@@ -5,12 +5,11 @@ rm(list = ls())
 # Libraries
 library(knitr)
 library(tidyverse)
-library(leaflet)
 library(RColorBrewer)
 
 # Knitr settings 
 options(scipen = 6);
-opts_chunk$set(echo = FALSE, hide = TRUE, cache = TRUE, warning = FALSE, message = FALSE,
+opts_chunk$set(echo = TRUE, hide = TRUE, cache = TRUE, warning = FALSE, message = FALSE,
                fig.asp = .45, fig.width = 8)
 
 # Darstellung von R-Berechnungen innerhalb von Text
@@ -61,52 +60,3 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
     }
   }
 }
-
-
-# Leaflet Einstellungen
-attri <- '&copy; <a href="http://openstreetmap.se">OpenStreetMap Sweden</a>'
-hintergrundkarte <- "Hydda.Base"
-lminZoom <- 7
-lmaxZoom <- 10
-lcenter <- c(9.3, 46.8)
-lradius <- 800
-lopacity <- 0.6
-
-# Taxanamen
-andere <- c("Porifera", "Cnidaria", "Bryozoa", "Dendrocoelidae", "Dugesiidae", "Planariidae",
-            "Nemathelminthes", "Erpobdellidae", "Glossiphoniidae", "Hirudidae (Tachet)", 
-            "Piscicolidae", "Oligochaeta")
-mollusca <- c("Acroloxidae", "Ancylidae", "Bithyniidae", "Ferrissiidae", "Hydrobiidae",
-              "Lymnaeidae", "Neritidae", "Physidae", "Planorbidae", "Valvatidae", "Viviparidae",
-              "Corbiculidae", "Dreissenidae", "Sphaeriidae", "Unionidae")
-anderearthro <- c("Hydracarina", "Branchiopoda", "Corophiidae", "Gammaridae", "Niphargidae", "Asellidae",
-                  "Janiridae", "Mysidae", "Astacidae", "Cambaridae")
-ephemeroptera <- c("Ameletidae", "Baetidae", "Caenidae", "Ephemerellidae", "Ephemeridae", 
-                   "Heptageniidae", "Leptophlebiidae", "Oligoneuriidae", "Polymitarcyidae", 
-                   "Potamanthidae", "Siphlonuridae")
-odonata <- c("Aeshnidae", "Calopterygidae", "Coenagrionidae", "Cordulegasteridae", "Corduliidae",
-             "Gomphidae", "Lestidae", "Libellulidae", "Platycnemididae")
-plecoptera <- c("Capniidae", "Chloroperlidae", "Leuctridae", "Nemouridae", "Perlidae", "Perlodidae",
-                "Taeniopterygidae")
-heteroptera <- c("Aphelocheiridae", "Corixidae", "Gerridae", "Hebridae", "Hydrometridae", "Mesoveliidae",
-                 "Naucoridae", "Nepidae", "Notonectidae", "Pleidae", "Veliidae", "Sialidae", 
-                 "Osmylidae", "Sisyridae")
-coleoptera <- c("Curculionidae", "Chrysomelidae", "Dryopidae", "Dytiscidae", "Elmidae", "Gyrinidae",
-                "Haliplidae", "Helophoridae", "Hydraenidae", "Hydrochidae", "Hydrophilidae", 
-                "Hydroscaphidae", "Hygrobiidae", "Noteridae", "Psephenidae (=Eubriidae)", "Scirtidae (=Helodidae)", 
-                "Spercheidae")
-hym <-  "Hymenoptera"
-trichoptera <- c("Apataniidae", "Beraeidae", "Brachycentridae", "Ecnomidae", "Glossosomatidae", "Goeridae",
-                 "Helicopsychidae", "Hydropsychidae", "Hydroptilidae", "Lepidostomatidae", "Leptoceridae",
-                 "Limnephilidae", "Molannidae", "Odontoceridae", "Philopotamidae", "Phryganeidae",
-                 "Polycentropodidae", "Psychomyiidae", "Ptilocolepidae", "Rhyacophilidae", "Sericostomatidae")
-lepi <- "Lepidoptera"
-diptera <- c("Anthomyiidae", "Athericidae", "Blephariceridae", "Ceratopogonidae", "Chaoboridae",
-             "Chironomidae", "Culicidae", "Cylindrotomidae", "Dixidae", "Dolichopodidae", 
-             "Empididae", "Ephydridae", "Limoniidae", "Psychodidae", "Ptychopteridae",
-             "Rhagionidae", "Scatophagidae", "Sciomyzidae", "Simuliidae", "Stratiomyidae",
-             "Syrphidae", "Tabanidae", "Thaumaleidae", "Tipulidae")
-
-alletaxa <- c(andere, mollusca, anderearthro, ephemeroptera, odonata, plecoptera, heteroptera,
-          coleoptera, hym, trichoptera, lepi, diptera)
-

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan</title>
+  <meta name="description" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN introduces Bayesian software, using R for the simple modes, and flexible Bayesian software (BUGS and Stan) for the more complicated ones. Guiding the ready from easy toward more complex (real) data analyses ina step-by-step manner, the book presents problems and solutions—including all R codes—that are most often applicable to other data and questions, making it an invaluable resource for analyzing a variety of data types.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.jpg" />
+  <meta property="og:description" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN introduces Bayesian software, using R for the simple modes, and flexible Bayesian software (BUGS and Stan) for the more complicated ones. Guiding the ready from easy toward more complex (real) data analyses ina step-by-step manner, the book presents problems and solutions—including all R codes—that are most often applicable to other data and questions, making it an invaluable resource for analyzing a variety of data types." />
+  <meta name="github-repo" content="TobiasRoth/BDAEcology" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan" />
+  
+  <meta name="twitter:description" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN introduces Bayesian software, using R for the simple modes, and flexible Bayesian software (BUGS and Stan) for the more complicated ones. Guiding the ready from easy toward more complex (real) data analyses ina step-by-step manner, the book presents problems and solutions—including all R codes—that are most often applicable to other data and questions, making it an invaluable resource for analyzing a variety of data types." />
+  <meta name="twitter:image" content="images/cover.jpg" />
+
+<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jérôme Guéla, Bettina Almasi and Pius Korner-Nievergelt">
+
+
+<meta name="date" content="2018-01-28">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="mcmc.html">
+<link rel="next" href="advancedmodels.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="Settings/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1</b> Why do we Need Statistical Models and What is this Book About?</a><ul>
+<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html#why-we-need-statistical-models"><i class="fa fa-check"></i><b>1.1</b> WHY WE NEED STATISTICAL MODELS</a></li>
+<li class="chapter" data-level="1.2" data-path="about.html"><a href="about.html#what-this-book-is-about"><i class="fa fa-check"></i><b>1.2</b> WHAT THIS BOOK IS ABOUT</a></li>
+<li class="chapter" data-level="" data-path="about.html"><a href="about.html#further-reading"><i class="fa fa-check"></i>FURTHER READING</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i><b>2</b> Prerequisites and Vocabulary</a><ul>
+<li class="chapter" data-level="2.1" data-path="prerequisites.html"><a href="prerequisites.html#software"><i class="fa fa-check"></i><b>2.1</b> SOFTWARE</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="prerequisites.html"><a href="prerequisites.html#what-is-r"><i class="fa fa-check"></i><b>2.1.1</b> What Is R?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="prerequisites.html"><a href="prerequisites.html#working-with-r"><i class="fa fa-check"></i><b>2.1.2</b> Working with R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="prerequisites.html"><a href="prerequisites.html#important-statistical-terms-and-how-to-handle-them-in-r"><i class="fa fa-check"></i><b>2.2</b> IMPORTANT STATISTICAL TERMS AND HOW TO HANDLE THEM IN R</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="prerequisites.html"><a href="prerequisites.html#data-sets-variables-and-observations"><i class="fa fa-check"></i><b>2.2.1</b> Data Sets, Variables, and Observations</a></li>
+<li class="chapter" data-level="2.2.2" data-path="prerequisites.html"><a href="prerequisites.html#distributions-and-summary-statistics"><i class="fa fa-check"></i><b>2.2.2</b> Distributions and Summary Statistics</a></li>
+<li class="chapter" data-level="2.2.3" data-path="prerequisites.html"><a href="prerequisites.html#more-on-r-objects"><i class="fa fa-check"></i><b>2.2.3</b> More on R Objects</a></li>
+<li class="chapter" data-level="2.2.4" data-path="prerequisites.html"><a href="prerequisites.html#r-functions-for-graphics"><i class="fa fa-check"></i><b>2.2.4</b> R Functions for Graphics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>3</b> The Bayesian and the Frequentist Ways of Analyzing Data</a><ul>
+<li class="chapter" data-level="3.1" data-path="bayes.html"><a href="bayes.html#short-historical-overview"><i class="fa fa-check"></i><b>3.1</b> SHORT HISTORICAL OVERVIEW</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>4</b> Normal Linear Models</a><ul>
+<li class="chapter" data-level="4.1" data-path="lm.html"><a href="lm.html#linear-regression"><i class="fa fa-check"></i><b>4.1</b> LINEAR REGRESSION</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="lm.html"><a href="lm.html#background"><i class="fa fa-check"></i><b>4.1.1</b> Background</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>5</b> Likelihood</a><ul>
+<li class="chapter" data-level="5.1" data-path="likelihood.html"><a href="likelihood.html#theory"><i class="fa fa-check"></i><b>5.1</b> THEORY</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="modelchecking.html"><a href="modelchecking.html"><i class="fa fa-check"></i><b>6</b> Assessing Model Assumptions</a><ul>
+<li class="chapter" data-level="6.1" data-path="modelchecking.html"><a href="modelchecking.html#model-assumptions"><i class="fa fa-check"></i><b>6.1</b> MODEL ASSUMPTIONS</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="lmm.html"><a href="lmm.html"><i class="fa fa-check"></i><b>7</b> Linear Mixed Effects Models</a><ul>
+<li class="chapter" data-level="7.1" data-path="lmm.html"><a href="lmm.html#background-1"><i class="fa fa-check"></i><b>7.1</b> BACKGROUND</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="lmm.html"><a href="lmm.html#why-mixed-effects-models"><i class="fa fa-check"></i><b>7.1.1</b> Why Mixed Effects Models?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>8</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="8.1" data-path="glm.html"><a href="glm.html#background-2"><i class="fa fa-check"></i><b>8.1</b> BACKGROUND</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="glmm.html"><a href="glmm.html"><i class="fa fa-check"></i><b>9</b> Generalized Linear Mixed Models</a><ul>
+<li class="chapter" data-level="9.1" data-path="glmm.html"><a href="glmm.html#binomial-mixed-model"><i class="fa fa-check"></i><b>9.1</b> BINOMIAL MIXED MODEL</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="glmm.html"><a href="glmm.html#background-3"><i class="fa fa-check"></i><b>9.1.1</b> Background</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="predictivemodcheck.html"><a href="predictivemodcheck.html"><i class="fa fa-check"></i><b>10</b> Posterior Predictive Model Checking and Proportion of Explained Variance</a><ul>
+<li class="chapter" data-level="10.1" data-path="predictivemodcheck.html"><a href="predictivemodcheck.html#posterior-predictive-model-checking"><i class="fa fa-check"></i><b>10.1</b> POSTERIOR PREDICTIVE MODEL CHECKING</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="predictivemodcheck.html"><a href="predictivemodcheck.html#why-mixed-effects-models-1"><i class="fa fa-check"></i><b>10.1.1</b> Why Mixed Effects Models?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="moddelection.html"><a href="moddelection.html"><i class="fa fa-check"></i><b>11</b> Model Selection and Multimodel Inference</a><ul>
+<li class="chapter" data-level="11.1" data-path="moddelection.html"><a href="moddelection.html#when-and-why-we-select-models-and-why-this-is-difficult"><i class="fa fa-check"></i><b>11.1</b> WHEN AND WHY WE SELECT MODELS AND WHY THIS IS DIFFICULT</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="mcmc.html"><a href="mcmc.html"><i class="fa fa-check"></i><b>12</b> Markov Chain Monte Carlo Simulation</a><ul>
+<li class="chapter" data-level="12.1" data-path="mcmc.html"><a href="mcmc.html#background-4"><i class="fa fa-check"></i><b>12.1</b> BACKGROUND</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="spatial.html"><a href="spatial.html"><i class="fa fa-check"></i><b>13</b> Modeling Spatial Data Using GLMM</a><ul>
+<li class="chapter" data-level="13.1" data-path="spatial.html"><a href="spatial.html#background-5"><i class="fa fa-check"></i><b>13.1</b> BACKGROUND</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="spatial.html"><a href="spatial.html#why-mixed-effects-models-2"><i class="fa fa-check"></i><b>13.1.1</b> Why Mixed Effects Models?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="advancedmodels.html"><a href="advancedmodels.html"><i class="fa fa-check"></i><b>14</b> Advanced Ecological Models</a><ul>
+<li class="chapter" data-level="14.1" data-path="advancedmodels.html"><a href="advancedmodels.html#hierarchical-multinomial-model-to-analyze-habitat-selection-using-bugs"><i class="fa fa-check"></i><b>14.1</b> HIERARCHICAL MULTINOMIAL MODEL TO ANALYZE HABITAT SELECTION USING BUGS</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="estimability.html"><a href="estimability.html"><i class="fa fa-check"></i><b>15</b> Prior Influence and Parameter Estimability</a><ul>
+<li class="chapter" data-level="15.1" data-path="estimability.html"><a href="estimability.html#how-to-specify-prior-distributions"><i class="fa fa-check"></i><b>15.1</b> HOW TO SPECIFY PRIOR DISTRIBUTIONS</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="checklist.html"><a href="checklist.html"><i class="fa fa-check"></i><b>16</b> Checklist</a><ul>
+<li class="chapter" data-level="16.1" data-path="checklist.html"><a href="checklist.html#data-analysis-step-by-step"><i class="fa fa-check"></i><b>16.1</b> DATA ANALYSIS STEP BY STEP</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="reportforpaper.html"><a href="reportforpaper.html"><i class="fa fa-check"></i><b>17</b> What Should I Report in a Paper</a><ul>
+<li class="chapter" data-level="17.1" data-path="reportforpaper.html"><a href="reportforpaper.html#how-to-present-the-results"><i class="fa fa-check"></i><b>17.1</b> HOW TO PRESENT THE RESULTS</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
+<li class="divider"></li>
+</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="spatial" class="section level1">
+<h1><span class="header-section-number">Kapitel 13</span> Modeling Spatial Data Using GLMM</h1>
+<div id="background-5" class="section level2">
+<h2><span class="header-section-number">13.1</span> BACKGROUND</h2>
+<div id="why-mixed-effects-models-2" class="section level3">
+<h3><span class="header-section-number">13.1.1</span> Why Mixed Effects Models?</h3>
+<p>The first law of geography says: “Everything is related to everything else, but near things are more related than distant things” (Tobler, 1970). Statisticians call this phenomenon spatial autocorrelation. It can be seen as a simple 2D generalization of temporal autocorrelation, which describes the tendency of two things nearer to each other along the time axis to be more similar than things further apart in time. Legendre (1993) proposed a more formal defi- nition: “The property of random variables taking values, at pairs of locations a certain distance apart, that are more similar (positive autocorrelation) or less similar (negative autocorrelation) than expected for randomly associated pairs of random observations”. Some common examples of spatial autocorrelation in ecology are patchiness, gradients, or regular distributions.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="mcmc.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="advancedmodels.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/13-spatial.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

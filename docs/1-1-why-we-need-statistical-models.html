@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan" />
+<meta property="og:type" content="book" />
+
+<meta property="og:image" content="images/cover.jpg" />
+<meta property="og:description" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN introduces Bayesian software, using R for the simple modes, and flexible Bayesian software (BUGS and Stan) for the more complicated ones. Guiding the ready from easy toward more complex (real) data analyses ina step-by-step manner, the book presents problems and solutions—including all R codes—that are most often applicable to other data and questions, making it an invaluable resource for analyzing a variety of data types." />
+<meta name="github-repo" content="TobiasRoth/BDAEcology" />
+
+<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jérôme Guéla, Bettina Almasi and Pius Korner-Nievergelt" />
+
+<meta name="date" content="2018-01-28" />
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN introduces Bayesian software, using R for the simple modes, and flexible Bayesian software (BUGS and Stan) for the more complicated ones. Guiding the ready from easy toward more complex (real) data analyses ina step-by-step manner, the book presents problems and solutions—including all R codes—that are most often applicable to other data and questions, making it an invaluable resource for analyzing a variety of data types.">
+
+<title>Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #ffffff; color: #1f1c1b; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; background-color: #ffffff; color: #a0a0a0; border-right: 1px solid #a0a0a0; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #1f1c1b; background-color: #ffffff; }
+code > span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code > span.dt { color: #0057ae; } /* DataType */
+code > span.dv { color: #b08000; } /* DecVal */
+code > span.bn { color: #b08000; } /* BaseN */
+code > span.fl { color: #b08000; } /* Float */
+code > span.cn { color: #aa5500; } /* Constant */
+code > span.ch { color: #924c9d; } /* Char */
+code > span.sc { color: #3daee9; } /* SpecialChar */
+code > span.st { color: #bf0303; } /* String */
+code > span.vs { color: #bf0303; } /* VerbatimString */
+code > span.ss { color: #ff5500; } /* SpecialString */
+code > span.im { color: #ff5500; } /* Import */
+code > span.co { color: #898887; } /* Comment */
+code > span.do { color: #607880; } /* Documentation */
+code > span.an { color: #ca60ca; } /* Annotation */
+code > span.cv { color: #0095ff; } /* CommentVar */
+code > span.ot { color: #006e28; } /* Other */
+code > span.fu { color: #644a9b; } /* Function */
+code > span.va { color: #0057ae; } /* Variable */
+code > span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #1f1c1b; } /* Operator */
+code > span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code > span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code > span.pp { color: #006e28; } /* Preprocessor */
+code > span.at { color: #0057ae; } /* Attribute */
+code > span.re { color: #0057ae; } /* RegionMarker */
+code > span.in { color: #b08000; } /* Information */
+code > span.wa { color: #bf0303; } /* Warning */
+code > span.al { color: #bf0303; font-weight: bold; } /* Alert */
+code > span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code > span. { color: #1f1c1b; } /* Normal */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<link rel="stylesheet" href="Settings/style.css" type="text/css" />
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li class="has-sub"><a href="index.html#preface">Preface</a><ul>
+<li><a href="acknowledgments.html#acknowledgments">Acknowledgments</a></li>
+</ul></li>
+<li class="has-sub"><a href="1-about.html#about"><span class="toc-section-number">1</span> Why do we Need Statistical Models and What is this Book About?</a><ul>
+<li><a href="1-1-why-we-need-statistical-models.html#why-we-need-statistical-models"><span class="toc-section-number">1.1</span> WHY WE NEED STATISTICAL MODELS</a></li>
+<li><a href="1-2-what-this-book-is-about.html#what-this-book-is-about"><span class="toc-section-number">1.2</span> WHAT THIS BOOK IS ABOUT</a></li>
+<li><a href="further-reading.html#further-reading">FURTHER READING</a></li>
+</ul></li>
+<li class="has-sub"><a href="2-prerequisites.html#prerequisites"><span class="toc-section-number">2</span> Prerequisites and Vocabulary</a><ul>
+<li class="has-sub"><a href="2-1-software.html#software"><span class="toc-section-number">2.1</span> SOFTWARE</a><ul>
+<li><a href="2-1-software.html#what-is-r"><span class="toc-section-number">2.1.1</span> What Is R?</a></li>
+<li><a href="2-1-software.html#working-with-r"><span class="toc-section-number">2.1.2</span> Working with R</a></li>
+</ul></li>
+<li class="has-sub"><a href="2-2-important-statistical-terms-and-how-to-handle-them-in-r.html#important-statistical-terms-and-how-to-handle-them-in-r"><span class="toc-section-number">2.2</span> IMPORTANT STATISTICAL TERMS AND HOW TO HANDLE THEM IN R</a><ul>
+<li><a href="2-2-important-statistical-terms-and-how-to-handle-them-in-r.html#data-sets-variables-and-observations"><span class="toc-section-number">2.2.1</span> Data Sets, Variables, and Observations</a></li>
+<li><a href="2-2-important-statistical-terms-and-how-to-handle-them-in-r.html#distributions-and-summary-statistics"><span class="toc-section-number">2.2.2</span> Distributions and Summary Statistics</a></li>
+<li><a href="2-2-important-statistical-terms-and-how-to-handle-them-in-r.html#more-on-r-objects"><span class="toc-section-number">2.2.3</span> More on R Objects</a></li>
+<li><a href="2-2-important-statistical-terms-and-how-to-handle-them-in-r.html#r-functions-for-graphics"><span class="toc-section-number">2.2.4</span> R Functions for Graphics</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="3-bayes.html#bayes"><span class="toc-section-number">3</span> The Bayesian and the Frequentist Ways of Analyzing Data</a><ul>
+<li><a href="3-1-short-historical-overview.html#short-historical-overview"><span class="toc-section-number">3.1</span> SHORT HISTORICAL OVERVIEW</a></li>
+</ul></li>
+<li class="has-sub"><a href="4-lm.html#lm"><span class="toc-section-number">4</span> Normal Linear Models</a><ul>
+<li class="has-sub"><a href="4-1-linear-regression.html#linear-regression"><span class="toc-section-number">4.1</span> LINEAR REGRESSION</a><ul>
+<li><a href="4-1-linear-regression.html#background"><span class="toc-section-number">4.1.1</span> Background</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="5-likelihood.html#likelihood"><span class="toc-section-number">5</span> Likelihood</a><ul>
+<li><a href="5-1-theory.html#theory"><span class="toc-section-number">5.1</span> THEORY</a></li>
+</ul></li>
+<li class="has-sub"><a href="6-modelchecking.html#modelchecking"><span class="toc-section-number">6</span> Assessing Model Assumptions</a><ul>
+<li><a href="6-1-model-assumptions.html#model-assumptions"><span class="toc-section-number">6.1</span> MODEL ASSUMPTIONS</a></li>
+</ul></li>
+<li class="has-sub"><a href="7-lmm.html#lmm"><span class="toc-section-number">7</span> Linear Mixed Effects Models</a><ul>
+<li class="has-sub"><a href="7-1-background-1.html#background-1"><span class="toc-section-number">7.1</span> BACKGROUND</a><ul>
+<li><a href="7-1-background-1.html#why-mixed-effects-models"><span class="toc-section-number">7.1.1</span> Why Mixed Effects Models?</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="8-glm.html#glm"><span class="toc-section-number">8</span> Generalized Linear Models</a><ul>
+<li><a href="8-1-background-2.html#background-2"><span class="toc-section-number">8.1</span> BACKGROUND</a></li>
+</ul></li>
+<li class="has-sub"><a href="9-glmm.html#glmm"><span class="toc-section-number">9</span> Generalized Linear Mixed Models</a><ul>
+<li class="has-sub"><a href="9-1-binomial-mixed-model.html#binomial-mixed-model"><span class="toc-section-number">9.1</span> BINOMIAL MIXED MODEL</a><ul>
+<li><a href="9-1-binomial-mixed-model.html#background-3"><span class="toc-section-number">9.1.1</span> Background</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="10-predictivemodcheck.html#predictivemodcheck"><span class="toc-section-number">10</span> Posterior Predictive Model Checking and Proportion of Explained Variance</a><ul>
+<li class="has-sub"><a href="10-1-posterior-predictive-model-checking.html#posterior-predictive-model-checking"><span class="toc-section-number">10.1</span> POSTERIOR PREDICTIVE MODEL CHECKING</a><ul>
+<li><a href="10-1-posterior-predictive-model-checking.html#why-mixed-effects-models-1"><span class="toc-section-number">10.1.1</span> Why Mixed Effects Models?</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="11-moddelection.html#moddelection"><span class="toc-section-number">11</span> Model Selection and Multimodel Inference</a><ul>
+<li><a href="11-1-when-and-why-we-select-models-and-why-this-is-difficult.html#when-and-why-we-select-models-and-why-this-is-difficult"><span class="toc-section-number">11.1</span> WHEN AND WHY WE SELECT MODELS AND WHY THIS IS DIFFICULT</a></li>
+</ul></li>
+<li class="has-sub"><a href="12-mcmc.html#mcmc"><span class="toc-section-number">12</span> Markov Chain Monte Carlo Simulation</a><ul>
+<li><a href="12-1-background-4.html#background-4"><span class="toc-section-number">12.1</span> BACKGROUND</a></li>
+</ul></li>
+<li class="has-sub"><a href="13-spatial.html#spatial"><span class="toc-section-number">13</span> Modeling Spatial Data Using GLMM</a><ul>
+<li class="has-sub"><a href="13-1-background-5.html#background-5"><span class="toc-section-number">13.1</span> BACKGROUND</a><ul>
+<li><a href="13-1-background-5.html#why-mixed-effects-models-2"><span class="toc-section-number">13.1.1</span> Why Mixed Effects Models?</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="14-advancedmodels.html#advancedmodels"><span class="toc-section-number">14</span> Advanced Ecological Models</a><ul>
+<li><a href="14-1-hierarchical-multinomial-model-to-analyze-habitat-selection-using-bugs.html#hierarchical-multinomial-model-to-analyze-habitat-selection-using-bugs"><span class="toc-section-number">14.1</span> HIERARCHICAL MULTINOMIAL MODEL TO ANALYZE HABITAT SELECTION USING BUGS</a></li>
+</ul></li>
+<li class="has-sub"><a href="15-estimability.html#estimability"><span class="toc-section-number">15</span> Prior Influence and Parameter Estimability</a><ul>
+<li><a href="15-1-how-to-specify-prior-distributions.html#how-to-specify-prior-distributions"><span class="toc-section-number">15.1</span> HOW TO SPECIFY PRIOR DISTRIBUTIONS</a></li>
+</ul></li>
+<li class="has-sub"><a href="16-checklist.html#checklist"><span class="toc-section-number">16</span> Checklist</a><ul>
+<li><a href="16-1-data-analysis-step-by-step.html#data-analysis-step-by-step"><span class="toc-section-number">16.1</span> DATA ANALYSIS STEP BY STEP</a></li>
+</ul></li>
+<li class="has-sub"><a href="17-reportforpaper.html#reportforpaper"><span class="toc-section-number">17</span> What Should I Report in a Paper</a><ul>
+<li><a href="17-1-how-to-present-the-results.html#how-to-present-the-results"><span class="toc-section-number">17.1</span> HOW TO PRESENT THE RESULTS</a></li>
+</ul></li>
+<li><a href="referenzen.html#referenzen">Referenzen</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="why-we-need-statistical-models" class="section level2">
+<h2><span class="header-section-number">1.1</span> WHY WE NEED STATISTICAL MODELS</h2>
+<p>There are at least four main reasons why statistical models are used: (1) models help to describe how we think a system works, (2) data can be summarized using models, (3) comparison of model predictions with data helps with understanding the system, and (4) models allow for predictions, including the quantification of their uncertainty, and, therefore, they help with making decisions.</p>
+<p>A statistical model is a mathematical construct based on probability theory that aims to reconstruct the system or the process under study; the data are observations of this system or process. When we speak of “models” in this book, we always mean statistical models. Models express what we know (or, better, what we think we know) about a natural system. The difference between the model and the observations shows that what we think about the system may still not be realistic and, therefore, points out what we may want to think about more intensively. In this way, statistical models help with understanding natural systems.</p>
+<p>Analyzing data using statistical models is rarely just applying one model to the data and extracting the results. Rather, it is an iterative process of fitting a model, comparing the model with the data, gaining insight into the system from specific discrepancies between the model and the data, and then finding a more realistic model. Analyzing data using statistical models is a learning process. Reality is usually too complex to be perfectly represented by a model. Thus, no model is perfect, but a good model is useful (e.g., Box, 1979). Often, several models may be plausible and fit the data reasonably well. In such cases, the inference can be based on the set of all models, or a model that performs best for a specific purpose is selected. In Chapter 11 we have compiled a number of approaches we found useful for model comparisons and multimodel inference.</p>
+<p>Once we have one or several models, we want to draw inferences from the model(s). Estimates of the effects of the predictor variables on the outcome variables, fitted values, or derived quantities that are of biological interest are extracted, together with an uncertainty estimate. In this book we use, except in one example, Bayesian methods to assess uncertainty of the estimates.</p>
+<p>Models summarize data. When we have measured the height of 100 trees in a forest and we would like to report these heights to colleagues, we report the mean and the standard deviation instead of reporting all 100 values. The mean and the standard deviation, together with a distributional assumption (e.g., the normal distribution) represent a statistical model that describes the data. We do not need to report all 100 values because the 2 values (mean and standard deviation) describe the distribution of the 100 values sufficiently well so that people have a picture of the heights of the 100 trees. With increasing complexity of the data, we need more complex models that summarize the data in a sensible way.</p>
+<p>Statistical models are widely applied because they allow for quantifying uncertainty and making predictions. A well-known application of statistical models is the weather forecast. Additional examples include the prediction of bird or bat collision risks at wind energy turbines based on some covariates, the avalanche bulletins, or all the models used to predict changes of an ecosystem when temperatures rise. Political decisions are often based on models or model predictions. Models are pervasive; they even govern our daily life. For example, we first expected our children to get home before 3:30 p.m. because we knew that the school bus drops them off at 3:24, and a child can walk 200 m in around 4 min. What we had in mind was a model child. After some weeks observing the time our children came home after school, we could compare the model prediction with real data. Based on this comparison and short interviews with the children, we included “playing with the neighbor’s dog” in our model and updated the expected arrival time to 3:45 p.m.</p>
+</div>
+<p style="text-align: center;">
+<a href="1-about.html"><button class="btn btn-default">Previous</button></a>
+<a href="1-2-what-this-book-is-about.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

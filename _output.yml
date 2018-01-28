@@ -1,4 +1,6 @@
-bookdown::gitbook:
+bookdown::html_book:
+  theme: united
+  highlight: kate
   css: Settings/style.css
   split_bib: no
   config:

@@ -8,10 +8,14 @@ documentclass: book
 bibliography: [References.bib]
 link-citations: yes
 github-repo: TobiasRoth/BDAEcology
+cover-image: images/cover.jpg
 description: "Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN introduces Bayesian software, using R for the simple modes, and flexible Bayesian software (BUGS and Stan) for the more complicated ones. Guiding the ready from easy toward more complex (real) data analyses ina step-by-step manner, the book presents problems and solutions—including all R codes—that are most often applicable to other data and questions, making it an invaluable resource for analyzing a variety of data types."
 ---
 
 # Preface {-}
+
+<a href="https://www.elsevier.com/books/bayesian-data-analysis-in-ecology-using-linear-models-with-r-bugs-and-stan/korner-nievergelt/978-0-12-801370-0" target="_blank"><img src="images/cover.jpg" width="448" style="display: block; margin: auto;" /></a>
+
 
 
 ## Acknowledgments {-}
