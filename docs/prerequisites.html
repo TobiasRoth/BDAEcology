@@ -118,7 +118,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2.2" data-path="prerequisites.html"><a href="prerequisites.html#distributions-and-summary-statistics"><i class="fa fa-check"></i><b>2.2.2</b> Distributions and Summary Statistics</a></li>
 <li class="chapter" data-level="2.2.3" data-path="prerequisites.html"><a href="prerequisites.html#more-on-r-objects"><i class="fa fa-check"></i><b>2.2.3</b> More on R Objects</a></li>
 <li class="chapter" data-level="2.2.4" data-path="prerequisites.html"><a href="prerequisites.html#r-functions-for-graphics"><i class="fa fa-check"></i><b>2.2.4</b> R Functions for Graphics</a></li>
+<li class="chapter" data-level="2.2.5" data-path="prerequisites.html"><a href="prerequisites.html#writing-our-own-r-functions"><i class="fa fa-check"></i><b>2.2.5</b> Writing Our Own R Functions</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="prerequisites.html"><a href="prerequisites.html#further-reading-1"><i class="fa fa-check"></i>FURTHER READING</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>3</b> The Bayesian and the Frequentist Ways of Analyzing Data</a><ul>
 <li class="chapter" data-level="3.1" data-path="bayes.html"><a href="bayes.html#short-historical-overview"><i class="fa fa-check"></i><b>3.1</b> SHORT HISTORICAL OVERVIEW</a></li>
@@ -421,28 +423,34 @@ birds</code></pre></div>
 ABBILDUNG 2.1: <em>Left:</em> Boxplot of blood corticosterone measurements (totCort) for corticosterone (C) and placebo (P) treated barn owl nestlings. Bold horizontal bar 1⁄4 median; box 1⁄4 interquartile range. The whiskers are drawn from the first or third quartile to the lowest or to the largest value within 1.5 times the interquartile range, respectively. Circles are observations beyond the whiskers. <em>Right:</em> Blood corticosterone measurements (totCort) in relation to age. Open symbols 1⁄4 placebo-treated nestlings, closed symbols 1⁄4 corticosterone-treated nestlings.
 </p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#---------------------------------------------------------------------------------------------</span>
-<span class="co">#2.1.7  Writing own R functions</span>
-<span class="co">#---------------------------------------------------------------------------------------------</span>
-<span class="co"># function to calculate the standard error of the mean </span>
-sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">sd</span>(x)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">length</span>(x))
-
-<span class="co"># try for example</span>
-x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">13</span>,<span class="dv">2</span>,<span class="dv">20</span>,<span class="dv">5</span>)
+</div>
+<div id="writing-our-own-r-functions" class="section level3">
+<h3><span class="header-section-number">2.2.5</span> Writing Our Own R Functions</h3>
+<p>R allows us to write our own functions. Here we write a function that cal- culates the standard error of the mean (SEM). We define the following function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">sd</span>(x)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">length</span>(x))</code></pre></div>
+<p>function(x) means that sem is a function of x, x being the only argument required by the function. The function sd calculates the standard deviation of the sample, length extracts the number of elements of the sample (sample size), and sqrt calculates its square root. We can define a vector x and apply the function sem as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">13</span>,<span class="dv">2</span>,<span class="dv">20</span>,<span class="dv">5</span>)
 <span class="kw">sem</span>(x)</code></pre></div>
 <pre><code>## [1] 1.994971</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># however, if we add a missing value to the data, the function produces a missing value too</span>
-x &lt;-<span class="st"> </span><span class="kw">c</span>(x, <span class="ot">NA</span>)
+<p>This is a good time to mention the topic of missing values. Biological data sets often have missing values (e.g., due to organisms that died, or failure to take measurements). In R, missing values are coded as NA and need to be treated explicitly. If we add a missing value to x and apply sem again, sem produces NA, because the function sd produces NA:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(x, <span class="ot">NA</span>)
 <span class="kw">sem</span>(x)</code></pre></div>
 <pre><code>## [1] NA</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(x)</code></pre></div>
 <pre><code>## [1] NA</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># improved version</span>
-sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">sd</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">sum</span>(<span class="op">!</span><span class="kw">is.na</span>(x)))
+<p>Unless we specify how to handle missing values, any calculation in R that involves missing values will produce a missing value again. An adapted version of sem could look as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">sd</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">sum</span>(<span class="op">!</span><span class="kw">is.na</span>(x)))
 <span class="kw">sem</span>(x)</code></pre></div>
 <pre><code>## [1] 1.994971</code></pre>
-
+<p>Despite the missing value we have added to x we get the same result as before. The argument na.rm 1⁄4 TRUE within the function sd causes R to ignore missing values.</p>
 </div>
+</div>
+<div id="further-reading-1" class="section level2 unnumbered">
+<h2>FURTHER READING</h2>
+<p>If you are interested in an introductory statistics book (on frequentist statistics) that works with R, we recommend Crawley (2005), Crawley (2007), Dalgaard (2008), or Logan (2010). The books by Crawley and Logan use biological examples whereas most of the examples in Daalgard (2008) come from the medical sciences.</p>
+<p>Basic statistical knowledge can be acquired from any classical textbook in statistics. Quinn and Keough (2009) provide a nice introduction to experimental design and data analysis, focusing on the close link between design and analysis. They work through a large number of ecological examples, unfortunately omitting modern mixed-effects models. If you really have a hard time in finding the motivation to read about statistics, you may want to look at Larry Gonick &amp; Woollcott Smith (2005).</p>
+<p>If you need a more thorough introduction to R, we recommend Venables et al. (2014; downloadable from <a href="http://cran.r-project.org/doc/manuals/R-intro.pdf" class="uri">http://cran.r-project.org/doc/manuals/R-intro.pdf</a> ), Zuur et al. (2009), or Chambers (2008). To learn more about how to generate specialized, publication-quality graphics, you might want to read a book focusing on R graphics such as Murrell (2006) or Chang (2012), or read the reference books on the R graphics packages lattice (Sarkar, 2008) or ggplot (Wickham, 2009).</p>
+
 </div>
 </div>
             </section>

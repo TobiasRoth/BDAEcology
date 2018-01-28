@@ -186,31 +186,44 @@ points(totCort ~ Age, data = cortbowl[cortbowl$Implant == "C",], pch = 20)
 ```
 
 
+### Writing Our Own R Functions
 
+R allows us to write our own functions. Here we write a function that cal- culates the standard error of the mean (SEM). We define the following function:
 
 ```{r}
-#---------------------------------------------------------------------------------------------
-#2.1.7	Writing own R functions
-#---------------------------------------------------------------------------------------------
-# function to calculate the standard error of the mean 
 sem <- function(x) sd(x)/sqrt(length(x))
+```
 
-# try for example
+function(x) means that sem is a function of x, x being the only argument required by the function. The function sd calculates the standard deviation of the sample, length extracts the number of elements of the sample (sample size), and sqrt calculates its square root. We can define a vector x and apply the function sem as follows:
+
+```{r}
 x <- c(10,7,5,9,13,2,20,5)
 sem(x)
+```
 
-# however, if we add a missing value to the data, the function produces a missing value too
+This is a good time to mention the topic of missing values. Biological data sets often have missing values (e.g., due to organisms that died, or failure to take measurements). In R, missing values are coded as NA and need to be treated explicitly. If we add a missing value to x and apply sem again, sem produces NA, because the function sd produces NA:
+
+```{r}
 x <- c(x, NA)
 sem(x)
 sd(x)
+```
 
+Unless we specify how to handle missing values, any calculation in R that involves missing values will produce a missing value again. An adapted version of sem could look as follows:
 
-# improved version
+```{r}
 sem <- function(x) sd(x, na.rm = TRUE)/sqrt(sum(!is.na(x)))
 sem(x)
 ```
 
+Despite the missing value we have added to x we get the same result as before. The argument na.rm 1⁄4 TRUE within the function sd causes R to ignore missing values.
 
+## FURTHER READING {-}
+If you are interested in an introductory statistics book (on frequentist statistics) that works with R, we recommend Crawley (2005), Crawley (2007), Dalgaard (2008), or Logan (2010). The books by Crawley and Logan use biological examples whereas most of the examples in Daalgard (2008) come from the medical sciences.
 
+Basic statistical knowledge can be acquired from any classical textbook in statistics. Quinn and Keough (2009) provide a nice introduction to experimental design and data analysis, focusing on the close link between design and analysis. They work through a large number of ecological examples, unfortunately omitting modern mixed-effects models. If you really have a hard time in finding the motivation to read about statistics, you may want to look at Larry Gonick & Woollcott Smith (2005).
+
+If you need a more thorough introduction to R, we recommend Venables et al. (2014; downloadable from http://cran.r-project.org/doc/manuals/R-intro.pdf ), Zuur et al. (2009), or Chambers (2008).
+To learn more about how to generate specialized, publication-quality graphics, you might want to read a book focusing on R graphics such as Murrell (2006) or Chang (2012), or read the reference books on the R graphics packages lattice (Sarkar, 2008) or ggplot (Wickham, 2009).
 
 
