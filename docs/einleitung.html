@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan</title>
+  <meta name="description" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN introduces Bayesian software, using R for the simple modes, and flexible Bayesian software (BUGS and Stan) for the more complicated ones. Guiding the ready from easy toward more complex (real) data analyses ina step-by-step manner, the book presents problems and solutions—including all R codes—that are most often applicable to other data and questions, making it an invaluable resource for analyzing a variety of data types.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN introduces Bayesian software, using R for the simple modes, and flexible Bayesian software (BUGS and Stan) for the more complicated ones. Guiding the ready from easy toward more complex (real) data analyses ina step-by-step manner, the book presents problems and solutions—including all R codes—that are most often applicable to other data and questions, making it an invaluable resource for analyzing a variety of data types." />
+  <meta name="github-repo" content="TobiasRoth/BDAEcology" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan" />
+  
+  <meta name="twitter:description" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN introduces Bayesian software, using R for the simple modes, and flexible Bayesian software (BUGS and Stan) for the more complicated ones. Guiding the ready from easy toward more complex (real) data analyses ina step-by-step manner, the book presents problems and solutions—including all R codes—that are most often applicable to other data and questions, making it an invaluable resource for analyzing a variety of data types." />
+  
+
+<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jérôme Guéla, Bettina Almasi and Pius Korner-Nievergelt">
+
+
+<meta name="date" content="2018-01-28">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="Settings/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="einleitung.html"><a href="einleitung.html"><i class="fa fa-check"></i><b>1</b> Einleitung</a><ul>
+<li class="chapter" data-level="1.1" data-path="einleitung.html"><a href="einleitung.html#ausgangslage"><i class="fa fa-check"></i><b>1.1</b> Ausgangslage</a></li>
+<li class="chapter" data-level="1.2" data-path="einleitung.html"><a href="einleitung.html#ziele"><i class="fa fa-check"></i><b>1.2</b> Ziele</a></li>
+</ul></li>
+<li class="divider"></li>
+</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="einleitung" class="section level1">
+<h1><span class="header-section-number">Kapitel 1</span> Einleitung</h1>
+<div id="ausgangslage" class="section level2">
+<h2><span class="header-section-number">1.1</span> Ausgangslage</h2>
+<p>Das Modul Makrozoobenthos Stufe F, oder auch IBCH‐Index, des Modul‐Stufen‐Konzepts wurde im Jahr 2010 publiziert <span class="citation">(Stucki <a href="einleitung.html#ref-Stucki2010">2010</a>)</span>. Als Modul auf Stufe F erlaubt die Methode, basierend auf einer semiquantitativen Erhebung der Makrozoobenthos‐Gemeinschaft, eine schnelle, flächendeckende Bewertung des Gewässerzustandes in fünf Qualitätsklassen.</p>
+<p>Über die letzten Jahre wurden wertvolle Daten erhoben und Erfahrungen mit der Methode gesammelt. Dabei zeigten sich auch Probleme, die mit einer Befrage von Anwendern und einer Expertendiskussionen am BAFU identifiziert wurden. Es zeigte sich, dass natürliche Standortfaktoren den IBCH‐Index und seine Unteraspekte Familien‐Diversität und Indikatorgruppe beeinflussen. Die Bedeutung dieses Einflusses dieser natürlichen Standortparameter soll durch eine Auswertung der vorhandenen Daten analysiert werden. Daraus sollen konkrete Ansätze für eine Verbesserung der Methode IBCH abgeleitet werden. Die Methodik der Felderhebung und das taxonomische Niveau der Bestimmung sollen dabei möglichst unverändert bleiben, um die Vergleichbarkeit von alten und neuen Erhebungen gewährleistet. Die Arbeiten der Auswertung und Anpassung erfolgen unter Einbezug einer bestehenden Expertengruppe mit Vertretern von BAFU, Forschung, Kantonen und Ökobüros.</p>
+</div>
+<div id="ziele" class="section level2">
+<h2><span class="header-section-number">1.2</span> Ziele</h2>
+<p>Der IBCH wurde konzipiert, um den Grad der Naturnähe der Makrozoobenthos‐Gemeinschaft in Fliessgewässern abzuschätzen. Um die im Verlauf der letzten Jahre erkannten Probleme der Bewertungsmethode zu beheben wurden die folgenden drei Ziele definiert.</p>
+<p><strong>1. Wirkungsweise des IBCH verstehen und Probleme quantifizieren</strong><br />
+Der IBCH-Wert soll auf menschliche Einflüsse reagieren, nicht jedoch auf natürliche Umweltfaktoren. Eine detaillierte Analyse des Einflusses natürlicher Umweltfaktoren und menschlicher Einflussgrössen auf den IBCH inklusive seiner Teilparameter Diversitätsklasse und Indikatorgruppe bildet daher eine wichtigste Diskussionsgrundlage. Neben den statistischen Auswertungen bildet die Analyse von Aufnahmestellen, bei welchen der IBCH-Wert bekanntermassen unpassende Ergebnisse liefert (“Problemstellen-Katalog”) eine wichtige Voraussetzung zur Quantifizierung der Probleme bei der Erhebung des IBCH. Liegen beispielsweise die meisten Problemstellen im Gebirge, dann sind dies wichtige Hinweise für mögliche Ursachen des Problems.</p>
+<p><strong>2. Lösungsansätze zur Optimierung entwickeln</strong><br />
+Es müssen praktikable Ansätze erarbeitet werden, wmit denen die identifizierten Probleme gelöst werden können.</p>
+<p><strong>3. Lösungsvorschläge kommunizieren und konsolidieren</strong><br />
+Die Methode Makrozoobenthos Stufe F im Modulstufenkonzept mit dem resultierenden IBCH-Wert ist derzeit die Standardmethode zur biologischen Bewertung kleiner und mittlerer Fliessgewässer in der Schweiz. Allfällige Anpassungen müssen daher breit akzeptiert sein: bei den Anwendern, bei den Gewässerfachstellen der verschiedenen Kantone und nicht zuletzt auch bei den zuständigen Bundesstellen und den im Bereich der Fliessgewässer‐Bioindikation forschenden Personen. Gespräche mit kantonalen Fachstellen bei der Erarbeitung des Problemstellen‐Katalogs sowie die Diskussion der Ergebnisse und die Validierung der Ansätze in den beiden Workshops sind deshalb zentrale Bestandteile der Überarbeitung des IBCH.</p>
+
+<div id="refs" class="references">
+<div id="ref-Stucki2010">
+<p>Stucki, P. 2010. “Methoden Zur Untersuchung Und Beurteilung Der Fliessgewässer. Makrozoobenthos Stufe F.” Bern: Umwelt-Vollzug Nr. 1026, Federal Office for the Environment, 61 S. <a href="http://www.modul-stufen-konzept.ch/download/MZB_Stufe_F-D_20111215.pdf" class="uri">http://www.modul-stufen-konzept.ch/download/MZB_Stufe_F-D_20111215.pdf</a>.</p>
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/01-einleitung.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

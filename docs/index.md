@@ -1,7 +1,8 @@
+
 --- 
 title: "Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan"
 author: "Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jérôme Guéla, Bettina Almasi and Pius Korner-Nievergelt"
-date: "`r Sys.Date()`"
+date: "2018-01-28"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [References.bib]
