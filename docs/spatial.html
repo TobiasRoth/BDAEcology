@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan</title>
   <meta name="description" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN introduces Bayesian software, using R for the simple modes, and flexible Bayesian software (BUGS and Stan) for the more complicated ones. Guiding the ready from easy toward more complex (real) data analyses ina step-by-step manner, the book presents problems and solutions—including all R codes—that are most often applicable to other data and questions, making it an invaluable resource for analyzing a variety of data types.">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jérôme Guéla, Bettina Almasi and Pius Korner-Nievergelt">
 
 
-<meta name="date" content="2018-01-28">
+<meta name="date" content="2018-04-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -87,7 +87,7 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
-<link rel="stylesheet" href="Settings/style.css" type="text/css" />
+<link rel="stylesheet" href="Settings\style.css" type="text/css" />
 </head>
 
 <body>
@@ -124,6 +124,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="3" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>3</b> The Bayesian and the Frequentist Ways of Analyzing Data</a><ul>
 <li class="chapter" data-level="3.1" data-path="bayes.html"><a href="bayes.html#short-historical-overview"><i class="fa fa-check"></i><b>3.1</b> SHORT HISTORICAL OVERVIEW</a></li>
+<li class="chapter" data-level="3.2" data-path="bayes.html"><a href="bayes.html#the-bayesian-way"><i class="fa fa-check"></i><b>3.2</b> THE BAYESIAN WAY</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="bayes.html"><a href="bayes.html#estimating-the-mean-of-a-normal-distribution-with-a-known-variance"><i class="fa fa-check"></i><b>3.2.1</b> Estimating the Mean of a Normal Distribution with a Known Variance</a></li>
+<li class="chapter" data-level="3.2.2" data-path="bayes.html"><a href="bayes.html#estimating-mean-and-variance-of-a-normal-distribution-using-simulation"><i class="fa fa-check"></i><b>3.2.2</b> Estimating Mean and Variance of a Normal Distribution Using Simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="bayes.html"><a href="bayes.html#frequentist"><i class="fa fa-check"></i><b>3.3</b> THE FREQUENTIST WAY</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>4</b> Normal Linear Models</a><ul>
 <li class="chapter" data-level="4.1" data-path="lm.html"><a href="lm.html#linear-regression"><i class="fa fa-check"></i><b>4.1</b> LINEAR REGRESSION</a><ul>
@@ -199,7 +204,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="spatial" class="section level1">
-<h1><span class="header-section-number">Kapitel 13</span> Modeling Spatial Data Using GLMM</h1>
+<h1><span class="header-section-number">13</span> Modeling Spatial Data Using GLMM</h1>
 <div id="background-5" class="section level2">
 <h2><span class="header-section-number">13.1</span> BACKGROUND</h2>
 <div id="why-mixed-effects-models-2" class="section level3">
@@ -233,10 +238,11 @@ gitbook.start({
 "facebook": false,
 "twitter": false,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -260,9 +266,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
