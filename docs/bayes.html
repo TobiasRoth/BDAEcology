@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan</title>
   <meta name="description" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN introduces Bayesian software, using R for the simple modes, and flexible Bayesian software (BUGS and Stan) for the more complicated ones. Guiding the ready from easy toward more complex (real) data analyses ina step-by-step manner, the book presents problems and solutions—including all R codes—that are most often applicable to other data and questions, making it an invaluable resource for analyzing a variety of data types.">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jérôme Guéla, Bettina Almasi and Pius Korner-Nievergelt">
 
 
-<meta name="date" content="2018-01-28">
+<meta name="date" content="2018-04-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -87,7 +87,7 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
-<link rel="stylesheet" href="Settings/style.css" type="text/css" />
+<link rel="stylesheet" href="Settings\style.css" type="text/css" />
 </head>
 
 <body>
@@ -115,94 +115,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="prerequisites.html"><a href="prerequisites.html#important-statistical-terms-and-how-to-handle-them-in-r"><i class="fa fa-check"></i><b>2.2</b> IMPORTANT STATISTICAL TERMS AND HOW TO HANDLE THEM IN R</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="prerequisites.html"><a href="prerequisites.html#data-sets-variables-and-observations"><i class="fa fa-check"></i><b>2.2.1</b> Data Sets, Variables, and Observations</a></li>
+<li class="chapter" data-level="2.2.2" data-path="prerequisites.html"><a href="prerequisites.html#distributions-and-summary-statistics"><i class="fa fa-check"></i><b>2.2.2</b> Distributions and Summary Statistics</a></li>
+<li class="chapter" data-level="2.2.3" data-path="prerequisites.html"><a href="prerequisites.html#more-on-r-objects"><i class="fa fa-check"></i><b>2.2.3</b> More on R Objects</a></li>
+<li class="chapter" data-level="2.2.4" data-path="prerequisites.html"><a href="prerequisites.html#r-functions-for-graphics"><i class="fa fa-check"></i><b>2.2.4</b> R Functions for Graphics</a></li>
+<li class="chapter" data-level="2.2.5" data-path="prerequisites.html"><a href="prerequisites.html#writing-our-own-r-functions"><i class="fa fa-check"></i><b>2.2.5</b> Writing Our Own R Functions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="prerequisites.html"><a href="prerequisites.html#numeric"><i class="fa fa-check"></i><b>2.3</b> [1] “numeric”</a></li>
-<li class="chapter" data-level="2.4" data-path="prerequisites.html"><a href="prerequisites.html#character"><i class="fa fa-check"></i><b>2.4</b> [1] “character”</a></li>
-<li class="chapter" data-level="2.5" data-path="prerequisites.html"><a href="prerequisites.html#character-1"><i class="fa fa-check"></i><b>2.5</b> [1] “character”</a></li>
-<li class="chapter" data-level="2.6" data-path="prerequisites.html"><a href="prerequisites.html#section"><i class="fa fa-check"></i><b>2.6</b> [1] 8 2 4 1</a></li>
-<li class="chapter" data-level="2.7" data-path="prerequisites.html"><a href="prerequisites.html#v1-v2-v3"><i class="fa fa-check"></i><b>2.7</b> v1 v2 v3</a></li>
-<li class="chapter" data-level="2.8" data-path="prerequisites.html"><a href="prerequisites.html#bird-1"><i class="fa fa-check"></i><b>2.8</b> 1 1 bird 1</a></li>
-<li class="chapter" data-level="2.9" data-path="prerequisites.html"><a href="prerequisites.html#bat-4"><i class="fa fa-check"></i><b>2.9</b> 2 4 bat 4</a></li>
-<li class="chapter" data-level="2.10" data-path="prerequisites.html"><a href="prerequisites.html#frog-bird"><i class="fa fa-check"></i><b>2.10</b> 3 2 frog bird</a></li>
-<li class="chapter" data-level="2.11" data-path="prerequisites.html"><a href="prerequisites.html#bear-bat"><i class="fa fa-check"></i><b>2.11</b> 4 8 bear bat</a></li>
-<li class="chapter" data-level="2.12" data-path="prerequisites.html"><a href="prerequisites.html#number-animal-mix"><i class="fa fa-check"></i><b>2.12</b> number animal mix</a></li>
-<li class="chapter" data-level="2.13" data-path="prerequisites.html"><a href="prerequisites.html#bird-1-1"><i class="fa fa-check"></i><b>2.13</b> 1 1 bird 1</a></li>
-<li class="chapter" data-level="2.14" data-path="prerequisites.html"><a href="prerequisites.html#bat-4-1"><i class="fa fa-check"></i><b>2.14</b> 2 4 bat 4</a></li>
-<li class="chapter" data-level="2.15" data-path="prerequisites.html"><a href="prerequisites.html#frog-bird-1"><i class="fa fa-check"></i><b>2.15</b> 3 2 frog bird</a></li>
-<li class="chapter" data-level="2.16" data-path="prerequisites.html"><a href="prerequisites.html#bear-bat-1"><i class="fa fa-check"></i><b>2.16</b> 4 8 bear bat</a></li>
-<li class="chapter" data-level="2.17" data-path="prerequisites.html"><a href="prerequisites.html#number-animal"><i class="fa fa-check"></i><b>2.17</b> number animal</a></li>
-<li class="chapter" data-level="2.18" data-path="prerequisites.html"><a href="prerequisites.html#bird"><i class="fa fa-check"></i><b>2.18</b> 1 1 bird</a></li>
-<li class="chapter" data-level="2.19" data-path="prerequisites.html"><a href="prerequisites.html#bird-2"><i class="fa fa-check"></i><b>2.19</b> 2 4 bird</a></li>
-<li class="chapter" data-level="2.20" data-path="prerequisites.html"><a href="prerequisites.html#bird-3"><i class="fa fa-check"></i><b>2.20</b> 3 2 bird</a></li>
-<li class="chapter" data-level="2.21" data-path="prerequisites.html"><a href="prerequisites.html#bird-4"><i class="fa fa-check"></i><b>2.21</b> 4 8 bird</a></li>
-<li class="chapter" data-level="2.22" data-path="prerequisites.html"><a href="prerequisites.html#bat"><i class="fa fa-check"></i><b>2.22</b> 5 1 bat</a></li>
-<li class="chapter" data-level="2.23" data-path="prerequisites.html"><a href="prerequisites.html#bat-1"><i class="fa fa-check"></i><b>2.23</b> 6 4 bat</a></li>
-<li class="chapter" data-level="2.24" data-path="prerequisites.html"><a href="prerequisites.html#bat-2"><i class="fa fa-check"></i><b>2.24</b> 7 2 bat</a></li>
-<li class="chapter" data-level="2.25" data-path="prerequisites.html"><a href="prerequisites.html#bat-3"><i class="fa fa-check"></i><b>2.25</b> 8 8 bat</a></li>
-<li class="chapter" data-level="2.26" data-path="prerequisites.html"><a href="prerequisites.html#frog"><i class="fa fa-check"></i><b>2.26</b> 9 1 frog</a></li>
-<li class="chapter" data-level="2.27" data-path="prerequisites.html"><a href="prerequisites.html#frog-1"><i class="fa fa-check"></i><b>2.27</b> 10 4 frog</a></li>
-<li class="chapter" data-level="2.28" data-path="prerequisites.html"><a href="prerequisites.html#frog-2"><i class="fa fa-check"></i><b>2.28</b> 11 2 frog</a></li>
-<li class="chapter" data-level="2.29" data-path="prerequisites.html"><a href="prerequisites.html#frog-3"><i class="fa fa-check"></i><b>2.29</b> 12 8 frog</a></li>
-<li class="chapter" data-level="2.30" data-path="prerequisites.html"><a href="prerequisites.html#bear"><i class="fa fa-check"></i><b>2.30</b> 13 1 bear</a></li>
-<li class="chapter" data-level="2.31" data-path="prerequisites.html"><a href="prerequisites.html#bear-1"><i class="fa fa-check"></i><b>2.31</b> 14 4 bear</a></li>
-<li class="chapter" data-level="2.32" data-path="prerequisites.html"><a href="prerequisites.html#bear-2"><i class="fa fa-check"></i><b>2.32</b> 15 2 bear</a></li>
-<li class="chapter" data-level="2.33" data-path="prerequisites.html"><a href="prerequisites.html#bear-3"><i class="fa fa-check"></i><b>2.33</b> 16 8 bear</a></li>
-<li class="chapter" data-level="2.34" data-path="prerequisites.html"><a href="prerequisites.html#section-1"><i class="fa fa-check"></i><b>2.34</b> [1] 4 8</a></li>
-<li class="chapter" data-level="2.35" data-path="prerequisites.html"><a href="prerequisites.html#number-animal-1"><i class="fa fa-check"></i><b>2.35</b> number animal</a></li>
-<li class="chapter" data-level="2.36" data-path="prerequisites.html"><a href="prerequisites.html#bat-5"><i class="fa fa-check"></i><b>2.36</b> 5 1 bat</a></li>
-<li class="chapter" data-level="2.37" data-path="prerequisites.html"><a href="prerequisites.html#bat-6"><i class="fa fa-check"></i><b>2.37</b> 6 4 bat</a></li>
-<li class="chapter" data-level="2.38" data-path="prerequisites.html"><a href="prerequisites.html#bat-7"><i class="fa fa-check"></i><b>2.38</b> 7 2 bat</a></li>
-<li class="chapter" data-level="2.39" data-path="prerequisites.html"><a href="prerequisites.html#bat-8"><i class="fa fa-check"></i><b>2.39</b> 8 8 bat</a></li>
-<li class="chapter" data-level="2.40" data-path="prerequisites.html"><a href="prerequisites.html#brood-ring-implant-age-days-totcort"><i class="fa fa-check"></i><b>2.40</b> Brood Ring Implant Age days totCort</a></li>
-<li class="chapter" data-level="2.41" data-path="prerequisites.html"><a href="prerequisites.html#p-49-20-5.761"><i class="fa fa-check"></i><b>2.41</b> 1 301 898331 P 49 20 5.761</a></li>
-<li class="chapter" data-level="2.42" data-path="prerequisites.html"><a href="prerequisites.html#p-29-2-8.418"><i class="fa fa-check"></i><b>2.42</b> 2 301 898332 P 29 2 8.418</a></li>
-<li class="chapter" data-level="2.43" data-path="prerequisites.html"><a href="prerequisites.html#p-47-20-8.047"><i class="fa fa-check"></i><b>2.43</b> 3 301 898332 P 47 20 8.047</a></li>
-<li class="chapter" data-level="2.44" data-path="prerequisites.html"><a href="prerequisites.html#c-25-2-25.744"><i class="fa fa-check"></i><b>2.44</b> 4 301 898333 C 25 2 25.744</a></li>
-<li class="chapter" data-level="2.45" data-path="prerequisites.html"><a href="prerequisites.html#p-57-20-8.041"><i class="fa fa-check"></i><b>2.45</b> 5 302 898185 P 57 20 8.041</a></li>
-<li class="chapter" data-level="2.46" data-path="prerequisites.html"><a href="prerequisites.html#c-28-before-6.338"><i class="fa fa-check"></i><b>2.46</b> 6 302 898188 C 28 before 6.338</a></li>
-<li class="chapter" data-level="2.47" data-path="prerequisites.html"><a href="prerequisites.html#data.frame-287-obs.-of-6-variables"><i class="fa fa-check"></i><b>2.47</b> ‘data.frame’: 287 obs. of 6 variables:</a></li>
-<li class="chapter" data-level="2.48" data-path="prerequisites.html"><a href="prerequisites.html#brood-factor-w-54-levels-231232233..-7-7-7-7-8-8-9-9-10-10"><i class="fa fa-check"></i><b>2.48</b> $ Brood : Factor w/ 54 levels “231”,“232”,“233”,..: 7 7 7 7 8 8 9 9 10 10 …</a></li>
-<li class="chapter" data-level="2.49" data-path="prerequisites.html"><a href="prerequisites.html#ring-factor-w-151-levels-898054898055..-44-45-45-46-31-32-9-9-18-19"><i class="fa fa-check"></i><b>2.49</b> $ Ring : Factor w/ 151 levels “898054”,“898055”,..: 44 45 45 46 31 32 9 9 18 19 …</a></li>
-<li class="chapter" data-level="2.50" data-path="prerequisites.html"><a href="prerequisites.html#implant-factor-w-2-levels-cp-2-2-2-1-2-1-1-1-2-1"><i class="fa fa-check"></i><b>2.50</b> $ Implant: Factor w/ 2 levels “C”,“P”: 2 2 2 1 2 1 1 1 2 1 …</a></li>
-<li class="chapter" data-level="2.51" data-path="prerequisites.html"><a href="prerequisites.html#age-int-49-29-47-25-57-28-35-53-35-31"><i class="fa fa-check"></i><b>2.51</b> $ Age : int 49 29 47 25 57 28 35 53 35 31 …</a></li>
-<li class="chapter" data-level="2.52" data-path="prerequisites.html"><a href="prerequisites.html#days-factor-w-3-levels-220before-2-1-2-1-2-3-1-2-1-1"><i class="fa fa-check"></i><b>2.52</b> $ days : Factor w/ 3 levels “2”,“20”,“before”: 2 1 2 1 2 3 1 2 1 1 …</a></li>
-<li class="chapter" data-level="2.53" data-path="prerequisites.html"><a href="prerequisites.html#totcort-num-5.76-8.42-8.05-25.74-8.04"><i class="fa fa-check"></i><b>2.53</b> $ totCort: num 5.76 8.42 8.05 25.74 8.04 …</a><ul>
-<li class="chapter" data-level="2.53.1" data-path="prerequisites.html"><a href="prerequisites.html#distributions-and-summary-statistics"><i class="fa fa-check"></i><b>2.53.1</b> Distributions and Summary Statistics</a></li>
-<li class="chapter" data-level="2.53.2" data-path="prerequisites.html"><a href="prerequisites.html#more-on-r-objects"><i class="fa fa-check"></i><b>2.53.2</b> More on R Objects</a></li>
-</ul></li>
-<li class="chapter" data-level="2.54" data-path="prerequisites.html"><a href="prerequisites.html#observer-ben"><i class="fa fa-check"></i><b>2.54</b> , , observer = Ben</a></li>
-<li class="chapter" data-level="2.55" data-path="prerequisites.html"><a href="prerequisites.html#section-2"><i class="fa fa-check"></i><b>2.55</b> </a></li>
-<li class="chapter" data-level="2.56" data-path="prerequisites.html"><a href="prerequisites.html#year"><i class="fa fa-check"></i><b>2.56</b> year</a></li>
-<li class="chapter" data-level="2.57" data-path="prerequisites.html"><a href="prerequisites.html#site-2010-2011-2012-2013-2014"><i class="fa fa-check"></i><b>2.57</b> site 2010 2011 2012 2013 2014</a></li>
-<li class="chapter" data-level="2.58" data-path="prerequisites.html"><a href="prerequisites.html#site1-11-11-12-9-11"><i class="fa fa-check"></i><b>2.58</b> Site1 11 11 12 9 11</a></li>
-<li class="chapter" data-level="2.59" data-path="prerequisites.html"><a href="prerequisites.html#site2-10-10-14-15-7"><i class="fa fa-check"></i><b>2.59</b> Site2 10 10 14 15 7</a></li>
-<li class="chapter" data-level="2.60" data-path="prerequisites.html"><a href="prerequisites.html#section-3"><i class="fa fa-check"></i><b>2.60</b> </a></li>
-<li class="chapter" data-level="2.61" data-path="prerequisites.html"><a href="prerequisites.html#observer-sue"><i class="fa fa-check"></i><b>2.61</b> , , observer = Sue</a></li>
-<li class="chapter" data-level="2.62" data-path="prerequisites.html"><a href="prerequisites.html#section-4"><i class="fa fa-check"></i><b>2.62</b> </a></li>
-<li class="chapter" data-level="2.63" data-path="prerequisites.html"><a href="prerequisites.html#year-1"><i class="fa fa-check"></i><b>2.63</b> year</a></li>
-<li class="chapter" data-level="2.64" data-path="prerequisites.html"><a href="prerequisites.html#site-2010-2011-2012-2013-2014-1"><i class="fa fa-check"></i><b>2.64</b> site 2010 2011 2012 2013 2014</a></li>
-<li class="chapter" data-level="2.65" data-path="prerequisites.html"><a href="prerequisites.html#site1-14-5-9-12-5"><i class="fa fa-check"></i><b>2.65</b> Site1 14 5 9 12 5</a></li>
-<li class="chapter" data-level="2.66" data-path="prerequisites.html"><a href="prerequisites.html#site2-16-8-9-8-10"><i class="fa fa-check"></i><b>2.66</b> Site2 16 8 9 8 10</a></li>
-<li class="chapter" data-level="2.67" data-path="prerequisites.html"><a href="prerequisites.html#section-5"><i class="fa fa-check"></i><b>2.67</b> </a></li>
-<li class="chapter" data-level="2.68" data-path="prerequisites.html"><a href="prerequisites.html#observer-emma"><i class="fa fa-check"></i><b>2.68</b> , , observer = Emma</a></li>
-<li class="chapter" data-level="2.69" data-path="prerequisites.html"><a href="prerequisites.html#section-6"><i class="fa fa-check"></i><b>2.69</b> </a></li>
-<li class="chapter" data-level="2.70" data-path="prerequisites.html"><a href="prerequisites.html#year-2"><i class="fa fa-check"></i><b>2.70</b> year</a></li>
-<li class="chapter" data-level="2.71" data-path="prerequisites.html"><a href="prerequisites.html#site-2010-2011-2012-2013-2014-2"><i class="fa fa-check"></i><b>2.71</b> site 2010 2011 2012 2013 2014</a></li>
-<li class="chapter" data-level="2.72" data-path="prerequisites.html"><a href="prerequisites.html#site1-12-19-8-8-7"><i class="fa fa-check"></i><b>2.72</b> Site1 12 19 8 8 7</a></li>
-<li class="chapter" data-level="2.73" data-path="prerequisites.html"><a href="prerequisites.html#site2-10-13-9-8-11"><i class="fa fa-check"></i><b>2.73</b> Site2 10 13 9 8 11</a></li>
-<li class="chapter" data-level="2.74" data-path="prerequisites.html"><a href="prerequisites.html#ben-sue-emma"><i class="fa fa-check"></i><b>2.74</b> Ben Sue Emma</a></li>
-<li class="chapter" data-level="2.75" data-path="prerequisites.html"><a href="prerequisites.html#section-7"><i class="fa fa-check"></i><b>2.75</b> 110 96 105</a></li>
-<li class="chapter" data-level="2.76" data-path="prerequisites.html"><a href="prerequisites.html#year-3"><i class="fa fa-check"></i><b>2.76</b> year</a></li>
-<li class="chapter" data-level="2.77" data-path="prerequisites.html"><a href="prerequisites.html#site-2010-2011-2012-2013-2014-3"><i class="fa fa-check"></i><b>2.77</b> site 2010 2011 2012 2013 2014</a></li>
-<li class="chapter" data-level="2.78" data-path="prerequisites.html"><a href="prerequisites.html#site1-12.33333-11.66667-9.666667-9.666667-7.666667"><i class="fa fa-check"></i><b>2.78</b> Site1 12.33333 11.66667 9.666667 9.666667 7.666667</a></li>
-<li class="chapter" data-level="2.79" data-path="prerequisites.html"><a href="prerequisites.html#site2-12.00000-10.33333-10.666667-10.333333-9.333333"><i class="fa fa-check"></i><b>2.79</b> Site2 12.00000 10.33333 10.666667 10.333333 9.333333</a><ul>
-<li class="chapter" data-level="2.79.1" data-path="prerequisites.html"><a href="prerequisites.html#r-functions-for-graphics"><i class="fa fa-check"></i><b>2.79.1</b> R Functions for Graphics</a></li>
-<li class="chapter" data-level="2.79.2" data-path="prerequisites.html"><a href="prerequisites.html#writing-our-own-r-functions"><i class="fa fa-check"></i><b>2.79.2</b> Writing Our Own R Functions</a></li>
-</ul></li>
-<li class="chapter" data-level="2.80" data-path="prerequisites.html"><a href="prerequisites.html#section-8"><i class="fa fa-check"></i><b>2.80</b> [1] 1.994971</a></li>
-<li class="chapter" data-level="2.81" data-path="prerequisites.html"><a href="prerequisites.html#na"><i class="fa fa-check"></i><b>2.81</b> [1] NA</a></li>
-<li class="chapter" data-level="2.82" data-path="prerequisites.html"><a href="prerequisites.html#na-1"><i class="fa fa-check"></i><b>2.82</b> [1] NA</a></li>
-<li class="chapter" data-level="2.83" data-path="prerequisites.html"><a href="prerequisites.html#section-9"><i class="fa fa-check"></i><b>2.83</b> [1] 1.994971</a></li>
 <li class="chapter" data-level="" data-path="prerequisites.html"><a href="prerequisites.html#further-reading-1"><i class="fa fa-check"></i>FURTHER READING</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>3</b> The Bayesian and the Frequentist Ways of Analyzing Data</a><ul>
@@ -401,10 +318,11 @@ gitbook.start({
 "facebook": false,
 "twitter": false,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -428,9 +346,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
