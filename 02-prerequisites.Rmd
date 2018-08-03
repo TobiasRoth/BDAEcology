@@ -1,5 +1,9 @@
 # Prerequisites and Vocabulary {#prerequisites}
 
+Notation: It is unavoidable that different authors use different notations for the same thing, or that the same notation is used for different things. We try to use, whenever possible, notations that is commonly used at the [International Statistical Ecology Congress ISEC](https://www......)
+
+
+below copied from book:
 
 ## SOFTWARE
 In most chapters of this book we work with the [statistical software R](https://www.r-project.org). R is a very powerful tool for statistics and graphics in general. However, it is limited with regard to Bayesian methods applied to more complex models. In Part II of the book (Chapters 12--15), we therefore use [Open BUGS](http://www.openbugs.net/) [@Spiegelhalter2003] and Stan (Stan Development Team, 2014), using specific interfaces to operate them from within R. OpenBUGS and Stan are introduced in Chapter \@ref(mcmc). Here, we briefly introduce R.
