@@ -1,14 +1,12 @@
-# Prerequisites and Vocabulary {#prerequisites}
+# Introduction to statistical thinking and working with R {#prerequisites}
 
-Notation: It is unavoidable that different authors use different notations for the same thing, or that the same notation is used for different things. We try to use, whenever possible, notations that is commonly used at the [International Statistical Ecology Congress ISEC](https://www......)
+## Notations
+It is unavoidable that different authors use different notations for the same thing, or that the same notation is used for different things. We try to use, whenever possible, notations that is commonly used at the [International Statistical Ecology Congress ISEC](https://http://www.isec2018.org/home). Resulting from an earlier ISEC, @Thomson.2009d give guidelines on what letter should be used for which parameter in order to achieve a standard notation at least among people working with classical mark-recapture models. However, the alphabet has fewer letters compared to the number of ecological parameters. Therefore, the same letter cannot stand for the same parameter across all papers, books and chapters. Here, we try to use the same letter for the same parameter within the same chapter. 
 
 
-below copied from book:
+ab hier ist book copy
 
-## SOFTWARE
-In most chapters of this book we work with the [statistical software R](https://www.r-project.org). R is a very powerful tool for statistics and graphics in general. However, it is limited with regard to Bayesian methods applied to more complex models. In Part II of the book (Chapters 12--15), we therefore use [Open BUGS](http://www.openbugs.net/) [@Spiegelhalter2003] and Stan (Stan Development Team, 2014), using specific interfaces to operate them from within R. OpenBUGS and Stan are introduced in Chapter \@ref(mcmc). Here, we briefly introduce R.
-
-### What Is R?
+## Start with R
 R is a software environment for statistics and graphics that is free in two ways: [free to download](https://www.r-project.org) and free source code. The first version of R was written by Robert Gentleman and Ross Ihaka of the University of Auckland (note that both names begin with "R"). Since 1997, R has been governed by a core group of [R contributors](https://www.r-project.org/contributors.html). R is a descendant of the commercial S language and environment that was developed at Bell Laboratories by John Chambers and colleagues. Most code written for S runs in R, too. It is an asset of R that, along with statistical analyses, well-designed publication-quality graphics can be pro- duced. R runs on all operating systems (UNIX, Linux, Mac, Windows).
 
 R is different from many statistical software packages that work with menus. R is a programming language or, in fact, a programming environment. This means that we need to write down our commands in the form of R code. While this may need a bit of effort in the beginning, we will soon be able to reap the first fruits. Writing code enforces us to know what we are doing and why we are doing it, and enables us to learn about statistics and the R language rapidly. And because we save the R code of our analyses, they are easily reproduced, comprehensible for colleagues (especially if the code is furnished with comments), or easily adapted and extended to a similar new analysis. Due to its flexibility, R also allows us to write our own functions and to make them available for other users by sharing R code or, even better, by compiling them in an R package. R packages are extensions of the slim basic R distribution, which is supplied with only about eight packages, and typically contain R functions and sometimes also data sets. A steadily increasing number of packages are available from the network of CRAN mirror sites (currently over 5000), accessible at www.r-project.org.
@@ -22,23 +20,21 @@ We can easily install additional packages by using the function `install.package
 
 Each R function has documentation describing what the function does and how it is used. If the package containing a function is loaded in the current R session, we can open the documentation using `?`. Typing `?mean` into the R console will open the documentation for the function mean (arithmetic mean). If we are looking for a specific function, we can use the function `help.search` to search for functions within all installed packages. Typing `help. search("linear model")`, will open a list of functions dealing with linear models (together with the package containing them). For example, `stats::lm` suggests the function lm from the package stats. Shorter, but equivalent to `help.search("linear model")` is `??"linear model"`. Alternatively, R’s online documentation can also be accessed with `help.start()`. Functions/packages that are not installed yet can be found using the specific search menu on www.r-project.org. Once familiar with using the R help and searching the internet efficiently for R-related topics, we can independently broaden our knowledge about R.
 
-Note that whenever we show R code in this book, the code is printed in `this font`. Comments, which are preceded by a hash sign, #, and are therefore not executed by R, are printed in gray R output is printed in blue font.
-
 
 ## IMPORTANT STATISTICAL TERMS AND HOW TO HANDLE THEM IN R
 
 ### Data Sets, Variables, and Observations
 Data are always collected on a sample of objects (e.g., animals, plants, or plots). An observation refers to the smallest observational or experimental unit. In fact, this can also be a smaller unit, such as the wing of a bird, a leaf of a plant, or a subplot. Data are collected with regard to certain characteristics (e.g., age, sex, size, weight, level of blood parameters), all of which are called variables. A collection of data, a so-called “data set,” can consist of one or many variables. The term *variable* illustrates that these characteristics vary between the observations.
 
-Variables can be classified in several ways, for instance, by the scale of measurement. We distinguish between nominal, ordinal, and numeric variables (see \@ref(tab:scales)). Nominal and ordinal variables can be summarized as cate- gorical variables. Numeric variables can be further classified as discrete or continuous. Moreover, note that categorical variables are often called factors and numeric variables are often called covariates.
+Variables can be classified in several ways, for instance, by the scale of measurement. We distinguish between nominal, ordinal, and numeric variables (see \@ref(tab:scales)). Nominal and ordinal variables can be summarized as categorical variables. Numeric variables can be further classified as discrete or continuous. Moreover, note that categorical variables are often called factors and numeric variables are often called covariates.
 
 Table: (\#tab:scales) Scales of Measurement 
 
-Scale   | Examples                 | Properties      | Typical coding in R | 
-:-------|:------------------------:|:---------------:|:-------------------:|
-Nominal | Sex, genotype, habitat   | Identity (values have a unique meaning) | `factor()` |
+Scale   | Examples                | Properties    | Typical coding in R | 
+:-------|:------------------------|:---------------|:--------------------|
+Nominal | Sex, genotype, habitat  | Identity (values have a unique meaning) | `factor()` |
 Ordinal | Altitudinal zones (e.g., foothill, montane, subalpine, alpine zone) | Identity and magnitude (values have an ordered relationship, some values are larger and some are smaller) | `ordered()` |
-Numeric | Discrete: counts; continuous: body weight, wing length, speed | Identity, magnitude, and equal intervals (units along the scale are equal to each other) and possibly a minimum value of zero (ratios are interpretable) | `intgeger()`; numeric() |
+Numeric | Discrete: counts; continuous: body weight, wing length, speed | Identity, magnitude, and equal intervals (units along the scale are equal to each other) and possibly a minimum value of zero (ratios are interpretable) | `intgeger()`; `numeric()` |
 
 Now let us look at ways to store and handle data in R. A simple, but probably the most important, data structure is a vector. It is a collection of ordered elements of the same type. We can use the function c to combine these elements, which are automatically coerced to a common type. The type of elements determines the type of the vector. Vectors can (among other things) be used to represent variables. Here are some examples:
 
