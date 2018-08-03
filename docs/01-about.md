@@ -1,9 +1,4 @@
 
-todos:
-- references mit bib verknüpfen
-- further reading fertigstellen
-- titelseite? mit autorenliste und acknowledgements?
-
 # What is this dynamic e-book about? {#about}
 
 
@@ -13,13 +8,12 @@ With this e-book, we open the possibility to add new or substantially revised ma
 It is open so that everybody with a GitHub account can make comments and suggestions for improvement. We are looking forward to your contribution!
 
 ## What is the content of this dynamic e-book?
-We do not copy text from the book into the e-book. Therefore, we refer to the book [@KornerNievergelt.2015b] for reading about the basic theory on doing Bayesian data analyses using liner models. However, chapters 1 to 17 correspond to the book chapters. In each chapter, we may provide updated R-codes and/or additional material. The following chapters contain completely new material that we think may be useful for ecologists. 
+We do not copy text from the book into the e-book. Therefore, we refer to the book [@KornerNievergelt.2015b] for reading about the basic theory on doing Bayesian data analyses using linear models. However, Chapters 1 to 17 of this dynamic e-book correspond to the book chapters. In each chapter, we may provide updated R-codes and/or additional material. The following chapters contain completely new material that we think may be useful for ecologists. 
 
 
 ## Further reading in Bayesian data analysis  {-} 
-Eldredge "Statistical rethinking" introduces the Bayes theorem and the bases in statistics in a very understandable and insightful way. 
-Hastie's Bayes Book....
+A really good introductory book to Bayesian data analyses is [@McElreath.2016]. This book starts with a thorough introduction to applying the Bayes theorem for drawing inference from data. In addition, it carefully discusses what can and what cannot be concluded from statistical results. We like this very much.
 
-Gelman and Hill (2007) teach Bayesian data analysis using linear models in a very creative way, with examples from the social and political sciences. Kruschke (2011) gives a thorough and very understandable introduction to Bayesian data analysis. McCarthy (2007) concisely introduces Bayesian methods using WinBUGS. Kéry (2010) gives an introduction to linear models using Bayesian methods with WinBUGS. Stauffer (2008) works practically through common research problems in the life sciences using Bayesian methods.
+We like looking up statistical methods in papers and books written by Andrew Gelman (e.g. [@Gelman.2014]) and Trevor Hastie (e.g. [@Hastie.2009, @Efron.2016]) because both explain complicated things in a concise and understandable way.  
 
-Faraway (2005, 2006) and Fox and Weisberg (2011) provide applied introductions to linear models using frequentist methods in R. Note that there is an extensive erratum to Faraway (2006) on the web. Zuur et al. (2009, 2012) are practical and understandable introductions to linear models in R with a particular focus on complex real ecological data problems such as nonindependent data. Zuur et al. (2012) also introduce Bayesian methods. A more theoretical approach, including R code, is Aitkin et al. (2009). We can also recommend the chapters introducing generalized linear models in Wood (2006).
+For further reading recommendations, see [@KornerNievergelt.2015b].
