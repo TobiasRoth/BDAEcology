@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="about.html">
-<link rel="next" href="distributions.html">
+<link rel="prev" href="basics.html">
+<link rel="next" href="priors.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -150,14 +150,29 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="basics" class="section level1">
-<h1><span class="header-section-number">2</span> Introduction to statistical thinking and working with R</h1>
-<div id="notations" class="section level2">
-<h2><span class="header-section-number">2.1</span> Notations</h2>
-<p>It is unavoidable that different authors use different notations for the same thing, or that the same notation is used for different things. We try to use, whenever possible, notations that is commonly used at the <a href="https://http://www.isec2018.org/home">International Statistical Ecology Congress ISEC</a>. Resulting from an earlier ISEC, <span class="citation">Thomson et al. (<a href="referenzen.html#ref-Thomson.2009d">2009</a>)</span> give guidelines on what letter should be used for which parameter in order to achieve a standard notation at least among people working with classical mark-recapture models. However, the alphabet has fewer letters compared to the number of ecological parameters. Therefore, the same letter cannot stand for the same parameter across all papers, books and chapters. Here, we try to use the same letter for the same parameter within the same chapter.</p>
-<blockquote>
-<p>hier kommt eine Bemerkung</p>
-</blockquote>
+<div id="distributions" class="section level1">
+<h1><span class="header-section-number">3</span> Probability distributions</h1>
+<div id="introduction" class="section level2">
+<h2><span class="header-section-number">3.1</span> Introduction</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">rnorm</span>(<span class="dv">1000</span>))</code></pre></div>
+<div class="figure"><span id="fig:test"></span>
+<img src="03-distributions_files/figure-html/test-1.png" alt="Das ist ein Versuch." width="768" />
+<p class="caption">
+Figure 3.1: Das ist ein Versuch.
+</p>
+</div>
+</div>
+<div id="normal-distribution" class="section level2">
+<h2><span class="header-section-number">3.2</span> Normal distribution</h2>
+<p>xxx</p>
+</div>
+<div id="poisson-distribution" class="section level2">
+<h2><span class="header-section-number">3.3</span> Poisson distribution</h2>
+<p>xxx</p>
+</div>
+<div id="gamma-distribution" class="section level2">
+<h2><span class="header-section-number">3.4</span> Gamma distribution</h2>
+<p>xxx</p>
 
 </div>
 </div>
@@ -166,8 +181,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="about.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="distributions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="basics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="priors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -197,7 +212,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/02-basics.Rmd",
+"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/03-distributions.Rmd",
 "text": "Edit"
 },
 "download": null,

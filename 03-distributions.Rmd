@@ -1,0 +1,19 @@
+# Probability distributions {#distributions}
+
+## Introduction
+
+```{r test, fig.cap="Das ist ein Versuch."}
+hist(rnorm(1000))
+```
+
+
+## Normal distribution
+xxx
+
+## Poisson distribution
+xxx
+
+## Gamma distribution
+xxx
+
+

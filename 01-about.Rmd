@@ -18,3 +18,5 @@ A really good introductory book to Bayesian data analyses is [@McElreath.2016]. 
 We like looking up statistical methods in papers and books written by Andrew Gelman (e.g. [@Gelman.2014]) and Trevor Hastie (e.g. [@Hastie.2009, @Efron.2016]) because both explain complicated things in a concise and understandable way.  
 
 For further reading recommendations, see [@KornerNievergelt.2015b].
+
+Siehe auch Fig. \@ref(fig:test). 
