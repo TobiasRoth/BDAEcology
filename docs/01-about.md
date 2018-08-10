@@ -4,7 +4,9 @@
 
 ## Why did we start this dynamic e-book?
 In 2015, we wrote a statistics book for Master/PhD level Bayesian data analyses in ecology [@KornerNievergelt.2015b]. People seemed to like it (e.g. [@Harju.2016]). Since then, two parallel processes happen. First, we learn more and we become more confident in what we do, or what we do not, and why we do what we do. Second, several really clever people develop software that broaden the spectrum of ecological models that now easily can be applied by ecologists used to work with R.  
+
 With this e-book, we open the possibility to add new or substantially revised material. In most of the time, it should be in a state that it can be printed and used together with the book as handout for our stats courses. 
+
 It is open so that everybody with a GitHub account can make comments and suggestions for improvement. We are looking forward to your contribution!
 
 ## What is the content of this dynamic e-book?
