@@ -1,10 +1,11 @@
 
 # Introduction to statistical thinking and working with R {#prerequisites}
 
-## Notation
+## Notations
 It is unavoidable that different authors use different notations for the same thing, or that the same notation is used for different things. We try to use, whenever possible, notations that is commonly used at the [International Statistical Ecology Congress ISEC](https://http://www.isec2018.org/home). Resulting from an earlier ISEC, @Thomson.2009d give guidelines on what letter should be used for which parameter in order to achieve a standard notation at least among people working with classical mark-recapture models. However, the alphabet has fewer letters compared to the number of ecological parameters. Therefore, the same letter cannot stand for the same parameter across all papers, books and chapters. Here, we try to use the same letter for the same parameter within the same chapter. 
 
 
+ab hier ist book copy
 
 ## Start with R
 R is a software environment for statistics and graphics that is free in two ways: [free to download](https://www.r-project.org) and free source code. The first version of R was written by Robert Gentleman and Ross Ihaka of the University of Auckland (note that both names begin with "R"). Since 1997, R has been governed by a core group of [R contributors](https://www.r-project.org/contributors.html). R is a descendant of the commercial S language and environment that was developed at Bell Laboratories by John Chambers and colleagues. Most code written for S runs in R, too. It is an asset of R that, along with statistical analyses, well-designed publication-quality graphics can be pro- duced. R runs on all operating systems (UNIX, Linux, Mac, Windows).
@@ -34,7 +35,7 @@ Scale   | Examples                | Properties    | Typical coding in R |
 :-------|:------------------------|:---------------|:--------------------|
 Nominal | Sex, genotype, habitat  | Identity (values have a unique meaning) | `factor()` |
 Ordinal | Altitudinal zones (e.g., foothill, montane, subalpine, alpine zone) | Identity and magnitude (values have an ordered relationship, some values are larger and some are smaller) | `ordered()` |
-Numeric | Discrete: counts; continuous: body weight, wing length, speed | Identity, magnitude, and equal intervals (units along the scale are equal to each other) and possibly a minimum value of zero (ratios are interpretable) | `intgeger()`; numeric() |
+Numeric | Discrete: counts; continuous: body weight, wing length, speed | Identity, magnitude, and equal intervals (units along the scale are equal to each other) and possibly a minimum value of zero (ratios are interpretable) | `intgeger()`; `numeric()` |
 
 Now let us look at ways to store and handle data in R. A simple, but probably the most important, data structure is a vector. It is a collection of ordered elements of the same type. We can use the function c to combine these elements, which are automatically coerced to a common type. The type of elements determines the type of the vector. Vectors can (among other things) be used to represent variables. Here are some examples:
 
@@ -331,8 +332,8 @@ points(totCort ~ Age, data = cortbowl[cortbowl$Implant == "C",], pch = 20)
 ```
 
 <div class="figure">
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-12-1.png" alt="*Left:* Boxplot of blood corticosterone measurements (totCort) for corticosterone (C) and placebo (P) treated barn owl nestlings. Bold horizontal bar 1/4 median; box 1/4 interquartile range. The whiskers are drawn from the first or third quartile to the lowest or to the largest value within 1.5 times the interquartile range, respectively. Circles are observations beyond the whiskers. *Right:* Blood corticosterone measurements (totCort) in relation to age. Open symbols 1/4 placebo-treated nestlings, closed symbols 1/4 corticosterone-treated nestlings." width="768" />
-<p class="caption">(\#fig:unnamed-chunk-12)*Left:* Boxplot of blood corticosterone measurements (totCort) for corticosterone (C) and placebo (P) treated barn owl nestlings. Bold horizontal bar 1/4 median; box 1/4 interquartile range. The whiskers are drawn from the first or third quartile to the lowest or to the largest value within 1.5 times the interquartile range, respectively. Circles are observations beyond the whiskers. *Right:* Blood corticosterone measurements (totCort) in relation to age. Open symbols 1/4 placebo-treated nestlings, closed symbols 1/4 corticosterone-treated nestlings.</p>
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-12-1.png" alt="*Left:* Boxplot of blood corticosterone measurements (totCort) for corticosterone (C) and placebo (P) treated barn owl nestlings. Bold horizontal bar 1⁄4 median; box 1⁄4 interquartile range. The whiskers are drawn from the first or third quartile to the lowest or to the largest value within 1.5 times the interquartile range, respectively. Circles are observations beyond the whiskers. *Right:* Blood corticosterone measurements (totCort) in relation to age. Open symbols 1⁄4 placebo-treated nestlings, closed symbols 1⁄4 corticosterone-treated nestlings." width="768" />
+<p class="caption">(\#fig:unnamed-chunk-12)*Left:* Boxplot of blood corticosterone measurements (totCort) for corticosterone (C) and placebo (P) treated barn owl nestlings. Bold horizontal bar 1⁄4 median; box 1⁄4 interquartile range. The whiskers are drawn from the first or third quartile to the lowest or to the largest value within 1.5 times the interquartile range, respectively. Circles are observations beyond the whiskers. *Right:* Blood corticosterone measurements (totCort) in relation to age. Open symbols 1⁄4 placebo-treated nestlings, closed symbols 1⁄4 corticosterone-treated nestlings.</p>
 </div>
 
 

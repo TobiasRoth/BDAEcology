@@ -5,27 +5,27 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan</title>
-  <meta name="description" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN introduces Bayesian software, using R for the simple modes, and flexible Bayesian software (BUGS and Stan) for the more complicated ones. Guiding the ready from easy toward more complex (real) data analyses ina step-by-step manner, the book presents problems and solutions—including all R codes—that are most often applicable to other data and questions, making it an invaluable resource for analyzing a variety of data types.">
+  <title>Bayesian Data Analysis in Ecology with R, BUGS, and Stan</title>
+  <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN.">
   <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan" />
+  <meta property="og:title" content="Bayesian Data Analysis in Ecology with R, BUGS, and Stan" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/cover.jpg" />
-  <meta property="og:description" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN introduces Bayesian software, using R for the simple modes, and flexible Bayesian software (BUGS and Stan) for the more complicated ones. Guiding the ready from easy toward more complex (real) data analyses ina step-by-step manner, the book presents problems and solutions—including all R codes—that are most often applicable to other data and questions, making it an invaluable resource for analyzing a variety of data types." />
+  <meta property="og:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="github-repo" content="TobiasRoth/BDAEcology" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan" />
+  <meta name="twitter:title" content="Bayesian Data Analysis in Ecology with R, BUGS, and Stan" />
   
-  <meta name="twitter:description" content="Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN introduces Bayesian software, using R for the simple modes, and flexible Bayesian software (BUGS and Stan) for the more complicated ones. Guiding the ready from easy toward more complex (real) data analyses ina step-by-step manner, the book presents problems and solutions—including all R codes—that are most often applicable to other data and questions, making it an invaluable resource for analyzing a variety of data types." />
+  <meta name="twitter:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="twitter:image" content="images/cover.jpg" />
 
-<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jérôme Guéla, Bettina Almasi and Pius Korner-Nievergelt">
+<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jérôme Guélat, Bettina Almasi and Pius Korner-Nievergelt">
 
 
-<meta name="date" content="2018-04-24">
+<meta name="date" content="2018-08-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -87,7 +87,7 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
-<link rel="stylesheet" href="Settings\style.css" type="text/css" />
+<link rel="stylesheet" href="Settings/style.css" type="text/css" />
 </head>
 
 <body>
@@ -103,24 +103,24 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1</b> Why do we Need Statistical Models and What is this Book About?</a><ul>
-<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html#why-we-need-statistical-models"><i class="fa fa-check"></i><b>1.1</b> WHY WE NEED STATISTICAL MODELS</a></li>
-<li class="chapter" data-level="1.2" data-path="about.html"><a href="about.html#what-this-book-is-about"><i class="fa fa-check"></i><b>1.2</b> WHAT THIS BOOK IS ABOUT</a></li>
-<li class="chapter" data-level="" data-path="about.html"><a href="about.html#further-reading"><i class="fa fa-check"></i>FURTHER READING</a></li>
+<li class="chapter" data-level="1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1</b> What is this dynamic e-book about?</a><ul>
+<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html#why-did-we-start-this-dynamic-e-book"><i class="fa fa-check"></i><b>1.1</b> Why did we start this dynamic e-book?</a></li>
+<li class="chapter" data-level="1.2" data-path="about.html"><a href="about.html#what-is-the-content-of-this-dynamic-e-book"><i class="fa fa-check"></i><b>1.2</b> What is the content of this dynamic e-book?</a></li>
+<li class="chapter" data-level="" data-path="about.html"><a href="about.html#further-reading-in-bayesian-data-analysis"><i class="fa fa-check"></i>Further reading in Bayesian data analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i><b>2</b> Prerequisites and Vocabulary</a><ul>
-<li class="chapter" data-level="2.1" data-path="prerequisites.html"><a href="prerequisites.html#software"><i class="fa fa-check"></i><b>2.1</b> SOFTWARE</a><ul>
-<li class="chapter" data-level="2.1.1" data-path="prerequisites.html"><a href="prerequisites.html#what-is-r"><i class="fa fa-check"></i><b>2.1.1</b> What Is R?</a></li>
-<li class="chapter" data-level="2.1.2" data-path="prerequisites.html"><a href="prerequisites.html#working-with-r"><i class="fa fa-check"></i><b>2.1.2</b> Working with R</a></li>
+<li class="chapter" data-level="2" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i><b>2</b> Introduction to statistical thinking and working with R</a><ul>
+<li class="chapter" data-level="2.1" data-path="prerequisites.html"><a href="prerequisites.html#notations"><i class="fa fa-check"></i><b>2.1</b> Notations</a></li>
+<li class="chapter" data-level="2.2" data-path="prerequisites.html"><a href="prerequisites.html#start-with-r"><i class="fa fa-check"></i><b>2.2</b> Start with R</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="prerequisites.html"><a href="prerequisites.html#working-with-r"><i class="fa fa-check"></i><b>2.2.1</b> Working with R</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="prerequisites.html"><a href="prerequisites.html#important-statistical-terms-and-how-to-handle-them-in-r"><i class="fa fa-check"></i><b>2.2</b> IMPORTANT STATISTICAL TERMS AND HOW TO HANDLE THEM IN R</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="prerequisites.html"><a href="prerequisites.html#data-sets-variables-and-observations"><i class="fa fa-check"></i><b>2.2.1</b> Data Sets, Variables, and Observations</a></li>
-<li class="chapter" data-level="2.2.2" data-path="prerequisites.html"><a href="prerequisites.html#distributions-and-summary-statistics"><i class="fa fa-check"></i><b>2.2.2</b> Distributions and Summary Statistics</a></li>
-<li class="chapter" data-level="2.2.3" data-path="prerequisites.html"><a href="prerequisites.html#more-on-r-objects"><i class="fa fa-check"></i><b>2.2.3</b> More on R Objects</a></li>
-<li class="chapter" data-level="2.2.4" data-path="prerequisites.html"><a href="prerequisites.html#r-functions-for-graphics"><i class="fa fa-check"></i><b>2.2.4</b> R Functions for Graphics</a></li>
-<li class="chapter" data-level="2.2.5" data-path="prerequisites.html"><a href="prerequisites.html#writing-our-own-r-functions"><i class="fa fa-check"></i><b>2.2.5</b> Writing Our Own R Functions</a></li>
+<li class="chapter" data-level="2.3" data-path="prerequisites.html"><a href="prerequisites.html#important-statistical-terms-and-how-to-handle-them-in-r"><i class="fa fa-check"></i><b>2.3</b> IMPORTANT STATISTICAL TERMS AND HOW TO HANDLE THEM IN R</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="prerequisites.html"><a href="prerequisites.html#data-sets-variables-and-observations"><i class="fa fa-check"></i><b>2.3.1</b> Data Sets, Variables, and Observations</a></li>
+<li class="chapter" data-level="2.3.2" data-path="prerequisites.html"><a href="prerequisites.html#distributions-and-summary-statistics"><i class="fa fa-check"></i><b>2.3.2</b> Distributions and Summary Statistics</a></li>
+<li class="chapter" data-level="2.3.3" data-path="prerequisites.html"><a href="prerequisites.html#more-on-r-objects"><i class="fa fa-check"></i><b>2.3.3</b> More on R Objects</a></li>
+<li class="chapter" data-level="2.3.4" data-path="prerequisites.html"><a href="prerequisites.html#r-functions-for-graphics"><i class="fa fa-check"></i><b>2.3.4</b> R Functions for Graphics</a></li>
+<li class="chapter" data-level="2.3.5" data-path="prerequisites.html"><a href="prerequisites.html#writing-our-own-r-functions"><i class="fa fa-check"></i><b>2.3.5</b> Writing Our Own R Functions</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="prerequisites.html"><a href="prerequisites.html#further-reading-1"><i class="fa fa-check"></i>FURTHER READING</a></li>
+<li class="chapter" data-level="" data-path="prerequisites.html"><a href="prerequisites.html#further-reading"><i class="fa fa-check"></i>FURTHER READING</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>3</b> The Bayesian and the Frequentist Ways of Analyzing Data</a><ul>
 <li class="chapter" data-level="3.1" data-path="bayes.html"><a href="bayes.html#short-historical-overview"><i class="fa fa-check"></i><b>3.1</b> SHORT HISTORICAL OVERVIEW</a></li>
@@ -150,9 +150,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.1" data-path="glm.html"><a href="glm.html#background-2"><i class="fa fa-check"></i><b>8.1</b> BACKGROUND</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="glmm.html"><a href="glmm.html"><i class="fa fa-check"></i><b>9</b> Generalized Linear Mixed Models</a><ul>
-<li class="chapter" data-level="9.1" data-path="glmm.html"><a href="glmm.html#binomial-mixed-model"><i class="fa fa-check"></i><b>9.1</b> BINOMIAL MIXED MODEL</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="glmm.html"><a href="glmm.html#background-3"><i class="fa fa-check"></i><b>9.1.1</b> Background</a></li>
-</ul></li>
+<li class="chapter" data-level="9.1" data-path="glmm.html"><a href="glmm.html#overview-of-r-functions-fitting-glmms-and-their-options"><i class="fa fa-check"></i><b>9.1</b> Overview of R functions fitting GLMMs and their options:</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="predictivemodcheck.html"><a href="predictivemodcheck.html"><i class="fa fa-check"></i><b>10</b> Posterior Predictive Model Checking and Proportion of Explained Variance</a><ul>
 <li class="chapter" data-level="10.1" data-path="predictivemodcheck.html"><a href="predictivemodcheck.html#posterior-predictive-model-checking"><i class="fa fa-check"></i><b>10.1</b> POSTERIOR PREDICTIVE MODEL CHECKING</a><ul>
@@ -163,10 +161,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.1" data-path="moddelection.html"><a href="moddelection.html#when-and-why-we-select-models-and-why-this-is-difficult"><i class="fa fa-check"></i><b>11.1</b> WHEN AND WHY WE SELECT MODELS AND WHY THIS IS DIFFICULT</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="mcmc.html"><a href="mcmc.html"><i class="fa fa-check"></i><b>12</b> Markov Chain Monte Carlo Simulation</a><ul>
-<li class="chapter" data-level="12.1" data-path="mcmc.html"><a href="mcmc.html#background-4"><i class="fa fa-check"></i><b>12.1</b> BACKGROUND</a></li>
+<li class="chapter" data-level="12.1" data-path="mcmc.html"><a href="mcmc.html#background-3"><i class="fa fa-check"></i><b>12.1</b> BACKGROUND</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="spatial.html"><a href="spatial.html"><i class="fa fa-check"></i><b>13</b> Modeling Spatial Data Using GLMM</a><ul>
-<li class="chapter" data-level="13.1" data-path="spatial.html"><a href="spatial.html#background-5"><i class="fa fa-check"></i><b>13.1</b> BACKGROUND</a><ul>
+<li class="chapter" data-level="13.1" data-path="spatial.html"><a href="spatial.html#background-4"><i class="fa fa-check"></i><b>13.1</b> BACKGROUND</a><ul>
 <li class="chapter" data-level="13.1.1" data-path="spatial.html"><a href="spatial.html#why-mixed-effects-models-2"><i class="fa fa-check"></i><b>13.1.1</b> Why Mixed Effects Models?</a></li>
 </ul></li>
 </ul></li>
@@ -195,7 +193,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and Stan</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian Data Analysis in Ecology with R, BUGS, and Stan</a>
           </h1>
         </div>
 
@@ -207,8 +205,29 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1>Referenzen</h1>
 
 <div id="refs" class="references">
-<div id="ref-Spiegelhalter2003">
-<p>Spiegelhalter, David, Andrew Thomas, Nicky Best, and Dave Lunn. 2003. “WinBUGS User Manual.” version 3.2.3.</p>
+<div id="ref-Burkner.2017">
+<p>Bürkner, Paul-Christian. 2017. “Brms: An R Package for Bayesian Multilevel Models Using Stan.” <em>Journal of Statistical Software</em> 80: 1–28.</p>
+</div>
+<div id="ref-Efron.2016">
+<p>Efron, Bradley, and Trevor Hastie. 2016. <em>Computer Age Statistical Inference: Algorithms, Evidence, and Data Science</em>. Institute of Mathematical Statistics Monographs.</p>
+</div>
+<div id="ref-Gelman.2014">
+<p>Gelman, A., John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2014. <em>Bayesian Data Analysis</em>. Third. New York: CRC Press.</p>
+</div>
+<div id="ref-Harju.2016">
+<p>Harju, Seth. 2016. “Book Review: Bayesian Data Analysis in Ecology Using Linear Models with R, Bugs, and Stan.” <em>The Journal of Wildlife Management</em> 80: 771.</p>
+</div>
+<div id="ref-Hastie.2009">
+<p>Hastie, T., R. Tibshirani, and J. Friedman. 2009. <em>The Elements of Statistical Learning, Data Mining, Inference, and Prediction</em>. New York: Springer.</p>
+</div>
+<div id="ref-KornerNievergelt.2015b">
+<p>Korner-Nievergelt, F., T. Roth, Stefanie von Felten, J. Guélat, B. Almasi, and P. Korner-Nievergelt. 2015. <em>Bayesian Data Analysis in Ecolog Using Linear Models with R, Bugs, and Stan</em>. New York: Elsevier.</p>
+</div>
+<div id="ref-McElreath.2016">
+<p>McElreath, Richard. 2016. <em>Statistical Rethinking: A Bayesian Course with Examples in R and Stan</em>. New York: Max Planck Institute for Evolutionary Anthropology; CRC Press.</p>
+</div>
+<div id="ref-Thomson.2009d">
+<p>Thomson, D. L., M. J. Conroy, D. R. Anderson, K. P. Burnham, E. G. Cooch, C. M. Francis, J.-D. Lebreton, et al. 2009. “Standardising Terminology and Notation for the Analysis of Demographic Processes in Marked Populations.” In <em>Modeling Demographic Processes in Marked Populations</em>, edited by D. L. Thomson, E. G. Cooch, and M. J. Conroy, 1099–1106. Environmental and Ecological Statistics 3. Berlin: Springer.</p>
 </div>
 </div>
 </div>
