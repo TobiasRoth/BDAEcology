@@ -110,6 +110,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Introduction to statistical thinking and working with R</a><ul>
 <li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#notations"><i class="fa fa-check"></i><b>2.1</b> Notations</a></li>
+<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#data-handling"><i class="fa fa-check"></i><b>2.2</b> Data handling</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>3</b> Probability distributions</a><ul>
 <li class="chapter" data-level="3.1" data-path="distributions.html"><a href="distributions.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
@@ -158,6 +159,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <blockquote>
 <p>hier kommt eine Bemerkung</p>
 </blockquote>
+</div>
+<div id="data-handling" class="section level2">
+<h2><span class="header-section-number">2.2</span> Data handling</h2>
+<p>Alle Packete laden <code>library(tidyverse)</code> oder nur <code>library(tidyverse)</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as.tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(Sepal.Length <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(),
+            <span class="dt">mittel =</span> <span class="kw">mean</span>(Petal.Length))</code></pre></div>
 
 </div>
 </div>

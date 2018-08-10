@@ -5,6 +5,7 @@ rm(list = ls())
 # Libraries
 library(knitr)
 library(blmeco)
+library(tidyverse)
 
 # Knitr settings 
 options(scipen = 6);
