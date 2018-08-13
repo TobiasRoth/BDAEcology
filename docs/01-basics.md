@@ -1,3 +1,6 @@
+
+# (PART) BAYESIAN DATA ANALYSIS {-}
+
 # Introduction to statistical thinking and working with R {#basics}
 
 ## Notations
@@ -9,7 +12,8 @@ It is unavoidable that different authors use different notations for the same th
 Alle Packete laden `library(tidyverse)` oder nur `library(tidyverse)`.
 
 
-```{r}
+
+```r
 dat <- iris %>% 
   as.tibble() %>% 
   filter(Sepal.Length > 5) %>% 

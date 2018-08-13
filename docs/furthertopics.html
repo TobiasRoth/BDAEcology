@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="cjs-with-mix.html">
-
+<link rel="prev" href="rgis.html">
+<link rel="next" href="PART-III.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -164,40 +164,34 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="referenzen" class="section level1 unnumbered">
-<h1>Referenzen</h1>
+<div id="furthertopics" class="section level1">
+<h1><span class="header-section-number">7</span> Further topics</h1>
+<p>This is a collection of short introductions or links with commented R code that cover other topics that might be usful for ecologists.</p>
+<div id="bioacoustic-analyse" class="section level2">
+<h2><span class="header-section-number">7.1</span> Bioacoustic analyse</h2>
+<p>Bioacoustic analyses are nicely covered in a blog by <a href="https://marce10.github.io">Marcelo Araya-Salas</a>.</p>
+</div>
+<div id="python" class="section level2">
+<h2><span class="header-section-number">7.2</span> Python</h2>
+<p>Like R, python is a is a high-level programming language that is used by many ecologists. The <a href="https://rstudio.github.io/reticulate/index.html">reticulate</a> package provides a comprehensive set of tools for interoperability between Python and R.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reticulate)
+<span class="kw">use_python</span>(<span class="st">&quot;/usr/local/bin/python&quot;</span>) <span class="co"># Reference to python installation</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># This is python</span>
+<span class="bu">print</span> <span class="st">&#39;Hello, world!&#39;</span></code></pre></div>
+<pre><code>## Hello, world!</code></pre>
 
-<div id="refs" class="references">
-<div id="ref-Efron.2016">
-<p>Efron, Bradley, and Trevor Hastie. 2016. <em>Computer Age Statistical Inference: Algorithms, Evidence, and Data Science</em>. Institute of Mathematical Statistics Monographs.</p>
-</div>
-<div id="ref-Gelman.2014">
-<p>Gelman, A., John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2014. <em>Bayesian Data Analysis</em>. Third. New York: CRC Press.</p>
-</div>
-<div id="ref-Harju.2016">
-<p>Harju, Seth. 2016. “Book Review: Bayesian Data Analysis in Ecology Using Linear Models with R, Bugs, and Stan.” <em>The Journal of Wildlife Management</em> 80: 771.</p>
-</div>
-<div id="ref-Hastie.2009">
-<p>Hastie, T., R. Tibshirani, and J. Friedman. 2009. <em>The Elements of Statistical Learning, Data Mining, Inference, and Prediction</em>. New York: Springer.</p>
-</div>
-<div id="ref-KornerNievergelt.2015b">
-<p>Korner-Nievergelt, F., T. Roth, Stefanie von Felten, J. Guélat, B. Almasi, and P. Korner-Nievergelt. 2015. <em>Bayesian Data Analysis in Ecolog Using Linear Models with R, Bugs, and Stan</em>. New York: Elsevier.</p>
-</div>
-<div id="ref-McElreath.2016">
-<p>McElreath, Richard. 2016. <em>Statistical Rethinking: A Bayesian Course with Examples in R and Stan</em>. New York: Max Planck Institute for Evolutionary Anthropology; CRC Press.</p>
-</div>
-<div id="ref-Thomson.2009d">
-<p>Thomson, D. L., M. J. Conroy, D. R. Anderson, K. P. Burnham, E. G. Cooch, C. M. Francis, J.-D. Lebreton, et al. 2009. “Standardising Terminology and Notation for the Analysis of Demographic Processes in Marked Populations.” In <em>Modeling Demographic Processes in Marked Populations</em>, edited by D. L. Thomson, E. G. Cooch, and M. J. Conroy, 1099–1106. Environmental and Ecological Statistics 3. Berlin: Springer.</p>
 </div>
 </div>
-</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="cjs-with-mix.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="rgis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="PART-III.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -227,7 +221,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/99-references.Rmd",
+"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/29-furthertopics.Rmd",
 "text": "Edit"
 },
 "download": null,

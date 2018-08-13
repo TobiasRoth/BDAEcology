@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="cjs-with-mix.html">
-
+<link rel="prev" href="reproducible.html">
+<link rel="next" href="furthertopics.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -164,31 +164,30 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="referenzen" class="section level1 unnumbered">
-<h1>Referenzen</h1>
+<div id="rgis" class="section level1">
+<h1><span class="header-section-number">6</span> Spatial analyses and maps</h1>
+<div id="hintergrund" class="section level2">
+<h2><span class="header-section-number">6.1</span> Hintergrund</h2>
+<p>Some useful packages - <code>raster</code>: Very efficient for raster data. - <code>sf</code>: Very efficient package for data other than raster data. It also link to GEOS, GDAL proj.4.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
+<span class="kw">library</span>(raster)</code></pre></div>
+</div>
+<div id="coordinate-systems" class="section level2">
+<h2><span class="header-section-number">6.2</span> Coordinate systems</h2>
+<p>The following are some definitions of coordinate systems that I often use:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch1903 &lt;-<span class="st"> </span><span class="kw">CRS</span>(<span class="st">&quot;+init=epsg:21781&quot;</span>)       <span class="co"># Old Swiss grid 1903</span>
+chLV95 &lt;-<span class="st"> </span><span class="kw">CRS</span>(<span class="st">&quot;+init=epsg:2056&quot;</span>)        <span class="co"># New Swiss grid 1903+ </span>
+wgs84 &lt;-<span class="st">   </span><span class="kw">CRS</span>(<span class="st">&quot;+init=epsg:4326&quot;</span>)       <span class="co"># WGS 84</span></code></pre></div>
+<p>The following code transfers a spatial point from one coordinate reference system to an ohter:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pt &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="fl">650007.0</span>, <span class="dt">y=</span><span class="fl">227023.0</span>)
+<span class="kw">coordinates</span>(pt) &lt;-<span class="st"> </span><span class="er">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>y
+<span class="kw">proj4string</span>(pt) &lt;-<span class="st">   </span>ch1903 
+<span class="kw">spTransform</span>(pt, chLV95)</code></pre></div>
+<pre><code>## class       : SpatialPoints 
+## features    : 1 
+## extent      : 2650007, 2650007, 1227023, 1227023  (xmin, xmax, ymin, ymax)
+## coord. ref. : +init=epsg:2056 +proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +k_0=1 +x_0=2600000 +y_0=1200000 +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs</code></pre>
 
-<div id="refs" class="references">
-<div id="ref-Efron.2016">
-<p>Efron, Bradley, and Trevor Hastie. 2016. <em>Computer Age Statistical Inference: Algorithms, Evidence, and Data Science</em>. Institute of Mathematical Statistics Monographs.</p>
-</div>
-<div id="ref-Gelman.2014">
-<p>Gelman, A., John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2014. <em>Bayesian Data Analysis</em>. Third. New York: CRC Press.</p>
-</div>
-<div id="ref-Harju.2016">
-<p>Harju, Seth. 2016. “Book Review: Bayesian Data Analysis in Ecology Using Linear Models with R, Bugs, and Stan.” <em>The Journal of Wildlife Management</em> 80: 771.</p>
-</div>
-<div id="ref-Hastie.2009">
-<p>Hastie, T., R. Tibshirani, and J. Friedman. 2009. <em>The Elements of Statistical Learning, Data Mining, Inference, and Prediction</em>. New York: Springer.</p>
-</div>
-<div id="ref-KornerNievergelt.2015b">
-<p>Korner-Nievergelt, F., T. Roth, Stefanie von Felten, J. Guélat, B. Almasi, and P. Korner-Nievergelt. 2015. <em>Bayesian Data Analysis in Ecolog Using Linear Models with R, Bugs, and Stan</em>. New York: Elsevier.</p>
-</div>
-<div id="ref-McElreath.2016">
-<p>McElreath, Richard. 2016. <em>Statistical Rethinking: A Bayesian Course with Examples in R and Stan</em>. New York: Max Planck Institute for Evolutionary Anthropology; CRC Press.</p>
-</div>
-<div id="ref-Thomson.2009d">
-<p>Thomson, D. L., M. J. Conroy, D. R. Anderson, K. P. Burnham, E. G. Cooch, C. M. Francis, J.-D. Lebreton, et al. 2009. “Standardising Terminology and Notation for the Analysis of Demographic Processes in Marked Populations.” In <em>Modeling Demographic Processes in Marked Populations</em>, edited by D. L. Thomson, E. G. Cooch, and M. J. Conroy, 1099–1106. Environmental and Ecological Statistics 3. Berlin: Springer.</p>
-</div>
 </div>
 </div>
             </section>
@@ -196,8 +195,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="cjs-with-mix.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="reproducible.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="furthertopics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -227,7 +226,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/99-references.Rmd",
+"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/23-rgis.Rmd",
 "text": "Edit"
 },
 "download": null,
