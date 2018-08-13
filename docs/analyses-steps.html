@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="analyses-steps.html">
+<link rel="prev" href="PART-I.html">
+<link rel="next" href="datamanip.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -196,13 +196,55 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="PART-I" class="section level1">
-<h1><span class="header-section-number">1</span> Introduction to PART I</h1>
-<p><a href="" target="_blank"><img src="images/part_I.jpg" width="655" style="display: block; margin: auto;" /></a></p>
-<hr />
-<p>During our courses we are sometimes asked to give an introduction to some R-related stuff covering data analysis, presentation of results or rather specialist topics in ecology. In this part we present collected these introduction and try to keep them updated. This is also a commented collection of R-code that we documented for our own work. We hope this might be useful olso for other readers.</p>
-<div id="further-reading" class="section level2">
-<h2><span class="header-section-number">1.1</span> Further reading</h2>
+<div id="analyses_steps" class="section level1">
+<h1><span class="header-section-number">2</span> Data analysis step by step</h1>
+<p>In this chapter we provide a checklist with some guidance for data analysis. However, do not expect tthe list to be complete and for different studies, a different order of the steps may make more sense. We usually repeat steps <a href="analyses-steps.html#step2">2.2</a> to <a href="analyses-steps.html#step7">2.7</a> until we find one or a set of models that fit the data well and that are realistic enough to be useful for the intended purpose. Data analysis is always a lot of work and, often, the following steps have to be repeated many times until we find a useful and robust model.</p>
+<p>There is a danger with this: we may find interesting results that answer different questions than we asked originally.We can report such findings, but we should state that they appeared (more or less by chance) during the data exploration and model fitting phase, and we have to be aware that the estimates may be biased because the study was not optimally designed with respect to these findings. It is important to always keep the original aim of the study in mind. Do not adjust the study question according to the data. We also recommend reporting what the model started with at the first iteration and describing the strategy and reasoning behind the model development process.</p>
+<div id="step1" class="section level2">
+<h2><span class="header-section-number">2.1</span> Plausibility of Data</h2>
+<p>Prepare the data and check graphically, or via summary statistics, whether all the data are plausible. Prepare the data so that errors (typos, etc.) are minimal, for example, by double-checking the entries. See chapter <a href="datamanip.html#datamanip">3</a> for useful R-code that can be used for data preparation and to make plausibility controls.</p>
+</div>
+<div id="step2" class="section level2">
+<h2><span class="header-section-number">2.2</span> Relationships</h2>
+<p>Think about the direct and indirect relationships among the variables of the study. We normally start a data analysis by drawing a sketch of the model including all explanatory variables and interactions that may be biologically meaningful.We will most likely repeat this step after having looked at the model fit. To make the data analysis transparent we should report every model that was considered. A short note about why a specific model was considered and why it was discarded helps make the modeling process reproducible.</p>
+</div>
+<div id="step3" class="section level2">
+<h2><span class="header-section-number">2.3</span> Error Distribution</h2>
+<p>What is the nature of the variable of interest (outcome, dependent variable)? Chapter <a href="distributions.html#distributions">5</a> give an overview of the distributions that are most relevant for ecologists.</p>
+</div>
+<div id="step4" class="section level2">
+<h2><span class="header-section-number">2.4</span> Preparation of Explanatory Variables</h2>
+<ol style="list-style-type: decimal">
+<li><p>Look at the distribution (histogram) of every explanatory variable: Linear models do not assume that the explanatory variables have any specific distribution. Thus there is no need to check for a normal distribution! However, very skewed distributions result in unequal weighting of the observations in the model. In extreme cases, the slope of a regression line is defined by one or a few observations only. We also need to check whether the variance is large enough, and to think about the shape of the expected effect. The following four questions may help with this step: l Is the variance (of the explanatory variable) big enough so that an effect of the variable can be measured? l Is the distribution skewed? If an explanatory variable is highly skewed, it may make sense to transform the variable. l Does it show a bimodal distribution? Consider making the variable binary. l Is it expected that a change of 1 at lower values for x has the same biological effect as a change of 1 at higher values of x? If not, a trans- formation (e.g., log) could linearize the relationship between x and y.</p></li>
+<li><p>Centering: Centering (x_centered 1⁄4 x mean(x)) is a transformation that produces a variable with a mean of 0. With centered predictors, the intercept and main effects in the linear model are better interpretable (they are measured at the center of the data instead of at the covariate value 1⁄4 0 which may be far off; Section 4.2.6); the model fitting algorithm converges faster and better.</p></li>
+<li><p>Scaling: To make the estimate of the effect sizes comparable between var- iables, the variables can be scaled, that is, x_scaled 1⁄4 x/sd(x). The unit of the scaled variable is then 1 standard deviation. Gelman and Hill (2007, p. 55 f) propose to scale the variables by two times the standard deviation (x_scaled 1⁄4 x/(2*sd(x))) to make effect sizes comparable between numeric and binary variables. Scaling can be important for model convergence, especially when polynomials are included. Consider the use of orthogonal polynomials (Section 4.2.9).</p></li>
+<li><p>Collinearity: l Look at the correlation among the explanatory variables (pairs plot or correlation matrix). l If the explanatory variables are correlated, go back to step 2 and see Section 4.2.7 for more details about collinearity.</p></li>
+<li><p>Are interactions and polynomial terms needed in the model? If not already done in step 2, think about the relationship between each explanatory variable and the dependent variable. l Is it linear or do polynomial terms have to be included in the model? If the relationship cannot be described appropriately by polynomial terms, think of a nonlinear model or a generalized additive model (GAM). l May the effect of one explanatory variable depend on the value of another explanatory variable (interaction)?</p></li>
+</ol>
+</div>
+<div id="step5" class="section level2">
+<h2><span class="header-section-number">2.5</span> Data Structure</h2>
+<p>After having taken into account all of the (fixed effect) terms from step 4: are the observations independent or grouped/structured?</p>
+</div>
+<div id="step6" class="section level2">
+<h2><span class="header-section-number">2.6</span> Fit the Model</h2>
+<p>Fit the model as described in Chapters 4, 7, 8, 9, or 14.</p>
+</div>
+<div id="step7" class="section level2">
+<h2><span class="header-section-number">2.7</span> Check Model</h2>
+<p>We assess model fit by graphical analyses of the residuals (Chapter 6), by predictive model checking (Section 10.1), or by sensitivity analysis (Chapter 15). The following is a nonexhaustive list of aspects that can be looked at in a residual analysis and posterior predictive model checking.</p>
+<p>For non-Gaussian models it is often easier to assess model fit using pos- terior predictive checks (Chapter 10) rather than residual analyses. Posterior predictive checks usually show clearly in which aspect the model failed so we can go back to step 2 of the analysis. Recognizing in what aspect a model does not fit the data based on residual plots improves with experience. Therefore, the following table lists some patterns that can appear in residual plots together with what these patterns possibly indicate. We also indicate what could be done in the specific cases.</p>
+</div>
+<div id="step8" class="section level2">
+<h2><span class="header-section-number">2.8</span> Model Uncertainty</h2>
+<p>If, while working through steps 1 to 7, possibly repeatedly, we came up with one or more models that fit the data reasonably well, we then turn to the methods presented in Chapter 11 to draw inference from more than one model. If we have only one model, we proceed to step 9.</p>
+</div>
+<div id="step9" class="section level2">
+<h2><span class="header-section-number">2.9</span> Draw Conclusions</h2>
+<p>Simulate values from the joint posterior distribution of the model parameters (sim, BUGS, Stan). Use these samples to present parameter uncertainty, to obtain posterior distributions for predictions, probabilities of specific hypotheses, and derived quantities.</p>
+</div>
+<div id="further-reading-1" class="section level2 unnumbered">
+<h2>Further reading</h2>
 <ul>
 <li><a href="http://r4ds.had.co.nz">R for Data Science by Garrett Grolemund and Hadley Wickham</a>: Introduces the tidyverse framwork. It explains how to get data into R, get it into the most useful structure, transform it, visualise it and model it.</li>
 </ul>
@@ -214,8 +256,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="analyses-steps.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="PART-I.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="datamanip.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -245,7 +287,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/01-PART-I.Rmd",
+"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/02-analyses_steps.Rmd",
 "text": "Edit"
 },
 "download": null,

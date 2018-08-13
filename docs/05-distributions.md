@@ -9,7 +9,7 @@ hist(rnorm(1000))
 ```
 
 <div class="figure">
-<img src="02-distributions_files/figure-html/test-1.png" alt="Das ist ein Versuch." width="768" />
+<img src="05-distributions_files/figure-html/test-1.png" alt="Das ist ein Versuch." width="768" />
 <p class="caption">(\#fig:test)Das ist ein Versuch.</p>
 </div>
 

@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="analyses-steps.html">
+<link rel="prev" href="datamanip.html">
+<link rel="next" href="distributions.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -196,15 +196,28 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="PART-I" class="section level1">
-<h1><span class="header-section-number">1</span> Introduction to PART I</h1>
-<p><a href="" target="_blank"><img src="images/part_I.jpg" width="655" style="display: block; margin: auto;" /></a></p>
-<hr />
-<p>During our courses we are sometimes asked to give an introduction to some R-related stuff covering data analysis, presentation of results or rather specialist topics in ecology. In this part we present collected these introduction and try to keep them updated. This is also a commented collection of R-code that we documented for our own work. We hope this might be useful olso for other readers.</p>
-<div id="further-reading" class="section level2">
-<h2><span class="header-section-number">1.1</span> Further reading</h2>
+<div id="figures" class="section level1">
+<h1><span class="header-section-number">4</span> Visualizations</h1>
+<div id="short-checklist-for-figures" class="section level2">
+<h2><span class="header-section-number">4.1</span> Short Checklist for figures</h2>
+<ol style="list-style-type: decimal">
+<li>The figure should represent the answer to the study question. Often, the classical types of plots such as a scatterplot, a bar plot, or an effects plot are sufficient. However, in many cases, adding a little bit of creativity can greatly improve readability or the message of the figure.</li>
+</ol>
+<p>2.Label the x- and y-axes. Make sure that the units are indicated either within the title or in the figure legend.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Starty-axisatzeroifthereferencetozeroisimportantfortheinterpretationof effects. The argument ylim[c(0, max(dat$y)) in R is used for this purpose.</p></li>
+<li><p>Scale the axes so that all data are shown. Make sure that sample size is indicated either in the figure or in the legend (or, at least, easy to find in the text).</p></li>
+<li><p>Use interpretable units. That means, if the variable on the x-axis has been z-transformed to fit the model, back-transform the effects to the original scale.</p></li>
+<li><p>Give the raw data whenever possible. Sometimes, a significant effect cannot be seen in the raw data because so many other variables have an influence on the outcome. Then, you may prefer showing the effect only (e.g., a regression line with a credible interval) and give the residual standard deviation in the figure legend. Even then, we think it is important to show the raw data graphically somewhere else in the paper or in the supplementary material. A scatterplot of the data can contain structures that are lost in summary statistics.</p></li>
+<li><p>Draw the figures as simply as possible. Avoid 3D graphics. Delete all unnecessary elements.</p></li>
+<li><p>Reduce the number of different colors to a minimum necessary. A color scale from orange to blue gives a gray scale in a black-and-white print. <code>colorRampPalette(c(&quot;orange&quot;, &quot;blue&quot;))(5)</code> produces five colors on a scale from orange to blue. Remember that around 8% of the northern European male population have difficulties distinguishing red from green but it is easier for them to distinguish orange from blue.</p></li>
+</ol>
+</div>
+<div id="further-reading-3" class="section level2 unnumbered">
+<h2>Further reading</h2>
 <ul>
-<li><a href="http://r4ds.had.co.nz">R for Data Science by Garrett Grolemund and Hadley Wickham</a>: Introduces the tidyverse framwork. It explains how to get data into R, get it into the most useful structure, transform it, visualise it and model it.</li>
+<li><p><a href="https://socviz.co">Data Visualization. A practical introduction</a>: A practical introduction to data visulization in R. Good data visualizations also make it easier to communicate your ideas and findings to other people. Beyond that, producing effective plots from your own data is the best way to develop a good eye for reading and understanding graphs—good and bad—made by others.</p></li>
+<li><p><a href="https://serialmentor.com/dataviz/">Fundamentals of Data Visualization</a>: A guide to making visualizations that accurately reflect the data, tell a story, and look professional. […] This is an online preview of the book “Fundamentals of Data Visualization” to be published with O’Reilly Media, Inc. Completed chapters will be posted here as they become available. The book is meant as a guide to making visualizations that accurately reflect the data, tell a story, and look professional. It has grown out of my experience of working with students and postdocs in my laboratory on thousands of data visualizations.</p></li>
 </ul>
 
 </div>
@@ -214,8 +227,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="analyses-steps.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="datamanip.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="distributions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -245,7 +258,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/01-PART-I.Rmd",
+"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/04-figures.Rmd",
 "text": "Edit"
 },
 "download": null,

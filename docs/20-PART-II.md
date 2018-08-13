@@ -1,26 +1,14 @@
 
-\cleardoublepage 
-
-# (PART) R FOR ECOLOGISTS {-}
+# (PART) BAYESIAN DATA ANALYSIS {-}
 
 # Introduction to PART II {#PART-II}
-<a href="" target="_blank"><img src="images/part_II.jpg" width="655" style="display: block; margin: auto;" /></a>
+
+<a href="" target="_blank"><img src="images/part_II.jpg" width="410" style="display: block; margin: auto;" /></a>
 
 ------
 
-During our courses we are sometimes asked to give an introduction to some R-related stuff covering data analysis, presentation of results or rather specialist topics in ecology. In this part we present collected these introduction and try to keep them updated. This is also a commented collection of R-code that we documented for our own work. We hope this might be useful olso for other readers.
+## Further reading {-} 
+A really good introductory book to Bayesian data analyses is [@McElreath.2016]. This book starts with a thorough introduction to applying the Bayes theorem for drawing inference from data. In addition, it carefully discusses what can and what cannot be concluded from statistical results. We like this very much.
 
-
-## Further reading
-- [R for Data Science by Garrett Grolemund and Hadley Wickham](http://r4ds.had.co.nz): Introduces the tidyverse framwork. It explains how to get data into R, get it into the most useful structure, transform it, visualise it and model it.
-
-- [Geocomputation with R](https://geocompr.robinlovelace.net): This book is aimed at people who want to do spatial data analysis, visualization and modeling using open source software and reproducible workflows. 
-
-
-
-
-
-
-
-
+We like looking up statistical methods in papers and books written by Andrew Gelman (e.g. [@Gelman.2014]) and Trevor Hastie (e.g. [@Hastie.2009, @Efron.2016]) because both explain complicated things in a concise and understandable way.  
 
