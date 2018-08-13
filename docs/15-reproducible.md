@@ -1,9 +1,0 @@
-
-# Reproducible Research {#reproducible}
-
-## Introduction
-
-
-
-
-

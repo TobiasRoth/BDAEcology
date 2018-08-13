@@ -28,5 +28,7 @@ proj4string(pt) <-   ch1903
 spTransform(pt, chLV95)
 ```
 
+## Further reading
+- [Geocomputation with R](https://geocompr.robinlovelace.net): This book is aimed at people who want to do spatial data analysis, visualization and modeling using open source software and reproducible workflows. 
 
 

@@ -3,6 +3,34 @@
 
 ## Introduction
 
+## Add citations
+Mit dem Packet `knitcitations` können Referenzen relativ einfach gesucht und in das `.bib` File eingefügt werden. Erst muss das Packet geladen und der lokale Speicher gelöscht werden. Das Format pandoc scheint auch nötig zu sein.
+
+
+```r
+library(knitcitations)
+cleanbib()
+cite_options(citation_format = "pandoc")
+```
+
+Danach kann man einfach nach einer Referenz mit Stichworten, Autoren oder DOI-Nummer. Zum Beispiel sucht der Befehl `citep("Roth, Plattner Amrhein")` die entsprechende Referenz und fügt diese ein [@Roth_2014]. Der folgende Befehl schreibt alle Referenzen aus der Zwischenablage in das `.bib` File.
+
+
+```r
+write.bibtex(file="References.bib", append = TRUE)
+```
+
+Am einfachsten folgende Hilfsfunktion benutzen um aus der Konsole eine Referenz ins `.bib` File zu schreiben.
+
+
+```r
+ref <- function(x) {
+  library(knitcitations)
+  cleanbib()
+  print(citep(x))
+  write.bibtex(file="References.bib", append = TRUE)
+}
+```
 
 ## Further reading
 
