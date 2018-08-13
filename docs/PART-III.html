@@ -124,10 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="3" data-path="datamanip.html"><a href="datamanip.html"><i class="fa fa-check"></i><b>3</b> Data preparation</a><ul>
 <li class="chapter" data-level="3.1" data-path="datamanip.html"><a href="datamanip.html#basic-operations"><i class="fa fa-check"></i><b>3.1</b> Basic operations</a></li>
-<li class="chapter" data-level="3.2" data-path="datamanip.html"><a href="datamanip.html#conection-to-existing-sql-db"><i class="fa fa-check"></i><b>3.2</b> Conection to existing sql-DB</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="datamanip.html"><a href="datamanip.html#abfragen-zur-artenvielfalt"><i class="fa fa-check"></i><b>3.2.1</b> Abfragen zur Artenvielfalt</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="datamanip.html"><a href="datamanip.html#further-reading-2"><i class="fa fa-check"></i><b>3.3</b> Further reading</a></li>
+<li class="chapter" data-level="3.2" data-path="datamanip.html"><a href="datamanip.html#further-reading-2"><i class="fa fa-check"></i><b>3.2</b> Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="figures.html"><a href="figures.html"><i class="fa fa-check"></i><b>4</b> Visualizations</a><ul>
 <li class="chapter" data-level="4.1" data-path="figures.html"><a href="figures.html#short-checklist-for-figures"><i class="fa fa-check"></i><b>4.1</b> Short Checklist for figures</a></li>
@@ -162,10 +159,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a></li>
 <li class="chapter" data-level="10.3" data-path="priors.html"><a href="priors.html#prior-sensitivity"><i class="fa fa-check"></i><b>10.3</b> Prior sensitivity</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="mcmc.html"><a href="mcmc.html"><i class="fa fa-check"></i><b>11</b> Markov Chain Monte Carlo Simulation</a><ul>
-<li class="chapter" data-level="11.1" data-path="mcmc.html"><a href="mcmc.html#background"><i class="fa fa-check"></i><b>11.1</b> Background</a></li>
-<li class="chapter" data-level="11.2" data-path="mcmc.html"><a href="mcmc.html#mcmc-using-stan"><i class="fa fa-check"></i><b>11.2</b> MCMC using Stan</a></li>
-<li class="chapter" data-level="" data-path="mcmc.html"><a href="mcmc.html#further-reading-7"><i class="fa fa-check"></i>Further reading</a></li>
+<li class="chapter" data-level="11" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>11</b> MCMC using Stan</a><ul>
+<li class="chapter" data-level="11.1" data-path="stan.html"><a href="stan.html#background"><i class="fa fa-check"></i><b>11.1</b> Background</a></li>
+<li class="chapter" data-level="11.2" data-path="stan.html"><a href="stan.html#install-rstan"><i class="fa fa-check"></i><b>11.2</b> Install <code>rstan</code></a></li>
+<li class="chapter" data-level="11.3" data-path="stan.html"><a href="stan.html#writing-a-stan-model"><i class="fa fa-check"></i><b>11.3</b> Writing a Stan model</a></li>
+<li class="chapter" data-level="11.4" data-path="stan.html"><a href="stan.html#run-stan-from-r"><i class="fa fa-check"></i><b>11.4</b> Run Stan from R</a></li>
+<li class="chapter" data-level="" data-path="stan.html"><a href="stan.html#further-reading-7"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>12</b> Ridge regression</a><ul>
 <li class="chapter" data-level="12.1" data-path="ridge.html"><a href="ridge.html#introduction-3"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
@@ -213,7 +212,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>This part is a collection of more complicated ecological models to analyse data that may not be analysed with the traditional linear models that we covered in <a href="PART-I.html#PART-I">PART I</a> of this book.</p>
 <div id="model-notations" class="section level2">
 <h2><span class="header-section-number">14.1</span> Model notations</h2>
-<p>It is unavoidable that different authors use different notations for the same thing, or that the same notation is used for different things. We try to use, whenever possible, notations that is commonly used at the <a href="https://http://www.isec2018.org/home">International Statistical Ecology Congress ISEC</a>. Resulting from an earlier ISEC, <span class="citation">Thomson et al. (<a href="referenzen.html#ref-Thomson.2009d">2009</a>)</span> give guidelines on what letter should be used for which parameter in order to achieve a standard notation at least among people working with classical mark-recapture models. However, the alphabet has fewer letters compared to the number of ecological parameters. Therefore, the same letter cannot stand for the same parameter across all papers, books and chapters. Here, we try to use the same letter for the same parameter within the same chapter.</p>
+<p>It is unavoidable that different authors use different notations for the same thing, or that the same notation is used for different things. We try to use, whenever possible, notations that is commonly used at the <a href="https://http://www.isec2018.org/home">International Statistical Ecology Congress ISEC</a>. Resulting from an earlier ISEC, <span class="citation">Betancourt et al. (<a href="referenzen.html#ref-Thomson2009">2016</a>)</span> give guidelines on what letter should be used for which parameter in order to achieve a standard notation at least among people working with classical mark-recapture models. However, the alphabet has fewer letters compared to the number of ecological parameters. Therefore, the same letter cannot stand for the same parameter across all papers, books and chapters. Here, we try to use the same letter for the same parameter within the same chapter.</p>
 
 </div>
 </div>

@@ -8,7 +8,7 @@
 ------
 
 ## Further reading {-} 
-A really good introductory book to Bayesian data analyses is [@McElreath.2016]. This book starts with a thorough introduction to applying the Bayes theorem for drawing inference from data. In addition, it carefully discusses what can and what cannot be concluded from statistical results. We like this very much.
+A really good introductory book to Bayesian data analyses is [@McElreath2016]. This book starts with a thorough introduction to applying the Bayes theorem for drawing inference from data. In addition, it carefully discusses what can and what cannot be concluded from statistical results. We like this very much.
 
-We like looking up statistical methods in papers and books written by Andrew Gelman (e.g. [@Gelman.2014]) and Trevor Hastie (e.g. [@Hastie.2009, @Efron.2016]) because both explain complicated things in a concise and understandable way.  
+We like looking up statistical methods in papers and books written by Andrew Gelman [e.g. @Gelman2014] and Trevor Hastie (e.g. [@Hastie2009, @Efron2016]) because both explain complicated things in a concise and understandable way.  
 

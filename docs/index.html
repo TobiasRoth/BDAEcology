@@ -124,10 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="3" data-path="datamanip.html"><a href="datamanip.html"><i class="fa fa-check"></i><b>3</b> Data preparation</a><ul>
 <li class="chapter" data-level="3.1" data-path="datamanip.html"><a href="datamanip.html#basic-operations"><i class="fa fa-check"></i><b>3.1</b> Basic operations</a></li>
-<li class="chapter" data-level="3.2" data-path="datamanip.html"><a href="datamanip.html#conection-to-existing-sql-db"><i class="fa fa-check"></i><b>3.2</b> Conection to existing sql-DB</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="datamanip.html"><a href="datamanip.html#abfragen-zur-artenvielfalt"><i class="fa fa-check"></i><b>3.2.1</b> Abfragen zur Artenvielfalt</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="datamanip.html"><a href="datamanip.html#further-reading-2"><i class="fa fa-check"></i><b>3.3</b> Further reading</a></li>
+<li class="chapter" data-level="3.2" data-path="datamanip.html"><a href="datamanip.html#further-reading-2"><i class="fa fa-check"></i><b>3.2</b> Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="figures.html"><a href="figures.html"><i class="fa fa-check"></i><b>4</b> Visualizations</a><ul>
 <li class="chapter" data-level="4.1" data-path="figures.html"><a href="figures.html#short-checklist-for-figures"><i class="fa fa-check"></i><b>4.1</b> Short Checklist for figures</a></li>
@@ -162,10 +159,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a></li>
 <li class="chapter" data-level="10.3" data-path="priors.html"><a href="priors.html#prior-sensitivity"><i class="fa fa-check"></i><b>10.3</b> Prior sensitivity</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="mcmc.html"><a href="mcmc.html"><i class="fa fa-check"></i><b>11</b> Markov Chain Monte Carlo Simulation</a><ul>
-<li class="chapter" data-level="11.1" data-path="mcmc.html"><a href="mcmc.html#background"><i class="fa fa-check"></i><b>11.1</b> Background</a></li>
-<li class="chapter" data-level="11.2" data-path="mcmc.html"><a href="mcmc.html#mcmc-using-stan"><i class="fa fa-check"></i><b>11.2</b> MCMC using Stan</a></li>
-<li class="chapter" data-level="" data-path="mcmc.html"><a href="mcmc.html#further-reading-7"><i class="fa fa-check"></i>Further reading</a></li>
+<li class="chapter" data-level="11" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>11</b> MCMC using Stan</a><ul>
+<li class="chapter" data-level="11.1" data-path="stan.html"><a href="stan.html#background"><i class="fa fa-check"></i><b>11.1</b> Background</a></li>
+<li class="chapter" data-level="11.2" data-path="stan.html"><a href="stan.html#install-rstan"><i class="fa fa-check"></i><b>11.2</b> Install <code>rstan</code></a></li>
+<li class="chapter" data-level="11.3" data-path="stan.html"><a href="stan.html#writing-a-stan-model"><i class="fa fa-check"></i><b>11.3</b> Writing a Stan model</a></li>
+<li class="chapter" data-level="11.4" data-path="stan.html"><a href="stan.html#run-stan-from-r"><i class="fa fa-check"></i><b>11.4</b> Run Stan from R</a></li>
+<li class="chapter" data-level="" data-path="stan.html"><a href="stan.html#further-reading-7"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>12</b> Ridge regression</a><ul>
 <li class="chapter" data-level="12.1" data-path="ridge.html"><a href="ridge.html#introduction-3"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
@@ -216,11 +215,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><a href="" target="_blank"><img src="images/cover.jpg" width="655" style="display: block; margin: auto;" /></a></p>
 <div id="why-this-book" class="section level2 unnumbered">
 <h2>Why this book?</h2>
-<p>In 2015, we wrote a statistics book for Master/PhD level Bayesian data analyses in ecology <span class="citation">(F. Korner-Nievergelt et al. <a href="referenzen.html#ref-KornerNievergelt.2015b">2015</a>)</span>. You can order it <a href="https://www.elsevier.com/books/bayesian-data-analysis-in-ecology-using-linear-models-with-r-bugs-and-stan/korner-nievergelt/978-0-12-801370-0">here</a>. People seemed to like it (e.g. <span class="citation">(Harju <a href="referenzen.html#ref-Harju.2016">2016</a>)</span>). Since then, two parallel processes happen. First, we learn more and we become more confident in what we do, or what we do not, and why we do what we do. Second, several really clever people develop software that broaden the spectrum of ecological models that now easily can be applied by ecologists used to work with R. With this e-book, we open the possibility to add new or substantially revised material. In most of the time, it should be in a state that it can be printed and used together with the book as handout for our stats courses.</p>
+<p>In 2015, we wrote a statistics book for Master/PhD level Bayesian data analyses in ecology <span class="citation">(F. Korner-Nievergelt et al. <a href="referenzen.html#ref-KornerNievergelt2015">2015</a>)</span>. You can order it <a href="https://www.elsevier.com/books/bayesian-data-analysis-in-ecology-using-linear-models-with-r-bugs-and-stan/korner-nievergelt/978-0-12-801370-0">here</a>. People seemed to like it (e.g. <span class="citation">(Harju <a href="referenzen.html#ref-Harju2016">2016</a>)</span>). Since then, two parallel processes happen. First, we learn more and we become more confident in what we do, or what we do not, and why we do what we do. Second, several really clever people develop software that broaden the spectrum of ecological models that now easily can be applied by ecologists used to work with R. With this e-book, we open the possibility to add new or substantially revised material. In most of the time, it should be in a state that it can be printed and used together with the book as handout for our stats courses.</p>
 </div>
 <div id="about-this-book" class="section level2 unnumbered">
 <h2>About this book</h2>
-<p>We do not copy text from the book into the e-book. Therefore, we refer to the book <span class="citation">(F. Korner-Nievergelt et al. <a href="referenzen.html#ref-KornerNievergelt.2015b">2015</a>)</span> for reading about the basic theory on doing Bayesian data analyses using linear models. However, Chapters 1 to 17 of this dynamic e-book correspond to the book chapters. In each chapter, we may provide updated R-codes and/or additional material. The following chapters contain completely new material that we think may be useful for ecologists.</p>
+<p>We do not copy text from the book into the e-book. Therefore, we refer to the book <span class="citation">(F. Korner-Nievergelt et al. <a href="referenzen.html#ref-KornerNievergelt2015">2015</a>)</span> for reading about the basic theory on doing Bayesian data analyses using linear models. However, Chapters 1 to 17 of this dynamic e-book correspond to the book chapters. In each chapter, we may provide updated R-codes and/or additional material. The following chapters contain completely new material that we think may be useful for ecologists.</p>
 <p>While we show the R-code behind most of the analyses, we sometimes choose not to show all the code in the html version of the book. This is particularly the case for some of the illustrations. An intrested reader can always consult the <a href="https://github.com/TobiasRoth/BDAEcology">public GitHub repository</a> with the rmarkdown-files that were used to generate the book.</p>
 </div>
 <div id="how-to-contribute" class="section level2 unnumbered">

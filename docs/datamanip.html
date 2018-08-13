@@ -124,10 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="3" data-path="datamanip.html"><a href="datamanip.html"><i class="fa fa-check"></i><b>3</b> Data preparation</a><ul>
 <li class="chapter" data-level="3.1" data-path="datamanip.html"><a href="datamanip.html#basic-operations"><i class="fa fa-check"></i><b>3.1</b> Basic operations</a></li>
-<li class="chapter" data-level="3.2" data-path="datamanip.html"><a href="datamanip.html#conection-to-existing-sql-db"><i class="fa fa-check"></i><b>3.2</b> Conection to existing sql-DB</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="datamanip.html"><a href="datamanip.html#abfragen-zur-artenvielfalt"><i class="fa fa-check"></i><b>3.2.1</b> Abfragen zur Artenvielfalt</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="datamanip.html"><a href="datamanip.html#further-reading-2"><i class="fa fa-check"></i><b>3.3</b> Further reading</a></li>
+<li class="chapter" data-level="3.2" data-path="datamanip.html"><a href="datamanip.html#further-reading-2"><i class="fa fa-check"></i><b>3.2</b> Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="figures.html"><a href="figures.html"><i class="fa fa-check"></i><b>4</b> Visualizations</a><ul>
 <li class="chapter" data-level="4.1" data-path="figures.html"><a href="figures.html#short-checklist-for-figures"><i class="fa fa-check"></i><b>4.1</b> Short Checklist for figures</a></li>
@@ -162,10 +159,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a></li>
 <li class="chapter" data-level="10.3" data-path="priors.html"><a href="priors.html#prior-sensitivity"><i class="fa fa-check"></i><b>10.3</b> Prior sensitivity</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="mcmc.html"><a href="mcmc.html"><i class="fa fa-check"></i><b>11</b> Markov Chain Monte Carlo Simulation</a><ul>
-<li class="chapter" data-level="11.1" data-path="mcmc.html"><a href="mcmc.html#background"><i class="fa fa-check"></i><b>11.1</b> Background</a></li>
-<li class="chapter" data-level="11.2" data-path="mcmc.html"><a href="mcmc.html#mcmc-using-stan"><i class="fa fa-check"></i><b>11.2</b> MCMC using Stan</a></li>
-<li class="chapter" data-level="" data-path="mcmc.html"><a href="mcmc.html#further-reading-7"><i class="fa fa-check"></i>Further reading</a></li>
+<li class="chapter" data-level="11" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>11</b> MCMC using Stan</a><ul>
+<li class="chapter" data-level="11.1" data-path="stan.html"><a href="stan.html#background"><i class="fa fa-check"></i><b>11.1</b> Background</a></li>
+<li class="chapter" data-level="11.2" data-path="stan.html"><a href="stan.html#install-rstan"><i class="fa fa-check"></i><b>11.2</b> Install <code>rstan</code></a></li>
+<li class="chapter" data-level="11.3" data-path="stan.html"><a href="stan.html#writing-a-stan-model"><i class="fa fa-check"></i><b>11.3</b> Writing a Stan model</a></li>
+<li class="chapter" data-level="11.4" data-path="stan.html"><a href="stan.html#run-stan-from-r"><i class="fa fa-check"></i><b>11.4</b> Run Stan from R</a></li>
+<li class="chapter" data-level="" data-path="stan.html"><a href="stan.html#further-reading-7"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>12</b> Ridge regression</a><ul>
 <li class="chapter" data-level="12.1" data-path="ridge.html"><a href="ridge.html#introduction-3"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
@@ -210,7 +209,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">3</span> Data preparation</h1>
 <div id="basic-operations" class="section level2">
 <h2><span class="header-section-number">3.1</span> Basic operations</h2>
-<p>Alle Packete laden <code>library(tidyverse)</code> oder nur <code>library(tidyverse)</code>.</p>
+<p>Alle Packete laden <code>library(tidyverse)</code> oder nur <code>library(dplyr)</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">as.tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(Sepal.Length <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -218,66 +217,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(),
             <span class="dt">mittel =</span> <span class="kw">mean</span>(Petal.Length))</code></pre></div>
 </div>
-<div id="conection-to-existing-sql-db" class="section level2">
-<h2><span class="header-section-number">3.2</span> Conection to existing sql-DB</h2>
-<p>Die in diesem Kapitel präsentierten Datenabfragen nutzen das R-Packet <code>dplyr</code>. Damit der R-Code funktioniert muss eine Kopie der SQLite Datenbank lokal verfügbar sein (DropBox-Zugang von Ro beziehen). Als Grundlage muss also erst das R-Packet geladen werden und den Link zu den Datebbanken hergestellt werden.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Connection to data base</span>
-db &lt;-<span class="st"> </span><span class="kw">src_sqlite</span>(<span class="dt">path =</span> <span class="st">&quot;~/Documents/Dropbox/DB_BDM.db&quot;</span>, <span class="dt">create =</span> <span class="ot">FALSE</span>)
-rd &lt;-<span class="st"> </span><span class="kw">src_sqlite</span>(<span class="dt">path =</span> <span class="st">&quot;~/Documents/Dropbox/DB_CHRD.db&quot;</span>, <span class="dt">create =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<div id="abfragen-zur-artenvielfalt" class="section level3">
-<h3><span class="header-section-number">3.2.1</span> Abfragen zur Artenvielfalt</h3>
-<p>Im Folgenden soll die mittlere Artenvielfalt für Z9 Plfanzen im LANAG für die Periode 2013 bis 2017 im Wald berechnet werden.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Auswahl der gültigen Aufnahmen in der entprechenden Periode</span>
-ausw &lt;-<span class="st"> </span><span class="kw">inner_join</span>(
-  <span class="kw">tbl</span>(db, <span class="st">&quot;STICHPROBE_Z9&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">filter</span>(LANAG_aktuell <span class="op">==</span><span class="st"> &quot;ja&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span>dplyr<span class="op">::</span><span class="kw">select</span>(aID_STAO),
-  <span class="kw">tbl</span>(db, <span class="st">&quot;KD_Z9&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">filter</span>(yearP <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2013</span> <span class="op">&amp;</span><span class="st"> </span>yearP <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2017</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(yearPl) <span class="op">&amp;</span><span class="st"> </span>HN <span class="op">==</span><span class="st"> &quot;Wald&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span>dplyr<span class="op">::</span><span class="kw">select</span>(aID_KD, aID_STAO)
-)
-  
-<span class="co"># Artenvielfalt für jede Aufnahme anhängen</span>
-dat &lt;-<span class="st"> </span><span class="kw">left_join</span>(
-  ausw,
-  <span class="kw">tbl</span>(db, <span class="st">&quot;PL&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Z7 <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(aID_KD) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">AZ =</span> <span class="kw">n</span>()) 
-) <span class="op">%&gt;%</span><span class="st"> </span>data.frame
-
-<span class="co"># AZ von gültigen Aufnahmen ohne Arten auf 0 setzen</span>
-dat &lt;-<span class="st"> </span><span class="kw">replace_na</span>(dat, <span class="kw">list</span>(<span class="dt">AZ =</span> <span class="dv">0</span>))
-
-<span class="co"># Mittelwert berechnen</span>
-<span class="kw">mean</span>(dat<span class="op">$</span>AZ)</code></pre></div>
-<p>Der folgende Code plottet die mittlere Artenvielfalt der BDM Z7 Pflanzen (ohne Verdichtung) gegen die Meereshöhe.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ausw &lt;-<span class="st"> </span><span class="kw">inner_join</span>(
-  <span class="kw">tbl</span>(db, <span class="st">&quot;STICHPROBE_Z7&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">filter</span>(BDM_aktuell <span class="op">==</span><span class="st"> &quot;ja&quot;</span> <span class="op">&amp;</span><span class="st"> </span>BDM_Verdichtung <span class="op">==</span><span class="st"> &quot;nein&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span>dplyr<span class="op">::</span><span class="kw">select</span>(aID_STAO),
-  <span class="kw">tbl</span>(db, <span class="st">&quot;KD_Z7&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">filter</span>(yearP <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2013</span> <span class="op">&amp;</span><span class="st"> </span>yearP <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2017</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(yearPl) <span class="op">&amp;</span><span class="st"> </span>
-<span class="st">             </span>Aufnahmetyp <span class="op">==</span><span class="st"> &quot;Normalaufnahme_Z7&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span>dplyr<span class="op">::</span><span class="kw">select</span>(aID_KD, aID_STAO)
-)
-  
-<span class="co"># Artenvielfalt für jede Aufnahme berechnen</span>
-dat &lt;-<span class="st"> </span><span class="kw">left_join</span>(
-  ausw,
-  <span class="kw">tbl</span>(db, <span class="st">&quot;PL&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Z7 <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(aID_KD) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">AZ =</span> <span class="kw">n</span>()) 
-) 
-
-<span class="co"># Meereshöhe anhängen</span>
-dat &lt;-<span class="st"> </span><span class="kw">left_join</span>(dat, <span class="kw">tbl</span>(db, <span class="st">&quot;RAUMDATEN_Z7&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(aID_STAO, Hoehe))
-dat &lt;-<span class="st"> </span><span class="kw">replace_na</span>(dat <span class="op">%&gt;%</span><span class="st"> </span>data.frame, <span class="kw">list</span>(<span class="dt">AZ =</span> <span class="dv">0</span>))
-
-
-<span class="co"># Plot results</span>
-<span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(<span class="dt">x =</span> Hoehe, <span class="dt">y =</span> AZ)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">16</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_smooth</span>() </code></pre></div>
-</div>
-</div>
 <div id="further-reading-2" class="section level2">
-<h2><span class="header-section-number">3.3</span> Further reading</h2>
+<h2><span class="header-section-number">3.2</span> Further reading</h2>
 <ul>
 <li><a href="http://r4ds.had.co.nz">R for Data Science by Garrett Grolemund and Hadley Wickham</a>: Introduces the tidyverse framwork. It explains how to get data into R, get it into the most useful structure, transform it, visualise it and model it.</li>
 </ul>

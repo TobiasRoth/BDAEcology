@@ -1,5 +1,13 @@
 base
+methods
+datasets
+utils
+grDevices
+graphics
+stats
 knitr
+MASS
+blmeco
 tidyverse
 ggplot2
 tibble
@@ -9,7 +17,3 @@ purrr
 dplyr
 stringr
 forcats
-leaflet
-RColorBrewer
-MASS
-blmeco
