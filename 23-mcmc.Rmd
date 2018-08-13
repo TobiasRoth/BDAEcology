@@ -1,0 +1,30 @@
+# Markov Chain Monte Carlo Simulation {#mcmc}
+
+## Background
+Markov chain Monte Carlo (MCMC) simulation techniques were developed in the mid-1950s by physicists (Metropolis et al., 1953). Later, statisticians discovered MCMC (Hastings, 1970; Geman & Geman, 1984; Tanner & Wong, 1987; Gelfand et al., 1990; Gelfand & Smith, 1990). MCMC methods make it possible to obtain posterior distributions for parameters and latent variables (unobserved variables) of complex models. In parallel, personal computer capacities increased in the 1990s and user-friendly software such as the different programs based on the programming language BUGS (Spiegelhalter et al., 2003) came out. These developments boosted the use of Bayesian data analyses, particularly in genetics and ecology.
+
+
+## MCMC using Stan
+In this book we use the program [Stan](http://mc-stan.org) to draw random samples from the joint posterior distribution of the model parameters given a model, the data, prior distributions, and initial values. To do so, it uses the “no-U-turn sampler,” which is a type of Hamiltonian Monte Carlo simulation (Hoffman & Gelman, 2012; Betancourt, 2013), and optimization-based point estimation. These algorithms are more efficient than the ones implemented in BUGS programs and they can handle larger data sets. Stan works particularly well for hierar- chical models (Betancourt & Girolami, 2013). For example, the mark- recapture model with random effects presented in Section 14.5 used less than 2 hours in Stan to obtain a similar effective sample size as WinBUGS produced after several days. This motivated us to learn Stan in addition to BUGS and to cover Stan in this book.
+
+Stan runs on Windows, Mac, and Linux. It is freely available from http://mc-stan.org/. Stan can be used via the R interface rstan. Stan is automatically installed when the R package rstan is installed. For installing rstan, it is advised to follow closely the system-specific instructions. Stan requires that a Cþþ compiler is installed on the computer. Therefore, before downloading rstan we have to install a Cþþ compiler (e.g., Rtools). How to do this is explained very well on the Stan website. Besides the interface to R, interfaces to Python, PyStan, and to the shell, CmdStan, are available.
+
+The use of Stan is similar to BUGS. The model has to be defined in a text file, the data prepared within R, and then Stan is called from R. However, the Stan language differs from BUGS and it is stricter, forcing the user to write unambiguous models. A comprehensive manual introduces the Stan language (Stan Development Team, 2014), downloadable from mc-stan.org.
+
+A Stan code defining a model consists of different named blocks. These blocks are (from first to last): data, transformed data, parameters, trans- formed parameters, model, and generated quantities. The blocks must appear in this order. The model block is mandatory; all other blocks are optional. In the data block, the type, dimension, and name of every variable has to be declared. Optionally, the range of possible values can be specified. For example, vector[N] y; means that y is a vector (type real) of length N, and int<lower1⁄40> N; means that N is an integer with nonnegative values (the bounds, here 0, are included). Note that the restriction to a possible range of values is not strictly necessary but this will help specifying the correct model and it will improve speed. We also see that each line needs to be closed by a column sign. In the parameters block, all model parameters have to be defined. The coefficients of the linear predictor constitute a vector of length 2, vector[2] beta;. Alternatively, real beta[2]; could be used. The sigma parameter is a one-number parameter that has to be positive, therefore real<lower1⁄40> sigma;.
+
+The model block contains the model specification. Unlike BUGS, Stan functions can handle vectors. Therefore, we do not have to loop through all observations. Here, we use a Cauchy distribution as a prior distribution for sigma. This distribution can have negative values, but because we defined the lower limit of sigma to be 0 in the parameters block, the prior distri- bution actually used in the model is a truncated Cauchy distribution (truncated at zero). In Chapter 15 we explain how to choose prior distributions.
+
+Further characteristics of the Stan language that are good to know include: The variance parameter for the normal distribution is specified as the standard deviation (like in R but different from BUGS, where the precision is used). If no prior is specified, Stan uses a uniform prior over the range of possible values as specified in the parameter block. Variable names must not contain periods, for example, “x.z” would not be allowed, but “x_z” is allowed. To comment out a line, use double forward-slashes // (“#” in BUGS and R). The Stan website provides a large collection of model code that can be downloaded and adapted.
+
+We fit the model to the data that has been produced in Chapter 4. There, the vectors x and y have been simulated and n is the sample size. Stan needs a vector containing the names of the data objects. In our case, x, y, and N are objects that exist in the R console.
+
+The function stan starts Stan and returns an object containing MCMCs for every model parameter. We have to specify the name of the file that contains the model specification, the data, the number of chains, and the number of iterations per chain we would like to have. The first half of the iterations of each chain is declared as the warm-up. During the warm-up, Stan is not simulating a Markov chain, because in every step the algorithm is adapted. After the warm-up the algorithm is fixed and Stan simulates Markov chains.
+
+## Further reading {-}
+- [Stan-Homepage](http://mc-stan.org): It contains the documentation for Stand a a lot of tutorials.
+
+
+
+
+
