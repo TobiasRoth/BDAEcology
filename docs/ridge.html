@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Data Analysis in Ecology with R and Stan</title>
+  <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Data Analysis in Ecology with R and Stan" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.jpg" />
+  <meta property="og:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
+  <meta name="github-repo" content="TobiasRoth/BDAEcology" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Data Analysis in Ecology with R and Stan" />
+  
+  <meta name="twitter:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
+  <meta name="twitter:image" content="images/cover.jpg" />
+
+<meta name="author" content="Fränzi Korner-Nievergelt and Tobias Roth">
+
+
+<meta name="date" content="2018-08-13">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="priors.html">
+<link rel="next" href="sem.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="Settings/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-this-book"><i class="fa fa-check"></i>Why this book?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="part"><span><b>I BAYESIAN DATA ANALYSIS</b></span></li>
+<li class="chapter" data-level="1" data-path="PART-I.html"><a href="PART-I.html"><i class="fa fa-check"></i><b>1</b> Introduction to PART I</a><ul>
+<li class="chapter" data-level="" data-path="PART-I.html"><a href="PART-I.html#further-reading"><i class="fa fa-check"></i>Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>2</b> Probability distributions</a><ul>
+<li class="chapter" data-level="2.1" data-path="distributions.html"><a href="distributions.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="distributions.html"><a href="distributions.html#normal-distribution"><i class="fa fa-check"></i><b>2.2</b> Normal distribution</a></li>
+<li class="chapter" data-level="2.3" data-path="distributions.html"><a href="distributions.html#poisson-distribution"><i class="fa fa-check"></i><b>2.3</b> Poisson distribution</a></li>
+<li class="chapter" data-level="2.4" data-path="distributions.html"><a href="distributions.html#gamma-distribution"><i class="fa fa-check"></i><b>2.4</b> Gamma distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i><b>3</b> Prior distributions</a><ul>
+<li class="chapter" data-level="3.1" data-path="priors.html"><a href="priors.html#introduction-1"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>3.2</b> How to choose a prior</a></li>
+<li class="chapter" data-level="3.3" data-path="priors.html"><a href="priors.html#prior-sensitivity"><i class="fa fa-check"></i><b>3.3</b> Prior sensitivity</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>4</b> Ridge regression</a><ul>
+<li class="chapter" data-level="4.1" data-path="ridge.html"><a href="ridge.html#introduction-2"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="sem.html"><a href="sem.html"><i class="fa fa-check"></i><b>5</b> Structural equation model</a><ul>
+<li class="chapter" data-level="5.1" data-path="sem.html"><a href="sem.html#introduction-3"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+</ul></li>
+<li class="part"><span><b>II R FOR ECOLOGISTS</b></span></li>
+<li class="chapter" data-level="6" data-path="PART-II.html"><a href="PART-II.html"><i class="fa fa-check"></i><b>6</b> Introduction to PART II</a><ul>
+<li class="chapter" data-level="6.1" data-path="PART-II.html"><a href="PART-II.html#further-reading-1"><i class="fa fa-check"></i><b>6.1</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="datamanip.html"><a href="datamanip.html"><i class="fa fa-check"></i><b>7</b> Data preparation</a><ul>
+<li class="chapter" data-level="7.1" data-path="datamanip.html"><a href="datamanip.html#basic-operations"><i class="fa fa-check"></i><b>7.1</b> Basic operations</a></li>
+<li class="chapter" data-level="7.2" data-path="datamanip.html"><a href="datamanip.html#conection-to-existing-sql-db"><i class="fa fa-check"></i><b>7.2</b> Conection to existing sql-DB</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="datamanip.html"><a href="datamanip.html#abfragen-zur-artenvielfalt"><i class="fa fa-check"></i><b>7.2.1</b> Abfragen zur Artenvielfalt</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="datamanip.html"><a href="datamanip.html#further-reading-2"><i class="fa fa-check"></i><b>7.3</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="reproducible.html"><a href="reproducible.html"><i class="fa fa-check"></i><b>8</b> Reproducible Research</a><ul>
+<li class="chapter" data-level="8.1" data-path="reproducible.html"><a href="reproducible.html#introduction-4"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="reproducible.html"><a href="reproducible.html#add-citations"><i class="fa fa-check"></i><b>8.2</b> Add citations</a></li>
+<li class="chapter" data-level="8.3" data-path="reproducible.html"><a href="reproducible.html#further-reading-3"><i class="fa fa-check"></i><b>8.3</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="rgis.html"><a href="rgis.html"><i class="fa fa-check"></i><b>9</b> Spatial analyses and maps</a><ul>
+<li class="chapter" data-level="9.1" data-path="rgis.html"><a href="rgis.html#hintergrund"><i class="fa fa-check"></i><b>9.1</b> Hintergrund</a></li>
+<li class="chapter" data-level="9.2" data-path="rgis.html"><a href="rgis.html#coordinate-systems"><i class="fa fa-check"></i><b>9.2</b> Coordinate systems</a></li>
+<li class="chapter" data-level="9.3" data-path="rgis.html"><a href="rgis.html#further-reading-4"><i class="fa fa-check"></i><b>9.3</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="furthertopics.html"><a href="furthertopics.html"><i class="fa fa-check"></i><b>10</b> Further topics</a><ul>
+<li class="chapter" data-level="10.1" data-path="furthertopics.html"><a href="furthertopics.html#bioacoustic-analyse"><i class="fa fa-check"></i><b>10.1</b> Bioacoustic analyse</a></li>
+<li class="chapter" data-level="10.2" data-path="furthertopics.html"><a href="furthertopics.html#python"><i class="fa fa-check"></i><b>10.2</b> Python</a></li>
+</ul></li>
+<li class="part"><span><b>III ECOLOGICAL MODELS</b></span></li>
+<li class="chapter" data-level="11" data-path="PART-III.html"><a href="PART-III.html"><i class="fa fa-check"></i><b>11</b> Introduction to PART III</a><ul>
+<li class="chapter" data-level="11.1" data-path="PART-III.html"><a href="PART-III.html#model-notations"><i class="fa fa-check"></i><b>11.1</b> Model notations</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html"><i class="fa fa-check"></i><b>12</b> Fränzi Modell</a><ul>
+<li class="chapter" data-level="12.1" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#introduction-5"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
+<li class="divider"></li>
+</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Analysis in Ecology with R and Stan</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ridge" class="section level1">
+<h1><span class="header-section-number">4</span> Ridge regression</h1>
+<blockquote>
+<p>We should provide an example in Stan.</p>
+</blockquote>
+<div id="introduction-2" class="section level2">
+<h2><span class="header-section-number">4.1</span> Introduction</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Settings </span>
+<span class="kw">library</span>(R2OpenBUGS)
+bugslocation &lt;-<span class="st"> &quot;C:/Program Files/OpenBUGS323/OpenBugs.exe&quot;</span>      <span class="co"># location of OpenBUGS</span>
+bugsworkingdir &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">getwd</span>(), <span class="st">&quot;BUGS&quot;</span>)                     <span class="co"># Bugs working directory</span>
+
+<span class="co">#-------------------------------------------------------------------------------</span>
+<span class="co"># Simulate fake data </span>
+<span class="co">#-------------------------------------------------------------------------------</span>
+<span class="kw">library</span>(MASS)
+n &lt;-<span class="st"> </span><span class="dv">50</span>                                      <span class="co"># sample size</span>
+b0 &lt;-<span class="st"> </span><span class="fl">1.2</span>
+b &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">2</span>)
+Sigma &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,
+                  <span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,
+                  <span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">2</span>,
+                  <span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">10</span>,<span class="dv">3</span>,
+                  <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">15</span>),<span class="dv">5</span>,<span class="dv">5</span>)
+Sigma
+x &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(<span class="dt">n =</span> n, <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), Sigma)
+
+simresid &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">3</span>)            <span class="co"># residuals</span>
+
+x.z &lt;-<span class="st"> </span>x
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(x)) x.z[,i] &lt;-<span class="st"> </span>(x[,i]<span class="op">-</span><span class="kw">mean</span>(x[,i]))<span class="op">/</span><span class="kw">sd</span>(x[,i]) 
+
+y &lt;-<span class="st"> </span>b0 <span class="op">+</span><span class="st"> </span>x.z<span class="op">%*%</span>b <span class="op">+</span><span class="st"> </span>simresid                    <span class="co"># calculate y, i.e. the data</span>
+
+
+
+<span class="co">#-------------------------------------------------------------------------------</span>
+<span class="co"># Function to generate initial values </span>
+<span class="co">#-------------------------------------------------------------------------------</span>
+inits &lt;-<span class="st"> </span><span class="cf">function</span>() {
+  <span class="kw">list</span>(<span class="dt">b0=</span><span class="kw">runif</span>(<span class="dv">1</span>, <span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>),
+       <span class="dt">b=</span><span class="kw">runif</span>(<span class="dv">5</span>, <span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>),
+       <span class="dt">sigma=</span><span class="kw">runif</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">2</span>))
+}
+
+
+<span class="co">#-------------------------------------------------------------------------------</span>
+<span class="co"># Run OpenBUGS</span>
+<span class="co">#-------------------------------------------------------------------------------</span>
+parameters &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;b0&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;sigma&quot;</span>)
+
+lambda &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">10000</span>)
+bs &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="kw">length</span>(lambda), <span class="dt">nrow=</span><span class="kw">length</span>(b))
+bse &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="kw">length</span>(lambda), <span class="dt">nrow=</span><span class="kw">length</span>(b))
+
+<span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(lambda)){
+datax &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">y=</span><span class="kw">as.numeric</span>(y), <span class="dt">x=</span>x, <span class="dt">n=</span>n, <span class="dt">mb=</span><span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">lambda=</span>lambda[j])
+
+
+fit &lt;-<span class="st"> </span><span class="kw">bugs</span>(datax, inits, parameters, <span class="dt">model.file=</span><span class="st">&quot;ridge_regression.txt&quot;</span>,
+            <span class="dt">n.thin=</span><span class="dv">1</span>, <span class="dt">n.chains=</span><span class="dv">2</span>, <span class="dt">n.burnin=</span><span class="dv">5000</span>, <span class="dt">n.iter=</span><span class="dv">10000</span>,
+            <span class="dt">debug=</span><span class="ot">FALSE</span>, <span class="dt">OpenBUGS.pgm =</span> bugslocation, 
+            <span class="dt">working.directory=</span>bugsworkingdir)
+
+bs[,j] &lt;-<span class="st"> </span>fit<span class="op">$</span>mean<span class="op">$</span>b
+bse[,j] &lt;-<span class="st"> </span>fit<span class="op">$</span>sd<span class="op">$</span>b
+
+}
+
+<span class="kw">range</span>(bs)
+<span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(lambda), <span class="kw">seq</span>(<span class="op">-</span><span class="dv">2</span>, <span class="dv">1</span>, <span class="dt">length=</span><span class="kw">length</span>(lambda)), <span class="dt">type=</span><span class="st">&quot;n&quot;</span>)
+colkey &lt;-<span class="st"> </span><span class="kw">rainbow</span>(<span class="kw">length</span>(b))
+<span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(bs)){
+  <span class="kw">lines</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(lambda), bs[j,], <span class="dt">col=</span>colkey[j], <span class="dt">lwd=</span><span class="dv">2</span>)
+  <span class="kw">lines</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(lambda), bs[j,]<span class="op">-</span><span class="dv">2</span><span class="op">*</span>bse[j,], <span class="dt">col=</span>colkey[j], <span class="dt">lty=</span><span class="dv">3</span>)
+  <span class="kw">lines</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(lambda), bs[j,]<span class="op">+</span><span class="dv">2</span><span class="op">*</span>bse[j,], <span class="dt">col=</span>colkey[j], <span class="dt">lty=</span><span class="dv">3</span>)
+}
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)
+<span class="kw">round</span>(fit<span class="op">$</span>summary,<span class="dv">2</span>)
+
+<span class="co">#-------------------------------------------------------------------------------</span>
+<span class="co"># Run WinBUGS</span>
+<span class="co">#-------------------------------------------------------------------------------</span>
+<span class="kw">library</span>(R2WinBUGS)
+bugsdir &lt;-<span class="st"> &quot;C:/Users/fk/WinBUGS14&quot;</span>         <span class="co"># </span>
+mod &lt;-<span class="st"> </span><span class="kw">bugs</span>(datax, <span class="dt">inits=</span> inits, parameters,
+            <span class="dt">model.file=</span><span class="st">&quot;normlinreg.txt&quot;</span>, <span class="dt">n.chains=</span><span class="dv">2</span>, <span class="dt">n.iter=</span><span class="dv">1000</span>, 
+            <span class="dt">n.burnin=</span><span class="dv">500</span>, <span class="dt">n.thin=</span><span class="dv">1</span>, <span class="dt">debug=</span><span class="ot">TRUE</span>,
+            <span class="dt">bugs.directory=</span>bugsdir, <span class="dt">program=</span><span class="st">&quot;WinBUGS&quot;</span>, <span class="dt">working.directory=</span>bugsworkingdir)
+
+
+<span class="co">#-------------------------------------------------------------------------------</span>
+<span class="co"># Test convergence and make inference</span>
+<span class="co">#-------------------------------------------------------------------------------</span>
+<span class="kw">library</span>(blmeco)
+
+<span class="co"># Make Figure 12.2</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))                            
+<span class="kw">historyplot</span>(fit, <span class="st">&quot;beta0&quot;</span>)
+<span class="kw">historyplot</span>(fit, <span class="st">&quot;beta1&quot;</span>)
+<span class="kw">historyplot</span>(fit, <span class="st">&quot;sigmaRes&quot;</span>)
+
+<span class="co"># Parameter estimates</span>
+<span class="kw">print</span>(fit<span class="op">$</span>summary, <span class="dv">3</span>)
+
+<span class="co"># Make predictions for covariate values between 10 and 30</span>
+newdat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">seq</span>(<span class="dv">10</span>, <span class="dv">30</span>, <span class="dt">length=</span><span class="dv">100</span>))
+Xmat &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>x, <span class="dt">data=</span>newdat)
+predmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span>fit<span class="op">$</span>n.sim, <span class="dt">nrow=</span><span class="kw">nrow</span>(newdat))
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>fit<span class="op">$</span>n.sim) predmat[,i] &lt;-<span class="st"> </span>Xmat<span class="op">%*%</span><span class="kw">c</span>(fit<span class="op">$</span>sims.list<span class="op">$</span>beta0[i], fit<span class="op">$</span>sims.list<span class="op">$</span>beta1[i])
+newdat<span class="op">$</span>lower.bugs &lt;-<span class="st"> </span><span class="kw">apply</span>(predmat, <span class="dv">1</span>, quantile, <span class="dt">prob=</span><span class="fl">0.025</span>)
+newdat<span class="op">$</span>upper.bugs &lt;-<span class="st"> </span><span class="kw">apply</span>(predmat, <span class="dv">1</span>, quantile, <span class="dt">prob=</span><span class="fl">0.975</span>)
+
+<span class="kw">plot</span>(y<span class="op">~</span>x,  <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">las=</span><span class="dv">1</span>, <span class="dt">cex.lab=</span><span class="fl">1.4</span>, <span class="dt">cex.axis=</span><span class="fl">1.2</span>, <span class="dt">type=</span><span class="st">&quot;n&quot;</span>, <span class="dt">main=</span><span class="st">&quot;&quot;</span>)
+<span class="kw">polygon</span>(<span class="kw">c</span>(newdat<span class="op">$</span>x, <span class="kw">rev</span>(newdat<span class="op">$</span>x)), <span class="kw">c</span>(newdat<span class="op">$</span>lower.bugs, <span class="kw">rev</span>(newdat<span class="op">$</span>upper.bugs)), <span class="dt">col=</span><span class="kw">grey</span>(<span class="fl">0.7</span>), <span class="dt">border=</span><span class="ot">NA</span>)
+<span class="kw">abline</span>(<span class="kw">c</span>(fit<span class="op">$</span>mean<span class="op">$</span>beta0, fit<span class="op">$</span>mean<span class="op">$</span>beta1), <span class="dt">lwd=</span><span class="dv">2</span>)
+<span class="kw">box</span>()
+<span class="kw">points</span>(x,y)</code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="priors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sem.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/15-ridge.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

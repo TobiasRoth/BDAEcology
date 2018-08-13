@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="reproducible.html">
-<link rel="next" href="furthertopics.html">
+<link rel="prev" href="ridge.html">
+<link rel="next" href="PART-II.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -180,45 +180,109 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="rgis" class="section level1">
-<h1><span class="header-section-number">9</span> Spatial analyses and maps</h1>
-<div id="hintergrund" class="section level2">
-<h2><span class="header-section-number">9.1</span> Hintergrund</h2>
-<p>Some useful packages - <code>raster</code>: Very efficient for raster data. - <code>sf</code>: Very efficient package for data other than raster data. It also link to GEOS, GDAL proj.4.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
-<span class="kw">library</span>(raster)</code></pre></div>
-</div>
-<div id="coordinate-systems" class="section level2">
-<h2><span class="header-section-number">9.2</span> Coordinate systems</h2>
-<p>The following are some definitions of coordinate systems that I often use:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch1903 &lt;-<span class="st"> </span><span class="kw">CRS</span>(<span class="st">&quot;+init=epsg:21781&quot;</span>)       <span class="co"># Old Swiss grid 1903</span>
-chLV95 &lt;-<span class="st"> </span><span class="kw">CRS</span>(<span class="st">&quot;+init=epsg:2056&quot;</span>)        <span class="co"># New Swiss grid 1903+ </span>
-wgs84 &lt;-<span class="st">   </span><span class="kw">CRS</span>(<span class="st">&quot;+init=epsg:4326&quot;</span>)       <span class="co"># WGS 84</span></code></pre></div>
-<p>The following code transfers a spatial point from one coordinate reference system to an ohter:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pt &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="fl">650007.0</span>, <span class="dt">y=</span><span class="fl">227023.0</span>)
-<span class="kw">coordinates</span>(pt) &lt;-<span class="st"> </span><span class="er">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>y
-<span class="kw">proj4string</span>(pt) &lt;-<span class="st">   </span>ch1903 
-<span class="kw">spTransform</span>(pt, chLV95)</code></pre></div>
-<pre><code>## class       : SpatialPoints 
-## features    : 1 
-## extent      : 2650007, 2650007, 1227023, 1227023  (xmin, xmax, ymin, ymax)
-## coord. ref. : +init=epsg:2056 +proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +k_0=1 +x_0=2600000 +y_0=1200000 +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs</code></pre>
-</div>
-<div id="further-reading-4" class="section level2">
-<h2><span class="header-section-number">9.3</span> Further reading</h2>
-<ul>
-<li><a href="https://geocompr.robinlovelace.net">Geocomputation with R</a>: This book is aimed at people who want to do spatial data analysis, visualization and modeling using open source software and reproducible workflows.</li>
-</ul>
+<div id="sem" class="section level1">
+<h1><span class="header-section-number">5</span> Structural equation model</h1>
+<blockquote>
+<p>We should provide an example in Stan.</p>
+</blockquote>
+<div id="introduction-3" class="section level2">
+<h2><span class="header-section-number">5.1</span> Introduction</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">------------------------------------------------------------------------------------------------------</span>
+<span class="co"># General settings</span>
+<span class="co">#------------------------------------------------------------------------------------------------------</span>
+<span class="kw">library</span>(MASS)
+<span class="kw">library</span>(rjags)
+<span class="kw">library</span>(MCMCpack)
+
+<span class="co">#------------------------------------------------------------------------------------------------------</span>
+<span class="co"># Simulation</span>
+<span class="co">#------------------------------------------------------------------------------------------------------</span>
+n &lt;-<span class="st"> </span><span class="dv">100</span>
+heffM &lt;-<span class="st"> </span><span class="fl">0.6</span>                                <span class="co"># effect of H on M</span>
+heffCS &lt;-<span class="st"> </span><span class="fl">0.0</span>                              <span class="co"># effect of H on Clutch size</span>
+meffCS &lt;-<span class="st"> </span><span class="fl">0.6</span>                               <span class="co"># effect of M on Clutch size</span>
+
+SigmaM &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="fl">0.1</span>,<span class="fl">0.04</span>,<span class="fl">0.04</span>,<span class="fl">0.1</span>),<span class="dv">2</span>,<span class="dv">2</span>)
+meffm1 &lt;-<span class="st"> </span><span class="fl">0.6</span>
+meffm2 &lt;-<span class="st"> </span><span class="fl">0.7</span>
+
+SigmaH &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="fl">0.1</span>,<span class="fl">0.04</span>,<span class="fl">0.04</span>,<span class="fl">0.1</span>),<span class="dv">2</span>,<span class="dv">2</span>)
+meffh1 &lt;-<span class="st"> </span><span class="fl">0.6</span>
+meffh2 &lt;-<span class="st"> </span><span class="op">-</span><span class="fl">0.7</span>
+
+<span class="co"># Latente Variablen</span>
+H &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)
+M &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, heffM <span class="op">*</span><span class="st"> </span>H, <span class="fl">0.1</span>)
+
+<span class="co"># Clutch size</span>
+CS &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, heffCS <span class="op">*</span><span class="st"> </span>H <span class="op">+</span><span class="st"> </span>meffCS <span class="op">*</span><span class="st"> </span>M, <span class="fl">0.1</span>)
+
+<span class="co"># Indicators</span>
+eM &lt;-<span class="st"> </span><span class="kw">cbind</span>(meffm1 <span class="op">*</span><span class="st"> </span>M, meffm2 <span class="op">*</span><span class="st"> </span>M)
+datM &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> n)
+eH &lt;-<span class="st"> </span><span class="kw">cbind</span>(meffh1 <span class="op">*</span><span class="st"> </span>H, meffh2 <span class="op">*</span><span class="st"> </span>H)
+datH &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> n)
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) {
+  datM[i,] &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(<span class="dv">1</span>, eM[i,], SigmaM)
+  datH[i,] &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(<span class="dv">1</span>, eH[i,], SigmaH)
+}
+
+<span class="co">#------------------------------------------------------------------------------</span>
+<span class="co"># JAGS Model  </span>
+<span class="co">#------------------------------------------------------------------------------</span>
+dat &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">datM =</span> datM, <span class="dt">datH =</span> datH, <span class="dt">n =</span> n, <span class="dt">CS =</span> CS, <span class="co">#H = H, M = M,  </span>
+            <span class="dt">S3 =</span>  <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="dt">nrow=</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">1</span>)
+
+<span class="co"># Function to create initial values</span>
+inits &lt;-<span class="st"> </span><span class="cf">function</span>() {
+  <span class="kw">list</span>(
+    <span class="dt">meffh =</span> <span class="kw">runif</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),
+    <span class="dt">meffm =</span> <span class="kw">runif</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),
+    <span class="dt">heffM =</span> <span class="kw">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),
+    <span class="dt">heffCS =</span> <span class="kw">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),
+    <span class="dt">meffCS =</span> <span class="kw">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),
+    <span class="dt">tauCS =</span> <span class="kw">runif</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>),
+    <span class="dt">tauMH =</span> <span class="kw">runif</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>),
+    <span class="dt">tauH =</span> <span class="kw">rwish</span>(<span class="dv">3</span>,<span class="kw">matrix</span>(<span class="kw">c</span>(.<span class="dv">02</span>,<span class="dv">0</span>,<span class="dv">0</span>,.<span class="dv">04</span>),<span class="dt">nrow=</span><span class="dv">2</span>)),
+    <span class="dt">tauM =</span> <span class="kw">rwish</span>(<span class="dv">3</span>,<span class="kw">matrix</span>(<span class="kw">c</span>(.<span class="dv">02</span>,<span class="dv">0</span>,<span class="dv">0</span>,.<span class="dv">04</span>),<span class="dt">nrow=</span><span class="dv">2</span>))
+<span class="co">#    M = as.numeric(rep(0, n))</span>
+  )
+}
+
+t.n.thin &lt;-<span class="st">      </span><span class="dv">50</span>
+t.n.chains &lt;-<span class="st">     </span><span class="dv">2</span>
+t.n.burnin &lt;-<span class="st"> </span><span class="dv">20000</span>
+t.n.iter &lt;-<span class="st">   </span><span class="dv">50000</span>
+
+<span class="co"># Run JAGS</span>
+jagres &lt;-<span class="st"> </span><span class="kw">jags.model</span>(<span class="st">&#39;JAGS/BUGSmod1.R&#39;</span>,<span class="dt">data =</span> dat, <span class="dt">n.chains =</span> t.n.chains, <span class="dt">inits =</span> inits, <span class="dt">n.adapt =</span> t.n.burnin)
+
+params &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;meffh&quot;</span>, <span class="st">&quot;meffm&quot;</span>, <span class="st">&quot;heffM&quot;</span>, <span class="st">&quot;heffCS&quot;</span>, <span class="st">&quot;meffCS&quot;</span>)
+mod &lt;-<span class="st"> </span><span class="kw">coda.samples</span>(jagres, params, <span class="dt">n.iter=</span>t.n.iter, <span class="dt">thin=</span>t.n.thin)
+res &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">data.frame</span>(<span class="kw">summary</span>(mod)<span class="op">$</span>quantiles[, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span>)]), <span class="dv">3</span>)
+res<span class="op">$</span>TRUEVALUE &lt;-<span class="st"> </span><span class="kw">c</span>(heffCS, heffM, meffCS, meffh1, meffh2, meffm1, meffm2)
+res
+
+<span class="co"># Traceplots</span>
+post &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">rbind</span>(mod[[<span class="dv">1</span>]], mod[[<span class="dv">2</span>]]))
+<span class="kw">names</span>(post) &lt;-<span class="st"> </span><span class="kw">dimnames</span>(mod[[<span class="dv">1</span>]])[[<span class="dv">2</span>]]
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))
+param &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;meffh[1]&quot;</span>, <span class="st">&quot;meffh[2]&quot;</span>, <span class="st">&quot;meffm[1]&quot;</span>, <span class="st">&quot;meffm[2]&quot;</span>, <span class="st">&quot;heffM&quot;</span>, <span class="st">&quot;heffCS&quot;</span>, <span class="st">&quot;meffCS&quot;</span>)
+<span class="kw">traceplot</span>(mod[, <span class="kw">match</span>(param, <span class="kw">names</span>(post))])</code></pre></div>
+
 
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="reproducible.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="furthertopics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ridge.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="PART-II.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -248,7 +312,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/23-rgis.Rmd",
+"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/16-sem.Rmd",
 "text": "Edit"
 },
 "download": null,

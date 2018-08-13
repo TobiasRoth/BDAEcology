@@ -1,0 +1,96 @@
+
+# Structural equation model {#sem}
+
+> We should provide an example in Stan.
+
+## Introduction
+
+
+
+```r
+------------------------------------------------------------------------------------------------------
+# General settings
+#------------------------------------------------------------------------------------------------------
+library(MASS)
+library(rjags)
+library(MCMCpack)
+
+#------------------------------------------------------------------------------------------------------
+# Simulation
+#------------------------------------------------------------------------------------------------------
+n <- 100
+heffM <- 0.6                                # effect of H on M
+heffCS <- 0.0                              # effect of H on Clutch size
+meffCS <- 0.6                               # effect of M on Clutch size
+
+SigmaM <- matrix(c(0.1,0.04,0.04,0.1),2,2)
+meffm1 <- 0.6
+meffm2 <- 0.7
+
+SigmaH <- matrix(c(0.1,0.04,0.04,0.1),2,2)
+meffh1 <- 0.6
+meffh2 <- -0.7
+
+# Latente Variablen
+H <- rnorm(n, 0, 1)
+M <- rnorm(n, heffM * H, 0.1)
+
+# Clutch size
+CS <- rnorm(n, heffCS * H + meffCS * M, 0.1)
+
+# Indicators
+eM <- cbind(meffm1 * M, meffm2 * M)
+datM <- matrix(NA, ncol = 2, nrow = n)
+eH <- cbind(meffh1 * H, meffh2 * H)
+datH <- matrix(NA, ncol = 2, nrow = n)
+for(i in 1:n) {
+  datM[i,] <- mvrnorm(1, eM[i,], SigmaM)
+  datH[i,] <- mvrnorm(1, eH[i,], SigmaH)
+}
+
+#------------------------------------------------------------------------------
+# JAGS Model  
+#------------------------------------------------------------------------------
+dat <- list(datM = datM, datH = datH, n = n, CS = CS, #H = H, M = M,  
+            S3 =  matrix(c(1,0,0,1),nrow=2)/1)
+
+# Function to create initial values
+inits <- function() {
+  list(
+    meffh = runif(2, 0, 0.1),
+    meffm = runif(2, 0, 0.1),
+    heffM = runif(1, 0, 0.1),
+    heffCS = runif(1, 0, 0.1),
+    meffCS = runif(1, 0, 0.1),
+    tauCS = runif(1, 0.1, 0.3),
+    tauMH = runif(1, 0.1, 0.3),
+    tauH = rwish(3,matrix(c(.02,0,0,.04),nrow=2)),
+    tauM = rwish(3,matrix(c(.02,0,0,.04),nrow=2))
+#    M = as.numeric(rep(0, n))
+  )
+}
+
+t.n.thin <-      50
+t.n.chains <-     2
+t.n.burnin <- 20000
+t.n.iter <-   50000
+
+# Run JAGS
+jagres <- jags.model('JAGS/BUGSmod1.R',data = dat, n.chains = t.n.chains, inits = inits, n.adapt = t.n.burnin)
+
+params <- c("meffh", "meffm", "heffM", "heffCS", "meffCS")
+mod <- coda.samples(jagres, params, n.iter=t.n.iter, thin=t.n.thin)
+res <- round(data.frame(summary(mod)$quantiles[, c(3, 1, 5)]), 3)
+res$TRUEVALUE <- c(heffCS, heffM, meffCS, meffh1, meffh2, meffm1, meffm2)
+res
+
+# Traceplots
+post <- data.frame(rbind(mod[[1]], mod[[2]]))
+names(post) <- dimnames(mod[[1]])[[2]]
+par(mfrow = c(3,3))
+param <- c("meffh[1]", "meffh[2]", "meffm[1]", "meffm[2]", "heffM", "heffCS", "meffCS")
+traceplot(mod[, match(param, names(post))])
+```
+
+
+
