@@ -1,5 +1,4 @@
 
-
 # Prerequisites: What is R and basic statistical terms
 
 
@@ -84,9 +83,22 @@ $\tau = 1-\frac{4I}{(n(n-1))}$
 ## Principal components analyses PCA
 rotation of the coordinate system
 
-<div class="figure" style="text-align: left">
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-3-1.png" alt="Principal components are eigenvectors of the covariance or correlation matrix" width="240" />
-<p class="caption">(\#fig:unnamed-chunk-3)Principal components are eigenvectors of the covariance or correlation matrix</p>
+
+```r
+x <- rnorm(100, 5, 1)
+y <- rnorm(100, 0.8*x, 1)
+pca <- princomp(cbind(x,y), cor=TRUE)
+par(mar=c(3,3,0.3,0.3))
+plot(x-mean(x),y-mean(y), asp=1, pch=16, col="blue")
+pc1 <- eigen(cov(cbind(x,y)))$vectors[,1]
+pc2 <- eigen(cov(cbind(x,y)))$vectors[,2]
+abline(0, pc1[2]/pc1[1], col="green", lwd=2)
+abline(0, pc2[2]/pc2[1], col="green", lwd=2)
+```
+
+<div class="figure">
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-2-1.png" alt="Principal components are eigenvectors of the covariance or correlation matrix" width="768" />
+<p class="caption">(\#fig:unnamed-chunk-2)Principal components are eigenvectors of the covariance or correlation matrix</p>
 </div>
 
 
@@ -133,9 +145,9 @@ summary(pca)
 ```
 ## Importance of components:
 ##                           Comp.1    Comp.2
-## Standard deviation     1.2875974 0.5848871
-## Proportion of Variance 0.8289536 0.1710464
-## Cumulative Proportion  0.8289536 1.0000000
+## Standard deviation     1.2746692 0.6125508
+## Proportion of Variance 0.8123908 0.1876092
+## Cumulative Proportion  0.8123908 1.0000000
 ```
 outlook: components with low variance are shrinked to a higher degree in Ridge regression
 
@@ -160,6 +172,7 @@ Quantification of uncertainty only possible if
 2. the observations are a random sample from the population of interest
 
 Solutions:  
+
 1. working with models and reporting assumptions  
 2. study design
 
@@ -167,6 +180,7 @@ Solutions:
 
 
 Example: Number of stats courses before starting a PhD among all PhD students
+
 
 ```r
 # simulate the virtual true data
@@ -181,7 +195,7 @@ y <- sample(statscourses, 12, replace=FALSE)
 ```
 
 
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-7-1.png" width="432" style="display: block; margin: auto;" />
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-6-1.png" width="768" />
 
 
 
@@ -191,10 +205,10 @@ Frequentist solution: How would the sample mean scatter, if we repeat the study 
 
 Bayesian solution: For any possible value, what is the probability that it is the true population mean?  
 
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-8-1.png" width="336" style="display: block; margin: auto;" />
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-7-1.png" width="768" />
 
 Standard deviation and standard error  
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-9-1.png" width="384" style="display: block; margin: auto;" />
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-8-1.png" width="768" />
 
 
 
@@ -207,7 +221,7 @@ SE = SD of posterior distribution
 ## Central limit theorem / law of large numbers
   
     
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-10-1.png" width="384" style="display: block; margin: auto;" />
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-9-1.png" width="768" />
 
 
 
@@ -222,7 +236,7 @@ normal distribution = Gaussian distribution
 
   
     
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-11-1.png" width="384" style="display: block; margin: auto;" />
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-10-1.png" width="768" />
 
 
 
@@ -284,7 +298,7 @@ $p(\theta|y) = Norm(\mu_n, \tau_n)$, where
 
 Posterior mean = weighted average between prior mean and $\bar{y}$ with weights
 equal to the precisions ($\frac{1}{\tau_0^2}$ and $\frac{n}{\sigma^2}$)
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-13-1.png" width="384" style="display: block; margin: auto;" />
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-12-1.png" width="768" />
 
 
 
@@ -326,7 +340,7 @@ $\mu_n= \frac{\kappa_0}{\kappa_0+n}\mu_0 + \frac{n}{\kappa_0+n}\bar{y}$
 
 
 Joint, marginal and conditional posterior distributions
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-15-1.png" width="384" style="display: block; margin: auto;" />
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-14-1.png" width="768" />
 
 
 

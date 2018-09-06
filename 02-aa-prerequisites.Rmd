@@ -1,27 +1,3 @@
-```{r include=FALSE, cache=FALSE}
-#  This script will be run at the start of each chapter
-
-rm(list = ls())
-
-# Libraries
-library(knitr)
-library(blmeco)
-library(tidyverse)
-
-# Knitr settings 
-options(scipen = 6);
-opts_chunk$set(echo = TRUE, hide = TRUE, cache = TRUE, warning = FALSE, message = FALSE,
-               fig.asp = .45, fig.width = 8)
-
-# Darstellung von R-Berechnungen innerhalb von Text
-inline_hook <- function(x) {
-  if (is.numeric(x)) {
-    x <- format(x, nsmall = 2, digits = 2)
-  }
-  x
-}
-knit_hooks$set(inline = inline_hook)
-```
 # Prerequisites: What is R and basic statistical terms
 
 
@@ -106,7 +82,7 @@ $\tau = 1-\frac{4I}{(n(n-1))}$
 ## Principal components analyses PCA
 rotation of the coordinate system
 
-```{r,fig.width=2.5, fig.height=2.5, echo=FALSE, fig.align='left', fig.cap='Principal components are eigenvectors of the covariance or correlation matrix'}
+```{r, fig.cap='Principal components are eigenvectors of the covariance or correlation matrix'}
 x <- rnorm(100, 5, 1)
 y <- rnorm(100, 0.8*x, 1)
 pca <- princomp(cbind(x,y), cor=TRUE)
@@ -166,6 +142,7 @@ Quantification of uncertainty only possible if
 2. the observations are a random sample from the population of interest
 
 Solutions:  
+
 1. working with models and reporting assumptions  
 2. study design
 
@@ -173,6 +150,7 @@ Solutions:
 
 
 Example: Number of stats courses before starting a PhD among all PhD students
+
 ```{r}
 # simulate the virtual true data
 set.seed(235325)   # set seed for random number generator
@@ -186,7 +164,7 @@ y <- sample(statscourses, 12, replace=FALSE)
 ```
 
 
-```{r, fig.width=4.5, fig.height=3,  fig.align='center', fig.cap='', echo=FALSE}
+```{r, fig.cap='', echo=FALSE}
 par(mar=c(4,3,1,1))
 hist(statscourses, breaks=seq(-0.5, 10.5, by=1), main=NA)     # draw histogram of the population
 rug(jitter(y))                                       # add the sample
@@ -205,7 +183,7 @@ Frequentist solution: How would the sample mean scatter, if we repeat the study 
 
 Bayesian solution: For any possible value, what is the probability that it is the true population mean?  
 
-```{r, fig.width=3.5, fig.height=2.5, fig.align='center', fig.cap='',echo=FALSE, message=FALSE}
+```{r, fig.cap='',echo=FALSE, message=FALSE}
 library(arm)
 nsim <- 5000
 # frequentist theoretical uncertainty of mean
@@ -231,7 +209,7 @@ text(0.65, 1.8, "Posterior distribution of the mean", col="violet", adj=c(0,1), 
 ```
 
 Standard deviation and standard error  
-```{r, fig.width=4, fig.height=3.2,  fig.align='center', fig.cap='',echo=FALSE, message=FALSE}
+```{r, fig.cap='',echo=FALSE, message=FALSE}
 par(mar=c(4,4,0.1,6), mgp=c(2,0.5,0), tck=-0.01, cex.lab=0.8, cex.axis=0.7)
 hist(statscourses, breaks=seq(-0.5, 10.5, by=1), main=NA, freq=FALSE, ylim=c(0, 2),
      las=1)     # draw histogram of the population
@@ -263,7 +241,7 @@ SE = SD of posterior distribution
 ## Central limit theorem / law of large numbers
   
     
-```{r, fig.width=4, fig.height=3.2,  fig.align='center', fig.cap='',echo=FALSE, message=FALSE}
+```{r, fig.cap='',echo=FALSE, message=FALSE}
 par(mar=c(4,4,0.1,6), mgp=c(2,0.5,0), tck=-0.01)
 
 nn <- c(120, 1200)
@@ -294,7 +272,7 @@ normal distribution = Gaussian distribution
 
   
     
-```{r, fig.width=4, fig.height=3.2, fig.align='center', fig.cap='',echo=FALSE, message=FALSE}
+```{r, fig.cap='',echo=FALSE, message=FALSE}
 par(mar=c(4,4,0.1,6), mgp=c(2,0.5,0), tck=-0.01)
 
 hist(my, main=NA, xlab="Mean(y)", ylim=c(0, 14), freq=FALSE, las=1)
@@ -373,7 +351,7 @@ $p(\theta|y) = Norm(\mu_n, \tau_n)$, where
 
 Posterior mean = weighted average between prior mean and $\bar{y}$ with weights
 equal to the precisions ($\frac{1}{\tau_0^2}$ and $\frac{n}{\sigma^2}$)
-```{r, fig.width=4, fig.height=2.7, fig.align='center', fig.cap='',echo=FALSE, results='hide'}
+```{r, fig.cap='',echo=FALSE, results='hide'}
 library(blmeco)
 par(mar=c(4,4,0.8,0.1), mgp=c(2,0.5,0), tck=-0.01)
 
@@ -420,7 +398,7 @@ $\mu_n= \frac{\kappa_0}{\kappa_0+n}\mu_0 + \frac{n}{\kappa_0+n}\bar{y}$
 
 
 Joint, marginal and conditional posterior distributions
-```{r,fig.width=4, fig.height=3, fig.align='center', fig.cap='',echo=FALSE}
+```{r, fig.cap='',echo=FALSE}
 mod <- lm(y~1)
 bsim <- sim(mod, n.sim=20000)
 xrange <- range(bsim@coef)
