@@ -23,4 +23,7 @@ xxx
 ## Gamma distribution
 xxx
 
+### Cauchy distribution {#cauchydistri}
+We sometimes use the Cauchy distiribution to specify the prior distirbution of the standart deviation and similar parameters in a model. An example for this is the regression model that we used to introduce Stan (Chapter \@ref(firststanmod)).
+
 

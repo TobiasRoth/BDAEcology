@@ -1,4 +1,5 @@
 
+
 # Prerequisites: What is R and basic statistical terms
 
 
@@ -84,8 +85,8 @@ $\tau = 1-\frac{4I}{(n(n-1))}$
 rotation of the coordinate system
 
 <div class="figure" style="text-align: left">
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-2-1.png" alt="Principal components are eigenvectors of the covariance or correlation matrix" width="240" />
-<p class="caption">(\#fig:unnamed-chunk-2)Principal components are eigenvectors of the covariance or correlation matrix</p>
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-3-1.png" alt="Principal components are eigenvectors of the covariance or correlation matrix" width="240" />
+<p class="caption">(\#fig:unnamed-chunk-3)Principal components are eigenvectors of the covariance or correlation matrix</p>
 </div>
 
 
@@ -132,9 +133,9 @@ summary(pca)
 ```
 ## Importance of components:
 ##                           Comp.1    Comp.2
-## Standard deviation     1.2798982 0.6015485
-## Proportion of Variance 0.8190697 0.1809303
-## Cumulative Proportion  0.8190697 1.0000000
+## Standard deviation     1.2875974 0.5848871
+## Proportion of Variance 0.8289536 0.1710464
+## Cumulative Proportion  0.8289536 1.0000000
 ```
 outlook: components with low variance are shrinked to a higher degree in Ridge regression
 
@@ -180,7 +181,7 @@ y <- sample(statscourses, 12, replace=FALSE)
 ```
 
 
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-6-1.png" width="432" style="display: block; margin: auto;" />
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-7-1.png" width="432" style="display: block; margin: auto;" />
 
 
 
@@ -190,10 +191,10 @@ Frequentist solution: How would the sample mean scatter, if we repeat the study 
 
 Bayesian solution: For any possible value, what is the probability that it is the true population mean?  
 
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-7-1.png" width="336" style="display: block; margin: auto;" />
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-8-1.png" width="336" style="display: block; margin: auto;" />
 
 Standard deviation and standard error  
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-8-1.png" width="384" style="display: block; margin: auto;" />
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-9-1.png" width="384" style="display: block; margin: auto;" />
 
 
 
@@ -206,7 +207,7 @@ SE = SD of posterior distribution
 ## Central limit theorem / law of large numbers
   
     
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-9-1.png" width="384" style="display: block; margin: auto;" />
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-10-1.png" width="384" style="display: block; margin: auto;" />
 
 
 
@@ -221,7 +222,7 @@ normal distribution = Gaussian distribution
 
   
     
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-10-1.png" width="384" style="display: block; margin: auto;" />
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-11-1.png" width="384" style="display: block; margin: auto;" />
 
 
 
@@ -283,7 +284,7 @@ $p(\theta|y) = Norm(\mu_n, \tau_n)$, where
 
 Posterior mean = weighted average between prior mean and $\bar{y}$ with weights
 equal to the precisions ($\frac{1}{\tau_0^2}$ and $\frac{n}{\sigma^2}$)
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-12-1.png" width="384" style="display: block; margin: auto;" />
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-13-1.png" width="384" style="display: block; margin: auto;" />
 
 
 
@@ -325,7 +326,7 @@ $\mu_n= \frac{\kappa_0}{\kappa_0+n}\mu_0 + \frac{n}{\kappa_0+n}\bar{y}$
 
 
 Joint, marginal and conditional posterior distributions
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-14-1.png" width="384" style="display: block; margin: auto;" />
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-15-1.png" width="384" style="display: block; margin: auto;" />
 
 
 

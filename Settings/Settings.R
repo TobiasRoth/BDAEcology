@@ -9,7 +9,7 @@ library(tidyverse)
 
 # Knitr settings 
 options(scipen = 6);
-opts_chunk$set(echo = TRUE, hide = TRUE, cache = TRUE, warning = FALSE, message = FALSE,
+opts_chunk$set(echo = TRUE, hide = TRUE, cache = FALSE, warning = FALSE, message = FALSE,
                fig.asp = .45, fig.width = 8)
 
 # Darstellung von R-Berechnungen innerhalb von Text

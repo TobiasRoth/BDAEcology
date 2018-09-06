@@ -8,7 +8,7 @@ Markov chain Monte Carlo (MCMC) simulation techniques were developed in the mid-
 ## Install `rstan`
 In this book we use the program [Stan](http://mc-stan.org) to draw random samples from the joint posterior distribution of the model parameters given a model, the data, prior distributions, and initial values. To do so, it uses the “no-U-turn sampler,” which is a type of Hamiltonian Monte Carlo simulation [@Hoffman2014; @Betancourt2013_b], and optimization-based point estimation. These algorithms are more efficient than the ones implemented in BUGS programs and they can handle larger data sets. Stan works particularly well for hierar- chical models [@Betancourt2013]. Stan runs on Windows, Mac, and Linux and can be used via the R interface `rstan`. Stan is automatically installed when the R package `rstan` is installed. For [installing rstan](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started), it is advised to follow closely the system-specific instructions. 
 
-## Writing a Stan model
+## Writing a Stan model {#firststanmod}
 The statistical model is written in the Stan language and saved in a text file. The Stan language is rather strict, forcing the user to write unambiguous models. Stan is very well documented and the [Stan Documentation](http://mc-stan.org/users/documentation/index.html) contains a comprehensive Language Manual, a Wiki documentation and various tutorials. 
 
 We here provide a normal regression with one predictor variable as a worked example. The entire Stan model is as following (saved as `linreg.stan`)
@@ -37,17 +37,17 @@ model {
 
 A Stan model consists of different named blocks. These blocks are (from first to last): data, transformed data, parameters, trans- formed parameters, model, and generated quantities. The blocks must appear in this order. The model block is mandatory; all other blocks are optional. 
 
-In the *data* block, the type, dimension, and name of every variable has to be declared. Optionally, the range of possible values can be specified. For example, `vector[N] y;` means that y is a vector (type real) of length N, and `int<lower=0> N; means that N is an integer with nonnegative values (the bounds, here 0, are included). Note that the restriction to a possible range of values is not strictly necessary but this will help specifying the correct model and it will improve speed. We also see that each line needs to be closed by a column sign. In the parameters block, all model parameters have to be defined. The coefficients of the linear predictor constitute a vector of length 2, `vector[2] beta;. Alternatively, `real beta[2];` could be used. The sigma parameter is a one-number parameter that has to be positive, therefore `real<lower=0> sigma;`.
+In the *data* block, the type, dimension, and name of every variable has to be declared. Optionally, the range of possible values can be specified. For example, `vector[N] y;` means that y is a vector (type real) of length N, and `int<lower=0> N;` means that N is an integer with nonnegative values (the bounds, here 0, are included). Note that the restriction to a possible range of values is not strictly necessary but this will help specifying the correct model and it will improve speed. We also see that each line needs to be closed by a column sign. In the parameters block, all model parameters have to be defined. The coefficients of the linear predictor constitute a vector of length 2, `vector[2] beta;`. Alternatively, `real beta[2];` could be used. The sigma parameter is a one-number parameter that has to be positive, therefore `real<lower=0> sigma;`.
 
-The *model* block contains the model specification. Stan functions can handle vectors and we do not have to loop through all observations as typical for BUGS . Here, we use a Cauchy distribution as a prior distribution for sigma. This distribution can have negative values, but because we defined the lower limit of sigma to be 0 in the parameters block, the prior distri- bution actually used in the model is a truncated Cauchy distribution (truncated at zero). In Chapter 15 we explain how to choose prior distributions.
+The *model* block contains the model specification. Stan functions can handle vectors and we do not have to loop over all observations as typical for BUGS . Here, we use a [Cauchy distribution](#cauchydistri) as a prior distribution for sigma. This distribution can have negative values, but because we defined the lower limit of sigma to be 0 in the parameters block, the prior distribution actually used in the model is a truncated Cauchy distribution (truncated at zero). In Chapter \@ref(choosepriors) we explain how to choose prior distributions.
 
 Further characteristics of the Stan language that are good to know include: The variance parameter for the normal distribution is specified as the standard deviation (like in R but different from BUGS, where the precision is used). If no prior is specified, Stan uses a uniform prior over the range of possible values as specified in the parameter block. Variable names must not contain periods, for example, `x.z` would not be allowed, but `x_z` is allowed. To comment out a line, use double forward-slashes `//`. 
 
 
 ## Run Stan from R
-We fit the model to the data that has been produced in Chapter 4. There, the vectors x and y have been simulated and n is the sample size. Stan needs a vector containing the names of the data objects. In our case, x, y, and N are objects that exist in the R console.
+We fit the model to simulated data. Stan needs a vector containing the names of the data objects. In our case, `x`, `y,` and `N` are objects that exist in the R console.
 
-The function stan starts Stan and returns an object containing MCMCs for every model parameter. We have to specify the name of the file that contains the model specification, the data, the number of chains, and the number of iterations per chain we would like to have. The first half of the iterations of each chain is declared as the warm-up. During the warm-up, Stan is not simulating a Markov chain, because in every step the algorithm is adapted. After the warm-up the algorithm is fixed and Stan simulates Markov chains.
+The function `stan()` starts Stan and returns an object containing MCMCs for every model parameter. We have to specify the name of the file that contains the model specification, the data, the number of chains, and the number of iterations per chain we would like to have. The first half of the iterations of each chain is declared as the warm-up. During the warm-up, Stan is not simulating a Markov chain, because in every step the algorithm is adapted. After the warm-up the algorithm is fixed and Stan simulates Markov chains.
 
 
 ```r
@@ -68,11 +68,11 @@ y <- b0 + b1*x + simresid                    # calculate y, i.e. the data
 datax <- list(n=length(y), y=y, x=x)
 
 # Run STAN
-fit <- stan(file = "stanmodels/linreg.stan", data=datax)
+fit <- stan(file = "stanmodels/linreg.stan", data=datax, verbose = FALSE)
 ```
 
 ```
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:4:
@@ -87,7 +87,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## <command line>:6:9: note: previous definition is here
 ## #define BOOST_NO_CXX11_RVALUE_REFERENCES 1
 ##         ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:4:
@@ -100,7 +100,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RcppEigen/include/Eigen/src/Core/util/ReenableStupidWarnings.h:10:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
 ##     #pragma clang diagnostic pop
 ##                              ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:4:
@@ -113,7 +113,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RcppEigen/include/Eigen/src/Core/util/ReenableStupidWarnings.h:10:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
 ##     #pragma clang diagnostic pop
 ##                              ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:4:
@@ -127,7 +127,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RcppEigen/include/Eigen/src/Core/util/ReenableStupidWarnings.h:10:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
 ##     #pragma clang diagnostic pop
 ##                              ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:4:
@@ -140,7 +140,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RcppEigen/include/Eigen/src/Core/util/ReenableStupidWarnings.h:10:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
 ##     #pragma clang diagnostic pop
 ##                              ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:4:
@@ -154,7 +154,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RcppEigen/include/Eigen/src/Core/util/ReenableStupidWarnings.h:10:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
 ##     #pragma clang diagnostic pop
 ##                              ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:4:
@@ -167,7 +167,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RcppEigen/include/Eigen/src/Core/util/ReenableStupidWarnings.h:10:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
 ##     #pragma clang diagnostic pop
 ##                              ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:4:
@@ -180,7 +180,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RcppEigen/include/Eigen/src/Core/util/ReenableStupidWarnings.h:10:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
 ##     #pragma clang diagnostic pop
 ##                              ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:4:
@@ -193,7 +193,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RcppEigen/include/Eigen/src/Core/util/ReenableStupidWarnings.h:10:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
 ##     #pragma clang diagnostic pop
 ##                              ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:4:
@@ -215,7 +215,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /usr/local/clang4/bin/../include/c++/v1/__config:388:52: note: expanded from macro '_LIBCPP_BEGIN_NAMESPACE_STD'
 ## #define _LIBCPP_BEGIN_NAMESPACE_STD namespace std {inline namespace _LIBCPP_NAMESPACE {
 ##                                                    ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:12:
@@ -226,7 +226,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RcppEigen/include/Eigen/src/Core/util/ReenableStupidWarnings.h:10:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
 ##     #pragma clang diagnostic pop
 ##                              ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:12:
@@ -237,7 +237,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RcppEigen/include/Eigen/src/Core/util/ReenableStupidWarnings.h:10:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
 ##     #pragma clang diagnostic pop
 ##                              ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:12:
@@ -248,7 +248,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RcppEigen/include/Eigen/src/Core/util/ReenableStupidWarnings.h:10:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
 ##     #pragma clang diagnostic pop
 ##                              ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:12:
@@ -259,7 +259,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RcppEigen/include/Eigen/src/Core/util/ReenableStupidWarnings.h:10:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
 ##     #pragma clang diagnostic pop
 ##                              ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:12:
@@ -270,7 +270,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RcppEigen/include/Eigen/src/Core/util/ReenableStupidWarnings.h:10:30: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]
 ##     #pragma clang diagnostic pop
 ##                              ^
-## In file included from file4a9285b346.cpp:390:
+## In file included from file31f3274317ca.cpp:390:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rstan/include/rstan/rstaninc.hpp:3:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rstan/include/rstan/stan_fit.hpp:36:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/services/optimize/bfgs.hpp:11:
@@ -289,7 +289,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /usr/local/clang4/bin/../include/c++/v1/__config:388:52: note: expanded from macro '_LIBCPP_BEGIN_NAMESPACE_STD'
 ## #define _LIBCPP_BEGIN_NAMESPACE_STD namespace std {inline namespace _LIBCPP_NAMESPACE {
 ##                                                    ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:4:
@@ -297,7 +297,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/core/set_zero_all_adjoints.hpp:14:17: warning: unused function 'set_zero_all_adjoints' [-Wunused-function]
 ##     static void set_zero_all_adjoints() {
 ##                 ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:4:
@@ -305,7 +305,7 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/core/set_zero_all_adjoints_nested.hpp:17:17: warning: 'static' function 'set_zero_all_adjoints_nested' declared in header file should be declared 'static inline' [-Wunneeded-internal-declaration]
 ##     static void set_zero_all_adjoints_nested() {
 ##                 ^
-## In file included from file4a9285b346.cpp:8:
+## In file included from file31f3274317ca.cpp:8:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/src/stan/model/model_header.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math.hpp:4:
 ## In file included from /Library/Frameworks/R.framework/Versions/3.5/Resources/library/StanHeaders/include/stan/math/rev/mat.hpp:12:
@@ -317,8 +317,8 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## 
 ## SAMPLING FOR MODEL 'linreg' NOW (CHAIN 1).
 ## 
-## Gradient evaluation took 2.6e-05 seconds
-## 1000 transitions using 10 leapfrog steps per transition would take 0.26 seconds.
+## Gradient evaluation took 2.9e-05 seconds
+## 1000 transitions using 10 leapfrog steps per transition would take 0.29 seconds.
 ## Adjust your expectations accordingly!
 ## 
 ## 
@@ -335,15 +335,15 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Iteration: 2000 / 2000 [100%]  (Sampling)
 ## 
-##  Elapsed Time: 0.073328 seconds (Warm-up)
-##                0.062297 seconds (Sampling)
-##                0.135625 seconds (Total)
+##  Elapsed Time: 0.06986 seconds (Warm-up)
+##                0.060892 seconds (Sampling)
+##                0.130752 seconds (Total)
 ## 
 ## 
 ## SAMPLING FOR MODEL 'linreg' NOW (CHAIN 2).
 ## 
-## Gradient evaluation took 7e-06 seconds
-## 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
+## Gradient evaluation took 6e-06 seconds
+## 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 ## Adjust your expectations accordingly!
 ## 
 ## 
@@ -360,15 +360,15 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Iteration: 2000 / 2000 [100%]  (Sampling)
 ## 
-##  Elapsed Time: 0.064916 seconds (Warm-up)
-##                0.075088 seconds (Sampling)
-##                0.140004 seconds (Total)
+##  Elapsed Time: 0.067897 seconds (Warm-up)
+##                0.05046 seconds (Sampling)
+##                0.118357 seconds (Total)
 ## 
 ## 
 ## SAMPLING FOR MODEL 'linreg' NOW (CHAIN 3).
 ## 
-## Gradient evaluation took 7e-06 seconds
-## 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
+## Gradient evaluation took 6e-06 seconds
+## 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 ## Adjust your expectations accordingly!
 ## 
 ## 
@@ -385,9 +385,9 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Iteration: 2000 / 2000 [100%]  (Sampling)
 ## 
-##  Elapsed Time: 0.066212 seconds (Warm-up)
-##                0.066705 seconds (Sampling)
-##                0.132917 seconds (Total)
+##  Elapsed Time: 0.06799 seconds (Warm-up)
+##                0.055187 seconds (Sampling)
+##                0.123177 seconds (Total)
 ## 
 ## 
 ## SAMPLING FOR MODEL 'linreg' NOW (CHAIN 4).
@@ -410,12 +410,10 @@ fit <- stan(file = "stanmodels/linreg.stan", data=datax)
 ## Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Iteration: 2000 / 2000 [100%]  (Sampling)
 ## 
-##  Elapsed Time: 0.063708 seconds (Warm-up)
-##                0.066525 seconds (Sampling)
-##                0.130233 seconds (Total)
+##  Elapsed Time: 0.062517 seconds (Warm-up)
+##                0.052287 seconds (Sampling)
+##                0.114804 seconds (Total)
 ```
-
-
 
 
 ## Further reading {-}
