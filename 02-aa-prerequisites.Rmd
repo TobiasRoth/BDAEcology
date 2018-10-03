@@ -1,34 +1,7 @@
-# Prerequisites: What is R and basic statistical terms
+# Prerequisits: Basic statistical terms {#basics}
 
-
-## What is R?
-* download for free: www.r-project.org 
-* authors of first version: Robert Gentleman and Ross Ihaka, University of Auckland
-* since 1997: R development core team
-* R is a programming language
-
-
-
-## Why using R?
-* we program the statistical analyses
-* we have to know what we do (no clicking)
-* analyses are documented and reproducible
-* we can write own functions
-* methods can be shared (CRAN)
-
-R is easy to learn (intuitive), less strict syntax, slow  
-e.g. compared to Python or Julia
-
-
-## Working with R
-### Console and Editor
-R Console and Editor (mostly RStudio)
-
-\begin{center}
-  \includegraphics[width=1.00\textwidth]{images/RConsole.png}
-\end{center}
-
-
+This chapter introduces some important terms useful for doing data analyses.
+It also introduces the essentials of the classical frequentist tests such as t- and Chisquare test. We will not use them later but we think it is important to know how to interpret the results in order to be able to understand 100 years of scientific literature. For each classical test, we provide a suggestion how to do it in a Bayesian way and we discuss some differences between the Bayesian and frequentist statistics. 
 
 
 ## Scale of measurement
@@ -41,9 +14,10 @@ Ordinal | Elevational zones | Identity and magnitude (values have an ordered rel
 Numeric | Discrete: counts;  continuous: body weight, wing length | Identity, magnitude, and equal intervals | `intgeger()` `numeric()` |
 
 
+
 ## Correlations
 
-###Basics
+### Basics of correlations
   
 - variance $\hat{\sigma^2} = s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2$  
   
@@ -59,7 +33,6 @@ Numeric | Discrete: counts;  continuous: body weight, wing length | Identity, ma
 ### Pearson correlation coefficient
   
 standardized covariance
-
 
   $r=\frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2\sum_{i=1}^{n}(y_i-\bar{y})^2}}$
 
@@ -82,7 +55,7 @@ $\tau = 1-\frac{4I}{(n(n-1))}$
 ## Principal components analyses PCA
 rotation of the coordinate system
 
-```{r, fig.cap='Principal components are eigenvectors of the covariance or correlation matrix'}
+```{r,fig.width=2.5, fig.height=2.5, echo=FALSE, fig.align='left', fig.cap='Principal components are eigenvectors of the covariance or correlation matrix'}
 x <- rnorm(100, 5, 1)
 y <- rnorm(100, 0.8*x, 1)
 pca <- princomp(cbind(x,y), cor=TRUE)
@@ -93,6 +66,7 @@ pc2 <- eigen(cov(cbind(x,y)))$vectors[,2]
 abline(0, pc1[2]/pc1[1], col="green", lwd=2)
 abline(0, pc2[2]/pc2[1], col="green", lwd=2)
 ```
+
 
 
 rotation of the coordinate system so that   
@@ -122,35 +96,29 @@ summary(pca)
 outlook: components with low variance are shrinked to a higher degree in Ridge regression
 
 
-## Inferential statistics
-\begin{center}
-  \includegraphics[width=1.00\textwidth]{images/Amrhein_PeerJ2018.png}
-\end{center}
-
-https://peerj.com/preprints/26857
+### Inferential statistics
 
 > there is never a "yes-or-no" answer  
 > there will always be uncertainty  
-Amrhein (2017)
+Amrhein (2017)[https://peerj.com/preprints/26857]
 
-Statistical analyses is quantifying uncertainty.
+The decision whether an effect is important or not cannot not be done based on data alone. For a decision we should carefully consider the consequences of each decision, the aims we would like to achieve and the data. Consequences, needs and wishes of different stakeholders can be formally combined with the information in data by using methods of the decision theory. In most data analyses, particularly in basic research and when working on case studies, we normally do not consider consequences of decisions. In these cases, our job is extracting the information of data so that this information later can be used by other scientists, stakeholders and politicians to make decisions.
 
+Therefore, statistics is describing pattern in data and quantifying the uncertainty of the described patterns that is due to the fact that the data is just a (small) random sample from the population we would like to know. 
 
-Quantification of uncertainty only possible if  
+Quantification of uncertainty is only possible if  
   
 1. the mechanisms under study are known
 2. the observations are a random sample from the population of interest
 
 Solutions:  
-
-1. working with models and reporting assumptions  
-2. study design
+to 1. working with models and reporting assumptions  
+to 2. study design
 
 > reported uncertainties always are too small!
 
 
 Example: Number of stats courses before starting a PhD among all PhD students
-
 ```{r}
 # simulate the virtual true data
 set.seed(235325)   # set seed for random number generator
@@ -164,8 +132,8 @@ y <- sample(statscourses, 12, replace=FALSE)
 ```
 
 
-```{r, fig.cap='', echo=FALSE}
-par(mar=c(4,3,1,1))
+```{r, fig.width=4.5, fig.height=3,  fig.align='center', fig.cap='', echo=FALSE}
+par(mar=c(4,5,1,1))
 hist(statscourses, breaks=seq(-0.5, 10.5, by=1), main=NA)     # draw histogram of the population
 rug(jitter(y))                                       # add the sample
 abline(v=mean(y), col="blue", lwd=2)                 # add the mean of the sample
@@ -183,7 +151,7 @@ Frequentist solution: How would the sample mean scatter, if we repeat the study 
 
 Bayesian solution: For any possible value, what is the probability that it is the true population mean?  
 
-```{r, fig.cap='',echo=FALSE, message=FALSE}
+```{r, fig.width=3.5, fig.height=2.5, fig.align='center', fig.cap='',echo=FALSE, message=FALSE}
 library(arm)
 nsim <- 5000
 # frequentist theoretical uncertainty of mean
@@ -208,8 +176,10 @@ text(0.55, 2.53, "Sample mean with 95% CI", col="blue", adj=c(0,1), cex=0.9, xpd
 text(0.65, 1.8, "Posterior distribution of the mean", col="violet", adj=c(0,1), cex=0.9, xpd=NA)
 ```
 
-Standard deviation and standard error  
-```{r, fig.cap='',echo=FALSE, message=FALSE}
+
+## Standard deviation and standard error  
+
+```{r, fig.width=7, fig.height=4,  fig.align='center', fig.cap='',echo=FALSE, message=FALSE}
 par(mar=c(4,4,0.1,6), mgp=c(2,0.5,0), tck=-0.01, cex.lab=0.8, cex.axis=0.7)
 hist(statscourses, breaks=seq(-0.5, 10.5, by=1), main=NA, freq=FALSE, ylim=c(0, 2),
      las=1)     # draw histogram of the population
@@ -232,16 +202,15 @@ text(2, 0.3, "Estimated mean with SE", adj=c(0,1), col="blue", cex=0.9, xpd=NA)
 
 
 
-
-SE = SD/sqrt(n)  
+frequentist SE = SD/sqrt(n)  
   
-SE = SD of posterior distribution
+Bayesian SE = SD of posterior distribution
 
 
 ## Central limit theorem / law of large numbers
   
     
-```{r, fig.cap='',echo=FALSE, message=FALSE}
+```{r, fig.width=4.5, fig.height=3.2,  fig.align='center', fig.cap='',echo=FALSE, message=FALSE}
 par(mar=c(4,4,0.1,6), mgp=c(2,0.5,0), tck=-0.01)
 
 nn <- c(120, 1200)
@@ -263,7 +232,7 @@ legend(1, 1400, fill=c("white", "blue", "pink"), legend=c("n=12", "n=120", "n=12
 
 normal distribution = Gaussian distribution  
  
- $p(\theta) = \frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{1}{2\sigma^2}(\theta -\mu)^2)$  
+ $p(\theta) = \frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{1}{2\sigma^2}(\theta -\mu)^2) = Normal(\mu, \sigma)$  
    
      
        
@@ -272,7 +241,7 @@ normal distribution = Gaussian distribution
 
   
     
-```{r, fig.cap='',echo=FALSE, message=FALSE}
+```{r, fig.width=4.5, fig.height=3.2, fig.align='center', fig.cap='',echo=FALSE, message=FALSE}
 par(mar=c(4,4,0.1,6), mgp=c(2,0.5,0), tck=-0.01)
 
 hist(my, main=NA, xlab="Mean(y)", ylim=c(0, 14), freq=FALSE, las=1)
@@ -289,31 +258,30 @@ legend(1, 14, fill=c("white", "blue", "pink"), legend=c("n=12", "n=120", "n=1200
 
 
 
+
 ## Bayes theorem
 ```{r, echo=FALSE}
-dat <- data.frame(sex=c("m", "f", "f", "m", "m", "m", "f"),
-                  birthday=c("wine","wine","flower","flower","wine","flower","flower"))
-tab <- table(dat$sex, dat$birthday)
+dat <- read.table("RData/datacourse.txt", header=TRUE, sep="\t")
+tab <- table(dat$car, dat$birthday)
 ```
   
   
 $P(A|B) = \frac{P(B|A)P(A)}{P(B)}$  
 
-sex    | flowers        | wine           | **sum**               | 
+car    | flowers        | wine           | **sum**               | 
 :------|:---------------|:---------------|:------------------|
-female | `r tab[1,1]`  | `r tab[1,2]`  | **`r sum(tab[1,])`** |
-male   | `r tab[2,1]`  | `r tab[2,2]`  | **`r sum(tab[2,])`** |
+no | `r tab[1,1]`  | `r tab[1,2]`  | **`r sum(tab[1,])`** |
+yes   | `r tab[2,1]`  | `r tab[2,2]`  | **`r sum(tab[2,])`** |
 -------|----------------|----------------|-------------------|
 **sum**    | **`r sum(tab[,1])`**| **`r sum(tab[,2])`**| **`r sum(tab)`** |
 
-What is the probability that the person likes wine given it is a female?  
-$P(A) =$ likes wine $= `r sum(tab[,2])/sum(tab)`$  
-$P(B) =$ female $= `r sum(tab[1,])/ sum(tab)`$   
+What is the probability that the person likes wine given it has no car?  
+$P(A) =$ likes wine $= `r round(sum(tab[,2])/sum(tab),2)`$  
+$P(B) =$ no car $= `r round(sum(tab[1,])/ sum(tab),2)`$   
 
-$P(B|A) =$ proportion of females among the wine liker $= `r tab[1,2]/sum(tab[,2])`$
+$P(B|A) =$ proportion car-free people among the wine liker $= `r round(tab[1,2]/sum(tab[,2]),2)`$
 
-Knowing the person's sex increases the knowledge of the birthday preference.
-
+Knowing whether a persons owns a car increases the knowledge of the birthday preference.
 
 
 ## Bayes theorem for continuous parameters
@@ -331,8 +299,7 @@ $p(y)$: scaling constant
 
 
 
-
-### Single parameter model
+## Single parameter model
 
 $p(y|\theta) = Norm(\theta, \sigma)$, with $\sigma$ known 
   
@@ -351,7 +318,7 @@ $p(\theta|y) = Norm(\mu_n, \tau_n)$, where
 
 Posterior mean = weighted average between prior mean and $\bar{y}$ with weights
 equal to the precisions ($\frac{1}{\tau_0^2}$ and $\frac{n}{\sigma^2}$)
-```{r, fig.cap='',echo=FALSE, results='hide'}
+```{r, fig.width=4, fig.height=2.7, fig.align='center', fig.cap='',echo=FALSE, results='hide', dpi=700}
 library(blmeco)
 par(mar=c(4,4,0.8,0.1), mgp=c(2,0.5,0), tck=-0.01)
 
@@ -361,12 +328,11 @@ triplot.normal.knownvariance(theta.data=3, variance.known=2, n=3,
 
 
 
-
-### A model with two parameters
+## A model with two parameters
 $p(y|\theta, \sigma) = Norm(\theta, \sigma)$ 
   
 \begin{center}
-  \includegraphics[width=0.5\textwidth]{images/snowfinch.jpg}
+  \includegraphics[width=0.5\textwidth]{images/snowfinch2.jpg}
 \end{center}
 
 ```{r,echo=TRUE}
@@ -374,6 +340,7 @@ $p(y|\theta, \sigma) = Norm(\theta, \sigma)$
 y <- c(47.5, 43, 43, 44, 48.5, 37.5, 41.5, 45.5)
 n <- length(y)
 ```
+
 
 
 $p(y|\theta, \sigma) = Norm(\theta, \sigma)$ 
@@ -396,9 +363,8 @@ $\mu_n= \frac{\kappa_0}{\kappa_0+n}\mu_0 + \frac{n}{\kappa_0+n}\bar{y}$
   
  $\bar{y}$ and $s^2$ are sufficient statistics  
 
-
 Joint, marginal and conditional posterior distributions
-```{r, fig.cap='',echo=FALSE}
+```{r,fig.width=4, fig.height=3, fig.align='center', fig.cap='',echo=FALSE}
 mod <- lm(y~1)
 bsim <- sim(mod, n.sim=20000)
 xrange <- range(bsim@coef)
@@ -432,6 +398,464 @@ text(0.04, 18, "p(sigma|y) = \nInv-Chisq-dist.", adj=c(0,1), cex=0.6)
 
 
 
-
 ## t-distribution
-marginal posterior distribution of a normal mean with unknown variance and conjugate prior distribution
+marginal posterior distribution of a normal mean with unknown variance and conjugate prior distribution  
+
+  
+$p(\theta|v,\mu,\sigma) = \frac{\Gamma((v+1)/2)}{\Gamma(v/2)\sqrt{v\pi}\sigma}(1+\frac{1}{v}(\frac{\theta-\mu}{\sigma})^2)^{-(v+1)/2}$  
+
+
+$v$ degrees of freedom  
+$\mu$ location  
+$\sigma$ scale
+
+
+
+## Frequentist one-sample t-test
+H0: the mean weight is equal to exactly 40g.  
+
+$t = \frac{\bar{y}-\mu_0}{\frac{s}{\sqrt{n}}}$
+```{r,echo=TRUE}
+t.test(y, mu=40)
+```
+
+
+## Nullhypothesis test
+p-value: Probability of the data or more extreme data given the null hypothesis is true.
+
+```{r,fig.width=8, fig.height=5, fig.align='center', fig.cap='',echo=FALSE}
+# use density function for t-distribution as given in Gelman et al. (2014) BDA-book
+dt_BDA <- function(x,v,m,s) gamma((v+1)/2)/(gamma(v/2)*sqrt(v*pi)*s)*(1+1/v*((x-m)/s)^2)^(-(v+1)/2)
+
+par(mar=c(4.5, 5, 2, 2))
+hist(y, col="blue", xlim=c(30, 52), las=1, freq=FALSE, main=NA, ylim=c(0, 0.3))
+abline(v=mean(y), lwd=3, col="lightblue")
+abline(v=40, lwd=2)
+text(41, 0.31, "H0", xpd=NA)
+text(30, 0.25, "t(7, 40, SE(mean(y))", adj=c(0,0), cex=0.8)
+x <- seq(20, 60, length=100)
+dy <- dt_BDA(x, v=7, m=40, s=sd(y)/sqrt(n))
+lines(x, dy)
+index <- x>=mean(y)
+polygon(c(x[index], rev(x[index])), c(rep(0, sum(index)), rev(dy[index])), border=NA, col="orange")
+index <- x<= 40- (mean(y)-40)
+polygon(c(x[index], rev(x[index])), c(rep(0, sum(index)), rev(dy[index])), border=NA, col="orange")
+```
+
+
+## Confidence interval
+```{r, results=FALSE}
+# lower limit of 95% CI
+mean(y) + qt(0.025, df=7)*sd(y)/sqrt(n) 
+# upper limit of 95% CI
+mean(y) + qt(0.975, df=7)*sd(y)/sqrt(n) 
+```
+
+
+```{r,fig.width=6, fig.height=3, fig.align='center', fig.cap='',echo=FALSE}
+par(mar=c(5, 4.5, 0, 2))
+hist(y, col="blue", xlim=c(30, 52), las=1, freq=FALSE, main=NA, ylim=c(0, 0.3))
+abline(v=mean(y), lwd=3, col="lightblue")
+abline(v=40, lwd=2)
+text(41, 0.27, "H0", xpd=NA)
+x <- seq(30, 52, length=200)
+dy <- dt_BDA(x, v=7, m=mean(y), s=sd(y)/sqrt(n))
+lines(x, dy)
+segments((mean(y) + qt(0.025, df=7)*sd(y)/sqrt(n)), 0,
+         mean(y) + qt(0.975, df=7)*sd(y)/sqrt(n), 0, lwd=10, col="orange", lend="butt")
+
+```
+
+
+
+## Posterior distribution
+```{r,fig.width=8, fig.height=6, fig.align='center', fig.cap='',echo=FALSE}
+par(mar=c(4.5, 5, 2, 2))
+hist(y, col="blue", xlim=c(30,52), las=1, freq=FALSE, main=NA, ylim=c(0, 0.3))
+abline(v=mean(y), lwd=2, col="lightblue")
+abline(v=40, lwd=2)
+lines(density(bsim@coef))
+x <- seq(20, 60, length=100)
+dy <- dt_BDA(x, v=7, m=mean(y), s=sd(y)/sqrt(n))
+lines(x, dy, col="grey", lty=2)
+text(45, 0.3, "posterior distribution\nof the mean of y", cex=0.8, adj=c(0,1), xpd=NA)
+
+text(45.5, 0.2, "t-distr.", cex=0.8, adj=c(0,1), col="grey")
+
+```
+
+
+ Two different theories - one single result!
+
+
+## Posterior probability
+Probability $P(H:\mu<=40) =$ `r round(mean(bsim@coef[,1]<=40),2)`
+```{r,fig.width=8, fig.height=6, fig.align='center', fig.cap='',echo=FALSE}
+par(mar=c(4.5, 5, 2, 2))
+hist(y, col="blue", xlim=c(30,52), las=1, freq=FALSE, main=NA, ylim=c(0, 0.3))
+abline(v=mean(y), lwd=2, col="lightblue")
+abline(v=40, lwd=2)
+post <- density(bsim@coef)
+lines(post)
+text(45, 0.3, "posterior distribution\nof the mean of y", cex=0.8, adj=c(0,1), xpd=NA)
+index <- post$x<= 40
+polygon(c(post$x[index], rev(post$x[index])), c(rep(0, sum(index)), rev(post$y[index])), border=NA, col="orange")
+
+```
+
+## Monte Carlo simulation (parametric bootstrap)  
+  
+Monte Carlo integration: numerical solution of $\int_{-1}^{1.5} F(x) dx$ 
+```{r,fig.width=8, fig.height=6, fig.align='center', fig.cap='',echo=FALSE}
+# a function that is hard to integrate
+myfunction <- function(x) 2/x * sin(x) + 0.5*cos(4*x) + sin(2*abs(x-0.2)) + asin(x/3)
+x <- seq(-1.5, 2, length=100)
+par(mar=c(4.5,4.5,0,1))
+plot(x, myfunction(x), type="l", las=1, ylim=c(0, 3.5), ylab="F(x)")
+rect(-1, 0, 1.5, 3.3)
+nsim <- 5000
+ranx <- runif(nsim, -1, 1.5)
+rany <- runif(nsim, 0, 3.3)
+colkey <- c("orange", "blue")[as.numeric(myfunction(ranx)<rany)+1]
+points(ranx, rany, col=colkey, pch=16, cex=0.5)
+lines(x, myfunction(x), lwd=2)
+```
+
+
+sim is solving a mathematical problem by simulation
+How sim is simulating to get the marginal distribution of $\mu$:
+
+```{r,fig.width=4, fig.height=3, fig.align='center', fig.cap='',echo=FALSE}
+layout(matrix(c(2,0,1,3), ncol=2, byrow=TRUE), heights=c(1,2),  
+       width=c(2,1))
+par(mar=c(5.1, 4.1, 0.2, 0.2), cex.lab=0.8, cex.axis=0.8) 
+plot(bsim@coef, bsim@sigma, xlab=expression(theta), ylab=expression(sigma), las=1, cex=0.5, xlim=xrange, ylim=yrange, col=rgb(0,0,0,0.1), pch=16)
+abline(h=6.5)
+text(33, 10, paste(expression(p(theta|y, sigma))), adj=c(0,1), cex=0.8)
+text(33, 8, "= normal distribution", adj=c(0,1), cex=0.8)
+text(33, 12, "step 2", adj=c(0,1))
+par(mar=c(0, 4.1, 1, 0.2)) 
+histtheta <- hist(bsim@coef, plot=FALSE)
+plot(histtheta$breaks, seq(0, max(histtheta$density)+0.01, length= 
+                             length(histtheta$breaks)), type="n", xaxt="n", xlim = xrange, 
+     las=1, ylab = "Density", yaxs="i")
+rect(histtheta$breaks[1:(length(histtheta$breaks)-1)], 0, 
+     histtheta$breaks[2:(length(histtheta$breaks))], histtheta$density, 
+     col=grey(0.5))
+mtext(paste(expression(p(theta|y)), "= t-distribution"), side=3, adj=0, cex=0.8)
+par(mar=c(5.1, 0, 0.2, 0.2)) 
+histsigma<- hist(bsim@sigma, plot=FALSE)
+plot(seq(0, max(histsigma$density)+0.01, length=length(histsigma$breaks)), 
+     histsigma$breaks, type="n", yaxt="n", ylim=yrange, 
+     xlab="Density", xaxs="i",
+     xaxt="n")
+axis(1, at=seq(0, 0.4, by=0.1), labels=c(NA, 0.1, 0.3, 0.3, 0.4))
+rect(0, histsigma$breaks[2:(length(histsigma$breaks))], histsigma$density, 
+     histsigma$breaks[1:(length(histsigma$breaks)-1)],col=grey(0.5))
+text(0.04, 18, "p(sigma|y) = \nInv-Chisq-dist.", adj=c(0,1), cex=0.8)
+abline(h=6.5)
+text(0.02, 9, "step 1", adj=c(0,1))
+```
+
+
+## 3 methods for getting the posterior distribution
+
+* analytically
+* approximation
+* Monte Carlo simulation
+
+
+
+## Grid approximation
+  
+$p(\theta|y) = \frac{p(y|\theta)p(\theta)}{p(y)}$ 
+  
+For example, one coin flip (Bernoulli model) 
+  
+data: y=0  (a tail)  
+likelihood: $p(y|\theta)=\theta^y(1-\theta)^{(1-y)}$
+
+
+```{r, fig.width=5, fig.height=2.5, fig.align='center', fig.cap='',echo=FALSE}
+# analytical solution
+par(mar=c(4.5, 5, 0.2, 0.2)) 
+xa <- seq(0, 1, length=100)
+posta <- dbeta(xa, 2, 3)
+x<- seq(0.05, 0.95, length=10)
+breaksx<- seq(0, 1, length=11)
+bandwitdth <- 0.1
+
+y <- 0
+prior <- dbeta(x, 2, 2)
+lik <- x^y*(1-x)^(1-y)
+plot(x,prior, type="b", col="blue", ylim=c(0,2), xlim=c(0,1), lwd=2, 
+     xlab=expression(theta), ylab="Density", las=1)
+lines(xa, posta, lwd=2, col=grey(0.5), lty=3)
+rect(breaksx[1:10], rep(0, 10), breaksx[2:11], prior, border="blue")
+text(0.65, 2, "prior", col="blue", adj=c(0,1), cex=0.9)
+lines(x, lik, type="b", lwd=2, col="orange", cex=0.9)
+text(0.65, 1.8, "likelihood", col="orange", adj=c(0,1), cex=0.9)
+text(0.65, 1.6, "posterior (approx.)",adj=c(0,1), cex=0.9)
+text(0.75, 1.4, "posterior (anal.)", col=grey(0.5), adj=c(0,1), cex=0.9)
+
+post0 <- lik*prior
+post <- post0/(sum(0.1*post0))
+lines(x, post, type="b", col=1, lwd=2)
+
+```
+
+
+## Monte Carlo simulations
+
+* Markov chain Monte Carlo simulation (BUGS, Jags)
+* Hamiltonian Monte Carlo (Stan)
+
+```{r, echo=FALSE, fig.height=8, fig.width=10}
+par(mar=c(3,3,3,3), cex=2)
+plot(c(0,1), c(0,1), type="n", axes=FALSE, xlab=NA, ylab=NA)
+text(0,0.8, "likelihood\ndata\npriors\ninitial values", adj=c(0,1))
+arrows(0.4, 0.7, 0.6, 0.7, length=0.2, lwd=5)
+text(0.63,0.75, "(joint) posterior\ndistribution", adj=c(0,1))
+```
+
+
+## Comparison of the locations between two groups 
+Boxplot:  
+Median, 50% box, extremes observation within 1.5 times the interquartile range, outliers  
+
+The uncertainties of the means do not show the uncertainty of the difference between the means!  
+
+```{r, echo=FALSE, fig.height=3, fig.width=5}
+par(mar=c(4.5,4.5,2,0.2))
+boxplot(ell~birthday, data=dat, las=1, ylab="Length of ell (cm)", col="grey", boxwex=0.2,
+        ylim=c(30, 45))
+
+means <- tapply(dat$ell, dat$birthday, mean)
+semeans <- tapply(dat$ell, dat$birthday, function(x) sd(x)/sqrt(length(x)))
+segments(c(1.3,2.3), means-2*semeans, c(1.3,2.3), means+2*semeans, lwd=2)
+points(c(1.3,2.3), means, pch=21, bg="white")
+
+```
+
+## Difference between two means
+
+```{r, echo=TRUE}
+mod <- lm(ell~birthday, data=dat)
+mod
+bsim <- sim(mod, n.sim=nsim)
+quantile(bsim@coef[,2], prob=c(0.025, 0.5, 0.975))
+```
+
+
+## Two-sample t-test
+```{r, echo=TRUE}
+t.test(ell~birthday, data=dat, var.equal=TRUE)
+```
+
+
+
+## Wilxocon test
+```{r, echo=TRUE}
+wilcox.test(ell~birthday, data=dat)
+```
+
+
+## Randomisation test
+```{r, echo=TRUE}
+diffH0 <- numeric(nsim)
+for(i in 1:nsim){
+  randbirthday <- sample(dat$birthday)
+  rmod <- lm(ell~randbirthday, data=dat)
+  diffH0[i] <- coef(rmod)[2]
+}
+mean(abs(diffH0)>abs(coef(mod)[2])) # p-value
+```
+
+```{r, echo=FALSE, fig.height=2, fig.width=3}
+par(mar=c(5.5, 4.5, 0.5, 0), cex=0.8)
+hist(diffH0, main=NA); abline(v=coef(mod)[2], lwd=2, col="red", main=NA)
+```
+
+
+* Produces the distribution of a test statistics given the null hypothesis.  
+* assumption: all observations are independent  
+* becomes unfeasible when data is structured
+
+
+
+## Bootstrap
+```{r, echo=TRUE}
+diffboot <- numeric(nsim)
+for(i in 1:nsim){
+  nbirthday <- 1
+  while(nbirthday==1){
+    bootrows <- sample(1:nrow(dat), replace=TRUE)
+    nbirthday <- length(unique(dat$birthday[bootrows]))
+  }
+  rmod <- lm(ell~birthday, data=dat[bootrows,])
+  diffboot[i] <- coef(rmod)[2]
+}
+quantile(diffboot, prob=c(0.025, 0.975))
+```
+
+
+* result is a confidence interval  
+* assumption: all observations are independent!
+
+```{r, echo=TRUE, fig.height=5, fit.width=7}
+hist(diffboot); abline(v=coef(mod)[2], lwd=2, col="red")
+```
+
+
+## F-test
+Comparison of two variances  
+H0: Var(X1)=Var(X2) -> $F = \frac{Var(X1)}{Var(X2)} \approx 1$  
+even more complicated density function than the t-distribution!
+```{r, echo=FALSE, fig.height=5, fit.width=7}
+x <- seq(0, 5, length=100)
+y <- df(x, 5,5)
+plot(x, y, type="l", lwd=2, las=1, xlab="F-value", ylab="Density", main="Distribution of F given H0")
+```
+
+
+* We have not yet met any Bayesian example where the F-distribution is used.
+* is used in the frequentist version of ANOVA
+
+
+## Analysis of variance ANOVA
+Aim: comparison between means  
+Method: comparison of between-group with within-group variance
+```{r, echo=FALSE, fig.height=4, fit.width=7}
+y <- log(dat$nrcourses+1)
+group <- dat$statsfeeling
+boxplot(y~group, las=1, names=levels(group), ylab="Nr stats courses",
+    boxwex=0.5, col="orange", cex.lab=1.4, ylim=c(0, max(y)), cex.axis=1.4,
+    ylim=c(0, max(y)))
+npg <- table(group)
+text(1:3, rep(0, 3), npg, cex=1.4, xpd=NA)
+text(0.6, 0, "n =", cex=1.4, xpd=NA)
+
+```
+
+Total sum of squares (SS) =  SST = $\sum_1^n{(y_i-\bar{y})^2}$  
+Within-group SS = SSW = $\sum_1^n{(y_i-\bar{y_g})^2}$: unexplained variance  
+Between-group SS = SSB = $\sum_1^n{(\bar{y_g}-\bar{y})^2}$: explained variance  
+```{r, echo=FALSE, fig.height=5.5, fit.width=7}
+n<-length(y)
+par(mfrow=c(1,3), mar=c(4,3,3,0.5), oma=c(0,2,0,0))
+# total sum of squares
+plot(1:n, y, las=1, cex.lab=1.2, pch=16, ylab=NA, 
+     xlab="Observation ID", main="SST", cex.main=1.5)
+abline(h=mean(y))
+segments(1:n, mean(y), 1:n, y, col="orange", lwd=1)
+mtext("Log(Nr stats courses +1)", side=2, outer=TRUE)
+text(n*1.1, mean(y), "=", xpd=NA, cex=2)
+
+# sum of squares between groups
+mpg <- tapply(y, group, mean)
+plot(1:n, y, las=1, cex.lab=1.2, pch=16, ylab=NA, 
+     xlab="Observation ID", main="SSB", yaxt="n", cex.main=1.5)
+segments(c(1, cumsum(npg)[1:2]+1), mpg, cumsum(npg), mpg)
+abline(h=mean(y))
+segments(1:n, rep(mpg, times=npg), 1:n, mean(y), col="orange", 
+         lwd=1)
+text(n*1.1, mean(y), "+", xpd=NA, cex=2)
+
+# sum of squares within groups
+plot(1:n, y, las=1, cex.lab=1.2, pch=16, ylab=NA, 
+     xlab="Observation ID", main="SSW", yaxt="n", cex.main=1.5)
+segments(c(1, cumsum(npg)[1:2]+1), mpg, cumsum(npg), mpg)
+segments(1:n, rep(mpg, times=npg), 1:n, y, col="orange", lwd=1)
+```
+
+
+
+H0: $\bar{y_1}=\bar{y_2}=\bar{y_3}$  
+  
+Expectation given H0:  
+  
+* Between-group variance is due to natural variation (within-group variance)  
+* SSB/df_between = SSW/df_within, where df_between= number of groups -1 and df_within = n-number of groups  
+* MSB = SSB/df_between, MSW = SSW/df_within  
+* MSB/MSW ~ F(df_between, df_within)
+
+
+
+NEED TO INSERT A BAYESIAN ANAOVA HERE
+
+## Chisquare test
+* correlations between two categorical variables
+* comparison of two distributions (goodness of fit)
+```{r, echo=TRUE}
+table(dat$birthday, dat$statsfeeling)
+```
+expected values $E_{ij}$ given H0: rowsum*colsum/total
+
+$\chi^2$ measures the difference between the observed $O_{ij}$ and expected $E_{ij}$ values as:  
+$\chi^2=\sum_{i=1}^{m}\sum_{j=1}^{k}\frac{(O_{ij}-E_{ij})^2}{E_{ij}}$    
+The $\chi^2$-distribution has 1 parameter, the degrees of freedom $v$ = $(m-1)(k-1)$.
+```{r, echo=FALSE, fig.height=4, fig.width=7}
+par(mar=c(4.5, 4.5, 0,0))
+x <- seq(0, 10, length=100)
+y <- dchisq(x, 2)
+plot(x,y, type="l", lwd=2, las=1, xlab="Chisquare-value", ylab="Density")
+text(5, 0.08, "df=2")
+y <- dchisq(x, 6)
+lines(x, y, lwd=2, col="blue")
+text(6, 0.15, "df=6", col="blue")
+
+```
+
+```{r, echo=TRUE}
+chisq.test(table(dat$birthday, dat$statsfeeling))
+```
+no cell should have a count less than 5...
+
+## Bayesian way of analysing correlations between categorical variables
+* log-linear model (Poisson model) for the counts
+* estimating proportions using a binomial or a multinomial model
+
+```{r, echo=FALSE}
+datagg <- aggregate(dat$name, list(birthday=dat$birthday, statsfeeling=dat$statsfeeling), 
+                    length, drop=FALSE)
+datagg$x[is.na(datagg$x)] <- 0
+names(datagg) <- c("gift", "feel", "count")
+```
+
+```{r, echo=TRUE}
+# log-linear model
+mod <- glm(count~gift+feel + gift:feel, 
+           data=datagg, family=poisson)
+bsim <- sim(mod, n.sim=nsim)
+round(t(apply(bsim@coef, 2, quantile, 
+              prob=c(0.025, 0.5, 0.975))),2)
+```
+the interaction parameters measure the strength of the correlation  
+
+
+
+```{r, echo=TRUE}
+# binomial model
+tab <- table(dat$statsfeeling,dat$birthday)
+mod <- glm(tab~rownames(tab),  family=binomial)
+bsim <- sim(mod, n.sim=nsim)
+```
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=8}
+par(cex=1.2, mar=c(5,4.5,0,0))
+plot(1:3, seq(0, 1, length=3), type="n", xaxt="n", xlab=NA, ylab="Proportion flower", 
+     las=1,xlim=c(0.5, 3.5))
+axis(1, at=1:3, labels=levels(dat$statsfeeling))
+fitmat <- plogis(cbind(bsim@coef[,1], bsim@coef[,1]+bsim@coef[,2], bsim@coef[,1]+bsim@coef[,3]))
+segments(1:3, apply(fitmat, 2, quantile, prob=0.025), 
+         1:3, apply(fitmat, 2, quantile, prob=0.975), lwd=3, lend="butt")
+points(1:3, apply(fitmat, 2, quantile, prob=0.5), pch=21, bg="white")
+
+```
+
+
+## Summary
+Bayesian data analysis = applying the Bayes theorem for summarizing knowledge based on data, priors and the model assumptions.  
+
+Frequentist statistics = quantifying uncertainty by hypothetical repetitions  
+p-values are not wrong per se but they lead scientists and politicians to wrong decisions.

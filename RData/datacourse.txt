@@ -1,0 +1,8 @@
+name	car	nrcourses	swimfreq	distance	joggingfreq	birthday	statsfeeling	ell	temp
+a	yes	0	30	20		wine	positive	45	15
+b	yes	1	2	4500		wine	neutral	34	19
+cd	no	0	4	250		flower	neutral	37	23
+e	no	4	0	10		flower	negative	41	27
+f	no	2	8	300		wine	negative	36	20
+g	yes	1	15	50		flower	negative	35	21
+h	yes	1	3	20		flower	negative	36	22
