@@ -106,9 +106,9 @@ summary(pca)
 ```
 ## Importance of components:
 ##                           Comp.1    Comp.2
-## Standard deviation     1.2899873 0.5795971
-## Proportion of Variance 0.8320336 0.1679664
-## Cumulative Proportion  0.8320336 1.0000000
+## Standard deviation     1.2471218 0.6668488
+## Proportion of Variance 0.7776563 0.2223437
+## Cumulative Proportion  0.7776563 1.0000000
 ```
 outlook: components with low variance are shrinked to a higher degree in Ridge regression
 
