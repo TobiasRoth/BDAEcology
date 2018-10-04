@@ -2,7 +2,7 @@
 --- 
 title: "Data Analysis in Ecology with R and Stan"
 author: "Fränzi Korner-Nievergelt and Tobias Roth"
-date: "2018-09-09"
+date: "2018-10-04"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [References.bib]
@@ -28,7 +28,7 @@ While we show the R-code behind most of the analyses, we sometimes choose not to
 It is open so that everybody with a [GitHub](https://github.com) account can make comments and suggestions for improvement. Readers can contribute in two ways. One way is to add an [issue](https://github.com/TobiasRoth/BDAEcology/issues). The second way is to contribute content directly through the edit button at the top of the page (i.e. a symbol showing a pencil in a square). That button is linked to the rmarkdown source file of each page. You can correct typos or add new text and then submit a [GitHub pull request](https://help.github.com/articles/about-pull-requests/). We try to respond to you as quickly as possible. We are looking forward to your contribution!
 
 ## Acknowledgments {-}
-We thank *Yihui Xie* for providing [bookdown](bhttps://bookdown.org/yihui/bookdown/) which makes is much fun to write open books such as ours. 
+We thank *Yihui Xie* for providing [bookdown](bhttps://bookdown.org/yihui/bookdown/) which makes it much fun to write open books such as ours. 
 
 
 
