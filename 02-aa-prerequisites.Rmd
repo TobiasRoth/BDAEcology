@@ -1,3 +1,27 @@
+```{r include=FALSE, cache=FALSE}
+#  This script will be run at the start of each chapter
+
+rm(list = ls())
+
+# Libraries
+library(knitr)
+library(blmeco)
+library(tidyverse)
+
+# Knitr settings 
+options(scipen = 6);
+opts_chunk$set(echo = TRUE, hide = TRUE, cache = FALSE, warning = FALSE, message = FALSE,
+               fig.asp = .45, fig.width = 8)
+
+# Darstellung von R-Berechnungen innerhalb von Text
+inline_hook <- function(x) {
+  if (is.numeric(x)) {
+    x <- format(x, nsmall = 2, digits = 2)
+  }
+  x
+}
+knit_hooks$set(inline = inline_hook)
+```
 # Prerequisits: Basic statistical terms {#basics}
 
 This chapter introduces some important terms useful for doing data analyses.
@@ -17,11 +41,11 @@ Numeric | Discrete: counts;  continuous: body weight, wing length | Identity, ma
 
 ## Correlations
 
-### Basics of correlations
+### Basics of variances, covariances and correlations
   
 - variance $\hat{\sigma^2} = s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2$  
+The term $(n-1)$ is called the degrees of freedom.  
   
-    
       
 - standard deviation $\hat{\sigma} = s = \sqrt{s^2}$  
   
@@ -55,7 +79,7 @@ $\tau = 1-\frac{4I}{(n(n-1))}$
 ## Principal components analyses PCA
 rotation of the coordinate system
 
-```{r,fig.width=2.5, fig.height=2.5, echo=FALSE, fig.align='left', fig.cap='Principal components are eigenvectors of the covariance or correlation matrix'}
+```{r, echo=FALSE, fig.cap='Principal components are eigenvectors of the covariance or correlation matrix'}
 x <- rnorm(100, 5, 1)
 y <- rnorm(100, 0.8*x, 1)
 pca <- princomp(cbind(x,y), cor=TRUE)
@@ -132,7 +156,7 @@ y <- sample(statscourses, 12, replace=FALSE)
 ```
 
 
-```{r, fig.width=4.5, fig.height=3,  fig.align='center', fig.cap='', echo=FALSE}
+```{r, fig.cap='', echo=FALSE}
 par(mar=c(4,5,1,1))
 hist(statscourses, breaks=seq(-0.5, 10.5, by=1), main=NA)     # draw histogram of the population
 rug(jitter(y))                                       # add the sample
@@ -151,7 +175,7 @@ Frequentist solution: How would the sample mean scatter, if we repeat the study 
 
 Bayesian solution: For any possible value, what is the probability that it is the true population mean?  
 
-```{r, fig.width=3.5, fig.height=2.5, fig.align='center', fig.cap='',echo=FALSE, message=FALSE}
+```{r, fig.cap='',echo=FALSE, message=FALSE}
 library(arm)
 nsim <- 5000
 # frequentist theoretical uncertainty of mean
@@ -179,7 +203,7 @@ text(0.65, 1.8, "Posterior distribution of the mean", col="violet", adj=c(0,1), 
 
 ## Standard deviation and standard error  
 
-```{r, fig.width=7, fig.height=4,  fig.align='center', fig.cap='',echo=FALSE, message=FALSE}
+```{r, fig.cap='',echo=FALSE, message=FALSE}
 par(mar=c(4,4,0.1,6), mgp=c(2,0.5,0), tck=-0.01, cex.lab=0.8, cex.axis=0.7)
 hist(statscourses, breaks=seq(-0.5, 10.5, by=1), main=NA, freq=FALSE, ylim=c(0, 2),
      las=1)     # draw histogram of the population
@@ -210,7 +234,7 @@ Bayesian SE = SD of posterior distribution
 ## Central limit theorem / law of large numbers
   
     
-```{r, fig.width=4.5, fig.height=3.2,  fig.align='center', fig.cap='',echo=FALSE, message=FALSE}
+```{r, fig.cap='',echo=FALSE, message=FALSE}
 par(mar=c(4,4,0.1,6), mgp=c(2,0.5,0), tck=-0.01)
 
 nn <- c(120, 1200)
@@ -241,7 +265,7 @@ normal distribution = Gaussian distribution
 
   
     
-```{r, fig.width=4.5, fig.height=3.2, fig.align='center', fig.cap='',echo=FALSE, message=FALSE}
+```{r,  fig.cap='',echo=FALSE, message=FALSE}
 par(mar=c(4,4,0.1,6), mgp=c(2,0.5,0), tck=-0.01)
 
 hist(my, main=NA, xlab="Mean(y)", ylim=c(0, 14), freq=FALSE, las=1)
@@ -318,7 +342,7 @@ $p(\theta|y) = Norm(\mu_n, \tau_n)$, where
 
 Posterior mean = weighted average between prior mean and $\bar{y}$ with weights
 equal to the precisions ($\frac{1}{\tau_0^2}$ and $\frac{n}{\sigma^2}$)
-```{r, fig.width=4, fig.height=2.7, fig.align='center', fig.cap='',echo=FALSE, results='hide', dpi=700}
+```{r, fig.cap='',echo=FALSE, results='hide', dpi=700}
 library(blmeco)
 par(mar=c(4,4,0.8,0.1), mgp=c(2,0.5,0), tck=-0.01)
 
@@ -364,7 +388,7 @@ $\mu_n= \frac{\kappa_0}{\kappa_0+n}\mu_0 + \frac{n}{\kappa_0+n}\bar{y}$
  $\bar{y}$ and $s^2$ are sufficient statistics  
 
 Joint, marginal and conditional posterior distributions
-```{r,fig.width=4, fig.height=3, fig.align='center', fig.cap='',echo=FALSE}
+```{r, fig.cap='',echo=FALSE}
 mod <- lm(y~1)
 bsim <- sim(mod, n.sim=20000)
 xrange <- range(bsim@coef)
@@ -469,7 +493,7 @@ segments((mean(y) + qt(0.025, df=7)*sd(y)/sqrt(n)), 0,
 
 
 ## Posterior distribution
-```{r,fig.width=8, fig.height=6, fig.align='center', fig.cap='',echo=FALSE}
+```{r, fig.cap='',echo=FALSE}
 par(mar=c(4.5, 5, 2, 2))
 hist(y, col="blue", xlim=c(30,52), las=1, freq=FALSE, main=NA, ylim=c(0, 0.3))
 abline(v=mean(y), lwd=2, col="lightblue")
@@ -506,7 +530,7 @@ polygon(c(post$x[index], rev(post$x[index])), c(rep(0, sum(index)), rev(post$y[i
 ## Monte Carlo simulation (parametric bootstrap)  
   
 Monte Carlo integration: numerical solution of $\int_{-1}^{1.5} F(x) dx$ 
-```{r,fig.width=8, fig.height=6, fig.align='center', fig.cap='',echo=FALSE}
+```{r, fig.cap='',echo=FALSE}
 # a function that is hard to integrate
 myfunction <- function(x) 2/x * sin(x) + 0.5*cos(4*x) + sin(2*abs(x-0.2)) + asin(x/3)
 x <- seq(-1.5, 2, length=100)
@@ -525,7 +549,7 @@ lines(x, myfunction(x), lwd=2)
 sim is solving a mathematical problem by simulation
 How sim is simulating to get the marginal distribution of $\mu$:
 
-```{r,fig.width=4, fig.height=3, fig.align='center', fig.cap='',echo=FALSE}
+```{r, fig.cap='',echo=FALSE}
 layout(matrix(c(2,0,1,3), ncol=2, byrow=TRUE), heights=c(1,2),  
        width=c(2,1))
 par(mar=c(5.1, 4.1, 0.2, 0.2), cex.lab=0.8, cex.axis=0.8) 
@@ -576,7 +600,7 @@ data: y=0  (a tail)
 likelihood: $p(y|\theta)=\theta^y(1-\theta)^{(1-y)}$
 
 
-```{r, fig.width=5, fig.height=2.5, fig.align='center', fig.cap='',echo=FALSE}
+```{r,  fig.cap='',echo=FALSE}
 # analytical solution
 par(mar=c(4.5, 5, 0.2, 0.2)) 
 xa <- seq(0, 1, length=100)
@@ -610,7 +634,7 @@ lines(x, post, type="b", col=1, lwd=2)
 * Markov chain Monte Carlo simulation (BUGS, Jags)
 * Hamiltonian Monte Carlo (Stan)
 
-```{r, echo=FALSE, fig.height=8, fig.width=10}
+```{r, echo=FALSE}
 par(mar=c(3,3,3,3), cex=2)
 plot(c(0,1), c(0,1), type="n", axes=FALSE, xlab=NA, ylab=NA)
 text(0,0.8, "likelihood\ndata\npriors\ninitial values", adj=c(0,1))
@@ -625,7 +649,7 @@ Median, 50% box, extremes observation within 1.5 times the interquartile range, 
 
 The uncertainties of the means do not show the uncertainty of the difference between the means!  
 
-```{r, echo=FALSE, fig.height=3, fig.width=5}
+```{r, echo=FALSE}
 par(mar=c(4.5,4.5,2,0.2))
 boxplot(ell~birthday, data=dat, las=1, ylab="Length of ell (cm)", col="grey", boxwex=0.2,
         ylim=c(30, 45))
@@ -671,7 +695,7 @@ for(i in 1:nsim){
 mean(abs(diffH0)>abs(coef(mod)[2])) # p-value
 ```
 
-```{r, echo=FALSE, fig.height=2, fig.width=3}
+```{r, echo=FALSE}
 par(mar=c(5.5, 4.5, 0.5, 0), cex=0.8)
 hist(diffH0, main=NA); abline(v=coef(mod)[2], lwd=2, col="red", main=NA)
 ```
@@ -702,30 +726,36 @@ quantile(diffboot, prob=c(0.025, 0.975))
 * result is a confidence interval  
 * assumption: all observations are independent!
 
-```{r, echo=TRUE, fig.height=5, fit.width=7}
+```{r, echo=TRUE}
 hist(diffboot); abline(v=coef(mod)[2], lwd=2, col="red")
 ```
 
 
-## F-test
-Comparison of two variances  
-H0: Var(X1)=Var(X2) -> $F = \frac{Var(X1)}{Var(X2)} \approx 1$  
-even more complicated density function than the t-distribution!
-```{r, echo=FALSE, fig.height=5, fit.width=7}
+## F-distribution
+Ratios of sample variances drawn from populations with equal variances follow an F-distribution. The density function of the F-distribution is even more complicated than the one of the t-distribution! We do not copy it here. Further, we have not yet met any Bayesian example where the F-distribution is used. It is used in frequentist analyses in order to compare variances, and, within the ANOVA, to compare means between groups. If two variances only differ because of natural variance in the data (nullhypothesis) then $\frac{Var(X_1)}{Var(X_2)}\sim F_{df_1,df_2}$.
+
+```{r, echo=FALSE, fig.cap="Different density functions of the F statistics"}
+par(mar=c(4.5,4.5,1,1))
 x <- seq(0, 5, length=100)
 y <- df(x, 5,5)
-plot(x, y, type="l", lwd=2, las=1, xlab="F-value", ylab="Density", main="Distribution of F given H0")
+plot(x, y, type="l", lwd=2, las=1, xlab="F-value", ylab="Density", main="", ylim=c(0,1))
+text(3, 0.3, "df1=5, df2=5", adj=c(0,0))
+text(3, 0.2, "df1=2, df2=10", adj=c(0,0), col="blue")
+text(3, 0.1, "df1=20, df2=20", adj=c(0,0), col="orange")
+
+y <- df(x, 2,10)
+lines(x,y, lwd=2, col="blue")
+y <- df(x, 20, 20)
+lines(x,y, lwd=2, col="orange")
+
 ```
 
 
-* We have not yet met any Bayesian example where the F-distribution is used.
-* is used in the frequentist version of ANOVA
 
+### Analysis of variance ANOVA
+The aim of an ANOVA is to compare means of groups. The frequentist method to do that is to compare the between-group with the within-group variance. 
 
-## Analysis of variance ANOVA
-Aim: comparison between means  
-Method: comparison of between-group with within-group variance
-```{r, echo=FALSE, fig.height=4, fit.width=7}
+```{r, echo=FALSE, fig.cap="Number of stats courses students have taken before starting a PhD in relation to their feeling about statistics."}
 y <- log(dat$nrcourses+1)
 group <- dat$statsfeeling
 boxplot(y~group, las=1, names=levels(group), ylab="Nr stats courses",
@@ -737,10 +767,23 @@ text(0.6, 0, "n =", cex=1.4, xpd=NA)
 
 ```
 
-Total sum of squares (SS) =  SST = $\sum_1^n{(y_i-\bar{y})^2}$  
+The following three sum of squares (SS) underly an ANOVA:  
+Total sum of squares =  SST = $\sum_1^n{(y_i-\bar{y})^2}$  
 Within-group SS = SSW = $\sum_1^n{(y_i-\bar{y_g})^2}$: unexplained variance  
-Between-group SS = SSB = $\sum_1^n{(\bar{y_g}-\bar{y})^2}$: explained variance  
-```{r, echo=FALSE, fig.height=5.5, fit.width=7}
+Between-group SS = SSB = $\sum_1^g{n_g(\bar{y_g}-\bar{y})^2}$: explained variance  
+
+
+In order to make SSB and SSW comparable, we have to divide them by their degrees of freedoms. For the within-group SS, SSW, the degrees of freedom is the number of obervations minus the number of groups ($g$), because g means have been estimated from the data. If the $g$ means are fixed and $n-g$ data points are known, then the last $g$ data points are defined, i.e., they cannot be chosen freely. For the between-group SS, SSB, the degrees of freedom is the number of groups  minus 1 (for the overall mean).   
+
+* MSB = SSB/df_between, MSW = SSW/df_within  
+
+It can be shown (by mathematicians) that, given the nullhypothesis, the mean of all groups are equal $m_1 = m_2 = m_3$, then the mean squared errors between groups (MSB) is expected to be equal to the mean squared errors within the groups (MSW). Therefore, the ration MSB/MSW is  expected to follow an F-distribution given the nullhypothesis is true.
+
+* MSB/MSW ~ F(df_between, df_within)
+
+
+
+```{r, echo=FALSE}
 n<-length(y)
 par(mfrow=c(1,3), mar=c(4,3,3,0.5), oma=c(0,2,0,0))
 # total sum of squares
@@ -769,15 +812,6 @@ segments(1:n, rep(mpg, times=npg), 1:n, y, col="orange", lwd=1)
 ```
 
 
-
-H0: $\bar{y_1}=\bar{y_2}=\bar{y_3}$  
-  
-Expectation given H0:  
-  
-* Between-group variance is due to natural variation (within-group variance)  
-* SSB/df_between = SSW/df_within, where df_between= number of groups -1 and df_within = n-number of groups  
-* MSB = SSB/df_between, MSW = SSW/df_within  
-* MSB/MSW ~ F(df_between, df_within)
 
 
 
