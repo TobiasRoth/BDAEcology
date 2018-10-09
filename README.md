@@ -1,4 +1,4 @@
-# Bayesian Data Analysis in Ecology Using Linear Models with R and Stan
+# Bayesian Data Analysis in Ecology with R and Stan
 
 ## Content of the repository
 There is a single rmarkdon file for each chaper of the book. Otherwise the repositoriy contains also the following folders.

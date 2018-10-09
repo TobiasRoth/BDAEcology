@@ -438,8 +438,8 @@ correlation between rank(x) and rank(y)</p>
 <div id="principal-components-analyses-pca" class="section level2">
 <h2><span class="header-section-number">2.3</span> Principal components analyses PCA</h2>
 <p>rotation of the coordinate system</p>
-<div class="figure"><span id="fig:unnamed-chunk-2"></span>
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-2-1.png" alt="Principal components are eigenvectors of the covariance or correlation matrix" width="768" />
+<div class="figure"><span id="fig:unnamed-chunk-3"></span>
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-3-1.png" alt="Principal components are eigenvectors of the covariance or correlation matrix" width="768" />
 <p class="caption">
 Figure 2.1: Principal components are eigenvectors of the covariance or correlation matrix
 </p>
@@ -476,9 +476,9 @@ number of components = number of variables</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(pca)</code></pre></div>
 <pre><code>## Importance of components:
 ##                           Comp.1    Comp.2
-## Standard deviation     1.2594693 0.6432239
-## Proportion of Variance 0.7931315 0.2068685
-## Cumulative Proportion  0.7931315 1.0000000</code></pre>
+## Standard deviation     1.2564516 0.6490988
+## Proportion of Variance 0.7893354 0.2106646
+## Cumulative Proportion  0.7893354 1.0000000</code></pre>
 <p>outlook: components with low variance are shrinked to a higher degree in Ridge regression</p>
 <div id="inferential-statistics" class="section level3">
 <h3><span class="header-section-number">2.3.1</span> Inferential statistics</h3>
@@ -501,7 +501,7 @@ to 2. study design</p>
 <p>reported uncertainties always are too small!</p>
 </blockquote>
 <p>Example: Number of stats courses before starting a PhD among all PhD students</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># simulate the virtual true data</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># simulate the virtual true population</span>
 <span class="kw">set.seed</span>(<span class="dv">235325</span>)   <span class="co"># set seed for random number generator</span>
 
 <span class="co"># simulate fake data of the whole population</span>
@@ -510,26 +510,26 @@ statscourses &lt;-<span class="st"> </span><span class="kw">rpois</span>(<span c
 <span class="co"># draw a random sample from the population</span>
 n &lt;-<span class="st"> </span><span class="dv">12</span>            <span class="co"># sample size</span>
 y &lt;-<span class="st"> </span><span class="kw">sample</span>(statscourses, <span class="dv">12</span>, <span class="dt">replace=</span><span class="ot">FALSE</span>)         </code></pre></div>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-6-1.png" width="768" /></p>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-7-1.png" width="768" /></p>
 <p>We observe the sample mean, what do we know about the population mean?</p>
 <p>Frequentist solution: How would the sample mean scatter, if we repeat the study many times?</p>
 <p>Bayesian solution: For any possible value, what is the probability that it is the true population mean?</p>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-7-1.png" width="768" /></p>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-8-1.png" width="768" /></p>
 </div>
 </div>
 <div id="standard-deviation-and-standard-error" class="section level2">
 <h2><span class="header-section-number">2.4</span> Standard deviation and standard error</h2>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-8-1.png" width="768" /></p>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-9-1.png" width="768" /></p>
 <p>frequentist SE = SD/sqrt(n)</p>
 <p>Bayesian SE = SD of posterior distribution</p>
 </div>
 <div id="central-limit-theorem-law-of-large-numbers" class="section level2">
 <h2><span class="header-section-number">2.5</span> Central limit theorem / law of large numbers</h2>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-9-1.png" width="768" /></p>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-10-1.png" width="768" /></p>
 <p>normal distribution = Gaussian distribution</p>
 <p><span class="math inline">\(p(\theta) = \frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{1}{2\sigma^2}(\theta -\mu)^2) = Normal(\mu, \sigma)\)</span></p>
 <p><span class="math inline">\(E(\theta) = \mu\)</span>, <span class="math inline">\(var(\theta) = \sigma^2\)</span>, <span class="math inline">\(mode(\theta) = \mu\)</span></p>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-10-1.png" width="768" /></p>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-11-1.png" width="768" /></p>
 </div>
 <div id="bayes-theorem" class="section level2">
 <h2><span class="header-section-number">2.6</span> Bayes theorem</h2>
@@ -546,15 +546,15 @@ y &lt;-<span class="st"> </span><span class="kw">sample</span>(statscourses, <sp
 <tbody>
 <tr class="odd">
 <td align="left">no</td>
-<td align="left">2</td>
-<td align="left">1</td>
-<td align="left"><strong>3</strong></td>
+<td align="left">5</td>
+<td align="left">3</td>
+<td align="left"><strong>8</strong></td>
 </tr>
 <tr class="even">
 <td align="left">yes</td>
-<td align="left">2</td>
-<td align="left">2</td>
-<td align="left"><strong>4</strong></td>
+<td align="left">1</td>
+<td align="left">4</td>
+<td align="left"><strong>5</strong></td>
 </tr>
 <tr class="odd">
 <td align="left">——-</td>
@@ -564,16 +564,16 @@ y &lt;-<span class="st"> </span><span class="kw">sample</span>(statscourses, <sp
 </tr>
 <tr class="even">
 <td align="left"><strong>sum</strong></td>
-<td align="left"><strong>4</strong></td>
-<td align="left"><strong>3</strong></td>
+<td align="left"><strong>6</strong></td>
 <td align="left"><strong>7</strong></td>
+<td align="left"><strong>13</strong></td>
 </tr>
 </tbody>
 </table>
 <p>What is the probability that the person likes wine given it has no car?<br />
-<span class="math inline">\(P(A) =\)</span> likes wine <span class="math inline">\(= 0.43\)</span><br />
-<span class="math inline">\(P(B) =\)</span> no car <span class="math inline">\(= 0.43\)</span></p>
-<p><span class="math inline">\(P(B|A) =\)</span> proportion car-free people among the wine liker <span class="math inline">\(= 0.33\)</span></p>
+<span class="math inline">\(P(A) =\)</span> likes wine <span class="math inline">\(= 0.54\)</span><br />
+<span class="math inline">\(P(B) =\)</span> no car <span class="math inline">\(= 0.62\)</span></p>
+<p><span class="math inline">\(P(B|A) =\)</span> proportion car-free people among the wine liker <span class="math inline">\(= 0.43\)</span></p>
 <p>Knowing whether a persons owns a car increases the knowledge of the birthday preference.</p>
 </div>
 <div id="bayes-theorem-for-continuous-parameters" class="section level2">
@@ -591,7 +591,7 @@ y &lt;-<span class="st"> </span><span class="kw">sample</span>(statscourses, <sp
 <p><span class="math inline">\(p(\theta|y) = Norm(\mu_n, \tau_n)\)</span>, where <span class="math inline">\(\mu_n= \frac{\frac{1}{\tau_0^2}\mu_0 + \frac{n}{\sigma^2}\bar{y}}{\frac{1}{\tau_0^2}+\frac{n}{\sigma^2}}\)</span> and <span class="math inline">\(\frac{1}{\tau_n^2} = \frac{1}{\tau_0^2} + \frac{n}{\sigma^2}\)</span></p>
 <p><span class="math inline">\(\bar{y}\)</span> is a sufficient statistics<br />
 <span class="math inline">\(p(\theta) = Norm(\mu_0, \tau_0)\)</span> is a conjugate prior for <span class="math inline">\(p(y|\theta) = Norm(\theta, \sigma)\)</span>, with <span class="math inline">\(\sigma\)</span> known.</p>
-<p>Posterior mean = weighted average between prior mean and <span class="math inline">\(\bar{y}\)</span> with weights equal to the precisions (<span class="math inline">\(\frac{1}{\tau_0^2}\)</span> and <span class="math inline">\(\frac{n}{\sigma^2}\)</span>) <img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-12-1.png" width="5600" /></p>
+<p>Posterior mean = weighted average between prior mean and <span class="math inline">\(\bar{y}\)</span> with weights equal to the precisions (<span class="math inline">\(\frac{1}{\tau_0^2}\)</span> and <span class="math inline">\(\frac{n}{\sigma^2}\)</span>) <img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-13-1.png" width="5600" /></p>
 </div>
 <div id="a-model-with-two-parameters" class="section level2">
 <h2><span class="header-section-number">2.9</span> A model with two parameters</h2>
@@ -608,7 +608,7 @@ n &lt;-<span class="st"> </span><span class="kw">length</span>(y)</code></pre></
 <p><span class="math inline">\(v_n = v_0 +n\)</span></p>
 <p><span class="math inline">\(v_n\sigma_n^2=v_0\sigma_0^2+(n-1)s^2+\frac{\kappa_0n}{\kappa_0+n}(\bar{y}-\mu_0)^2\)</span></p>
 <p><span class="math inline">\(\bar{y}\)</span> and <span class="math inline">\(s^2\)</span> are sufficient statistics</p>
-<p>Joint, marginal and conditional posterior distributions <img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-14-1.png" width="768" /></p>
+<p>Joint, marginal and conditional posterior distributions <img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-15-1.png" width="768" /></p>
 </div>
 <div id="t-distribution" class="section level2">
 <h2><span class="header-section-number">2.10</span> t-distribution</h2>
@@ -638,7 +638,7 @@ n &lt;-<span class="st"> </span><span class="kw">length</span>(y)</code></pre></
 <div id="nullhypothesis-test" class="section level2">
 <h2><span class="header-section-number">2.12</span> Nullhypothesis test</h2>
 <p>p-value: Probability of the data or more extreme data given the null hypothesis is true.</p>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-16-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-17-1.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 <div id="confidence-interval" class="section level2">
 <h2><span class="header-section-number">2.13</span> Confidence interval</h2>
@@ -646,22 +646,22 @@ n &lt;-<span class="st"> </span><span class="kw">length</span>(y)</code></pre></
 <span class="kw">mean</span>(y) <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.025</span>, <span class="dt">df=</span><span class="dv">7</span>)<span class="op">*</span><span class="kw">sd</span>(y)<span class="op">/</span><span class="kw">sqrt</span>(n) 
 <span class="co"># upper limit of 95% CI</span>
 <span class="kw">mean</span>(y) <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df=</span><span class="dv">7</span>)<span class="op">*</span><span class="kw">sd</span>(y)<span class="op">/</span><span class="kw">sqrt</span>(n) </code></pre></div>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="posterior-distribution" class="section level2">
 <h2><span class="header-section-number">2.14</span> Posterior distribution</h2>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-19-1.png" width="768" /></p>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-20-1.png" width="768" /></p>
 <p>Two different theories - one single result!</p>
 </div>
 <div id="posterior-probability" class="section level2">
 <h2><span class="header-section-number">2.15</span> Posterior probability</h2>
-<p>Probability <span class="math inline">\(P(H:\mu&lt;=40) =\)</span> 0.01 <img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-20-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>Probability <span class="math inline">\(P(H:\mu&lt;=40) =\)</span> 0.01 <img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-21-1.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 <div id="monte-carlo-simulation-parametric-bootstrap" class="section level2">
 <h2><span class="header-section-number">2.16</span> Monte Carlo simulation (parametric bootstrap)</h2>
-<p>Monte Carlo integration: numerical solution of <span class="math inline">\(\int_{-1}^{1.5} F(x) dx\)</span> <img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-21-1.png" width="768" /></p>
+<p>Monte Carlo integration: numerical solution of <span class="math inline">\(\int_{-1}^{1.5} F(x) dx\)</span> <img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-22-1.png" width="768" /></p>
 <p>sim is solving a mathematical problem by simulation How sim is simulating to get the marginal distribution of <span class="math inline">\(\mu\)</span>:</p>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-22-1.png" width="768" /></p>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-23-1.png" width="768" /></p>
 </div>
 <div id="methods-for-getting-the-posterior-distribution" class="section level2">
 <h2><span class="header-section-number">2.17</span> 3 methods for getting the posterior distribution</h2>
@@ -677,7 +677,7 @@ n &lt;-<span class="st"> </span><span class="kw">length</span>(y)</code></pre></
 <p>For example, one coin flip (Bernoulli model)</p>
 <p>data: y=0 (a tail)<br />
 likelihood: <span class="math inline">\(p(y|\theta)=\theta^y(1-\theta)^{(1-y)}\)</span></p>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-23-1.png" width="768" /></p>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-24-1.png" width="768" /></p>
 </div>
 <div id="monte-carlo-simulations" class="section level2">
 <h2><span class="header-section-number">2.19</span> Monte Carlo simulations</h2>
@@ -685,14 +685,14 @@ likelihood: <span class="math inline">\(p(y|\theta)=\theta^y(1-\theta)^{(1-y)}\)
 <li>Markov chain Monte Carlo simulation (BUGS, Jags)</li>
 <li>Hamiltonian Monte Carlo (Stan)</li>
 </ul>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-24-1.png" width="768" /></p>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-25-1.png" width="768" /></p>
 </div>
 <div id="comparison-of-the-locations-between-two-groups" class="section level2">
 <h2><span class="header-section-number">2.20</span> Comparison of the locations between two groups</h2>
 <p>Boxplot:<br />
 Median, 50% box, extremes observation within 1.5 times the interquartile range, outliers</p>
 <p>The uncertainties of the means do not show the uncertainty of the difference between the means!</p>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-25-1.png" width="768" /></p>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-26-1.png" width="768" /></p>
 </div>
 <div id="difference-between-two-means" class="section level2">
 <h2><span class="header-section-number">2.21</span> Difference between two means</h2>
@@ -704,11 +704,11 @@ mod</code></pre></div>
 ## 
 ## Coefficients:
 ##  (Intercept)  birthdaywine  
-##       37.250         1.083</code></pre>
+##      43.3333        0.6667</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bsim &lt;-<span class="st"> </span><span class="kw">sim</span>(mod, <span class="dt">n.sim=</span>nsim)
 <span class="kw">quantile</span>(bsim<span class="op">@</span>coef[,<span class="dv">2</span>], <span class="dt">prob=</span><span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))</code></pre></div>
-<pre><code>##      2.5%       50%     97.5% 
-## -6.938854  1.094108  9.176722</code></pre>
+<pre><code>##       2.5%        50%      97.5% 
+## -1.6524462  0.6698085  2.9975599</code></pre>
 </div>
 <div id="two-sample-t-test" class="section level2">
 <h2><span class="header-section-number">2.22</span> Two-sample t-test</h2>
@@ -717,13 +717,13 @@ mod</code></pre></div>
 ##  Two Sample t-test
 ## 
 ## data:  ell by birthday
-## t = -0.33541, df = 5, p-value = 0.7509
+## t = -0.63369, df = 11, p-value = 0.5392
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -9.385932  7.219266
+##  -2.982185  1.648851
 ## sample estimates:
-## mean in group flower   mean in group wine 
-##             37.25000             38.33333</code></pre>
+## mean in group flowers    mean in group wine 
+##              43.33333              44.00000</code></pre>
 </div>
 <div id="wilxocon-test" class="section level2">
 <h2><span class="header-section-number">2.23</span> Wilxocon test</h2>
@@ -732,7 +732,7 @@ mod</code></pre></div>
 ##  Wilcoxon rank sum test with continuity correction
 ## 
 ## data:  ell by birthday
-## W = 6.5, p-value = 1
+## W = 18, p-value = 0.7172
 ## alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 <div id="randomisation-test" class="section level2">
@@ -744,8 +744,8 @@ mod</code></pre></div>
   diffH0[i] &lt;-<span class="st"> </span><span class="kw">coef</span>(rmod)[<span class="dv">2</span>]
 }
 <span class="kw">mean</span>(<span class="kw">abs</span>(diffH0)<span class="op">&gt;</span><span class="kw">abs</span>(<span class="kw">coef</span>(mod)[<span class="dv">2</span>])) <span class="co"># p-value</span></code></pre></div>
-<pre><code>## [1] 0.7094</code></pre>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-30-1.png" width="768" /></p>
+<pre><code>## [1] 0.4898</code></pre>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-31-1.png" width="768" /></p>
 <ul>
 <li>Produces the distribution of a test statistics given the null hypothesis.<br />
 </li>
@@ -768,103 +768,168 @@ mod</code></pre></div>
 }
 <span class="kw">quantile</span>(diffboot, <span class="dt">prob=</span><span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</code></pre></div>
 <pre><code>##      2.5%     97.5% 
-## -4.200000  8.333333</code></pre>
+## -1.214286  2.725327</code></pre>
 <ul>
 <li>result is a confidence interval<br />
 </li>
 <li>assumption: all observations are independent!</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(diffboot); <span class="kw">abline</span>(<span class="dt">v=</span><span class="kw">coef</span>(mod)[<span class="dv">2</span>], <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-32-1.png" width="768" /></p>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-33-1.png" width="768" /></p>
 </div>
 <div id="f-distribution" class="section level2">
 <h2><span class="header-section-number">2.26</span> F-distribution</h2>
-<p>Ratios of sample variances drawn from populations with equal variances follow an F-distribution. The density function of the F-distribution is even more complicated than the one of the t-distribution! We do not copy it here. Further, we have not yet met any Bayesian example where the F-distribution is used. It is used in frequentist analyses in order to compare variances, and, within the ANOVA, to compare means between groups. If two variances only differ because of natural variance in the data (nullhypothesis) then <span class="math inline">\(\frac{Var(X_1)}{Var(X_2)}\sim F_{df_1,df_2}\)</span>.</p>
-<div class="figure"><span id="fig:unnamed-chunk-33"></span>
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-33-1.png" alt="Different density functions of the F statistics" width="768" />
+<p>Ratios of sample variances drawn from populations with equal variances follow an F-distribution. The density function of the F-distribution is even more complicated than the one of the t-distribution! We do not copy it here. Further, we have not yet met any Bayesian example where the F-distribution is used (that does not mean that there is no). It is used in frequentist analyses in order to compare variances, and, within the ANOVA, to compare means between groups. If two variances only differ because of natural variance in the data (nullhypothesis) then <span class="math inline">\(\frac{Var(X_1)}{Var(X_2)}\sim F_{df_1,df_2}\)</span>.</p>
+<div class="figure"><span id="fig:unnamed-chunk-34"></span>
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-34-1.png" alt="Different density functions of the F statistics" width="768" />
 <p class="caption">
 Figure 2.2: Different density functions of the F statistics
 </p>
 </div>
 <div id="analysis-of-variance-anova" class="section level3">
 <h3><span class="header-section-number">2.26.1</span> Analysis of variance ANOVA</h3>
-<p>The aim of an ANOVA is to compare means of groups. The frequentist method to do that is to compare the between-group with the within-group variance.</p>
-<div class="figure"><span id="fig:unnamed-chunk-34"></span>
-<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-34-1.png" alt="Number of stats courses students have taken before starting a PhD in relation to their feeling about statistics." width="768" />
+<p>The aim of an ANOVA is to compare means of groups. In a frequentist analysis, this is done by comparing the between-group with the within-group variance. The result of a Bayesian analysis is the joint posterior distribution of the group means.</p>
+<div class="figure"><span id="fig:unnamed-chunk-35"></span>
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-35-1.png" alt="Number of stats courses students have taken before starting a PhD in relation to their feeling about statistics." width="768" />
 <p class="caption">
 Figure 2.3: Number of stats courses students have taken before starting a PhD in relation to their feeling about statistics.
 </p>
 </div>
-<p>The following three sum of squares (SS) underly an ANOVA:<br />
+<p>In the frequentist ANOVA, the following three sum of squared distances (SS) are used to calculate the total, the between- and within-group variances:<br />
 Total sum of squares = SST = <span class="math inline">\(\sum_1^n{(y_i-\bar{y})^2}\)</span><br />
 Within-group SS = SSW = <span class="math inline">\(\sum_1^n{(y_i-\bar{y_g})^2}\)</span>: unexplained variance<br />
 Between-group SS = SSB = <span class="math inline">\(\sum_1^g{n_g(\bar{y_g}-\bar{y})^2}\)</span>: explained variance</p>
-<p>In order to make SSB and SSW comparable, we have to divide them by their degrees of freedoms. For the within-group SS, SSW, the degrees of freedom is the number of obervations minus the number of groups (<span class="math inline">\(g\)</span>), because g means have been estimated from the data. If the <span class="math inline">\(g\)</span> means are fixed and <span class="math inline">\(n-g\)</span> data points are known, then the last <span class="math inline">\(g\)</span> data points are defined, i.e., they cannot be chosen freely. For the between-group SS, SSB, the degrees of freedom is the number of groups minus 1 (for the overall mean).</p>
+<p>The between-group and within-group SS sum to the total sum of squares: SST=SSB+SSW. Attention: this equation is only true in any case for a simple one-way ANOVA (just one grouping factor). If the data are grouped according to more than one factor (such as in a two- or three-way ANOVA), then there is one single solution for the equation only when the data is completely balanced, i.e. when there are the same number of observations in all combinations of factor levels. For non-balanced data with more than one grouping factor, there are different ways of calculating the SSBs, and the result of the F-test described below depends on the order of the predictors in the model.</p>
+<div class="figure"><span id="fig:unnamed-chunk-36"></span>
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-36-1.png" alt="Visualisation of the total, between-group and within-group sum of squares. Points are observations; long horizontal line is the overall mean; short horizontal lines are group specific means." width="768" />
+<p class="caption">
+Figure 2.4: Visualisation of the total, between-group and within-group sum of squares. Points are observations; long horizontal line is the overall mean; short horizontal lines are group specific means.
+</p>
+</div>
+<p>In order to make SSB and SSW comparable, we have to divide them by their degrees of freedoms. For the within-group SS, SSW, the degrees of freedom is the number of obervations minus the number of groups (<span class="math inline">\(g\)</span>), because <span class="math inline">\(g\)</span> means have been estimated from the data. If the <span class="math inline">\(g\)</span> means are fixed and <span class="math inline">\(n-g\)</span> data points are known, then the last <span class="math inline">\(g\)</span> data points are defined, i.e., they cannot be chosen freely. For the between-group SS, SSB, the degrees of freedom is the number of groups minus 1 (the minus 1 stands for the overall mean).</p>
 <ul>
 <li>MSB = SSB/df_between, MSW = SSW/df_within</li>
 </ul>
-<p>It can be shown (by mathematicians) that given the nullhypothesis that the mean of all groups are equal <span class="math inline">\(m_1 = m_2 = m_3\)</span>, then the mean squared errors between groups (MSB) is expected to be equalt to the mean squared errors within the groups (MSW). Therefore, the ration MSB/MSW is expected to follow an F-distribution given the nullhypothesis is true.</p>
+<p>It can be shown (by mathematicians) that, given the nullhypothesis, the mean of all groups are equal <span class="math inline">\(m_1 = m_2 = m_3\)</span>, then the mean squared errors between groups (MSB) is expected to be equal to the mean squared errors within the groups (MSW). Therefore, the ration MSB/MSW is expected to follow an F-distribution given the nullhypothesis is true.</p>
 <ul>
 <li>MSB/MSW ~ F(df_between, df_within)</li>
 </ul>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-35-1.png" width="768" /></p>
-<p>NEED TO INSERT A BAYESIAN ANAOVA HERE</p>
+<p>The Bayesian analysis for comparing group means consists of calculating the posterior distribution for each group mean and then drawing inference from these posterior distributions. A Bayesian one-way ANOVA involves the following steps:<br />
+1. Decide for a data model: We, here, assume that the measurements are normally distributed around the group means. In this example here, we transform the outcome variable in order to better meet the normal assumption. Note: the frequentist ANOVA makes exactly the same assumptions. We can write the data model: <span class="math inline">\(y_i\sim Norm(\mu_i,\sigma)\)</span> with <span class="math inline">\(mu_i= \beta_0 + \beta_1I(group=2) +\beta_1I(group=3)\)</span>, where the <span class="math inline">\(I()\)</span>-function is an indicator function taking on 1 if the expression is true and 0 otherwise. This model has 4 parameters: <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\beta_2\)</span> and <span class="math inline">\(\sigma\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit a normal model with 3 different means</span>
+mod &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(nrcourses<span class="op">+</span><span class="dv">1</span>)<span class="op">~</span>statsfeeling, <span class="dt">data=</span>dat)</code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Choose a prior distribution for each model parameter: In this example, we choose flat prior distributions for each parameter. By using these priors, the result should not remarkably be affected by the prior distributions but almost only reflect the information in the data. We choose so-called improper prior distributions. These are completely flat distributions that give all parameter values the same probability. Such distributions are called improper because the area under the curve is not summing to 1 and therefore, they cannot be considered to be proper probability distributions. However, they can still be used to solve the Bayesian theorem.</p></li>
+<li><p>Solve the Bayes theorem: The solution of the Bayes theorem for the above priors and model is implemented in the function sim of the package arm.</p></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate numerically the posterior distributions of the model </span>
+<span class="co"># parameters using flat prior distributions</span>
+nsim &lt;-<span class="st"> </span><span class="dv">5000</span>
+<span class="kw">set.seed</span>(<span class="dv">346346</span>)
+bsim &lt;-<span class="st"> </span><span class="kw">sim</span>(mod, <span class="dt">n.sim=</span>nsim)</code></pre></div>
+<ol start="4" style="list-style-type: decimal">
+<li>Display the joint posterior distributions of the group means</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate group means from the model parameters</span>
+newdat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">statsfeeling=</span><span class="kw">levels</span>(dat<span class="op">$</span>statsfeeling))
+X &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>statsfeeling, <span class="dt">data=</span>newdat)
+fitmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span>nsim, <span class="dt">nrow=</span><span class="kw">nrow</span>(newdat))
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) fitmat[,i] &lt;-<span class="st"> </span>X<span class="op">%*%</span>bsim<span class="op">@</span>coef[i,]
+<span class="kw">hist</span>(fitmat[<span class="dv">1</span>,], <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">breaks=</span><span class="kw">seq</span>(<span class="op">-</span><span class="fl">2.5</span>, <span class="fl">4.2</span>, <span class="dt">by=</span><span class="fl">0.1</span>), <span class="dt">main=</span><span class="ot">NA</span>, <span class="dt">xlab=</span><span class="st">&quot;Group mean of log(number of courses +1)&quot;</span>, <span class="dt">las=</span><span class="dv">1</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">2.2</span>))
+<span class="kw">hist</span>(fitmat[<span class="dv">2</span>,], <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">breaks=</span><span class="kw">seq</span>(<span class="op">-</span><span class="fl">2.5</span>, <span class="fl">4.2</span>, <span class="dt">by=</span><span class="fl">0.1</span>), <span class="dt">main=</span><span class="ot">NA</span>, <span class="dt">xlab=</span><span class="st">&quot;&quot;</span>, <span class="dt">las=</span><span class="dv">1</span>, <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">col=</span><span class="kw">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.5</span>))
+<span class="kw">hist</span>(fitmat[<span class="dv">3</span>,], <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">breaks=</span><span class="kw">seq</span>(<span class="op">-</span><span class="fl">2.5</span>, <span class="fl">4.2</span>, <span class="dt">by=</span><span class="fl">0.1</span>), <span class="dt">main=</span><span class="ot">NA</span>, <span class="dt">xlab=</span><span class="st">&quot;&quot;</span>, <span class="dt">las=</span><span class="dv">1</span>, <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">col=</span><span class="kw">rgb</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="fl">0.5</span>))
+<span class="kw">legend</span>(<span class="dv">2</span>,<span class="dv">2</span>, <span class="dt">fill=</span><span class="kw">c</span>(<span class="st">&quot;white&quot;</span>,<span class="kw">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.5</span>), <span class="kw">rgb</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="fl">0.5</span>)), <span class="dt">legend=</span><span class="kw">levels</span>(dat<span class="op">$</span>statsfeeling))</code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-39"></span>
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-39-1.png" alt="Posterior distributions of the mean number of stats courses PhD students visited before starting the PhD grouped according to their feelings about statistics." width="768" />
+<p class="caption">
+Figure 2.5: Posterior distributions of the mean number of stats courses PhD students visited before starting the PhD grouped according to their feelings about statistics.
+</p>
+</div>
+<p>Based on the posterior distributions of the group means, we can extract derived quantities depending on our interest and questions. Here, for example, we could extract the posterior probability of the hypothesis that students with a positive feeling about statistics have a better education in statistics than those with a neutral or negative feeling about statistics.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># P(mean(positive)&gt;mean(neutral))</span>
+<span class="kw">mean</span>(fitmat[<span class="dv">3</span>,]<span class="op">&gt;</span>fitmat[<span class="dv">2</span>,])</code></pre></div>
+<pre><code>## [1] 0.9004</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># P(mean(positive)&gt;mean(negative))</span>
+<span class="kw">mean</span>(fitmat[<span class="dv">3</span>,]<span class="op">&gt;</span>fitmat[<span class="dv">1</span>,])</code></pre></div>
+<pre><code>## [1] 0.953</code></pre>
 </div>
 </div>
 <div id="chisquare-test" class="section level2">
 <h2><span class="header-section-number">2.27</span> Chisquare test</h2>
-<ul>
-<li>correlations between two categorical variables</li>
-<li>comparison of two distributions (goodness of fit)</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(dat<span class="op">$</span>birthday, dat<span class="op">$</span>statsfeeling)</code></pre></div>
-<pre><code>##         
-##          negative neutral positive
-##   flower        3       1        0
-##   wine          1       1        1</code></pre>
-<p>expected values <span class="math inline">\(E_{ij}\)</span> given H0: rowsum*colsum/total</p>
+<p>The chisquare test is used for two frequentist purposes.<br />
+1. Testing for correlations between two categorical variables.<br />
+2. Comparison of two distributions (goodness of fit test)</p>
+<p>When testing for correlations between two categorical variables, then the nullhypothesis is “there is no correlation”. The data can be displayed in cross-tables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Example: correlation between birthday preference and car ownership</span>
+<span class="kw">table</span>(dat<span class="op">$</span>birthday, dat<span class="op">$</span>car)</code></pre></div>
+<pre><code>##          
+##           N Y
+##   flowers 5 1
+##   wine    3 4</code></pre>
+<p>Given the nullhypothesis is true, we expect that the distribution of the data in each column of the cross-table is similar to the distribution of the row-sums. And, the distribution of the data in each row should be similar to the distribution of the column-sums. The chisquare test statistics <span class="math inline">\(\chi^2\)</span> measures the deviation of the data from this expected distribution of the data in the cross-table.</p>
+<p>For calculating the chisquare test statistics <span class="math inline">\(\chi^2\)</span>, we first have to obtain for each cell in the cross-table the expected value <span class="math inline">\(E_{ij}\)</span> = rowsum*colsum/total.</p>
 <p><span class="math inline">\(\chi^2\)</span> measures the difference between the observed <span class="math inline">\(O_{ij}\)</span> and expected <span class="math inline">\(E_{ij}\)</span> values as:<br />
-<span class="math inline">\(\chi^2=\sum_{i=1}^{m}\sum_{j=1}^{k}\frac{(O_{ij}-E_{ij})^2}{E_{ij}}\)</span><br />
-The <span class="math inline">\(\chi^2\)</span>-distribution has 1 parameter, the degrees of freedom <span class="math inline">\(v\)</span> = <span class="math inline">\((m-1)(k-1)\)</span>. <img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">chisq.test</span>(<span class="kw">table</span>(dat<span class="op">$</span>birthday, dat<span class="op">$</span>statsfeeling))</code></pre></div>
+<span class="math inline">\(\chi^2=\sum_{i=1}^{m}\sum_{j=1}^{k}\frac{(O_{ij}-E_{ij})^2}{E_{ij}}\)</span> where <span class="math inline">\(m\)</span> is the number of rows and <span class="math inline">\(k\)</span> is the number of columns. The <span class="math inline">\(\chi^2\)</span>-distribution has 1 parameter, the degrees of freedom <span class="math inline">\(v\)</span> = <span class="math inline">\((m-1)(k-1)\)</span>.</p>
+<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p>R is calculating the <span class="math inline">\(\chi^2\)</span> value for specific cross-tables, and it is also giving the p-values, i.e., the probability of obtaining the observed or a higher <span class="math inline">\(\chi^2\)</span> value given the nullhypothesis is true by comparing the observed <span class="math inline">\(\chi^2\)</span> with the corresponding chisquare distribution.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">chisq.test</span>(<span class="kw">table</span>(dat<span class="op">$</span>birthday, dat<span class="op">$</span>car))</code></pre></div>
 <pre><code>## 
-##  Pearson&#39;s Chi-squared test
+##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
-## data:  table(dat$birthday, dat$statsfeeling)
-## X-squared = 1.8958, df = 2, p-value = 0.3875</code></pre>
-<p>no cell should have a count less than 5…</p>
+## data:  table(dat$birthday, dat$car)
+## X-squared = 0.85312, df = 1, p-value = 0.3557</code></pre>
+<p>The warning (that is suppressed in the rmarkdown version, but that you will see if you run the code on your own computer) is given, because in our example some cells have counts less than 5. In such cases, the Fisher’s exact test should be preferred. This test calculates the p-value analytically using probability theory, whereas the chisquare test relies on the assumption that the <span class="math inline">\(\chi^2\)</span> value follows a chisquare distribution. The latter assumption holds better for larger sample sizes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fisher.test</span>(<span class="kw">table</span>(dat<span class="op">$</span>birthday, dat<span class="op">$</span>car))</code></pre></div>
+<pre><code>## 
+##  Fisher&#39;s Exact Test for Count Data
+## 
+## data:  table(dat$birthday, dat$car)
+## p-value = 0.2657
+## alternative hypothesis: true odds ratio is not equal to 1
+## 95 percent confidence interval:
+##    0.3369761 391.2320030
+## sample estimates:
+## odds ratio 
+##   5.699654</code></pre>
 </div>
 <div id="bayesian-way-of-analysing-correlations-between-categorical-variables" class="section level2">
 <h2><span class="header-section-number">2.28</span> Bayesian way of analysing correlations between categorical variables</h2>
+<p>For a Bayesian analysis of cross-table data, a data model has to be found. There are several possibilities that could be used:</p>
 <ul>
-<li>log-linear model (Poisson model) for the counts</li>
-<li>estimating proportions using a binomial or a multinomial model</li>
+<li>a so-called log-linear model (Poisson model) for the counts in each cell of the cross-table.<br />
+</li>
+<li>a binomial or a multinomial model for obtaining estimates of the proportions of data in each cell</li>
 </ul>
+<p>These models provide possibilities to explore the patterns in the data in more details than a chisquare test.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># log-linear model</span>
-mod &lt;-<span class="st"> </span><span class="kw">glm</span>(count<span class="op">~</span>gift<span class="op">+</span>feel <span class="op">+</span><span class="st"> </span>gift<span class="op">:</span>feel, 
+mod &lt;-<span class="st"> </span><span class="kw">glm</span>(count<span class="op">~</span>birthday<span class="op">+</span>car <span class="op">+</span><span class="st"> </span>birthday<span class="op">:</span>car, 
            <span class="dt">data=</span>datagg, <span class="dt">family=</span>poisson)
 bsim &lt;-<span class="st"> </span><span class="kw">sim</span>(mod, <span class="dt">n.sim=</span>nsim)
 <span class="kw">round</span>(<span class="kw">t</span>(<span class="kw">apply</span>(bsim<span class="op">@</span>coef, <span class="dv">2</span>, quantile, 
               <span class="dt">prob=</span><span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))),<span class="dv">2</span>)</code></pre></div>
-<pre><code>##                            2.5%     50%    97.5%
-## (Intercept)               -0.02    1.10     2.26
-## giftwine                  -3.35   -1.09     1.13
-## feelneutral               -3.37   -1.10     1.22
-## feelpositive          -82593.73 -217.91 85128.08
-## giftwine:feelneutral      -2.48    1.10     4.69
-## giftwine:feelpositive -85129.15  220.68 82595.26</code></pre>
-<p>the interaction parameters measure the strength of the correlation</p>
+<pre><code>##                    2.5%   50% 97.5%
+## (Intercept)        0.74  1.61  2.47
+## birthdaywine      -1.91 -0.50  0.90
+## carY              -3.71 -1.62  0.52
+## birthdaywine:carY -0.67  1.88  4.40</code></pre>
+<p>The interaction parameter measures the strength of the correlation. To quantitatively understand what a parameter value of 1.90 means, we have to look at the interpretation of all parameter values. We do that here quickly without a thorough explanation, because we already explained the Poisson model in chapter 8 of <span class="citation">(F. Korner-Nievergelt et al. <a href="referenzen.html#ref-KornerNievergelt2015">2015</a>)</span>.</p>
+<p>The intercept 1.61 corresponds to the logarithm of the count in the cell “flowers” and “N” (number of students who prefer flowers as a birthday present and who do not have a car), i.e., <span class="math inline">\(exp(\beta_0)\)</span> = 5.00. The exponent of the second parameter corresponds to the multiplicative difference between the counts in the cells “flowers and N” and “wine and N”, i.e., count in the cell “wine and N” = <span class="math inline">\(exp(\beta_0)exp(\beta_1)\)</span> = exp(1.61)exp(-0.51) = 3.00. The third parameter measures the multiplicative difference in the counts between the cells “flowers and N” and “flowers and Y”, i.e., count in the cell “flowers and Y” = <span class="math inline">\(exp(\beta_0)exp(\beta_2)\)</span> = exp(1.61)exp(-1.61) = 1.00. Thus, the third parameter is the difference in the logarithm of the counts between the car owners and the car-free students for those who prefer flowers. The interaction parameter is the difference of this difference between the students who prefer wine and those who prefer flowers. This is difficult to intuitively understand. Here is another try to formulate it: The interaction parameter measures the difference in the logarithm of the counts in the cross-table between the row-differences between the columns. Maybe it becomes clear, when we extract the count in the cell “wine and Y” from the model parameters: <span class="math inline">\(exp(\beta_0)exp(\beta_1)exp(\beta_2)exp(\beta_3)\)</span> = exp(1.61)exp(-0.51)exp(-1.61)exp(1.90) = 4.00.</p>
+<p>Alternatively, we could estimate the proportions of flower and wine preferers within each group of car owners and car-free students using a binomial model. For an explanation of the binomial model, see chapter 8 of <span class="citation">(F. Korner-Nievergelt et al. <a href="referenzen.html#ref-KornerNievergelt2015">2015</a>)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># binomial model</span>
-tab &lt;-<span class="st"> </span><span class="kw">table</span>(dat<span class="op">$</span>statsfeeling,dat<span class="op">$</span>birthday)
+tab &lt;-<span class="st"> </span><span class="kw">table</span>(dat<span class="op">$</span>car,dat<span class="op">$</span>birthday)
 mod &lt;-<span class="st"> </span><span class="kw">glm</span>(tab<span class="op">~</span><span class="kw">rownames</span>(tab),  <span class="dt">family=</span>binomial)
 bsim &lt;-<span class="st"> </span><span class="kw">sim</span>(mod, <span class="dt">n.sim=</span>nsim)</code></pre></div>
-<p><img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-42-1.png" width="768" /></p>
+<div class="figure"><span id="fig:unnamed-chunk-48"></span>
+<img src="02-aa-prerequisites_files/figure-html/unnamed-chunk-48-1.png" alt="Estimated proportion of students that prefer flowers over wine as a birthday present among the car-free students (N) and the car owners (Y). Given are the median of the posterior distribution (circle). The bar extends between the 2.5% and 97.5% quantiles of the posterior distribution." width="768" />
+<p class="caption">
+Figure 2.6: Estimated proportion of students that prefer flowers over wine as a birthday present among the car-free students (N) and the car owners (Y). Given are the median of the posterior distribution (circle). The bar extends between the 2.5% and 97.5% quantiles of the posterior distribution.
+</p>
+</div>
 </div>
 <div id="summary" class="section level2">
 <h2><span class="header-section-number">2.29</span> Summary</h2>
-<p>Bayesian data analysis = applying the Bayes theorem for summarizing knowledge based on data, priors and the model assumptions.</p>
-<p>Frequentist statistics = quantifying uncertainty by hypothetical repetitions<br />
-p-values are not wrong per se but they lead scientists and politicians to wrong decisions.</p>
+<p>Bayesian data analysis = applying the Bayes theorem for summarising knowledge based on data, priors and the model assumptions.</p>
+<p>Frequentist statistics = quantifying uncertainty by hypothetical repetitions</p>
 
 </div>
 </div>
