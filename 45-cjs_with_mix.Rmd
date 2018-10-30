@@ -1,5 +1,26 @@
-# Fränzi Modell {#cjs_with_mix}
+# Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals  {#cjs_with_mix}
 ## Introduction
+
+In some species the identification of the sex is not possible for all individuals without sampling DNA. For example, morphological dimorphism is absent or so weak that for parts of the individuals cannot assigned to one of the sexes. Particularly in ornithological long-term capture recapture data sets that typically are obtained by voluntary bird ringers who do normaly not have the possibilities to analyse DNA, often the sex identification is missing in parts of the individuals. For estimating survival, it would nevertheless be valuable to include data of all individuals, use the information on sex-specific effects on survival wherever possible but account for the fact that of parts of the individuals the sex is not known. We here explain how a Cormack-Jolly-Seber model can be integrated with a mixture model in oder to allow for a combined analyses of individuals with and without sex identified. 
+
+
+## Model description 
+
+
+
+
+## The Stan code
+The trick for coding the CMR-mixture model in Stan is to formulate the model 3 times:
+1. For the individuals with identified sex
+2. For the males that were not identified
+3. For the females that were not identified
+
+Then for the non-identified individuals a mixture model is formulated that assigns a probability of being a female or a male to each individual.
+
+
+
+
+
 
 
 
