@@ -25,7 +25,7 @@ plot(ra)
 <p class="caption">(\#fig:unnamed-chunk-3)Meter above sea leavel (m) accross the canton Aargau in Switzerland.</p>
 </div>
 
-### Geometry data
+### Geometry data {#geometrydata}
 All geometry data types are composed of points. The spatial location of a point is defined by its x and y coordinates. Using several points one can then define lines (sequence of points connected by straight lines) and polygons (sequence of points that form a closed ring). Points, lines and plygons are the geometries we usually work with. We use the package `sf` to work with geometry data types. Its functions are very efficient to work with all spatial data other than raster data. It also links to GDAL (i.e. a computer software library for reading and writing raster and vector geospatial data formats) and proj.4 (i.e. a library for performing conversions between cartographic projections), which are important tools when woring with different sources of spatial data.
 
 We can used the function `st_read()` to read geometry data from file or database. In the following example, however, we convert the tibble `frogs` into a simple feature collection. The data file `frogs`, formatted as a tibble, contains different columns including the counts, variables that describe the ponds as well as the spatial coordinates of the counts. The simple feature collection looks rather similar to the original tibble, however instead of the x and y colomns it now contains the column geometry. With the simple feature collection we can work pretty much in the same way as we use to work with tibbles. For example we can filter only the data from 2011, select the geometries and plot them on the top of the raster with the elevation across the entire canton of Aargau (see \@ref(rasterdata) for the raster data).
@@ -33,7 +33,7 @@ We can used the function `st_read()` to read geometry data from file or database
 
 ```r
 library(sf)
-dat <- frogs %>% st_as_sf(coords = c("x", "y"))
+dat <- frogs %>% st_as_sf(coords = c("x", "y"), crs = 21781)
 plot(ra)
 dat %>% filter(year == 2011) %>% 
   st_geometry() %>% 
@@ -66,6 +66,18 @@ projectRaster(ra, crs = CRS("+init=epsg:4326"))
 
 # Transfrom sf data to WGS84
 st_transform(dat, crs = 4326)
+```
+
+### Joining spatial data
+Joining two non-spatial datasets relies on a shared variable (`key`) using for instance the function `left_join()`, as described in chapter \@ref(joindata). In a spatial context, we apply the exact same concept except for the key being a shared areas of geographic space. Note, however, that  people with a background in geographic information systems may call these operations differently, such as spatial overlay or intersection.
+
+For [geometry data](#geometrydata) we can use the function `st_join()`. As an example, we aim to add the [biogegraphic Region](biogeographische regionen der schweiz) to the counts of the number of frogs in ponds of the Canton Aargau. We transform the `frogs` data into a spatial object (i.e. a simple feature collection). The polygons of the biogegraphic regions in Switzerland are available in the object `bgr`. To each of the polygons additional data are available and we aim to extract the information from the column `BIOGREG_R6`, which contains the name of the biogeographic region. We add this column to the frogs data using the function `st_join()` as following.
+
+
+```r
+load("RData/bgr.RData")
+dat <- frogs %>% st_as_sf(coords = c("x", "y"), crs = 21781)
+dat <- dat %>% st_join(bgr["BIOGREG_R6"])
 ```
 
 
