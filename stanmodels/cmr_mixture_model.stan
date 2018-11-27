@@ -10,10 +10,7 @@ data {
   int<lower=1, upper=2> juvi[nindi, nocc];
   int<lower=1, upper=2> juvni[nindni, nocc];
   int<lower=1> year[nocc];
-  real tempsu[nocc-1];                     // a covariate 
-  real tempwi[nocc-1];
-  //real rainsu[nocc-1];
-  //real rainwi[nocc-1];
+  real x[nocc-1];                     // a covariate 
 }
 
 transformed data {
@@ -43,12 +40,7 @@ parameters {
   real<lower=0, upper=1> theta[nindni];            // probability of being male for non-identified individuals
   real<lower=0, upper=1> b0[2,nocc-1];             // intercept of p
   real a0[2,2];                  // intercept for phi 
-  real a1[2,2];                  // coefficient for phi
-  real a2[2,2];                  // coefficient for phi 
-  //real a3[2,2];                  // coefficient for phi 
-  //real a4[2,2];                  // coefficient for phi 
-   
-
+  real a1[2,2];                  // coefficient for phi   
 }
 
 transformed parameters {
@@ -80,9 +72,7 @@ transformed parameters {
       }
       for(tt in firsti[ii]:(nocc-1)) {
         // linear predictor for phi:
-        phi[ii,tt] = inv_logit(a0[sex[ii], juvi[ii,tt]] + a1[sex[ii], juvi[ii,tt]]*tempsu[tt]
-                                +a2[sex[ii], juvi[ii,tt]]*tempwi[tt]); //+a3[sex[ii], juvi[ii,tt]]*rainsu[tt]
-                                //+a4[sex[ii], juvi[ii,tt]]*rainwi[tt]
+        phi[ii,tt] = inv_logit(a0[sex[ii], juvi[ii,tt]] + a1[sex[ii], juvi[ii,tt]]*x[tt]); 
 
       }
     }
@@ -96,12 +86,8 @@ transformed parameters {
       }
       for(tt in firstni[ii]:(nocc-1)) {
         // linear predictor for phi:
-        phi_male[ii,tt] = inv_logit(a0[1, juvni[ii,tt]] + a1[1, juvni[ii,tt]]*tempsu[tt]
-                                +a2[1, juvni[ii,tt]]*tempwi[tt]);  //+a3[1, juvni[ii,tt]]*rainsu[tt]
-                                //+a4[1, juvni[ii,tt]]*rainwi[tt]
-        phi_female[ii,tt] = inv_logit(a0[2, juvni[ii,tt]]+ a1[2, juvni[ii,tt]]*tempsu[tt]
-                                      +a2[2, juvni[ii,tt]]*tempwi[tt]);//+a3[2, juvni[ii,tt]]*rainsu[tt]
-                                      //+a4[2, juvni[ii,tt]]*rainwi[tt]
+        phi_male[ii,tt] = inv_logit(a0[1, juvni[ii,tt]] + a1[1, juvni[ii,tt]]*x[tt]); 
+        phi_female[ii,tt] = inv_logit(a0[2, juvni[ii,tt]]+ a1[2, juvni[ii,tt]]*x[tt]);
 
       }
     }
@@ -168,25 +154,13 @@ model {
   }
   a0[1,1]~normal(0,1.5);
   a0[1,2]~normal(0,1.5);
-  a1[1,1]~normal(0,1.5);
+  a1[1,1]~normal(0,3);
   a1[1,2]~normal(0,3);
-  a2[1,1]~normal(0,3);
-  a2[1,2]~normal(0,3);
-  //a3[1,1]~normal(0,3);
-  //a3[1,2]~normal(0,3);
-  //a4[1,1]~normal(0,3);
-  //a4[1,2]~normal(0,3);
 
   a0[2,1]~normal(0,1.5);
-  a0[2,2]~normal(a0[1,2],0.01);
-  a1[2,1]~normal(0,1.5);
+  a0[2,2]~normal(a0[1,2],0.01); // for juveniles, we assume that the effect of the covariate is independet of sex
+  a1[2,1]~normal(0,3);
   a1[2,2]~normal(a1[1,2],0.01);
-  a2[2,1]~normal(0,3);
-  a2[2,2]~normal(a2[1,2],0.01);
-  //a3[2,1]~normal(0,3);
-  //a3[2,2]~normal(a3[1,2],0.01);
-  //a4[2,1]~normal(0,3);
-  //a4[2,2]~normal(a4[1,2],0.01);
 
   // likelihood for identified individuals
   for (i in 1:nindi) {
