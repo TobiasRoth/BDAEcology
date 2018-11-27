@@ -1,0 +1,30 @@
+
+# Data preparation {#datamanip}
+
+## Basic operations
+Alle Packete laden `library(tidyverse)` oder nur `library(dplyr)`.
+
+
+
+```r
+dat <- iris %>% 
+  as.tibble() %>% 
+  filter(Sepal.Length > 5) %>% 
+  group_by(Species) %>% 
+  summarise(n = n(),
+            mittel = mean(Petal.Length))
+```
+
+
+
+## Joining tables {#joindata}
+Beschreiben wie left_join funktioniert.
+
+
+
+
+## Further reading
+- [R for Data Science by Garrett Grolemund and Hadley Wickham](http://r4ds.had.co.nz): Introduces the tidyverse framwork. It explains how to get data into R, get it into the most useful structure, transform it, visualise it and model it.
+
+
+

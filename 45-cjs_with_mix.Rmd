@@ -32,7 +32,7 @@ An introduction to the Cormack-Jolly-Seber model we gave in Chapter 14.5 of the 
 
 
 ## Data description
-```{r datasim, echo=TRUE}
+```{r datasim, echo=TRUE, eval=FALSE}
 # true parameter values
 theta  <- 0.6 # proportion of males
 nocc <- 15    # number of years in the data set
@@ -186,7 +186,7 @@ model {
     }  
     target+=(log(chi[i,lasti[i]+1]));
   }
-
+```
 
 
 ## Model description 

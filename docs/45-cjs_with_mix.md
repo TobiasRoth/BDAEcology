@@ -1,6 +1,206 @@
 
-# Fränzi Modell {#cjs_with_mix}
+
+
+
+# Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals  {#cjs_with_mix}
 ## Introduction
+
+In some species the identification of the sex is not possible for all individuals without sampling DNA. For example, morphological dimorphism is absent or so weak that parts of the individuals cannot be assigned to one of the sexes. Particularly in ornithological long-term capture recapture data sets that typically are obtained by voluntary bird ringers who do normaly not have the possibilities to analyse DNA, often the sex identification is missing in parts of the individuals. For estimating survival, it would nevertheless be valuable to include data of all individuals, use the information on sex-specific effects on survival wherever possible but account for the fact that of parts of the individuals the sex is not known. We here explain how a Cormack-Jolly-Seber model can be integrated with a mixture model in oder to allow for a combined analyses of individuals with and without sex identified. 
+An introduction to the Cormack-Jolly-Seber model we gave in Chapter 14.5 of the book @KornerNievergelt2015. We here expand this model by a mixture structure that allows including individuals with a missing categorical predictor variable, such as sex.
+
+
+## Data description
+
+```r
+# true parameter values
+theta  <- 0.6 # proportion of males
+nocc <- 15    # number of years in the data set
+b0 <- matrix(NA, ncol=nocc-1, nrow=2)
+b0[1,] <- rbeta((nocc-1), 3, 4) # capture probability of males
+b0[2,] <- rbeta((nocc-1), 2, 4) # capture probability of females  
+a0 <- matrix(NA, ncol=2, nrow=2)
+a1 <- matrix(NA, ncol=2, nrow=2)
+a0[1,1]<- qlogis(0.7) # average annual survival for adult males
+a0[1,2]<- qlogis(0.3) # average annual survival for juveniles
+a0[2,1] <- qlogis(0.55) # average annual survival for adult females
+a0[2,2] <- a0[1,2]
+a1[1,1] <- 0
+a1[1,2] <- -0.3
+a1[2,1] <- -0.4
+a1[2,2] <- a1[1,2]
+
+nindi <- 1000
+nindni <- 1500
+nind <- nindi + nindni
+y <- matrix(ncol=nocc, nrow=nind)
+first <- sample(1:(nocc-1), nind, replace=TRUE)
+sex <- sample(c(1,2), nind, prob=c(theta, 1-theta), replace=TRUE)
+juv <- sample(c(0,1), nind, prob=c(0.5, 0.5), replace=TRUE)
+x <- runif(nocc-1)                   # a covariate 
+
+
+  int<lower=0,upper=2> yi[nindi,nocc];         // CH[i,k]: individual i captured at k
+  int<lower=0,upper=nocc-1> firsti[nindi];      // year of first capture
+  int<lower=0,upper=2> yni[nindni,nocc];       // CH[i,k]: individual i captured at k
+  int<lower=0,upper=nocc-1> firstni[nindni];    // year of first capture
+  int<lower=1, upper=2> sex[nindi];
+  int<lower=1, upper=2> juvi[nindi, nocc];
+  int<lower=1, upper=2> juvni[nindni, nocc];
+  int<lower=1> year[nocc];
+
+
+
+transformed parameters {
+  real<lower=0,upper=1>p_male[nindni,nocc];         // capture probability
+  real<lower=0,upper=1>p_female[nindni,nocc];       // capture probability
+  real<lower=0,upper=1>p[nindi,nocc];               // capture probability
+
+  real<lower=0,upper=1>phi_male[nindni,nocc-1];   // survival probability
+  real<lower=0,upper=1>chi_male[nindni,nocc+1];   // probability that an individual 
+                                                  // is never recaptured after its
+                                                  // last capture
+  real<lower=0,upper=1>phi_female[nindni,nocc-1]; // survival probability
+  real<lower=0,upper=1>chi_female[nindni,nocc+1]; // probability that an individual 
+                                                  // is never recaptured after its
+                                                   // last capture
+  real<lower=0,upper=1>phi[nindi,nocc-1];   // survival probability
+  real<lower=0,upper=1>chi[nindi,nocc+1];   // probability that an individual 
+                                            // is never recaptured after its
+                                            // last capture
+
+  {
+    int k; 
+    int kk; 
+    for(ii in 1:nindi){
+      if (firsti[ii]>1) {
+        for (z in 1:(firsti[ii]-1)){
+          phi[ii,z] = 1;
+        }
+      }
+      for(tt in firsti[ii]:(nocc-1)) {
+        // linear predictor for phi:
+        phi[ii,tt] = inv_logit(a0[sex[ii], juvi[ii,tt]] + a1[sex[ii], juvi[ii,tt]]*x[tt]); 
+
+      }
+    }
+
+    for(ii in 1:nindni){
+      if (firstni[ii]>1) {
+        for (z in 1:(firstni[ii]-1)){
+          phi_female[ii,z] = 1;
+          phi_male[ii,z] = 1;
+        }
+      }
+      for(tt in firstni[ii]:(nocc-1)) {
+        // linear predictor for phi:
+        phi_male[ii,tt] = inv_logit(a0[1, juvni[ii,tt]] + a1[1, juvni[ii,tt]]*x[tt]); 
+        phi_female[ii,tt] = inv_logit(a0[2, juvni[ii,tt]]+ a1[2, juvni[ii,tt]]*x[tt]);
+
+      }
+    }
+    
+    for(i in 1:nindi) {
+      // linear predictor for p for identified individuals
+      for(w in 1:firsti[i]){
+        p[i,w] = 1;
+      }
+      for(kkk in (firsti[i]+1):nocc)
+        p[i,kkk] = b0[sex[i],year[kkk-1]];  
+      chi[i,nocc+1] = 1.0;              
+      k = nocc;
+      while (k > firsti[i]) {
+        chi[i,k] = (1 - phi[i,k-1]) + phi[i,k-1] * (1 - p[i,k]) * chi[i,k+1]; 
+        k = k - 1;
+      }
+      if (firsti[i]>1) {
+        for (u in 1:(firsti[i]-1)){
+          chi[i,u] = 0;
+        }
+      }
+      chi[i,firsti[i]] = (1 - p[i,firsti[i]]) * chi[i,firsti[i]+1];
+    }// close definition of transformed parameters for identified individuals
+
+    for(i in 1:nindni) {
+      // linear predictor for p for non-identified individuals
+      for(w in 1:firstni[i]){
+        p_male[i,w] = 1;
+        p_female[i,w] = 1;
+      }
+      for(kkkk in (firstni[i]+1):nocc){
+        p_male[i,kkkk] = b0[1,year[kkkk-1]];  
+        p_female[i,kkkk] = b0[2,year[kkkk-1]];
+      }
+      chi_male[i,nocc+1] = 1.0; 
+      chi_female[i,nocc+1] = 1.0; 
+      k = nocc;
+      while (k > firstni[i]) {
+        chi_male[i,k] = (1 - phi_male[i,k-1]) + phi_male[i,k-1] * (1 - p_male[i,k]) * chi_male[i,k+1]; 
+        chi_female[i,k] = (1 - phi_female[i,k-1]) + phi_female[i,k-1] * (1 - p_female[i,k]) * chi_female[i,k+1]; 
+        k = k - 1;
+      }
+      if (firstni[i]>1) {
+        for (u in 1:(firstni[i]-1)){
+          chi_male[i,u] = 0;
+          chi_female[i,u] = 0;
+        }
+      }
+      chi_male[i,firstni[i]] = (1 - p_male[i,firstni[i]]) * chi_male[i,firstni[i]+1];
+      chi_female[i,firstni[i]] = (1 - p_female[i,firstni[i]]) * chi_female[i,firstni[i]+1];
+    } // close definition of transformed parameters for non-identified individuals
+
+    
+  }  // close block of transformed parameters exclusive parameter declarations
+}    // close transformed parameters
+
+model {
+
+  // likelihood for identified individuals
+  for (i in 1:nindi) {
+    if (lasti[i]>0) {
+      for (k in firsti[i]:lasti[i]) {
+        if(k>1) target+= (log(phi[i, k-1])); 
+        if (yi[i,k] == 1) target+=(log(p[i,k]));   
+        else target+=(log1m(p[i,k]));  
+      }
+    }  
+    target+=(log(chi[i,lasti[i]+1]));
+  }
+```
+
+
+## Model description 
+
+For the annual data, time period t was one year (of 15 years in total), and for the monthly data, time period t was one month (of 169 months in total).  
+The observations yit, an indicator of whether individual i was recaptured during time period t is modelled conditional on the latent true state of the individual birds zit (0 = dead or permanently emigrated, 1 = alive and at the study site) as a Bernoulli variable. The probability P(yit = 1) is the product of the probability that an alive individual is recaptured, pit, and the state of the bird zit (alive = 1, dead = 0). Thus, a dead bird cannot be recaptured, whereas for a bird alive during time period t, the recapture probability equals pit:
+yit ~ Bernoulli(zitpit)
+The latent state variable zit is a Markovian variable with the state at time t being dependent on the state at time t-1 and the apparent survival probability it:
+zit ~ Bernoulli(zit-1it)
+We use the term apparent survival in order to indicate that the parameter   is a product of site fidelity and survival. Thus, individuals that permanently emigrated from the study area cannot be distinguished from dead individuals.
+In both models, the parameters and p were modelled as sex-specific. However, for 61% of the individuals, sex could not be identified, i.e. sex was missing. Ignoring these missing values would most likely lead to a bias because they were not missing at random. The probability that sex can be identified is increasing with age and most likely differs between sexes. Therefore, we included a mixture model for the sex:
+Sexi ~ Categorical(q)
+where q is a vector of length 2, containing the probability of being a male and a female, respectively. In this way, the sex of the non-identified individuals was assumed to be male or female with probability q[1] and q[2]=1-q[1], respectively. This model corresponds to the finite mixture model introduced by Pledger et al. (2003) in order to account for unknown classes of birds (heterogeneity).  However, in our case, for parts of the individuals the class (sex) was known.
+
+Annual survival models
+We used two different models for annual apparent survival. In the first model, we estimated independent annual survival for each year, age and sex class (3 levels: juveniles, adult males and adult females):
+Model 1:it = a t,age.sex[it]
+Annual recapture probability was modelled for each year and age and sex class independently:
+ pit = b0t,age.sex[it]
+Uniform prior distributions were used for all parameters with a parameter space limited to values between 0 and 1 (probabilities) and a normal distribution with a mean of 0 and a standard deviation of 1.5 for the intercept a0. A standard deviation of 5 was used for a1, a2, a3, and a4.
+
+
+
+## The Stan code
+The trick for coding the CMR-mixture model in Stan is to formulate the model 3 times:
+1. For the individuals with identified sex
+2. For the males that were not identified
+3. For the females that were not identified
+
+Then for the non-identified individuals a mixture model is formulated that assigns a probability of being a female or a male to each individual.
+
+
+
+
+
 
 
 

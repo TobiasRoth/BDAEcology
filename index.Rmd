@@ -13,7 +13,7 @@ description: "This GitHub-book is collection of updates and additional material 
 
 # Preface {-}
 
-```{r fig.align='center', echo=FALSE, fig.link=''}
+```{r fig.align='center', echo=FALSE}
 knitr::include_graphics('images/cover.jpg', dpi = 150)
 ```
 
