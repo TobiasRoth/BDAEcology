@@ -49,7 +49,11 @@ dat %>% filter(year == 2011) %>%
 In this chapter we shortly describe some functions that we often use when working with spatial data in R.
 
 ### Coordinate systems
-An important aspect of spatial data is the coordinate reference system (CRS). A CRS determines for instance where the center of the map is, the units for the coordinates and others. [PROJ.4](https://proj4.org/#) is an open source software library that is commonly used for CRS transformation. Most commonly used CRSs have been assigned a HERE IS SOMETHING MISSING. The EPSG (European Petroleum Survey Group) code is a unique ID that can be used to identify a CRS. Thus if we know the EPSG code it is rather simple to transform spatial data into other CRS. To search for the correct EPSG code we can use https://www.epsg-registry.org or http://www.spatialreference.org
+An important aspect of spatial data is the coordinate reference system (CRS). A CRS determines for instance where the center of the map is, the units for the coordinates and others. [PROJ.4](https://proj4.org/#) is an open source software library that is commonly used for CRS transformation. Most commonly used CRSs have been assigned a 
+
+>HERE IS SOMETHING MISSING. 
+
+The EPSG (European Petroleum Survey Group) code is a unique ID that can be used to identify a CRS. Thus if we know the EPSG code it is rather simple to transform spatial data into other CRS. To search for the correct EPSG code we can use https://www.epsg-registry.org or http://www.spatialreference.org
 
 The following code shows how to assign the CRS of existing data and how to transform the coordinate system for raster data and sf data, respectively.
 
@@ -76,6 +80,8 @@ For [geometry data](#geometrydata) we can use the function `st_join()`. As an ex
 
 ```r
 load("RData/bgr.RData")
+bgr <- bgr %>%
+  st_transform(21781)
 dat <- frogs %>% st_as_sf(coords = c("x", "y"), crs = 21781)
 dat <- dat %>% st_join(bgr["BIOGREG_R6"])
 ```
