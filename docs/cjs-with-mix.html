@@ -32,7 +32,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="zeroinflated-poisson-lmm.html">
+<link rel="prev" href="dailynestsurv.html">
 <link rel="next" href="referenzen.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -230,11 +230,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="16.2" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#example-data"><i class="fa fa-check"></i><b>16.2</b> Example data</a></li>
 <li class="chapter" data-level="16.3" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#model"><i class="fa fa-check"></i><b>16.3</b> Model</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html"><i class="fa fa-check"></i><b>17</b> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</a><ul>
-<li class="chapter" data-level="17.1" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#introduction-6"><i class="fa fa-check"></i><b>17.1</b> Introduction</a></li>
-<li class="chapter" data-level="17.2" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#data-description"><i class="fa fa-check"></i><b>17.2</b> Data description</a></li>
-<li class="chapter" data-level="17.3" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#model-description"><i class="fa fa-check"></i><b>17.3</b> Model description</a></li>
-<li class="chapter" data-level="17.4" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#the-stan-code"><i class="fa fa-check"></i><b>17.4</b> The Stan code</a></li>
+<li class="chapter" data-level="17" data-path="dailynestsurv.html"><a href="dailynestsurv.html"><i class="fa fa-check"></i><b>17</b> Daily nest survival</a><ul>
+<li class="chapter" data-level="17.1" data-path="dailynestsurv.html"><a href="dailynestsurv.html#background-1"><i class="fa fa-check"></i><b>17.1</b> Background</a></li>
+<li class="chapter" data-level="17.2" data-path="dailynestsurv.html"><a href="dailynestsurv.html#models-for-estimating-daily-nest-survival"><i class="fa fa-check"></i><b>17.2</b> Models for estimating daily nest survival</a></li>
+<li class="chapter" data-level="17.3" data-path="dailynestsurv.html"><a href="dailynestsurv.html#dailynestsurvstan"><i class="fa fa-check"></i><b>17.3</b> The Stan model</a></li>
+<li class="chapter" data-level="17.4" data-path="dailynestsurv.html"><a href="dailynestsurv.html#prepare-data-and-run-stan"><i class="fa fa-check"></i><b>17.4</b> Prepare data and run Stan</a></li>
+<li class="chapter" data-level="17.5" data-path="dailynestsurv.html"><a href="dailynestsurv.html#check-convergence"><i class="fa fa-check"></i><b>17.5</b> Check convergence</a></li>
+<li class="chapter" data-level="17.6" data-path="dailynestsurv.html"><a href="dailynestsurv.html#look-at-results"><i class="fa fa-check"></i><b>17.6</b> Look at results</a></li>
+<li class="chapter" data-level="" data-path="dailynestsurv.html"><a href="dailynestsurv.html#further-reading-8"><i class="fa fa-check"></i>Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html"><i class="fa fa-check"></i><b>18</b> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</a><ul>
+<li class="chapter" data-level="18.1" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#introduction-6"><i class="fa fa-check"></i><b>18.1</b> Introduction</a></li>
+<li class="chapter" data-level="18.2" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#data-description"><i class="fa fa-check"></i><b>18.2</b> Data description</a></li>
+<li class="chapter" data-level="18.3" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#model-description"><i class="fa fa-check"></i><b>18.3</b> Model description</a></li>
+<li class="chapter" data-level="18.4" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#the-stan-code"><i class="fa fa-check"></i><b>18.4</b> The Stan code</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
 <li class="divider"></li>
@@ -258,13 +267,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="cjs_with_mix" class="section level1">
-<h1><span class="header-section-number">17</span> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</h1>
+<h1><span class="header-section-number">18</span> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</h1>
 <div id="introduction-6" class="section level2">
-<h2><span class="header-section-number">17.1</span> Introduction</h2>
+<h2><span class="header-section-number">18.1</span> Introduction</h2>
 <p>In some species the identification of the sex is not possible for all individuals without sampling DNA. For example, morphological dimorphism is absent or so weak that parts of the individuals cannot be assigned to one of the sexes. Particularly in ornithological long-term capture recapture data sets that typically are obtained by voluntary bird ringers who do normaly not have the possibilities to analyse DNA, often the sex identification is missing in parts of the individuals. For estimating survival, it would nevertheless be valuable to include data of all individuals, use the information on sex-specific effects on survival wherever possible but account for the fact that of parts of the individuals the sex is not known. We here explain how a Cormack-Jolly-Seber model can be integrated with a mixture model in oder to allow for a combined analyses of individuals with and without sex identified. An introduction to the Cormack-Jolly-Seber model we gave in Chapter 14.5 of the book <span class="citation">F. Korner-Nievergelt et al. (<a href="referenzen.html#ref-KornerNievergelt2015">2015</a>)</span>. We here expand this model by a mixture structure that allows including individuals with a missing categorical predictor variable, such as sex.</p>
 </div>
 <div id="data-description" class="section level2">
-<h2><span class="header-section-number">17.2</span> Data description</h2>
+<h2><span class="header-section-number">18.2</span> Data description</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># true parameter values</span>
 theta  &lt;-<span class="st"> </span><span class="fl">0.6</span> <span class="co"># proportion of males</span>
 nocc &lt;-<span class="st"> </span><span class="dv">15</span>    <span class="co"># number of years in the data set</span>
@@ -420,13 +429,13 @@ model {
   }</code></pre></div>
 </div>
 <div id="model-description" class="section level2">
-<h2><span class="header-section-number">17.3</span> Model description</h2>
+<h2><span class="header-section-number">18.3</span> Model description</h2>
 <p>For the annual data, time period t was one year (of 15 years in total), and for the monthly data, time period t was one month (of 169 months in total).<br />
 The observations yit, an indicator of whether individual i was recaptured during time period t is modelled conditional on the latent true state of the individual birds zit (0 = dead or permanently emigrated, 1 = alive and at the study site) as a Bernoulli variable. The probability P(yit = 1) is the product of the probability that an alive individual is recaptured, pit, and the state of the bird zit (alive = 1, dead = 0). Thus, a dead bird cannot be recaptured, whereas for a bird alive during time period t, the recapture probability equals pit: yit ~ Bernoulli(zitpit) The latent state variable zit is a Markovian variable with the state at time t being dependent on the state at time t-1 and the apparent survival probability it: zit ~ Bernoulli(zit-1it) We use the term apparent survival in order to indicate that the parameter  is a product of site fidelity and survival. Thus, individuals that permanently emigrated from the study area cannot be distinguished from dead individuals. In both models, the parameters and p were modelled as sex-specific. However, for 61% of the individuals, sex could not be identified, i.e. sex was missing. Ignoring these missing values would most likely lead to a bias because they were not missing at random. The probability that sex can be identified is increasing with age and most likely differs between sexes. Therefore, we included a mixture model for the sex: Sexi ~ Categorical(q) where q is a vector of length 2, containing the probability of being a male and a female, respectively. In this way, the sex of the non-identified individuals was assumed to be male or female with probability q[1] and q[2]=1-q[1], respectively. This model corresponds to the finite mixture model introduced by Pledger et al. (2003) in order to account for unknown classes of birds (heterogeneity). However, in our case, for parts of the individuals the class (sex) was known.</p>
 <p>Annual survival models We used two different models for annual apparent survival. In the first model, we estimated independent annual survival for each year, age and sex class (3 levels: juveniles, adult males and adult females): Model 1:it = a t,age.sex[it] Annual recapture probability was modelled for each year and age and sex class independently: pit = b0t,age.sex[it] Uniform prior distributions were used for all parameters with a parameter space limited to values between 0 and 1 (probabilities) and a normal distribution with a mean of 0 and a standard deviation of 1.5 for the intercept a0. A standard deviation of 5 was used for a1, a2, a3, and a4.</p>
 </div>
 <div id="the-stan-code" class="section level2">
-<h2><span class="header-section-number">17.4</span> The Stan code</h2>
+<h2><span class="header-section-number">18.4</span> The Stan code</h2>
 <p>The trick for coding the CMR-mixture model in Stan is to formulate the model 3 times: 1. For the individuals with identified sex 2. For the males that were not identified 3. For the females that were not identified</p>
 <p>Then for the non-identified individuals a mixture model is formulated that assigns a probability of being a female or a male to each individual.</p>
 
@@ -437,7 +446,7 @@ The observations yit, an indicator of whether individual i was recaptured during
           </div>
         </div>
       </div>
-<a href="zeroinflated-poisson-lmm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dailynestsurv.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="referenzen.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
