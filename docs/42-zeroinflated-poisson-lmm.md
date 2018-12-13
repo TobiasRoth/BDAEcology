@@ -33,3 +33,6 @@ zit is a latent (unobserved) variable that takes the values 0 or 1 for each nest
 
 To fit this model in Stan, we first write the Stan model code and save it in a separated text-file with name “zeroinfl.stan”.
 
+
+Here is a handy package:
+https://cran.r-project.org/web/packages/GLMMadaptive/vignettes/ZeroInflated_and_TwoPart_Models.html

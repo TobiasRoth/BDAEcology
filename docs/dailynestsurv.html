@@ -25,7 +25,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt and Tobias Roth">
 
 
-<meta name="date" content="2018-12-11">
+<meta name="date" content="2018-12-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -50,44 +50,70 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="Settings\style.css" type="text/css" />
+<link rel="stylesheet" href="Settings/style.css" type="text/css" />
 </head>
 
 <body>
@@ -274,9 +300,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="models-for-estimating-daily-nest-survival" class="section level2">
 <h2><span class="header-section-number">17.2</span> Models for estimating daily nest survival</h2>
-<p>Using a simple logistic regression with an indicator for whether a nest is alive or not at day <span class="math inline">\(t\)</span> is not appropriate for estimating nest survival because its result is directly dependent on the time point when the nest has been detected. This time point is not biologically relevant. The conditional logistic regression <code>clogit</code> from the <code>survival</code> package could be used to describe correlations of the mortality with environmental variables but it does not provide an estimate for the daily survival probability. A natural model that allows estimating daily nest survival is the known-fate survival model. It is a Markov model that models the state of a nest <span class="math inline">\(i\)</span> at day <span class="math inline">\(t\)</span> (whether it is alive, <span class="math inline">\(y_{it}=1\)</span> or not <span class="math inline">\(y_{it}=0\)</span>) as a Bernoulli variable dependent on the state of the nest the day before.<br />
-<span class="math display">\[ y_{it} \sim Bernoulli(y_{it-1}S_{it})\]</span> The daily nest survival <span class="math inline">\(S_{it}\)</span> can be linearly related to predictor variables that are measured on the nest or on the day level.</p>
-<p><span class="math display">\[logit(S_{it}) = \textbf{X} \beta\]</span> It is also possible to add random effects if needed.</p>
+<p>Using a simple logistic regression with an indicator for whether a nest is alive or not at day <span class="math inline">\(t\)</span> is not appropriate for estimating nest survival because its result is directly dependent on the time point when the nest has been detected. This time point is not biologically relevant. The conditional logistic regression <code>clogit</code> from the <code>survival</code> package could be used to describe correlations of the mortality with environmental variables but it does not provide an estimate for the daily survival probability.
+A natural model that allows estimating daily nest survival is the known-fate survival model. It is a Markov model that models the state of a nest <span class="math inline">\(i\)</span> at day <span class="math inline">\(t\)</span> (whether it is alive, <span class="math inline">\(y_{it}=1\)</span> or not <span class="math inline">\(y_{it}=0\)</span>) as a Bernoulli variable dependent on the state of the nest the day before.<br />
+<span class="math display">\[ y_{it} \sim Bernoulli(y_{it-1}S_{it})\]</span>
+The daily nest survival <span class="math inline">\(S_{it}\)</span> can be linearly related to predictor variables that are measured on the nest or on the day level.</p>
+<p><span class="math display">\[logit(S_{it}) = \textbf{X} \beta\]</span>
+It is also possible to add random effects if needed.</p>
 </div>
 <div id="dailynestsurvstan" class="section level2">
 <h2><span class="header-section-number">17.3</span> The Stan model</h2>
@@ -317,31 +346,31 @@ model {
 <div id="prepare-data-and-run-stan" class="section level2">
 <h2><span class="header-section-number">17.4</span> Prepare data and run Stan</h2>
 <p>It would be much nicer to have a real data example!!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rstan)
-
-<span class="co"># Simulate fake data </span>
-Nnests &lt;-<span class="st"> </span><span class="dv">50</span>
-maxage &lt;-<span class="st">  </span><span class="dv">30</span>
-x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(Nnests)
-b0 &lt;-<span class="st"> </span><span class="dv">2</span>; b1 =<span class="st"> </span><span class="fl">0.5</span>
-S &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">ncol=</span>maxage<span class="op">-</span><span class="dv">1</span>, <span class="dt">nrow=</span>Nnests)
-<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>Nnests) S[i,] &lt;-<span class="st"> </span><span class="kw">plogis</span>(b0<span class="op">+</span>b1<span class="op">*</span>x[i])
-y &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">ncol=</span>maxage, <span class="dt">nrow=</span>Nnests)
-y[,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
-<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>Nnests){
-  <span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>maxage){
-    y[i,t] &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span>y[i,t<span class="op">-</span><span class="dv">1</span>]<span class="op">*</span>S[i,t<span class="op">-</span><span class="dv">1</span>])
-  }
-}
-
-last &lt;-<span class="st"> </span><span class="kw">apply</span>(y, <span class="dv">1</span>, sum)<span class="op">+</span><span class="dv">1</span>
-last[last<span class="op">&gt;</span><span class="dv">30</span>] &lt;-<span class="st"> </span><span class="dv">30</span>
-
-datax &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;y&quot;</span>, <span class="st">&quot;Nnests&quot;</span>, <span class="st">&quot;last&quot;</span>, <span class="st">&quot;maxage&quot;</span>, <span class="st">&quot;x&quot;</span>)
-
-<span class="co"># Run STAN</span>
-mod &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt">file =</span> <span class="st">&quot;stanmodels/daily_nest_survival.stan&quot;</span>, <span class="dt">data=</span>datax, 
-            <span class="dt">chains=</span><span class="dv">5</span>, <span class="dt">iter=</span><span class="dv">2500</span>, <span class="dt">control=</span><span class="kw">list</span>(<span class="dt">adapt_delta=</span><span class="fl">0.9</span>))</code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">library</span>(rstan)</a>
+<a class="sourceLine" id="cb51-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb51-3" data-line-number="3"><span class="co"># Simulate fake data </span></a>
+<a class="sourceLine" id="cb51-4" data-line-number="4">Nnests &lt;-<span class="st"> </span><span class="dv">50</span></a>
+<a class="sourceLine" id="cb51-5" data-line-number="5">maxage &lt;-<span class="st">  </span><span class="dv">30</span></a>
+<a class="sourceLine" id="cb51-6" data-line-number="6">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(Nnests)</a>
+<a class="sourceLine" id="cb51-7" data-line-number="7">b0 &lt;-<span class="st"> </span><span class="dv">2</span>; b1 =<span class="st"> </span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb51-8" data-line-number="8">S &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">ncol=</span>maxage<span class="dv">-1</span>, <span class="dt">nrow=</span>Nnests)</a>
+<a class="sourceLine" id="cb51-9" data-line-number="9"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>Nnests) S[i,] &lt;-<span class="st"> </span><span class="kw">plogis</span>(b0<span class="op">+</span>b1<span class="op">*</span>x[i])</a>
+<a class="sourceLine" id="cb51-10" data-line-number="10">y &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">ncol=</span>maxage, <span class="dt">nrow=</span>Nnests)</a>
+<a class="sourceLine" id="cb51-11" data-line-number="11">y[,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb51-12" data-line-number="12"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>Nnests){</a>
+<a class="sourceLine" id="cb51-13" data-line-number="13">  <span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>maxage){</a>
+<a class="sourceLine" id="cb51-14" data-line-number="14">    y[i,t] &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span>y[i,t<span class="dv">-1</span>]<span class="op">*</span>S[i,t<span class="dv">-1</span>])</a>
+<a class="sourceLine" id="cb51-15" data-line-number="15">  }</a>
+<a class="sourceLine" id="cb51-16" data-line-number="16">}</a>
+<a class="sourceLine" id="cb51-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb51-18" data-line-number="18">last &lt;-<span class="st"> </span><span class="kw">apply</span>(y, <span class="dv">1</span>, sum)<span class="op">+</span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb51-19" data-line-number="19">last[last<span class="op">&gt;</span><span class="dv">30</span>] &lt;-<span class="st"> </span><span class="dv">30</span></a>
+<a class="sourceLine" id="cb51-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb51-21" data-line-number="21">datax &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;y&quot;</span>, <span class="st">&quot;Nnests&quot;</span>, <span class="st">&quot;last&quot;</span>, <span class="st">&quot;maxage&quot;</span>, <span class="st">&quot;x&quot;</span>)</a>
+<a class="sourceLine" id="cb51-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb51-23" data-line-number="23"><span class="co"># Run STAN</span></a>
+<a class="sourceLine" id="cb51-24" data-line-number="24">mod &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt">file =</span> <span class="st">&quot;stanmodels/daily_nest_survival.stan&quot;</span>, <span class="dt">data=</span>datax, </a>
+<a class="sourceLine" id="cb51-25" data-line-number="25">            <span class="dt">chains=</span><span class="dv">5</span>, <span class="dt">iter=</span><span class="dv">2500</span>, <span class="dt">control=</span><span class="kw">list</span>(<span class="dt">adapt_delta=</span><span class="fl">0.9</span>))</a></code></pre></div>
 </div>
 <div id="check-convergence" class="section level2">
 <h2><span class="header-section-number">17.5</span> Check convergence</h2>
@@ -349,41 +378,41 @@ mod &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt">
 </div>
 <div id="look-at-results" class="section level2">
 <h2><span class="header-section-number">17.6</span> Look at results</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mod)</code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="kw">print</span>(mod)</a></code></pre></div>
 <pre><code>## Inference for Stan model: daily_nest_survival.
 ## 5 chains, each with iter=2500; warmup=1250; thin=1; 
 ## post-warmup draws per chain=1250, total post-warmup draws=6250.
 ## 
 ##         mean se_mean   sd    2.5%     25%     50%     75%   97.5% n_eff
-## b[1]    1.98    0.00 0.16    1.67    1.87    1.97    2.08    2.30  4434
-## b[2]    0.51    0.00 0.14    0.24    0.42    0.51    0.60    0.78  4248
-## lp__ -146.30    0.02 1.04 -149.14 -146.70 -145.98 -145.57 -145.30  2355
+## b[1]    1.84    0.00 0.16    1.53    1.73    1.84    1.95    2.18  3846
+## b[2]    0.55    0.00 0.18    0.20    0.43    0.55    0.67    0.91  3965
+## lp__ -146.61    0.02 1.06 -149.53 -146.96 -146.29 -145.88 -145.61  2375
 ##      Rhat
 ## b[1]    1
 ## b[2]    1
 ## lp__    1
 ## 
-## Samples were drawn using NUTS(diag_e) at Tue Dec 11 22:56:12 2018.
+## Samples were drawn using NUTS(diag_e) at Thu Dec 13 08:50:40 2018.
 ## For each parameter, n_eff is a crude measure of effective sample size,
 ## and Rhat is the potential scale reduction factor on split chains (at 
 ## convergence, Rhat=1).</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># effect plot</span>
-
-bsim &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(mod)
-nsim &lt;-<span class="st"> </span><span class="kw">nrow</span>(bsim)
-
-newdat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dt">length=</span><span class="dv">100</span>))
-Xmat &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>x, <span class="dt">data=</span>newdat)
-fitmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span>nsim, <span class="dt">nrow=</span><span class="kw">nrow</span>(newdat))
-<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) fitmat[,i] &lt;-<span class="st"> </span><span class="kw">plogis</span>(Xmat<span class="op">%*%</span><span class="kw">as.numeric</span>(bsim[i,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]))
-newdat<span class="op">$</span>fit &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, median)
-newdat<span class="op">$</span>lwr &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="dt">prob=</span><span class="fl">0.025</span>)
-newdat<span class="op">$</span>upr &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="dt">prob=</span><span class="fl">0.975</span>)
-
-<span class="kw">plot</span>(newdat<span class="op">$</span>x, newdat<span class="op">$</span>fit, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,
-     <span class="dt">las=</span><span class="dv">1</span>, <span class="dt">ylab=</span><span class="st">&quot;Daily nest survival&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;A covariate&quot;</span>)
-<span class="kw">lines</span>(newdat<span class="op">$</span>x, newdat<span class="op">$</span>lwr, <span class="dt">lty=</span><span class="dv">3</span>)
-<span class="kw">lines</span>(newdat<span class="op">$</span>x, newdat<span class="op">$</span>upr, <span class="dt">lty=</span><span class="dv">3</span>)</code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="co"># effect plot</span></a>
+<a class="sourceLine" id="cb54-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb54-3" data-line-number="3">bsim &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(mod)</a>
+<a class="sourceLine" id="cb54-4" data-line-number="4">nsim &lt;-<span class="st"> </span><span class="kw">nrow</span>(bsim)</a>
+<a class="sourceLine" id="cb54-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb54-6" data-line-number="6">newdat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dt">length=</span><span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb54-7" data-line-number="7">Xmat &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>x, <span class="dt">data=</span>newdat)</a>
+<a class="sourceLine" id="cb54-8" data-line-number="8">fitmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span>nsim, <span class="dt">nrow=</span><span class="kw">nrow</span>(newdat))</a>
+<a class="sourceLine" id="cb54-9" data-line-number="9"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) fitmat[,i] &lt;-<span class="st"> </span><span class="kw">plogis</span>(Xmat<span class="op">%*%</span><span class="kw">as.numeric</span>(bsim[i,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]))</a>
+<a class="sourceLine" id="cb54-10" data-line-number="10">newdat<span class="op">$</span>fit &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, median)</a>
+<a class="sourceLine" id="cb54-11" data-line-number="11">newdat<span class="op">$</span>lwr &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="dt">prob=</span><span class="fl">0.025</span>)</a>
+<a class="sourceLine" id="cb54-12" data-line-number="12">newdat<span class="op">$</span>upr &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="dt">prob=</span><span class="fl">0.975</span>)</a>
+<a class="sourceLine" id="cb54-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb54-14" data-line-number="14"><span class="kw">plot</span>(newdat<span class="op">$</span>x, newdat<span class="op">$</span>fit, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,</a>
+<a class="sourceLine" id="cb54-15" data-line-number="15">     <span class="dt">las=</span><span class="dv">1</span>, <span class="dt">ylab=</span><span class="st">&quot;Daily nest survival&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;A covariate&quot;</span>)</a>
+<a class="sourceLine" id="cb54-16" data-line-number="16"><span class="kw">lines</span>(newdat<span class="op">$</span>x, newdat<span class="op">$</span>lwr, <span class="dt">lty=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb54-17" data-line-number="17"><span class="kw">lines</span>(newdat<span class="op">$</span>x, newdat<span class="op">$</span>upr, <span class="dt">lty=</span><span class="dv">3</span>)</a></code></pre></div>
 <div class="figure"><span id="fig:effplots"></span>
 <img src="43_daily_nest_survival_files/figure-html/effplots-1.png" alt="Estimated daily nest survival probability in relation to a covariable x. Dotted lines are 95% uncertainty intervals of the regression line." width="768" />
 <p class="caption">
@@ -449,7 +478,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

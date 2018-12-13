@@ -54,9 +54,9 @@ $\tau = 1-\frac{4I}{(n(n-1))}$
 
 
 ## Principal components analyses PCA
-rotation of the coordinate system
+rotation of the coordinate system (see Fig. \@ref(fig:principal))
 
-```{r, echo=FALSE, fig.cap='Principal components are eigenvectors of the covariance or correlation matrix'}
+```{r principal, echo=FALSE, fig.cap='Principal components are eigenvectors of the covariance or correlation matrix'}
 x <- rnorm(100, 5, 1)
 y <- rnorm(100, 0.8*x, 1)
 pca <- princomp(cbind(x,y), cor=TRUE)

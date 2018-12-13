@@ -108,15 +108,15 @@ print(mod)
 ## post-warmup draws per chain=1250, total post-warmup draws=6250.
 ## 
 ##         mean se_mean   sd    2.5%     25%     50%     75%   97.5% n_eff
-## b[1]    1.98    0.00 0.16    1.67    1.87    1.97    2.08    2.30  4434
-## b[2]    0.51    0.00 0.14    0.24    0.42    0.51    0.60    0.78  4248
-## lp__ -146.30    0.02 1.04 -149.14 -146.70 -145.98 -145.57 -145.30  2355
+## b[1]    1.84    0.00 0.16    1.53    1.73    1.84    1.95    2.18  3846
+## b[2]    0.55    0.00 0.18    0.20    0.43    0.55    0.67    0.91  3965
+## lp__ -146.61    0.02 1.06 -149.53 -146.96 -146.29 -145.88 -145.61  2375
 ##      Rhat
 ## b[1]    1
 ## b[2]    1
 ## lp__    1
 ## 
-## Samples were drawn using NUTS(diag_e) at Tue Dec 11 22:56:12 2018.
+## Samples were drawn using NUTS(diag_e) at Thu Dec 13 08:50:40 2018.
 ## For each parameter, n_eff is a crude measure of effective sample size,
 ## and Rhat is the potential scale reduction factor on split chains (at 
 ## convergence, Rhat=1).

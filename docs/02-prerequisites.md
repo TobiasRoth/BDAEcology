@@ -55,11 +55,11 @@ $\tau = 1-\frac{4I}{(n(n-1))}$
 
 
 ## Principal components analyses PCA
-rotation of the coordinate system
+rotation of the coordinate system (see Fig. \@ref(fig:principal))
 
 <div class="figure">
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-2-1.png" alt="Principal components are eigenvectors of the covariance or correlation matrix" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-2)Principal components are eigenvectors of the covariance or correlation matrix</p>
+<img src="02-prerequisites_files/figure-html/principal-1.png" alt="Principal components are eigenvectors of the covariance or correlation matrix" width="768" />
+<p class="caption">(\#fig:principal)Principal components are eigenvectors of the covariance or correlation matrix</p>
 </div>
 
 
@@ -107,9 +107,9 @@ summary(pca)
 ```
 ## Importance of components:
 ##                           Comp.1    Comp.2
-## Standard deviation     1.2814424 0.5982520
-## Proportion of Variance 0.8210473 0.1789527
-## Cumulative Proportion  0.8210473 1.0000000
+## Standard deviation     1.2619424 0.6383584
+## Proportion of Variance 0.7962493 0.2037507
+## Cumulative Proportion  0.7962493 1.0000000
 ```
 outlook: components with low variance are shrinked to a higher degree in Ridge regression
 
@@ -151,7 +151,7 @@ y <- sample(statscourses, 12, replace=FALSE)
 ```
 
 
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-6-1.png" width="768" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-5-1.png" width="768" />
 
 
 
@@ -161,12 +161,12 @@ Frequentist solution: How would the sample mean scatter, if we repeat the study 
 
 Bayesian solution: For any possible value, what is the probability that it is the true population mean?  
 
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-7-1.png" width="768" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-6-1.png" width="768" />
 
 
 ## Standard deviation and standard error  
 
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-8-1.png" width="768" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-7-1.png" width="768" />
 
 
 
@@ -178,7 +178,7 @@ Bayesian SE = SD of posterior distribution
 ## Central limit theorem / law of large numbers
   
     
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-9-1.png" width="768" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-8-1.png" width="768" />
 
 
 
@@ -193,7 +193,7 @@ normal distribution = Gaussian distribution
 
   
     
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-10-1.png" width="768" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-9-1.png" width="768" />
 
 
 
@@ -254,7 +254,7 @@ $p(\theta|y) = Norm(\mu_n, \tau_n)$, where
 
 Posterior mean = weighted average between prior mean and $\bar{y}$ with weights
 equal to the precisions ($\frac{1}{\tau_0^2}$ and $\frac{n}{\sigma^2}$)
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-12-1.png" width="5600" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-11-1.png" width="5600" />
 
 
 
@@ -295,7 +295,7 @@ $\mu_n= \frac{\kappa_0}{\kappa_0+n}\mu_0 + \frac{n}{\kappa_0+n}\bar{y}$
  $\bar{y}$ and $s^2$ are sufficient statistics  
 
 Joint, marginal and conditional posterior distributions
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-14-1.png" width="768" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-13-1.png" width="768" />
 
 
 
@@ -339,7 +339,7 @@ t.test(y, mu=40)
 ## Nullhypothesis test
 p-value: Probability of the data or more extreme data given the null hypothesis is true.
 
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-16-1.png" width="768" style="display: block; margin: auto;" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-15-1.png" width="768" style="display: block; margin: auto;" />
 
 
 ## Confidence interval
@@ -352,12 +352,12 @@ mean(y) + qt(0.975, df=7)*sd(y)/sqrt(n)
 ```
 
 
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" />
 
 
 
 ## Posterior distribution
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-19-1.png" width="768" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-18-1.png" width="768" />
 
 
  Two different theories - one single result!
@@ -365,18 +365,18 @@ mean(y) + qt(0.975, df=7)*sd(y)/sqrt(n)
 
 ## Posterior probability
 Probability $P(H:\mu<=40) =$ 0.01
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-20-1.png" width="768" style="display: block; margin: auto;" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-19-1.png" width="768" style="display: block; margin: auto;" />
 
 ## Monte Carlo simulation (parametric bootstrap)  
   
 Monte Carlo integration: numerical solution of $\int_{-1}^{1.5} F(x) dx$ 
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-21-1.png" width="768" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-20-1.png" width="768" />
 
 
 sim is solving a mathematical problem by simulation
 How sim is simulating to get the marginal distribution of $\mu$:
 
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-22-1.png" width="768" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-21-1.png" width="768" />
 
 
 ## 3 methods for getting the posterior distribution
@@ -397,7 +397,7 @@ data: y=0  (a tail)
 likelihood: $p(y|\theta)=\theta^y(1-\theta)^{(1-y)}$
 
 
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-23-1.png" width="768" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-22-1.png" width="768" />
 
 
 ## Monte Carlo simulations
@@ -405,7 +405,7 @@ likelihood: $p(y|\theta)=\theta^y(1-\theta)^{(1-y)}$
 * Markov chain Monte Carlo simulation (BUGS, Jags)
 * Hamiltonian Monte Carlo (Stan)
 
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-24-1.png" width="768" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-23-1.png" width="768" />
 
 
 ## Comparison of the locations between two groups 
@@ -414,7 +414,7 @@ Median, 50% box, extremes observation within 1.5 times the interquartile range, 
 
 The uncertainties of the means do not show the uncertainty of the difference between the means!  
 
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-25-1.png" width="768" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-24-1.png" width="768" />
 
 ## Difference between two means
 
@@ -499,7 +499,7 @@ mean(abs(diffH0)>abs(coef(mod)[2])) # p-value
 ## [1] 0.4898
 ```
 
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-30-1.png" width="768" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-29-1.png" width="768" />
 
 
 * Produces the distribution of a test statistics given the null hypothesis.  
@@ -538,15 +538,15 @@ quantile(diffboot, prob=c(0.025, 0.975))
 hist(diffboot); abline(v=coef(mod)[2], lwd=2, col="red")
 ```
 
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-32-1.png" width="768" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-31-1.png" width="768" />
 
 
 ## F-distribution
 Ratios of sample variances drawn from populations with equal variances follow an F-distribution. The density function of the F-distribution is even more complicated than the one of the t-distribution! We do not copy it here. Further, we have not yet met any Bayesian example where the F-distribution is used (that does not mean that there is no). It is used in frequentist analyses in order to compare variances, and, within the ANOVA, to compare means between groups. If two variances only differ because of natural variance in the data (nullhypothesis) then $\frac{Var(X_1)}{Var(X_2)}\sim F_{df_1,df_2}$.
 
 <div class="figure">
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-33-1.png" alt="Different density functions of the F statistics" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-33)Different density functions of the F statistics</p>
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-32-1.png" alt="Different density functions of the F statistics" width="768" />
+<p class="caption">(\#fig:unnamed-chunk-32)Different density functions of the F statistics</p>
 </div>
 
 
@@ -555,8 +555,8 @@ Ratios of sample variances drawn from populations with equal variances follow an
 The aim of an ANOVA is to compare means of groups. In a frequentist analysis, this is done by comparing the between-group with the within-group variance. The result of a Bayesian analysis is the joint posterior distribution of the group means.
 
 <div class="figure">
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-34-1.png" alt="Number of stats courses students have taken before starting a PhD in relation to their feeling about statistics." width="768" />
-<p class="caption">(\#fig:unnamed-chunk-34)Number of stats courses students have taken before starting a PhD in relation to their feeling about statistics.</p>
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-33-1.png" alt="Number of stats courses students have taken before starting a PhD in relation to their feeling about statistics." width="768" />
+<p class="caption">(\#fig:unnamed-chunk-33)Number of stats courses students have taken before starting a PhD in relation to their feeling about statistics.</p>
 </div>
 
 In the frequentist ANOVA, the following three sum of squared distances (SS) are used to calculate the total, the between- and within-group variances:  
@@ -567,8 +567,8 @@ Between-group SS = SSB = $\sum_1^g{n_g(\bar{y_g}-\bar{y})^2}$: explained varianc
 The between-group and within-group SS sum to the total sum of squares: SST=SSB+SSW. Attention: this equation is only true in any case for a simple one-way ANOVA (just one grouping factor). If the data are grouped according to more than one factor (such as in a two- or three-way ANOVA), then there is one single solution for the equation only when the data is completely balanced, i.e. when there are the same number of observations in all combinations of factor levels. For non-balanced data with more than one grouping factor, there are different ways of calculating the SSBs, and the result of the F-test described below depends on the order of the predictors in the model.   
 
 <div class="figure">
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-35-1.png" alt="Visualisation of the total, between-group and within-group sum of squares. Points are observations; long horizontal line is the overall mean; short horizontal lines are group specific means." width="768" />
-<p class="caption">(\#fig:unnamed-chunk-35)Visualisation of the total, between-group and within-group sum of squares. Points are observations; long horizontal line is the overall mean; short horizontal lines are group specific means.</p>
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-34-1.png" alt="Visualisation of the total, between-group and within-group sum of squares. Points are observations; long horizontal line is the overall mean; short horizontal lines are group specific means." width="768" />
+<p class="caption">(\#fig:unnamed-chunk-34)Visualisation of the total, between-group and within-group sum of squares. Points are observations; long horizontal line is the overall mean; short horizontal lines are group specific means.</p>
 </div>
 
 
@@ -621,8 +621,8 @@ legend(2,2, fill=c("white",rgb(0,0,1,0.5), rgb(1,0,0,0.5)), legend=levels(dat$st
 ```
 
 <div class="figure">
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-38-1.png" alt="Posterior distributions of the mean number of stats courses PhD students visited before starting the PhD grouped according to their feelings about statistics." width="768" />
-<p class="caption">(\#fig:unnamed-chunk-38)Posterior distributions of the mean number of stats courses PhD students visited before starting the PhD grouped according to their feelings about statistics.</p>
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-37-1.png" alt="Posterior distributions of the mean number of stats courses PhD students visited before starting the PhD grouped according to their feelings about statistics." width="768" />
+<p class="caption">(\#fig:unnamed-chunk-37)Posterior distributions of the mean number of stats courses PhD students visited before starting the PhD grouped according to their feelings about statistics.</p>
 </div>
 
 Based on the posterior distributions of the group means, we can extract derived quantities depending on our interest and questions. Here, for example, we could extract the posterior probability of the hypothesis that students with a positive feeling about statistics have a better education in statistics than those with a neutral or negative feeling about statistics.  
@@ -673,7 +673,7 @@ $\chi^2$ measures the difference between the observed $O_{ij}$ and expected $E_{
 $\chi^2=\sum_{i=1}^{m}\sum_{j=1}^{k}\frac{(O_{ij}-E_{ij})^2}{E_{ij}}$ where $m$ is the number of rows and $k$ is the number of columns. 
 The $\chi^2$-distribution has 1 parameter, the degrees of freedom $v$ = $(m-1)(k-1)$.
 
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-41-1.png" width="672" />
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-40-1.png" width="672" />
 
 R is calculating the $\chi^2$ value for specific cross-tables, and it is also giving the p-values, i.e., the probability of obtaining the observed or a higher $\chi^2$ value given the nullhypothesis is true by comparing the observed $\chi^2$ with the corresponding chisquare distribution.
 
@@ -757,8 +757,8 @@ bsim <- sim(mod, n.sim=nsim)
 ```
 
 <div class="figure">
-<img src="02-prerequisites_files/figure-html/unnamed-chunk-47-1.png" alt="Estimated proportion of students that prefer flowers over wine as a birthday present among the car-free students (N) and the car owners (Y). Given are the median of the posterior distribution (circle). The bar extends between the 2.5% and 97.5% quantiles of the posterior distribution." width="768" />
-<p class="caption">(\#fig:unnamed-chunk-47)Estimated proportion of students that prefer flowers over wine as a birthday present among the car-free students (N) and the car owners (Y). Given are the median of the posterior distribution (circle). The bar extends between the 2.5% and 97.5% quantiles of the posterior distribution.</p>
+<img src="02-prerequisites_files/figure-html/unnamed-chunk-46-1.png" alt="Estimated proportion of students that prefer flowers over wine as a birthday present among the car-free students (N) and the car owners (Y). Given are the median of the posterior distribution (circle). The bar extends between the 2.5% and 97.5% quantiles of the posterior distribution." width="768" />
+<p class="caption">(\#fig:unnamed-chunk-46)Estimated proportion of students that prefer flowers over wine as a birthday present among the car-free students (N) and the car owners (Y). Given are the median of the posterior distribution (circle). The bar extends between the 2.5% and 97.5% quantiles of the posterior distribution.</p>
 </div>
 
 

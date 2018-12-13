@@ -2,7 +2,7 @@
 --- 
 title: "Data Analysis in Ecology with R and Stan"
 author: "Fränzi Korner-Nievergelt and Tobias Roth"
-date: "2018-12-11"
+date: "2018-12-13"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [References.bib]
