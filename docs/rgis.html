@@ -25,7 +25,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt and Tobias Roth">
 
 
-<meta name="date" content="2018-12-13">
+<meta name="date" content="2018-12-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -50,70 +50,44 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
-<link rel="stylesheet" href="Settings/style.css" type="text/css" />
+<link rel="stylesheet" href="Settings\style.css" type="text/css" />
 </head>
 
 <body>
@@ -270,6 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="18.2" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#data-description"><i class="fa fa-check"></i><b>18.2</b> Data description</a></li>
 <li class="chapter" data-level="18.3" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#model-description"><i class="fa fa-check"></i><b>18.3</b> Model description</a></li>
 <li class="chapter" data-level="18.4" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#the-stan-code"><i class="fa fa-check"></i><b>18.4</b> The Stan code</a></li>
+<li class="chapter" data-level="18.5" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#call-stan-from-r-check-convergence-and-look-at-results"><i class="fa fa-check"></i><b>18.5</b> Call Stan from R, check convergence and look at results</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
 <li class="divider"></li>
@@ -305,9 +280,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">7.1.1</span> Raster data</h3>
 <p>Very broadly speaking, we divide spatial data into two categories, raster data and all other types of data for points, lines or polygons. Raster data consists of a grid (i.e. a matrix) where each cell of the grid contains one or several values representing the spatial information. The R-package <code>raster</code> is very efficient for raster data.</p>
 <p>We can use the function <code>raster()</code> to load raster data from files. Most of the common file formats for raster data such as .geotiff, .tif or .grd are supported. However, raster data can also be converted from tables with one column for the x-coordinates, one column for the y-coordinates and one column for the spatial information. The coordinates must be from a regular grid. For example the freely available <a href="https://www.bfs.admin.ch/bfs/de/home/dienstleistungen/geostat/geodaten-bundesstatistik/topografie.html">topographic data of Switzerland</a> are collected on a 100m x 100m grid. In the following example the tibble <code>elevations</code> contains the elevation data from the canton of Aargau and is converted into raster data using the function <code>rasterFromXYZ()</code>.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">library</span>(raster)</a>
-<a class="sourceLine" id="cb41-2" data-line-number="2">ra &lt;-<span class="st"> </span><span class="kw">rasterFromXYZ</span>(elevation)</a>
-<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="kw">plot</span>(ra)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
+ra &lt;-<span class="st"> </span><span class="kw">rasterFromXYZ</span>(elevation)
+<span class="kw">plot</span>(ra)</code></pre></div>
 <div class="figure"><span id="fig:unnamed-chunk-3"></span>
 <img src="07-rgis_files/figure-html/unnamed-chunk-3-1.png" alt="Meter above sea leavel (m) accross the canton Aargau in Switzerland." width="768" />
 <p class="caption">
@@ -319,12 +294,12 @@ Figure 7.1: Meter above sea leavel (m) accross the canton Aargau in Switzerland.
 <h3><span class="header-section-number">7.1.2</span> Geometry data</h3>
 <p>All geometry data types are composed of points. The spatial location of a point is defined by its x and y coordinates. Using several points one can then define lines (sequence of points connected by straight lines) and polygons (sequence of points that form a closed ring). Points, lines and plygons are the geometries we usually work with. We use the package <code>sf</code> to work with geometry data types. Its functions are very efficient to work with all spatial data other than raster data. It also links to GDAL (i.e. a computer software library for reading and writing raster and vector geospatial data formats) and proj.4 (i.e. a library for performing conversions between cartographic projections), which are important tools when woring with different sources of spatial data.</p>
 <p>We can used the function <code>st_read()</code> to read geometry data from file or database. In the following example, however, we convert the tibble <code>frogs</code> into a simple feature collection. The data file <code>frogs</code>, formatted as a tibble, contains different columns including the counts, variables that describe the ponds as well as the spatial coordinates of the counts. The simple feature collection looks rather similar to the original tibble, however instead of the x and y colomns it now contains the column geometry. With the simple feature collection we can work pretty much in the same way as we use to work with tibbles. For example we can filter only the data from 2011, select the geometries and plot them on the top of the raster with the elevation across the entire canton of Aargau (see <a href="rgis.html#rasterdata">7.1.1</a> for the raster data).</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">library</span>(sf)</a>
-<a class="sourceLine" id="cb42-2" data-line-number="2">dat &lt;-<span class="st"> </span>frogs <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_as_sf</span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), <span class="dt">crs =</span> <span class="dv">21781</span>)</a>
-<a class="sourceLine" id="cb42-3" data-line-number="3"><span class="kw">plot</span>(ra)</a>
-<a class="sourceLine" id="cb42-4" data-line-number="4">dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2011</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb42-5" data-line-number="5"><span class="st">  </span><span class="kw">st_geometry</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb42-6" data-line-number="6"><span class="st">  </span><span class="kw">plot</span>(<span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">pch =</span> <span class="st">&quot;x&quot;</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
+dat &lt;-<span class="st"> </span>frogs <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_as_sf</span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), <span class="dt">crs =</span> <span class="dv">21781</span>)
+<span class="kw">plot</span>(ra)
+dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2011</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">st_geometry</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">plot</span>(<span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">pch =</span> <span class="st">&quot;x&quot;</span>)</code></pre></div>
 <div class="figure"><span id="fig:unnamed-chunk-4"></span>
 <img src="07-rgis_files/figure-html/unnamed-chunk-4-1.png" alt="Locations of the ponds where frogs were counted in 2011. The background image shows the elevation (meter above sea level)." width="768" />
 <p class="caption">
@@ -344,27 +319,27 @@ Figure 7.2: Locations of the ponds where frogs were counted in 2011. The backgro
 </blockquote>
 <p>The EPSG (European Petroleum Survey Group) code is a unique ID that can be used to identify a CRS. Thus if we know the EPSG code it is rather simple to transform spatial data into other CRS. To search for the correct EPSG code we can use <a href="https://www.epsg-registry.org" class="uri">https://www.epsg-registry.org</a> or <a href="http://www.spatialreference.org" class="uri">http://www.spatialreference.org</a></p>
 <p>The following code shows how to assign the CRS of existing data and how to transform the coordinate system for raster data and sf data, respectively.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># Assign CRS for raster data</span></a>
-<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="kw">crs</span>(ra) &lt;-<span class="st"> </span><span class="kw">CRS</span>(<span class="st">&quot;+init=epsg:21781&quot;</span>)</a>
-<a class="sourceLine" id="cb43-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="co"># Assign CRS for sf data</span></a>
-<a class="sourceLine" id="cb43-5" data-line-number="5"><span class="kw">st_crs</span>(dat) &lt;-<span class="st"> </span><span class="dv">21781</span></a>
-<a class="sourceLine" id="cb43-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb43-7" data-line-number="7"><span class="co"># Transfrom raster data to WGS84</span></a>
-<a class="sourceLine" id="cb43-8" data-line-number="8"><span class="kw">projectRaster</span>(ra, <span class="dt">crs =</span> <span class="kw">CRS</span>(<span class="st">&quot;+init=epsg:4326&quot;</span>))</a>
-<a class="sourceLine" id="cb43-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb43-10" data-line-number="10"><span class="co"># Transfrom sf data to WGS84</span></a>
-<a class="sourceLine" id="cb43-11" data-line-number="11"><span class="kw">st_transform</span>(dat, <span class="dt">crs =</span> <span class="dv">4326</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Assign CRS for raster data</span>
+<span class="kw">crs</span>(ra) &lt;-<span class="st"> </span><span class="kw">CRS</span>(<span class="st">&quot;+init=epsg:21781&quot;</span>)
+
+<span class="co"># Assign CRS for sf data</span>
+<span class="kw">st_crs</span>(dat) &lt;-<span class="st"> </span><span class="dv">21781</span>
+
+<span class="co"># Transfrom raster data to WGS84</span>
+<span class="kw">projectRaster</span>(ra, <span class="dt">crs =</span> <span class="kw">CRS</span>(<span class="st">&quot;+init=epsg:4326&quot;</span>))
+
+<span class="co"># Transfrom sf data to WGS84</span>
+<span class="kw">st_transform</span>(dat, <span class="dt">crs =</span> <span class="dv">4326</span>)</code></pre></div>
 </div>
 <div id="joining-spatial-data" class="section level3">
 <h3><span class="header-section-number">7.2.2</span> Joining spatial data</h3>
 <p>Joining two non-spatial datasets relies on a shared variable (<code>key</code>) using for instance the function <code>left_join()</code>, as described in chapter <a href="datamanip.html#joindata">4.2</a>. In a spatial context, we apply the exact same concept except for the key being a shared areas of geographic space. Note, however, that people with a background in geographic information systems may call these operations differently, such as spatial overlay or intersection.</p>
 <p>For <a href="rgis.html#geometrydata">geometry data</a> we can use the function <code>st_join()</code>. As an example, we aim to add the <a href="biogeographische%20regionen%20der%20schweiz">biogegraphic Region</a> to the counts of the number of frogs in ponds of the Canton Aargau. We transform the <code>frogs</code> data into a spatial object (i.e. a simple feature collection). The polygons of the biogegraphic regions in Switzerland are available in the object <code>bgr</code>. To each of the polygons additional data are available and we aim to extract the information from the column <code>BIOGREG_R6</code>, which contains the name of the biogeographic region. We add this column to the frogs data using the function <code>st_join()</code> as following.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">load</span>(<span class="st">&quot;RData/bgr.RData&quot;</span>)</a>
-<a class="sourceLine" id="cb44-2" data-line-number="2">bgr &lt;-<span class="st"> </span>bgr <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">21781</span>)</a>
-<a class="sourceLine" id="cb44-4" data-line-number="4">dat &lt;-<span class="st"> </span>frogs <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_as_sf</span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), <span class="dt">crs =</span> <span class="dv">21781</span>)</a>
-<a class="sourceLine" id="cb44-5" data-line-number="5">dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_join</span>(bgr[<span class="st">&quot;BIOGREG_R6&quot;</span>])</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&quot;RData/bgr.RData&quot;</span>)
+bgr &lt;-<span class="st"> </span>bgr <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">21781</span>)
+dat &lt;-<span class="st"> </span>frogs <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_as_sf</span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), <span class="dt">crs =</span> <span class="dv">21781</span>)
+dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_join</span>(bgr[<span class="st">&quot;BIOGREG_R6&quot;</span>])</code></pre></div>
 </div>
 </div>
 <div id="further-reading-4" class="section level2">
@@ -428,7 +403,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "true";
+    var src = "";
     if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

@@ -1,7 +1,5 @@
 
 
-
-
 # Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals  {#cjs_with_mix}
 ## Introduction
 
@@ -12,6 +10,7 @@ An introduction to the Cormack-Jolly-Seber model we gave in Chapter 14.5 of the 
 ## Data description
 
 ```r
+## simulate data
 # true parameter values
 theta  <- 0.6 # proportion of males
 nocc <- 15    # number of years in the data set
@@ -25,20 +24,87 @@ a0[1,2]<- qlogis(0.3) # average annual survival for juveniles
 a0[2,1] <- qlogis(0.55) # average annual survival for adult females
 a0[2,2] <- a0[1,2]
 a1[1,1] <- 0
-a1[1,2] <- -0.3
-a1[2,1] <- -0.4
+a1[1,2] <- -0.5
+a1[2,1] <- -0.8
 a1[2,2] <- a1[1,2]
 
-nindi <- 1000
-nindni <- 1500
-nind <- nindi + nindni
+nindi <- 1000    # number of individuals with identified sex
+nindni <- 1500   # number of individuals with non-identified sex
+nind <- nindi + nindni  # total number of individuals
 y <- matrix(ncol=nocc, nrow=nind)
+z <- matrix(ncol=nocc, nrow=nind)
 first <- sample(1:(nocc-1), nind, replace=TRUE)
 sex <- sample(c(1,2), nind, prob=c(theta, 1-theta), replace=TRUE)
-juv <- sample(c(0,1), nind, prob=c(0.5, 0.5), replace=TRUE)
-x <- runif(nocc-1)                   # a covariate 
+juvfirst <- sample(c(0,1), nind, prob=c(0.5, 0.5), replace=TRUE)
+juv <- matrix(0, nrow=nind, ncol=nocc)
+for(i in 1:nind) juv[i,first[i]] <- juv[i]
+
+x <- runif(nocc-1, -2, 2)                   # a time dependent covariate covariate 
+p <- b0                                     # recapture probability
+phi <- array(NA, dim=c(2, 2, nocc-1))
+# for ad males
+phi[1,1,] <- plogis(a0[1,1]+a1[1,1]*x)
+# for ad females
+phi[2,1,] <- plogis(a0[2,1]+a1[2,1]*x)
+# for juvs
+phi[1,2,] <-  phi[2,2,] <- plogis(a0[2,2]+a1[2,2]*x)
+for(i in 1:nind){
+  z[i,first[i]] <- 1
+  y[i, first[i]] <- 1
+  for(t in (first[i]+1):nocc){
+    z[i, t] <- rbinom(1, size=1, prob=z[i,t-1]*phi[sex[i],juv[i,t-1]+1, t-1])
+    y[i, t] <- rbinom(1, size=1, prob=z[i,t]*p[sex[i],t-1])
+    }
+}
+y[is.na(y)] <- 0
+```
+The mark-recapture data set consists of capture histories of 2500.00 individuals over 15.00 time periods. For each time period $t$ and individual $i$ the capture history matrix $y$ contains $y_{it}=1$ if the individual $i$ is captured during time period $t$, or $y_{it}=0$ if the individual $i$ is not captured during time period $t$. The marking time period varies between individuals from  1 to 14.00. At the marking time period, the age of the individuals was classified either as juvenile or as adult. Juveniles turn into adults after one time period, thus age is known for all individuals during all time periods after marking. For 1000.00 individuals of the 2500.00 individuals, the sex is identified, whereas for 1500.00 individuals, the sex is unknown. The example data contain one covariate $x$ that takes on one value for each time period.  
 
 
+```r
+# bundle the data for Stan
+i <- 1:nindi
+ni <- (nindi+1):nind
+datax <- list(yi=y[i,], nindi=nindi, sex=sex[i], nocc=nocc, 
+              yni=y[ni,], nindni=nindni, firsti=first[i], firstni=first[ni],
+              juvi=juv[i,]+1, juvni=juv[ni,]+1, year=1:nocc, x=x)
+```
+
+
+## Model description 
+
+The observations $y_{it}$, an indicator of whether individual i was recaptured during time period $t$ is modelled conditional on the latent true state of the individual birds $z_{it}$ (0 = dead or permanently emigrated, 1 = alive and at the study site) as a Bernoulli variable. The probability $P(y_{it} = 1)$ is the product of the probability that an alive individual is recaptured, $p_{it}$, and the state of the bird $z_{it}$ (alive = 1, dead = 0). Thus, a dead bird cannot be recaptured, whereas for a bird alive during time period $t$, the recapture probability equals $p_{it}$:
+$$y_{it} \sim Bernoulli(z_{it}p_{it})$$
+The latent state variable $z_{it}$ is a Markovian variable with the state at time $t$ being dependent on the state at time $t-1$ and the apparent survival probability $$\phi_{it}$$:
+$$z_{it} \sim Bernoulli(z_{it-1}\phi_{it})$$
+We use the term apparent survival in order to indicate that the parameter $\phi$ is a product of site fidelity and survival. Thus, individuals that permanently emigrated from the study area cannot be distinguished from dead individuals.
+In both models, the parameters $\phi$ and $p$ were modelled as sex-specific. However, for parts of the individuals, sex could not be identified, i.e. sex was missing. Ignoring these missing values would most likely lead to a bias because they were not missing at random. The probability that sex can be identified is increasing with age and most likely differs between sexes. Therefore, we included a mixture model for the sex:
+$$Sex_i \sim Categorical(q_i)$$
+where $q_i$ is a vector of length 2, containing the probability of being a male and a female, respectively. In this way, the sex of the non-identified individuals was assumed to be male or female with probability $q[1]$ and $q[2]=1-q[1]$, respectively. This model corresponds to the finite mixture model introduced by @Pledger2003 in order to account for unknown classes of birds (heterogeneity).  However, in our case, for parts of the individuals the class (sex) was known.
+
+In the example model, we constrain apparent survival to be linearly dependent on a covariate x with different slopes for males, females and juveniles using the logit link function. 
+$$logit(\phi_{it}) = a0_{sex-age-class[it]} + a1_{sex-age-class[it]}x_i$$
+
+Annual recapture probability was modelled for each year and age and sex class independently:
+$$p_{it} = b0_{t,sex-age-class[it]}$$
+Uniform prior distributions were used for all parameters with a parameter space limited to values between 0 and 1 (probabilities) and a normal distribution with a mean of 0 and a standard deviation of 1.5 for the intercept $a0$, and a standard deviation of 5 was used for $a1$.
+
+
+
+## The Stan code
+The trick for coding the CMR-mixture model in Stan is to formulate the model 3 times:  
+1. For the individuals with identified sex  
+2. For the males that were not identified  
+3. For the females that were not identified  
+
+Then for the non-identified individuals a mixture model is formulated that assigns a probability of being a female or a male to each individual.
+
+
+```stan
+data {
+  int<lower=2> nocc;                    // number of capture events
+  int<lower=0> nindi;                   // number of individuals with identified sex
+  int<lower=0> nindni;                  // number of individuals with non-identified sex
   int<lower=0,upper=2> yi[nindi,nocc];         // CH[i,k]: individual i captured at k
   int<lower=0,upper=nocc-1> firsti[nindi];      // year of first capture
   int<lower=0,upper=2> yni[nindni,nocc];       // CH[i,k]: individual i captured at k
@@ -47,8 +113,38 @@ x <- runif(nocc-1)                   # a covariate
   int<lower=1, upper=2> juvi[nindi, nocc];
   int<lower=1, upper=2> juvni[nindni, nocc];
   int<lower=1> year[nocc];
+  real x[nocc-1];                     // a covariate 
+}
+
+transformed data {
+  int<lower=0,upper=nocc+1> lasti[nindi];       // last[i]:  ind i last capture
+  int<lower=0,upper=nocc+1> lastni[nindni];       // last[i]:  ind i last capture
+  lasti = rep_array(0,nindi); 
+  lastni = rep_array(0,nindni);
+  for (i in 1:nindi) {
+    for (k in firsti[i]:nocc) {
+      if (yi[i,k] == 1) {
+        if (k > lasti[i])  lasti[i] = k;
+      }
+    }
+  }
+  for (ii in 1:nindni) {
+    for (kk in firstni[ii]:nocc) {
+      if (yni[ii,kk] == 1) {
+        if (kk > lastni[ii])  lastni[ii] = kk;
+      }
+    }
+  }
+
+}
 
 
+parameters {
+  real<lower=0, upper=1> theta[nindni];            // probability of being male for non-identified individuals
+  real<lower=0, upper=1> b0[2,nocc-1];             // intercept of p
+  real a0[2,2];                  // intercept for phi 
+  real a1[2,2];                  // coefficient for phi   
+}
 
 transformed parameters {
   real<lower=0,upper=1>p_male[nindni,nocc];         // capture probability
@@ -65,8 +161,8 @@ transformed parameters {
                                                    // last capture
   real<lower=0,upper=1>phi[nindi,nocc-1];   // survival probability
   real<lower=0,upper=1>chi[nindi,nocc+1];   // probability that an individual 
-                                            // is never recaptured after its
-                                            // last capture
+                                           // is never recaptured after its
+                                           // last capture
 
   {
     int k; 
@@ -153,6 +249,21 @@ transformed parameters {
 }    // close transformed parameters
 
 model {
+  // priors
+  theta ~ beta(1, 1);
+  for (g in 1:(nocc-1)){
+    b0[1,g]~beta(1,1);
+    b0[2,g]~beta(1,1);
+  }
+  a0[1,1]~normal(0,1.5);
+  a0[1,2]~normal(0,1.5);
+  a1[1,1]~normal(0,3);
+  a1[1,2]~normal(0,3);
+
+  a0[2,1]~normal(0,1.5);
+  a0[2,2]~normal(a0[1,2],0.01); // for juveniles, we assume that the effect of the covariate is independet of sex
+  a1[2,1]~normal(0,3);
+  a1[2,2]~normal(a1[1,2],0.01);
 
   // likelihood for identified individuals
   for (i in 1:nindi) {
@@ -165,43 +276,134 @@ model {
     }  
     target+=(log(chi[i,lasti[i]+1]));
   }
+  
+  // likelihood for non-identified individuals
+  for (i in 1:nindni) {
+    real log_like_male = 0;
+    real log_like_female = 0;
+
+    if (lastni[i]>0) {
+      for (k in firstni[i]:lastni[i]) {
+        if(k>1){
+          log_like_male += (log(phi_male[i, k-1]));
+          log_like_female += (log(phi_female[i, k-1]));
+        }
+        if (yni[i,k] == 1){ 
+          log_like_male+=(log(p_male[i,k]));
+          log_like_female+=(log(p_female[i,k]));
+        }
+        else{
+          log_like_male+=(log1m(p_male[i,k])); 
+          log_like_female+=(log1m(p_female[i,k])); 
+        }
+
+      }
+    }  
+    log_like_male += (log(chi_male[i,lastni[i]+1]));
+    log_like_female += (log(chi_female[i,lastni[i]+1]));
+    
+    target += log_mix(theta[i], log_like_male, log_like_female);
+  }
+
+}
+
+```
+
+## Call Stan from R, check convergence and look at results
+
+```r
+# Run STAN
+library(rstan)
+fit <- stan(file = "stanmodels/cmr_mixture_model.stan", data=datax, verbose = FALSE)
+# for above simulated data (25000 individuals x 15 time periods) 
+# computing time is around 48 hours on an intel corei7 laptop
+# for larger data sets, we recommed moving the transformed parameters block 
+# to the model block in order to avoid monitoring of p_male, p_female, 
+# phi_male and phi_female producing memory problems
+
+# launch_shinystan(fit) # diagnostic plots
+summary(fit)
 ```
 
 
-## Model description 
-
-For the annual data, time period t was one year (of 15 years in total), and for the monthly data, time period t was one month (of 169 months in total).  
-The observations yit, an indicator of whether individual i was recaptured during time period t is modelled conditional on the latent true state of the individual birds zit (0 = dead or permanently emigrated, 1 = alive and at the study site) as a Bernoulli variable. The probability P(yit = 1) is the product of the probability that an alive individual is recaptured, pit, and the state of the bird zit (alive = 1, dead = 0). Thus, a dead bird cannot be recaptured, whereas for a bird alive during time period t, the recapture probability equals pit:
-yit ~ Bernoulli(zitpit)
-The latent state variable zit is a Markovian variable with the state at time t being dependent on the state at time t-1 and the apparent survival probability it:
-zit ~ Bernoulli(zit-1it)
-We use the term apparent survival in order to indicate that the parameter   is a product of site fidelity and survival. Thus, individuals that permanently emigrated from the study area cannot be distinguished from dead individuals.
-In both models, the parameters and p were modelled as sex-specific. However, for 61% of the individuals, sex could not be identified, i.e. sex was missing. Ignoring these missing values would most likely lead to a bias because they were not missing at random. The probability that sex can be identified is increasing with age and most likely differs between sexes. Therefore, we included a mixture model for the sex:
-Sexi ~ Categorical(q)
-where q is a vector of length 2, containing the probability of being a male and a female, respectively. In this way, the sex of the non-identified individuals was assumed to be male or female with probability q[1] and q[2]=1-q[1], respectively. This model corresponds to the finite mixture model introduced by Pledger et al. (2003) in order to account for unknown classes of birds (heterogeneity).  However, in our case, for parts of the individuals the class (sex) was known.
-
-Annual survival models
-We used two different models for annual apparent survival. In the first model, we estimated independent annual survival for each year, age and sex class (3 levels: juveniles, adult males and adult females):
-Model 1:it = a t,age.sex[it]
-Annual recapture probability was modelled for each year and age and sex class independently:
- pit = b0t,age.sex[it]
-Uniform prior distributions were used for all parameters with a parameter space limited to values between 0 and 1 (probabilities) and a normal distribution with a mean of 0 and a standard deviation of 1.5 for the intercept a0. A standard deviation of 5 was used for a1, a2, a3, and a4.
 
 
-
-## The Stan code
-The trick for coding the CMR-mixture model in Stan is to formulate the model 3 times:
-1. For the individuals with identified sex
-2. For the males that were not identified
-3. For the females that were not identified
-
-Then for the non-identified individuals a mixture model is formulated that assigns a probability of being a female or a male to each individual.
-
-
-
-
-
-
+```
+##                 mean      se_mean         sd        2.5%         25%
+## b0[1,1]   0.60132367 0.0015709423 0.06173884  0.48042366  0.55922253
+## b0[1,2]   0.70098709 0.0012519948 0.04969428  0.60382019  0.66806698
+## b0[1,3]   0.50293513 0.0010904085 0.04517398  0.41491848  0.47220346
+## b0[1,4]   0.28118209 0.0008809447 0.03577334  0.21440931  0.25697691
+## b0[1,5]   0.34938289 0.0009901335 0.03647815  0.27819918  0.32351323
+## b0[1,6]   0.13158569 0.0006914740 0.02627423  0.08664129  0.11286629
+## b0[1,7]   0.61182981 0.0010463611 0.04129602  0.53187976  0.58387839
+## b0[1,8]   0.48535193 0.0010845951 0.04155762  0.40559440  0.45750793
+## b0[1,9]   0.52531291 0.0008790063 0.03704084  0.45247132  0.50064513
+## b0[1,10]  0.87174780 0.0007565552 0.03000936  0.80818138  0.85259573
+## b0[1,11]  0.80185454 0.0009425675 0.03518166  0.73173810  0.77865187
+## b0[1,12]  0.33152443 0.0008564381 0.03628505  0.26380840  0.30697293
+## b0[1,13]  0.42132288 0.0012174784 0.04140382  0.34062688  0.39305210
+## b0[1,14]  0.65180372 0.0015151039 0.05333953  0.55349105  0.61560493
+## b0[2,1]   0.34237039 0.0041467200 0.12925217  0.12002285  0.24717176
+## b0[2,2]   0.18534646 0.0023431250 0.07547704  0.05924694  0.12871584
+## b0[2,3]   0.61351083 0.0024140550 0.07679100  0.46647727  0.56242546
+## b0[2,4]   0.37140208 0.0024464965 0.06962399  0.24693888  0.32338093
+## b0[2,5]   0.19428215 0.0034618302 0.11214798  0.02800056  0.11146326
+## b0[2,6]   0.27371336 0.0026553769 0.09054020  0.11827243  0.20785316
+## b0[2,7]   0.18611173 0.0014387436 0.05328492  0.09122869  0.14789827
+## b0[2,8]   0.25648337 0.0018258589 0.05287800  0.16255769  0.21913271
+## b0[2,9]   0.20378754 0.0021367769 0.07380004  0.07777998  0.15215845
+## b0[2,10]  0.52679548 0.0024625568 0.08696008  0.36214334  0.46594844
+## b0[2,11]  0.47393354 0.0032593161 0.10555065  0.28843967  0.39781278
+## b0[2,12]  0.22289155 0.0017082729 0.05551514  0.12576797  0.18203335
+## b0[2,13]  0.26191486 0.0024159794 0.07016314  0.14106495  0.21234017
+## b0[2,14]  0.65111737 0.0055743944 0.18780555  0.29279480  0.50957591
+## a0[1,1]   0.95440670 0.0013771881 0.04808748  0.86301660  0.92146330
+## a0[1,2]   0.01529770 0.0469699511 1.46995922 -2.82218067 -0.95533706
+## a0[2,1]   0.16384995 0.0049928331 0.12634422 -0.06399631  0.07533962
+## a0[2,2]   0.01535679 0.0469634175 1.47006964 -2.81864060 -0.95515751
+## a1[1,1]   0.15937249 0.0028992587 0.08864790 -0.01288607  0.10017613
+## a1[1,2]   0.08055953 0.1007089857 3.02148727 -5.95525636 -1.96662599
+## a1[2,1]  -0.83614134 0.0074143920 0.18655882 -1.21033848 -0.95698565
+## a1[2,2]   0.08071668 0.1006904255 3.02145647 -5.94617355 -1.96508733
+##                  50%        75%      97.5%     n_eff     Rhat
+## b0[1,1]   0.60206306  0.6431566  0.7206343 1544.5301 1.002331
+## b0[1,2]   0.70165494  0.7355204  0.7946280 1575.4617 1.001482
+## b0[1,3]   0.50367411  0.5330078  0.5898079 1716.3196 1.001183
+## b0[1,4]   0.27997512  0.3046483  0.3544592 1649.0040 1.000760
+## b0[1,5]   0.34936442  0.3751935  0.4191138 1357.3073 1.002072
+## b0[1,6]   0.12987449  0.1481661  0.1873982 1443.8040 1.003676
+## b0[1,7]   0.61203228  0.6397577  0.6933929 1557.5904 1.001458
+## b0[1,8]   0.48513822  0.5134314  0.5672066 1468.1355 1.002511
+## b0[1,9]   0.52534212  0.5501747  0.5994060 1775.7335 1.000824
+## b0[1,10]  0.87324112  0.8934047  0.9258033 1573.3747 1.000719
+## b0[1,11]  0.80300311  0.8261868  0.8675033 1393.1817 1.001172
+## b0[1,12]  0.33044476  0.3552199  0.4052902 1794.9956 1.000566
+## b0[1,13]  0.42116690  0.4492297  0.5026942 1156.5339 1.000289
+## b0[1,14]  0.64956850  0.6864706  0.7607107 1239.4056 1.004061
+## b0[2,1]   0.33493631  0.4251416  0.6150923  971.5524 1.004049
+## b0[2,2]   0.17981663  0.2358847  0.3446097 1037.6210 1.001474
+## b0[2,3]   0.61326419  0.6644156  0.7628427 1011.8737 1.005727
+## b0[2,4]   0.36837778  0.4158585  0.5190457  809.8949 1.003803
+## b0[2,5]   0.17910449  0.2591418  0.4533117 1049.4733 1.001499
+## b0[2,6]   0.26739172  0.3299594  0.4685139 1162.6006 1.001170
+## b0[2,7]   0.18254607  0.2198969  0.3003156 1371.6455 1.000878
+## b0[2,8]   0.25280556  0.2895585  0.3704113  838.7174 1.005624
+## b0[2,9]   0.19724053  0.2501298  0.3694806 1192.8747 1.003687
+## b0[2,10]  0.52587075  0.5845730  0.7061694 1247.0027 1.002851
+## b0[2,11]  0.46874445  0.5392302  0.7046892 1048.7425 0.999473
+## b0[2,12]  0.21961656  0.2580782  0.3397127 1056.1081 1.000907
+## b0[2,13]  0.25601959  0.3056204  0.4142888  843.3960 1.003130
+## b0[2,14]  0.65824835  0.7973674  0.9698829 1135.0669 1.003838
+## a0[1,1]   0.95368445  0.9862439  1.0515747 1219.2071 1.003898
+## a0[1,2]   0.01633534  0.9911055  2.9717839  979.4231 1.003726
+## a0[2,1]   0.15519648  0.2472483  0.4230776  640.3489 1.004625
+## a0[2,2]   0.01587281  0.9898084  2.9659552  979.8429 1.003744
+## a1[1,1]   0.15647489  0.2205720  0.3354845  934.8953 1.007190
+## a1[1,2]   0.06683287  2.1568781  6.0295208  900.1297 1.003701
+## a1[2,1]  -0.83503982 -0.7075691 -0.4814539  633.1119 1.010568
+## a1[2,2]   0.06586905  2.1557247  6.0239735  900.4432 1.003704
+```
 
 
 

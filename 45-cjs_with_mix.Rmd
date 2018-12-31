@@ -1,28 +1,3 @@
-```{r include=FALSE, cache=FALSE}
-#  This script will be run at the start of each chapter
-
-rm(list = ls())
-
-# Libraries
-library(knitr)
-library(blmeco)
-library(tidyverse)
-
-# Knitr settings 
-options(scipen = 6);
-opts_chunk$set(echo = TRUE, hide = TRUE, cache = FALSE, warning = FALSE, message = FALSE,
-               fig.asp = .45, fig.width = 8)
-
-# Darstellung von R-Berechnungen innerhalb von Text
-inline_hook <- function(x) {
-  if (is.numeric(x)) {
-    x <- format(x, nsmall = 2, digits = 2)
-  }
-  x
-}
-knit_hooks$set(inline = inline_hook)
-```
-
 
 # Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals  {#cjs_with_mix}
 ## Introduction
@@ -32,7 +7,8 @@ An introduction to the Cormack-Jolly-Seber model we gave in Chapter 14.5 of the 
 
 
 ## Data description
-```{r datasim, echo=TRUE, eval=FALSE}
+```{r datasim, echo=TRUE}
+## simulate data
 # true parameter values
 theta  <- 0.6 # proportion of males
 nocc <- 15    # number of years in the data set
@@ -46,20 +22,85 @@ a0[1,2]<- qlogis(0.3) # average annual survival for juveniles
 a0[2,1] <- qlogis(0.55) # average annual survival for adult females
 a0[2,2] <- a0[1,2]
 a1[1,1] <- 0
-a1[1,2] <- -0.3
-a1[2,1] <- -0.4
+a1[1,2] <- -0.5
+a1[2,1] <- -0.8
 a1[2,2] <- a1[1,2]
 
-nindi <- 1000
-nindni <- 1500
-nind <- nindi + nindni
+nindi <- 1000    # number of individuals with identified sex
+nindni <- 1500   # number of individuals with non-identified sex
+nind <- nindi + nindni  # total number of individuals
 y <- matrix(ncol=nocc, nrow=nind)
+z <- matrix(ncol=nocc, nrow=nind)
 first <- sample(1:(nocc-1), nind, replace=TRUE)
 sex <- sample(c(1,2), nind, prob=c(theta, 1-theta), replace=TRUE)
-juv <- sample(c(0,1), nind, prob=c(0.5, 0.5), replace=TRUE)
-x <- runif(nocc-1)                   # a covariate 
+juvfirst <- sample(c(0,1), nind, prob=c(0.5, 0.5), replace=TRUE)
+juv <- matrix(0, nrow=nind, ncol=nocc)
+for(i in 1:nind) juv[i,first[i]] <- juv[i]
+
+x <- runif(nocc-1, -2, 2)                   # a time dependent covariate covariate 
+p <- b0                                     # recapture probability
+phi <- array(NA, dim=c(2, 2, nocc-1))
+# for ad males
+phi[1,1,] <- plogis(a0[1,1]+a1[1,1]*x)
+# for ad females
+phi[2,1,] <- plogis(a0[2,1]+a1[2,1]*x)
+# for juvs
+phi[1,2,] <-  phi[2,2,] <- plogis(a0[2,2]+a1[2,2]*x)
+for(i in 1:nind){
+  z[i,first[i]] <- 1
+  y[i, first[i]] <- 1
+  for(t in (first[i]+1):nocc){
+    z[i, t] <- rbinom(1, size=1, prob=z[i,t-1]*phi[sex[i],juv[i,t-1]+1, t-1])
+    y[i, t] <- rbinom(1, size=1, prob=z[i,t]*p[sex[i],t-1])
+    }
+}
+y[is.na(y)] <- 0
+```
+The mark-recapture data set consists of capture histories of `r nind` individuals over `r nocc` time periods. For each time period $t$ and individual $i$ the capture history matrix $y$ contains $y_{it}=1$ if the individual $i$ is captured during time period $t$, or $y_{it}=0$ if the individual $i$ is not captured during time period $t$. The marking time period varies between individuals from  1 to `r nocc-1`. At the marking time period, the age of the individuals was classified either as juvenile or as adult. Juveniles turn into adults after one time period, thus age is known for all individuals during all time periods after marking. For `r nindi` individuals of the `r nind` individuals, the sex is identified, whereas for `r nindni` individuals, the sex is unknown. The example data contain one covariate $x$ that takes on one value for each time period.  
+
+```{r}
+# bundle the data for Stan
+i <- 1:nindi
+ni <- (nindi+1):nind
+datax <- list(yi=y[i,], nindi=nindi, sex=sex[i], nocc=nocc, 
+              yni=y[ni,], nindni=nindni, firsti=first[i], firstni=first[ni],
+              juvi=juv[i,]+1, juvni=juv[ni,]+1, year=1:nocc, x=x)
+```
 
 
+## Model description 
+
+The observations $y_{it}$, an indicator of whether individual i was recaptured during time period $t$ is modelled conditional on the latent true state of the individual birds $z_{it}$ (0 = dead or permanently emigrated, 1 = alive and at the study site) as a Bernoulli variable. The probability $P(y_{it} = 1)$ is the product of the probability that an alive individual is recaptured, $p_{it}$, and the state of the bird $z_{it}$ (alive = 1, dead = 0). Thus, a dead bird cannot be recaptured, whereas for a bird alive during time period $t$, the recapture probability equals $p_{it}$:
+$$y_{it} \sim Bernoulli(z_{it}p_{it})$$
+The latent state variable $z_{it}$ is a Markovian variable with the state at time $t$ being dependent on the state at time $t-1$ and the apparent survival probability $$\phi_{it}$$:
+$$z_{it} \sim Bernoulli(z_{it-1}\phi_{it})$$
+We use the term apparent survival in order to indicate that the parameter $\phi$ is a product of site fidelity and survival. Thus, individuals that permanently emigrated from the study area cannot be distinguished from dead individuals.
+In both models, the parameters $\phi$ and $p$ were modelled as sex-specific. However, for parts of the individuals, sex could not be identified, i.e. sex was missing. Ignoring these missing values would most likely lead to a bias because they were not missing at random. The probability that sex can be identified is increasing with age and most likely differs between sexes. Therefore, we included a mixture model for the sex:
+$$Sex_i \sim Categorical(q_i)$$
+where $q_i$ is a vector of length 2, containing the probability of being a male and a female, respectively. In this way, the sex of the non-identified individuals was assumed to be male or female with probability $q[1]$ and $q[2]=1-q[1]$, respectively. This model corresponds to the finite mixture model introduced by @Pledger2003 in order to account for unknown classes of birds (heterogeneity).  However, in our case, for parts of the individuals the class (sex) was known.
+
+In the example model, we constrain apparent survival to be linearly dependent on a covariate x with different slopes for males, females and juveniles using the logit link function. 
+$$logit(\phi_{it}) = a0_{sex-age-class[it]} + a1_{sex-age-class[it]}x_i$$
+
+Annual recapture probability was modelled for each year and age and sex class independently:
+$$p_{it} = b0_{t,sex-age-class[it]}$$
+Uniform prior distributions were used for all parameters with a parameter space limited to values between 0 and 1 (probabilities) and a normal distribution with a mean of 0 and a standard deviation of 1.5 for the intercept $a0$, and a standard deviation of 5 was used for $a1$.
+
+
+
+## The Stan code
+The trick for coding the CMR-mixture model in Stan is to formulate the model 3 times:  
+1. For the individuals with identified sex  
+2. For the males that were not identified  
+3. For the females that were not identified  
+
+Then for the non-identified individuals a mixture model is formulated that assigns a probability of being a female or a male to each individual.
+
+```{r engine='cat', engine.opts=list(file="stanmodels/cmr_mixture_model.stan",lang="stan")}
+data {
+  int<lower=2> nocc;                    // number of capture events
+  int<lower=0> nindi;                   // number of individuals with identified sex
+  int<lower=0> nindni;                  // number of individuals with non-identified sex
   int<lower=0,upper=2> yi[nindi,nocc];         // CH[i,k]: individual i captured at k
   int<lower=0,upper=nocc-1> firsti[nindi];      // year of first capture
   int<lower=0,upper=2> yni[nindni,nocc];       // CH[i,k]: individual i captured at k
@@ -68,8 +109,38 @@ x <- runif(nocc-1)                   # a covariate
   int<lower=1, upper=2> juvi[nindi, nocc];
   int<lower=1, upper=2> juvni[nindni, nocc];
   int<lower=1> year[nocc];
+  real x[nocc-1];                     // a covariate 
+}
+
+transformed data {
+  int<lower=0,upper=nocc+1> lasti[nindi];       // last[i]:  ind i last capture
+  int<lower=0,upper=nocc+1> lastni[nindni];       // last[i]:  ind i last capture
+  lasti = rep_array(0,nindi); 
+  lastni = rep_array(0,nindni);
+  for (i in 1:nindi) {
+    for (k in firsti[i]:nocc) {
+      if (yi[i,k] == 1) {
+        if (k > lasti[i])  lasti[i] = k;
+      }
+    }
+  }
+  for (ii in 1:nindni) {
+    for (kk in firstni[ii]:nocc) {
+      if (yni[ii,kk] == 1) {
+        if (kk > lastni[ii])  lastni[ii] = kk;
+      }
+    }
+  }
+
+}
 
 
+parameters {
+  real<lower=0, upper=1> theta[nindni];            // probability of being male for non-identified individuals
+  real<lower=0, upper=1> b0[2,nocc-1];             // intercept of p
+  real a0[2,2];                  // intercept for phi 
+  real a1[2,2];                  // coefficient for phi   
+}
 
 transformed parameters {
   real<lower=0,upper=1>p_male[nindni,nocc];         // capture probability
@@ -86,8 +157,8 @@ transformed parameters {
                                                    // last capture
   real<lower=0,upper=1>phi[nindi,nocc-1];   // survival probability
   real<lower=0,upper=1>chi[nindi,nocc+1];   // probability that an individual 
-                                            // is never recaptured after its
-                                            // last capture
+                                           // is never recaptured after its
+                                           // last capture
 
   {
     int k; 
@@ -174,6 +245,21 @@ transformed parameters {
 }    // close transformed parameters
 
 model {
+  // priors
+  theta ~ beta(1, 1);
+  for (g in 1:(nocc-1)){
+    b0[1,g]~beta(1,1);
+    b0[2,g]~beta(1,1);
+  }
+  a0[1,1]~normal(0,1.5);
+  a0[1,2]~normal(0,1.5);
+  a1[1,1]~normal(0,3);
+  a1[1,2]~normal(0,3);
+
+  a0[2,1]~normal(0,1.5);
+  a0[2,2]~normal(a0[1,2],0.01); // for juveniles, we assume that the effect of the covariate is independet of sex
+  a1[2,1]~normal(0,3);
+  a1[2,2]~normal(a1[1,2],0.01);
 
   // likelihood for identified individuals
   for (i in 1:nindi) {
@@ -186,43 +272,62 @@ model {
     }  
     target+=(log(chi[i,lasti[i]+1]));
   }
+  
+  // likelihood for non-identified individuals
+  for (i in 1:nindni) {
+    real log_like_male = 0;
+    real log_like_female = 0;
+
+    if (lastni[i]>0) {
+      for (k in firstni[i]:lastni[i]) {
+        if(k>1){
+          log_like_male += (log(phi_male[i, k-1]));
+          log_like_female += (log(phi_female[i, k-1]));
+        }
+        if (yni[i,k] == 1){ 
+          log_like_male+=(log(p_male[i,k]));
+          log_like_female+=(log(p_female[i,k]));
+        }
+        else{
+          log_like_male+=(log1m(p_male[i,k])); 
+          log_like_female+=(log1m(p_female[i,k])); 
+        }
+
+      }
+    }  
+    log_like_male += (log(chi_male[i,lastni[i]+1]));
+    log_like_female += (log(chi_female[i,lastni[i]+1]));
+    
+    target += log_mix(theta[i], log_like_male, log_like_female);
+  }
+
+}
+
 ```
 
+## Call Stan from R, check convergence and look at results
+```{r runstan, eval=FALSE}
+# Run STAN
+library(rstan)
+fit <- stan(file = "stanmodels/cmr_mixture_model.stan", data=datax, verbose = FALSE)
+# for above simulated data (25000 individuals x 15 time periods) 
+# computing time is around 48 hours on an intel corei7 laptop
+# for larger data sets, we recommed moving the transformed parameters block 
+# to the model block in order to avoid monitoring of p_male, p_female, 
+# phi_male and phi_female producing memory problems
 
-## Model description 
+# launch_shinystan(fit) # diagnostic plots
+summary(fit)
+```
 
-For the annual data, time period t was one year (of 15 years in total), and for the monthly data, time period t was one month (of 169 months in total).  
-The observations yit, an indicator of whether individual i was recaptured during time period t is modelled conditional on the latent true state of the individual birds zit (0 = dead or permanently emigrated, 1 = alive and at the study site) as a Bernoulli variable. The probability P(yit = 1) is the product of the probability that an alive individual is recaptured, pit, and the state of the bird zit (alive = 1, dead = 0). Thus, a dead bird cannot be recaptured, whereas for a bird alive during time period t, the recapture probability equals pit:
-yit ~ Bernoulli(zitpit)
-The latent state variable zit is a Markovian variable with the state at time t being dependent on the state at time t-1 and the apparent survival probability it:
-zit ~ Bernoulli(zit-1it)
-We use the term apparent survival in order to indicate that the parameter   is a product of site fidelity and survival. Thus, individuals that permanently emigrated from the study area cannot be distinguished from dead individuals.
-In both models, the parameters and p were modelled as sex-specific. However, for 61% of the individuals, sex could not be identified, i.e. sex was missing. Ignoring these missing values would most likely lead to a bias because they were not missing at random. The probability that sex can be identified is increasing with age and most likely differs between sexes. Therefore, we included a mixture model for the sex:
-Sexi ~ Categorical(q)
-where q is a vector of length 2, containing the probability of being a male and a female, respectively. In this way, the sex of the non-identified individuals was assumed to be male or female with probability q[1] and q[2]=1-q[1], respectively. This model corresponds to the finite mixture model introduced by Pledger et al. (2003) in order to account for unknown classes of birds (heterogeneity).  However, in our case, for parts of the individuals the class (sex) was known.
+```{r savefit, eval=FALSE, echo=FALSE}
+#save(sumfit2, file="stanmodels/summaryfit_cmrmix.rda")
+```
 
-Annual survival models
-We used two different models for annual apparent survival. In the first model, we estimated independent annual survival for each year, age and sex class (3 levels: juveniles, adult males and adult females):
-Model 1:it = a t,age.sex[it]
-Annual recapture probability was modelled for each year and age and sex class independently:
- pit = b0t,age.sex[it]
-Uniform prior distributions were used for all parameters with a parameter space limited to values between 0 and 1 (probabilities) and a normal distribution with a mean of 0 and a standard deviation of 1.5 for the intercept a0. A standard deviation of 5 was used for a1, a2, a3, and a4.
-
-
-
-## The Stan code
-The trick for coding the CMR-mixture model in Stan is to formulate the model 3 times:
-1. For the individuals with identified sex
-2. For the males that were not identified
-3. For the females that were not identified
-
-Then for the non-identified individuals a mixture model is formulated that assigns a probability of being a female or a male to each individual.
-
-
-
-
-
-
+```{r loadfit, echo=FALSE}
+load("stanmodels/summaryfit_cmrmix.rda")
+sumfit2
+```
 
 
 
