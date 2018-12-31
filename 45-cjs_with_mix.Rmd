@@ -56,7 +56,8 @@ for(i in 1:nind){
 }
 y[is.na(y)] <- 0
 ```
-The mark-recapture data set consists of capture histories of `r nind` individuals over `r nocc` time periods. For each time period $t$ and individual $i$ the capture history matrix $y$ contains $y_{it}=1$ if the individual $i$ is captured during time period $t$, or $y_{it}=0$ if the individual $i$ is not captured during time period $t$. The marking time period varies between individuals from  1 to `r nocc-1`. At the marking time period, the age of the individuals was classified either as juvenile or as adult. Juveniles turn into adults after one time period, thus age is known for all individuals during all time periods after marking. For `r nindi` individuals of the `r nind` individuals, the sex is identified, whereas for `r nindni` individuals, the sex is unknown. The example data contain one covariate $x$ that takes on one value for each time period.  
+The mark-recapture data set consists of capture histories of `r round(nind)` individuals over `r round(nocc)` time periods. For each time period $t$ and individual $i$ the capture history matrix $y$ contains $y_{it}=1$ if the individual $i$ is captured during time period $t$, or $y_{it}=0$ if the individual $i$ is not captured during time period $t$. The marking time period varies between individuals from  1 to `r round(nocc-1)`. At the marking time period, the age of the individuals was classified either as juvenile or as adult. Juveniles turn into adults after one time period, thus age is known for all individuals during all time periods after marking. For `r round(nindi)` individuals of the `r round(nind)` individuals, the sex is identified, whereas for `r round(nindni)` individuals, the sex is unknown. The example data contain one covariate $x$ that takes on one value for each time period.  
+
 
 ```{r}
 # bundle the data for Stan
