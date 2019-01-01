@@ -57,31 +57,14 @@ model {
 
 ## Prepare data and run Stan
 
-It would be much nicer to have a real data example!!
+Read data DESCRIPTION OF ORIGIN INCL REFERENCE MISSING
 ```{r, cache=TRUE, echo=TRUE, results=FALSE}
-library(rstan)
-
-# Simulate fake data 
-Nnests <- 50
-maxage <-  30
-x <- rnorm(Nnests)
-b0 <- 2; b1 = 0.5
-S <- matrix(NA, ncol=maxage-1, nrow=Nnests)
-for(i in 1:Nnests) S[i,] <- plogis(b0+b1*x[i])
-y <- matrix(NA, ncol=maxage, nrow=Nnests)
-y[,1] <- 1
-for(i in 1:Nnests){
-  for(t in 2:maxage){
-    y[i,t] <- rbinom(1, size=1, prob=y[i,t-1]*S[i,t-1])
-  }
-}
-
-last <- apply(y, 1, sum)+1
-last[last>30] <- 30
-
+load("RData/nest_surv_data.rda")
 datax <- c("y", "Nnests", "last", "maxage", "x")
 
 # Run STAN
+library(rstan)
+
 mod <- stan(file = "stanmodels/daily_nest_survival.stan", data=datax, 
             chains=5, iter=2500, control=list(adapt_delta=0.9))
 ```
