@@ -2,7 +2,7 @@
 
 ## Background
 
-Analyses of nest survival is important for understanding the mechanisms of population dynamics. The life-span of a nest could be used as a measure of nest survival. However, this measure very often is biased towards nests that survived longer because these nests are detected by the ornithologists with higher probability (@Mayfield1975). Therefore, instead of estimating overall nest survival it is better to estimate daily nest survival conditional on survival to the previous day. 
+Analyses of nest survival is important for understanding the mechanisms of population dynamics. The life-span of a nest could be used as a measure of nest survival. However, this measure very often is biased towards nests that survived longer because these nests are detected by the ornithologists with higher probability [@Mayfield1975]. Therefore, instead of estimating overall nest survival it is better to estimate daily nest survival conditional on survival to the previous day. 
 
 
 ## Models for estimating daily nest survival
@@ -22,35 +22,40 @@ The following Stan model code is saved as `daily_nest_survival.stan`.
 data {
   int<lower=0> Nnests;                  // number of nests
   int<lower=0> last[Nnests];            // day of last observation (alive or dead)
+  int<lower=0> first[Nnests];           // day of first observation (alive or dead)
   int<lower=0> maxage;                  // maximum of last
   int<lower=0> y[Nnests, maxage];       // indicator of alive nests
-  real x[Nnests];                       // a covariate
+  real cover[Nnests];                 // a covariate of the nest
+  real age[maxage];                   // a covariate of the date
 }
 
 parameters {
-  vector[2] b;                          // coef of linear pred for S
+  vector[4] b;                          // coef of linear pred for S
 }
 
 model {
   real S[Nnests, maxage-1];             // survival probability
                 
   for(i in 1:Nnests){  
-    for(t in 1:(last[i]-1)){ 
-      S[i,t] = inv_logit(b[1] + b[2]*x[i]); 
+    for(t in first[i]:(last[i]-1)){ 
+      S[i,t] = inv_logit(b[1] + b[2]*cover[i] + b[3]*age[t] + b[4]*pow(age[t], 2)); 
     }
   }
 
   // priors
   b[1]~normal(0,5);
-  b[2]~normal(0,5);
+  b[2]~normal(0,3);
+  b[3]~normal(0,3);  
+  b[4]~normal(0,3);
 
   // likelihood
   for (i in 1:Nnests) {
-    for(t in 2:last[i]){
+    for(t in (first[i]+1):last[i]){
       y[i,t]~bernoulli(y[i,t-1]*S[i,t-1]);
     }
   }
 }
+
 ```
 
 
@@ -58,15 +63,19 @@ model {
 ## Prepare data and run Stan
 
 Read data DESCRIPTION OF ORIGIN INCL REFERENCE MISSING
-```{r, cache=TRUE, echo=TRUE, results=FALSE}
-load("RData/nest_surv_data.rda")
-datax <- c("y", "Nnests", "last", "maxage", "x")
 
+```{r, echo=TRUE}
+load("RData/nest_surv_data.rda")
+str(datax)
+datax$y[is.na(datax$y)] <- 0  # Stan does not allow for NA's in the outcome
+```
+
+```{r, echo=TRUE, cache=TRUE}
 # Run STAN
 library(rstan)
 
 mod <- stan(file = "stanmodels/daily_nest_survival.stan", data=datax, 
-            chains=5, iter=2500, control=list(adapt_delta=0.9))
+            chains=5, iter=2500, control=list(adapt_delta=0.9), verbose = FALSE)
 ```
 
 
@@ -75,37 +84,38 @@ mod <- stan(file = "stanmodels/daily_nest_survival.stan", data=datax,
 We love exploring the performance of the Markov chains by using the function `launch_shinystan` from the package `shinystan`. 
 
 ## Look at results
+It looks like cover does not affect daily nest survival, but daily nest survival decreases with the age of the nestlings.
 
-
-```{r printmodel, echo=TRUE, }
+```{r printmodel, echo=TRUE}
 print(mod)
 ```
 
 
-```{r effplots, echo=TRUE, fig.cap="Estimated daily nest survival probability in relation to a covariable x. Dotted lines are 95% uncertainty intervals of the regression line."}
+```{r effplots, echo=TRUE, fig.cap="Estimated daily nest survival probability in relation to nest age. Dotted lines are 95% uncertainty intervals of the regression line."}
 
 # effect plot
-
 bsim <- as.data.frame(mod)
 nsim <- nrow(bsim)
 
-newdat <- data.frame(x=seq(-3, 3, length=100))
-Xmat <- model.matrix(~x, data=newdat)
+newdat <- data.frame(age=seq(1, datax$maxage, length=100))
+newdat$age.z <- (newdat$age-mean(1:datax$maxage))/sd((1:datax$maxage))
+Xmat <- model.matrix(~age.z+I(age.z^2), data=newdat)
 fitmat <- matrix(ncol=nsim, nrow=nrow(newdat))
-for(i in 1:nsim) fitmat[,i] <- plogis(Xmat%*%as.numeric(bsim[i,1:2]))
+for(i in 1:nsim) fitmat[,i] <- plogis(Xmat%*%as.numeric(bsim[i,c(1,3,4)]))
 newdat$fit <- apply(fitmat, 1, median)
 newdat$lwr <- apply(fitmat, 1, quantile, prob=0.025)
 newdat$upr <- apply(fitmat, 1, quantile, prob=0.975)
 
-plot(newdat$x, newdat$fit, ylim=c(0.5,1), type="l",
-     las=1, ylab="Daily nest survival", xlab="A covariate")
-lines(newdat$x, newdat$lwr, lty=3)
-lines(newdat$x, newdat$upr, lty=3)
+plot(newdat$age, newdat$fit, ylim=c(0.8,1), type="l",
+     las=1, ylab="Daily nest survival", xlab="Age [d]")
+lines(newdat$age, newdat$lwr, lty=3)
+lines(newdat$age, newdat$upr, lty=3)
 ```
 
 
+
 ## Further reading {-}
-Can we add some example studies that have used the above model to estimate daily nest survival?
+ADD EXAMPLE STUDIES!!
 
 
 

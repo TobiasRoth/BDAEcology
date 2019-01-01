@@ -61,6 +61,7 @@ y[is.na(y)] <- 0
 The mark-recapture data set consists of capture histories of 2500.00 individuals over 15.00 time periods. For each time period $t$ and individual $i$ the capture history matrix $y$ contains $y_{it}=1$ if the individual $i$ is captured during time period $t$, or $y_{it}=0$ if the individual $i$ is not captured during time period $t$. The marking time period varies between individuals from  1 to 14.00. At the marking time period, the age of the individuals was classified either as juvenile or as adult. Juveniles turn into adults after one time period, thus age is known for all individuals during all time periods after marking. For 1000.00 individuals of the 2500.00 individuals, the sex is identified, whereas for 1500.00 individuals, the sex is unknown. The example data contain one covariate $x$ that takes on one value for each time period.  
 
 
+
 ```r
 # bundle the data for Stan
 i <- 1:nindi

@@ -25,7 +25,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt and Tobias Roth">
 
 
-<meta name="date" content="2018-12-31">
+<meta name="date" content="2019-01-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -271,7 +271,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">17</span> Daily nest survival</h1>
 <div id="background-1" class="section level2">
 <h2><span class="header-section-number">17.1</span> Background</h2>
-<p>Analyses of nest survival is important for understanding the mechanisms of population dynamics. The life-span of a nest could be used as a measure of nest survival. However, this measure very often is biased towards nests that survived longer because these nests are detected by the ornithologists with higher probability (<span class="citation">Mayfield (<a href="referenzen.html#ref-Mayfield1975">1975</a>)</span>). Therefore, instead of estimating overall nest survival it is better to estimate daily nest survival conditional on survival to the previous day.</p>
+<p>Analyses of nest survival is important for understanding the mechanisms of population dynamics. The life-span of a nest could be used as a measure of nest survival. However, this measure very often is biased towards nests that survived longer because these nests are detected by the ornithologists with higher probability <span class="citation">(Mayfield <a href="referenzen.html#ref-Mayfield1975">1975</a>)</span>. Therefore, instead of estimating overall nest survival it is better to estimate daily nest survival conditional on survival to the previous day.</p>
 </div>
 <div id="models-for-estimating-daily-nest-survival" class="section level2">
 <h2><span class="header-section-number">17.2</span> Models for estimating daily nest survival</h2>
@@ -285,64 +285,198 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre class="stan"><code>data {
   int&lt;lower=0&gt; Nnests;                  // number of nests
   int&lt;lower=0&gt; last[Nnests];            // day of last observation (alive or dead)
+  int&lt;lower=0&gt; first[Nnests];           // day of first observation (alive or dead)
   int&lt;lower=0&gt; maxage;                  // maximum of last
   int&lt;lower=0&gt; y[Nnests, maxage];       // indicator of alive nests
-  real x[Nnests];                       // a covariate
+  real cover[Nnests];                 // a covariate of the nest
+  real age[maxage];                   // a covariate of the date
 }
 
 parameters {
-  vector[2] b;                          // coef of linear pred for S
+  vector[4] b;                          // coef of linear pred for S
 }
 
 model {
   real S[Nnests, maxage-1];             // survival probability
                 
   for(i in 1:Nnests){  
-    for(t in 1:(last[i]-1)){ 
-      S[i,t] = inv_logit(b[1] + b[2]*x[i]); 
+    for(t in first[i]:(last[i]-1)){ 
+      S[i,t] = inv_logit(b[1] + b[2]*cover[i] + b[3]*age[t] + b[4]*pow(age[t], 2)); 
     }
   }
 
   // priors
   b[1]~normal(0,5);
-  b[2]~normal(0,5);
+  b[2]~normal(0,3);
+  b[3]~normal(0,3);  
+  b[4]~normal(0,3);
 
   // likelihood
   for (i in 1:Nnests) {
-    for(t in 2:last[i]){
+    for(t in (first[i]+1):last[i]){
       y[i,t]~bernoulli(y[i,t-1]*S[i,t-1]);
     }
   }
-}</code></pre>
+}
+</code></pre>
 </div>
 <div id="prepare-data-and-run-stan" class="section level2">
 <h2><span class="header-section-number">17.4</span> Prepare data and run Stan</h2>
-<p>It would be much nicer to have a real data example!!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rstan)
+<p>Read data DESCRIPTION OF ORIGIN INCL REFERENCE MISSING</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&quot;RData/nest_surv_data.rda&quot;</span>)
+<span class="kw">str</span>(datax)</code></pre></div>
+<pre><code>## List of 7
+##  $ y     : int [1:157, 1:38] 1 NA 1 NA 1 NA NA 1 1 1 ...
+##  $ Nnests: int 157
+##  $ last  : int [1:157] 26 30 32 27 31 30 31 31 33 31 ...
+##  $ first : int [1:157] 1 14 1 3 1 24 18 1 1 1 ...
+##  $ cover : num [1:157] -0.944 -0.226 0.133 0.133 -0.226 ...
+##  $ age   : num [1:38] -1.66 -1.57 -1.48 -1.39 -1.3 ...
+##  $ maxage: int 38</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">datax<span class="op">$</span>y[<span class="kw">is.na</span>(datax<span class="op">$</span>y)] &lt;-<span class="st"> </span><span class="dv">0</span>  <span class="co"># Stan does not allow for NA&#39;s in the outcome</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Run STAN</span>
+<span class="kw">library</span>(rstan)
 
-<span class="co"># Simulate fake data </span>
-Nnests &lt;-<span class="st"> </span><span class="dv">50</span>
-maxage &lt;-<span class="st">  </span><span class="dv">30</span>
-x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(Nnests)
-b0 &lt;-<span class="st"> </span><span class="dv">2</span>; b1 =<span class="st"> </span><span class="fl">0.5</span>
-S &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">ncol=</span>maxage<span class="op">-</span><span class="dv">1</span>, <span class="dt">nrow=</span>Nnests)
-<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>Nnests) S[i,] &lt;-<span class="st"> </span><span class="kw">plogis</span>(b0<span class="op">+</span>b1<span class="op">*</span>x[i])
-y &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">ncol=</span>maxage, <span class="dt">nrow=</span>Nnests)
-y[,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
-<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>Nnests){
-  <span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>maxage){
-    y[i,t] &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span>y[i,t<span class="op">-</span><span class="dv">1</span>]<span class="op">*</span>S[i,t<span class="op">-</span><span class="dv">1</span>])
-  }
-}
-
-last &lt;-<span class="st"> </span><span class="kw">apply</span>(y, <span class="dv">1</span>, sum)<span class="op">+</span><span class="dv">1</span>
-last[last<span class="op">&gt;</span><span class="dv">30</span>] &lt;-<span class="st"> </span><span class="dv">30</span>
-
-datax &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;y&quot;</span>, <span class="st">&quot;Nnests&quot;</span>, <span class="st">&quot;last&quot;</span>, <span class="st">&quot;maxage&quot;</span>, <span class="st">&quot;x&quot;</span>)
-
-<span class="co"># Run STAN</span>
 mod &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt">file =</span> <span class="st">&quot;stanmodels/daily_nest_survival.stan&quot;</span>, <span class="dt">data=</span>datax, 
-            <span class="dt">chains=</span><span class="dv">5</span>, <span class="dt">iter=</span><span class="dv">2500</span>, <span class="dt">control=</span><span class="kw">list</span>(<span class="dt">adapt_delta=</span><span class="fl">0.9</span>))</code></pre></div>
+            <span class="dt">chains=</span><span class="dv">5</span>, <span class="dt">iter=</span><span class="dv">2500</span>, <span class="dt">control=</span><span class="kw">list</span>(<span class="dt">adapt_delta=</span><span class="fl">0.9</span>), <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## In file included from C:/Users/fk/Documents/R/win-library/3.5/BH/include/boost/config.hpp:39:0,
+##                  from C:/Users/fk/Documents/R/win-library/3.5/BH/include/boost/math/tools/config.hpp:13,
+##                  from C:/Users/fk/Documents/R/win-library/3.5/StanHeaders/include/stan/math/rev/core/var.hpp:7,
+##                  from C:/Users/fk/Documents/R/win-library/3.5/StanHeaders/include/stan/math/rev/core/gevv_vvv_vari.hpp:5,
+##                  from C:/Users/fk/Documents/R/win-library/3.5/StanHeaders/include/stan/math/rev/core.hpp:12,
+##                  from C:/Users/fk/Documents/R/win-library/3.5/StanHeaders/include/stan/math/rev/mat.hpp:4,
+##                  from C:/Users/fk/Documents/R/win-library/3.5/StanHeaders/include/stan/math.hpp:4,
+##                  from C:/Users/fk/Documents/R/win-library/3.5/StanHeaders/include/src/stan/model/model_header.hpp:4,
+##                  from filedc281745c.cpp:8:
+## C:/Users/fk/Documents/R/win-library/3.5/BH/include/boost/config/compiler/gcc.hpp:186:0: warning: &quot;BOOST_NO_CXX11_RVALUE_REFERENCES&quot; redefined
+##  #  define BOOST_NO_CXX11_RVALUE_REFERENCES
+##  ^
+## &lt;command-line&gt;:0:0: note: this is the location of the previous definition
+## cc1plus.exe: warning: unrecognized command line option &quot;-Wno-ignored-attributes&quot;
+## 
+## SAMPLING FOR MODEL &#39;daily_nest_survival&#39; NOW (CHAIN 1).
+## 
+## Gradient evaluation took 0 seconds
+## 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+## Adjust your expectations accordingly!
+## 
+## 
+## Iteration:    1 / 2500 [  0%]  (Warmup)
+## Iteration:  250 / 2500 [ 10%]  (Warmup)
+## Iteration:  500 / 2500 [ 20%]  (Warmup)
+## Iteration:  750 / 2500 [ 30%]  (Warmup)
+## Iteration: 1000 / 2500 [ 40%]  (Warmup)
+## Iteration: 1250 / 2500 [ 50%]  (Warmup)
+## Iteration: 1251 / 2500 [ 50%]  (Sampling)
+## Iteration: 1500 / 2500 [ 60%]  (Sampling)
+## Iteration: 1750 / 2500 [ 70%]  (Sampling)
+## Iteration: 2000 / 2500 [ 80%]  (Sampling)
+## Iteration: 2250 / 2500 [ 90%]  (Sampling)
+## Iteration: 2500 / 2500 [100%]  (Sampling)
+## 
+##  Elapsed Time: 7.441 seconds (Warm-up)
+##                7.933 seconds (Sampling)
+##                15.374 seconds (Total)
+## 
+## 
+## SAMPLING FOR MODEL &#39;daily_nest_survival&#39; NOW (CHAIN 2).
+## 
+## Gradient evaluation took 0 seconds
+## 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+## Adjust your expectations accordingly!
+## 
+## 
+## Iteration:    1 / 2500 [  0%]  (Warmup)
+## Iteration:  250 / 2500 [ 10%]  (Warmup)
+## Iteration:  500 / 2500 [ 20%]  (Warmup)
+## Iteration:  750 / 2500 [ 30%]  (Warmup)
+## Iteration: 1000 / 2500 [ 40%]  (Warmup)
+## Iteration: 1250 / 2500 [ 50%]  (Warmup)
+## Iteration: 1251 / 2500 [ 50%]  (Sampling)
+## Iteration: 1500 / 2500 [ 60%]  (Sampling)
+## Iteration: 1750 / 2500 [ 70%]  (Sampling)
+## Iteration: 2000 / 2500 [ 80%]  (Sampling)
+## Iteration: 2250 / 2500 [ 90%]  (Sampling)
+## Iteration: 2500 / 2500 [100%]  (Sampling)
+## 
+##  Elapsed Time: 7.172 seconds (Warm-up)
+##                7.558 seconds (Sampling)
+##                14.73 seconds (Total)
+## 
+## 
+## SAMPLING FOR MODEL &#39;daily_nest_survival&#39; NOW (CHAIN 3).
+## 
+## Gradient evaluation took 0 seconds
+## 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+## Adjust your expectations accordingly!
+## 
+## 
+## Iteration:    1 / 2500 [  0%]  (Warmup)
+## Iteration:  250 / 2500 [ 10%]  (Warmup)
+## Iteration:  500 / 2500 [ 20%]  (Warmup)
+## Iteration:  750 / 2500 [ 30%]  (Warmup)
+## Iteration: 1000 / 2500 [ 40%]  (Warmup)
+## Iteration: 1250 / 2500 [ 50%]  (Warmup)
+## Iteration: 1251 / 2500 [ 50%]  (Sampling)
+## Iteration: 1500 / 2500 [ 60%]  (Sampling)
+## Iteration: 1750 / 2500 [ 70%]  (Sampling)
+## Iteration: 2000 / 2500 [ 80%]  (Sampling)
+## Iteration: 2250 / 2500 [ 90%]  (Sampling)
+## Iteration: 2500 / 2500 [100%]  (Sampling)
+## 
+##  Elapsed Time: 6.991 seconds (Warm-up)
+##                8.303 seconds (Sampling)
+##                15.294 seconds (Total)
+## 
+## 
+## SAMPLING FOR MODEL &#39;daily_nest_survival&#39; NOW (CHAIN 4).
+## 
+## Gradient evaluation took 0.016 seconds
+## 1000 transitions using 10 leapfrog steps per transition would take 160 seconds.
+## Adjust your expectations accordingly!
+## 
+## 
+## Iteration:    1 / 2500 [  0%]  (Warmup)
+## Iteration:  250 / 2500 [ 10%]  (Warmup)
+## Iteration:  500 / 2500 [ 20%]  (Warmup)
+## Iteration:  750 / 2500 [ 30%]  (Warmup)
+## Iteration: 1000 / 2500 [ 40%]  (Warmup)
+## Iteration: 1250 / 2500 [ 50%]  (Warmup)
+## Iteration: 1251 / 2500 [ 50%]  (Sampling)
+## Iteration: 1500 / 2500 [ 60%]  (Sampling)
+## Iteration: 1750 / 2500 [ 70%]  (Sampling)
+## Iteration: 2000 / 2500 [ 80%]  (Sampling)
+## Iteration: 2250 / 2500 [ 90%]  (Sampling)
+## Iteration: 2500 / 2500 [100%]  (Sampling)
+## 
+##  Elapsed Time: 7.237 seconds (Warm-up)
+##                7.497 seconds (Sampling)
+##                14.734 seconds (Total)
+## 
+## 
+## SAMPLING FOR MODEL &#39;daily_nest_survival&#39; NOW (CHAIN 5).
+## 
+## Gradient evaluation took 0 seconds
+## 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+## Adjust your expectations accordingly!
+## 
+## 
+## Iteration:    1 / 2500 [  0%]  (Warmup)
+## Iteration:  250 / 2500 [ 10%]  (Warmup)
+## Iteration:  500 / 2500 [ 20%]  (Warmup)
+## Iteration:  750 / 2500 [ 30%]  (Warmup)
+## Iteration: 1000 / 2500 [ 40%]  (Warmup)
+## Iteration: 1250 / 2500 [ 50%]  (Warmup)
+## Iteration: 1251 / 2500 [ 50%]  (Sampling)
+## Iteration: 1500 / 2500 [ 60%]  (Sampling)
+## Iteration: 1750 / 2500 [ 70%]  (Sampling)
+## Iteration: 2000 / 2500 [ 80%]  (Sampling)
+## Iteration: 2250 / 2500 [ 90%]  (Sampling)
+## Iteration: 2500 / 2500 [100%]  (Sampling)
+## 
+##  Elapsed Time: 7.642 seconds (Warm-up)
+##                7.129 seconds (Sampling)
+##                14.771 seconds (Total)</code></pre>
 </div>
 <div id="check-convergence" class="section level2">
 <h2><span class="header-section-number">17.5</span> Check convergence</h2>
@@ -350,51 +484,56 @@ mod &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt">
 </div>
 <div id="look-at-results" class="section level2">
 <h2><span class="header-section-number">17.6</span> Look at results</h2>
+<p>It looks like cover does not affect daily nest survival, but daily nest survival decreases with the age of the nestlings.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mod)</code></pre></div>
 <pre><code>## Inference for Stan model: daily_nest_survival.
 ## 5 chains, each with iter=2500; warmup=1250; thin=1; 
 ## post-warmup draws per chain=1250, total post-warmup draws=6250.
 ## 
 ##         mean se_mean   sd    2.5%     25%     50%     75%   97.5% n_eff
-## b[1]    1.98    0.00 0.16    1.67    1.87    1.97    2.08    2.30  4434
-## b[2]    0.51    0.00 0.14    0.24    0.42    0.51    0.60    0.78  4248
-## lp__ -146.30    0.02 1.04 -149.14 -146.70 -145.98 -145.57 -145.30  2355
+## b[1]    3.88    0.00 0.19    3.53    3.75    3.87    4.00    4.26  3630
+## b[2]    0.00    0.00 0.13   -0.24   -0.09    0.00    0.08    0.26  5627
+## b[3]   -0.90    0.00 0.19   -1.26   -1.03   -0.90   -0.77   -0.53  4301
+## b[4]   -0.18    0.00 0.24   -0.64   -0.34   -0.19   -0.03    0.29  3556
+## lp__ -306.91    0.03 1.46 -310.67 -307.61 -306.57 -305.85 -305.10  2620
 ##      Rhat
 ## b[1]    1
 ## b[2]    1
+## b[3]    1
+## b[4]    1
 ## lp__    1
 ## 
-## Samples were drawn using NUTS(diag_e) at Tue Dec 11 22:56:12 2018.
+## Samples were drawn using NUTS(diag_e) at Tue Jan 01 13:43:07 2019.
 ## For each parameter, n_eff is a crude measure of effective sample size,
 ## and Rhat is the potential scale reduction factor on split chains (at 
 ## convergence, Rhat=1).</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># effect plot</span>
-
 bsim &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(mod)
 nsim &lt;-<span class="st"> </span><span class="kw">nrow</span>(bsim)
 
-newdat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dt">length=</span><span class="dv">100</span>))
-Xmat &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>x, <span class="dt">data=</span>newdat)
+newdat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">age=</span><span class="kw">seq</span>(<span class="dv">1</span>, datax<span class="op">$</span>maxage, <span class="dt">length=</span><span class="dv">100</span>))
+newdat<span class="op">$</span>age.z &lt;-<span class="st"> </span>(newdat<span class="op">$</span>age<span class="op">-</span><span class="kw">mean</span>(<span class="dv">1</span><span class="op">:</span>datax<span class="op">$</span>maxage))<span class="op">/</span><span class="kw">sd</span>((<span class="dv">1</span><span class="op">:</span>datax<span class="op">$</span>maxage))
+Xmat &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>age.z<span class="op">+</span><span class="kw">I</span>(age.z<span class="op">^</span><span class="dv">2</span>), <span class="dt">data=</span>newdat)
 fitmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span>nsim, <span class="dt">nrow=</span><span class="kw">nrow</span>(newdat))
-<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) fitmat[,i] &lt;-<span class="st"> </span><span class="kw">plogis</span>(Xmat<span class="op">%*%</span><span class="kw">as.numeric</span>(bsim[i,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]))
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) fitmat[,i] &lt;-<span class="st"> </span><span class="kw">plogis</span>(Xmat<span class="op">%*%</span><span class="kw">as.numeric</span>(bsim[i,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]))
 newdat<span class="op">$</span>fit &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, median)
 newdat<span class="op">$</span>lwr &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="dt">prob=</span><span class="fl">0.025</span>)
 newdat<span class="op">$</span>upr &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="dt">prob=</span><span class="fl">0.975</span>)
 
-<span class="kw">plot</span>(newdat<span class="op">$</span>x, newdat<span class="op">$</span>fit, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,
-     <span class="dt">las=</span><span class="dv">1</span>, <span class="dt">ylab=</span><span class="st">&quot;Daily nest survival&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;A covariate&quot;</span>)
-<span class="kw">lines</span>(newdat<span class="op">$</span>x, newdat<span class="op">$</span>lwr, <span class="dt">lty=</span><span class="dv">3</span>)
-<span class="kw">lines</span>(newdat<span class="op">$</span>x, newdat<span class="op">$</span>upr, <span class="dt">lty=</span><span class="dv">3</span>)</code></pre></div>
+<span class="kw">plot</span>(newdat<span class="op">$</span>age, newdat<span class="op">$</span>fit, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="fl">0.8</span>,<span class="dv">1</span>), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,
+     <span class="dt">las=</span><span class="dv">1</span>, <span class="dt">ylab=</span><span class="st">&quot;Daily nest survival&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Age [d]&quot;</span>)
+<span class="kw">lines</span>(newdat<span class="op">$</span>age, newdat<span class="op">$</span>lwr, <span class="dt">lty=</span><span class="dv">3</span>)
+<span class="kw">lines</span>(newdat<span class="op">$</span>age, newdat<span class="op">$</span>upr, <span class="dt">lty=</span><span class="dv">3</span>)</code></pre></div>
 <div class="figure"><span id="fig:effplots"></span>
-<img src="43_daily_nest_survival_files/figure-html/effplots-1.png" alt="Estimated daily nest survival probability in relation to a covariable x. Dotted lines are 95% uncertainty intervals of the regression line." width="768" />
+<img src="43_daily_nest_survival_files/figure-html/effplots-1.png" alt="Estimated daily nest survival probability in relation to nest age. Dotted lines are 95% uncertainty intervals of the regression line." width="768" />
 <p class="caption">
-Figure 17.1: Estimated daily nest survival probability in relation to a covariable x. Dotted lines are 95% uncertainty intervals of the regression line.
+Figure 17.1: Estimated daily nest survival probability in relation to nest age. Dotted lines are 95% uncertainty intervals of the regression line.
 </p>
 </div>
 </div>
 <div id="further-reading-8" class="section level2 unnumbered">
 <h2>Further reading</h2>
-<p>Can we add some example studies that have used the above model to estimate daily nest survival?</p>
+<p>ADD EXAMPLE STUDIES!!</p>
 
 </div>
 </div>
