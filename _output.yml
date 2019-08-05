@@ -12,3 +12,8 @@ bookdown::gitbook:
       github: no
       facebook: no
       twitter: no
+bookdown::word_document2:
+  toc: yes
+  fig_width: 5
+  fig_height: 4
+  fig_caption: true

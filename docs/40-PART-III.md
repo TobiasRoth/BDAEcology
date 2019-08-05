@@ -2,7 +2,7 @@
 # (PART) ECOLOGICAL MODELS {-}
 
 # Introduction to PART III {#PART-III}
-<a href="" target="_blank"><img src="images/part_IIII.jpg" width="410" style="display: block; margin: auto;" /></a>
+[![](images/part_IIII.jpg)]()<!-- -->
 
 ------
 

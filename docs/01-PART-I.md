@@ -2,7 +2,7 @@
 # (PART) R FOR ECOLOGISTS {-}
 
 # Introduction to PART I {#PART-I}
-<a href="" target="_blank"><img src="images/part_I.jpg" width="410" style="display: block; margin: auto;" /></a>
+[![](images/part_I.jpg)]()<!-- -->
 
 ------
 

@@ -20,10 +20,7 @@ ra <- rasterFromXYZ(elevation)
 plot(ra)
 ```
 
-<div class="figure">
-<img src="07-rgis_files/figure-html/unnamed-chunk-3-1.png" alt="Meter above sea leavel (m) accross the canton Aargau in Switzerland." width="768" />
-<p class="caption">(\#fig:unnamed-chunk-3)Meter above sea leavel (m) accross the canton Aargau in Switzerland.</p>
-</div>
+![(\#fig:unnamed-chunk-3)Meter above sea leavel (m) accross the canton Aargau in Switzerland.](07-rgis_files/figure-docx/unnamed-chunk-3-1.png)
 
 ### Geometry data {#geometrydata}
 All geometry data types are composed of points. The spatial location of a point is defined by its x and y coordinates. Using several points one can then define lines (sequence of points connected by straight lines) and polygons (sequence of points that form a closed ring). Points, lines and plygons are the geometries we usually work with. We use the package `sf` to work with geometry data types. Its functions are very efficient to work with all spatial data other than raster data. It also links to GDAL (i.e. a computer software library for reading and writing raster and vector geospatial data formats) and proj.4 (i.e. a library for performing conversions between cartographic projections), which are important tools when woring with different sources of spatial data.
@@ -40,10 +37,7 @@ dat %>% filter(year == 2011) %>%
   plot(add = TRUE, pch = "x")
 ```
 
-<div class="figure">
-<img src="07-rgis_files/figure-html/unnamed-chunk-4-1.png" alt="Locations of the ponds where frogs were counted in 2011. The background image shows the elevation (meter above sea level)." width="768" />
-<p class="caption">(\#fig:unnamed-chunk-4)Locations of the ponds where frogs were counted in 2011. The background image shows the elevation (meter above sea level).</p>
-</div>
+![(\#fig:unnamed-chunk-4)Locations of the ponds where frogs were counted in 2011. The background image shows the elevation (meter above sea level).](07-rgis_files/figure-docx/unnamed-chunk-4-1.png)
 
 ## Basic functions
 In this chapter we shortly describe some functions that we often use when working with spatial data in R.
