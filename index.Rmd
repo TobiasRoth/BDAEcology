@@ -4,7 +4,7 @@ author: "Fränzi Korner-Nievergelt and Tobias Roth"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: [References.bib]
+bibliography: [References_fk.bib, References_new.bib]
 link-citations: yes
 github-repo: TobiasRoth/BDAEcology
 cover-image: images/cover.jpg
