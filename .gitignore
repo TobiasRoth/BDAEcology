@@ -3,5 +3,7 @@
 .RData
 .Ruserdata
 **/_bookdown_files
-_bookdown_files/**
 **/.DS_Store
+
+_bookdown_files/**
+docs_local/**
