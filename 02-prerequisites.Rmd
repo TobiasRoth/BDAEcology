@@ -2,21 +2,34 @@
 # Prerequisits: Basic statistical terms {#basics}
 
 This chapter introduces some important terms useful for doing data analyses.
-It also introduces the essentials of the classical frequentist tests such as t- and Chisquare test. We will not use them later but we think it is important to know how to interpret the results in order to be able to understand 100 years of scientific literature. For each classical test, we provide a suggestion how to do it in a Bayesian way and we discuss some differences between the Bayesian and frequentist statistics. 
+It also introduces the essentials of the classical frequentist tests such as t- and Chisquare test. Even though we will not use nullhypotheses tests later, we introduce them here because we need to understand 100 years of scientific literature. For each classical test, we provide a suggestion how to do it in a Bayesian way and we discuss some differences between the Bayesian and frequentist statistics. 
+
+## Variables and observations
+
+Empirical research involves data collection. Data are collected by recording measurements of variables for observational units. An observational unit may be, for example, an individual, a plot, a time interval or a combination of those. The collection of all units ideally build a random sample of the entire population of units in that we are interested. The measurements of the random sample are stored in a data table (sometimes also called data set, but a data set may include several data tables. A collection of data tables belonging to the same study or system is norally bundled and stored in a data base). A data table is a collection of variables (columns). Data tables normally are handled as objects of class `data.frame` in R. All measurements on a row in a data table belong to the same observational unit. The variables can be of different scales (Table \@ref(tab:scalemeasurement)). 
 
 
-## Scale of measurement
-
+Table: (\#tab:scalemeasurement) Scales of measurements
 
 Scale   | Examples          | Properties        | Coding in R | 
 :-------|:------------------|:------------------|:--------------------|
 Nominal | Sex, genotype, habitat  | Identity (values have a unique meaning) | `factor()` |
 Ordinal | Elevational zones | Identity and magnitude (values have an ordered relationship) | `ordered()` |
-Numeric | Discrete: counts;  continuous: body weight, wing length | Identity, magnitude, and equal intervals | `intgeger()` `numeric()` |
+Numeric | Discrete: counts;  continuous: body weight, wing length | Identity, magnitude, and intervals or ratios | `intgeger()` `numeric()` |
 
 
+While nominal and ordinal variables are summarized by giving the absolute number or the proportion of observations for each category, numeric variables normally are summarized by a location and a scatter statistics, such as the mean and the standard deviation or the median and some quantiles. The distribution of a numeric variable is graphically displayed in a histogram (Fig. \ref(histogram)).
+
+
+```{r histogram, echo=FALSE, fig.cap='Histogram of the length of ell of statistics course participants.'}
+load("RData/datacourse.RData")
+hist(dat$ell, las=1, xlab="Lenght of ell [cm]", ylab="Number of students", main=NA,
+     col="tomato")
+
+```
 
 ## Correlations
+
 
 ### Basics of variances, covariances and correlations
   
@@ -262,7 +275,7 @@ legend(1, 14, fill=c("white", "blue", "pink"), legend=c("n=12", "n=120", "n=1200
 
 ## Bayes theorem
 ```{r, echo=FALSE}
-load("RData/datacourse.rda")
+load("RData/datacourse.RData")
 tab <- table(dat$car, dat$birthday)
 ```
   
