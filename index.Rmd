@@ -1,6 +1,6 @@
 --- 
 title: "Bayesian Data Analysis in Ecology with R and Stan"
-author: "Fränzi Korner-Nievergelt, Tobias Roth"
+author: "Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
