@@ -15,7 +15,8 @@ Hier schreiben wir verschiedene Beschlüsse und Anleitungen auf.
 ## Formeln
 Wir versuchen die Bezeichnungen der Parameter möglichst einheitlich zu verwenden:
 
-- *Estimates*: Wir verwenden ^ (hat) wenn wir das Estimate von einem Parameter meinen. Zum Beispiel wenn der Mittelwert aus den Daten als Schätzung für den Populations-Mean gebraucht wird (y^ = mean(der Daten)) oder wenn wir eine Schätzung angeben $\hat{beta} = 0.34$). 
+- *Estimates*: Wir verwenden ^ (hat) wenn wir das Estimate von einem Parameter meinen. Zum Beispiel wenn der Mittelwert aus den Daten als Schätzung für den Populations-Mean gebraucht wird (mu^ = mean(der Daten), mu = wahrere Mittelwert der Grundgesamtheit) oder wenn wir eine Schätzung angeben $\hat{beta} = 0.34$). 
+$\hat{y}$ sollten wir vermeiden, da die Beobachtung ja bekannt ist und nicht geschätzt wird.
 
 ## Externe Daten
 - Datenfiles werden, wenn möglich, im Package blmeco abgelegt
