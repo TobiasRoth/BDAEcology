@@ -25,6 +25,7 @@ While nominal and ordinal variables are summarized by giving the absolute number
 
 ```{r histogram, echo=FALSE, fig.cap='Histogram of the length of ell of statistics course participants.'}
 load("RData/datacourse.RData")
+
 hist(dat$ell, las=1, xlab="Lenght of ell [cm]", ylab="Number of students", main=NA,
      col="tomato")
 
@@ -59,77 +60,102 @@ The standard deviation is approximately the average deviation of an observation 
 
 The variance and standard deviation each describe the scatter with a single value. Thus, we have to assume that the observations are scattered symmetrically around their mean in order to get a picture of the distribution of the measurements. When the measurements are spread asymmetrically (skewed distribution), then it may be more precise to describe the scatter with more than one value. Such statistics could be quantiles from the lower and upper tail of the data. 
 
-Quantiles inform us about both location and spread of a distribution. The $p$th-quantile is the value with the property that a proportion $p$ of all values are less than or equal to the value of the quantile. The median is the 50% quantile.The 25% quantile and the 75% quantile are also called the lower and upper quartiles, respectively. The range between the 25% and the 75% quartile is called the interquartile range. This range includes 50% of the distribution and is also used as a measure of scatter.
+Quantiles inform us about both location and spread of a distribution. The $p$th-quantile is the value with the property that a proportion $p$ of all values are less than or equal to the value of the quantile. The median is the 50% quantile.The 25% quantile and the 75% quantile are also called the lower and upper quartiles, respectively. The range between the 25% and the 75% quartile is called the interquartile range. This range includes 50% of the distribution and is also used as a measure of scatter. The R function `quantile` extracts sample quantiles. The median, the quartiles, and the interquartile range can be graphically displayed using box and-whisker plots (boxplots in short, R function `boxplot`). The horizontal fat bars are the medians (Fig. \ref{fig:boxplot}). The boxes mark the interquartile range. The whiskers reach out to the last observation within 1.5 times the interquartile range from the quartile. Circles mark observations beyond 1.5 times the
+interquartile range from the quartile.
 
+```{r boxplot, fig.cap="Boxplot of the length of ell of statistics course participants who are or ar not owner of a car."}
+par(mar=c(5,4,1,1))
+boxplot(ell~car, data=dat, las=1, ylab="Lenght of ell [cm]",
+col="tomato", xaxt="n")
+axis(1, at=c(1,2), labels=c("Not owing a car", "Car owner"))
+n <- table(dat$car)
+axis(1, at=c(1,2), labels=paste("n=", n, sep=""), mgp=c(3,2, 0))
+```
+
+The boxplot is an appealing tool for comparing location, variance and distribution of measurements among groups.
+
+## Correlations
+
+A correlation measures the strength with which characteristics of two variables are associated with each other (co-occurr). If both variables are numeric, we can visualize the correlation using a scatterplot.
+
+```{r scatterplot, fig.cap="Scatterplot of the length of ell and the comfort temperature of statistics course participants."}  
+par(mar=c(5,4,1,1))
+plot(temp~ell, data=dat, las=1, xlab="Lenght of ell [cm]",
+ylab="Comfort temperature [°C]",
+pch=16)
+```
+  
+The covariance between variable $x$ and $y$ is defined as:
+  
+- covariance $q = \frac{1}{n-1}\sum_{i=1}^{n}((x_i-\bar{x})*(y_i-\bar{y}))$  (R function `cov`)
+
+As for the variance, also the units of the covariance are sqared and therefore covariance values are difficult to interpret. A standardized covariance is the Pearson correlation coefficient:
 
   
-- covariance $q = \frac{1}{n-1}\sum_{i=1}^{n}((x_i-\bar{x})*(y_i-\bar{y}))$  
+- Pearson correlation coefficient: $r=\frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2\sum_{i=1}^{n}(y_i-\bar{y})^2}}$ (R function `cor`)
+
+Means, variances, standard deviations, covariances and correlations are sensible for outliers. Single observations containing extreme values normally have a overproportional influence on these statistics. When outliers are present in the data, we may prefer a more robust correlation measure such as the Spearman correlation or Kendall’s tau. Both are based on the ranks of the measurements instead of the measurements themselves. 
 
 
-### Pearson correlation coefficient
-  
-standardized covariance
+- Spearman correlation coefficient: correlation between rank(x) and rank(y) (R function `cor(x,y, method="spearman")`)  
 
-$$r=\frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2\sum_{i=1}^{n}(y_i-\bar{y})^2}}$$
-
-
-
-### Spearman correlation coefficient
-rank correlation  
-correlation between rank(x) and rank(y)  
-  
-  robust against outliers
-
-### Kendall's tau
-rank correlation  
-
-I = number of pairs (i,k) for which $(x_i < x_k)$ & $(y_i > y_k)$ or viceversa  
-$\tau = 1-\frac{4I}{(n(n-1))}$
-
+- Kendall's tau: $\tau = 1-\frac{4I}{(n(n-1))}$, where $I$ = number of pairs $(i,k)$ for which $(x_i < x_k)$ & $(y_i > y_k)$ or viceversa. (R function `cor(x,y, method="kendall")`) 
 
 
 ## Principal components analyses PCA
-rotation of the coordinate system (see Fig. \@ref(fig:principal))
 
-```{r principal, echo=FALSE, fig.cap='Principal components are eigenvectors of the covariance or correlation matrix'}
-x <- rnorm(100, 5, 1)
-y <- rnorm(100, 0.8*x, 1)
-pca <- princomp(cbind(x,y), cor=TRUE)
+The principal components analysis (PCA) is a multivariate correlation analysis. A multidimensional data set with $k$ variables can be seen as a cloud of points (observations) in a $k$-dimensional space. Imagine, we could move around in the space and look at the cloud from different locations. From some locations, the data looks highly correlated, whereas from others, we cannot see the correlation. That is what PCA is doing. It is rotating the coordinate system (defined by the original variables) of the data cloud so that the correlations are no longer visible. The axes of the new coordinates system are linear combinations of the original variables. They are called principal components. There are as many principal coordinates as there are original variables, i.e. $k$, $p_1, ..., p_k$. The principal components meet further requirements:
+
+- the first component explains most variance
+- the second component explains most of the remaining variance and is perpendicular (= uncorrelated) to the first one
+- third component explains most of the remaining variance and is perpendicular to the first two
+- ...
+
+For example, in a two-dimensional data set $(x_1, x_2)$ the principal components become
+
+$pc_{1i} = b_{11}x_{1i} + b_{12}x_{2i}$
+$pc_{2i} = b_{21}x_{1i} + b_{22}x_{2i}$ with $b_{jk}$ being loadings of principal component $j$ and original variable $k$. Fig. \@ref(fig:principal) shows the two principal components for a two-dimensional data set. They can be calculated using matrix algebra: principal components are eigenvectors of the covariance or correlation matrix.
+
+```{r principal, echo=FALSE, fig.cap='Principal components of a two dimensional data set based on the covariance matrix (green) and the correlation matrix (brown).'}
+set.seed(2353)
+x1 <- rnorm(100, 5, 1)
+x2 <- rnorm(100, 0.8*x1, 1)
 par(mar=c(3,3,0.3,0.3))
-plot(x-mean(x),y-mean(y), asp=1, pch=16, col="blue")
-pc1 <- eigen(cov(cbind(x,y)))$vectors[,1]
-pc2 <- eigen(cov(cbind(x,y)))$vectors[,2]
+plot(x1-mean(x1),x2-mean(x2), asp=1, pch=16, col="blue")
+# PCA based on covariance matrix
+pc1 <- eigen(cov(cbind(x1,x2)))$vectors[,1]
+pc2 <- eigen(cov(cbind(x1,x2)))$vectors[,2]
 abline(0, pc1[2]/pc1[1], col="green", lwd=2)
 abline(0, pc2[2]/pc2[1], col="green", lwd=2)
+
+# PCA based on correlation matrix
+pc1 <- eigen(cor(cbind(x1,x2)))$vectors[,1]
+pc2 <- eigen(cor(cbind(x1,x2)))$vectors[,2]
+abline(0, pc1[2]/pc1[1], col="brown", lwd=2)
+abline(0, pc2[2]/pc2[1], col="brown", lwd=2)
 ```
 
-
-
-rotation of the coordinate system so that   
-
-* first component explains most variance  
-* second component explains most of the remaining variance and is perpendicular to the first one  
-* third component explains most of the remaining variance and is perpendicular to the first two  
-* ...  
-
-$(x,y)$ becomes $(pc1, pc2)$  
-where  
-$pc1_i= b_{11} x_i + b_{12} y_i$  
-$pc2_i = b_{21} x_i + b_{22} y_i$ with $b_{jk}$ being loadings
+The choice between correlation or covariance matrix is essential and important. The covariance matrix is an unstandardized correlation matrix. Therefore, the units, i.e., whether cm or m are used, influence the results of the PCA if it is based on the covariance matrix.  When the PCA is based on the covariance matrix, the results will change, when we change the units of one variable, e.g., from cm to m. Basing the PCA on the covariance matrix only makes sense, when the variances are comparable among the variables, i.e., if all variables are measured in the same unit and we would like to weight each variable according to its variance. If this is not the case, the PCA must be based on the correlation matrix.
 
 ```{r}
-pca <- princomp(cbind(x,y), cor=TRUE)
+pca <- princomp(cbind(x1,x2)) # PCA based on covariance matrix
+
+pca <- princomp(cbind(x1,x2), cor=TRUE) # PCA based on correlation matrix
+
 loadings(pca)
+
 ```
-loadings of a component can be multiplied by -1
 
+The loadings measure the correlation of each variable with the principal components. They inform about what aspects of the data each component is measuring. The signs of the loadings are arbitrary, thus we can multiplied them by -1 without changing the PCA. Sometimes this can be handy for describing the meaning of the principal component in a paper. For example, @Zbinden.2018 combined the number of hunting licenses, the duration of the hunting period and the number of black grouse cocks that were allowed to be hunted per hunter in a principal component in order to measure hunting pressure. All three variables had a negative loading in the first component, so that high values of the component meant low hunting pressure. Before the subsequent analyses, for which a measure of hunting pressure was of interest, the authors changed the signs of the loadings so that this component measured hunting pressure.  
 
-proportion of variance explained by each component  
-number of components = number of variables
+The proportion of variance explained by each component is, beside the loadings, an important information. If the first few components explain the main part of the variance, it means that maybe not all $k$ variables are necessary to describe the data, or, in other words, the original $k$ variables contain a lot of redundant information.   
+
 ```{r}
+# extract the variance captured by each component
 summary(pca)
 ```
-outlook: components with low variance are shrinked to a higher degree in Ridge regression
+
+{\footnotesize Ridge regression is similar to doing a PCA within a linear model while components with low variance are shrinked to a higher degree than components with a high variance.}
 
 
 ### Inferential statistics
@@ -138,28 +164,32 @@ outlook: components with low variance are shrinked to a higher degree in Ridge r
 > there will always be uncertainty  
 Amrhein (2017)[https://peerj.com/preprints/26857]
 
-The decision whether an effect is important or not cannot not be done based on data alone. For a decision we should carefully consider the consequences of each decision, the aims we would like to achieve and the data. Consequences, needs and wishes of different stakeholders can be formally combined with the information in data by using methods of the decision theory. In most data analyses, particularly in basic research and when working on case studies, we normally do not consider consequences of decisions. In these cases, our job is extracting the information of data so that this information later can be used by other scientists, stakeholders and politicians to make decisions.
+The decision whether an effect is important or not cannot not be done based on data alone. For a decision we should carefully consider the consequences of each decision, the aims we would like to achieve and the data. Consequences, needs and wishes of different stakeholders can be formally combined with the information in data by using decision theoretical methods. In most data analyses, particularly in basic research and when working on case studies, we normally do not consider consequences of decisions. In these cases, our job is extracting the information of data so that this information later can be used by other scientists, stakeholders and politicians to make decisions.
 
 Therefore, statistics is describing pattern in data and quantifying the uncertainty of the described patterns that is due to the fact that the data is just a (small) random sample from the population we would like to know. 
 
-Quantification of uncertainty is only possible if  
-  
-1. the mechanisms under study are known
+Quantification of uncertainty is only possible if:
+1. the mechanisms that generated the data are known
 2. the observations are a random sample from the population of interest
 
-Solutions:  
-to 1. working with models and reporting assumptions  
-to 2. study design
+Most studies aim at understanding the mechanisms that generated the data, thus they are most likely not known. To overcome that problem, we construct models, e.g. statistical models, that are (strong) abstractions of the data generating process. And we report the model assumptions. All uncertainty measures are conditional on the model we used to analyze the data, i.e., they are only reliable, if the model we used somehow realistically describes the data generating process. Because most statistical models do not describe the data generating process well, the true uncertainty almost always is much higher than the one we report.  
+In order to obtain a random sample from the population under study, a good study design is a prerequisite.
 
-> reported uncertainties always are too small!
+To illustrate how inference about a big population is drawn from a small sample, we here use simulated data. The advantage of using simulated data is that the mechanism that generated the data is known. However, in the example, we use different models for simulation and analysis. 
 
+Imagine there are 300000 PhD students on the world and we would like to know how many statistics courses they have taken before they started their PhD. 
 
-Example: Number of stats courses before starting a PhD among all PhD students
 ```{r}
 # simulate the virtual true population
 set.seed(235325)   # set seed for random number generator
 
 # simulate fake data of the whole population
+# using an overdispersed Poisson distribution
+# There is no need to understand more of this model 
+# at this moment of the course than that this model 
+# produces integer numbers (counts). Poisson models 
+# will be introduced later.
+
 statscourses <- rpois(300000, rgamma(300000, 2, 3))  
 
 # draw a random sample from the population
@@ -168,15 +198,20 @@ y <- sample(statscourses, 12, replace=FALSE)
 ```
 
 
-```{r, fig.cap='', echo=FALSE}
+```{r, histtruesample, fig.cap='Histogram of the number of statistics courses 300000 virtual PhD students have taken before their PhD started. The rugs on the x-axis indicate a random sample of the 300000 students. The black vertical line indicates the mean of the 300000 students (true mean) and the blue line indicates the mean of the sample.', echo=FALSE}
 par(mar=c(4,5,1,1))
-hist(statscourses, breaks=seq(-0.5, 10.5, by=1), main=NA)     # draw histogram of the population
-rug(jitter(y))                                       # add the sample
-abline(v=mean(y), col="blue", lwd=2)                 # add the mean of the sample
-abline(v=mean(statscourses), lwd=2)                  # add the true mean of the population
+# draw a histogram of the 300000 students
+hist(statscourses, breaks=seq(-0.5, 10.5, by=1), main=NA,
+     xlab="Number of statistics courses", ylab="Number of students") 
+box(bty="l")
+# add the sample 
+rug(jitter(y))                            
+# add the mean of the sample
+abline(v=mean(y), col="blue", lwd=2)   
+# add the true mean of the population
+abline(v=mean(statscourses), lwd=2)                  
 text(4, 150000, "Sample mean", col="blue", adj=c(0,1))
 text(4, 120000, "True mean", adj=c(0,1))
-
 ```
 
 
