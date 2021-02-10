@@ -2,11 +2,11 @@
 # Prerequisits: Basic statistical terms {#basics}
 
 This chapter introduces some important terms useful for doing data analyses.
-It also introduces the essentials of the classical frequentist tests such as t- and Chisquare test. Even though we will not use nullhypotheses tests later, we introduce them here because we need to understand 100 years of scientific literature. For each classical test, we provide a suggestion how to do it in a Bayesian way and we discuss some differences between the Bayesian and frequentist statistics. 
+It also introduces the essentials of the classical frequentist tests such as t- and Chisquare test. Even though we will not use nullhypotheses tests later [@Amrhein.2019], we introduce them here because we need to understand 100 years of scientific literature. For each classical test, we provide a suggestion how to do it in a Bayesian way and we discuss some differences between the Bayesian and frequentist statistics. 
 
 ## Variables and observations
 
-Empirical research involves data collection. Data are collected by recording measurements of variables for observational units. An observational unit may be, for example, an individual, a plot, a time interval or a combination of those. The collection of all units ideally build a random sample of the entire population of units in that we are interested. The measurements of the random sample are stored in a data table (sometimes also called data set, but a data set may include several data tables. A collection of data tables belonging to the same study or system is norally bundled and stored in a data base). A data table is a collection of variables (columns). Data tables normally are handled as objects of class `data.frame` in R. All measurements on a row in a data table belong to the same observational unit. The variables can be of different scales (Table \@ref(tab:scalemeasurement)). 
+Empirical research involves data collection. Data are collected by recording measurements of variables for observational units. An observational unit may be, for example, an individual, a plot, a time interval or a combination of those. The collection of all units ideally build a random sample of the entire population of units in that we are interested. The measurements (or observations) of the random sample are stored in a data table (sometimes also called data set, but a data set may include several data tables. A collection of data tables belonging to the same study or system is normally bundled and stored in a data base). A data table is a collection of variables (columns). Data tables normally are handled as objects of class `data.frame` in R. All measurements on a row in a data table belong to the same observational unit. The variables can be of different scales (Table \@ref(tab:scalemeasurement)). 
 
 
 Table: (\#tab:scalemeasurement) Scales of measurements
@@ -18,6 +18,8 @@ Ordinal | Elevational zones | Identity and magnitude (values have an ordered rel
 Numeric | Discrete: counts;  continuous: body weight, wing length | Identity, magnitude, and intervals or ratios | `intgeger()` `numeric()` |
 
 
+## Displaying and summarizing variables
+
 While nominal and ordinal variables are summarized by giving the absolute number or the proportion of observations for each category, numeric variables normally are summarized by a location and a scatter statistics, such as the mean and the standard deviation or the median and some quantiles. The distribution of a numeric variable is graphically displayed in a histogram (Fig. \ref(histogram)).
 
 
@@ -28,18 +30,38 @@ hist(dat$ell, las=1, xlab="Lenght of ell [cm]", ylab="Number of students", main=
 
 ```
 
-## Correlations
+To draw a histogram, the variable is displayed on the x-axis and the $x_i$-values are assigned to classes. The edges of the classes are called ‘breaks’. They can be set with the argument `breaks=` within the function `hist`. The values given in the `breaks=` argument must at least span the values of the variable. If the argument `breaks=` is not specified, R searches for breaks-values that make the histogram look smooth. The number of observations falling in each class is given on the y-axis. The y-axis can be re-scaled so that the area of the histogram equals 1 by setting the argument `density=TRUE`. In that case, the values on the y-axis correspond to the density values of a probability distribution (Chapter \@ref(distributions)).
 
+Location statistics are mean, median or mode. A common mean is the 
+- arithmetic mean: $\hat{\mu} = \bar{x} = \frac{i=1}{n} x_i \sum_{1}^{n}$(R function `mean`),
+where $n$ is the sample size. The parameter $\mu$ is the (unknown) true mean of the entire population of which
+the $1,...,n$ measurements are a random sample of. $\bar{x}$ is called the sample mean and used as an estimate for $\mu$. The $^$ above any parameter indicates that the parameter value is obtained from a sample and, therefore, it may be different from the true value. 
 
-### Basics of variances, covariances and correlations
-  
+The median is the 50% quantile. We find 50% of the measurements below and 50% above the median. If $x_1,..., x_n$ are the ordered measurements of a variable, then the median is:
+- median $= x_{(n+1)/2}$ for uneven $n$, and median $= \frac{1}{2}(x_{n/2} + x_{n/2+1})$ for even $n$ (R function `median`).
+
+The mode is the value that is occurring with highest frequency or that has the highest density.
+
+Scatter also is called spread, scale or variance. Variance parameters describe how far away from the location parameter single observations can be found, or how the measurements are scattered around their mean. The variance is defined as the average squared difference between the observations and the mean:
+
 - variance $\hat{\sigma^2} = s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2$  
-The term $(n-1)$ is called the degrees of freedom.  
-  
+The term $(n-1)$ is called the degrees of freedom. It is used in the denominator of the variance formula instead of $n$ to prevent underestimating the variance. Because $\bar{x}$ is in average closer to $x_i$ than the
+unknown true mean $\mu$ would be, the variance would be underestimated if $n$ is used in the denominator. 
+
+{\footnotesize The maximum likelihood estimate (Chapter xxx.xx) of the variance corresponds to the variance formula using $n$ instead of $n-1$ in the denominator, see, e.g., @Royle.2008b.} 
+
+The variance is used to compare the degree of scatter among different groups. However, its values are difficult to interpret because of the squared unit. Therefore, the square root of the variance, the standard deviation is
+normally reported:
       
-- standard deviation $\hat{\sigma} = s = \sqrt{s^2}$  
-  
-    
+- standard deviation $\hat{\sigma} = s = \sqrt{s^2}$  (R Function `sd`) 
+
+The standard deviation is approximately the average deviation of an observation from the sample mean. In the case of a normal distribution, about two thirds (68%) of the data are expected within one standard deviation around the mean.
+
+The variance and standard deviation each describe the scatter with a single value. Thus, we have to assume that the observations are scattered symmetrically around their mean in order to get a picture of the distribution of the measurements. When the measurements are spread asymmetrically (skewed distribution), then it may be more precise to describe the scatter with more than one value. Such statistics could be quantiles from the lower and upper tail of the data. 
+
+Quantiles inform us about both location and spread of a distribution. The $p$th-quantile is the value with the property that a proportion $p$ of all values are less than or equal to the value of the quantile. The median is the 50% quantile.The 25% quantile and the 75% quantile are also called the lower and upper quartiles, respectively. The range between the 25% and the 75% quartile is called the interquartile range. This range includes 50% of the distribution and is also used as a measure of scatter.
+
+
   
 - covariance $q = \frac{1}{n-1}\sum_{i=1}^{n}((x_i-\bar{x})*(y_i-\bar{y}))$  
 

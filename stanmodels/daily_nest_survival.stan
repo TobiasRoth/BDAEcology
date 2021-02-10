@@ -25,7 +25,6 @@ model {
   b[1]~normal(0,5);
   b[2]~normal(0,3);
   b[3]~normal(0,3);  
-  b[4]~normal(0,3);
 
   // likelihood
   for (i in 1:Nnests) {
