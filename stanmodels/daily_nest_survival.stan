@@ -9,7 +9,7 @@ data {
 }
 
 parameters {
-  vector[4] b;                          // coef of linear pred for S
+  vector[3] b;                          // coef of linear pred for S
 }
 
 model {
@@ -17,7 +17,7 @@ model {
                 
   for(i in 1:Nnests){  
     for(t in first[i]:(last[i]-1)){ 
-      S[i,t] = inv_logit(b[1] + b[2]*cover[i] + b[3]*age[t] + b[4]*pow(age[t], 2)); 
+      S[i,t] = inv_logit(b[1] + b[2]*cover[i] + b[3]*age[t]); 
     }
   }
 
