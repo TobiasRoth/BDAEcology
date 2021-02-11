@@ -177,7 +177,7 @@ In order to obtain a random sample from the population under study, a good study
 
 To illustrate how inference about a big population is drawn from a small sample, we here use simulated data. The advantage of using simulated data is that the mechanism that generated the data is known. However, in the example, we use different models for simulation and analysis. 
 
-Imagine there are 300000 PhD students on the world and we would like to know how many statistics courses they have taken before they started their PhD. 
+Imagine there are 300000 PhD students on the world and we would like to know how many statistics courses they have taken before they started their PhD (Fig. \@ref{fig:histtruesample}). 
 
 ```{r}
 # simulate the virtual true population
@@ -216,22 +216,29 @@ text(4, 120000, "True mean", adj=c(0,1))
 
 
 
-We observe the sample mean, what do we know about the population mean?  
+We observe the sample mean, what do we know about the population mean? There are two different approaches to answer this question. 1) We could ask us, how much the sample mean would scatter, if we repeat the study many times? This approach is called the frequentist statistics. 2) We could ask us for any possible value, what is the probability that it is the true population mean? To do so, we use probability theory and that is called the Bayesian statistics.  
 
-Frequentist solution: How would the sample mean scatter, if we repeat the study many times?  
+Both approaches use (essentially similar) models. Only the mathematical techniques to calculate uncertainty measures differ between the two approaches. In cases when beside the data no other information is used to construct the model, then the results are approximately identical (at least for large enough sample sizes).  
 
-Bayesian solution: For any possible value, what is the probability that it is the true population mean?  
+We illustrate what uncertainty intervals mean in Fig. \@ref{fig:CImean}. A frequentist 95% confidence interval (blue horizontal semgent in Fig. \@ref{fig:CImean) is constructed such that, if you were to (hypothetically) repeat the experiment or sampling many many times, 95% of the intervals constructed would contain the true value of the parameter. From the Bayesian posterior distribution we could construct a 95% interval (e.g., by using the 2.5% and 97.5% quantiles). This interval has traditionally been called credible interval. It can be interpreted that we are 95% sure that the true mean is inside that interval. 
+Both interpretations only are reliable if the model is a realistic abstraction of the data generating process (or if the model assumptions are realistic).
 
-```{r, fig.cap='',echo=FALSE, message=FALSE}
+Because both terms, confidence and credible interval, suggest that the interval indicates confidence or credibility but the intervals actually show uncertainty, it has been suggested to rename the interval into compatibility or uncertainty interval @Gelman.2019.  
+
+```{r, CImean, fig.cap='Histogram of means of repeated samples from the true populations. The scatter of these means visualize the true uncertainty of the mean in this example. The blue vertical line indicates the mean of the original sample. The blue segment shows the 95% confidence interval (obtained by fequensist methods) and the violet line shows the posterior distribution of the mean (obtained by Bayesian methods). For both solutions, we assumed a Normal distribution for the data that is different from the true mechanism that generated the data (which was an overdispersed Poisson model. The star indicates the true mean.',echo=FALSE, message=FALSE}
 library(arm)
-nsim <- 5000
+nsim <- 10000
 # frequentist theoretical uncertainty of mean
+# we draw many new samples from the true population
 my <- numeric(nsim)
 for(i in 1:nsim) my[i] <- mean(sample(statscourses, 12, replace=FALSE))
 
-# Bayesian uncertainty of mean
-mod <- lm(y~1)
-bsim <- sim(mod, n.sim=nsim)
+# Bayesian uncertainty of the mean
+mod <- lm(y~1) # define the model (Normal(mu, sigma2))
+bsim <- sim(mod, n.sim=nsim) # apply Bayes theorem
+
+# frequentist uncertainty of the mean
+mean_freqCI <- predict(mod, interval="confidence")[1,]
 
 par(mar=c(4,4,0.1,6), mgp=c(2,0.5,0), tck=-0.01)
 hist(my, main=NA, xlab="Mean(y)", freq=FALSE, ylim=c(0, 2.5), col="grey",
@@ -240,12 +247,14 @@ bm <- density(bsim@coef[,1])
 lines(bm$x, bm$y, lwd=2, col="violet")
 
 abline(v= coef(mod), lwd=2, col="blue")
-segments(coef(mod)-2*summary(mod)$coef[2], 0, coef(mod)+2*summary(mod)$coef[2], lwd=3, col="blue")
+segments(mean_freqCI["lwr"], 0, mean_freqCI["upr"], lwd=3, col="blue")
 
-text(1, 1.6, "True repetitions of the study", adj=c(0,1), cex=0.9, xpd=NA)
-text(0.55, 2.53, "Sample mean with 95% CI", col="blue", adj=c(0,1), cex=0.9, xpd=NA)
-text(0.65, 1.8, "Posterior distribution of the mean", col="violet", adj=c(0,1), cex=0.9, xpd=NA)
+text(0, 2.5, "True repetitions of the study", adj=c(0,1), cex=0.9, xpd=NA)
+text(1.2, 2.2, "Sample mean with 95% CI", col="blue", adj=c(0,1), cex=0.9, xpd=NA)
+text(1.2, 1.5, "Posterior distribution of the mean", col="violet", adj=c(0,1), cex=0.9, xpd=NA)
 ```
+
+
 
 
 ## Standard deviation and standard error  
@@ -268,6 +277,7 @@ segments(mean(statscourses)-sd(my), 1.49, mean(statscourses)+sd(my), 1.49, lwd=3
 text(2, 1.5, "True mean with SD and SE", adj=c(0,1), cex=0.9, xpd=NA)
 text(2, 0.5, "Estimated mean with SD", adj=c(0,1), col="green", cex=0.9, xpd=NA)
 text(2, 0.3, "Estimated mean with SE", adj=c(0,1), col="blue", cex=0.9, xpd=NA)
+points(mean(statscourses), 0, pch=8)
 
 ```
 
