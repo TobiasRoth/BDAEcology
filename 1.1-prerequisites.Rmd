@@ -74,7 +74,7 @@ axis(1, at=c(1,2), labels=paste("n=", n, sep=""), mgp=c(3,2, 0))
 
 The boxplot is an appealing tool for comparing location, variance and distribution of measurements among groups.
 
-## Correlations
+### Correlations
 
 A correlation measures the strength with which characteristics of two variables are associated with each other (co-occurr). If both variables are numeric, we can visualize the correlation using a scatterplot.
 
@@ -102,7 +102,7 @@ Means, variances, standard deviations, covariances and correlations are sensible
 - Kendall's tau: $\tau = 1-\frac{4I}{(n(n-1))}$, where $I$ = number of pairs $(i,k)$ for which $(x_i < x_k)$ & $(y_i > y_k)$ or viceversa. (R function `cor(x,y, method="kendall")`) 
 
 
-## Principal components analyses PCA
+### Principal components analyses PCA
 
 The principal components analysis (PCA) is a multivariate correlation analysis. A multidimensional data set with $k$ variables can be seen as a cloud of points (observations) in a $k$-dimensional space. Imagine, we could move around in the space and look at the cloud from different locations. From some locations, the data looks highly correlated, whereas from others, we cannot see the correlation. That is what PCA is doing. It is rotating the coordinate system (defined by the original variables) of the data cloud so that the correlations are no longer visible. The axes of the new coordinates system are linear combinations of the original variables. They are called principal components. There are as many principal coordinates as there are original variables, i.e. $k$, $p_1, ..., p_k$. The principal components meet further requirements:
 
@@ -158,7 +158,9 @@ summary(pca)
 {\footnotesize Ridge regression is similar to doing a PCA within a linear model while components with low variance are shrinked to a higher degree than components with a high variance.}
 
 
-### Inferential statistics
+## Inferential statistics
+
+### Uncertainty
 
 > there is never a "yes-or-no" answer  
 > there will always be uncertainty  
@@ -198,7 +200,7 @@ y <- sample(statscourses, 12, replace=FALSE)
 ```
 
 
-```{r, histtruesample, fig.cap='Histogram of the number of statistics courses 300000 virtual PhD students have taken before their PhD started. The rugs on the x-axis indicate a random sample of the 300000 students. The black vertical line indicates the mean of the 300000 students (true mean) and the blue line indicates the mean of the sample.', echo=FALSE}
+```{r histtruesample, fig.cap='Histogram of the number of statistics courses 300000 virtual PhD students have taken before their PhD started. The rugs on the x-axis indicate a random sample of the 300000 students. The black vertical line indicates the mean of the 300000 students (true mean) and the blue line indicates the mean of the sample.', echo=FALSE}
 par(mar=c(4,5,1,1))
 # draw a histogram of the 300000 students
 hist(statscourses, breaks=seq(-0.5, 10.5, by=1), main=NA,
@@ -225,7 +227,7 @@ Both interpretations only are reliable if the model is a realistic abstraction o
 
 Because both terms, confidence and credible interval, suggest that the interval indicates confidence or credibility but the intervals actually show uncertainty, it has been suggested to rename the interval into compatibility or uncertainty interval @Gelman.2019.  
 
-```{r, CImean, fig.cap='Histogram of means of repeated samples from the true populations. The scatter of these means visualize the true uncertainty of the mean in this example. The blue vertical line indicates the mean of the original sample. The blue segment shows the 95% confidence interval (obtained by fequensist methods) and the violet line shows the posterior distribution of the mean (obtained by Bayesian methods). For both solutions, we assumed a Normal distribution for the data that is different from the true mechanism that generated the data (which was an overdispersed Poisson model. The star indicates the true mean.',echo=FALSE, message=FALSE}
+```{r CImean, fig.cap='Histogram of means of repeated samples from the true populations. The scatter of these means visualize the true uncertainty of the mean in this example. The blue vertical line indicates the mean of the original sample. The blue segment shows the 95% confidence interval (obtained by fequensist methods) and the violet line shows the posterior distribution of the mean (obtained by Bayesian methods). For both solutions, we assumed a Normal distribution for the data that is different from the true mechanism that generated the data (which was an overdispersed Poisson model. The star indicates the true mean.',echo=FALSE, message=FALSE}
 library(arm)
 nsim <- 10000
 # frequentist theoretical uncertainty of mean
@@ -256,10 +258,18 @@ text(1.2, 1.5, "Posterior distribution of the mean", col="violet", adj=c(0,1), c
 
 
 
+### Standard error  
 
-## Standard deviation and standard error  
+The standard error SE is, beside the uncertainty interval, an alternative possibility to measure uncertainty. It measures an average deviation of the sample mean from the (unknown) true population mean. The frequentist method for obtaining the SE is based on the central limit theorem. According to the central limit theorem the sum of independent, not necessarily normally distributed random numbers are normally distributed when sample size is large enough (Chapter \@ref{distributions}). Because the mean is a sum (divided by a constant, the sample size) it can be assumed that the distribution of many means of samples is normal. It can be mathematically shown that the standard error SE equals the standard deviation SD of the sample divided by the square root of the sample size:  
+ 
+- frequentist SE = SD/sqrt(n) =  $\frac{\hat{\sigma}}{\sqrt{n}}$
 
-```{r, fig.cap='',echo=FALSE, message=FALSE}
+- Bayesian SE: Using Bayesian methods, the SE is the SD of the posterior distribution. 
+
+It is very important to keep the difference between SE and SD in mind! SD measures the scatter of the data, whereas SE measures the uncertainty of the mean (or of another estimated parameter, Fig. \@ref{fig:sesd}). SD is a descriptive statistics describing a characteristics of the data, whereas SE is an inferential statistics showing us how far away we possibly are from the true parameter value. When sample size increases, SE becomes smaller, whereas SD does not change (given the added observations are drawn at random from the same big population as the ones already in the sample).
+
+
+```{r sesd, fig.cap='Illustration of the difference between SD and SE. The SD measures the scatter in the data (for the sample (green tickmarks) in green and for the true population (light grey histogram) in a thin black line. The SE measures the uncertainty of the sample mean (in blue for the sample mean and in bold black for the means of the repeated samples (dark grey histogram)).',echo=FALSE, message=FALSE}
 par(mar=c(4,4,0.1,6), mgp=c(2,0.5,0), tck=-0.01, cex.lab=0.8, cex.axis=0.7)
 hist(statscourses, breaks=seq(-0.5, 10.5, by=1), main=NA, freq=FALSE, ylim=c(0, 2),
      las=1)     # draw histogram of the population
@@ -283,59 +293,6 @@ points(mean(statscourses), 0, pch=8)
 
 
 
-frequentist SE = SD/sqrt(n)  
-  
-Bayesian SE = SD of posterior distribution
-
-
-## Central limit theorem / law of large numbers
-  
-    
-```{r, fig.cap='',echo=FALSE, message=FALSE}
-par(mar=c(4,4,0.1,6), mgp=c(2,0.5,0), tck=-0.01)
-
-nn <- c(120, 1200)
-my1 <- matrix(ncol=length(nn), nrow=nsim)
-for(i in 1:nsim){
-  for(j in 1:ncol(my1)){
-    my1[i,j] <- mean(sample(statscourses, nn[j], replace=FALSE))
-  }
-}
-
-hist(my, main=NA, xlab="Mean(y)", ylim=c(0, 1400))
-hist(my1[,1], add=TRUE, col="blue")
-hist(my1[,2], add=TRUE, col=rgb(1,0,0,0.5))
-legend(1, 1400, fill=c("white", "blue", "pink"), legend=c("n=12", "n=120", "n=1200"), bty="n")
-
-```
-
-
-
-normal distribution = Gaussian distribution  
- 
- $p(\theta) = \frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{1}{2\sigma^2}(\theta -\mu)^2) = Normal(\mu, \sigma)$  
-   
-     
-       
-   $E(\theta) = \mu$, $var(\theta) = \sigma^2$, $mode(\theta) = \mu$
-
-
-  
-    
-```{r,  fig.cap='',echo=FALSE, message=FALSE}
-par(mar=c(4,4,0.1,6), mgp=c(2,0.5,0), tck=-0.01)
-
-hist(my, main=NA, xlab="Mean(y)", ylim=c(0, 14), freq=FALSE, las=1)
-hist(my1[,1], add=TRUE, col="blue", freq=FALSE)
-hist(my1[,2], add=TRUE, col=rgb(1,0,0,0.5), freq=FALSE)
-legend(1, 1400, fill=c("white", "blue", "pink"), legend=c("n=12", "n=120", "n=1200"), bty="n")
-x <- seq(0, 2, length=100)
-lines(x, dnorm(x, mean=mean(my), sd=sd(my)), lwd=2)
-lines(x, dnorm(x, mean=mean(my1[,1]), sd=sd(my1[,1])), lwd=2, col="blue")
-lines(x, dnorm(x, mean=mean(my1[,2]), sd=sd(my1[,2])), lwd=2, col="pink")
-legend(1, 14, fill=c("white", "blue", "pink"), legend=c("n=12", "n=120", "n=1200"), bty="n")
-
-```
 
 
 

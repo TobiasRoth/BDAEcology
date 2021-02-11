@@ -8,7 +8,19 @@ hist(rnorm(1000))
 
 
 ## Normal distribution
-xxx
+
+
+normal distribution = Gaussian distribution  
+ 
+ $p(\theta) = \frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{1}{2\sigma^2}(\theta -\mu)^2) = Normal(\mu, \sigma)$  
+   
+     
+       
+   $E(\theta) = \mu$, $var(\theta) = \sigma^2$, $mode(\theta) = \mu$
+
+
+  
+
 
 ## Poisson distribution
 xxx
