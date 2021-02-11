@@ -293,36 +293,35 @@ points(mean(statscourses), 0, pch=8)
 
 
 
+## Bayes theorem and the common aim of frequentist and Bayesian methods
 
+### Bayes theorem for discrete events
 
-
-
-## Bayes theorem
 ```{r, echo=FALSE}
-load("RData/datacourse.RData")
 tab <- table(dat$car, dat$birthday)
 ```
   
-  
+The Bayes theorem describes the probability of event A conditional on event B (the probability of A after B has already occurred) from the probability of B conditional on A and the two probabilities of the events A and B:
+
 $P(A|B) = \frac{P(B|A)P(A)}{P(B)}$  
 
-car    | flowers        | wine           | **sum**               | 
+Imagine, event A is "The person likes wine as a birthday present." and event B "The person has no car.".  The conditional probability of A given B is the probability that a person not owing a car likes wine. Answers from students whether they have a car and what they like as a birthday present are summarized in Table \@ref{tab:winecar}.
+
+Table: (\#tab:winecar) Cross table of the student's birthday preference and car ownership.
+
+car/birthday  | flowers  | wine   | **sum**       | 
 :------|:---------------|:---------------|:------------------|
-no | `r tab[1,1]`  | `r tab[1,2]`  | **`r sum(tab[1,])`** |
-yes   | `r tab[2,1]`  | `r tab[2,2]`  | **`r sum(tab[2,])`** |
--------|----------------|----------------|-------------------|
-**sum**    | **`r sum(tab[,1])`**| **`r sum(tab[,2])`**| **`r sum(tab)`** |
-
-What is the probability that the person likes wine given it has no car?  
-$P(A) =$ likes wine $= `r round(sum(tab[,2])/sum(tab),2)`$  
-$P(B) =$ no car $= `r round(sum(tab[1,])/ sum(tab),2)`$   
-
-$P(B|A) =$ proportion car-free people among the wine liker $= `r round(tab[1,2]/sum(tab[,2]),2)`$
-
-Knowing whether a persons owns a car increases the knowledge of the birthday preference.
+no car | `r tab[1,1]`  | `r tab[1,2]`  | **`r sum(tab[1,])`** |
+car   | `r tab[2,1]`  | `r tab[2,2]`  | **`r sum(tab[2,])`** |
+**sum** | **`r sum(tab[,1])`**| **`r sum(tab[,2])`**| **`r sum(tab)`** |
 
 
-## Bayes theorem for continuous parameters
+We can apply the Bayes theorem to obtain the probability that the student likes wine given it has no car, $P(A|B)$. Let's assume that only the ones who prefer wine above flowers among the students go together for having a glass of wine at the bar after the statistics course. While they drink wine, the tell each other about their cars and they obtain the probability that a student has no car given it likes wine, $P(B|A) = `r round(tab[1,2]/sum(tab[,2]),2)`$. During the statistics class the teacher asked the students about their car ownership and birthday preference. Therefore, they know that $P(A) =$ likes wine $= `r round(sum(tab[,2])/sum(tab),2)`$  and $P(B) =$ no car $= `r round(sum(tab[1,])/ sum(tab),2)`$. With these information, they can obtain the probability that a student likes wine given it has no car, even if not all students without cars went to the bar: $P(A|B) = \frac{`r round(tab[1,2]/sum(tab[,2]),2)`*`r round(sum(tab[,2])/sum(tab),2)`}{`r round(sum(tab[1,])/ sum(tab),2)`} = `r round((tab[1,2]/sum(tab[,2]))*(sum(tab[,2])/sum(tab))/ (sum(tab[1,])/ sum(tab)), 2)`$.
+
+
+### Bayes theorem for continuous parameters
+
+
 
 $p(\theta|y) = \frac{p(y|\theta)p(\theta)}{p(y)} = \frac{p(y|\theta)p(\theta)}{\int p(y|\theta)p(\theta) d\theta}$    
 
@@ -337,7 +336,7 @@ $p(y)$: scaling constant
 
 
 
-## Single parameter model
+### Single parameter model
 
 $p(y|\theta) = Norm(\theta, \sigma)$, with $\sigma$ known 
   
@@ -366,7 +365,7 @@ triplot.normal.knownvariance(theta.data=3, variance.known=2, n=3,
 
 
 
-## A model with two parameters
+### A model with two parameters
 $p(y|\theta, \sigma) = Norm(\theta, \sigma)$ 
   
 \begin{center}
@@ -436,7 +435,7 @@ text(0.04, 18, "p(sigma|y) = \nInv-Chisq-dist.", adj=c(0,1), cex=0.6)
 
 
 
-## t-distribution
+### t-distribution
 marginal posterior distribution of a normal mean with unknown variance and conjugate prior distribution  
 
   
@@ -448,8 +447,9 @@ $\mu$ location
 $\sigma$ scale
 
 
+## Classical tests
 
-## Frequentist one-sample t-test
+### Frequentist one-sample t-test
 H0: the mean weight is equal to exactly 40g.  
 
 $t = \frac{\bar{y}-\mu_0}{\frac{s}{\sqrt{n}}}$
