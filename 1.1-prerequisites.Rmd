@@ -60,7 +60,7 @@ The standard deviation is approximately the average deviation of an observation 
 
 The variance and standard deviation each describe the scatter with a single value. Thus, we have to assume that the observations are scattered symmetrically around their mean in order to get a picture of the distribution of the measurements. When the measurements are spread asymmetrically (skewed distribution), then it may be more precise to describe the scatter with more than one value. Such statistics could be quantiles from the lower and upper tail of the data. 
 
-Quantiles inform us about both location and spread of a distribution. The $p$th-quantile is the value with the property that a proportion $p$ of all values are less than or equal to the value of the quantile. The median is the 50% quantile.The 25% quantile and the 75% quantile are also called the lower and upper quartiles, respectively. The range between the 25% and the 75% quartile is called the interquartile range. This range includes 50% of the distribution and is also used as a measure of scatter. The R function `quantile` extracts sample quantiles. The median, the quartiles, and the interquartile range can be graphically displayed using box and-whisker plots (boxplots in short, R function `boxplot`). The horizontal fat bars are the medians (Fig. \ref{fig:boxplot}). The boxes mark the interquartile range. The whiskers reach out to the last observation within 1.5 times the interquartile range from the quartile. Circles mark observations beyond 1.5 times the
+Quantiles inform us about both location and spread of a distribution. The $p$th-quantile is the value with the property that a proportion $p$ of all values are less than or equal to the value of the quantile. The median is the 50% quantile.The 25% quantile and the 75% quantile are also called the lower and upper quartiles, respectively. The range between the 25% and the 75% quartile is called the interquartile range. This range includes 50% of the distribution and is also used as a measure of scatter. The R function `quantile` extracts sample quantiles. The median, the quartiles, and the interquartile range can be graphically displayed using box and-whisker plots (boxplots in short, R function `boxplot`). The horizontal fat bars are the medians (Fig. \ref(fig:boxplot)). The boxes mark the interquartile range. The whiskers reach out to the last observation within 1.5 times the interquartile range from the quartile. Circles mark observations beyond 1.5 times the
 interquartile range from the quartile.
 
 ```{r boxplot, fig.cap="Boxplot of the length of ell of statistics course participants who are or ar not owner of a car."}
@@ -155,7 +155,7 @@ The proportion of variance explained by each component is, beside the loadings, 
 summary(pca)
 ```
 
-{\footnotesize Ridge regression is similar to doing a PCA within a linear model while components with low variance are shrinked to a higher degree than components with a high variance.}
+\footnotesize{Ridge regression is similar to doing a PCA within a linear model while components with low variance are shrinked to a higher degree than components with a high variance.}
 
 
 ## Inferential statistics
@@ -179,7 +179,7 @@ In order to obtain a random sample from the population under study, a good study
 
 To illustrate how inference about a big population is drawn from a small sample, we here use simulated data. The advantage of using simulated data is that the mechanism that generated the data is known. However, in the example, we use different models for simulation and analysis. 
 
-Imagine there are 300000 PhD students on the world and we would like to know how many statistics courses they have taken before they started their PhD (Fig. \@ref{fig:histtruesample}). 
+Imagine there are 300000 PhD students on the world and we would like to know how many statistics courses they have taken before they started their PhD (Fig. \@ref(fig:histtruesample)). 
 
 ```{r}
 # simulate the virtual true population
@@ -222,7 +222,7 @@ We observe the sample mean, what do we know about the population mean? There are
 
 Both approaches use (essentially similar) models. Only the mathematical techniques to calculate uncertainty measures differ between the two approaches. In cases when beside the data no other information is used to construct the model, then the results are approximately identical (at least for large enough sample sizes).  
 
-We illustrate what uncertainty intervals mean in Fig. \@ref{fig:CImean}. A frequentist 95% confidence interval (blue horizontal semgent in Fig. \@ref{fig:CImean) is constructed such that, if you were to (hypothetically) repeat the experiment or sampling many many times, 95% of the intervals constructed would contain the true value of the parameter. From the Bayesian posterior distribution we could construct a 95% interval (e.g., by using the 2.5% and 97.5% quantiles). This interval has traditionally been called credible interval. It can be interpreted that we are 95% sure that the true mean is inside that interval. 
+We illustrate what uncertainty intervals mean in Fig. \@ref(fig:CImean). A frequentist 95% confidence interval (blue horizontal semgent in Fig. \@ref(fig:CImean)) is constructed such that, if you were to (hypothetically) repeat the experiment or sampling many many times, 95% of the intervals constructed would contain the true value of the parameter. From the Bayesian posterior distribution we could construct a 95% interval (e.g., by using the 2.5% and 97.5% quantiles). This interval has traditionally been called credible interval. It can be interpreted that we are 95% sure that the true mean is inside that interval. 
 Both interpretations only are reliable if the model is a realistic abstraction of the data generating process (or if the model assumptions are realistic).
 
 Because both terms, confidence and credible interval, suggest that the interval indicates confidence or credibility but the intervals actually show uncertainty, it has been suggested to rename the interval into compatibility or uncertainty interval @Gelman.2019.  
@@ -260,13 +260,13 @@ text(1.2, 1.5, "Posterior distribution of the mean", col="violet", adj=c(0,1), c
 
 ### Standard error  
 
-The standard error SE is, beside the uncertainty interval, an alternative possibility to measure uncertainty. It measures an average deviation of the sample mean from the (unknown) true population mean. The frequentist method for obtaining the SE is based on the central limit theorem. According to the central limit theorem the sum of independent, not necessarily normally distributed random numbers are normally distributed when sample size is large enough (Chapter \@ref{distributions}). Because the mean is a sum (divided by a constant, the sample size) it can be assumed that the distribution of many means of samples is normal. It can be mathematically shown that the standard error SE equals the standard deviation SD of the sample divided by the square root of the sample size:  
+The standard error SE is, beside the uncertainty interval, an alternative possibility to measure uncertainty. It measures an average deviation of the sample mean from the (unknown) true population mean. The frequentist method for obtaining the SE is based on the central limit theorem. According to the central limit theorem the sum of independent, not necessarily normally distributed random numbers are normally distributed when sample size is large enough (Chapter \@ref(distributions)). Because the mean is a sum (divided by a constant, the sample size) it can be assumed that the distribution of many means of samples is normal. It can be mathematically shown that the standard error SE equals the standard deviation SD of the sample divided by the square root of the sample size:  
  
 - frequentist SE = SD/sqrt(n) =  $\frac{\hat{\sigma}}{\sqrt{n}}$
 
 - Bayesian SE: Using Bayesian methods, the SE is the SD of the posterior distribution. 
 
-It is very important to keep the difference between SE and SD in mind! SD measures the scatter of the data, whereas SE measures the uncertainty of the mean (or of another estimated parameter, Fig. \@ref{fig:sesd}). SD is a descriptive statistics describing a characteristics of the data, whereas SE is an inferential statistics showing us how far away we possibly are from the true parameter value. When sample size increases, SE becomes smaller, whereas SD does not change (given the added observations are drawn at random from the same big population as the ones already in the sample).
+It is very important to keep the difference between SE and SD in mind! SD measures the scatter of the data, whereas SE measures the uncertainty of the mean (or of another estimated parameter, Fig. \@ref(fig:sesd)). SD is a descriptive statistics describing a characteristics of the data, whereas SE is an inferential statistics showing us how far away we possibly are from the true parameter value. When sample size increases, SE becomes smaller, whereas SD does not change (given the added observations are drawn at random from the same big population as the ones already in the sample).
 
 
 ```{r sesd, fig.cap='Illustration of the difference between SD and SE. The SD measures the scatter in the data (for the sample (green tickmarks) in green and for the true population (light grey histogram) in a thin black line. The SE measures the uncertainty of the sample mean (in blue for the sample mean and in bold black for the means of the repeated samples (dark grey histogram)).',echo=FALSE, message=FALSE}
@@ -305,7 +305,7 @@ The Bayes theorem describes the probability of event A conditional on event B (t
 
 $P(A|B) = \frac{P(B|A)P(A)}{P(B)}$  
 
-Imagine, event A is "The person likes wine as a birthday present." and event B "The person has no car.".  The conditional probability of A given B is the probability that a person not owing a car likes wine. Answers from students whether they have a car and what they like as a birthday present are summarized in Table \@ref{tab:winecar}.
+Imagine, event A is "The person likes wine as a birthday present." and event B "The person has no car.".  The conditional probability of A given B is the probability that a person not owing a car likes wine. Answers from students whether they have a car and what they like as a birthday present are summarized in Table \@ref(tab:winecar).
 
 Table: (\#tab:winecar) Cross table of the student's birthday preference and car ownership.
 
@@ -321,7 +321,7 @@ We can apply the Bayes theorem to obtain the probability that the student likes 
 
 ### Bayes theorem for continuous parameters
 
-When we use the Bayes theorem for analyzing data, then the aim is to make probability statements for parameters. Such a probability statement could be the description of what we know about the population mean after having looked at the data. Because the mean of the population is measured at a continuous scale we use a probability density function to describe what we know about the mean. The Bayes theorem can be formulated for probability density functions denoted with $p(\theta)$, e.g. for a parameter $\theta$ (for example probability density functions see Chapter \@ref{distributions}).
+When we use the Bayes theorem for analyzing data, then the aim is to make probability statements for parameters. Such a probability statement could be the description of what we know about the population mean after having looked at the data. Because the mean of the population is measured at a continuous scale we use a probability density function to describe what we know about the mean. The Bayes theorem can be formulated for probability density functions denoted with $p(\theta)$, e.g. for a parameter $\theta$ (for example probability density functions see Chapter \@ref(distributions)).
 What we are interested in is the probability of the parameter $\theta$ given the data, i.e., $p(\theta|y)$. This probability density function is called the posterior distribution of the parameter $\theta$. Here is the Bayes theorem formulated for obtaining the posterior distribution of a parameter from the data $y$, the prior distribution of the parameter $p(\theta)$ and assuming a model for the data generating process. The data model is defined by the likelihood that specifies how the data $y$ is distributed given the parameters $p(y|\theta)$: 
 
 $p(\theta|y) = \frac{p(y|\theta)p(\theta)}{p(y)} = \frac{p(y|\theta)p(\theta)}{\int p(y|\theta)p(\theta) d\theta}$    
@@ -333,9 +333,9 @@ The probability of the data $p(y)$ is also called the scaling constant, because 
 For illustration, we first describe a simple (unrealistic) example for which it is almost possible to follow the mathematical steps for solving the Bayes theorem even for non-mathematicians. Even if we cannot follow all steps, this example will illustrate the principle how the Bayesian theorem works for continuous parameters. The example is unrealistic because we assume that the variance $\sigma^2$ in the data $y$ is known. 
 We construct a data model by assuming that $y$ is normally distributed: 
 
-$p(y|\theta) = Norm(\theta, \sigma)$, with $\sigma$ known. The function $Norm$ defines the probability density function of the normal distribution (Chapter \@ref{distributions}). 
+$p(y|\theta) = Norm(\theta, \sigma)$, with $\sigma$ known. The function $Norm$ defines the probability density function of the normal distribution (Chapter \@ref(distributions)). 
   
-The parameter, for which we would like to get the posterior distribution is $\theta$, the mean. We specify a prior distribution for $\theta$. Because the normal distribution is a conjugate prior for a normal data model with known variance, we use the normal distribution. Conjugate priors have nice mathematical properties (see Chapter \@ref{priors}) and are therefore preferred when the posterior distribution is obtained algebraically. 
+The parameter, for which we would like to get the posterior distribution is $\theta$, the mean. We specify a prior distribution for $\theta$. Because the normal distribution is a conjugate prior for a normal data model with known variance, we use the normal distribution. Conjugate priors have nice mathematical properties (see Chapter \@ref(priors)) and are therefore preferred when the posterior distribution is obtained algebraically. 
 That is the prior: 
 $p(\theta) = Norm(\mu_0, \tau_0)$  
 
@@ -346,7 +346,7 @@ $p(\theta|y) = Norm(\mu_n, \tau_n)$, where
   
 $\bar{y}$ is the arithmetic mean of the data. Because only this value is needed in order to obtain the posterior distribution, this value is called the sufficient statistics.
 
-From the mathematical formulas above and also from Fig. \@ref{fig:triplot} we see that the mean of the posterior distribution is a weighted average between the prior mean and $\bar{y}$ with weights equal to the precisions ($\frac{1}{\tau_0^2}$ and $\frac{n}{\sigma^2}$).
+From the mathematical formulas above and also from Fig. \@ref(fig:triplot) we see that the mean of the posterior distribution is a weighted average between the prior mean and $\bar{y}$ with weights equal to the precisions ($\frac{1}{\tau_0^2}$ and $\frac{n}{\sigma^2}$).
 
 
 ```{r triplot, fig.cap='Hypothetical example showing the result of applying the Bayes theorem for obtaining a posterior distribution of a continuous parameter. The likelhood is defined by the data and the model, the prior is expressing the knowledge about the parameter before looking at the data. Combining the two distributions using the Bayes theorem results in the posterior distribution.',echo=FALSE, results='hide', dpi=700}
@@ -361,12 +361,12 @@ triplot.normal.knownvariance(theta.data=3, variance.known=2, n=3,
 
 ### Estimating the mean and the variance
 
-We now move to a more realistic example, which is estimating the mean and the variance of a sample of weights of Snowfinches *Montifringilla nivalis* (Fig. \@ref{fig:ssp}). To analyze those data, a model with two parameters (the mean and the variance or standard deviation) is needed. The data model (or likelihood) is specified as  $p(y|\theta, \sigma) = Norm(\theta, \sigma)$.
+We now move to a more realistic example, which is estimating the mean and the variance of a sample of weights of Snowfinches *Montifringilla nivalis* (Fig. \@ref(fig:ssp)). To analyze those data, a model with two parameters (the mean and the variance or standard deviation) is needed. The data model (or likelihood) is specified as  $p(y|\theta, \sigma) = Norm(\theta, \sigma)$.
   
 \begin{center}
 \caption{Snowfinches live year-round above the treeline.}
-\label{fig:ssp}
-  \includegraphics[width=0.5\textwidth]{images/snowfinch2.jpg}
+\label{#fig:ssp}
+  \includegraphics[width=0.5\textwidth]{images/snowfinch2.JPG}
 \end{center}
 
 ```{r,echo=TRUE}
@@ -394,7 +394,7 @@ For this example, we need the arithmetic mean $\bar{y}$ and standard deviation $
 
 The above formula look intimidating, but we never really do that calculations. We let `R`doing that for us in most cases by simulating many numbers from the posterior distribution. In the end, we can visualize the distribution of these many numbers to have a look at the posterior distribution. 
 
-In Fig. \@ref{fig:jointpdist} the two-dimensional $(\theta, \sigma)$ posterior distribution is visualized by using simulated values. The two dimensional distribution is called the joint posterior distribution. The mountain of dots in Fig. \@ref{fig:jointpdist} visualize the Normal-Inverse-Chisquare that we calculated above. When all values of one parameter is displayed in a histogram ignoring the values of the other parameter, it is called the marginal posterior distribution. Algebraically, the marginal distribution is obtained by integrating one of the two parameters out over joint posterior distribution. This step is definitively way easier when simulated values from the posterior distribution are available! For the Snowfinch weights example, with a normal data model and a conjugate prior the marginal posterior distribution of the mean $\theta$ becomes a t-distribution and the one of $\sigma$ a inverse-Chisquare distribution. 
+In Fig. \@ref(fig:jointpdist) the two-dimensional $(\theta, \sigma)$ posterior distribution is visualized by using simulated values. The two dimensional distribution is called the joint posterior distribution. The mountain of dots in Fig. \@ref(fig:jointpdist) visualize the Normal-Inverse-Chisquare that we calculated above. When all values of one parameter is displayed in a histogram ignoring the values of the other parameter, it is called the marginal posterior distribution. Algebraically, the marginal distribution is obtained by integrating one of the two parameters out over joint posterior distribution. This step is definitively way easier when simulated values from the posterior distribution are available! For the Snowfinch weights example, with a normal data model and a conjugate prior the marginal posterior distribution of the mean $\theta$ becomes a t-distribution and the one of $\sigma$ a inverse-Chisquare distribution. 
 Another nice property of the posterior distribution in our example is that a horizontal section through the joint posterior distribution (at a fixed value of $\sigma$, i.e. a fixed variance) leads to a normal distribution. In other words, the density of the dots in the plot at a fixed value of $\sigma$ follows a normal density function.
 
 ```{r jointpdist, fig.cap='Visualization of the joint posterior distribution for the mean and standard deviation of Snowfinch weights. The lower left panel shows the two-dimensional joint posterior distribution, whereas the upper and right panel show the marginal posterior distributions of each parameter separately.', echo=FALSE}
@@ -432,25 +432,25 @@ text(0.04, 18, "p(sigma|y) = \nInv-Chisq-dist.", adj=c(0,1), cex=0.6)
 
 The marginal posterior distributions of every parameter is what we normally report in a paper. They inform us about what we know about these parameters (of the big unmeasured population) after having looked at the data. 
 
-In our example the the marginal distribution of the mean is a t-distribution (Chapter \@ref{distributions}). Frequentist statistical methods also use a t-distribution to describe the uncertainty of a mean for the case when the variance is not known. Thus, frequentist methods came to the same solution using a completely different approach and different techniques. Doesn't that increase dramatically our trust in statistical methods?
+In our example the the marginal distribution of the mean is a t-distribution (Chapter \@ref(distributions)). Frequentist statistical methods also use a t-distribution to describe the uncertainty of a mean for the case when the variance is not known. Thus, frequentist methods came to the same solution using a completely different approach and different techniques. Doesn't that increase dramatically our trust in statistical methods?
 
 
+## Classical frequentist tests and alternatives
 
-## Classical tests
+### Nullhypothesis testing
 
-### Frequentist one-sample t-test
-H0: the mean weight is equal to exactly 40g.  
+Several generations of scientist were indoctrinated that a scientific result only is valuable if p < 0.05. Results were only publishable if there was at least one magic p < 0.05. The peer pressure was so high that many scientist, relying on the number of published papers,  eagerly struggled until somewhere a *  pupped up in the output of the statistical software indicating a significant result. There are tons of examples of misuse of p-values, some even caused death. This is astonishing because scientists are warning from the misuse of p-values since the 1940ies (e.g. @Amrhein.2017).  
 
-$t = \frac{\bar{y}-\mu_0}{\frac{s}{\sqrt{n}}}$
-```{r,echo=TRUE}
-t.test(y, mu=40)
-```
+What is the p-value? A p-value is the probability of observing the data or more extreme data given the null hypothesis is true.
 
+Small p-values indicate that it is rather unlikely to observe the data or more extreme data given the null hypothesis $H_0$ is true. 
 
-### Nullhypothesis test
-p-value: Probability of the data or more extreme data given the null hypothesis is true.
+### One-sample t-test
 
-```{r,fig.width=8, fig.height=5, fig.align='center', fig.cap='',echo=FALSE}
+A null hypothesis is used to construct a model that can generate (hypothetical) data. For example, a null hypothesis could be $H_0:$"The mean of Snowfinch weights is exactly 40g."
+A normal distribution with a mean of $\mu_0=40$ and a variance equal to the estimated variance in the data $s^2$ is then assumed to describe how we would expect the data to look like given the null hypothesis was true. From that model it is possible to calculate the distribution of hypothetical means of many different hypothetical samples of sample size $n$. The result is a t-distribution (Fig. \@ref(fig:nht)). In classical tests, the distribution is standardized so that its variance was one. Then the sample mean, or in classical tests a standardized difference between the mean and the hypothetical mean of the null hypothesis (here 40g), called test statistics $t = \frac{\bar{y}-\mu_0}{\frac{s}{\sqrt{n}}}$, is compared to that (standardized) t-distribution. If the test statistics falls well within the expected distribution the null hypothesis is accepted. Then, the data is well compatible with the null hypothesis. However, if the test statistics falls in the tails or outside the distribution, then the null hypothesis is rejected and we could write that the mean weight of Snowfinches is statistically significantly different from 40g. Unfortunately, we cannot infer about the probability of the null hypothesis and how relevant the result is.
+
+```{r nht, fig.cap='Illustration of a one-sample t-test. The blue histogram shows the distribution of the measured weights with the sample mean (lightblue) indicated as a vertical line. The black line is the t-distribution that shows how many hypothetical sample means are expected to be distributed if the big population of Snowfinches has a mean weight of 40g. (the null hypothesis). Orange area shows the area of the t-distribution that lays equal or farther away from 40g than the sample mean. The orange area is the p-value.', fig.width=8, fig.height=5, fig.align='center', fig.cap='',echo=FALSE}
 # use density function for t-distribution as given in Gelman et al. (2014) BDA-book
 dt_BDA <- function(x,v,m,s) gamma((v+1)/2)/(gamma(v/2)*sqrt(v*pi)*s)*(1+1/v*((x-m)/s)^2)^(-(v+1)/2)
 
@@ -468,6 +468,12 @@ polygon(c(x[index], rev(x[index])), c(rep(0, sum(index)), rev(dy[index])), borde
 index <- x<= 40- (mean(y)-40)
 polygon(c(x[index], rev(x[index])), c(rep(0, sum(index)), rev(dy[index])), border=NA, col="orange")
 ```
+
+
+```{r,echo=TRUE}
+t.test(y, mu=40)
+```
+
 
 
 instead of reporting the p-value, report Confidence interval
