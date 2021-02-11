@@ -321,18 +321,13 @@ We can apply the Bayes theorem to obtain the probability that the student likes 
 
 ### Bayes theorem for continuous parameters
 
-
+When we use the Bayes theorem for analyzing data, then the aim is to make probability statements for parameters. Such a probability statement could be the description of what we know about the population mean after having looked at the data. Because the mean of the population is measured at a continuous scale we use a probability density function to describe what we know about the mean. The Bayes theorem can be formulated for probability density functions, denoted with $p(\theta)$, e.g. for a parameter $\theta$.
+What we are interested in is the probability of the parameter $\theta$ given the data, i.e., $p(\theta|y)$. This probability density function is called the posterior distribution of the parameter $\theta$. Here is the Bayes theorem formulated for obtaining the posterior distribution of a parameter from the data $y$, the prior distribution of the parameter $p(\theta)$ and assuming a model for the data generating process. The data model is defined by the likelihood that specifies how the data $y$ is distributed given the parameters $p(y|\theta)$: 
 
 $p(\theta|y) = \frac{p(y|\theta)p(\theta)}{p(y)} = \frac{p(y|\theta)p(\theta)}{\int p(y|\theta)p(\theta) d\theta}$    
 
+The probability of the data $p(y)$ is also called the scaling constant, because it is a constant. It is the intergral of the likelihood over all possible values of the parameter(s) of the model.
 
-$p(\theta|y)$: posterior distribution
-
-$p(y|\theta)$: likelihood, data model
-
-$p(\theta)$: prior distribution
-
-$p(y)$: scaling constant
 
 
 
