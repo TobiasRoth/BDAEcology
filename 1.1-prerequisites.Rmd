@@ -894,14 +894,14 @@ bsim <- sim(mod, n.sim=nsim)
 
 ```{r, echo=TRUE, fig.cap="Posterior distributions of the mean number of stats courses PhD students visited before starting the PhD grouped according to their feelings about statistics."}
 # calculate group means from the model parameters
-newdat <- data.frame(statsfeeling=levels(dat$statsfeeling))
+newdat <- data.frame(statsfeeling=levels(factor(dat$statsfeeling)))
 X <- model.matrix(~statsfeeling, data=newdat)
 fitmat <- matrix(ncol=nsim, nrow=nrow(newdat))
 for(i in 1:nsim) fitmat[,i] <- X%*%bsim@coef[i,]
 hist(fitmat[1,], freq=FALSE, breaks=seq(-2.5, 4.2, by=0.1), main=NA, xlab="Group mean of log(number of courses +1)", las=1, ylim=c(0, 2.2))
 hist(fitmat[2,], freq=FALSE, breaks=seq(-2.5, 4.2, by=0.1), main=NA, xlab="", las=1, add=TRUE, col=rgb(0,0,1,0.5))
 hist(fitmat[3,], freq=FALSE, breaks=seq(-2.5, 4.2, by=0.1), main=NA, xlab="", las=1, add=TRUE, col=rgb(1,0,0,0.5))
-legend(2,2, fill=c("white",rgb(0,0,1,0.5), rgb(1,0,0,0.5)), legend=levels(dat$statsfeeling))
+legend(2,2, fill=c("white",rgb(0,0,1,0.5), rgb(1,0,0,0.5)), legend=levels(factor(dat$statsfeeling)))
 ```
 
 Based on the posterior distributions of the group means, we can extract derived quantities depending on our interest and questions. Here, for example, we could extract the posterior probability of the hypothesis that students with a positive feeling about statistics have a better education in statistics than those with a neutral or negative feeling about statistics.  

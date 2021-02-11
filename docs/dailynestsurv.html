@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>11 Daily nest survival | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="11 Daily nest survival | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2019-09-23" />
+<meta name="date" content="2021-02-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="zeroinflated-poisson-lmm.html">
-<link rel="next" href="cjs-with-mix.html">
+<link rel="prev" href="zeroinflated-poisson-lmm.html"/>
+<link rel="next" href="cjs-with-mix.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,6 +48,11 @@
 
 
 
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -139,43 +145,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Prerequisits: Basic statistical terms</a><ul>
 <li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#variables-and-observations"><i class="fa fa-check"></i><b>2.1</b> Variables and observations</a></li>
-<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#correlations"><i class="fa fa-check"></i><b>2.2</b> Correlations</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="basics.html"><a href="basics.html#basics-of-variances-covariances-and-correlations"><i class="fa fa-check"></i><b>2.2.1</b> Basics of variances, covariances and correlations</a></li>
-<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#pearson-correlation-coefficient"><i class="fa fa-check"></i><b>2.2.2</b> Pearson correlation coefficient</a></li>
-<li class="chapter" data-level="2.2.3" data-path="basics.html"><a href="basics.html#spearman-correlation-coefficient"><i class="fa fa-check"></i><b>2.2.3</b> Spearman correlation coefficient</a></li>
-<li class="chapter" data-level="2.2.4" data-path="basics.html"><a href="basics.html#kendalls-tau"><i class="fa fa-check"></i><b>2.2.4</b> Kendall’s tau</a></li>
+<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-variables"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing variables</a></li>
+<li class="chapter" data-level="2.3" data-path="basics.html"><a href="basics.html#correlations"><i class="fa fa-check"></i><b>2.3</b> Correlations</a></li>
+<li class="chapter" data-level="2.4" data-path="basics.html"><a href="basics.html#principal-components-analyses-pca"><i class="fa fa-check"></i><b>2.4</b> Principal components analyses PCA</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="basics.html"><a href="basics.html#inferential-statistics"><i class="fa fa-check"></i><b>2.4.1</b> Inferential statistics</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="basics.html"><a href="basics.html#principal-components-analyses-pca"><i class="fa fa-check"></i><b>2.3</b> Principal components analyses PCA</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="basics.html"><a href="basics.html#inferential-statistics"><i class="fa fa-check"></i><b>2.3.1</b> Inferential statistics</a></li>
+<li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#standard-deviation-and-standard-error"><i class="fa fa-check"></i><b>2.5</b> Standard deviation and standard error</a></li>
+<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#central-limit-theorem-law-of-large-numbers"><i class="fa fa-check"></i><b>2.6</b> Central limit theorem / law of large numbers</a></li>
+<li class="chapter" data-level="2.7" data-path="basics.html"><a href="basics.html#bayes-theorem"><i class="fa fa-check"></i><b>2.7</b> Bayes theorem</a></li>
+<li class="chapter" data-level="2.8" data-path="basics.html"><a href="basics.html#bayes-theorem-for-continuous-parameters"><i class="fa fa-check"></i><b>2.8</b> Bayes theorem for continuous parameters</a></li>
+<li class="chapter" data-level="2.9" data-path="basics.html"><a href="basics.html#single-parameter-model"><i class="fa fa-check"></i><b>2.9</b> Single parameter model</a></li>
+<li class="chapter" data-level="2.10" data-path="basics.html"><a href="basics.html#a-model-with-two-parameters"><i class="fa fa-check"></i><b>2.10</b> A model with two parameters</a></li>
+<li class="chapter" data-level="2.11" data-path="basics.html"><a href="basics.html#t-distribution"><i class="fa fa-check"></i><b>2.11</b> t-distribution</a></li>
+<li class="chapter" data-level="2.12" data-path="basics.html"><a href="basics.html#frequentist-one-sample-t-test"><i class="fa fa-check"></i><b>2.12</b> Frequentist one-sample t-test</a></li>
+<li class="chapter" data-level="2.13" data-path="basics.html"><a href="basics.html#nullhypothesis-test"><i class="fa fa-check"></i><b>2.13</b> Nullhypothesis test</a></li>
+<li class="chapter" data-level="2.14" data-path="basics.html"><a href="basics.html#confidence-interval"><i class="fa fa-check"></i><b>2.14</b> Confidence interval</a></li>
+<li class="chapter" data-level="2.15" data-path="basics.html"><a href="basics.html#posterior-distribution"><i class="fa fa-check"></i><b>2.15</b> Posterior distribution</a></li>
+<li class="chapter" data-level="2.16" data-path="basics.html"><a href="basics.html#posterior-probability"><i class="fa fa-check"></i><b>2.16</b> Posterior probability</a></li>
+<li class="chapter" data-level="2.17" data-path="basics.html"><a href="basics.html#monte-carlo-simulation-parametric-bootstrap"><i class="fa fa-check"></i><b>2.17</b> Monte Carlo simulation (parametric bootstrap)</a></li>
+<li class="chapter" data-level="2.18" data-path="basics.html"><a href="basics.html#methods-for-getting-the-posterior-distribution"><i class="fa fa-check"></i><b>2.18</b> 3 methods for getting the posterior distribution</a></li>
+<li class="chapter" data-level="2.19" data-path="basics.html"><a href="basics.html#grid-approximation"><i class="fa fa-check"></i><b>2.19</b> Grid approximation</a></li>
+<li class="chapter" data-level="2.20" data-path="basics.html"><a href="basics.html#monte-carlo-simulations"><i class="fa fa-check"></i><b>2.20</b> Monte Carlo simulations</a></li>
+<li class="chapter" data-level="2.21" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups"><i class="fa fa-check"></i><b>2.21</b> Comparison of the locations between two groups</a></li>
+<li class="chapter" data-level="2.22" data-path="basics.html"><a href="basics.html#difference-between-two-means"><i class="fa fa-check"></i><b>2.22</b> Difference between two means</a></li>
+<li class="chapter" data-level="2.23" data-path="basics.html"><a href="basics.html#two-sample-t-test"><i class="fa fa-check"></i><b>2.23</b> Two-sample t-test</a></li>
+<li class="chapter" data-level="2.24" data-path="basics.html"><a href="basics.html#wilxocon-test"><i class="fa fa-check"></i><b>2.24</b> Wilxocon test</a></li>
+<li class="chapter" data-level="2.25" data-path="basics.html"><a href="basics.html#randomisation-test"><i class="fa fa-check"></i><b>2.25</b> Randomisation test</a></li>
+<li class="chapter" data-level="2.26" data-path="basics.html"><a href="basics.html#bootstrap"><i class="fa fa-check"></i><b>2.26</b> Bootstrap</a></li>
+<li class="chapter" data-level="2.27" data-path="basics.html"><a href="basics.html#f-distribution"><i class="fa fa-check"></i><b>2.27</b> F-distribution</a><ul>
+<li class="chapter" data-level="2.27.1" data-path="basics.html"><a href="basics.html#analysis-of-variance-anova"><i class="fa fa-check"></i><b>2.27.1</b> Analysis of variance ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="basics.html"><a href="basics.html#standard-deviation-and-standard-error"><i class="fa fa-check"></i><b>2.4</b> Standard deviation and standard error</a></li>
-<li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#central-limit-theorem-law-of-large-numbers"><i class="fa fa-check"></i><b>2.5</b> Central limit theorem / law of large numbers</a></li>
-<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#bayes-theorem"><i class="fa fa-check"></i><b>2.6</b> Bayes theorem</a></li>
-<li class="chapter" data-level="2.7" data-path="basics.html"><a href="basics.html#bayes-theorem-for-continuous-parameters"><i class="fa fa-check"></i><b>2.7</b> Bayes theorem for continuous parameters</a></li>
-<li class="chapter" data-level="2.8" data-path="basics.html"><a href="basics.html#single-parameter-model"><i class="fa fa-check"></i><b>2.8</b> Single parameter model</a></li>
-<li class="chapter" data-level="2.9" data-path="basics.html"><a href="basics.html#a-model-with-two-parameters"><i class="fa fa-check"></i><b>2.9</b> A model with two parameters</a></li>
-<li class="chapter" data-level="2.10" data-path="basics.html"><a href="basics.html#t-distribution"><i class="fa fa-check"></i><b>2.10</b> t-distribution</a></li>
-<li class="chapter" data-level="2.11" data-path="basics.html"><a href="basics.html#frequentist-one-sample-t-test"><i class="fa fa-check"></i><b>2.11</b> Frequentist one-sample t-test</a></li>
-<li class="chapter" data-level="2.12" data-path="basics.html"><a href="basics.html#nullhypothesis-test"><i class="fa fa-check"></i><b>2.12</b> Nullhypothesis test</a></li>
-<li class="chapter" data-level="2.13" data-path="basics.html"><a href="basics.html#confidence-interval"><i class="fa fa-check"></i><b>2.13</b> Confidence interval</a></li>
-<li class="chapter" data-level="2.14" data-path="basics.html"><a href="basics.html#posterior-distribution"><i class="fa fa-check"></i><b>2.14</b> Posterior distribution</a></li>
-<li class="chapter" data-level="2.15" data-path="basics.html"><a href="basics.html#posterior-probability"><i class="fa fa-check"></i><b>2.15</b> Posterior probability</a></li>
-<li class="chapter" data-level="2.16" data-path="basics.html"><a href="basics.html#monte-carlo-simulation-parametric-bootstrap"><i class="fa fa-check"></i><b>2.16</b> Monte Carlo simulation (parametric bootstrap)</a></li>
-<li class="chapter" data-level="2.17" data-path="basics.html"><a href="basics.html#methods-for-getting-the-posterior-distribution"><i class="fa fa-check"></i><b>2.17</b> 3 methods for getting the posterior distribution</a></li>
-<li class="chapter" data-level="2.18" data-path="basics.html"><a href="basics.html#grid-approximation"><i class="fa fa-check"></i><b>2.18</b> Grid approximation</a></li>
-<li class="chapter" data-level="2.19" data-path="basics.html"><a href="basics.html#monte-carlo-simulations"><i class="fa fa-check"></i><b>2.19</b> Monte Carlo simulations</a></li>
-<li class="chapter" data-level="2.20" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups"><i class="fa fa-check"></i><b>2.20</b> Comparison of the locations between two groups</a></li>
-<li class="chapter" data-level="2.21" data-path="basics.html"><a href="basics.html#difference-between-two-means"><i class="fa fa-check"></i><b>2.21</b> Difference between two means</a></li>
-<li class="chapter" data-level="2.22" data-path="basics.html"><a href="basics.html#two-sample-t-test"><i class="fa fa-check"></i><b>2.22</b> Two-sample t-test</a></li>
-<li class="chapter" data-level="2.23" data-path="basics.html"><a href="basics.html#wilxocon-test"><i class="fa fa-check"></i><b>2.23</b> Wilxocon test</a></li>
-<li class="chapter" data-level="2.24" data-path="basics.html"><a href="basics.html#randomisation-test"><i class="fa fa-check"></i><b>2.24</b> Randomisation test</a></li>
-<li class="chapter" data-level="2.25" data-path="basics.html"><a href="basics.html#bootstrap"><i class="fa fa-check"></i><b>2.25</b> Bootstrap</a></li>
-<li class="chapter" data-level="2.26" data-path="basics.html"><a href="basics.html#f-distribution"><i class="fa fa-check"></i><b>2.26</b> F-distribution</a><ul>
-<li class="chapter" data-level="2.26.1" data-path="basics.html"><a href="basics.html#analysis-of-variance-anova"><i class="fa fa-check"></i><b>2.26.1</b> Analysis of variance ANOVA</a></li>
-</ul></li>
-<li class="chapter" data-level="2.27" data-path="basics.html"><a href="basics.html#chisquare-test"><i class="fa fa-check"></i><b>2.27</b> Chisquare test</a></li>
-<li class="chapter" data-level="2.28" data-path="basics.html"><a href="basics.html#bayesian-way-of-analysing-correlations-between-categorical-variables"><i class="fa fa-check"></i><b>2.28</b> Bayesian way of analysing correlations between categorical variables</a></li>
-<li class="chapter" data-level="2.29" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.29</b> Summary</a></li>
+<li class="chapter" data-level="2.28" data-path="basics.html"><a href="basics.html#chisquare-test"><i class="fa fa-check"></i><b>2.28</b> Chisquare test</a></li>
+<li class="chapter" data-level="2.29" data-path="basics.html"><a href="basics.html#bayesian-way-of-analysing-correlations-between-categorical-variables"><i class="fa fa-check"></i><b>2.29</b> Bayesian way of analysing correlations between categorical variables</a></li>
+<li class="chapter" data-level="2.30" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.30</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="analyses-steps.html"><a href="analyses-steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a><ul>
 <li class="chapter" data-level="3.1" data-path="analyses-steps.html"><a href="analyses-steps.html#step1"><i class="fa fa-check"></i><b>3.1</b> Plausibility of Data</a></li>
@@ -230,10 +232,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11" data-path="dailynestsurv.html"><a href="dailynestsurv.html"><i class="fa fa-check"></i><b>11</b> Daily nest survival</a><ul>
 <li class="chapter" data-level="11.1" data-path="dailynestsurv.html"><a href="dailynestsurv.html#background-1"><i class="fa fa-check"></i><b>11.1</b> Background</a></li>
 <li class="chapter" data-level="11.2" data-path="dailynestsurv.html"><a href="dailynestsurv.html#models-for-estimating-daily-nest-survival"><i class="fa fa-check"></i><b>11.2</b> Models for estimating daily nest survival</a></li>
-<li class="chapter" data-level="11.3" data-path="dailynestsurv.html"><a href="dailynestsurv.html#dailynestsurvstan"><i class="fa fa-check"></i><b>11.3</b> The Stan model</a></li>
-<li class="chapter" data-level="11.4" data-path="dailynestsurv.html"><a href="dailynestsurv.html#prepare-data-and-run-stan"><i class="fa fa-check"></i><b>11.4</b> Prepare data and run Stan</a></li>
-<li class="chapter" data-level="11.5" data-path="dailynestsurv.html"><a href="dailynestsurv.html#check-convergence"><i class="fa fa-check"></i><b>11.5</b> Check convergence</a></li>
-<li class="chapter" data-level="11.6" data-path="dailynestsurv.html"><a href="dailynestsurv.html#look-at-results"><i class="fa fa-check"></i><b>11.6</b> Look at results</a></li>
+<li class="chapter" data-level="11.3" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model"><i class="fa fa-check"></i><b>11.3</b> Known fate model</a></li>
+<li class="chapter" data-level="11.4" data-path="dailynestsurv.html"><a href="dailynestsurv.html#dailynestsurvstan"><i class="fa fa-check"></i><b>11.4</b> The Stan model</a></li>
+<li class="chapter" data-level="11.5" data-path="dailynestsurv.html"><a href="dailynestsurv.html#prepare-data-and-run-stan"><i class="fa fa-check"></i><b>11.5</b> Prepare data and run Stan</a></li>
+<li class="chapter" data-level="11.6" data-path="dailynestsurv.html"><a href="dailynestsurv.html#check-convergence"><i class="fa fa-check"></i><b>11.6</b> Check convergence</a></li>
+<li class="chapter" data-level="11.7" data-path="dailynestsurv.html"><a href="dailynestsurv.html#look-at-results"><i class="fa fa-check"></i><b>11.7</b> Look at results</a></li>
+<li class="chapter" data-level="11.8" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fat-model-for-irregular-nest-controls"><i class="fa fa-check"></i><b>11.8</b> Known fat model for irregular nest controls</a></li>
 <li class="chapter" data-level="" data-path="dailynestsurv.html"><a href="dailynestsurv.html#further-reading-4"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html"><i class="fa fa-check"></i><b>12</b> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</a><ul>
@@ -269,19 +273,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">11</span> Daily nest survival</h1>
 <div id="background-1" class="section level2">
 <h2><span class="header-section-number">11.1</span> Background</h2>
-<p>Analyses of nest survival is important for understanding the mechanisms of population dynamics. The life-span of a nest could be used as a measure of nest survival. However, this measure very often is biased towards nests that survived longer because these nests are detected by the ornithologists with higher probability <span class="citation">(Mayfield <a href="referenzen.html#ref-Mayfield1975" role="doc-biblioref">1975</a>)</span>. Therefore, instead of estimating overall nest survival it is better to estimate daily nest survival conditional on survival to the previous day.</p>
+<p>Analyses of nest survival is important for understanding the mechanisms of population dynamics. The life-span of a nest could be used as a measure of nest survival. However, this measure very often is biased towards nests that survived longer because these nests are detected by the ornithologists with higher probability <span class="citation">(Mayfield <a href="referenzen.html#ref-Mayfield1975" role="doc-biblioref">1975</a>)</span>. In order not to overestimate nest survival, daily nest survival conditional on survival to the previous day can be estimated.</p>
 </div>
 <div id="models-for-estimating-daily-nest-survival" class="section level2">
 <h2><span class="header-section-number">11.2</span> Models for estimating daily nest survival</h2>
-<p>Using a simple logistic regression with an indicator for whether a nest is alive or not at day <span class="math inline">\(t\)</span> is not appropriate for estimating nest survival because its result is directly dependent on the time point when the nest has been detected. This time point is not biologically relevant. The conditional logistic regression <code>clogit</code> from the <code>survival</code> package could be used to describe correlations of the mortality with environmental variables but it does not provide an estimate for the daily survival probability.
-A natural model that allows estimating daily nest survival is the known-fate survival model. It is a Markov model that models the state of a nest <span class="math inline">\(i\)</span> at day <span class="math inline">\(t\)</span> (whether it is alive, <span class="math inline">\(y_{it}=1\)</span> or not <span class="math inline">\(y_{it}=0\)</span>) as a Bernoulli variable dependent on the state of the nest the day before.<br />
+<p>What model is best used depends on the type of data available. Data may look:</p>
+<ol style="list-style-type: decimal">
+<li>Regular (e.g. daily) nest controls, all nests monitored from their first egg onward<br />
+</li>
+<li>Regular nest controls, nests found during the course of the study at different stages and nestling ages<br />
+</li>
+<li>Irregular nest controls, all nests monitored from their first egg onward<br />
+</li>
+<li>Irregular nest controls, nests found during the course of the study at different stages and nestling ages</li>
+</ol>
+<table>
+<caption><span id="tab:nestsurvmod">Table 11.1: </span> Models useful for estimating daily nest survival. Data numbers correspond to the descriptions above.</caption>
+<thead>
+<tr class="header">
+<th align="left">Model</th>
+<th align="left">Data</th>
+<th align="left">Software, R-code</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Binomial or Bernoulli model</td>
+<td align="left">1, (3)</td>
+<td align="left"><code>glm</code>, <code>glmer</code>,…</td>
+</tr>
+<tr class="even">
+<td align="left">Cox proportional hazard model</td>
+<td align="left">1,2,3,4</td>
+<td align="left"><code>brm</code>, soon: <code>stan_cox</code></td>
+</tr>
+<tr class="odd">
+<td align="left">Known fate model</td>
+<td align="left">1, 2</td>
+<td align="left">Stan code below</td>
+</tr>
+<tr class="even">
+<td align="left">Known fate model</td>
+<td align="left">3, 4</td>
+<td align="left">Stan code below</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="known-fate-model" class="section level2">
+<h2><span class="header-section-number">11.3</span> Known fate model</h2>
+<p>A natural model that allows estimating daily nest survival is the known-fate survival model. It is a Markov model that models the state of a nest <span class="math inline">\(i\)</span> at day <span class="math inline">\(t\)</span> (whether it is alive, <span class="math inline">\(y_{it}=1\)</span> or not <span class="math inline">\(y_{it}=0\)</span>) as a Bernoulli variable dependent on the state of the nest the day before.<br />
 <span class="math display">\[ y_{it} \sim Bernoulli(y_{it-1}S_{it})\]</span>
 The daily nest survival <span class="math inline">\(S_{it}\)</span> can be linearly related to predictor variables that are measured on the nest or on the day level.</p>
 <p><span class="math display">\[logit(S_{it}) = \textbf{X} \beta\]</span>
 It is also possible to add random effects if needed.</p>
 </div>
 <div id="dailynestsurvstan" class="section level2">
-<h2><span class="header-section-number">11.3</span> The Stan model</h2>
+<h2><span class="header-section-number">11.4</span> The Stan model</h2>
 <p>The following Stan model code is saved as <code>daily_nest_survival.stan</code>.</p>
 <pre class="stan"><code>data {
   int&lt;lower=0&gt; Nnests;                  // number of nests
@@ -294,7 +342,7 @@ It is also possible to add random effects if needed.</p>
 }
 
 parameters {
-  vector[4] b;                          // coef of linear pred for S
+  vector[3] b;                          // coef of linear pred for S
 }
 
 model {
@@ -302,7 +350,7 @@ model {
                 
   for(i in 1:Nnests){  
     for(t in first[i]:(last[i]-1)){ 
-      S[i,t] = inv_logit(b[1] + b[2]*cover[i] + b[3]*age[t] + b[4]*pow(age[t], 2)); 
+      S[i,t] = inv_logit(b[1] + b[2]*cover[i] + b[3]*age[t]); 
     }
   }
 
@@ -310,7 +358,6 @@ model {
   b[1]~normal(0,5);
   b[2]~normal(0,3);
   b[3]~normal(0,3);  
-  b[4]~normal(0,3);
 
   // likelihood
   for (i in 1:Nnests) {
@@ -322,10 +369,10 @@ model {
 </code></pre>
 </div>
 <div id="prepare-data-and-run-stan" class="section level2">
-<h2><span class="header-section-number">11.4</span> Prepare data and run Stan</h2>
-<p>Read data DESCRIPTION OF ORIGIN INCL REFERENCE MISSING</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="dailynestsurv.html#cb44-1"></a><span class="kw">load</span>(<span class="st">&quot;RData/nest_surv_data.rda&quot;</span>)</span>
-<span id="cb44-2"><a href="dailynestsurv.html#cb44-2"></a><span class="kw">str</span>(datax)</span></code></pre></div>
+<h2><span class="header-section-number">11.5</span> Prepare data and run Stan</h2>
+<p>Data is from <span class="citation">(<span class="citeproc-not-found" data-reference-id="Grendelmeier2018"><strong>???</strong></span>)</span>.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="dailynestsurv.html#cb46-1"></a><span class="kw">load</span>(<span class="st">&quot;RData/nest_surv_data.rda&quot;</span>)</span>
+<span id="cb46-2"><a href="dailynestsurv.html#cb46-2"></a><span class="kw">str</span>(datax)</span></code></pre></div>
 <pre><code>## List of 7
 ##  $ y     : int [1:156, 1:31] 1 NA 1 NA 1 NA NA 1 1 1 ...
 ##  $ Nnests: int 156
@@ -334,190 +381,140 @@ model {
 ##  $ cover : num [1:156] -0.943 -0.215 0.149 0.149 -0.215 ...
 ##  $ age   : num [1:31] -1.65 -1.54 -1.43 -1.32 -1.21 ...
 ##  $ maxage: int 31</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="dailynestsurv.html#cb46-1"></a>datax<span class="op">$</span>y[<span class="kw">is.na</span>(datax<span class="op">$</span>y)] &lt;-<span class="st"> </span><span class="dv">0</span>  <span class="co"># Stan does not allow for NA&#39;s in the outcome</span></span></code></pre></div>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="dailynestsurv.html#cb47-1"></a><span class="co"># Run STAN</span></span>
-<span id="cb47-2"><a href="dailynestsurv.html#cb47-2"></a><span class="kw">library</span>(rstan)</span>
-<span id="cb47-3"><a href="dailynestsurv.html#cb47-3"></a></span>
-<span id="cb47-4"><a href="dailynestsurv.html#cb47-4"></a>mod &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt">file =</span> <span class="st">&quot;stanmodels/daily_nest_survival.stan&quot;</span>, <span class="dt">data=</span>datax, </span>
-<span id="cb47-5"><a href="dailynestsurv.html#cb47-5"></a>            <span class="dt">chains=</span><span class="dv">5</span>, <span class="dt">iter=</span><span class="dv">2500</span>, <span class="dt">control=</span><span class="kw">list</span>(<span class="dt">adapt_delta=</span><span class="fl">0.9</span>), <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
-<pre><code>## 
-## SAMPLING FOR MODEL &#39;daily_nest_survival&#39; NOW (CHAIN 1).
-## Chain 1: 
-## Chain 1: Gradient evaluation took 0.001181 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 11.81 seconds.
-## Chain 1: Adjust your expectations accordingly!
-## Chain 1: 
-## Chain 1: 
-## Chain 1: Iteration:    1 / 2500 [  0%]  (Warmup)
-## Chain 1: Iteration:  250 / 2500 [ 10%]  (Warmup)
-## Chain 1: Iteration:  500 / 2500 [ 20%]  (Warmup)
-## Chain 1: Iteration:  750 / 2500 [ 30%]  (Warmup)
-## Chain 1: Iteration: 1000 / 2500 [ 40%]  (Warmup)
-## Chain 1: Iteration: 1250 / 2500 [ 50%]  (Warmup)
-## Chain 1: Iteration: 1251 / 2500 [ 50%]  (Sampling)
-## Chain 1: Iteration: 1500 / 2500 [ 60%]  (Sampling)
-## Chain 1: Iteration: 1750 / 2500 [ 70%]  (Sampling)
-## Chain 1: Iteration: 2000 / 2500 [ 80%]  (Sampling)
-## Chain 1: Iteration: 2250 / 2500 [ 90%]  (Sampling)
-## Chain 1: Iteration: 2500 / 2500 [100%]  (Sampling)
-## Chain 1: 
-## Chain 1:  Elapsed Time: 5.6274 seconds (Warm-up)
-## Chain 1:                6.14757 seconds (Sampling)
-## Chain 1:                11.775 seconds (Total)
-## Chain 1: 
-## 
-## SAMPLING FOR MODEL &#39;daily_nest_survival&#39; NOW (CHAIN 2).
-## Chain 2: 
-## Chain 2: Gradient evaluation took 0.000507 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 5.07 seconds.
-## Chain 2: Adjust your expectations accordingly!
-## Chain 2: 
-## Chain 2: 
-## Chain 2: Iteration:    1 / 2500 [  0%]  (Warmup)
-## Chain 2: Iteration:  250 / 2500 [ 10%]  (Warmup)
-## Chain 2: Iteration:  500 / 2500 [ 20%]  (Warmup)
-## Chain 2: Iteration:  750 / 2500 [ 30%]  (Warmup)
-## Chain 2: Iteration: 1000 / 2500 [ 40%]  (Warmup)
-## Chain 2: Iteration: 1250 / 2500 [ 50%]  (Warmup)
-## Chain 2: Iteration: 1251 / 2500 [ 50%]  (Sampling)
-## Chain 2: Iteration: 1500 / 2500 [ 60%]  (Sampling)
-## Chain 2: Iteration: 1750 / 2500 [ 70%]  (Sampling)
-## Chain 2: Iteration: 2000 / 2500 [ 80%]  (Sampling)
-## Chain 2: Iteration: 2250 / 2500 [ 90%]  (Sampling)
-## Chain 2: Iteration: 2500 / 2500 [100%]  (Sampling)
-## Chain 2: 
-## Chain 2:  Elapsed Time: 5.80243 seconds (Warm-up)
-## Chain 2:                8.11391 seconds (Sampling)
-## Chain 2:                13.9163 seconds (Total)
-## Chain 2: 
-## 
-## SAMPLING FOR MODEL &#39;daily_nest_survival&#39; NOW (CHAIN 3).
-## Chain 3: 
-## Chain 3: Gradient evaluation took 0.000676 seconds
-## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 6.76 seconds.
-## Chain 3: Adjust your expectations accordingly!
-## Chain 3: 
-## Chain 3: 
-## Chain 3: Iteration:    1 / 2500 [  0%]  (Warmup)
-## Chain 3: Iteration:  250 / 2500 [ 10%]  (Warmup)
-## Chain 3: Iteration:  500 / 2500 [ 20%]  (Warmup)
-## Chain 3: Iteration:  750 / 2500 [ 30%]  (Warmup)
-## Chain 3: Iteration: 1000 / 2500 [ 40%]  (Warmup)
-## Chain 3: Iteration: 1250 / 2500 [ 50%]  (Warmup)
-## Chain 3: Iteration: 1251 / 2500 [ 50%]  (Sampling)
-## Chain 3: Iteration: 1500 / 2500 [ 60%]  (Sampling)
-## Chain 3: Iteration: 1750 / 2500 [ 70%]  (Sampling)
-## Chain 3: Iteration: 2000 / 2500 [ 80%]  (Sampling)
-## Chain 3: Iteration: 2250 / 2500 [ 90%]  (Sampling)
-## Chain 3: Iteration: 2500 / 2500 [100%]  (Sampling)
-## Chain 3: 
-## Chain 3:  Elapsed Time: 7.47198 seconds (Warm-up)
-## Chain 3:                6.89072 seconds (Sampling)
-## Chain 3:                14.3627 seconds (Total)
-## Chain 3: 
-## 
-## SAMPLING FOR MODEL &#39;daily_nest_survival&#39; NOW (CHAIN 4).
-## Chain 4: 
-## Chain 4: Gradient evaluation took 0.000501 seconds
-## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 5.01 seconds.
-## Chain 4: Adjust your expectations accordingly!
-## Chain 4: 
-## Chain 4: 
-## Chain 4: Iteration:    1 / 2500 [  0%]  (Warmup)
-## Chain 4: Iteration:  250 / 2500 [ 10%]  (Warmup)
-## Chain 4: Iteration:  500 / 2500 [ 20%]  (Warmup)
-## Chain 4: Iteration:  750 / 2500 [ 30%]  (Warmup)
-## Chain 4: Iteration: 1000 / 2500 [ 40%]  (Warmup)
-## Chain 4: Iteration: 1250 / 2500 [ 50%]  (Warmup)
-## Chain 4: Iteration: 1251 / 2500 [ 50%]  (Sampling)
-## Chain 4: Iteration: 1500 / 2500 [ 60%]  (Sampling)
-## Chain 4: Iteration: 1750 / 2500 [ 70%]  (Sampling)
-## Chain 4: Iteration: 2000 / 2500 [ 80%]  (Sampling)
-## Chain 4: Iteration: 2250 / 2500 [ 90%]  (Sampling)
-## Chain 4: Iteration: 2500 / 2500 [100%]  (Sampling)
-## Chain 4: 
-## Chain 4:  Elapsed Time: 6.47079 seconds (Warm-up)
-## Chain 4:                6.46567 seconds (Sampling)
-## Chain 4:                12.9365 seconds (Total)
-## Chain 4: 
-## 
-## SAMPLING FOR MODEL &#39;daily_nest_survival&#39; NOW (CHAIN 5).
-## Chain 5: 
-## Chain 5: Gradient evaluation took 0.000556 seconds
-## Chain 5: 1000 transitions using 10 leapfrog steps per transition would take 5.56 seconds.
-## Chain 5: Adjust your expectations accordingly!
-## Chain 5: 
-## Chain 5: 
-## Chain 5: Iteration:    1 / 2500 [  0%]  (Warmup)
-## Chain 5: Iteration:  250 / 2500 [ 10%]  (Warmup)
-## Chain 5: Iteration:  500 / 2500 [ 20%]  (Warmup)
-## Chain 5: Iteration:  750 / 2500 [ 30%]  (Warmup)
-## Chain 5: Iteration: 1000 / 2500 [ 40%]  (Warmup)
-## Chain 5: Iteration: 1250 / 2500 [ 50%]  (Warmup)
-## Chain 5: Iteration: 1251 / 2500 [ 50%]  (Sampling)
-## Chain 5: Iteration: 1500 / 2500 [ 60%]  (Sampling)
-## Chain 5: Iteration: 1750 / 2500 [ 70%]  (Sampling)
-## Chain 5: Iteration: 2000 / 2500 [ 80%]  (Sampling)
-## Chain 5: Iteration: 2250 / 2500 [ 90%]  (Sampling)
-## Chain 5: Iteration: 2500 / 2500 [100%]  (Sampling)
-## Chain 5: 
-## Chain 5:  Elapsed Time: 6.54065 seconds (Warm-up)
-## Chain 5:                6.73006 seconds (Sampling)
-## Chain 5:                13.2707 seconds (Total)
-## Chain 5:</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="dailynestsurv.html#cb48-1"></a>datax<span class="op">$</span>y[<span class="kw">is.na</span>(datax<span class="op">$</span>y)] &lt;-<span class="st"> </span><span class="dv">0</span>  <span class="co"># Stan does not allow for NA&#39;s in the outcome</span></span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="dailynestsurv.html#cb49-1"></a><span class="co"># Run STAN</span></span>
+<span id="cb49-2"><a href="dailynestsurv.html#cb49-2"></a><span class="kw">library</span>(rstan)</span>
+<span id="cb49-3"><a href="dailynestsurv.html#cb49-3"></a></span>
+<span id="cb49-4"><a href="dailynestsurv.html#cb49-4"></a>mod &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt">file =</span> <span class="st">&quot;stanmodels/daily_nest_survival.stan&quot;</span>, <span class="dt">data=</span>datax, </span>
+<span id="cb49-5"><a href="dailynestsurv.html#cb49-5"></a>            <span class="dt">chains=</span><span class="dv">5</span>, <span class="dt">iter=</span><span class="dv">2500</span>, <span class="dt">control=</span><span class="kw">list</span>(<span class="dt">adapt_delta=</span><span class="fl">0.9</span>), <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 </div>
 <div id="check-convergence" class="section level2">
-<h2><span class="header-section-number">11.5</span> Check convergence</h2>
+<h2><span class="header-section-number">11.6</span> Check convergence</h2>
 <p>We love exploring the performance of the Markov chains by using the function <code>launch_shinystan</code> from the package <code>shinystan</code>.</p>
 </div>
 <div id="look-at-results" class="section level2">
-<h2><span class="header-section-number">11.6</span> Look at results</h2>
+<h2><span class="header-section-number">11.7</span> Look at results</h2>
 <p>It looks like cover does not affect daily nest survival, but daily nest survival decreases with the age of the nestlings.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="dailynestsurv.html#cb49-1"></a><span class="kw">print</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="dailynestsurv.html#cb50-1"></a><span class="co">#launch_shinystan(mod)</span></span>
+<span id="cb50-2"><a href="dailynestsurv.html#cb50-2"></a><span class="kw">print</span>(mod)</span></code></pre></div>
 <pre><code>## Inference for Stan model: daily_nest_survival.
 ## 5 chains, each with iter=2500; warmup=1250; thin=1; 
 ## post-warmup draws per chain=1250, total post-warmup draws=6250.
 ## 
-##         mean se_mean   sd    2.5%     25%     50%     75%   97.5% n_eff
-## b[1]    4.14    0.00 0.20    3.77    4.00    4.13    4.27    4.55  3731
-## b[2]   -0.01    0.00 0.13   -0.25   -0.09   -0.01    0.08    0.25  5691
-## b[3]   -0.67    0.00 0.16   -0.99   -0.77   -0.66   -0.55   -0.38  4164
-## b[4]   -0.12    0.00 0.17   -0.45   -0.24   -0.13   -0.01    0.23  3318
-## lp__ -299.07    0.03 1.42 -302.70 -299.77 -298.75 -298.03 -297.30  2668
-##      Rhat
-## b[1]    1
-## b[2]    1
-## b[3]    1
-## b[4]    1
-## lp__    1
+##         mean se_mean   sd    2.5%     25%     50%     75%   97.5% n_eff Rhat
+## b[1]    4.04    0.00 0.15    3.76    3.94    4.03    4.13    4.34  4020    1
+## b[2]    0.00    0.00 0.13   -0.24   -0.09   -0.01    0.08    0.25  4710    1
+## b[3]   -0.69    0.00 0.16   -1.01   -0.80   -0.69   -0.59   -0.40  4326    1
+## lp__ -298.94    0.02 1.26 -302.30 -299.51 -298.60 -298.05 -297.53  2781    1
 ## 
-## Samples were drawn using NUTS(diag_e) at Sat Sep 21 10:39:37 2019.
+## Samples were drawn using NUTS(diag_e) at Wed Feb 10 17:17:35 2021.
 ## For each parameter, n_eff is a crude measure of effective sample size,
 ## and Rhat is the potential scale reduction factor on split chains (at 
 ## convergence, Rhat=1).</code></pre>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="dailynestsurv.html#cb51-1"></a><span class="co"># effect plot</span></span>
-<span id="cb51-2"><a href="dailynestsurv.html#cb51-2"></a>bsim &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(mod)</span>
-<span id="cb51-3"><a href="dailynestsurv.html#cb51-3"></a>nsim &lt;-<span class="st"> </span><span class="kw">nrow</span>(bsim)</span>
-<span id="cb51-4"><a href="dailynestsurv.html#cb51-4"></a></span>
-<span id="cb51-5"><a href="dailynestsurv.html#cb51-5"></a>newdat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">age=</span><span class="kw">seq</span>(<span class="dv">1</span>, datax<span class="op">$</span>maxage, <span class="dt">length=</span><span class="dv">100</span>))</span>
-<span id="cb51-6"><a href="dailynestsurv.html#cb51-6"></a>newdat<span class="op">$</span>age.z &lt;-<span class="st"> </span>(newdat<span class="op">$</span>age<span class="op">-</span><span class="kw">mean</span>(<span class="dv">1</span><span class="op">:</span>datax<span class="op">$</span>maxage))<span class="op">/</span><span class="kw">sd</span>((<span class="dv">1</span><span class="op">:</span>datax<span class="op">$</span>maxage))</span>
-<span id="cb51-7"><a href="dailynestsurv.html#cb51-7"></a>Xmat &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>age.z<span class="op">+</span><span class="kw">I</span>(age.z<span class="op">^</span><span class="dv">2</span>), <span class="dt">data=</span>newdat)</span>
-<span id="cb51-8"><a href="dailynestsurv.html#cb51-8"></a>fitmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span>nsim, <span class="dt">nrow=</span><span class="kw">nrow</span>(newdat))</span>
-<span id="cb51-9"><a href="dailynestsurv.html#cb51-9"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) fitmat[,i] &lt;-<span class="st"> </span><span class="kw">plogis</span>(Xmat<span class="op">%*%</span><span class="kw">as.numeric</span>(bsim[i,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]))</span>
-<span id="cb51-10"><a href="dailynestsurv.html#cb51-10"></a>newdat<span class="op">$</span>fit &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, median)</span>
-<span id="cb51-11"><a href="dailynestsurv.html#cb51-11"></a>newdat<span class="op">$</span>lwr &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="dt">prob=</span><span class="fl">0.025</span>)</span>
-<span id="cb51-12"><a href="dailynestsurv.html#cb51-12"></a>newdat<span class="op">$</span>upr &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="dt">prob=</span><span class="fl">0.975</span>)</span>
-<span id="cb51-13"><a href="dailynestsurv.html#cb51-13"></a></span>
-<span id="cb51-14"><a href="dailynestsurv.html#cb51-14"></a><span class="kw">plot</span>(newdat<span class="op">$</span>age, newdat<span class="op">$</span>fit, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="fl">0.8</span>,<span class="dv">1</span>), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,</span>
-<span id="cb51-15"><a href="dailynestsurv.html#cb51-15"></a>     <span class="dt">las=</span><span class="dv">1</span>, <span class="dt">ylab=</span><span class="st">&quot;Daily nest survival&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Age [d]&quot;</span>)</span>
-<span id="cb51-16"><a href="dailynestsurv.html#cb51-16"></a><span class="kw">lines</span>(newdat<span class="op">$</span>age, newdat<span class="op">$</span>lwr, <span class="dt">lty=</span><span class="dv">3</span>)</span>
-<span id="cb51-17"><a href="dailynestsurv.html#cb51-17"></a><span class="kw">lines</span>(newdat<span class="op">$</span>age, newdat<span class="op">$</span>upr, <span class="dt">lty=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="dailynestsurv.html#cb52-1"></a><span class="co"># effect plot</span></span>
+<span id="cb52-2"><a href="dailynestsurv.html#cb52-2"></a>bsim &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(mod)</span>
+<span id="cb52-3"><a href="dailynestsurv.html#cb52-3"></a>nsim &lt;-<span class="st"> </span><span class="kw">nrow</span>(bsim)</span>
+<span id="cb52-4"><a href="dailynestsurv.html#cb52-4"></a></span>
+<span id="cb52-5"><a href="dailynestsurv.html#cb52-5"></a>newdat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">age=</span><span class="kw">seq</span>(<span class="dv">1</span>, datax<span class="op">$</span>maxage, <span class="dt">length=</span><span class="dv">100</span>))</span>
+<span id="cb52-6"><a href="dailynestsurv.html#cb52-6"></a>newdat<span class="op">$</span>age.z &lt;-<span class="st"> </span>(newdat<span class="op">$</span>age<span class="op">-</span><span class="kw">mean</span>(<span class="dv">1</span><span class="op">:</span>datax<span class="op">$</span>maxage))<span class="op">/</span><span class="kw">sd</span>((<span class="dv">1</span><span class="op">:</span>datax<span class="op">$</span>maxage))</span>
+<span id="cb52-7"><a href="dailynestsurv.html#cb52-7"></a>Xmat &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>age.z, <span class="dt">data=</span>newdat)</span>
+<span id="cb52-8"><a href="dailynestsurv.html#cb52-8"></a>fitmat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span>nsim, <span class="dt">nrow=</span><span class="kw">nrow</span>(newdat))</span>
+<span id="cb52-9"><a href="dailynestsurv.html#cb52-9"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim) fitmat[,i] &lt;-<span class="st"> </span><span class="kw">plogis</span>(Xmat<span class="op">%*%</span><span class="kw">as.numeric</span>(bsim[i,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]))</span>
+<span id="cb52-10"><a href="dailynestsurv.html#cb52-10"></a>newdat<span class="op">$</span>fit &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, median)</span>
+<span id="cb52-11"><a href="dailynestsurv.html#cb52-11"></a>newdat<span class="op">$</span>lwr &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="dt">prob=</span><span class="fl">0.025</span>)</span>
+<span id="cb52-12"><a href="dailynestsurv.html#cb52-12"></a>newdat<span class="op">$</span>upr &lt;-<span class="st"> </span><span class="kw">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="dt">prob=</span><span class="fl">0.975</span>)</span>
+<span id="cb52-13"><a href="dailynestsurv.html#cb52-13"></a></span>
+<span id="cb52-14"><a href="dailynestsurv.html#cb52-14"></a><span class="kw">plot</span>(newdat<span class="op">$</span>age, newdat<span class="op">$</span>fit, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="fl">0.8</span>,<span class="dv">1</span>), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,</span>
+<span id="cb52-15"><a href="dailynestsurv.html#cb52-15"></a>     <span class="dt">las=</span><span class="dv">1</span>, <span class="dt">ylab=</span><span class="st">&quot;Daily nest survival&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Age [d]&quot;</span>)</span>
+<span id="cb52-16"><a href="dailynestsurv.html#cb52-16"></a><span class="kw">lines</span>(newdat<span class="op">$</span>age, newdat<span class="op">$</span>lwr, <span class="dt">lty=</span><span class="dv">3</span>)</span>
+<span id="cb52-17"><a href="dailynestsurv.html#cb52-17"></a><span class="kw">lines</span>(newdat<span class="op">$</span>age, newdat<span class="op">$</span>upr, <span class="dt">lty=</span><span class="dv">3</span>)</span></code></pre></div>
 <div class="figure"><span id="fig:effplots"></span>
-<img src="3.2_daily_nest_survival_files/figure-html/effplots-1.png" alt="Estimated daily nest survival probability in relation to nest age. Dotted lines are 95% uncertainty intervals of the regression line." width="768" />
+<img src="3.2_daily_nest_survival_files/figure-html/effplots-1.png" alt="Estimated daily nest survival probability in relation to nest age. Dotted lines are 95% uncertainty intervals of the regression line." width="672" />
 <p class="caption">
 Figure 11.1: Estimated daily nest survival probability in relation to nest age. Dotted lines are 95% uncertainty intervals of the regression line.
 </p>
 </div>
+</div>
+<div id="known-fat-model-for-irregular-nest-controls" class="section level2">
+<h2><span class="header-section-number">11.8</span> Known fat model for irregular nest controls</h2>
+<p>When nest are controlled only irregularly, it may happen that a nest is found predated or dead after a longer break in controlling. In such cases, we know that the nest was predated or it died due to other causes some when between the last control when the nest was still alive and when it was found dead. In such cases, we need to tell the model that the nest could have died any time during the interval when we were not controlling.</p>
+<p>To do so, we create a variable that indicates the time (e.g. day since first egg) when the nest was last seen alive (<code>lastlive</code>). A second variable indicates the time of the last check which is either the equal to <code>lastlive</code> when the nest survived until the last check, or it is larger than <code>lastlive</code> when the nest failure has been recorded. A last variable, <code>gap</code>, measures the time interval in which the nest failure occurred. A <code>gap</code> of zero means that the nest was still alive at the last control, a <code>gap</code>of 1 means that the nest failure occurred during the first day after <code>lastlive</code>, a <code>gap</code> of 2 means that the nest failure either occurred at the first or second day after <code>lastlive</code>.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="dailynestsurv.html#cb53-1"></a><span class="co"># time when nest was last observed alive</span></span>
+<span id="cb53-2"><a href="dailynestsurv.html#cb53-2"></a>lastlive &lt;-<span class="st"> </span><span class="kw">apply</span>(datax<span class="op">$</span>y, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">max</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x))[x<span class="op">==</span><span class="dv">1</span>]))</span>
+<span id="cb53-3"><a href="dailynestsurv.html#cb53-3"></a></span>
+<span id="cb53-4"><a href="dailynestsurv.html#cb53-4"></a><span class="co"># time when nest was last checked (alive or dead)</span></span>
+<span id="cb53-5"><a href="dailynestsurv.html#cb53-5"></a>lastcheck &lt;-<span class="st"> </span>lastlive<span class="op">+</span><span class="dv">1</span> </span>
+<span id="cb53-6"><a href="dailynestsurv.html#cb53-6"></a><span class="co"># here, we turn the above data into a format that can be used for</span></span>
+<span id="cb53-7"><a href="dailynestsurv.html#cb53-7"></a><span class="co"># irregular nest controls. WOULD BE NICE TO HAVE A REAL DATA EXAMPLE!</span></span>
+<span id="cb53-8"><a href="dailynestsurv.html#cb53-8"></a></span>
+<span id="cb53-9"><a href="dailynestsurv.html#cb53-9"></a><span class="co"># when nest was observed alive at the last check, then lastcheck equals lastlive</span></span>
+<span id="cb53-10"><a href="dailynestsurv.html#cb53-10"></a>lastcheck[lastlive<span class="op">==</span>datax<span class="op">$</span>last] &lt;-<span class="st"> </span>datax<span class="op">$</span>last[lastlive<span class="op">==</span>datax<span class="op">$</span>last]</span>
+<span id="cb53-11"><a href="dailynestsurv.html#cb53-11"></a></span>
+<span id="cb53-12"><a href="dailynestsurv.html#cb53-12"></a>datax1 &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">Nnests=</span>datax<span class="op">$</span>Nnests,</span>
+<span id="cb53-13"><a href="dailynestsurv.html#cb53-13"></a>               <span class="dt">lastlive =</span> lastlive,</span>
+<span id="cb53-14"><a href="dailynestsurv.html#cb53-14"></a>               <span class="dt">lastcheck=</span> lastcheck,</span>
+<span id="cb53-15"><a href="dailynestsurv.html#cb53-15"></a>               <span class="dt">first=</span>datax<span class="op">$</span>first,</span>
+<span id="cb53-16"><a href="dailynestsurv.html#cb53-16"></a>               <span class="dt">cover=</span>datax<span class="op">$</span>cover,</span>
+<span id="cb53-17"><a href="dailynestsurv.html#cb53-17"></a>               <span class="dt">age=</span>datax<span class="op">$</span>age,</span>
+<span id="cb53-18"><a href="dailynestsurv.html#cb53-18"></a>               <span class="dt">maxage=</span>datax<span class="op">$</span>maxage)</span>
+<span id="cb53-19"><a href="dailynestsurv.html#cb53-19"></a><span class="co"># time between last seen alive and first seen dead (= lastcheck)</span></span>
+<span id="cb53-20"><a href="dailynestsurv.html#cb53-20"></a>datax1<span class="op">$</span>gap &lt;-<span class="st"> </span>datax1<span class="op">$</span>lastcheck<span class="op">-</span>datax1<span class="op">$</span>lastlive</span></code></pre></div>
+<p>In the Stan model code, we specify the likelihood for each gap separately.</p>
+<pre class="stan"><code>data {
+  int&lt;lower=0&gt; Nnests;                // number of nests
+  int&lt;lower=0&gt; lastlive[Nnests];      // day of last observation (alive)
+  int&lt;lower=0&gt; lastcheck[Nnests];       // day of observed death or, if alive, last day of study 
+  int&lt;lower=0&gt; first[Nnests];         // day of first observation (alive or dead)
+  int&lt;lower=0&gt; maxage;                // maximum of last
+  real cover[Nnests];                 // a covariate of the nest
+  real age[maxage];                   // a covariate of the date
+  int&lt;lower=0&gt; gap[Nnests];           // obsdead - lastlive
+}
+
+parameters {
+  vector[3] b;                          // coef of linear pred for S
+}
+
+model {
+  real S[Nnests, maxage-1];             // survival probability
+                
+  for(i in 1:Nnests){  
+    for(t in first[i]:(lastcheck[i]-1)){ 
+      S[i,t] = inv_logit(b[1] + b[2]*cover[i] + b[3]*age[t]); 
+    }
+  }
+
+  // priors
+  b[1]~normal(0,1.5);
+  b[2]~normal(0,3);
+  b[3]~normal(0,3);  
+
+  // likelihood
+  for (i in 1:Nnests) {
+    for(t in (first[i]+1):lastlive[i]){
+      1~bernoulli(S[i,t-1]);
+    }
+    if(gap[i]==1){
+      target += log(1-S[i,lastlive[i]]);  // 
+    }
+    if(gap[i]==2){
+      target += log((1-S[i,lastlive[i]]) + S[i,lastlive[i]]*(1-S[i,lastlive[i]+1]));  // 
+    }
+    if(gap[i]==3){
+      target += log((1-S[i,lastlive[i]]) + S[i,lastlive[i]]*(1-S[i,lastlive[i]+1]) +
+                    prod(S[i,lastlive[i]:(lastlive[i]+1)])*(1-S[i,lastlive[i]+2]));  // 
+    }
+    if(gap[i]==4){
+      target += log((1-S[i,lastlive[i]]) + S[i,lastlive[i]]*(1-S[i,lastlive[i]+1]) +
+                    prod(S[i,lastlive[i]:(lastlive[i]+1)])*(1-S[i,lastlive[i]+2]) +
+                    prod(S[i,lastlive[i]:(lastlive[i]+2)])*(1-S[i,lastlive[i]+3]));  // 
+    }
+
+  }
+}</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="dailynestsurv.html#cb55-1"></a><span class="co"># Run STAN</span></span>
+<span id="cb55-2"><a href="dailynestsurv.html#cb55-2"></a>mod1 &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt">file =</span> <span class="st">&quot;stanmodels/daily_nest_survival_irreg.stan&quot;</span>, <span class="dt">data=</span>datax1, </span>
+<span id="cb55-3"><a href="dailynestsurv.html#cb55-3"></a>            <span class="dt">chains=</span><span class="dv">5</span>, <span class="dt">iter=</span><span class="dv">2500</span>, <span class="dt">control=</span><span class="kw">list</span>(<span class="dt">adapt_delta=</span><span class="fl">0.9</span>), <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 </div>
 <div id="further-reading-4" class="section level2 unnumbered">
 <h2>Further reading</h2>
@@ -536,11 +533,13 @@ Figure 11.1: Estimated daily nest survival probability in relation to nest age. 
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -548,12 +547,11 @@ gitbook.start({
 "github": false,
 "facebook": false,
 "twitter": false,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -565,6 +563,10 @@ gitbook.start({
 "text": "Edit"
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -583,8 +585,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
