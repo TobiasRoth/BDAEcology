@@ -39,3 +39,24 @@ $v$ degrees of freedom
 $\mu$ location  
 $\sigma$ scale
 
+
+## F-distribution
+Ratios of sample variances drawn from populations with equal variances follow an F-distribution. The density function of the F-distribution is even more complicated than the one of the t-distribution! We do not copy it here. Further, we have not yet met any Bayesian example where the F-distribution is used (that does not mean that there is no). It is used in frequentist analyses in order to compare variances, and, within the ANOVA, to compare means between groups. If two variances only differ because of natural variance in the data (nullhypothesis) then $\frac{Var(X_1)}{Var(X_2)}\sim F_{df_1,df_2}$.
+
+```{r, echo=FALSE, fig.cap="Different density functions of the F statistics"}
+par(mar=c(4.5,4.5,1,1))
+x <- seq(0, 5, length=100)
+y <- df(x, 5,5)
+plot(x, y, type="l", lwd=2, las=1, xlab="F-value", ylab="Density", main="", ylim=c(0,1))
+text(3, 0.3, "df1=5, df2=5", adj=c(0,0))
+text(3, 0.2, "df1=2, df2=10", adj=c(0,0), col="blue")
+text(3, 0.1, "df1=20, df2=20", adj=c(0,0), col="orange")
+
+y <- df(x, 2,10)
+lines(x,y, lwd=2, col="blue")
+y <- df(x, 20, 20)
+lines(x,y, lwd=2, col="orange")
+
+```
+
+

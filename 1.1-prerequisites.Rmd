@@ -363,11 +363,11 @@ triplot.normal.knownvariance(theta.data=3, variance.known=2, n=3,
 
 We now move to a more realistic example, which is estimating the mean and the variance of a sample of weights of Snowfinches *Montifringilla nivalis* (Fig. \@ref(fig:ssp)). To analyze those data, a model with two parameters (the mean and the variance or standard deviation) is needed. The data model (or likelihood) is specified as  $p(y|\theta, \sigma) = Norm(\theta, \sigma)$.
   
-\begin{center}
-\caption{Snowfinches live year-round above the treeline.}
-\label{#fig:ssp}
-  \includegraphics[width=0.5\textwidth]{images/snowfinch2.JPG}
-\end{center}
+
+```{r ssp, fig.align='center', echo=FALSE, fig.link=''}
+knitr::include_graphics('images/snowfinch2.JPG', dpi = 150)
+```
+
 
 ```{r,echo=TRUE}
 # weight (g)
@@ -397,10 +397,11 @@ The above formula look intimidating, but we never really do that calculations. W
 In Fig. \@ref(fig:jointpdist) the two-dimensional $(\theta, \sigma)$ posterior distribution is visualized by using simulated values. The two dimensional distribution is called the joint posterior distribution. The mountain of dots in Fig. \@ref(fig:jointpdist) visualize the Normal-Inverse-Chisquare that we calculated above. When all values of one parameter is displayed in a histogram ignoring the values of the other parameter, it is called the marginal posterior distribution. Algebraically, the marginal distribution is obtained by integrating one of the two parameters out over joint posterior distribution. This step is definitively way easier when simulated values from the posterior distribution are available! For the Snowfinch weights example, with a normal data model and a conjugate prior the marginal posterior distribution of the mean $\theta$ becomes a t-distribution and the one of $\sigma$ a inverse-Chisquare distribution. 
 Another nice property of the posterior distribution in our example is that a horizontal section through the joint posterior distribution (at a fixed value of $\sigma$, i.e. a fixed variance) leads to a normal distribution. In other words, the density of the dots in the plot at a fixed value of $\sigma$ follows a normal density function.
 
-```{r jointpdist, fig.cap='Visualization of the joint posterior distribution for the mean and standard deviation of Snowfinch weights. The lower left panel shows the two-dimensional joint posterior distribution, whereas the upper and right panel show the marginal posterior distributions of each parameter separately.', echo=FALSE}
+```{r jointpdist, fig.cap='Visualization of the joint posterior distribution for the mean and standard deviation of Snowfinch weights. The lower left panel shows the two-dimensional joint posterior distribution, whereas the upper and right panel show the marginal posterior distributions of each parameter separately.', echo=FALSE, fig.height=7}
 
 mod <- lm(y~1)
 bsim <- sim(mod, n.sim=20000)
+modssp <- mod; bsimssp <- bsim # save for a chunk later
 xrange <- range(bsim@coef)
 yrange <- range(bsim@sigma)
 
@@ -439,11 +440,14 @@ In our example the the marginal distribution of the mean is a t-distribution (Ch
 
 ### Nullhypothesis testing
 
-Several generations of scientist were indoctrinated that a scientific result only is valuable if p < 0.05. Results were only publishable if there was at least one magic p < 0.05. The peer pressure was so high that many scientist, relying on the number of published papers,  eagerly struggled until somewhere a *  pupped up in the output of the statistical software indicating a significant result. There are tons of examples of misuse of p-values, some even caused death. This is astonishing because scientists are warning from the misuse of p-values since the 1940ies (e.g. @Amrhein.2017).  
+Null hypothesis testing is constructing a model that describes how the data would look like in case of what we expect to be would not be. Then, the data is compared to how the model thinks the data should look like. If the data does not look like the model thinks they should, we reject that model and accept that our expectation may be true. 
 
-What is the p-value? A p-value is the probability of observing the data or more extreme data given the null hypothesis is true.
+To decide whether the data looks like the model constructed from the null hypothesis thinks the data should look like the p-value is used. The p-value is the probability of observing the data or more extreme data given the null hypothesis is true.
 
 Small p-values indicate that it is rather unlikely to observe the data or more extreme data given the null hypothesis $H_0$ is true. 
+
+Null hypothesis testing is problematic. We discuss some of the problems after having introduces the most commonly used classical tests. 
+
 
 ### One-sample t-test
 
@@ -536,7 +540,160 @@ polygon(c(post$x[index], rev(post$x[index])), c(rep(0, sum(index)), rev(post$y[i
 
 ```
 
-## Monte Carlo simulation (parametric bootstrap)  
+
+
+### Comparison of the locations between two groups 
+
+Boxplot:  
+Median, 50% box, extremes observation within 1.5 times the interquartile range, outliers  
+
+The uncertainties of the means do not show the uncertainty of the difference between the means!  
+
+```{r, echo=FALSE}
+par(mar=c(4.5,4.5,2,0.2))
+boxplot(ell~birthday, data=dat, las=1, ylab="Length of ell (cm)", col="grey", boxwex=0.2,
+        ylim=c(30, 45))
+
+means <- tapply(dat$ell, dat$birthday, mean)
+semeans <- tapply(dat$ell, dat$birthday, function(x) sd(x)/sqrt(length(x)))
+segments(c(1.3,2.3), means-2*semeans, c(1.3,2.3), means+2*semeans, lwd=2)
+points(c(1.3,2.3), means, pch=21, bg="white")
+
+```
+
+### Difference between two means
+
+```{r, echo=TRUE}
+mod <- lm(ell~birthday, data=dat)
+mod
+bsim <- sim(mod, n.sim=nsim)
+quantile(bsim@coef[,2], prob=c(0.025, 0.5, 0.975))
+```
+
+### Two-sample t-test
+
+```{r, echo=TRUE}
+t.test(ell~birthday, data=dat, var.equal=TRUE)
+```
+
+
+
+### Wilxocon test
+```{r, echo=TRUE}
+wilcox.test(ell~birthday, data=dat)
+```
+
+
+#### Randomisation test
+
+```{r, echo=TRUE}
+diffH0 <- numeric(nsim)
+for(i in 1:nsim){
+  randbirthday <- sample(dat$birthday)
+  rmod <- lm(ell~randbirthday, data=dat)
+  diffH0[i] <- coef(rmod)[2]
+}
+mean(abs(diffH0)>abs(coef(mod)[2])) # p-value
+```
+
+```{r, echo=FALSE}
+par(mar=c(5.5, 4.5, 0.5, 0), cex=0.8)
+hist(diffH0, main=NA); abline(v=coef(mod)[2], lwd=2, col="red", main=NA)
+```
+
+
+
+### Chisquare test
+The chisquare test is used for two frequentist purposes.  
+1. Testing for correlations between two categorical variables.  
+2. Comparison of two distributions (goodness of fit test)
+
+When testing for correlations between two categorical variables, then the nullhypothesis is "there is no correlation". The data can be displayed in cross-tables. 
+```{r, echo=TRUE}
+# Example: correlation between birthday preference and car ownership
+table(dat$birthday, dat$car)
+```
+
+Given the nullhypothesis is true, we expect that the distribution of the data in each column of the cross-table is similar to the distribution of the row-sums. And, the distribution of the data in each row should be similar to the distribution of the column-sums. The chisquare test statistics $\chi^2$ measures the deviation of the data from this expected distribution of the data in the cross-table. 
+
+For calculating the chisquare test statistics $\chi^2$, we first have to obtain for each cell in the cross-table the expected value $E_{ij}$ = rowsum*colsum/total.
+
+$\chi^2$ measures the difference between the observed $O_{ij}$ and expected $E_{ij}$ values as:  
+$\chi^2=\sum_{i=1}^{m}\sum_{j=1}^{k}\frac{(O_{ij}-E_{ij})^2}{E_{ij}}$ where $m$ is the number of rows and $k$ is the number of columns. 
+The $\chi^2$-distribution has 1 parameter, the degrees of freedom $v$ = $(m-1)(k-1)$.
+
+```{r, echo=FALSE, fig.height=4, fig.width=7}
+par(mar=c(4.5, 4.5, 0,0))
+x <- seq(0, 10, length=100)
+y <- dchisq(x, 2)
+plot(x,y, type="l", lwd=2, las=1, xlab="Chisquare-value", ylab="Density")
+text(5, 0.08, "df=2")
+y <- dchisq(x, 6)
+lines(x, y, lwd=2, col="blue")
+text(6, 0.15, "df=6", col="blue")
+
+```
+
+R is calculating the $\chi^2$ value for specific cross-tables, and it is also giving the p-values, i.e., the probability of obtaining the observed or a higher $\chi^2$ value given the nullhypothesis is true by comparing the observed $\chi^2$ with the corresponding chisquare distribution.
+
+```{r, echo=TRUE}
+chisq.test(table(dat$birthday, dat$car))
+```
+
+The warning (that is suppressed in the rmarkdown version, but that you will see if you run the code on your own computer) is given, because in our example some cells have counts less than 5. In such cases, the Fisher's exact test should be preferred. This test calculates the p-value analytically using probability theory, whereas the chisquare test relies on the assumption that the  $\chi^2$ value follows a chisquare distribution. The latter assumption holds better for larger sample sizes.
+
+```{r, echo=TRUE}
+fisher.test(table(dat$birthday, dat$car))
+```
+
+ 
+
+
+## Problems of null hypothesis testing
+
+Read about misuse of p-values in @Amrhein.2017.  
+
+
+
+## Bootstrap
+
+* Produces the distribution of a test statistics given the null hypothesis.  
+* assumption: all observations are independent  
+* becomes unfeasible when data is structured
+
+
+```{r, echo=TRUE}
+diffboot <- numeric(nsim)
+for(i in 1:nsim){
+  nbirthday <- 1
+  while(nbirthday==1){
+    bootrows <- sample(1:nrow(dat), replace=TRUE)
+    nbirthday <- length(unique(dat$birthday[bootrows]))
+  }
+  rmod <- lm(ell~birthday, data=dat[bootrows,])
+  diffboot[i] <- coef(rmod)[2]
+}
+quantile(diffboot, prob=c(0.025, 0.975))
+```
+
+
+* result is a confidence interval  
+* assumption: all observations are independent!
+
+```{r, echo=TRUE}
+hist(diffboot); abline(v=coef(mod)[2], lwd=2, col="red")
+```
+
+
+
+
+## 3 methods for getting the posterior distribution
+
+* analytically
+* approximation
+* Monte Carlo simulation
+
+### Monte Carlo simulation (parametric bootstrap)  
   
 Monte Carlo integration: numerical solution of $\int_{-1}^{1.5} F(x) dx$ 
 ```{r, fig.cap='',echo=FALSE}
@@ -559,6 +716,7 @@ sim is solving a mathematical problem by simulation
 How sim is simulating to get the marginal distribution of $\mu$:
 
 ```{r, fig.cap='',echo=FALSE}
+mod <- modssp; bsim <- bsimssp
 layout(matrix(c(2,0,1,3), ncol=2, byrow=TRUE), heights=c(1,2),  
        width=c(2,1))
 par(mar=c(5.1, 4.1, 0.2, 0.2), cex.lab=0.8, cex.axis=0.8) 
@@ -591,15 +749,9 @@ text(0.02, 9, "step 1", adj=c(0,1))
 ```
 
 
-## 3 methods for getting the posterior distribution
-
-* analytically
-* approximation
-* Monte Carlo simulation
 
 
-
-## Grid approximation
+### Grid approximation
   
 $p(\theta|y) = \frac{p(y|\theta)p(\theta)}{p(y)}$ 
   
@@ -638,7 +790,7 @@ lines(x, post, type="b", col=1, lwd=2)
 ```
 
 
-## Monte Carlo simulations
+### Markov chain Monte Carlo simulations
 
 * Markov chain Monte Carlo simulation (BUGS, Jags)
 * Hamiltonian Monte Carlo (Stan)
@@ -652,116 +804,8 @@ text(0.63,0.75, "(joint) posterior\ndistribution", adj=c(0,1))
 ```
 
 
-## Comparison of the locations between two groups 
-Boxplot:  
-Median, 50% box, extremes observation within 1.5 times the interquartile range, outliers  
 
-The uncertainties of the means do not show the uncertainty of the difference between the means!  
-
-```{r, echo=FALSE}
-par(mar=c(4.5,4.5,2,0.2))
-boxplot(ell~birthday, data=dat, las=1, ylab="Length of ell (cm)", col="grey", boxwex=0.2,
-        ylim=c(30, 45))
-
-means <- tapply(dat$ell, dat$birthday, mean)
-semeans <- tapply(dat$ell, dat$birthday, function(x) sd(x)/sqrt(length(x)))
-segments(c(1.3,2.3), means-2*semeans, c(1.3,2.3), means+2*semeans, lwd=2)
-points(c(1.3,2.3), means, pch=21, bg="white")
-
-```
-
-## Difference between two means
-
-```{r, echo=TRUE}
-mod <- lm(ell~birthday, data=dat)
-mod
-bsim <- sim(mod, n.sim=nsim)
-quantile(bsim@coef[,2], prob=c(0.025, 0.5, 0.975))
-```
-
-
-## Two-sample t-test
-```{r, echo=TRUE}
-t.test(ell~birthday, data=dat, var.equal=TRUE)
-```
-
-
-
-## Wilxocon test
-```{r, echo=TRUE}
-wilcox.test(ell~birthday, data=dat)
-```
-
-
-## Randomisation test
-```{r, echo=TRUE}
-diffH0 <- numeric(nsim)
-for(i in 1:nsim){
-  randbirthday <- sample(dat$birthday)
-  rmod <- lm(ell~randbirthday, data=dat)
-  diffH0[i] <- coef(rmod)[2]
-}
-mean(abs(diffH0)>abs(coef(mod)[2])) # p-value
-```
-
-```{r, echo=FALSE}
-par(mar=c(5.5, 4.5, 0.5, 0), cex=0.8)
-hist(diffH0, main=NA); abline(v=coef(mod)[2], lwd=2, col="red", main=NA)
-```
-
-
-* Produces the distribution of a test statistics given the null hypothesis.  
-* assumption: all observations are independent  
-* becomes unfeasible when data is structured
-
-
-
-## Bootstrap
-```{r, echo=TRUE}
-diffboot <- numeric(nsim)
-for(i in 1:nsim){
-  nbirthday <- 1
-  while(nbirthday==1){
-    bootrows <- sample(1:nrow(dat), replace=TRUE)
-    nbirthday <- length(unique(dat$birthday[bootrows]))
-  }
-  rmod <- lm(ell~birthday, data=dat[bootrows,])
-  diffboot[i] <- coef(rmod)[2]
-}
-quantile(diffboot, prob=c(0.025, 0.975))
-```
-
-
-* result is a confidence interval  
-* assumption: all observations are independent!
-
-```{r, echo=TRUE}
-hist(diffboot); abline(v=coef(mod)[2], lwd=2, col="red")
-```
-
-
-## F-distribution
-Ratios of sample variances drawn from populations with equal variances follow an F-distribution. The density function of the F-distribution is even more complicated than the one of the t-distribution! We do not copy it here. Further, we have not yet met any Bayesian example where the F-distribution is used (that does not mean that there is no). It is used in frequentist analyses in order to compare variances, and, within the ANOVA, to compare means between groups. If two variances only differ because of natural variance in the data (nullhypothesis) then $\frac{Var(X_1)}{Var(X_2)}\sim F_{df_1,df_2}$.
-
-```{r, echo=FALSE, fig.cap="Different density functions of the F statistics"}
-par(mar=c(4.5,4.5,1,1))
-x <- seq(0, 5, length=100)
-y <- df(x, 5,5)
-plot(x, y, type="l", lwd=2, las=1, xlab="F-value", ylab="Density", main="", ylim=c(0,1))
-text(3, 0.3, "df1=5, df2=5", adj=c(0,0))
-text(3, 0.2, "df1=2, df2=10", adj=c(0,0), col="blue")
-text(3, 0.1, "df1=20, df2=20", adj=c(0,0), col="orange")
-
-y <- df(x, 2,10)
-lines(x,y, lwd=2, col="blue")
-y <- df(x, 20, 20)
-lines(x,y, lwd=2, col="orange")
-
-```
-
-
-
-### Analysis of variance ANOVA
+## Analysis of variance ANOVA
 The aim of an ANOVA is to compare means of groups. In a frequentist analysis, this is done by comparing the between-group with the within-group variance. The result of a Bayesian analysis is the joint posterior distribution of the group means.
 
 ```{r, echo=FALSE, fig.cap="Number of stats courses students have taken before starting a PhD in relation to their feeling about statistics."}
@@ -867,50 +911,6 @@ mean(fitmat[3,]>fitmat[1,])
 
 ```
 
-## Chisquare test
-The chisquare test is used for two frequentist purposes.  
-1. Testing for correlations between two categorical variables.  
-2. Comparison of two distributions (goodness of fit test)
-
-When testing for correlations between two categorical variables, then the nullhypothesis is "there is no correlation". The data can be displayed in cross-tables. 
-```{r, echo=TRUE}
-# Example: correlation between birthday preference and car ownership
-table(dat$birthday, dat$car)
-```
-
-Given the nullhypothesis is true, we expect that the distribution of the data in each column of the cross-table is similar to the distribution of the row-sums. And, the distribution of the data in each row should be similar to the distribution of the column-sums. The chisquare test statistics $\chi^2$ measures the deviation of the data from this expected distribution of the data in the cross-table. 
-
-For calculating the chisquare test statistics $\chi^2$, we first have to obtain for each cell in the cross-table the expected value $E_{ij}$ = rowsum*colsum/total.
-
-$\chi^2$ measures the difference between the observed $O_{ij}$ and expected $E_{ij}$ values as:  
-$\chi^2=\sum_{i=1}^{m}\sum_{j=1}^{k}\frac{(O_{ij}-E_{ij})^2}{E_{ij}}$ where $m$ is the number of rows and $k$ is the number of columns. 
-The $\chi^2$-distribution has 1 parameter, the degrees of freedom $v$ = $(m-1)(k-1)$.
-
-```{r, echo=FALSE, fig.height=4, fig.width=7}
-par(mar=c(4.5, 4.5, 0,0))
-x <- seq(0, 10, length=100)
-y <- dchisq(x, 2)
-plot(x,y, type="l", lwd=2, las=1, xlab="Chisquare-value", ylab="Density")
-text(5, 0.08, "df=2")
-y <- dchisq(x, 6)
-lines(x, y, lwd=2, col="blue")
-text(6, 0.15, "df=6", col="blue")
-
-```
-
-R is calculating the $\chi^2$ value for specific cross-tables, and it is also giving the p-values, i.e., the probability of obtaining the observed or a higher $\chi^2$ value given the nullhypothesis is true by comparing the observed $\chi^2$ with the corresponding chisquare distribution.
-
-```{r, echo=TRUE}
-chisq.test(table(dat$birthday, dat$car))
-```
-
-The warning (that is suppressed in the rmarkdown version, but that you will see if you run the code on your own computer) is given, because in our example some cells have counts less than 5. In such cases, the Fisher's exact test should be preferred. This test calculates the p-value analytically using probability theory, whereas the chisquare test relies on the assumption that the  $\chi^2$ value follows a chisquare distribution. The latter assumption holds better for larger sample sizes.
-
-```{r, echo=TRUE}
-fisher.test(table(dat$birthday, dat$car))
-```
-
- 
 
 ## Bayesian way of analysing correlations between categorical variables
 For a Bayesian analysis of cross-table data, a data model has to be found. There are several possibilities that could be used:  
