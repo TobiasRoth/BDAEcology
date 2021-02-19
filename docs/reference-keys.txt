@@ -8,9 +8,11 @@ fig:CImean
 fig:sesd
 tab:winecar
 fig:triplot
+fig:ssp
 fig:jointpdist
 fig:nht
 fig:unnamed-chunk-8
+fig:boxplt
 fig:ranhist
 fig:histboot
 fig:unnamed-chunk-1
