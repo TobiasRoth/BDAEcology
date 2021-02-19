@@ -24,7 +24,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2021-02-15" />
+<meta name="date" content="2021-02-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,6 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="basics.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,20 +50,24 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -84,7 +87,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -130,62 +133,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
-<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-this-book"><i class="fa fa-check"></i>Why this book?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
 </ul></li>
 <li class="part"><span><b>I R FOR ECOLOGISTS</b></span></li>
-<li class="chapter" data-level="1" data-path="PART-I.html"><a href="PART-I.html"><i class="fa fa-check"></i><b>1</b> Introduction to PART I</a>
-<ul>
+<li class="chapter" data-level="1" data-path="PART-I.html"><a href="PART-I.html"><i class="fa fa-check"></i><b>1</b> Introduction to PART I</a><ul>
 <li class="chapter" data-level="1.1" data-path="PART-I.html"><a href="PART-I.html#further-reading"><i class="fa fa-check"></i><b>1.1</b> Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Prerequisits: Basic statistical terms</a>
-<ul>
+<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Prerequisits: Basic statistical terms</a><ul>
 <li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#variables-and-observations"><i class="fa fa-check"></i><b>2.1</b> Variables and observations</a></li>
-<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-variables"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing variables</a>
-<ul>
+<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-variables"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing variables</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="basics.html"><a href="basics.html#correlations"><i class="fa fa-check"></i><b>2.2.1</b> Correlations</a></li>
 <li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#principal-components-analyses-pca"><i class="fa fa-check"></i><b>2.2.2</b> Principal components analyses PCA</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="basics.html"><a href="basics.html#inferential-statistics"><i class="fa fa-check"></i><b>2.3</b> Inferential statistics</a>
-<ul>
+<li class="chapter" data-level="2.3" data-path="basics.html"><a href="basics.html#inferential-statistics"><i class="fa fa-check"></i><b>2.3</b> Inferential statistics</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="basics.html"><a href="basics.html#uncertainty"><i class="fa fa-check"></i><b>2.3.1</b> Uncertainty</a></li>
 <li class="chapter" data-level="2.3.2" data-path="basics.html"><a href="basics.html#standard-error"><i class="fa fa-check"></i><b>2.3.2</b> Standard error</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="basics.html"><a href="basics.html#bayes-theorem-and-the-common-aim-of-frequentist-and-bayesian-methods"><i class="fa fa-check"></i><b>2.4</b> Bayes theorem and the common aim of frequentist and Bayesian methods</a>
-<ul>
+<li class="chapter" data-level="2.4" data-path="basics.html"><a href="basics.html#bayes-theorem-and-the-common-aim-of-frequentist-and-bayesian-methods"><i class="fa fa-check"></i><b>2.4</b> Bayes theorem and the common aim of frequentist and Bayesian methods</a><ul>
 <li class="chapter" data-level="2.4.1" data-path="basics.html"><a href="basics.html#bayes-theorem-for-discrete-events"><i class="fa fa-check"></i><b>2.4.1</b> Bayes theorem for discrete events</a></li>
 <li class="chapter" data-level="2.4.2" data-path="basics.html"><a href="basics.html#bayes-theorem-for-continuous-parameters"><i class="fa fa-check"></i><b>2.4.2</b> Bayes theorem for continuous parameters</a></li>
 <li class="chapter" data-level="2.4.3" data-path="basics.html"><a href="basics.html#estimating-a-mean-assuming-that-the-variance-is-known"><i class="fa fa-check"></i><b>2.4.3</b> Estimating a mean assuming that the variance is known</a></li>
 <li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#estimating-the-mean-and-the-variance"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#classical-frequentist-tests-and-alternatives"><i class="fa fa-check"></i><b>2.5</b> Classical frequentist tests and alternatives</a>
-<ul>
+<li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#classical-frequentist-tests-and-alternatives"><i class="fa fa-check"></i><b>2.5</b> Classical frequentist tests and alternatives</a><ul>
 <li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#nullhypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Nullhypothesis testing</a></li>
-<li class="chapter" data-level="2.5.2" data-path="basics.html"><a href="basics.html#one-sample-t-test"><i class="fa fa-check"></i><b>2.5.2</b> One-sample t-test</a></li>
-<li class="chapter" data-level="2.5.3" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups"><i class="fa fa-check"></i><b>2.5.3</b> Comparison of the locations between two groups</a></li>
-<li class="chapter" data-level="2.5.4" data-path="basics.html"><a href="basics.html#difference-between-two-means"><i class="fa fa-check"></i><b>2.5.4</b> Difference between two means</a></li>
-<li class="chapter" data-level="2.5.5" data-path="basics.html"><a href="basics.html#two-sample-t-test"><i class="fa fa-check"></i><b>2.5.5</b> Two-sample t-test</a></li>
-<li class="chapter" data-level="2.5.6" data-path="basics.html"><a href="basics.html#wilxocon-test"><i class="fa fa-check"></i><b>2.5.6</b> Wilxocon test</a></li>
-<li class="chapter" data-level="2.5.7" data-path="basics.html"><a href="basics.html#chisquare-test"><i class="fa fa-check"></i><b>2.5.7</b> Chisquare test</a></li>
+<li class="chapter" data-level="2.5.2" data-path="basics.html"><a href="basics.html#comparison-of-a-sample-with-a-fixed-values-one-sample-t-test"><i class="fa fa-check"></i><b>2.5.2</b> Comparison of a sample with a fixed values (one-sample t-test)</a></li>
+<li class="chapter" data-level="2.5.3" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups-two-sample-t-test"><i class="fa fa-check"></i><b>2.5.3</b> Comparison of the locations between two groups (two-sample t-test)</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#problems-of-null-hypothesis-testing"><i class="fa fa-check"></i><b>2.6</b> Problems of null hypothesis testing</a></li>
-<li class="chapter" data-level="2.7" data-path="basics.html"><a href="basics.html#bootstrap"><i class="fa fa-check"></i><b>2.7</b> Bootstrap</a></li>
-<li class="chapter" data-level="2.8" data-path="basics.html"><a href="basics.html#methods-for-getting-the-posterior-distribution"><i class="fa fa-check"></i><b>2.8</b> 3 methods for getting the posterior distribution</a>
-<ul>
-<li class="chapter" data-level="2.8.1" data-path="basics.html"><a href="basics.html#monte-carlo-simulation-parametric-bootstrap"><i class="fa fa-check"></i><b>2.8.1</b> Monte Carlo simulation (parametric bootstrap)</a></li>
-<li class="chapter" data-level="2.8.2" data-path="basics.html"><a href="basics.html#grid-approximation"><i class="fa fa-check"></i><b>2.8.2</b> Grid approximation</a></li>
-<li class="chapter" data-level="2.8.3" data-path="basics.html"><a href="basics.html#markov-chain-monte-carlo-simulations"><i class="fa fa-check"></i><b>2.8.3</b> Markov chain Monte Carlo simulations</a></li>
+<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.6</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="2.9" data-path="basics.html"><a href="basics.html#analysis-of-variance-anova"><i class="fa fa-check"></i><b>2.9</b> Analysis of variance ANOVA</a></li>
-<li class="chapter" data-level="2.10" data-path="basics.html"><a href="basics.html#bayesian-way-of-analysing-correlations-between-categorical-variables"><i class="fa fa-check"></i><b>2.10</b> Bayesian way of analysing correlations between categorical variables</a></li>
-<li class="chapter" data-level="2.11" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.11</b> Summary</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="analyses-steps.html"><a href="analyses-steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a>
-<ul>
+<li class="chapter" data-level="3" data-path="analyses-steps.html"><a href="analyses-steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a><ul>
 <li class="chapter" data-level="3.1" data-path="analyses-steps.html"><a href="analyses-steps.html#step1"><i class="fa fa-check"></i><b>3.1</b> Plausibility of Data</a></li>
 <li class="chapter" data-level="3.2" data-path="analyses-steps.html"><a href="analyses-steps.html#step2"><i class="fa fa-check"></i><b>3.2</b> Relationships</a></li>
 <li class="chapter" data-level="3.3" data-path="analyses-steps.html"><a href="analyses-steps.html#step3"><i class="fa fa-check"></i><b>3.3</b> Data Distribution</a></li>
@@ -198,104 +179,101 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.10" data-path="analyses-steps.html"><a href="analyses-steps.html#step10"><i class="fa fa-check"></i><b>3.10</b> Draw Conclusions</a></li>
 <li class="chapter" data-level="" data-path="analyses-steps.html"><a href="analyses-steps.html#further-reading-1"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>4</b> Probability distributions</a>
-<ul>
+<li class="chapter" data-level="4" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>4</b> Probability distributions</a><ul>
 <li class="chapter" data-level="4.1" data-path="distributions.html"><a href="distributions.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
 <li class="chapter" data-level="4.2" data-path="distributions.html"><a href="distributions.html#normal-distribution"><i class="fa fa-check"></i><b>4.2</b> Normal distribution</a></li>
 <li class="chapter" data-level="4.3" data-path="distributions.html"><a href="distributions.html#poisson-distribution"><i class="fa fa-check"></i><b>4.3</b> Poisson distribution</a></li>
-<li class="chapter" data-level="4.4" data-path="distributions.html"><a href="distributions.html#gamma-distribution"><i class="fa fa-check"></i><b>4.4</b> Gamma distribution</a>
-<ul>
+<li class="chapter" data-level="4.4" data-path="distributions.html"><a href="distributions.html#gamma-distribution"><i class="fa fa-check"></i><b>4.4</b> Gamma distribution</a><ul>
 <li class="chapter" data-level="4.4.1" data-path="distributions.html"><a href="distributions.html#cauchydistri"><i class="fa fa-check"></i><b>4.4.1</b> Cauchy distribution</a></li>
 <li class="chapter" data-level="4.4.2" data-path="distributions.html"><a href="distributions.html#t-distribution"><i class="fa fa-check"></i><b>4.4.2</b> t-distribution</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="distributions.html"><a href="distributions.html#f-distribution"><i class="fa fa-check"></i><b>4.5</b> F-distribution</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="furthertopics.html"><a href="furthertopics.html"><i class="fa fa-check"></i><b>5</b> Further topics</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="furthertopics.html"><a href="furthertopics.html#bioacoustic-analyse"><i class="fa fa-check"></i><b>5.1</b> Bioacoustic analyse</a></li>
-<li class="chapter" data-level="5.2" data-path="furthertopics.html"><a href="furthertopics.html#python"><i class="fa fa-check"></i><b>5.2</b> Python</a></li>
+<li class="chapter" data-level="5" data-path="addbasics.html"><a href="addbasics.html"><i class="fa fa-check"></i><b>5</b> Additional basic material</a><ul>
+<li class="chapter" data-level="5.1" data-path="addbasics.html"><a href="addbasics.html#chisquare-test"><i class="fa fa-check"></i><b>5.1</b> Chisquare test</a></li>
+<li class="chapter" data-level="5.2" data-path="addbasics.html"><a href="addbasics.html#methods-for-getting-the-posterior-distribution"><i class="fa fa-check"></i><b>5.2</b> 3 methods for getting the posterior distribution</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="addbasics.html"><a href="addbasics.html#monte-carlo-simulation-parametric-bootstrap"><i class="fa fa-check"></i><b>5.2.1</b> Monte Carlo simulation (parametric bootstrap)</a></li>
+<li class="chapter" data-level="5.2.2" data-path="addbasics.html"><a href="addbasics.html#grid-approximation"><i class="fa fa-check"></i><b>5.2.2</b> Grid approximation</a></li>
+<li class="chapter" data-level="5.2.3" data-path="addbasics.html"><a href="addbasics.html#markov-chain-monte-carlo-simulations"><i class="fa fa-check"></i><b>5.2.3</b> Markov chain Monte Carlo simulations</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="addbasics.html"><a href="addbasics.html#analysis-of-variance-anova"><i class="fa fa-check"></i><b>5.3</b> Analysis of variance ANOVA</a></li>
+<li class="chapter" data-level="5.4" data-path="addbasics.html"><a href="addbasics.html#bayesian-way-of-analysing-correlations-between-categorical-variables"><i class="fa fa-check"></i><b>5.4</b> Bayesian way of analysing correlations between categorical variables</a></li>
+<li class="chapter" data-level="5.5" data-path="addbasics.html"><a href="addbasics.html#summary-1"><i class="fa fa-check"></i><b>5.5</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="furthertopics.html"><a href="furthertopics.html"><i class="fa fa-check"></i><b>6</b> Further topics</a><ul>
+<li class="chapter" data-level="6.1" data-path="furthertopics.html"><a href="furthertopics.html#bioacoustic-analyse"><i class="fa fa-check"></i><b>6.1</b> Bioacoustic analyse</a></li>
+<li class="chapter" data-level="6.2" data-path="furthertopics.html"><a href="furthertopics.html#python"><i class="fa fa-check"></i><b>6.2</b> Python</a></li>
 </ul></li>
 <li class="part"><span><b>II BAYESIAN DATA ANALYSIS</b></span></li>
-<li class="chapter" data-level="6" data-path="PART-II.html"><a href="PART-II.html"><i class="fa fa-check"></i><b>6</b> Introduction to PART II</a>
-<ul>
+<li class="chapter" data-level="7" data-path="PART-II.html"><a href="PART-II.html"><i class="fa fa-check"></i><b>7</b> Introduction to PART II</a><ul>
 <li class="chapter" data-level="" data-path="PART-II.html"><a href="PART-II.html#further-reading-2"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>7</b> MCMC using Stan</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="stan.html"><a href="stan.html#background"><i class="fa fa-check"></i><b>7.1</b> Background</a></li>
-<li class="chapter" data-level="7.2" data-path="stan.html"><a href="stan.html#install-rstan"><i class="fa fa-check"></i><b>7.2</b> Install <code>rstan</code></a></li>
-<li class="chapter" data-level="7.3" data-path="stan.html"><a href="stan.html#firststanmod"><i class="fa fa-check"></i><b>7.3</b> Writing a Stan model</a></li>
-<li class="chapter" data-level="7.4" data-path="stan.html"><a href="stan.html#run-stan-from-r"><i class="fa fa-check"></i><b>7.4</b> Run Stan from R</a></li>
+<li class="chapter" data-level="8" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>8</b> MCMC using Stan</a><ul>
+<li class="chapter" data-level="8.1" data-path="stan.html"><a href="stan.html#background"><i class="fa fa-check"></i><b>8.1</b> Background</a></li>
+<li class="chapter" data-level="8.2" data-path="stan.html"><a href="stan.html#install-rstan"><i class="fa fa-check"></i><b>8.2</b> Install <code>rstan</code></a></li>
+<li class="chapter" data-level="8.3" data-path="stan.html"><a href="stan.html#firststanmod"><i class="fa fa-check"></i><b>8.3</b> Writing a Stan model</a></li>
+<li class="chapter" data-level="8.4" data-path="stan.html"><a href="stan.html#run-stan-from-r"><i class="fa fa-check"></i><b>8.4</b> Run Stan from R</a></li>
 <li class="chapter" data-level="" data-path="stan.html"><a href="stan.html#further-reading-3"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i><b>8</b> Prior distributions</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="priors.html"><a href="priors.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
-<li class="chapter" data-level="8.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>8.2</b> How to choose a prior</a></li>
-<li class="chapter" data-level="8.3" data-path="priors.html"><a href="priors.html#prior-sensitivity"><i class="fa fa-check"></i><b>8.3</b> Prior sensitivity</a></li>
+<li class="chapter" data-level="9" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i><b>9</b> Prior distributions</a><ul>
+<li class="chapter" data-level="9.1" data-path="priors.html"><a href="priors.html#introduction-1"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>9.2</b> How to choose a prior</a></li>
+<li class="chapter" data-level="9.3" data-path="priors.html"><a href="priors.html#prior-sensitivity"><i class="fa fa-check"></i><b>9.3</b> Prior sensitivity</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>9</b> Normal Linear Models</a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="lm.html"><a href="lm.html#linear-regression"><i class="fa fa-check"></i><b>9.1</b> Linear Regression</a>
-<ul>
-<li class="chapter" data-level="9.1.1" data-path="lm.html"><a href="lm.html#background-1"><i class="fa fa-check"></i><b>9.1.1</b> Background</a></li>
-<li class="chapter" data-level="9.1.2" data-path="lm.html"><a href="lm.html#fitting-a-linear-regression-in-r"><i class="fa fa-check"></i><b>9.1.2</b> Fitting a Linear Regression in R</a></li>
-<li class="chapter" data-level="9.1.3" data-path="lm.html"><a href="lm.html#drawing-conclusions"><i class="fa fa-check"></i><b>9.1.3</b> Drawing Conclusions</a></li>
-<li class="chapter" data-level="9.1.4" data-path="lm.html"><a href="lm.html#frequentist-results"><i class="fa fa-check"></i><b>9.1.4</b> Frequentist Results</a></li>
+<li class="chapter" data-level="10" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>10</b> Normal Linear Models</a><ul>
+<li class="chapter" data-level="10.1" data-path="lm.html"><a href="lm.html#linear-regression"><i class="fa fa-check"></i><b>10.1</b> Linear Regression</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="lm.html"><a href="lm.html#background-1"><i class="fa fa-check"></i><b>10.1.1</b> Background</a></li>
+<li class="chapter" data-level="10.1.2" data-path="lm.html"><a href="lm.html#fitting-a-linear-regression-in-r"><i class="fa fa-check"></i><b>10.1.2</b> Fitting a Linear Regression in R</a></li>
+<li class="chapter" data-level="10.1.3" data-path="lm.html"><a href="lm.html#drawing-conclusions"><i class="fa fa-check"></i><b>10.1.3</b> Drawing Conclusions</a></li>
+<li class="chapter" data-level="10.1.4" data-path="lm.html"><a href="lm.html#frequentist-results"><i class="fa fa-check"></i><b>10.1.4</b> Frequentist Results</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="lm.html"><a href="lm.html#regression-variants-anova-ancova-and-multiple-regression"><i class="fa fa-check"></i><b>9.2</b> Regression Variants: ANOVA, ANCOVA, and Multiple Regression</a>
-<ul>
-<li class="chapter" data-level="9.2.1" data-path="lm.html"><a href="lm.html#one-way-anova"><i class="fa fa-check"></i><b>9.2.1</b> One-Way ANOVA</a></li>
-<li class="chapter" data-level="9.2.2" data-path="lm.html"><a href="lm.html#frequentist-results-from-a-one-way-anova"><i class="fa fa-check"></i><b>9.2.2</b> Frequentist Results from a One-Way ANOVA</a></li>
-<li class="chapter" data-level="9.2.3" data-path="lm.html"><a href="lm.html#two-way-anova"><i class="fa fa-check"></i><b>9.2.3</b> Two-Way ANOVA</a></li>
-<li class="chapter" data-level="9.2.4" data-path="lm.html"><a href="lm.html#frequentist-results-from-a-two-way-anova"><i class="fa fa-check"></i><b>9.2.4</b> Frequentist Results from a Two-Way ANOVA</a></li>
-<li class="chapter" data-level="9.2.5" data-path="lm.html"><a href="lm.html#multiple-comparisons-and-post-hoc-tests"><i class="fa fa-check"></i><b>9.2.5</b> Multiple Comparisons and Post Hoc Tests</a></li>
-<li class="chapter" data-level="9.2.6" data-path="lm.html"><a href="lm.html#analysis-of-covariance"><i class="fa fa-check"></i><b>9.2.6</b> Analysis of Covariance</a></li>
-<li class="chapter" data-level="9.2.7" data-path="lm.html"><a href="lm.html#multiple-regression-and-collinearity"><i class="fa fa-check"></i><b>9.2.7</b> Multiple Regression and Collinearity</a></li>
-<li class="chapter" data-level="9.2.8" data-path="lm.html"><a href="lm.html#orderedfactors"><i class="fa fa-check"></i><b>9.2.8</b> Ordered Factors and Contrasts</a></li>
-<li class="chapter" data-level="9.2.9" data-path="lm.html"><a href="lm.html#quadratic-and-higher-polynomial-terms"><i class="fa fa-check"></i><b>9.2.9</b> Quadratic and Higher Polynomial Terms</a></li>
+<li class="chapter" data-level="10.2" data-path="lm.html"><a href="lm.html#regression-variants-anova-ancova-and-multiple-regression"><i class="fa fa-check"></i><b>10.2</b> Regression Variants: ANOVA, ANCOVA, and Multiple Regression</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="lm.html"><a href="lm.html#one-way-anova"><i class="fa fa-check"></i><b>10.2.1</b> One-Way ANOVA</a></li>
+<li class="chapter" data-level="10.2.2" data-path="lm.html"><a href="lm.html#frequentist-results-from-a-one-way-anova"><i class="fa fa-check"></i><b>10.2.2</b> Frequentist Results from a One-Way ANOVA</a></li>
+<li class="chapter" data-level="10.2.3" data-path="lm.html"><a href="lm.html#two-way-anova"><i class="fa fa-check"></i><b>10.2.3</b> Two-Way ANOVA</a></li>
+<li class="chapter" data-level="10.2.4" data-path="lm.html"><a href="lm.html#frequentist-results-from-a-two-way-anova"><i class="fa fa-check"></i><b>10.2.4</b> Frequentist Results from a Two-Way ANOVA</a></li>
+<li class="chapter" data-level="10.2.5" data-path="lm.html"><a href="lm.html#multiple-comparisons-and-post-hoc-tests"><i class="fa fa-check"></i><b>10.2.5</b> Multiple Comparisons and Post Hoc Tests</a></li>
+<li class="chapter" data-level="10.2.6" data-path="lm.html"><a href="lm.html#analysis-of-covariance"><i class="fa fa-check"></i><b>10.2.6</b> Analysis of Covariance</a></li>
+<li class="chapter" data-level="10.2.7" data-path="lm.html"><a href="lm.html#multiple-regression-and-collinearity"><i class="fa fa-check"></i><b>10.2.7</b> Multiple Regression and Collinearity</a></li>
+<li class="chapter" data-level="10.2.8" data-path="lm.html"><a href="lm.html#orderedfactors"><i class="fa fa-check"></i><b>10.2.8</b> Ordered Factors and Contrasts</a></li>
+<li class="chapter" data-level="10.2.9" data-path="lm.html"><a href="lm.html#quadratic-and-higher-polynomial-terms"><i class="fa fa-check"></i><b>10.2.9</b> Quadratic and Higher Polynomial Terms</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="lm.html"><a href="lm.html#pendenzen"><i class="fa fa-check"></i><b>9.3</b> Pendenzen</a></li>
+<li class="chapter" data-level="10.3" data-path="lm.html"><a href="lm.html#pendenzen"><i class="fa fa-check"></i><b>10.3</b> Pendenzen</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="residualanalysis.html"><a href="residualanalysis.html"><i class="fa fa-check"></i><b>10</b> Assessing Model Assumptions</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="residualanalysis.html"><a href="residualanalysis.html#model-assumptions"><i class="fa fa-check"></i><b>10.1</b> Model Assumptions</a></li>
-<li class="chapter" data-level="10.2" data-path="residualanalysis.html"><a href="residualanalysis.html#independent-and-identically-distributed"><i class="fa fa-check"></i><b>10.2</b> Independent and Identically Distributed</a></li>
-<li class="chapter" data-level="10.3" data-path="residualanalysis.html"><a href="residualanalysis.html#qqplot"><i class="fa fa-check"></i><b>10.3</b> The QQ-Plot</a></li>
-<li class="chapter" data-level="10.4" data-path="residualanalysis.html"><a href="residualanalysis.html#tempautocorrelation"><i class="fa fa-check"></i><b>10.4</b> Temporal Autocorrelation</a></li>
-<li class="chapter" data-level="10.5" data-path="residualanalysis.html"><a href="residualanalysis.html#spatialautocorrelation"><i class="fa fa-check"></i><b>10.5</b> Spatial Autocorrelation</a></li>
-<li class="chapter" data-level="10.6" data-path="residualanalysis.html"><a href="residualanalysis.html#Heteroscedasticity"><i class="fa fa-check"></i><b>10.6</b> Heteroscedasticity</a></li>
+<li class="chapter" data-level="11" data-path="residualanalysis.html"><a href="residualanalysis.html"><i class="fa fa-check"></i><b>11</b> Assessing Model Assumptions</a><ul>
+<li class="chapter" data-level="11.1" data-path="residualanalysis.html"><a href="residualanalysis.html#model-assumptions"><i class="fa fa-check"></i><b>11.1</b> Model Assumptions</a></li>
+<li class="chapter" data-level="11.2" data-path="residualanalysis.html"><a href="residualanalysis.html#independent-and-identically-distributed"><i class="fa fa-check"></i><b>11.2</b> Independent and Identically Distributed</a></li>
+<li class="chapter" data-level="11.3" data-path="residualanalysis.html"><a href="residualanalysis.html#qqplot"><i class="fa fa-check"></i><b>11.3</b> The QQ-Plot</a></li>
+<li class="chapter" data-level="11.4" data-path="residualanalysis.html"><a href="residualanalysis.html#tempautocorrelation"><i class="fa fa-check"></i><b>11.4</b> Temporal Autocorrelation</a></li>
+<li class="chapter" data-level="11.5" data-path="residualanalysis.html"><a href="residualanalysis.html#spatialautocorrelation"><i class="fa fa-check"></i><b>11.5</b> Spatial Autocorrelation</a></li>
+<li class="chapter" data-level="11.6" data-path="residualanalysis.html"><a href="residualanalysis.html#Heteroscedasticity"><i class="fa fa-check"></i><b>11.6</b> Heteroscedasticity</a></li>
 </ul></li>
 <li class="part"><span><b>III ECOLOGICAL MODELS</b></span></li>
-<li class="chapter" data-level="11" data-path="PART-III.html"><a href="PART-III.html"><i class="fa fa-check"></i><b>11</b> Introduction to PART III</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="PART-III.html"><a href="PART-III.html#model-notations"><i class="fa fa-check"></i><b>11.1</b> Model notations</a></li>
+<li class="chapter" data-level="12" data-path="PART-III.html"><a href="PART-III.html"><i class="fa fa-check"></i><b>12</b> Introduction to PART III</a><ul>
+<li class="chapter" data-level="12.1" data-path="PART-III.html"><a href="PART-III.html#model-notations"><i class="fa fa-check"></i><b>12.1</b> Model notations</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html"><i class="fa fa-check"></i><b>12</b> Zero-inflated Poisson Mixed Model</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#introduction-2"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
-<li class="chapter" data-level="12.2" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#example-data"><i class="fa fa-check"></i><b>12.2</b> Example data</a></li>
-<li class="chapter" data-level="12.3" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#model"><i class="fa fa-check"></i><b>12.3</b> Model</a></li>
+<li class="chapter" data-level="13" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html"><i class="fa fa-check"></i><b>13</b> Zero-inflated Poisson Mixed Model</a><ul>
+<li class="chapter" data-level="13.1" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#introduction-2"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#example-data"><i class="fa fa-check"></i><b>13.2</b> Example data</a></li>
+<li class="chapter" data-level="13.3" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#model"><i class="fa fa-check"></i><b>13.3</b> Model</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="dailynestsurv.html"><a href="dailynestsurv.html"><i class="fa fa-check"></i><b>13</b> Daily nest survival</a>
-<ul>
-<li class="chapter" data-level="13.1" data-path="dailynestsurv.html"><a href="dailynestsurv.html#background-2"><i class="fa fa-check"></i><b>13.1</b> Background</a></li>
-<li class="chapter" data-level="13.2" data-path="dailynestsurv.html"><a href="dailynestsurv.html#models-for-estimating-daily-nest-survival"><i class="fa fa-check"></i><b>13.2</b> Models for estimating daily nest survival</a></li>
-<li class="chapter" data-level="13.3" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model"><i class="fa fa-check"></i><b>13.3</b> Known fate model</a></li>
-<li class="chapter" data-level="13.4" data-path="dailynestsurv.html"><a href="dailynestsurv.html#dailynestsurvstan"><i class="fa fa-check"></i><b>13.4</b> The Stan model</a></li>
-<li class="chapter" data-level="13.5" data-path="dailynestsurv.html"><a href="dailynestsurv.html#prepare-data-and-run-stan"><i class="fa fa-check"></i><b>13.5</b> Prepare data and run Stan</a></li>
-<li class="chapter" data-level="13.6" data-path="dailynestsurv.html"><a href="dailynestsurv.html#check-convergence"><i class="fa fa-check"></i><b>13.6</b> Check convergence</a></li>
-<li class="chapter" data-level="13.7" data-path="dailynestsurv.html"><a href="dailynestsurv.html#look-at-results"><i class="fa fa-check"></i><b>13.7</b> Look at results</a></li>
-<li class="chapter" data-level="13.8" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model-for-irregular-nest-controls"><i class="fa fa-check"></i><b>13.8</b> Known fate model for irregular nest controls</a></li>
+<li class="chapter" data-level="14" data-path="dailynestsurv.html"><a href="dailynestsurv.html"><i class="fa fa-check"></i><b>14</b> Daily nest survival</a><ul>
+<li class="chapter" data-level="14.1" data-path="dailynestsurv.html"><a href="dailynestsurv.html#background-2"><i class="fa fa-check"></i><b>14.1</b> Background</a></li>
+<li class="chapter" data-level="14.2" data-path="dailynestsurv.html"><a href="dailynestsurv.html#models-for-estimating-daily-nest-survival"><i class="fa fa-check"></i><b>14.2</b> Models for estimating daily nest survival</a></li>
+<li class="chapter" data-level="14.3" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model"><i class="fa fa-check"></i><b>14.3</b> Known fate model</a></li>
+<li class="chapter" data-level="14.4" data-path="dailynestsurv.html"><a href="dailynestsurv.html#dailynestsurvstan"><i class="fa fa-check"></i><b>14.4</b> The Stan model</a></li>
+<li class="chapter" data-level="14.5" data-path="dailynestsurv.html"><a href="dailynestsurv.html#prepare-data-and-run-stan"><i class="fa fa-check"></i><b>14.5</b> Prepare data and run Stan</a></li>
+<li class="chapter" data-level="14.6" data-path="dailynestsurv.html"><a href="dailynestsurv.html#check-convergence"><i class="fa fa-check"></i><b>14.6</b> Check convergence</a></li>
+<li class="chapter" data-level="14.7" data-path="dailynestsurv.html"><a href="dailynestsurv.html#look-at-results"><i class="fa fa-check"></i><b>14.7</b> Look at results</a></li>
+<li class="chapter" data-level="14.8" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model-for-irregular-nest-controls"><i class="fa fa-check"></i><b>14.8</b> Known fate model for irregular nest controls</a></li>
 <li class="chapter" data-level="" data-path="dailynestsurv.html"><a href="dailynestsurv.html#further-reading-4"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html"><i class="fa fa-check"></i><b>14</b> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</a>
-<ul>
-<li class="chapter" data-level="14.1" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#introduction-3"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
-<li class="chapter" data-level="14.2" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#data-description"><i class="fa fa-check"></i><b>14.2</b> Data description</a></li>
-<li class="chapter" data-level="14.3" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#model-description"><i class="fa fa-check"></i><b>14.3</b> Model description</a></li>
-<li class="chapter" data-level="14.4" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#the-stan-code"><i class="fa fa-check"></i><b>14.4</b> The Stan code</a></li>
-<li class="chapter" data-level="14.5" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#call-stan-from-r-check-convergence-and-look-at-results"><i class="fa fa-check"></i><b>14.5</b> Call Stan from R, check convergence and look at results</a></li>
+<li class="chapter" data-level="15" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html"><i class="fa fa-check"></i><b>15</b> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</a><ul>
+<li class="chapter" data-level="15.1" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#introduction-3"><i class="fa fa-check"></i><b>15.1</b> Introduction</a></li>
+<li class="chapter" data-level="15.2" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#data-description"><i class="fa fa-check"></i><b>15.2</b> Data description</a></li>
+<li class="chapter" data-level="15.3" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#model-description"><i class="fa fa-check"></i><b>15.3</b> Model description</a></li>
+<li class="chapter" data-level="15.4" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#the-stan-code"><i class="fa fa-check"></i><b>15.4</b> The Stan code</a></li>
+<li class="chapter" data-level="15.5" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#call-stan-from-r-check-convergence-and-look-at-results"><i class="fa fa-check"></i><b>15.5</b> Call Stan from R, check convergence and look at results</a></li>
 </ul></li>
 <li class="part"><span><b>IV APPENDICES</b></span></li>
 <li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
@@ -319,12 +297,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="PART-I" class="section level1" number="1">
+<div id="PART-I" class="section level1">
 <h1><span class="header-section-number">1</span> Introduction to PART I</h1>
 <p><a href="" target="_blank"><img src="images/part_I.jpg" width="410" style="display: block; margin: auto;" /></a></p>
 <hr />
 <p>During our courses we are sometimes asked to give an introduction to some R-related stuff covering data analysis, presentation of results or rather specialist topics in ecology. In this part we present collected these introduction and try to keep them updated. This is also a commented collection of R-code that we documented for our own work. We hope this might be useful olso for other readers.</p>
-<div id="further-reading" class="section level2" number="1.1">
+<div id="further-reading" class="section level2">
 <h2><span class="header-section-number">1.1</span> Further reading</h2>
 <ul>
 <li><a href="http://r4ds.had.co.nz">R for Data Science by Garrett Grolemund and Hadley Wickham</a>: Introduces the tidyverse framwork. It explains how to get data into R, get it into the most useful structure, transform it, visualise it and model it.</li>

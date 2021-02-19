@@ -49,7 +49,7 @@ Scatter also is called spread, scale or variance. Variance parameters describe h
 The term $(n-1)$ is called the degrees of freedom. It is used in the denominator of the variance formula instead of $n$ to prevent underestimating the variance. Because $\bar{x}$ is in average closer to $x_i$ than the
 unknown true mean $\mu$ would be, the variance would be underestimated if $n$ is used in the denominator. 
 
-{\footnotesize The maximum likelihood estimate (Chapter xxx.xx) of the variance corresponds to the variance formula using $n$ instead of $n-1$ in the denominator, see, e.g., @Royle.2008b.} 
+<font size="1"> The maximum likelihood estimate (Chapter xxx.xx) of the variance corresponds to the variance formula using $n$ instead of $n-1$ in the denominator, see, e.g., @Royle.2008b.</font>
 
 The variance is used to compare the degree of scatter among different groups. However, its values are difficult to interpret because of the squared unit. Therefore, the square root of the variance, the standard deviation is
 normally reported:
@@ -76,7 +76,7 @@ The boxplot is an appealing tool for comparing location, variance and distributi
 
 ### Correlations
 
-A correlation measures the strength with which characteristics of two variables are associated with each other (co-occurr). If both variables are numeric, we can visualize the correlation using a scatterplot.
+A correlation measures the strength with which characteristics of two variables are associated with each other (co-occur). If both variables are numeric, we can visualize the correlation using a scatterplot.
 
 ```{r scatterplot, fig.cap="Scatterplot of the length of ell and the comfort temperature of statistics course participants."}  
 par(mar=c(5,4,1,1))
@@ -155,7 +155,7 @@ The proportion of variance explained by each component is, beside the loadings, 
 summary(pca)
 ```
 
-\footnotesize{Ridge regression is similar to doing a PCA within a linear model while components with low variance are shrinked to a higher degree than components with a high variance.}
+<font size="1">Ridge regression is similar to doing a PCA within a linear model while components with low variance are shrinked to a higher degree than components with a high variance.</font>
 
 
 ## Inferential statistics
@@ -401,7 +401,6 @@ Another nice property of the posterior distribution in our example is that a hor
 
 mod <- lm(y~1)
 bsim <- sim(mod, n.sim=20000)
-modssp <- mod; bsimssp <- bsim # save for a chunk later
 xrange <- range(bsim@coef)
 yrange <- range(bsim@sigma)
 
@@ -449,12 +448,12 @@ Small p-values indicate that it is rather unlikely to observe the data or more e
 Null hypothesis testing is problematic. We discuss some of the problems after having introduces the most commonly used classical tests. 
 
 
-### One-sample t-test
+### Comparison of a sample with a fixed values (one-sample t-test)
 
 A null hypothesis is used to construct a model that can generate (hypothetical) data. For example, a null hypothesis could be $H_0:$"The mean of Snowfinch weights is exactly 40g."
 A normal distribution with a mean of $\mu_0=40$ and a variance equal to the estimated variance in the data $s^2$ is then assumed to describe how we would expect the data to look like given the null hypothesis was true. From that model it is possible to calculate the distribution of hypothetical means of many different hypothetical samples of sample size $n$. The result is a t-distribution (Fig. \@ref(fig:nht)). In classical tests, the distribution is standardized so that its variance was one. Then the sample mean, or in classical tests a standardized difference between the mean and the hypothetical mean of the null hypothesis (here 40g), called test statistics $t = \frac{\bar{y}-\mu_0}{\frac{s}{\sqrt{n}}}$, is compared to that (standardized) t-distribution. If the test statistics falls well within the expected distribution the null hypothesis is accepted. Then, the data is well compatible with the null hypothesis. However, if the test statistics falls in the tails or outside the distribution, then the null hypothesis is rejected and we could write that the mean weight of Snowfinches is statistically significantly different from 40g. Unfortunately, we cannot infer about the probability of the null hypothesis and how relevant the result is.
 
-```{r nht, fig.cap='Illustration of a one-sample t-test. The blue histogram shows the distribution of the measured weights with the sample mean (lightblue) indicated as a vertical line. The black line is the t-distribution that shows how many hypothetical sample means are expected to be distributed if the big population of Snowfinches has a mean weight of 40g. (the null hypothesis). Orange area shows the area of the t-distribution that lays equal or farther away from 40g than the sample mean. The orange area is the p-value.', fig.width=8, fig.height=5, fig.align='center', fig.cap='',echo=FALSE}
+```{r nht, fig.cap='Illustration of a one-sample t-test. The blue histogram shows the distribution of the measured weights with the sample mean (lightblue) indicated as a vertical line. The black line is the t-distribution that shows how hypothetical sample means are expected to be distributed if the big population of Snowfinches has a mean weight of 40g (i.e., if the null hypothesis was true). Orange area shows the area of the t-distribution that lays equal or farther away from 40g than the sample mean. The orange area is the p-value.', fig.width=8, fig.height=5, fig.align='center',echo=FALSE}
 # use density function for t-distribution as given in Gelman et al. (2014) BDA-book
 dt_BDA <- function(x,v,m,s) gamma((v+1)/2)/(gamma(v/2)*sqrt(v*pi)*s)*(1+1/v*((x-m)/s)^2)^(-(v+1)/2)
 
@@ -473,499 +472,174 @@ index <- x<= 40- (mean(y)-40)
 polygon(c(x[index], rev(x[index])), c(rep(0, sum(index)), rev(dy[index])), border=NA, col="orange")
 ```
 
+We can use the r-function `t.test` to calculate the p-value of a one sample t-test.
 
 ```{r,echo=TRUE}
 t.test(y, mu=40)
 ```
 
 
+The output of the r-function `t.test` also includes the mean and the 95% confidence interval (or compatibility or uncertainty interval) of the mean. The CI could, alternatively, be obtained as the 2.5% and 97.5% quantiles of a t-distribution with a mean equal to the sample mean, degrees of freedom equal to the sample size minus one and a standard deviation equal to the standard error of the mean.
 
-instead of reporting the p-value, report Confidence interval
-```{r, results=FALSE}
+```{r}
 # lower limit of 95% CI
-mean(y) + qt(0.025, df=7)*sd(y)/sqrt(n) 
+mean(y) + qt(0.025, df=length(y)-1)*sd(y)/sqrt(n) 
+
 # upper limit of 95% CI
-mean(y) + qt(0.975, df=7)*sd(y)/sqrt(n) 
+mean(y) + qt(0.975, df=length(y)-1)*sd(y)/sqrt(n) 
 ```
 
+When applying the Bayes theorem for obtaining the posterior distribution of the mean we end up with the same t-distribution as described above, in case we use flat prior distributions for the mean and the standard deviation. Thus, the two different approaches end up with the same result! 
 
-```{r,fig.width=6, fig.height=3, fig.align='center', fig.cap='',echo=FALSE}
-par(mar=c(5, 4.5, 0, 2))
-hist(y, col="blue", xlim=c(30, 52), las=1, freq=FALSE, main=NA, ylim=c(0, 0.3))
-abline(v=mean(y), lwd=3, col="lightblue")
-abline(v=40, lwd=2)
-text(41, 0.27, "H0", xpd=NA)
-x <- seq(30, 52, length=200)
-dy <- dt_BDA(x, v=7, m=mean(y), s=sd(y)/sqrt(n))
-lines(x, dy)
-segments((mean(y) + qt(0.025, df=7)*sd(y)/sqrt(n)), 0,
-         mean(y) + qt(0.975, df=7)*sd(y)/sqrt(n), 0, lwd=10, col="orange", lend="butt")
-
-```
-
-
-
- Posterior distribution
-```{r, fig.cap='',echo=FALSE}
+```{r, fig.cap='Illustration of the posterior distribution of the mean. The blue histogram shows the distribution of the measured weights with the sample mean (lightblue) indicated as a vertical line. The black line is the posterior distribution that shows what we know about the mean after having looked at the data. The area under the posterior density function that is larger than 40 is the posterior probability of the hypothesis that the true mean Snwofinch weight is larger than 40g.',echo=TRUE, fig.height=6}
 par(mar=c(4.5, 5, 2, 2))
 hist(y, col="blue", xlim=c(30,52), las=1, freq=FALSE, main=NA, ylim=c(0, 0.3))
 abline(v=mean(y), lwd=2, col="lightblue")
 abline(v=40, lwd=2)
 lines(density(bsim@coef))
-x <- seq(20, 60, length=100)
-dy <- dt_BDA(x, v=7, m=mean(y), s=sd(y)/sqrt(n))
-lines(x, dy, col="grey", lty=2)
 text(45, 0.3, "posterior distribution\nof the mean of y", cex=0.8, adj=c(0,1), xpd=NA)
 
-text(45.5, 0.2, "t-distr.", cex=0.8, adj=c(0,1), col="grey")
+```
+
+The posterior probability of the hypothesis that the true mean Snowfinch weight is larger than 40g, $P(H:\mu>40) =$, is equal to the proportion of simulated random values from the posterior distribution, saved in the vector `bsim@coef`, that are larger than 40.
+
+```{r}
+# Two ways of calculating the proportion of values 
+# larger than a specific value within a vector of values
+round(sum(bsim@coef[,1]>40)/nrow(bsim@coef),2)
+
+round(mean(bsim@coef[,1]>40),2)
+
+# Note: logical values TRUE and FALSE become 
+# the numeric values 1 and 0 within the functions sum() and mean()
+
+```
+
+We, thus, can be pretty sure that the mean Snowfinch weight (in the big world population) is larger than 40g. Such a conclusion is not very informative, because it does not tell us how much larger we can expect the mean Snowfinch weight to be. Therefore, we prefer reporting a credible interval (or compatibility interval or uncertainty interval) that tells us what values for the mean Snowfinch weight are compatible with the data (given the data model we used realistically reflects the data generating process). Based on such an interval, we can conclude that we are pretty sure that the mean Snowfinch weight is between 40 and 48g.   
+
+
+```{r}
+# 80% credible interval, compatibility interval, uncertainty interval
+quantile(bsim@coef[,1], probs=c(0.1, 0.9))
+
+# 95% credible interval, compatibility interval, uncertainty interval
+quantile(bsim@coef[,1], probs=c(0.025, 0.975))
+
+# 99% credible interval, compatibility interval, uncertainty interval
+quantile(bsim@coef[,1], probs=c(0.005, 0.995))
+
 
 ```
 
 
- Two different theories - one single result!
+
+### Comparison of the locations between two groups (two-sample t-test)
+
+Many research questions aim at measuring differences between groups. For example, we could be curious to know how different in size car owner are from people not owning a car. 
+A boxplot is a nice possibility to visualize the ell length measurements of two (or more) groups (Fig. \@ref(fig:boxplt)). From the boxplot, we do not see how many observations are in the two samples. We can add that information to the plot. The boxplot visualizes the samples but it does not show what we know about the big (unmeasured) population mean. To show that, we need to add a compatibility interval (or uncertainty interval, credible interval, confidence interval, in brown in Fig. \@ref(fig:boxplt)). 
 
 
- Posterior probability
-Probability $P(H:\mu<=40) =$ `r round(mean(bsim@coef[,1]<=40),2)`
-```{r,fig.width=8, fig.height=6, fig.align='center', fig.cap='',echo=FALSE}
-par(mar=c(4.5, 5, 2, 2))
-hist(y, col="blue", xlim=c(30,52), las=1, freq=FALSE, main=NA, ylim=c(0, 0.3))
-abline(v=mean(y), lwd=2, col="lightblue")
-abline(v=40, lwd=2)
-post <- density(bsim@coef)
-lines(post)
-text(45, 0.3, "posterior distribution\nof the mean of y", cex=0.8, adj=c(0,1), xpd=NA)
-index <- post$x<= 40
-polygon(c(post$x[index], rev(post$x[index])), c(rep(0, sum(index)), rev(post$y[index])), border=NA, col="orange")
-
-```
-
-
-
-### Comparison of the locations between two groups 
-
-Boxplot:  
-Median, 50% box, extremes observation within 1.5 times the interquartile range, outliers  
-
-The uncertainties of the means do not show the uncertainty of the difference between the means!  
-
-```{r, echo=FALSE}
+```{r boxplt, fic.cap='Ell length of car owners (Y) and people not owning a car (N). Horizontal bar = median, box = interquartile range, whiskers = extremest observation within 1.5 times the interquartile range from the quartile, circles=observations farther than 1.5 times the interquartile range from the quartile. Filled brown circles = means, vertical brown bars = 95% compatibility interval.',echo=FALSE}
 par(mar=c(4.5,4.5,2,0.2))
-boxplot(ell~birthday, data=dat, las=1, ylab="Length of ell (cm)", col="grey", boxwex=0.2,
-        ylim=c(30, 45))
+boxplot(ell~car, data=dat, las=1, ylab="Length of ell (cm)", col="grey", boxwex=0.2,
+        ylim=c(35, 50))
 
-means <- tapply(dat$ell, dat$birthday, mean)
-semeans <- tapply(dat$ell, dat$birthday, function(x) sd(x)/sqrt(length(x)))
-segments(c(1.3,2.3), means-2*semeans, c(1.3,2.3), means+2*semeans, lwd=2)
-points(c(1.3,2.3), means, pch=21, bg="white")
+means <- tapply(dat$ell, dat$car, mean)
+semeans <- tapply(dat$ell, dat$car, function(x) sd(x)/sqrt(length(x)))
+segments(c(1.2,2.2), means-2*semeans, c(1.3,2.3), means+2*semeans, lwd=2, col="brown")
+points(c(1.2,2.2), means, pch=21, bg="brown")
+text(x=c(1,2), y=c(36, 36), labels=paste("n=", table(dat$car)))
 
 ```
 
-### Difference between two means
+When we added the two means with a compatibility interval, we see what we know about the two means, but we do still not see what we know about the difference between the two means. The uncertainties of the means do not show the uncertainty of the difference between the means. To do so, we need to extract the difference between the two means from a model that describes (abstractly) how the data has been generated. Such a model is a linear model that we will introduce in Chapter \@ref(lm). The second parameter measures the differences in the means of the two groups. And from the simulated posterior distribution we can extract a 95% compatibility interval.
+Thus, we can conclude that the average ell length of car owners is with high probability between 0.5 cm smaller and 2.5 cm larger than the averag ell of people not having a car.
+
 
 ```{r, echo=TRUE}
-mod <- lm(ell~birthday, data=dat)
+mod <- lm(ell~car, data=dat)
 mod
 bsim <- sim(mod, n.sim=nsim)
-quantile(bsim@coef[,2], prob=c(0.025, 0.5, 0.975))
+quantile(bsim@coef[,"carY"], prob=c(0.025, 0.5, 0.975))
 ```
 
-### Two-sample t-test
+The corresponding two-sample t-test gives a p-value for the null hypothesis: "The difference between the two means equals zero.", a confidence interval for the difference and the two means. While the function `lm`gives the difference Y minus N, the function `t.test`gives the difference N minus Y. Luckily the two means are also given in the output, so we know which group mean is the larger one. 
 
 ```{r, echo=TRUE}
-t.test(ell~birthday, data=dat, var.equal=TRUE)
+t.test(ell~car, data=dat, var.equal=TRUE)
 ```
 
+In both possibilities, we used to compare the to means, the Bayesian posterior distribution of the difference and the t-test or the confidence interval of the difference, we used a data model. We thus assumed that the observations are normally distributed. In some cases, such an assumption is not a reasonable assumption. Then the result is not reliable. In such cases, we can either search for a more realistic model or use non-parametric (also called distribution free) methods. Nowadays, we have almost infinite possibilities to construct data models (e.g. generalized linear models and beyond). Therefore, we normally start looking for a model that fits the data better. However, in former days, all these possiblities did not exist (or were not easily available for non-mathematicians). Therefore, we here introduce two of such non-parametric methods, the Wilcoxon-test (or Mann-Whitney-U-test) and the randomisation test. 
 
+Some of the distribution free statistical methods are based on the rank instead of the value of the observations. The principle of the Wilcoxon-test is to rank the observations and sum the ranks per group. It is not completely true that the non-parametric methods do not have a model. The model of the Wilcoxon-test "knows" how the difference in the sum of the ranks between two groups is distributed given the mean of the two groups do not differ (null hypothesis). Therefore, it is possible to get a p-value, e.g. by the function `wilcox.test`.
 
-### Wilxocon test
 ```{r, echo=TRUE}
-wilcox.test(ell~birthday, data=dat)
+wilcox.test(ell~car, data=dat)
 ```
 
+The note in the output tells us that ranking is ambiguous, when some values are equal. Equal values are called ties when they should be ranked.
 
-#### Randomisation test
+The result of the Wilcoxon-test tells us how probable it is to observe the difference in the rank sum between the two sample or a more extreme difference given the means of the two groups are equal. That is at least something.
+
+A similar result is obtained by using a randomisation test. This test is not based on ranks but on the original values. The aim of the randomisation is to simulate a distribution of the difference in the arithmetic mean between the two groups assuming this difference would be zero. To do so, the observed values are randomly distributed among the two groups. Because of the random distribution among the two groups, we expect that, if we repeat that virtual experiment many times, the average difference between the group means would be zero (both virtual samples are drawn from the same big population). 
+
+We can use a loop in R for repeating the random re-assignement to the two groups and, each time, extracting the difference between the group means. As a result, we have a vector of many (`nsim`) values that all are possible differences between group means given the two samples were drawn from the same population. The proportion of these values that have an equal or larger absolute value give the probability that the observed or a larger difference between the group means is observed given the null hypothesis would be true, thus that is a p-value.
+
 
 ```{r, echo=TRUE}
 diffH0 <- numeric(nsim)
 for(i in 1:nsim){
-  randbirthday <- sample(dat$birthday)
-  rmod <- lm(ell~randbirthday, data=dat)
-  diffH0[i] <- coef(rmod)[2]
+  randomcars <- sample(dat$car)
+  rmod <- lm(ell~randomcars, data=dat)
+  diffH0[i] <- coef(rmod)["randomcarsY"]
 }
-mean(abs(diffH0)>abs(coef(mod)[2])) # p-value
+mean(abs(diffH0)>abs(coef(mod)["carY"])) # p-value
 ```
 
-```{r, echo=FALSE}
+Visualizing the possible differences between the group means given the null hypothesis was true shows that the observed difference is well within what is expected if the two groups would not differ in their means (Fig. \@ref(fig:ranhist)). 
+
+
+```{r ranhist, fig.cap='Histogram if differences between the means of randomly assigned groups (grey) and the difference between the means of the two observed groups (red)', echo=FALSE}
 par(mar=c(5.5, 4.5, 0.5, 0), cex=0.8)
 hist(diffH0, main=NA); abline(v=coef(mod)[2], lwd=2, col="red", main=NA)
 ```
 
+The randomization test results in a p-value and, we could also report the observed difference between the group means. However, it does not tell us, what values of the difference all would be compatible with the data. We do not get an uncertainty measurement for the difference. 
 
+In order to get a compatibility interval without assuming a distribution for the data (thus non-parametric) we could bootstrap the samples. 
 
-### Chisquare test
-The chisquare test is used for two frequentist purposes.  
-1. Testing for correlations between two categorical variables.  
-2. Comparison of two distributions (goodness of fit test)
+Bootstrapping is sampling observations from the data with replacement. For example, if we have a sample of 8 observations, we draw 8 times a random observation from the 8 observation. Each time, we assume that all 8 observations are available. Thus a bootstrapped sample could include some observations several times, whereas others are missing. In this way, we simulate the variance in the data that is due to the fact that our data do not contain the whole big population.  
 
-When testing for correlations between two categorical variables, then the nullhypothesis is "there is no correlation". The data can be displayed in cross-tables. 
-```{r, echo=TRUE}
-# Example: correlation between birthday preference and car ownership
-table(dat$birthday, dat$car)
-```
-
-Given the nullhypothesis is true, we expect that the distribution of the data in each column of the cross-table is similar to the distribution of the row-sums. And, the distribution of the data in each row should be similar to the distribution of the column-sums. The chisquare test statistics $\chi^2$ measures the deviation of the data from this expected distribution of the data in the cross-table. 
-
-For calculating the chisquare test statistics $\chi^2$, we first have to obtain for each cell in the cross-table the expected value $E_{ij}$ = rowsum*colsum/total.
-
-$\chi^2$ measures the difference between the observed $O_{ij}$ and expected $E_{ij}$ values as:  
-$\chi^2=\sum_{i=1}^{m}\sum_{j=1}^{k}\frac{(O_{ij}-E_{ij})^2}{E_{ij}}$ where $m$ is the number of rows and $k$ is the number of columns. 
-The $\chi^2$-distribution has 1 parameter, the degrees of freedom $v$ = $(m-1)(k-1)$.
-
-```{r, echo=FALSE, fig.height=4, fig.width=7}
-par(mar=c(4.5, 4.5, 0,0))
-x <- seq(0, 10, length=100)
-y <- dchisq(x, 2)
-plot(x,y, type="l", lwd=2, las=1, xlab="Chisquare-value", ylab="Density")
-text(5, 0.08, "df=2")
-y <- dchisq(x, 6)
-lines(x, y, lwd=2, col="blue")
-text(6, 0.15, "df=6", col="blue")
-
-```
-
-R is calculating the $\chi^2$ value for specific cross-tables, and it is also giving the p-values, i.e., the probability of obtaining the observed or a higher $\chi^2$ value given the nullhypothesis is true by comparing the observed $\chi^2$ with the corresponding chisquare distribution.
+Also bootstrapping can be programmed in R using a loop. 
 
 ```{r, echo=TRUE}
-chisq.test(table(dat$birthday, dat$car))
-```
-
-The warning (that is suppressed in the rmarkdown version, but that you will see if you run the code on your own computer) is given, because in our example some cells have counts less than 5. In such cases, the Fisher's exact test should be preferred. This test calculates the p-value analytically using probability theory, whereas the chisquare test relies on the assumption that the  $\chi^2$ value follows a chisquare distribution. The latter assumption holds better for larger sample sizes.
-
-```{r, echo=TRUE}
-fisher.test(table(dat$birthday, dat$car))
-```
-
- 
-
-
-## Problems of null hypothesis testing
-
-Read about misuse of p-values in @Amrhein.2017.  
-
-
-
-## Bootstrap
-
-* Produces the distribution of a test statistics given the null hypothesis.  
-* assumption: all observations are independent  
-* becomes unfeasible when data is structured
-
-
-```{r, echo=TRUE}
-diffboot <- numeric(nsim)
+diffboot <- numeric(1000)
 for(i in 1:nsim){
-  nbirthday <- 1
-  while(nbirthday==1){
+  ngroups <- 1
+  while(ngroups==1){
     bootrows <- sample(1:nrow(dat), replace=TRUE)
-    nbirthday <- length(unique(dat$birthday[bootrows]))
-  }
-  rmod <- lm(ell~birthday, data=dat[bootrows,])
+    ngroups <- length(unique(dat$car[bootrows]))
+    }
+  rmod <- lm(ell~car, data=dat[bootrows,])
   diffboot[i] <- coef(rmod)[2]
 }
 quantile(diffboot, prob=c(0.025, 0.975))
 ```
 
+The resulting values for the difference between the two group means can be interpreted as the distribution of those differences, if we had repeated the study many times (Fig. \@ref(fig:histboot)).
+A 95% interval of the distribution corresponds to a 95% compatibility interval (or confidence interval or uncertainty interval). 
 
-* result is a confidence interval  
-* assumption: all observations are independent!
-
-```{r, echo=TRUE}
+```{r histboot, fig.cap='Histogram of the boostrapped differences between the group means (grey) and the observed difference.', echo=TRUE}
 hist(diffboot); abline(v=coef(mod)[2], lwd=2, col="red")
 ```
 
 
-
-
-## 3 methods for getting the posterior distribution
-
-* analytically
-* approximation
-* Monte Carlo simulation
-
-### Monte Carlo simulation (parametric bootstrap)  
-  
-Monte Carlo integration: numerical solution of $\int_{-1}^{1.5} F(x) dx$ 
-```{r, fig.cap='',echo=FALSE}
-# a function that is hard to integrate
-myfunction <- function(x) 2/x * sin(x) + 0.5*cos(4*x) + sin(2*abs(x-0.2)) + asin(x/3)
-x <- seq(-1.5, 2, length=100)
-par(mar=c(4.5,4.5,0,1))
-plot(x, myfunction(x), type="l", las=1, ylim=c(0, 3.5), ylab="F(x)")
-rect(-1, 0, 1.5, 3.3)
-nsim <- 5000
-ranx <- runif(nsim, -1, 1.5)
-rany <- runif(nsim, 0, 3.3)
-colkey <- c("orange", "blue")[as.numeric(myfunction(ranx)<rany)+1]
-points(ranx, rany, col=colkey, pch=16, cex=0.5)
-lines(x, myfunction(x), lwd=2)
-```
-
-
-sim is solving a mathematical problem by simulation
-How sim is simulating to get the marginal distribution of $\mu$:
-
-```{r, fig.cap='',echo=FALSE}
-mod <- modssp; bsim <- bsimssp
-layout(matrix(c(2,0,1,3), ncol=2, byrow=TRUE), heights=c(1,2),  
-       width=c(2,1))
-par(mar=c(5.1, 4.1, 0.2, 0.2), cex.lab=0.8, cex.axis=0.8) 
-plot(bsim@coef, bsim@sigma, xlab=expression(theta), ylab=expression(sigma), las=1, cex=0.5, xlim=xrange, ylim=yrange, col=rgb(0,0,0,0.1), pch=16)
-abline(h=6.5)
-text(33, 10, paste(expression(p(theta|y, sigma))), adj=c(0,1), cex=0.8)
-text(33, 8, "= normal distribution", adj=c(0,1), cex=0.8)
-text(33, 12, "step 2", adj=c(0,1))
-par(mar=c(0, 4.1, 1, 0.2)) 
-histtheta <- hist(bsim@coef, plot=FALSE)
-plot(histtheta$breaks, seq(0, max(histtheta$density)+0.01, length= 
-                             length(histtheta$breaks)), type="n", xaxt="n", xlim = xrange, 
-     las=1, ylab = "Density", yaxs="i")
-rect(histtheta$breaks[1:(length(histtheta$breaks)-1)], 0, 
-     histtheta$breaks[2:(length(histtheta$breaks))], histtheta$density, 
-     col=grey(0.5))
-mtext(paste(expression(p(theta|y)), "= t-distribution"), side=3, adj=0, cex=0.8)
-par(mar=c(5.1, 0, 0.2, 0.2)) 
-histsigma<- hist(bsim@sigma, plot=FALSE)
-plot(seq(0, max(histsigma$density)+0.01, length=length(histsigma$breaks)), 
-     histsigma$breaks, type="n", yaxt="n", ylim=yrange, 
-     xlab="Density", xaxs="i",
-     xaxt="n")
-axis(1, at=seq(0, 0.4, by=0.1), labels=c(NA, 0.1, 0.3, 0.3, 0.4))
-rect(0, histsigma$breaks[2:(length(histsigma$breaks))], histsigma$density, 
-     histsigma$breaks[1:(length(histsigma$breaks)-1)],col=grey(0.5))
-text(0.04, 18, "p(sigma|y) = \nInv-Chisq-dist.", adj=c(0,1), cex=0.8)
-abline(h=6.5)
-text(0.02, 9, "step 1", adj=c(0,1))
-```
-
-
-
-
-### Grid approximation
-  
-$p(\theta|y) = \frac{p(y|\theta)p(\theta)}{p(y)}$ 
-  
-For example, one coin flip (Bernoulli model) 
-  
-data: y=0  (a tail)  
-likelihood: $p(y|\theta)=\theta^y(1-\theta)^{(1-y)}$
-
-
-```{r,  fig.cap='',echo=FALSE}
-# analytical solution
-par(mar=c(4.5, 5, 0.2, 0.2)) 
-xa <- seq(0, 1, length=100)
-posta <- dbeta(xa, 2, 3)
-x<- seq(0.05, 0.95, length=10)
-breaksx<- seq(0, 1, length=11)
-bandwitdth <- 0.1
-
-y <- 0
-prior <- dbeta(x, 2, 2)
-lik <- x^y*(1-x)^(1-y)
-plot(x,prior, type="b", col="blue", ylim=c(0,2), xlim=c(0,1), lwd=2, 
-     xlab=expression(theta), ylab="Density", las=1)
-lines(xa, posta, lwd=2, col=grey(0.5), lty=3)
-rect(breaksx[1:10], rep(0, 10), breaksx[2:11], prior, border="blue")
-text(0.65, 2, "prior", col="blue", adj=c(0,1), cex=0.9)
-lines(x, lik, type="b", lwd=2, col="orange", cex=0.9)
-text(0.65, 1.8, "likelihood", col="orange", adj=c(0,1), cex=0.9)
-text(0.65, 1.6, "posterior (approx.)",adj=c(0,1), cex=0.9)
-text(0.75, 1.4, "posterior (anal.)", col=grey(0.5), adj=c(0,1), cex=0.9)
-
-post0 <- lik*prior
-post <- post0/(sum(0.1*post0))
-lines(x, post, type="b", col=1, lwd=2)
-
-```
-
-
-### Markov chain Monte Carlo simulations
-
-* Markov chain Monte Carlo simulation (BUGS, Jags)
-* Hamiltonian Monte Carlo (Stan)
-
-```{r, echo=FALSE}
-par(mar=c(3,3,3,3), cex=2)
-plot(c(0,1), c(0,1), type="n", axes=FALSE, xlab=NA, ylab=NA)
-text(0,0.8, "likelihood\ndata\npriors\ninitial values", adj=c(0,1))
-arrows(0.4, 0.7, 0.6, 0.7, length=0.2, lwd=5)
-text(0.63,0.75, "(joint) posterior\ndistribution", adj=c(0,1))
-```
-
-
-
-## Analysis of variance ANOVA
-The aim of an ANOVA is to compare means of groups. In a frequentist analysis, this is done by comparing the between-group with the within-group variance. The result of a Bayesian analysis is the joint posterior distribution of the group means.
-
-```{r, echo=FALSE, fig.cap="Number of stats courses students have taken before starting a PhD in relation to their feeling about statistics."}
-y <- log(dat$nrcourses+1)
-group <- dat$statsfeeling
-boxplot(y~group, las=1, names=levels(group), ylab="log(Nr stats courses+1)",
-    boxwex=0.5, col="orange", cex.lab=1.4, ylim=c(-0.2, max(y)), cex.axis=1.4)
-npg <- table(group)
-text(1:3, rep(-0.15, 3), npg, cex=1.4, xpd=NA)
-text(0.6, -0.15, "n =", cex=1.4, xpd=NA)
-
-```
-
-In the frequentist ANOVA, the following three sum of squared distances (SS) are used to calculate the total, the between- and within-group variances:  
-Total sum of squares =  SST = $\sum_1^n{(y_i-\bar{y})^2}$  
-Within-group SS = SSW = $\sum_1^n{(y_i-\bar{y_g})^2}$: unexplained variance  
-Between-group SS = SSB = $\sum_1^g{n_g(\bar{y_g}-\bar{y})^2}$: explained variance  
-
-The between-group and within-group SS sum to the total sum of squares: SST=SSB+SSW. Attention: this equation is only true in any case for a simple one-way ANOVA (just one grouping factor). If the data are grouped according to more than one factor (such as in a two- or three-way ANOVA), then there is one single solution for the equation only when the data is completely balanced, i.e. when there are the same number of observations in all combinations of factor levels. For non-balanced data with more than one grouping factor, there are different ways of calculating the SSBs, and the result of the F-test described below depends on the order of the predictors in the model.   
-
-```{r, echo=FALSE, fig.cap="Visualisation of the total, between-group and within-group sum of squares. Points are observations; long horizontal line is the overall mean; short horizontal lines are group specific means."}
-n<-length(y)
-par(mfrow=c(1,3), mar=c(4,3,3,0.5), oma=c(0,2,0,0))
-# total sum of squares
-plot(1:n, y, las=1, cex.lab=1.2, pch=16, ylab=NA, 
-     xlab="Observation ID", main="SST", cex.main=1.5)
-abline(h=mean(y))
-segments(1:n, mean(y), 1:n, y, col="orange", lwd=1)
-mtext("Log(Nr stats courses +1)", side=2, outer=TRUE)
-text(n*1.1, mean(y), "=", xpd=NA, cex=2)
-
-# sum of squares between groups
-mpg <- tapply(y, group, mean)
-plot(1:n, y, las=1, cex.lab=1.2, pch=16, ylab=NA, 
-     xlab="Observation ID", main="SSB", yaxt="n", cex.main=1.5)
-segments(c(1, cumsum(npg)[1:2]+1), mpg, cumsum(npg), mpg)
-abline(h=mean(y))
-segments(1:n, rep(mpg, times=npg), 1:n, mean(y), col="orange", 
-         lwd=1)
-text(n*1.1, mean(y), "+", xpd=NA, cex=2)
-
-# sum of squares within groups
-plot(1:n, y, las=1, cex.lab=1.2, pch=16, ylab=NA, 
-     xlab="Observation ID", main="SSW", yaxt="n", cex.main=1.5)
-segments(c(1, cumsum(npg)[1:2]+1), mpg, cumsum(npg), mpg)
-segments(1:n, rep(mpg, times=npg), 1:n, y, col="orange", lwd=1)
-```
-
-
-In order to make SSB and SSW comparable, we have to divide them by their degrees of freedoms. For the within-group SS, SSW, the degrees of freedom is the number of obervations minus the number of groups ($g$), because $g$ means have been estimated from the data. If the $g$ means are fixed and $n-g$ data points are known, then the last $g$ data points are defined, i.e., they cannot be chosen freely. For the between-group SS, SSB, the degrees of freedom is the number of groups  minus 1 (the minus 1 stands for the overall mean).   
-
-* MSB = SSB/df_between, MSW = SSW/df_within  
-
-It can be shown (by mathematicians) that, given the nullhypothesis, the mean of all groups are equal $m_1 = m_2 = m_3$, then the mean squared errors between groups (MSB) is expected to be equal to the mean squared errors within the groups (MSW). Therefore, the ration MSB/MSW is  expected to follow an F-distribution given the nullhypothesis is true.
-
-* MSB/MSW ~ F(df_between, df_within)
-
-
-The Bayesian analysis for comparing group means consists of calculating the posterior distribution for each group mean and then drawing inference from these posterior distributions. 
-A Bayesian one-way ANOVA involves the following steps:  
-1. Decide for a data model: We, here, assume that the measurements are normally distributed around the group means. In this example here, we transform the outcome variable in order to better meet the normal assumption. Note: the frequentist ANOVA makes exactly the same assumptions. We can write the data model: $y_i\sim Norm(\mu_i,\sigma)$ with $mu_i= \beta_0 + \beta_1I(group=2) +\beta_1I(group=3)$, where the $I()$-function is an indicator function taking on 1 if the expression is true and 0 otherwise. This model has 4 parameters: $\beta_0$,  $\beta_1$, $\beta_2$ and $\sigma$. 
-
-```{r, echo=TRUE}
-# fit a normal model with 3 different means
-mod <- lm(log(nrcourses+1)~statsfeeling, data=dat)
-```
-
-2. Choose a prior distribution for each model parameter: In this example, we choose flat prior distributions for each parameter. By using these priors, the result should not remarkably be affected by the prior distributions but almost only reflect the information in the data. We choose so-called improper prior distributions. These are completely flat distributions that give all parameter values the same probability. Such distributions are called improper because the area under the curve is not summing to 1 and therefore, they cannot be considered to be proper probability distributions. However, they can still be used to solve the Bayesian theorem.  
-
-3. Solve the Bayes theorem: The solution of the Bayes theorem for the above priors and model is implemented in the function sim of the package arm. 
-
-```{r, echo=TRUE}
-# calculate numerically the posterior distributions of the model 
-# parameters using flat prior distributions
-nsim <- 5000
-set.seed(346346)
-bsim <- sim(mod, n.sim=nsim)
-```
-
-4. Display the joint posterior distributions of the group means  
-
-
-```{r, echo=TRUE, fig.cap="Posterior distributions of the mean number of stats courses PhD students visited before starting the PhD grouped according to their feelings about statistics."}
-# calculate group means from the model parameters
-newdat <- data.frame(statsfeeling=levels(factor(dat$statsfeeling)))
-X <- model.matrix(~statsfeeling, data=newdat)
-fitmat <- matrix(ncol=nsim, nrow=nrow(newdat))
-for(i in 1:nsim) fitmat[,i] <- X%*%bsim@coef[i,]
-hist(fitmat[1,], freq=FALSE, breaks=seq(-2.5, 4.2, by=0.1), main=NA, xlab="Group mean of log(number of courses +1)", las=1, ylim=c(0, 2.2))
-hist(fitmat[2,], freq=FALSE, breaks=seq(-2.5, 4.2, by=0.1), main=NA, xlab="", las=1, add=TRUE, col=rgb(0,0,1,0.5))
-hist(fitmat[3,], freq=FALSE, breaks=seq(-2.5, 4.2, by=0.1), main=NA, xlab="", las=1, add=TRUE, col=rgb(1,0,0,0.5))
-legend(2,2, fill=c("white",rgb(0,0,1,0.5), rgb(1,0,0,0.5)), legend=levels(factor(dat$statsfeeling)))
-```
-
-Based on the posterior distributions of the group means, we can extract derived quantities depending on our interest and questions. Here, for example, we could extract the posterior probability of the hypothesis that students with a positive feeling about statistics have a better education in statistics than those with a neutral or negative feeling about statistics.  
-
-```{r, echo=TRUE}
-# P(mean(positive)>mean(neutral))
-mean(fitmat[3,]>fitmat[2,])
-
-# P(mean(positive)>mean(negative))
-mean(fitmat[3,]>fitmat[1,])
-
-```
-
-
-## Bayesian way of analysing correlations between categorical variables
-For a Bayesian analysis of cross-table data, a data model has to be found. There are several possibilities that could be used:  
-
-* a so-called log-linear model (Poisson model) for the counts in each cell of the cross-table.  
-* a binomial or a multinomial model for obtaining estimates of the proportions of data in each cell
-
-These models provide possibilities to explore the patterns in the data in more details than a chisquare test. 
-
-```{r, echo=FALSE}
-datagg <- aggregate(dat$name_fictive, list(birthday=dat$birthday, car=dat$car), 
-                    length, drop=FALSE)
-datagg$x[is.na(datagg$x)] <- 0
-names(datagg) <- c("birthday", "car", "count")
-```
-
-
-```{r, echo=TRUE}
-# log-linear model
-mod <- glm(count~birthday+car + birthday:car, 
-           data=datagg, family=poisson)
-bsim <- sim(mod, n.sim=nsim)
-round(t(apply(bsim@coef, 2, quantile, 
-              prob=c(0.025, 0.5, 0.975))),2)
-```
-The interaction parameter measures the strength of the correlation. To quantitatively understand what a parameter value of `r round(coef(mod)[4],2)` means, we have to look at the interpretation of all parameter values. We do that here quickly without a thorough explanation, because we already explained the Poisson model in chapter 8 of [@KornerNievergelt2015].
-
-The intercept `r round(coef(mod)[1],2)` corresponds to the logarithm of the count in the cell "flowers" and "N" (number of students who prefer flowers as a birthday present and who do not have a car), i.e., $exp(\beta_0)$ = `r round(exp(coef(mod)[1]),2)`. The exponent of the second parameter corresponds to the multiplicative difference between the counts in the cells "flowers and N" and "wine and N", i.e., count in the cell "wine and N" = $exp(\beta_0)exp(\beta_1)$ = exp(`r round(coef(mod)[1],2)`)exp(`r round(coef(mod)[2],2)`) = `r round(exp(coef(mod)[1])*exp(coef(mod)[2]), 2)`. The third parameter measures the multiplicative difference in the counts between the cells "flowers and N" and "flowers and Y", i.e., count in the cell "flowers and Y" = $exp(\beta_0)exp(\beta_2)$ = exp(`r round(coef(mod)[1],2)`)exp(`r round(coef(mod)[3],2)`) = `r round(exp(coef(mod)[1])*exp(coef(mod)[3]), 2)`. Thus, the third parameter is the difference in the logarithm of the counts between the car owners and the car-free students for those who prefer flowers. The interaction parameter is the difference of this difference between the students who prefer wine and those who prefer flowers. This is difficult to intuitively understand. Here is another try to formulate it: The interaction parameter measures the difference in the logarithm of the counts in the cross-table between the row-differences between the columns. Maybe it becomes clear, when we extract the count in the cell "wine and Y" from the model parameters: $exp(\beta_0)exp(\beta_1)exp(\beta_2)exp(\beta_3)$ = exp(`r round(coef(mod)[1],2)`)exp(`r round(coef(mod)[2],2)`)exp(`r round(coef(mod)[3],2)`)exp(`r round(coef(mod)[4],2)`) = `r round(exp(coef(mod)[1])*exp(coef(mod)[2])*exp(coef(mod)[3])*exp(coef(mod)[4]), 2)`.  
-
-
-Alternatively, we could estimate the proportions of flower and wine preferers within each group of car owners and car-free students using a binomial model. For an explanation of the binomial model, see chapter 8 of [@KornerNievergelt2015].
-
-```{r, echo=TRUE}
-# binomial model
-tab <- table(dat$car,dat$birthday)
-mod <- glm(tab~rownames(tab),  family=binomial)
-bsim <- sim(mod, n.sim=nsim)
-```
-
-```{r, echo=FALSE, fig.cap="Estimated proportion of students that prefer flowers over wine as a birthday present among the car-free students (N) and the car owners (Y). Given are the median of the posterior distribution (circle). The bar extends between the 2.5% and 97.5% quantiles of the posterior distribution."}
-par(cex=1.2, mar=c(5,4.5,0,0))
-plot(1:3, seq(0, 1, length=3), type="n", xaxt="n", xlab=NA, ylab="Proportion flower", 
-     las=1,xlim=c(0.5, 2.5))
-axis(1, at=1:2, labels=levels(dat$car))
-fitmat <- plogis(cbind(bsim@coef[,1], bsim@coef[,1]+bsim@coef[,2]))
-segments(1:2, apply(fitmat, 2, quantile, prob=0.025), 
-         1:2, apply(fitmat, 2, quantile, prob=0.975), lwd=3, lend="butt")
-points(1:2, apply(fitmat, 2, quantile, prob=0.5), pch=21, bg="white")
-
-```
+For both methods, randomisation test and bootstrapping, we have to assume that all observations are independent. Randomization and bootstrapping becomes complicated or even unfeasible when data are structured.
 
 
 
 ## Summary
-Bayesian data analysis = applying the Bayes theorem for summarising knowledge based on data, priors and the model assumptions.  
+Bayesian data analysis is applying the Bayes theorem for summarizing knowledge based on data, priors and the model assumptions.  
 
-Frequentist statistics = quantifying uncertainty by hypothetical repetitions  
+Frequentist statistics is quantifying uncertainty by hypothetical repetitions. 
 
