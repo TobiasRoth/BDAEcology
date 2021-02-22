@@ -3,19 +3,19 @@
 
 THIS CHAPTER IS UNDER CONSTRUCTION!!! 
 
-## Chisquare test
-The chisquare test is used for two frequentist purposes.  
-1. Testing for correlations between two categorical variables.  
-2. Comparison of two distributions (goodness of fit test)
+## Correlations among categorical variables
+
+### Chisquare test
 
 When testing for correlations between two categorical variables, then the nullhypothesis is "there is no correlation". The data can be displayed in cross-tables. 
+
 ```{r, echo=TRUE}
 # Example: correlation between birthday preference and car ownership
 load("RData/datacourse.RData")
 table(dat$birthday, dat$car)
 ```
 
-Given the nullhypothesis is true, we expect that the distribution of the data in each column of the cross-table is similar to the distribution of the row-sums. And, the distribution of the data in each row should be similar to the distribution of the column-sums. The chisquare test statistics $\chi^2$ measures the deviation of the data from this expected distribution of the data in the cross-table. 
+Given the nullhypothesis was true, we expect that the distribution of the data in each column of the cross-table is similar to the distribution of the row-sums. And, the distribution of the data in each row should be similar to the distribution of the column-sums. The chisquare test statistics $\chi^2$ measures the deviation of the data from this expected distribution of the data in the cross-table. 
 
 For calculating the chisquare test statistics $\chi^2$, we first have to obtain for each cell in the cross-table the expected value $E_{ij}$ = rowsum*colsum/total.
 
@@ -23,7 +23,7 @@ $\chi^2$ measures the difference between the observed $O_{ij}$ and expected $E_{
 $\chi^2=\sum_{i=1}^{m}\sum_{j=1}^{k}\frac{(O_{ij}-E_{ij})^2}{E_{ij}}$ where $m$ is the number of rows and $k$ is the number of columns. 
 The $\chi^2$-distribution has 1 parameter, the degrees of freedom $v$ = $(m-1)(k-1)$.
 
-```{r, echo=FALSE, fig.height=4, fig.width=7}
+```{r chisqdist, echo=FALSE, fig.cap="Two examples of Chisquare distributions.", fig.height=4, fig.width=7}
 par(mar=c(4.5, 4.5, 0,0))
 x <- seq(0, 10, length=100)
 y <- dchisq(x, 2)
@@ -35,7 +35,7 @@ text(6, 0.15, "df=6", col="blue")
 
 ```
 
-R is calculating the $\chi^2$ value for specific cross-tables, and it is also giving the p-values, i.e., the probability of obtaining the observed or a higher $\chi^2$ value given the nullhypothesis is true by comparing the observed $\chi^2$ with the corresponding chisquare distribution.
+R is calculating the $\chi^2$ value for specific cross-tables, and it is also giving the p-values, i.e., the probability of obtaining the observed or a higher $\chi^2$ value given the nullhypothesis was true by comparing the observed $\chi^2$ with the corresponding chisquare distribution.
 
 ```{r, echo=TRUE}
 chisq.test(table(dat$birthday, dat$car))
@@ -48,6 +48,66 @@ fisher.test(table(dat$birthday, dat$car))
 ```
 
  
+### Correlations among categorical variables using Bayesian methods
+
+For a Bayesian analysis of cross-table data, a data model has to be found. There are several possibilities that could be used:  
+
+* a so-called log-linear model (Poisson model) for the counts in each cell of the cross-table.  
+* a binomial or a multinomial model for obtaining estimates of the proportions of data in each cell
+
+These models provide possibilities to explore the patterns in the data in more details than a chisquare test. 
+
+```{r, echo=TRUE}
+# We arrange the data into a cross-table in a data-frame
+# format. That is, the counts in each cell of the 
+# cross-table become a variable and the row and column names
+# are also given in separate variables 
+datagg <- aggregate(dat$name_fictive, list(birthday=dat$birthday, car=dat$car), 
+                    length, drop=FALSE)
+datagg$x[is.na(datagg$x)] <- 0
+names(datagg) <- c("birthday", "car", "count")
+datagg
+```
+
+
+```{r, echo=TRUE}
+# log-linear model
+library(arm)
+nsim <- 5000
+
+mod <- glm(count~birthday+car + birthday:car, 
+           data=datagg, family=poisson)
+bsim <- sim(mod, n.sim=nsim)
+round(t(apply(bsim@coef, 2, quantile, 
+              prob=c(0.025, 0.5, 0.975))),2)
+```
+
+The interaction parameter measures the strength of the correlation. To quantitatively understand what a parameter value of `r round(coef(mod)[4],2)` means, we have to look at the interpretation of all parameter values. We do that here quickly without a thorough explanation, because we already explained the Poisson model in chapter 8 of [@KornerNievergelt2015].
+
+The intercept `r round(coef(mod)[1],2)` corresponds to the logarithm of the count in the cell "flowers" and "N" (number of students who prefer flowers as a birthday present and who do not have a car), i.e., $exp(\beta_0)$ = `r round(exp(coef(mod)[1]),2)`. The exponent of the second parameter corresponds to the multiplicative difference between the counts in the cells "flowers and N" and "wine and N", i.e., count in the cell "wine and N" = $exp(\beta_0)exp(\beta_1)$ = exp(`r round(coef(mod)[1],2)`)exp(`r round(coef(mod)[2],2)`) = `r round(exp(coef(mod)[1])*exp(coef(mod)[2]), 2)`. The third parameter measures the multiplicative difference in the counts between the cells "flowers and N" and "flowers and Y", i.e., count in the cell "flowers and Y" = $exp(\beta_0)exp(\beta_2)$ = exp(`r round(coef(mod)[1],2)`)exp(`r round(coef(mod)[3],2)`) = `r round(exp(coef(mod)[1])*exp(coef(mod)[3]), 2)`. Thus, the third parameter is the difference in the logarithm of the counts between the car owners and the car-free students for those who prefer flowers. The interaction parameter is the difference of this difference between the students who prefer wine and those who prefer flowers. This is difficult to intuitively understand. Here is another try to formulate it: The interaction parameter measures the difference in the logarithm of the counts in the cross-table between the row-differences between the columns. Maybe it becomes clear, when we extract the count in the cell "wine and Y" from the model parameters: $exp(\beta_0)exp(\beta_1)exp(\beta_2)exp(\beta_3)$ = exp(`r round(coef(mod)[1],2)`)exp(`r round(coef(mod)[2],2)`)exp(`r round(coef(mod)[3],2)`)exp(`r round(coef(mod)[4],2)`) = `r round(exp(coef(mod)[1])*exp(coef(mod)[2])*exp(coef(mod)[3])*exp(coef(mod)[4]), 2)`.  
+
+
+Alternatively, we could estimate the proportions of students prefering flower and wine within each group of car owners and car-free students using a binomial model. For an explanation of the binomial model, see chapter 8 of [@KornerNievergelt2015].
+
+```{r, echo=TRUE}
+# binomial model
+tab <- table(dat$car,dat$birthday)
+mod <- glm(tab~rownames(tab),  family=binomial)
+bsim <- sim(mod, n.sim=nsim)
+```
+
+```{r, echo=FALSE, fig.cap="Estimated proportion of students that prefer flowers over wine as a birthday present among the car-free students (N) and the car owners (Y). Given are the median of the posterior distribution (circle). The bar extends between the 2.5% and 97.5% quantiles of the posterior distribution."}
+par(cex=1.2, mar=c(5,4.5,0,0))
+plot(1:3, seq(0, 1, length=3), type="n", xaxt="n", xlab=NA, ylab="Proportion flower", 
+     las=1,xlim=c(0.5, 2.5))
+axis(1, at=1:2, labels=levels(dat$car))
+fitmat <- plogis(cbind(bsim@coef[,1], bsim@coef[,1]+bsim@coef[,2]))
+segments(1:2, apply(fitmat, 2, quantile, prob=0.025), 
+         1:2, apply(fitmat, 2, quantile, prob=0.975), lwd=3, lend="butt")
+points(1:2, apply(fitmat, 2, quantile, prob=0.5), pch=21, bg="white")
+
+```
+
 
 
 
@@ -70,7 +130,7 @@ x <- seq(-1.5, 2, length=100)
 par(mar=c(4.5,4.5,0,1))
 plot(x, myfunction(x), type="l", las=1, ylim=c(0, 3.5), ylab="F(x)")
 rect(-1, 0, 1.5, 3.3)
-nsim <- 5000
+
 ranx <- runif(nsim, -1, 1.5)
 rany <- runif(nsim, 0, 3.3)
 colkey <- c("orange", "blue")[as.numeric(myfunction(ranx)<rany)+1]
@@ -83,7 +143,6 @@ sim is solving a mathematical problem by simulation
 How sim is simulating to get the marginal distribution of $\mu$:
 
 ```{r, fig.cap='',echo=FALSE}
-library(arm)
 y <- c(47.5, 43, 43, 44, 48.5, 37.5, 41.5, 45.5)
 n <- length(y)
 
@@ -286,56 +345,6 @@ mean(fitmat[3,]>fitmat[1,])
 
 ```
 
-
-## Bayesian way of analysing correlations between categorical variables
-For a Bayesian analysis of cross-table data, a data model has to be found. There are several possibilities that could be used:  
-
-* a so-called log-linear model (Poisson model) for the counts in each cell of the cross-table.  
-* a binomial or a multinomial model for obtaining estimates of the proportions of data in each cell
-
-These models provide possibilities to explore the patterns in the data in more details than a chisquare test. 
-
-```{r, echo=FALSE}
-datagg <- aggregate(dat$name_fictive, list(birthday=dat$birthday, car=dat$car), 
-                    length, drop=FALSE)
-datagg$x[is.na(datagg$x)] <- 0
-names(datagg) <- c("birthday", "car", "count")
-```
-
-
-```{r, echo=TRUE}
-# log-linear model
-mod <- glm(count~birthday+car + birthday:car, 
-           data=datagg, family=poisson)
-bsim <- sim(mod, n.sim=nsim)
-round(t(apply(bsim@coef, 2, quantile, 
-              prob=c(0.025, 0.5, 0.975))),2)
-```
-The interaction parameter measures the strength of the correlation. To quantitatively understand what a parameter value of `r round(coef(mod)[4],2)` means, we have to look at the interpretation of all parameter values. We do that here quickly without a thorough explanation, because we already explained the Poisson model in chapter 8 of [@KornerNievergelt2015].
-
-The intercept `r round(coef(mod)[1],2)` corresponds to the logarithm of the count in the cell "flowers" and "N" (number of students who prefer flowers as a birthday present and who do not have a car), i.e., $exp(\beta_0)$ = `r round(exp(coef(mod)[1]),2)`. The exponent of the second parameter corresponds to the multiplicative difference between the counts in the cells "flowers and N" and "wine and N", i.e., count in the cell "wine and N" = $exp(\beta_0)exp(\beta_1)$ = exp(`r round(coef(mod)[1],2)`)exp(`r round(coef(mod)[2],2)`) = `r round(exp(coef(mod)[1])*exp(coef(mod)[2]), 2)`. The third parameter measures the multiplicative difference in the counts between the cells "flowers and N" and "flowers and Y", i.e., count in the cell "flowers and Y" = $exp(\beta_0)exp(\beta_2)$ = exp(`r round(coef(mod)[1],2)`)exp(`r round(coef(mod)[3],2)`) = `r round(exp(coef(mod)[1])*exp(coef(mod)[3]), 2)`. Thus, the third parameter is the difference in the logarithm of the counts between the car owners and the car-free students for those who prefer flowers. The interaction parameter is the difference of this difference between the students who prefer wine and those who prefer flowers. This is difficult to intuitively understand. Here is another try to formulate it: The interaction parameter measures the difference in the logarithm of the counts in the cross-table between the row-differences between the columns. Maybe it becomes clear, when we extract the count in the cell "wine and Y" from the model parameters: $exp(\beta_0)exp(\beta_1)exp(\beta_2)exp(\beta_3)$ = exp(`r round(coef(mod)[1],2)`)exp(`r round(coef(mod)[2],2)`)exp(`r round(coef(mod)[3],2)`)exp(`r round(coef(mod)[4],2)`) = `r round(exp(coef(mod)[1])*exp(coef(mod)[2])*exp(coef(mod)[3])*exp(coef(mod)[4]), 2)`.  
-
-
-Alternatively, we could estimate the proportions of flower and wine preferers within each group of car owners and car-free students using a binomial model. For an explanation of the binomial model, see chapter 8 of [@KornerNievergelt2015].
-
-```{r, echo=TRUE}
-# binomial model
-tab <- table(dat$car,dat$birthday)
-mod <- glm(tab~rownames(tab),  family=binomial)
-bsim <- sim(mod, n.sim=nsim)
-```
-
-```{r, echo=FALSE, fig.cap="Estimated proportion of students that prefer flowers over wine as a birthday present among the car-free students (N) and the car owners (Y). Given are the median of the posterior distribution (circle). The bar extends between the 2.5% and 97.5% quantiles of the posterior distribution."}
-par(cex=1.2, mar=c(5,4.5,0,0))
-plot(1:3, seq(0, 1, length=3), type="n", xaxt="n", xlab=NA, ylab="Proportion flower", 
-     las=1,xlim=c(0.5, 2.5))
-axis(1, at=1:2, labels=levels(dat$car))
-fitmat <- plogis(cbind(bsim@coef[,1], bsim@coef[,1]+bsim@coef[,2]))
-segments(1:2, apply(fitmat, 2, quantile, prob=0.025), 
-         1:2, apply(fitmat, 2, quantile, prob=0.975), lwd=3, lend="butt")
-points(1:2, apply(fitmat, 2, quantile, prob=0.5), pch=21, bg="white")
-
-```
 
 
 
