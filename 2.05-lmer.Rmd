@@ -1,0 +1,146 @@
+
+# Linear mixed effect models{#lmer}
+
+## Background
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(arm)
+```
+
+
+### Why Mixed Effects Models?
+
+Mixed effects models (or hierarchical models; see Gelman & Hill, 2007, for a discussion on the terminology) are used to analyze nonindependent, grouped, or hierarchical data. For example, when we measure growth rates of nestlings in different nests by taking mass measurements of each nestling several times during the nestling phase, the measurements are grouped within nestlings (because there are repeated measurements of each) and the nestlings are grouped within nests. Measurements from the same individual are likely to be more similar than measurements from different individuals, and individuals from the same nest are likely to be more similar than nestlings from different nests. Measurements of the same group (here, the “groups” are individuals or nests) are not independent. If the grouping structure of the data is ignored in the model, the residuals do not fulfill the independence assumption. Predictor variables can be measured on different hierarchical levels. For example, in each nest some nestlings were treated with a hormone implant whereas others received a placebo. Thus, the treatment is measured at the level of the individual, while clutch size is measured at the level of the nest. Clutch size was measured only once per nest but entered in the data file more than once (namely for each individual from the same nest). Similarly, all observations of one individual have the same value for treatment (but different values for individual measures such as weight). This results in pseudoreplication if we do not account for the hierarchical data structure in the model. Mixed models allow modeling of the hierarchical structure of the data and, therefore, account for pseudoreplication. Mixed models are further used to analyze variance components. For example, when the nestlings were cross-fostered so that they were not raised by their genetic parents, we would like to estimate the proportions of the variance (in a measurement, e.g., wing length) that can be assigned to genetic versus to environmental differences.
+Mixed models contain fixed and random effects. Note that, by definition,
+fixed and random effects are factors. Fixed effects have a finite (“fixed”)
+number of levels; for example, the factor “sex” has the levels male and female
+and (in many studies) nothing more. In contrast, random effects have a
+theoretically infinite number of levels of which we have measured a random
+sample. For example, we have measured 10 nests, but there are many more
+nests in the world that we have not measured. Normally, fixed effects have a
+low number of levels whereas random effects have a large number of levels (at
+least 3!). For fixed effects we are interested in the specific differences between
+levels (e.g., between males and females), whereas for random effects we are
+only interested in the between-level (¼ between-group, e.g., between-nest)
+variance rather than in differences between specific levels (e.g., nest A
+versus nest B).
+Typical fixed effects are: treatment, sex, age classes, or season. Typical
+random effects are: nest, individual, field, school, or study plot. It depends
+sometimes on the aim of the study whether a factor should be treated as fixed
+or random. When we would like to compare the average size of a corn cob
+between specific regions, then we include region as a fixed factor. However,
+when we would like to measure the size of a corn cob for a larger area within
+which we have measurements from a random sample of regions, then we treat
+region as a random factor.
+
+
+### Random Factors and Partial Pooling
+
+In a model with fixed factors, the differences of the group means to the mean
+of the reference group are separately estimated as model parameters. This
+produces k  1 (independent) model parameters, where k ¼ number of groups
+(or number of factor levels). In contrast, for a random factor, only one
+parameter, namely the between-group variance, is estimated. To estimate this
+variance, we look at the differences of the group means to the population
+mean; that is, we look at k differences from the population mean. These k
+differences are not independent. They are assumed to be realizations of the
+same (in most cases normal) distribution with mean zero. They are like
+residuals, and we usually call them bg; each is the difference, b, between the
+mean of group, g, and the mean of all groups. The variance of the bg values is
+the between-group variance.
+Treating a factor as a random factor is equivalent to partial pooling of the
+data. There are three different ways to obtain means for grouped data. First, the
+grouping structure of the data can be ignored. This is called complete pooling
+(left panel in Figure \ref(pooling)).
+
+```{r pooling, echo=FALSE, results='hide', fig.cap='Three possibilities to obtain group means for grouped data byi: complete pooling,partial pooling, and no pooling. Open symbols = data, orange dots with vertical bars = group means with 95% credible intervals, horizontal black line with shaded interval = population mean with 95% credible interval.'}
+
+
+# simulate unbalance data from ngroup groups
+set.seed(0470)
+ngroup <- 10         # number of groups
+sigma <- 2.5         # residual variance (standard deviation)
+sigma_b <- 3         # between-group variance (standard deviation)
+group.means <- rnorm(ngroup, 15, sigma_b)               # simulate group means
+npg <- rbinom(ngroup, prob=runif(ngroup), size=100)     # draw sample sizes per group at random between 0 and 100
+y <- NULL
+for(i in 1:ngroup) y <- c(y, rnorm(npg[i], group.means[i], sigma))         # simulate data
+group <- factor(rep(c(1:ngroup), npg))                                     # create the group-factor
+# end of data simulations
+
+
+
+ylimes <- c(floor(min(y)), ceiling(max(y)))
+x <-   jitter(as.numeric(group))
+ps <- 1.2 # point size
+
+
+# complete pooling
+par(mfrow=c(1,3), mar=c(5, 1,2,1), oma=c(0,3,0,0))
+plot(y~x,ylim=ylimes, xlab="group", ylab="y", las=1, cex.lab=1.4, 
+     cex.axis=1.2, xaxt="n", main="complete pooling", cex.main=1.7)
+axis(1, at=1:ngroup, labels=levels(group), cex.axis=1.2)
+mtext("y", side=2, line=3)
+m.y <- mean(y)
+sd(y)
+se.y <- sd(y)/sqrt(length(y))
+
+rect(0, m.y-1.96*se.y, 21, m.y+1.96*se.y, col=grey(0.6), border=NA)
+abline(h=m.y)
+points(mean(1:ngroup), m.y, pch=16, cex=ps, col="orange")
+points(y~x)
+
+# partial pooling
+mod <- lmer(y~1+(1|group))
+summary(mod)
+m.ppypg <- fixef(mod) + ranef(mod)$group
+popmean <- fixef(mod)
+box()
+
+# simulates confidence intervals for means
+bsim <- sim(mod, n.sim=2000)
+ranefsim <- bsim@ranef$group
+
+sem.ppypg <- apply(ranefsim[,,1], 2, sd)
+sem.popmean <- sd(bsim@fixef[,1])
+
+
+plot(y~x, type="n",   ylim=ylimes, xlab="group", ylab=NA, yaxt="n", las=1, cex.lab=1.4, 
+    cex.axis=1.2, xaxt="n", main="partial pooling", cex.main=1.7)
+axis(1, at=1:ngroup, labels=levels(group), cex.axis=1.2)
+
+# insert population mean
+rect(0, popmean-1.96*sem.popmean, 21, popmean+1.96*sem.popmean, col=grey(0.6), border=NA)
+abline(h=popmean)
+
+points(y~x)
+
+
+segments(1:ngroup, unlist(m.ppypg)-1.96*sem.ppypg, 1:ngroup, unlist(m.ppypg)+1.96*sem.ppypg, lwd=2, lend="butt", col="orange")
+points(1:ngroup, unlist(m.ppypg), pch=16, cex=ps, col="orange")
+box()
+
+# no pooling
+plot(y~x,ylim=ylimes, xlab="group", ylab=NA, yaxt="n", las=1, cex.lab=1.4, 
+     cex.axis=1.2, xaxt="n", main="no pooling", cex.main=1.7)
+axis(1, at=1:ngroup, labels=levels(group), cex.axis=1.2)
+m.ypg <- tapply(y, group, mean)
+se.ypg <- tapply(y, group, function(x) sd(x)/sqrt(length(x)))
+segments(1:ngroup, m.ypg-1.96*se.ypg, 1:ngroup, m.ypg+1.96*se.ypg, lwd=2, lend="butt", col="orange")
+points(1:ngroup, m.ypg, pch=16, cex=ps, col="orange")
+
+```
+
+
+
+
+
+
+Second, group means may be estimated separately for
+each group. In this case, the data from all other groups are ignored when estimating
+a group mean. No pooling occurs in this case (right panel in Figure 7-1).
+Third, the data of the different groups can be partially pooled (i.e., treated as a
+random effect). Thereby, the group means are weighted averages of the population
+mean and the unpooled group means. The weights are proportional to
+sample size and the inverse of the variance (see Gelman & Hill, 2007, p. 252).
