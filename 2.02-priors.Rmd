@@ -1,4 +1,7 @@
+
 # Prior distributions {#priors}
+
+THIS CHAPTER IS UNDER CONSTRUCTION!!! 
 
 ## Introduction
 

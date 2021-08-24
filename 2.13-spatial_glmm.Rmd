@@ -1,0 +1,12 @@
+
+# Modeling spatial data using GLMM {#spatial_glmm}
+
+THIS CHAPTER IS UNDER CONSTRUCTION!!! 
+
+## Introduction
+
+## Summary
+xxx
+
+
+

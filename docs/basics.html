@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2 Prerequisits: Basic statistical terms | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2 Prerequisits: Basic statistical terms | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:image" content="images/cover.jpg" />
+  <meta property="og:image" content="/images/cover.jpg" />
   <meta property="og:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="github-repo" content="TobiasRoth/BDAEcology" />
 
@@ -19,12 +19,12 @@
   <meta name="twitter:title" content="2 Prerequisits: Basic statistical terms | Bayesian Data Analysis in Ecology with R and Stan" />
   
   <meta name="twitter:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="twitter:image" content="images/cover.jpg" />
+  <meta name="twitter:image" content="/images/cover.jpg" />
 
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2021-02-19" />
+<meta name="date" content="2021-08-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="PART-I.html"/>
 <link rel="next" href="analyses-steps.html"/>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,24 +51,23 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -87,7 +87,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -120,7 +120,30 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="settings/style.css" type="text/css" />
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="Settings/style.css" type="text/css" />
 </head>
 
 <body>
@@ -133,40 +156,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-this-book"><i class="fa fa-check"></i>Why this book?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
 </ul></li>
-<li class="part"><span><b>I R FOR ECOLOGISTS</b></span></li>
-<li class="chapter" data-level="1" data-path="PART-I.html"><a href="PART-I.html"><i class="fa fa-check"></i><b>1</b> Introduction to PART I</a><ul>
+<li class="part"><span><b>I BASIC STATISTICS FOR ECOLOGISTS</b></span></li>
+<li class="chapter" data-level="1" data-path="PART-I.html"><a href="PART-I.html"><i class="fa fa-check"></i><b>1</b> Introduction to PART I</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="PART-I.html"><a href="PART-I.html#further-reading"><i class="fa fa-check"></i><b>1.1</b> Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Prerequisits: Basic statistical terms</a><ul>
+<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Prerequisits: Basic statistical terms</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#variables-and-observations"><i class="fa fa-check"></i><b>2.1</b> Variables and observations</a></li>
-<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-variables"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing variables</a><ul>
+<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-variables"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing variables</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="basics.html"><a href="basics.html#correlations"><i class="fa fa-check"></i><b>2.2.1</b> Correlations</a></li>
 <li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#principal-components-analyses-pca"><i class="fa fa-check"></i><b>2.2.2</b> Principal components analyses PCA</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="basics.html"><a href="basics.html#inferential-statistics"><i class="fa fa-check"></i><b>2.3</b> Inferential statistics</a><ul>
+<li class="chapter" data-level="2.3" data-path="basics.html"><a href="basics.html#inferential-statistics"><i class="fa fa-check"></i><b>2.3</b> Inferential statistics</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="basics.html"><a href="basics.html#uncertainty"><i class="fa fa-check"></i><b>2.3.1</b> Uncertainty</a></li>
 <li class="chapter" data-level="2.3.2" data-path="basics.html"><a href="basics.html#standard-error"><i class="fa fa-check"></i><b>2.3.2</b> Standard error</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="basics.html"><a href="basics.html#bayes-theorem-and-the-common-aim-of-frequentist-and-bayesian-methods"><i class="fa fa-check"></i><b>2.4</b> Bayes theorem and the common aim of frequentist and Bayesian methods</a><ul>
+<li class="chapter" data-level="2.4" data-path="basics.html"><a href="basics.html#bayes-theorem-and-the-common-aim-of-frequentist-and-bayesian-methods"><i class="fa fa-check"></i><b>2.4</b> Bayes theorem and the common aim of frequentist and Bayesian methods</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="basics.html"><a href="basics.html#bayes-theorem-for-discrete-events"><i class="fa fa-check"></i><b>2.4.1</b> Bayes theorem for discrete events</a></li>
 <li class="chapter" data-level="2.4.2" data-path="basics.html"><a href="basics.html#bayes-theorem-for-continuous-parameters"><i class="fa fa-check"></i><b>2.4.2</b> Bayes theorem for continuous parameters</a></li>
 <li class="chapter" data-level="2.4.3" data-path="basics.html"><a href="basics.html#estimating-a-mean-assuming-that-the-variance-is-known"><i class="fa fa-check"></i><b>2.4.3</b> Estimating a mean assuming that the variance is known</a></li>
 <li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#estimating-the-mean-and-the-variance"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#classical-frequentist-tests-and-alternatives"><i class="fa fa-check"></i><b>2.5</b> Classical frequentist tests and alternatives</a><ul>
+<li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#classical-frequentist-tests-and-alternatives"><i class="fa fa-check"></i><b>2.5</b> Classical frequentist tests and alternatives</a>
+<ul>
 <li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#nullhypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Nullhypothesis testing</a></li>
 <li class="chapter" data-level="2.5.2" data-path="basics.html"><a href="basics.html#comparison-of-a-sample-with-a-fixed-values-one-sample-t-test"><i class="fa fa-check"></i><b>2.5.2</b> Comparison of a sample with a fixed values (one-sample t-test)</a></li>
 <li class="chapter" data-level="2.5.3" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups-two-sample-t-test"><i class="fa fa-check"></i><b>2.5.3</b> Comparison of the locations between two groups (two-sample t-test)</a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.6</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="analyses-steps.html"><a href="analyses-steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a><ul>
+<li class="chapter" data-level="3" data-path="analyses-steps.html"><a href="analyses-steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="analyses-steps.html"><a href="analyses-steps.html#step1"><i class="fa fa-check"></i><b>3.1</b> Plausibility of Data</a></li>
 <li class="chapter" data-level="3.2" data-path="analyses-steps.html"><a href="analyses-steps.html#step2"><i class="fa fa-check"></i><b>3.2</b> Relationships</a></li>
 <li class="chapter" data-level="3.3" data-path="analyses-steps.html"><a href="analyses-steps.html#step3"><i class="fa fa-check"></i><b>3.3</b> Data Distribution</a></li>
@@ -179,101 +210,162 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.10" data-path="analyses-steps.html"><a href="analyses-steps.html#step10"><i class="fa fa-check"></i><b>3.10</b> Draw Conclusions</a></li>
 <li class="chapter" data-level="" data-path="analyses-steps.html"><a href="analyses-steps.html#further-reading-1"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>4</b> Probability distributions</a><ul>
+<li class="chapter" data-level="4" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>4</b> Probability distributions</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="distributions.html"><a href="distributions.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
 <li class="chapter" data-level="4.2" data-path="distributions.html"><a href="distributions.html#normal-distribution"><i class="fa fa-check"></i><b>4.2</b> Normal distribution</a></li>
 <li class="chapter" data-level="4.3" data-path="distributions.html"><a href="distributions.html#poisson-distribution"><i class="fa fa-check"></i><b>4.3</b> Poisson distribution</a></li>
-<li class="chapter" data-level="4.4" data-path="distributions.html"><a href="distributions.html#gamma-distribution"><i class="fa fa-check"></i><b>4.4</b> Gamma distribution</a><ul>
+<li class="chapter" data-level="4.4" data-path="distributions.html"><a href="distributions.html#gamma-distribution"><i class="fa fa-check"></i><b>4.4</b> Gamma distribution</a>
+<ul>
 <li class="chapter" data-level="4.4.1" data-path="distributions.html"><a href="distributions.html#cauchydistri"><i class="fa fa-check"></i><b>4.4.1</b> Cauchy distribution</a></li>
 <li class="chapter" data-level="4.4.2" data-path="distributions.html"><a href="distributions.html#t-distribution"><i class="fa fa-check"></i><b>4.4.2</b> t-distribution</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="distributions.html"><a href="distributions.html#f-distribution"><i class="fa fa-check"></i><b>4.5</b> F-distribution</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="addbasics.html"><a href="addbasics.html"><i class="fa fa-check"></i><b>5</b> Additional basic material</a><ul>
-<li class="chapter" data-level="5.1" data-path="addbasics.html"><a href="addbasics.html#chisquare-test"><i class="fa fa-check"></i><b>5.1</b> Chisquare test</a></li>
-<li class="chapter" data-level="5.2" data-path="addbasics.html"><a href="addbasics.html#methods-for-getting-the-posterior-distribution"><i class="fa fa-check"></i><b>5.2</b> 3 methods for getting the posterior distribution</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="addbasics.html"><a href="addbasics.html#monte-carlo-simulation-parametric-bootstrap"><i class="fa fa-check"></i><b>5.2.1</b> Monte Carlo simulation (parametric bootstrap)</a></li>
-<li class="chapter" data-level="5.2.2" data-path="addbasics.html"><a href="addbasics.html#grid-approximation"><i class="fa fa-check"></i><b>5.2.2</b> Grid approximation</a></li>
-<li class="chapter" data-level="5.2.3" data-path="addbasics.html"><a href="addbasics.html#markov-chain-monte-carlo-simulations"><i class="fa fa-check"></i><b>5.2.3</b> Markov chain Monte Carlo simulations</a></li>
+<li class="chapter" data-level="5" data-path="rfunctions.html"><a href="rfunctions.html"><i class="fa fa-check"></i><b>5</b> Important R-functions</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="rfunctions.html"><a href="rfunctions.html#data-preparation"><i class="fa fa-check"></i><b>5.1</b> Data preparation</a></li>
+<li class="chapter" data-level="5.2" data-path="rfunctions.html"><a href="rfunctions.html#figures"><i class="fa fa-check"></i><b>5.2</b> Figures</a></li>
+<li class="chapter" data-level="5.3" data-path="rfunctions.html"><a href="rfunctions.html#summary-1"><i class="fa fa-check"></i><b>5.3</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="addbasics.html"><a href="addbasics.html#analysis-of-variance-anova"><i class="fa fa-check"></i><b>5.3</b> Analysis of variance ANOVA</a></li>
-<li class="chapter" data-level="5.4" data-path="addbasics.html"><a href="addbasics.html#bayesian-way-of-analysing-correlations-between-categorical-variables"><i class="fa fa-check"></i><b>5.4</b> Bayesian way of analysing correlations between categorical variables</a></li>
-<li class="chapter" data-level="5.5" data-path="addbasics.html"><a href="addbasics.html#summary-1"><i class="fa fa-check"></i><b>5.5</b> Summary</a></li>
+<li class="chapter" data-level="6" data-path="reproducibleresearch.html"><a href="reproducibleresearch.html"><i class="fa fa-check"></i><b>6</b> Reproducible research</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="reproducibleresearch.html"><a href="reproducibleresearch.html#summary-2"><i class="fa fa-check"></i><b>6.1</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="furthertopics.html"><a href="furthertopics.html"><i class="fa fa-check"></i><b>6</b> Further topics</a><ul>
-<li class="chapter" data-level="6.1" data-path="furthertopics.html"><a href="furthertopics.html#bioacoustic-analyse"><i class="fa fa-check"></i><b>6.1</b> Bioacoustic analyse</a></li>
-<li class="chapter" data-level="6.2" data-path="furthertopics.html"><a href="furthertopics.html#python"><i class="fa fa-check"></i><b>6.2</b> Python</a></li>
+<li class="chapter" data-level="7" data-path="furthertopics.html"><a href="furthertopics.html"><i class="fa fa-check"></i><b>7</b> Further topics</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="furthertopics.html"><a href="furthertopics.html#bioacoustic-analyse"><i class="fa fa-check"></i><b>7.1</b> Bioacoustic analyse</a></li>
+<li class="chapter" data-level="7.2" data-path="furthertopics.html"><a href="furthertopics.html#python"><i class="fa fa-check"></i><b>7.2</b> Python</a></li>
 </ul></li>
 <li class="part"><span><b>II BAYESIAN DATA ANALYSIS</b></span></li>
-<li class="chapter" data-level="7" data-path="PART-II.html"><a href="PART-II.html"><i class="fa fa-check"></i><b>7</b> Introduction to PART II</a><ul>
+<li class="chapter" data-level="8" data-path="PART-II.html"><a href="PART-II.html"><i class="fa fa-check"></i><b>8</b> Introduction to PART II</a>
+<ul>
 <li class="chapter" data-level="" data-path="PART-II.html"><a href="PART-II.html#further-reading-2"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>8</b> MCMC using Stan</a><ul>
-<li class="chapter" data-level="8.1" data-path="stan.html"><a href="stan.html#background"><i class="fa fa-check"></i><b>8.1</b> Background</a></li>
-<li class="chapter" data-level="8.2" data-path="stan.html"><a href="stan.html#install-rstan"><i class="fa fa-check"></i><b>8.2</b> Install <code>rstan</code></a></li>
-<li class="chapter" data-level="8.3" data-path="stan.html"><a href="stan.html#firststanmod"><i class="fa fa-check"></i><b>8.3</b> Writing a Stan model</a></li>
-<li class="chapter" data-level="8.4" data-path="stan.html"><a href="stan.html#run-stan-from-r"><i class="fa fa-check"></i><b>8.4</b> Run Stan from R</a></li>
+<li class="chapter" data-level="9" data-path="bayesian-paradigm.html"><a href="bayesian-paradigm.html"><i class="fa fa-check"></i><b>9</b> The Bayesian paradigm</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="bayesian-paradigm.html"><a href="bayesian-paradigm.html#introduction-1"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="bayesian-paradigm.html"><a href="bayesian-paradigm.html#summary-3"><i class="fa fa-check"></i><b>9.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i><b>10</b> Prior distributions</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="priors.html"><a href="priors.html#introduction-2"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a></li>
+<li class="chapter" data-level="10.3" data-path="priors.html"><a href="priors.html#prior-sensitivity"><i class="fa fa-check"></i><b>10.3</b> Prior sensitivity</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>11</b> Normal Linear Models</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="lm.html"><a href="lm.html#linear-regression"><i class="fa fa-check"></i><b>11.1</b> Linear Regression</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="lm.html"><a href="lm.html#background"><i class="fa fa-check"></i><b>11.1.1</b> Background</a></li>
+<li class="chapter" data-level="11.1.2" data-path="lm.html"><a href="lm.html#fitting-a-linear-regression-in-r"><i class="fa fa-check"></i><b>11.1.2</b> Fitting a Linear Regression in R</a></li>
+<li class="chapter" data-level="11.1.3" data-path="lm.html"><a href="lm.html#drawing-conclusions"><i class="fa fa-check"></i><b>11.1.3</b> Drawing Conclusions</a></li>
+<li class="chapter" data-level="11.1.4" data-path="lm.html"><a href="lm.html#frequentist-results"><i class="fa fa-check"></i><b>11.1.4</b> Frequentist Results</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="lm.html"><a href="lm.html#regression-variants-anova-ancova-and-multiple-regression"><i class="fa fa-check"></i><b>11.2</b> Regression Variants: ANOVA, ANCOVA, and Multiple Regression</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="lm.html"><a href="lm.html#one-way-anova"><i class="fa fa-check"></i><b>11.2.1</b> One-Way ANOVA</a></li>
+<li class="chapter" data-level="11.2.2" data-path="lm.html"><a href="lm.html#frequentist-results-from-a-one-way-anova"><i class="fa fa-check"></i><b>11.2.2</b> Frequentist Results from a One-Way ANOVA</a></li>
+<li class="chapter" data-level="11.2.3" data-path="lm.html"><a href="lm.html#two-way-anova"><i class="fa fa-check"></i><b>11.2.3</b> Two-Way ANOVA</a></li>
+<li class="chapter" data-level="11.2.4" data-path="lm.html"><a href="lm.html#frequentist-results-from-a-two-way-anova"><i class="fa fa-check"></i><b>11.2.4</b> Frequentist Results from a Two-Way ANOVA</a></li>
+<li class="chapter" data-level="11.2.5" data-path="lm.html"><a href="lm.html#multiple-comparisons-and-post-hoc-tests"><i class="fa fa-check"></i><b>11.2.5</b> Multiple Comparisons and Post Hoc Tests</a></li>
+<li class="chapter" data-level="11.2.6" data-path="lm.html"><a href="lm.html#analysis-of-covariance"><i class="fa fa-check"></i><b>11.2.6</b> Analysis of Covariance</a></li>
+<li class="chapter" data-level="11.2.7" data-path="lm.html"><a href="lm.html#multiple-regression-and-collinearity"><i class="fa fa-check"></i><b>11.2.7</b> Multiple Regression and Collinearity</a></li>
+<li class="chapter" data-level="11.2.8" data-path="lm.html"><a href="lm.html#orderedfactors"><i class="fa fa-check"></i><b>11.2.8</b> Ordered Factors and Contrasts</a></li>
+<li class="chapter" data-level="11.2.9" data-path="lm.html"><a href="lm.html#quadratic-and-higher-polynomial-terms"><i class="fa fa-check"></i><b>11.2.9</b> Quadratic and Higher Polynomial Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="lm.html"><a href="lm.html#pendenzen"><i class="fa fa-check"></i><b>11.3</b> Pendenzen</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="residualanalysis.html"><a href="residualanalysis.html"><i class="fa fa-check"></i><b>12</b> Assessing Model Assumptions</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="residualanalysis.html"><a href="residualanalysis.html#model-assumptions"><i class="fa fa-check"></i><b>12.1</b> Model Assumptions</a></li>
+<li class="chapter" data-level="12.2" data-path="residualanalysis.html"><a href="residualanalysis.html#independent-and-identically-distributed"><i class="fa fa-check"></i><b>12.2</b> Independent and Identically Distributed</a></li>
+<li class="chapter" data-level="12.3" data-path="residualanalysis.html"><a href="residualanalysis.html#qqplot"><i class="fa fa-check"></i><b>12.3</b> The QQ-Plot</a></li>
+<li class="chapter" data-level="12.4" data-path="residualanalysis.html"><a href="residualanalysis.html#tempautocorrelation"><i class="fa fa-check"></i><b>12.4</b> Temporal Autocorrelation</a></li>
+<li class="chapter" data-level="12.5" data-path="residualanalysis.html"><a href="residualanalysis.html#spatialautocorrelation"><i class="fa fa-check"></i><b>12.5</b> Spatial Autocorrelation</a></li>
+<li class="chapter" data-level="12.6" data-path="residualanalysis.html"><a href="residualanalysis.html#Heteroscedasticity"><i class="fa fa-check"></i><b>12.6</b> Heteroscedasticity</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="lmer.html"><a href="lmer.html"><i class="fa fa-check"></i><b>13</b> Linear mixed effect models</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="lmer.html"><a href="lmer.html#background-1"><i class="fa fa-check"></i><b>13.1</b> Background</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="lmer.html"><a href="lmer.html#why-mixed-effects-models"><i class="fa fa-check"></i><b>13.1.1</b> Why Mixed Effects Models?</a></li>
+<li class="chapter" data-level="13.1.2" data-path="lmer.html"><a href="lmer.html#random-factors-and-partial-pooling"><i class="fa fa-check"></i><b>13.1.2</b> Random Factors and Partial Pooling</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>14</b> Generalized linear models</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="glm.html"><a href="glm.html#introduction-3"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="glm.html"><a href="glm.html#summary-4"><i class="fa fa-check"></i><b>14.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="glmm.html"><a href="glmm.html"><i class="fa fa-check"></i><b>15</b> Generalized linear mixed models</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="glmm.html"><a href="glmm.html#introduction-4"><i class="fa fa-check"></i><b>15.1</b> Introduction</a></li>
+<li class="chapter" data-level="15.2" data-path="glmm.html"><a href="glmm.html#summary-5"><i class="fa fa-check"></i><b>15.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="model-checking.html"><a href="model-checking.html"><i class="fa fa-check"></i><b>16</b> Posterior predictive model checking</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="model-checking.html"><a href="model-checking.html#introduction-5"><i class="fa fa-check"></i><b>16.1</b> Introduction</a></li>
+<li class="chapter" data-level="16.2" data-path="model-checking.html"><a href="model-checking.html#summary-6"><i class="fa fa-check"></i><b>16.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i><b>17</b> Model comparison and multimodel inference</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="model-comparison.html"><a href="model-comparison.html#introduction-6"><i class="fa fa-check"></i><b>17.1</b> Introduction</a></li>
+<li class="chapter" data-level="17.2" data-path="model-comparison.html"><a href="model-comparison.html#summary-7"><i class="fa fa-check"></i><b>17.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>18</b> MCMC using Stan</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="stan.html"><a href="stan.html#background-2"><i class="fa fa-check"></i><b>18.1</b> Background</a></li>
+<li class="chapter" data-level="18.2" data-path="stan.html"><a href="stan.html#install-rstan"><i class="fa fa-check"></i><b>18.2</b> Install <code>rstan</code></a></li>
+<li class="chapter" data-level="18.3" data-path="stan.html"><a href="stan.html#firststanmod"><i class="fa fa-check"></i><b>18.3</b> Writing a Stan model</a></li>
+<li class="chapter" data-level="18.4" data-path="stan.html"><a href="stan.html#run-stan-from-r"><i class="fa fa-check"></i><b>18.4</b> Run Stan from R</a></li>
 <li class="chapter" data-level="" data-path="stan.html"><a href="stan.html#further-reading-3"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i><b>9</b> Prior distributions</a><ul>
-<li class="chapter" data-level="9.1" data-path="priors.html"><a href="priors.html#introduction-1"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
-<li class="chapter" data-level="9.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>9.2</b> How to choose a prior</a></li>
-<li class="chapter" data-level="9.3" data-path="priors.html"><a href="priors.html#prior-sensitivity"><i class="fa fa-check"></i><b>9.3</b> Prior sensitivity</a></li>
+<li class="chapter" data-level="19" data-path="ridge-regression.html"><a href="ridge-regression.html"><i class="fa fa-check"></i><b>19</b> Ridge Regression</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ridge-regression.html"><a href="ridge-regression.html#introduction-7"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
+<li class="chapter" data-level="19.2" data-path="ridge-regression.html"><a href="ridge-regression.html#summary-8"><i class="fa fa-check"></i><b>19.2</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>10</b> Normal Linear Models</a><ul>
-<li class="chapter" data-level="10.1" data-path="lm.html"><a href="lm.html#linear-regression"><i class="fa fa-check"></i><b>10.1</b> Linear Regression</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="lm.html"><a href="lm.html#background-1"><i class="fa fa-check"></i><b>10.1.1</b> Background</a></li>
-<li class="chapter" data-level="10.1.2" data-path="lm.html"><a href="lm.html#fitting-a-linear-regression-in-r"><i class="fa fa-check"></i><b>10.1.2</b> Fitting a Linear Regression in R</a></li>
-<li class="chapter" data-level="10.1.3" data-path="lm.html"><a href="lm.html#drawing-conclusions"><i class="fa fa-check"></i><b>10.1.3</b> Drawing Conclusions</a></li>
-<li class="chapter" data-level="10.1.4" data-path="lm.html"><a href="lm.html#frequentist-results"><i class="fa fa-check"></i><b>10.1.4</b> Frequentist Results</a></li>
+<li class="chapter" data-level="20" data-path="SEM.html"><a href="SEM.html"><i class="fa fa-check"></i><b>20</b> Structural equation models</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="SEM.html"><a href="SEM.html#introduction-8"><i class="fa fa-check"></i><b>20.1</b> Introduction</a></li>
+<li class="chapter" data-level="20.2" data-path="SEM.html"><a href="SEM.html#summary-9"><i class="fa fa-check"></i><b>20.2</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="lm.html"><a href="lm.html#regression-variants-anova-ancova-and-multiple-regression"><i class="fa fa-check"></i><b>10.2</b> Regression Variants: ANOVA, ANCOVA, and Multiple Regression</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="lm.html"><a href="lm.html#one-way-anova"><i class="fa fa-check"></i><b>10.2.1</b> One-Way ANOVA</a></li>
-<li class="chapter" data-level="10.2.2" data-path="lm.html"><a href="lm.html#frequentist-results-from-a-one-way-anova"><i class="fa fa-check"></i><b>10.2.2</b> Frequentist Results from a One-Way ANOVA</a></li>
-<li class="chapter" data-level="10.2.3" data-path="lm.html"><a href="lm.html#two-way-anova"><i class="fa fa-check"></i><b>10.2.3</b> Two-Way ANOVA</a></li>
-<li class="chapter" data-level="10.2.4" data-path="lm.html"><a href="lm.html#frequentist-results-from-a-two-way-anova"><i class="fa fa-check"></i><b>10.2.4</b> Frequentist Results from a Two-Way ANOVA</a></li>
-<li class="chapter" data-level="10.2.5" data-path="lm.html"><a href="lm.html#multiple-comparisons-and-post-hoc-tests"><i class="fa fa-check"></i><b>10.2.5</b> Multiple Comparisons and Post Hoc Tests</a></li>
-<li class="chapter" data-level="10.2.6" data-path="lm.html"><a href="lm.html#analysis-of-covariance"><i class="fa fa-check"></i><b>10.2.6</b> Analysis of Covariance</a></li>
-<li class="chapter" data-level="10.2.7" data-path="lm.html"><a href="lm.html#multiple-regression-and-collinearity"><i class="fa fa-check"></i><b>10.2.7</b> Multiple Regression and Collinearity</a></li>
-<li class="chapter" data-level="10.2.8" data-path="lm.html"><a href="lm.html#orderedfactors"><i class="fa fa-check"></i><b>10.2.8</b> Ordered Factors and Contrasts</a></li>
-<li class="chapter" data-level="10.2.9" data-path="lm.html"><a href="lm.html#quadratic-and-higher-polynomial-terms"><i class="fa fa-check"></i><b>10.2.9</b> Quadratic and Higher Polynomial Terms</a></li>
-</ul></li>
-<li class="chapter" data-level="10.3" data-path="lm.html"><a href="lm.html#pendenzen"><i class="fa fa-check"></i><b>10.3</b> Pendenzen</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="residualanalysis.html"><a href="residualanalysis.html"><i class="fa fa-check"></i><b>11</b> Assessing Model Assumptions</a><ul>
-<li class="chapter" data-level="11.1" data-path="residualanalysis.html"><a href="residualanalysis.html#model-assumptions"><i class="fa fa-check"></i><b>11.1</b> Model Assumptions</a></li>
-<li class="chapter" data-level="11.2" data-path="residualanalysis.html"><a href="residualanalysis.html#independent-and-identically-distributed"><i class="fa fa-check"></i><b>11.2</b> Independent and Identically Distributed</a></li>
-<li class="chapter" data-level="11.3" data-path="residualanalysis.html"><a href="residualanalysis.html#qqplot"><i class="fa fa-check"></i><b>11.3</b> The QQ-Plot</a></li>
-<li class="chapter" data-level="11.4" data-path="residualanalysis.html"><a href="residualanalysis.html#tempautocorrelation"><i class="fa fa-check"></i><b>11.4</b> Temporal Autocorrelation</a></li>
-<li class="chapter" data-level="11.5" data-path="residualanalysis.html"><a href="residualanalysis.html#spatialautocorrelation"><i class="fa fa-check"></i><b>11.5</b> Spatial Autocorrelation</a></li>
-<li class="chapter" data-level="11.6" data-path="residualanalysis.html"><a href="residualanalysis.html#Heteroscedasticity"><i class="fa fa-check"></i><b>11.6</b> Heteroscedasticity</a></li>
+<li class="chapter" data-level="21" data-path="spatial-glmm.html"><a href="spatial-glmm.html"><i class="fa fa-check"></i><b>21</b> Modeling spatial data using GLMM</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="spatial-glmm.html"><a href="spatial-glmm.html#introduction-9"><i class="fa fa-check"></i><b>21.1</b> Introduction</a></li>
+<li class="chapter" data-level="21.2" data-path="spatial-glmm.html"><a href="spatial-glmm.html#summary-10"><i class="fa fa-check"></i><b>21.2</b> Summary</a></li>
 </ul></li>
 <li class="part"><span><b>III ECOLOGICAL MODELS</b></span></li>
-<li class="chapter" data-level="12" data-path="PART-III.html"><a href="PART-III.html"><i class="fa fa-check"></i><b>12</b> Introduction to PART III</a><ul>
-<li class="chapter" data-level="12.1" data-path="PART-III.html"><a href="PART-III.html#model-notations"><i class="fa fa-check"></i><b>12.1</b> Model notations</a></li>
+<li class="chapter" data-level="22" data-path="PART-III.html"><a href="PART-III.html"><i class="fa fa-check"></i><b>22</b> Introduction to PART III</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="PART-III.html"><a href="PART-III.html#model-notations"><i class="fa fa-check"></i><b>22.1</b> Model notations</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html"><i class="fa fa-check"></i><b>13</b> Zero-inflated Poisson Mixed Model</a><ul>
-<li class="chapter" data-level="13.1" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#introduction-2"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
-<li class="chapter" data-level="13.2" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#example-data"><i class="fa fa-check"></i><b>13.2</b> Example data</a></li>
-<li class="chapter" data-level="13.3" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#model"><i class="fa fa-check"></i><b>13.3</b> Model</a></li>
+<li class="chapter" data-level="23" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html"><i class="fa fa-check"></i><b>23</b> Zero-inflated Poisson Mixed Model</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#introduction-10"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
+<li class="chapter" data-level="23.2" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#example-data"><i class="fa fa-check"></i><b>23.2</b> Example data</a></li>
+<li class="chapter" data-level="23.3" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#model"><i class="fa fa-check"></i><b>23.3</b> Model</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="dailynestsurv.html"><a href="dailynestsurv.html"><i class="fa fa-check"></i><b>14</b> Daily nest survival</a><ul>
-<li class="chapter" data-level="14.1" data-path="dailynestsurv.html"><a href="dailynestsurv.html#background-2"><i class="fa fa-check"></i><b>14.1</b> Background</a></li>
-<li class="chapter" data-level="14.2" data-path="dailynestsurv.html"><a href="dailynestsurv.html#models-for-estimating-daily-nest-survival"><i class="fa fa-check"></i><b>14.2</b> Models for estimating daily nest survival</a></li>
-<li class="chapter" data-level="14.3" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model"><i class="fa fa-check"></i><b>14.3</b> Known fate model</a></li>
-<li class="chapter" data-level="14.4" data-path="dailynestsurv.html"><a href="dailynestsurv.html#dailynestsurvstan"><i class="fa fa-check"></i><b>14.4</b> The Stan model</a></li>
-<li class="chapter" data-level="14.5" data-path="dailynestsurv.html"><a href="dailynestsurv.html#prepare-data-and-run-stan"><i class="fa fa-check"></i><b>14.5</b> Prepare data and run Stan</a></li>
-<li class="chapter" data-level="14.6" data-path="dailynestsurv.html"><a href="dailynestsurv.html#check-convergence"><i class="fa fa-check"></i><b>14.6</b> Check convergence</a></li>
-<li class="chapter" data-level="14.7" data-path="dailynestsurv.html"><a href="dailynestsurv.html#look-at-results"><i class="fa fa-check"></i><b>14.7</b> Look at results</a></li>
-<li class="chapter" data-level="14.8" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model-for-irregular-nest-controls"><i class="fa fa-check"></i><b>14.8</b> Known fate model for irregular nest controls</a></li>
+<li class="chapter" data-level="24" data-path="dailynestsurv.html"><a href="dailynestsurv.html"><i class="fa fa-check"></i><b>24</b> Daily nest survival</a>
+<ul>
+<li class="chapter" data-level="24.1" data-path="dailynestsurv.html"><a href="dailynestsurv.html#background-3"><i class="fa fa-check"></i><b>24.1</b> Background</a></li>
+<li class="chapter" data-level="24.2" data-path="dailynestsurv.html"><a href="dailynestsurv.html#models-for-estimating-daily-nest-survival"><i class="fa fa-check"></i><b>24.2</b> Models for estimating daily nest survival</a></li>
+<li class="chapter" data-level="24.3" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model"><i class="fa fa-check"></i><b>24.3</b> Known fate model</a></li>
+<li class="chapter" data-level="24.4" data-path="dailynestsurv.html"><a href="dailynestsurv.html#dailynestsurvstan"><i class="fa fa-check"></i><b>24.4</b> The Stan model</a></li>
+<li class="chapter" data-level="24.5" data-path="dailynestsurv.html"><a href="dailynestsurv.html#prepare-data-and-run-stan"><i class="fa fa-check"></i><b>24.5</b> Prepare data and run Stan</a></li>
+<li class="chapter" data-level="24.6" data-path="dailynestsurv.html"><a href="dailynestsurv.html#check-convergence"><i class="fa fa-check"></i><b>24.6</b> Check convergence</a></li>
+<li class="chapter" data-level="24.7" data-path="dailynestsurv.html"><a href="dailynestsurv.html#look-at-results"><i class="fa fa-check"></i><b>24.7</b> Look at results</a></li>
+<li class="chapter" data-level="24.8" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model-for-irregular-nest-controls"><i class="fa fa-check"></i><b>24.8</b> Known fate model for irregular nest controls</a></li>
 <li class="chapter" data-level="" data-path="dailynestsurv.html"><a href="dailynestsurv.html#further-reading-4"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html"><i class="fa fa-check"></i><b>15</b> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</a><ul>
-<li class="chapter" data-level="15.1" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#introduction-3"><i class="fa fa-check"></i><b>15.1</b> Introduction</a></li>
-<li class="chapter" data-level="15.2" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#data-description"><i class="fa fa-check"></i><b>15.2</b> Data description</a></li>
-<li class="chapter" data-level="15.3" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#model-description"><i class="fa fa-check"></i><b>15.3</b> Model description</a></li>
-<li class="chapter" data-level="15.4" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#the-stan-code"><i class="fa fa-check"></i><b>15.4</b> The Stan code</a></li>
-<li class="chapter" data-level="15.5" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#call-stan-from-r-check-convergence-and-look-at-results"><i class="fa fa-check"></i><b>15.5</b> Call Stan from R, check convergence and look at results</a></li>
+<li class="chapter" data-level="25" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html"><i class="fa fa-check"></i><b>25</b> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</a>
+<ul>
+<li class="chapter" data-level="25.1" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#introduction-11"><i class="fa fa-check"></i><b>25.1</b> Introduction</a></li>
+<li class="chapter" data-level="25.2" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#data-description"><i class="fa fa-check"></i><b>25.2</b> Data description</a></li>
+<li class="chapter" data-level="25.3" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#model-description"><i class="fa fa-check"></i><b>25.3</b> Model description</a></li>
+<li class="chapter" data-level="25.4" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#the-stan-code"><i class="fa fa-check"></i><b>25.4</b> The Stan code</a></li>
+<li class="chapter" data-level="25.5" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#call-stan-from-r-check-convergence-and-look-at-results"><i class="fa fa-check"></i><b>25.5</b> Call Stan from R, check convergence and look at results</a></li>
 </ul></li>
 <li class="part"><span><b>IV APPENDICES</b></span></li>
 <li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
@@ -297,11 +389,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="basics" class="section level1">
+<div id="basics" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Prerequisits: Basic statistical terms</h1>
 <p>This chapter introduces some important terms useful for doing data analyses.
-It also introduces the essentials of the classical frequentist tests such as t- and Chisquare test. Even though we will not use nullhypotheses tests later <span class="citation">(Amrhein, Greenland, and McShane <a href="referenzen.html#ref-Amrhein.2019" role="doc-biblioref">2019</a>)</span>, we introduce them here because we need to understand 100 years of scientific literature. For each classical test, we provide a suggestion how to do it in a Bayesian way and we discuss some differences between the Bayesian and frequentist statistics.</p>
-<div id="variables-and-observations" class="section level2">
+It also introduces the essentials of the classical frequentist tests such as t- and Chisquare test. Even though we will not use nullhypotheses tests later <span class="citation">(<a href="referenzen.html#ref-Amrhein.2019" role="doc-biblioref">Amrhein, Greenland, and McShane 2019</a>)</span>, we introduce them here because we need to understand 100 years of scientific literature. For each classical test, we provide a suggestion how to do it in a Bayesian way and we discuss some differences between the Bayesian and frequentist statistics.</p>
+<div id="variables-and-observations" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Variables and observations</h2>
 <p>Empirical research involves data collection. Data are collected by recording measurements of variables for observational units. An observational unit may be, for example, an individual, a plot, a time interval or a combination of those. The collection of all units ideally build a random sample of the entire population of units in that we are interested. The measurements (or observations) of the random sample are stored in a data table (sometimes also called data set, but a data set may include several data tables. A collection of data tables belonging to the same study or system is normally bundled and stored in a data base). A data table is a collection of variables (columns). Data tables normally are handled as objects of class <code>data.frame</code> in R. All measurements on a row in a data table belong to the same observational unit. The variables can be of different scales (Table <a href="basics.html#tab:scalemeasurement">2.1</a>).</p>
 <table>
@@ -342,16 +434,16 @@ It also introduces the essentials of the classical frequentist tests such as t- 
 </tbody>
 </table>
 </div>
-<div id="displaying-and-summarizing-variables" class="section level2">
+<div id="displaying-and-summarizing-variables" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Displaying and summarizing variables</h2>
-<p>While nominal and ordinal variables are summarized by giving the absolute number or the proportion of observations for each category, numeric variables normally are summarized by a location and a scatter statistics, such as the mean and the standard deviation or the median and some quantiles. The distribution of a numeric variable is graphically displayed in a histogram (Fig. (histogram)).</p>
+<p>While nominal and ordinal variables are summarized by giving the absolute number or the proportion of observations for each category, numeric variables normally are summarized by a location and a scatter statistics, such as the mean and the standard deviation or the median and some quantiles. The distribution of a numeric variable is graphically displayed in a histogram (Fig. <a href="basics.html#fig:histogram">2.1</a>).</p>
 <div class="figure"><span id="fig:histogram"></span>
 <img src="1.1-prerequisites_files/figure-html/histogram-1.png" alt="Histogram of the length of ell of statistics course participants." width="672" />
 <p class="caption">
 Figure 2.1: Histogram of the length of ell of statistics course participants.
 </p>
 </div>
-<p>To draw a histogram, the variable is displayed on the x-axis and the <span class="math inline">\(x_i\)</span>-values are assigned to classes. The edges of the classes are called ‘breaks’. They can be set with the argument <code>breaks=</code> within the function <code>hist</code>. The values given in the <code>breaks=</code> argument must at least span the values of the variable. If the argument <code>breaks=</code> is not specified, R searches for breaks-values that make the histogram look smooth. The number of observations falling in each class is given on the y-axis. The y-axis can be re-scaled so that the area of the histogram equals 1 by setting the argument <code>density=TRUE</code>. In that case, the values on the y-axis correspond to the density values of a probability distribution (Chapter <a href="distributions.html#distributions">4</a>).</p>
+<p>To draw a histogram, the variable is displayed on the x-axis and the <span class="math inline">\(x_i\)</span>-values are assigned to classes. The edges of the classes are called ‘breaks.’ They can be set with the argument <code>breaks=</code> within the function <code>hist</code>. The values given in the <code>breaks=</code> argument must at least span the values of the variable. If the argument <code>breaks=</code> is not specified, R searches for breaks-values that make the histogram look smooth. The number of observations falling in each class is given on the y-axis. The y-axis can be re-scaled so that the area of the histogram equals 1 by setting the argument <code>density=TRUE</code>. In that case, the values on the y-axis correspond to the density values of a probability distribution (Chapter <a href="distributions.html#distributions">4</a>).</p>
 <p>Location statistics are mean, median or mode. A common mean is the
 - arithmetic mean: <span class="math inline">\(\hat{\mu} = \bar{x} = \frac{i=1}{n} x_i \sum_{1}^{n}\)</span>(R function <code>mean</code>),
 where <span class="math inline">\(n\)</span> is the sample size. The parameter <span class="math inline">\(\mu\)</span> is the (unknown) true mean of the entire population of which
@@ -365,7 +457,7 @@ the <span class="math inline">\(1,...,n\)</span> measurements are a random sampl
 The term <span class="math inline">\((n-1)\)</span> is called the degrees of freedom. It is used in the denominator of the variance formula instead of <span class="math inline">\(n\)</span> to prevent underestimating the variance. Because <span class="math inline">\(\bar{x}\)</span> is in average closer to <span class="math inline">\(x_i\)</span> than the
 unknown true mean <span class="math inline">\(\mu\)</span> would be, the variance would be underestimated if <span class="math inline">\(n\)</span> is used in the denominator.</li>
 </ul>
-<p><font size="1"> The maximum likelihood estimate (Chapter xxx.xx) of the variance corresponds to the variance formula using <span class="math inline">\(n\)</span> instead of <span class="math inline">\(n-1\)</span> in the denominator, see, e.g., <span class="citation">Royle and Dorazio (<a href="referenzen.html#ref-Royle.2008b" role="doc-biblioref">2008</a>)</span>.</font></p>
+<p><font size="1"> The maximum likelihood estimate (Chapter xxx.xx) of the variance corresponds to the variance formula using <span class="math inline">\(n\)</span> instead of <span class="math inline">\(n-1\)</span> in the denominator, see, e.g., <span class="citation"><a href="referenzen.html#ref-Royle.2008b" role="doc-biblioref">Royle and Dorazio</a> (<a href="referenzen.html#ref-Royle.2008b" role="doc-biblioref">2008</a>)</span>.</font></p>
 <p>The variance is used to compare the degree of scatter among different groups. However, its values are difficult to interpret because of the squared unit. Therefore, the square root of the variance, the standard deviation is
 normally reported:</p>
 <ul>
@@ -373,14 +465,14 @@ normally reported:</p>
 </ul>
 <p>The standard deviation is approximately the average deviation of an observation from the sample mean. In the case of a normal distribution, about two thirds (68%) of the data are expected within one standard deviation around the mean.</p>
 <p>The variance and standard deviation each describe the scatter with a single value. Thus, we have to assume that the observations are scattered symmetrically around their mean in order to get a picture of the distribution of the measurements. When the measurements are spread asymmetrically (skewed distribution), then it may be more precise to describe the scatter with more than one value. Such statistics could be quantiles from the lower and upper tail of the data.</p>
-<p>Quantiles inform us about both location and spread of a distribution. The <span class="math inline">\(p\)</span>th-quantile is the value with the property that a proportion <span class="math inline">\(p\)</span> of all values are less than or equal to the value of the quantile. The median is the 50% quantile.The 25% quantile and the 75% quantile are also called the lower and upper quartiles, respectively. The range between the 25% and the 75% quartile is called the interquartile range. This range includes 50% of the distribution and is also used as a measure of scatter. The R function <code>quantile</code> extracts sample quantiles. The median, the quartiles, and the interquartile range can be graphically displayed using box and-whisker plots (boxplots in short, R function <code>boxplot</code>). The horizontal fat bars are the medians (Fig. (fig:boxplot)). The boxes mark the interquartile range. The whiskers reach out to the last observation within 1.5 times the interquartile range from the quartile. Circles mark observations beyond 1.5 times the
+<p>Quantiles inform us about both location and spread of a distribution. The <span class="math inline">\(p\)</span>th-quantile is the value with the property that a proportion <span class="math inline">\(p\)</span> of all values are less than or equal to the value of the quantile. The median is the 50% quantile.The 25% quantile and the 75% quantile are also called the lower and upper quartiles, respectively. The range between the 25% and the 75% quartile is called the interquartile range. This range includes 50% of the distribution and is also used as a measure of scatter. The R function <code>quantile</code> extracts sample quantiles. The median, the quartiles, and the interquartile range can be graphically displayed using box and-whisker plots (boxplots in short, R function <code>boxplot</code>). The horizontal fat bars are the medians (Fig. <a href="basics.html#fig:boxplot">2.2</a>). The boxes mark the interquartile range. The whiskers reach out to the last observation within 1.5 times the interquartile range from the quartile. Circles mark observations beyond 1.5 times the
 interquartile range from the quartile.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="basics.html#cb1-1"></a><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb1-2"><a href="basics.html#cb1-2"></a><span class="kw">boxplot</span>(ell<span class="op">~</span>car, <span class="dt">data=</span>dat, <span class="dt">las=</span><span class="dv">1</span>, <span class="dt">ylab=</span><span class="st">&quot;Lenght of ell [cm]&quot;</span>,</span>
-<span id="cb1-3"><a href="basics.html#cb1-3"></a><span class="dt">col=</span><span class="st">&quot;tomato&quot;</span>, <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>)</span>
-<span id="cb1-4"><a href="basics.html#cb1-4"></a><span class="kw">axis</span>(<span class="dv">1</span>, <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;Not owing a car&quot;</span>, <span class="st">&quot;Car owner&quot;</span>))</span>
-<span id="cb1-5"><a href="basics.html#cb1-5"></a>n &lt;-<span class="st"> </span><span class="kw">table</span>(dat<span class="op">$</span>car)</span>
-<span id="cb1-6"><a href="basics.html#cb1-6"></a><span class="kw">axis</span>(<span class="dv">1</span>, <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels=</span><span class="kw">paste</span>(<span class="st">&quot;n=&quot;</span>, n, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>), <span class="dt">mgp=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>, <span class="dv">0</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="basics.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb1-2"><a href="basics.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(ell<span class="sc">~</span>car, <span class="at">data=</span>dat, <span class="at">las=</span><span class="dv">1</span>, <span class="at">ylab=</span><span class="st">&quot;Lenght of ell [cm]&quot;</span>,</span>
+<span id="cb1-3"><a href="basics.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">col=</span><span class="st">&quot;tomato&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb1-4"><a href="basics.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Not owing a car&quot;</span>, <span class="st">&quot;Car owner&quot;</span>))</span>
+<span id="cb1-5"><a href="basics.html#cb1-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">table</span>(dat<span class="sc">$</span>car)</span>
+<span id="cb1-6"><a href="basics.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">labels=</span><span class="fu">paste</span>(<span class="st">&quot;n=&quot;</span>, n, <span class="at">sep=</span><span class="st">&quot;&quot;</span>), <span class="at">mgp=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>, <span class="dv">0</span>))</span></code></pre></div>
 <div class="figure"><span id="fig:boxplot"></span>
 <img src="1.1-prerequisites_files/figure-html/boxplot-1.png" alt="Boxplot of the length of ell of statistics course participants who are or ar not owner of a car." width="672" />
 <p class="caption">
@@ -388,13 +480,13 @@ Figure 2.2: Boxplot of the length of ell of statistics course participants who a
 </p>
 </div>
 <p>The boxplot is an appealing tool for comparing location, variance and distribution of measurements among groups.</p>
-<div id="correlations" class="section level3">
+<div id="correlations" class="section level3" number="2.2.1">
 <h3><span class="header-section-number">2.2.1</span> Correlations</h3>
 <p>A correlation measures the strength with which characteristics of two variables are associated with each other (co-occur). If both variables are numeric, we can visualize the correlation using a scatterplot.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="basics.html#cb2-1"></a><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb2-2"><a href="basics.html#cb2-2"></a><span class="kw">plot</span>(temp<span class="op">~</span>ell, <span class="dt">data=</span>dat, <span class="dt">las=</span><span class="dv">1</span>, <span class="dt">xlab=</span><span class="st">&quot;Lenght of ell [cm]&quot;</span>,</span>
-<span id="cb2-3"><a href="basics.html#cb2-3"></a><span class="dt">ylab=</span><span class="st">&quot;Comfort temperature [°C]&quot;</span>,</span>
-<span id="cb2-4"><a href="basics.html#cb2-4"></a><span class="dt">pch=</span><span class="dv">16</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="basics.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb2-2"><a href="basics.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temp<span class="sc">~</span>ell, <span class="at">data=</span>dat, <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab=</span><span class="st">&quot;Lenght of ell [cm]&quot;</span>,</span>
+<span id="cb2-3"><a href="basics.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">ylab=</span><span class="st">&quot;Comfort temperature [°C]&quot;</span>,</span>
+<span id="cb2-4"><a href="basics.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">pch=</span><span class="dv">16</span>)</span></code></pre></div>
 <div class="figure"><span id="fig:scatterplot"></span>
 <img src="1.1-prerequisites_files/figure-html/scatterplot-1.png" alt="Scatterplot of the length of ell and the comfort temperature of statistics course participants." width="672" />
 <p class="caption">
@@ -415,7 +507,7 @@ Figure 2.3: Scatterplot of the length of ell and the comfort temperature of stat
 <li><p>Kendall’s tau: <span class="math inline">\(\tau = 1-\frac{4I}{(n(n-1))}\)</span>, where <span class="math inline">\(I\)</span> = number of pairs <span class="math inline">\((i,k)\)</span> for which <span class="math inline">\((x_i &lt; x_k)\)</span> &amp; <span class="math inline">\((y_i &gt; y_k)\)</span> or viceversa. (R function <code>cor(x,y, method="kendall")</code>)</p></li>
 </ul>
 </div>
-<div id="principal-components-analyses-pca" class="section level3">
+<div id="principal-components-analyses-pca" class="section level3" number="2.2.2">
 <h3><span class="header-section-number">2.2.2</span> Principal components analyses PCA</h3>
 <p>The principal components analysis (PCA) is a multivariate correlation analysis. A multidimensional data set with <span class="math inline">\(k\)</span> variables can be seen as a cloud of points (observations) in a <span class="math inline">\(k\)</span>-dimensional space. Imagine, we could move around in the space and look at the cloud from different locations. From some locations, the data looks highly correlated, whereas from others, we cannot see the correlation. That is what PCA is doing. It is rotating the coordinate system (defined by the original variables) of the data cloud so that the correlations are no longer visible. The axes of the new coordinates system are linear combinations of the original variables. They are called principal components. There are as many principal coordinates as there are original variables, i.e. <span class="math inline">\(k\)</span>, <span class="math inline">\(p_1, ..., p_k\)</span>. The principal components meet further requirements:</p>
 <ul>
@@ -434,11 +526,11 @@ Figure 2.4: Principal components of a two dimensional data set based on the cova
 </p>
 </div>
 <p>The choice between correlation or covariance matrix is essential and important. The covariance matrix is an unstandardized correlation matrix. Therefore, the units, i.e., whether cm or m are used, influence the results of the PCA if it is based on the covariance matrix. When the PCA is based on the covariance matrix, the results will change, when we change the units of one variable, e.g., from cm to m. Basing the PCA on the covariance matrix only makes sense, when the variances are comparable among the variables, i.e., if all variables are measured in the same unit and we would like to weight each variable according to its variance. If this is not the case, the PCA must be based on the correlation matrix.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="basics.html#cb3-1"></a>pca &lt;-<span class="st"> </span><span class="kw">princomp</span>(<span class="kw">cbind</span>(x1,x2)) <span class="co"># PCA based on covariance matrix</span></span>
-<span id="cb3-2"><a href="basics.html#cb3-2"></a></span>
-<span id="cb3-3"><a href="basics.html#cb3-3"></a>pca &lt;-<span class="st"> </span><span class="kw">princomp</span>(<span class="kw">cbind</span>(x1,x2), <span class="dt">cor=</span><span class="ot">TRUE</span>) <span class="co"># PCA based on correlation matrix</span></span>
-<span id="cb3-4"><a href="basics.html#cb3-4"></a></span>
-<span id="cb3-5"><a href="basics.html#cb3-5"></a><span class="kw">loadings</span>(pca)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="basics.html#cb3-1" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">princomp</span>(<span class="fu">cbind</span>(x1,x2)) <span class="co"># PCA based on covariance matrix</span></span>
+<span id="cb3-2"><a href="basics.html#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="basics.html#cb3-3" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">princomp</span>(<span class="fu">cbind</span>(x1,x2), <span class="at">cor=</span><span class="cn">TRUE</span>) <span class="co"># PCA based on correlation matrix</span></span>
+<span id="cb3-4"><a href="basics.html#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="basics.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">loadings</span>(pca)</span></code></pre></div>
 <pre><code>## 
 ## Loadings:
 ##    Comp.1 Comp.2
@@ -449,10 +541,10 @@ Figure 2.4: Principal components of a two dimensional data set based on the cova
 ## SS loadings       1.0    1.0
 ## Proportion Var    0.5    0.5
 ## Cumulative Var    0.5    1.0</code></pre>
-<p>The loadings measure the correlation of each variable with the principal components. They inform about what aspects of the data each component is measuring. The signs of the loadings are arbitrary, thus we can multiplied them by -1 without changing the PCA. Sometimes this can be handy for describing the meaning of the principal component in a paper. For example, <span class="citation">Zbinden et al. (<a href="referenzen.html#ref-Zbinden.2018" role="doc-biblioref">2018</a>)</span> combined the number of hunting licenses, the duration of the hunting period and the number of black grouse cocks that were allowed to be hunted per hunter in a principal component in order to measure hunting pressure. All three variables had a negative loading in the first component, so that high values of the component meant low hunting pressure. Before the subsequent analyses, for which a measure of hunting pressure was of interest, the authors changed the signs of the loadings so that this component measured hunting pressure.</p>
+<p>The loadings measure the correlation of each variable with the principal components. They inform about what aspects of the data each component is measuring. The signs of the loadings are arbitrary, thus we can multiplied them by -1 without changing the PCA. Sometimes this can be handy for describing the meaning of the principal component in a paper. For example, <span class="citation"><a href="referenzen.html#ref-Zbinden.2018" role="doc-biblioref">Zbinden et al.</a> (<a href="referenzen.html#ref-Zbinden.2018" role="doc-biblioref">2018</a>)</span> combined the number of hunting licenses, the duration of the hunting period and the number of black grouse cocks that were allowed to be hunted per hunter in a principal component in order to measure hunting pressure. All three variables had a negative loading in the first component, so that high values of the component meant low hunting pressure. Before the subsequent analyses, for which a measure of hunting pressure was of interest, the authors changed the signs of the loadings so that this component measured hunting pressure.</p>
 <p>The proportion of variance explained by each component is, beside the loadings, an important information. If the first few components explain the main part of the variance, it means that maybe not all <span class="math inline">\(k\)</span> variables are necessary to describe the data, or, in other words, the original <span class="math inline">\(k\)</span> variables contain a lot of redundant information.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="basics.html#cb5-1"></a><span class="co"># extract the variance captured by each component</span></span>
-<span id="cb5-2"><a href="basics.html#cb5-2"></a><span class="kw">summary</span>(pca)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="basics.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the variance captured by each component</span></span>
+<span id="cb5-2"><a href="basics.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pca)</span></code></pre></div>
 <pre><code>## Importance of components:
 ##                           Comp.1    Comp.2
 ## Standard deviation     1.2679406 0.6263598
@@ -461,9 +553,9 @@ Figure 2.4: Principal components of a two dimensional data set based on the cova
 <p><font size="1">Ridge regression is similar to doing a PCA within a linear model while components with low variance are shrinked to a higher degree than components with a high variance.</font></p>
 </div>
 </div>
-<div id="inferential-statistics" class="section level2">
+<div id="inferential-statistics" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Inferential statistics</h2>
-<div id="uncertainty" class="section level3">
+<div id="uncertainty" class="section level3" number="2.3.1">
 <h3><span class="header-section-number">2.3.1</span> Uncertainty</h3>
 <blockquote>
 <p>there is never a “yes-or-no” answer<br />
@@ -479,21 +571,21 @@ Amrhein (2017)[<a href="https://peerj.com/preprints/26857" class="uri">https://p
 In order to obtain a random sample from the population under study, a good study design is a prerequisite.</p>
 <p>To illustrate how inference about a big population is drawn from a small sample, we here use simulated data. The advantage of using simulated data is that the mechanism that generated the data is known. However, in the example, we use different models for simulation and analysis.</p>
 <p>Imagine there are 300000 PhD students on the world and we would like to know how many statistics courses they have taken before they started their PhD (Fig. <a href="basics.html#fig:histtruesample">2.5</a>).</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="basics.html#cb7-1"></a><span class="co"># simulate the virtual true population</span></span>
-<span id="cb7-2"><a href="basics.html#cb7-2"></a><span class="kw">set.seed</span>(<span class="dv">235325</span>)   <span class="co"># set seed for random number generator</span></span>
-<span id="cb7-3"><a href="basics.html#cb7-3"></a></span>
-<span id="cb7-4"><a href="basics.html#cb7-4"></a><span class="co"># simulate fake data of the whole population</span></span>
-<span id="cb7-5"><a href="basics.html#cb7-5"></a><span class="co"># using an overdispersed Poisson distribution</span></span>
-<span id="cb7-6"><a href="basics.html#cb7-6"></a><span class="co"># There is no need to understand more of this model </span></span>
-<span id="cb7-7"><a href="basics.html#cb7-7"></a><span class="co"># at this moment of the course than that this model </span></span>
-<span id="cb7-8"><a href="basics.html#cb7-8"></a><span class="co"># produces integer numbers (counts). Poisson models </span></span>
-<span id="cb7-9"><a href="basics.html#cb7-9"></a><span class="co"># will be introduced later.</span></span>
-<span id="cb7-10"><a href="basics.html#cb7-10"></a></span>
-<span id="cb7-11"><a href="basics.html#cb7-11"></a>statscourses &lt;-<span class="st"> </span><span class="kw">rpois</span>(<span class="dv">300000</span>, <span class="kw">rgamma</span>(<span class="dv">300000</span>, <span class="dv">2</span>, <span class="dv">3</span>))  </span>
-<span id="cb7-12"><a href="basics.html#cb7-12"></a></span>
-<span id="cb7-13"><a href="basics.html#cb7-13"></a><span class="co"># draw a random sample from the population</span></span>
-<span id="cb7-14"><a href="basics.html#cb7-14"></a>n &lt;-<span class="st"> </span><span class="dv">12</span>            <span class="co"># sample size</span></span>
-<span id="cb7-15"><a href="basics.html#cb7-15"></a>y &lt;-<span class="st"> </span><span class="kw">sample</span>(statscourses, <span class="dv">12</span>, <span class="dt">replace=</span><span class="ot">FALSE</span>)         </span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="basics.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate the virtual true population</span></span>
+<span id="cb7-2"><a href="basics.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">235325</span>)   <span class="co"># set seed for random number generator</span></span>
+<span id="cb7-3"><a href="basics.html#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="basics.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate fake data of the whole population</span></span>
+<span id="cb7-5"><a href="basics.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># using an overdispersed Poisson distribution</span></span>
+<span id="cb7-6"><a href="basics.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># There is no need to understand more of this model </span></span>
+<span id="cb7-7"><a href="basics.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># at this moment of the course than that this model </span></span>
+<span id="cb7-8"><a href="basics.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># produces integer numbers (counts). Poisson models </span></span>
+<span id="cb7-9"><a href="basics.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># will be introduced later.</span></span>
+<span id="cb7-10"><a href="basics.html#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="basics.html#cb7-11" aria-hidden="true" tabindex="-1"></a>statscourses <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">300000</span>, <span class="fu">rgamma</span>(<span class="dv">300000</span>, <span class="dv">2</span>, <span class="dv">3</span>))  </span>
+<span id="cb7-12"><a href="basics.html#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="basics.html#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># draw a random sample from the population</span></span>
+<span id="cb7-14"><a href="basics.html#cb7-14" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">12</span>            <span class="co"># sample size</span></span>
+<span id="cb7-15"><a href="basics.html#cb7-15" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sample</span>(statscourses, <span class="dv">12</span>, <span class="at">replace=</span><span class="cn">FALSE</span>)         </span></code></pre></div>
 <div class="figure"><span id="fig:histtruesample"></span>
 <img src="1.1-prerequisites_files/figure-html/histtruesample-1.png" alt="Histogram of the number of statistics courses 300000 virtual PhD students have taken before their PhD started. The rugs on the x-axis indicate a random sample of the 300000 students. The black vertical line indicates the mean of the 300000 students (true mean) and the blue line indicates the mean of the sample." width="672" />
 <p class="caption">
@@ -504,7 +596,7 @@ Figure 2.5: Histogram of the number of statistics courses 300000 virtual PhD stu
 <p>Both approaches use (essentially similar) models. Only the mathematical techniques to calculate uncertainty measures differ between the two approaches. In cases when beside the data no other information is used to construct the model, then the results are approximately identical (at least for large enough sample sizes).</p>
 <p>We illustrate what uncertainty intervals mean in Fig. <a href="basics.html#fig:CImean">2.6</a>. A frequentist 95% confidence interval (blue horizontal semgent in Fig. <a href="basics.html#fig:CImean">2.6</a>) is constructed such that, if you were to (hypothetically) repeat the experiment or sampling many many times, 95% of the intervals constructed would contain the true value of the parameter. From the Bayesian posterior distribution we could construct a 95% interval (e.g., by using the 2.5% and 97.5% quantiles). This interval has traditionally been called credible interval. It can be interpreted that we are 95% sure that the true mean is inside that interval.
 Both interpretations only are reliable if the model is a realistic abstraction of the data generating process (or if the model assumptions are realistic).</p>
-<p>Because both terms, confidence and credible interval, suggest that the interval indicates confidence or credibility but the intervals actually show uncertainty, it has been suggested to rename the interval into compatibility or uncertainty interval <span class="citation">Gelman and Greenland (<a href="referenzen.html#ref-Gelman.2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>Because both terms, confidence and credible interval, suggest that the interval indicates confidence or credibility but the intervals actually show uncertainty, it has been suggested to rename the interval into compatibility or uncertainty interval <span class="citation"><a href="referenzen.html#ref-Gelman.2019" role="doc-biblioref">Andrew Gelman and Greenland</a> (<a href="referenzen.html#ref-Gelman.2019" role="doc-biblioref">2019</a>)</span>.</p>
 <div class="figure"><span id="fig:CImean"></span>
 <img src="1.1-prerequisites_files/figure-html/CImean-1.png" alt="Histogram of means of repeated samples from the true populations. The scatter of these means visualize the true uncertainty of the mean in this example. The blue vertical line indicates the mean of the original sample. The blue segment shows the 95% confidence interval (obtained by fequensist methods) and the violet line shows the posterior distribution of the mean (obtained by Bayesian methods). For both solutions, we assumed a Normal distribution for the data that is different from the true mechanism that generated the data (which was an overdispersed Poisson model. The star indicates the true mean." width="672" />
 <p class="caption">
@@ -512,7 +604,7 @@ Figure 2.6: Histogram of means of repeated samples from the true populations. Th
 </p>
 </div>
 </div>
-<div id="standard-error" class="section level3">
+<div id="standard-error" class="section level3" number="2.3.2">
 <h3><span class="header-section-number">2.3.2</span> Standard error</h3>
 <p>The standard error SE is, beside the uncertainty interval, an alternative possibility to measure uncertainty. It measures an average deviation of the sample mean from the (unknown) true population mean. The frequentist method for obtaining the SE is based on the central limit theorem. According to the central limit theorem the sum of independent, not necessarily normally distributed random numbers are normally distributed when sample size is large enough (Chapter <a href="distributions.html#distributions">4</a>). Because the mean is a sum (divided by a constant, the sample size) it can be assumed that the distribution of many means of samples is normal. It can be mathematically shown that the standard error SE equals the standard deviation SD of the sample divided by the square root of the sample size:</p>
 <ul>
@@ -528,13 +620,13 @@ Figure 2.7: Illustration of the difference between SD and SE. The SD measures th
 </div>
 </div>
 </div>
-<div id="bayes-theorem-and-the-common-aim-of-frequentist-and-bayesian-methods" class="section level2">
+<div id="bayes-theorem-and-the-common-aim-of-frequentist-and-bayesian-methods" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Bayes theorem and the common aim of frequentist and Bayesian methods</h2>
-<div id="bayes-theorem-for-discrete-events" class="section level3">
+<div id="bayes-theorem-for-discrete-events" class="section level3" number="2.4.1">
 <h3><span class="header-section-number">2.4.1</span> Bayes theorem for discrete events</h3>
 <p>The Bayes theorem describes the probability of event A conditional on event B (the probability of A after B has already occurred) from the probability of B conditional on A and the two probabilities of the events A and B:</p>
 <p><span class="math inline">\(P(A|B) = \frac{P(B|A)P(A)}{P(B)}\)</span></p>
-<p>Imagine, event A is “The person likes wine as a birthday present.” and event B “The person has no car.”. The conditional probability of A given B is the probability that a person not owing a car likes wine. Answers from students whether they have a car and what they like as a birthday present are summarized in Table <a href="basics.html#tab:winecar">2.2</a>.</p>
+<p>Imagine, event A is “The person likes wine as a birthday present.” and event B “The person has no car.” The conditional probability of A given B is the probability that a person not owing a car likes wine. Answers from students whether they have a car and what they like as a birthday present are summarized in Table <a href="basics.html#tab:winecar">2.2</a>.</p>
 <table>
 <caption><span id="tab:winecar">Table 2.2: </span> Cross table of the student’s birthday preference and car ownership.</caption>
 <thead>
@@ -568,19 +660,19 @@ Figure 2.7: Illustration of the difference between SD and SE. The SD measures th
 </table>
 <p>We can apply the Bayes theorem to obtain the probability that the student likes wine given it has no car, <span class="math inline">\(P(A|B)\)</span>. Let’s assume that only the ones who prefer wine above flowers among the students go together for having a glass of wine at the bar after the statistics course. While they drink wine, the tell each other about their cars and they obtain the probability that a student has no car given it likes wine, <span class="math inline">\(P(B|A) = 0.6\)</span>. During the statistics class the teacher asked the students about their car ownership and birthday preference. Therefore, they know that <span class="math inline">\(P(A) =\)</span> likes wine <span class="math inline">\(= 0.68\)</span> and <span class="math inline">\(P(B) =\)</span> no car <span class="math inline">\(= 0.68\)</span>. With these information, they can obtain the probability that a student likes wine given it has no car, even if not all students without cars went to the bar: <span class="math inline">\(P(A|B) = \frac{0.6*0.68}{0.68} = 0.6\)</span>.</p>
 </div>
-<div id="bayes-theorem-for-continuous-parameters" class="section level3">
+<div id="bayes-theorem-for-continuous-parameters" class="section level3" number="2.4.2">
 <h3><span class="header-section-number">2.4.2</span> Bayes theorem for continuous parameters</h3>
 <p>When we use the Bayes theorem for analyzing data, then the aim is to make probability statements for parameters. Such a probability statement could be the description of what we know about the population mean after having looked at the data. Because the mean of the population is measured at a continuous scale we use a probability density function to describe what we know about the mean. The Bayes theorem can be formulated for probability density functions denoted with <span class="math inline">\(p(\theta)\)</span>, e.g. for a parameter <span class="math inline">\(\theta\)</span> (for example probability density functions see Chapter <a href="distributions.html#distributions">4</a>).
 What we are interested in is the probability of the parameter <span class="math inline">\(\theta\)</span> given the data, i.e., <span class="math inline">\(p(\theta|y)\)</span>. This probability density function is called the posterior distribution of the parameter <span class="math inline">\(\theta\)</span>. Here is the Bayes theorem formulated for obtaining the posterior distribution of a parameter from the data <span class="math inline">\(y\)</span>, the prior distribution of the parameter <span class="math inline">\(p(\theta)\)</span> and assuming a model for the data generating process. The data model is defined by the likelihood that specifies how the data <span class="math inline">\(y\)</span> is distributed given the parameters <span class="math inline">\(p(y|\theta)\)</span>:</p>
 <p><span class="math inline">\(p(\theta|y) = \frac{p(y|\theta)p(\theta)}{p(y)} = \frac{p(y|\theta)p(\theta)}{\int p(y|\theta)p(\theta) d\theta}\)</span></p>
 <p>The probability of the data <span class="math inline">\(p(y)\)</span> is also called the scaling constant, because it is a constant. It is the integral of the likelihood over all possible values of the parameter(s) of the model.</p>
 </div>
-<div id="estimating-a-mean-assuming-that-the-variance-is-known" class="section level3">
+<div id="estimating-a-mean-assuming-that-the-variance-is-known" class="section level3" number="2.4.3">
 <h3><span class="header-section-number">2.4.3</span> Estimating a mean assuming that the variance is known</h3>
 <p>For illustration, we first describe a simple (unrealistic) example for which it is almost possible to follow the mathematical steps for solving the Bayes theorem even for non-mathematicians. Even if we cannot follow all steps, this example will illustrate the principle how the Bayesian theorem works for continuous parameters. The example is unrealistic because we assume that the variance <span class="math inline">\(\sigma^2\)</span> in the data <span class="math inline">\(y\)</span> is known.
 We construct a data model by assuming that <span class="math inline">\(y\)</span> is normally distributed:</p>
 <p><span class="math inline">\(p(y|\theta) = Norm(\theta, \sigma)\)</span>, with <span class="math inline">\(\sigma\)</span> known. The function <span class="math inline">\(Norm\)</span> defines the probability density function of the normal distribution (Chapter <a href="distributions.html#distributions">4</a>).</p>
-<p>The parameter, for which we would like to get the posterior distribution is <span class="math inline">\(\theta\)</span>, the mean. We specify a prior distribution for <span class="math inline">\(\theta\)</span>. Because the normal distribution is a conjugate prior for a normal data model with known variance, we use the normal distribution. Conjugate priors have nice mathematical properties (see Chapter <a href="priors.html#priors">9</a>) and are therefore preferred when the posterior distribution is obtained algebraically.
+<p>The parameter, for which we would like to get the posterior distribution is <span class="math inline">\(\theta\)</span>, the mean. We specify a prior distribution for <span class="math inline">\(\theta\)</span>. Because the normal distribution is a conjugate prior for a normal data model with known variance, we use the normal distribution. Conjugate priors have nice mathematical properties (see Chapter <a href="priors.html#priors">10</a>) and are therefore preferred when the posterior distribution is obtained algebraically.
 That is the prior:
 <span class="math inline">\(p(\theta) = Norm(\mu_0, \tau_0)\)</span></p>
 <p>With the above data, data model and prior, the posterior distribution of the mean <span class="math inline">\(\theta\)</span> is defined by:
@@ -596,7 +688,7 @@ Figure 2.8: Hypothetical example showing the result of applying the Bayes theore
 </p>
 </div>
 </div>
-<div id="estimating-the-mean-and-the-variance" class="section level3">
+<div id="estimating-the-mean-and-the-variance" class="section level3" number="2.4.4">
 <h3><span class="header-section-number">2.4.4</span> Estimating the mean and the variance</h3>
 <p>We now move to a more realistic example, which is estimating the mean and the variance of a sample of weights of Snowfinches <em>Montifringilla nivalis</em> (Fig. <a href="basics.html#fig:ssp">2.9</a>). To analyze those data, a model with two parameters (the mean and the variance or standard deviation) is needed. The data model (or likelihood) is specified as <span class="math inline">\(p(y|\theta, \sigma) = Norm(\theta, \sigma)\)</span>.</p>
 <div class="figure" style="text-align: center"><span id="fig:ssp"></span>
@@ -605,10 +697,10 @@ Figure 2.8: Hypothetical example showing the result of applying the Bayes theore
 Figure 2.9: Snowfinches stay above the treeline for winter. They come to feeders.
 </p>
 </div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="basics.html#cb8-1"></a><span class="co"># weight (g)</span></span>
-<span id="cb8-2"><a href="basics.html#cb8-2"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">47.5</span>, <span class="dv">43</span>, <span class="dv">43</span>, <span class="dv">44</span>, <span class="fl">48.5</span>, <span class="fl">37.5</span>, <span class="fl">41.5</span>, <span class="fl">45.5</span>)</span>
-<span id="cb8-3"><a href="basics.html#cb8-3"></a>n &lt;-<span class="st"> </span><span class="kw">length</span>(y)</span></code></pre></div>
-<p>Because there are two parameters, we need to specify a two-dimensional prior distribution. We looked up in <span class="citation">A Gelman et al. (<a href="referenzen.html#ref-Gelman2014" role="doc-biblioref">2014</a>)</span> that the conjugate prior distribution in our case is an Normal-Inverse-Chisquare distribution:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="basics.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># weight (g)</span></span>
+<span id="cb8-2"><a href="basics.html#cb8-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">47.5</span>, <span class="dv">43</span>, <span class="dv">43</span>, <span class="dv">44</span>, <span class="fl">48.5</span>, <span class="fl">37.5</span>, <span class="fl">41.5</span>, <span class="fl">45.5</span>)</span>
+<span id="cb8-3"><a href="basics.html#cb8-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(y)</span></code></pre></div>
+<p>Because there are two parameters, we need to specify a two-dimensional prior distribution. We looked up in <span class="citation"><a href="referenzen.html#ref-Gelman2014" role="doc-biblioref">A. Gelman et al.</a> (<a href="referenzen.html#ref-Gelman2014" role="doc-biblioref">2014b</a>)</span> that the conjugate prior distribution in our case is an Normal-Inverse-Chisquare distribution:</p>
 <p><span class="math inline">\(p(\theta, \sigma) = N-Inv-\chi^2(\mu_0, \sigma_0^2/\kappa_0; v_0, \sigma_0^2)\)</span></p>
 <p>From the same reference we looked up how the posterior distribution looks like in our case:</p>
 <p><span class="math inline">\(p(\theta,\sigma|y) = \frac{p(y|\theta, \sigma)p(\theta, \sigma)}{p(y)} = N-Inv-\chi^2(\mu_n, \sigma_n^2/\kappa_n; v_n, \sigma_n^2)\)</span>, with</p>
@@ -630,16 +722,16 @@ Figure 2.10: Visualization of the joint posterior distribution for the mean and 
 <p>In our example the the marginal distribution of the mean is a t-distribution (Chapter <a href="distributions.html#distributions">4</a>). Frequentist statistical methods also use a t-distribution to describe the uncertainty of a mean for the case when the variance is not known. Thus, frequentist methods came to the same solution using a completely different approach and different techniques. Doesn’t that increase dramatically our trust in statistical methods?</p>
 </div>
 </div>
-<div id="classical-frequentist-tests-and-alternatives" class="section level2">
+<div id="classical-frequentist-tests-and-alternatives" class="section level2" number="2.5">
 <h2><span class="header-section-number">2.5</span> Classical frequentist tests and alternatives</h2>
-<div id="nullhypothesis-testing" class="section level3">
+<div id="nullhypothesis-testing" class="section level3" number="2.5.1">
 <h3><span class="header-section-number">2.5.1</span> Nullhypothesis testing</h3>
 <p>Null hypothesis testing is constructing a model that describes how the data would look like in case of what we expect to be would not be. Then, the data is compared to how the model thinks the data should look like. If the data does not look like the model thinks they should, we reject that model and accept that our expectation may be true.</p>
 <p>To decide whether the data looks like the model constructed from the null hypothesis thinks the data should look like the p-value is used. The p-value is the probability of observing the data or more extreme data given the null hypothesis is true.</p>
 <p>Small p-values indicate that it is rather unlikely to observe the data or more extreme data given the null hypothesis <span class="math inline">\(H_0\)</span> is true.</p>
 <p>Null hypothesis testing is problematic. We discuss some of the problems after having introduces the most commonly used classical tests.</p>
 </div>
-<div id="comparison-of-a-sample-with-a-fixed-values-one-sample-t-test" class="section level3">
+<div id="comparison-of-a-sample-with-a-fixed-values-one-sample-t-test" class="section level3" number="2.5.2">
 <h3><span class="header-section-number">2.5.2</span> Comparison of a sample with a fixed values (one-sample t-test)</h3>
 <p>A null hypothesis is used to construct a model that can generate (hypothetical) data. For example, a null hypothesis could be <span class="math inline">\(H_0:\)</span>“The mean of Snowfinch weights is exactly 40g.”
 A normal distribution with a mean of <span class="math inline">\(\mu_0=40\)</span> and a variance equal to the estimated variance in the data <span class="math inline">\(s^2\)</span> is then assumed to describe how we would expect the data to look like given the null hypothesis was true. From that model it is possible to calculate the distribution of hypothetical means of many different hypothetical samples of sample size <span class="math inline">\(n\)</span>. The result is a t-distribution (Fig. <a href="basics.html#fig:nht">2.11</a>). In classical tests, the distribution is standardized so that its variance was one. Then the sample mean, or in classical tests a standardized difference between the mean and the hypothetical mean of the null hypothesis (here 40g), called test statistics <span class="math inline">\(t = \frac{\bar{y}-\mu_0}{\frac{s}{\sqrt{n}}}\)</span>, is compared to that (standardized) t-distribution. If the test statistics falls well within the expected distribution the null hypothesis is accepted. Then, the data is well compatible with the null hypothesis. However, if the test statistics falls in the tails or outside the distribution, then the null hypothesis is rejected and we could write that the mean weight of Snowfinches is statistically significantly different from 40g. Unfortunately, we cannot infer about the probability of the null hypothesis and how relevant the result is.</p>
@@ -650,7 +742,7 @@ Figure 2.11: Illustration of a one-sample t-test. The blue histogram shows the d
 </p>
 </div>
 <p>We can use the r-function <code>t.test</code> to calculate the p-value of a one sample t-test.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="basics.html#cb9-1"></a><span class="kw">t.test</span>(y, <span class="dt">mu=</span><span class="dv">40</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="basics.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(y, <span class="at">mu=</span><span class="dv">40</span>)</span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
@@ -663,19 +755,19 @@ Figure 2.11: Illustration of a one-sample t-test. The blue histogram shows the d
 ## mean of x 
 ##   43.8125</code></pre>
 <p>The output of the r-function <code>t.test</code> also includes the mean and the 95% confidence interval (or compatibility or uncertainty interval) of the mean. The CI could, alternatively, be obtained as the 2.5% and 97.5% quantiles of a t-distribution with a mean equal to the sample mean, degrees of freedom equal to the sample size minus one and a standard deviation equal to the standard error of the mean.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="basics.html#cb11-1"></a><span class="co"># lower limit of 95% CI</span></span>
-<span id="cb11-2"><a href="basics.html#cb11-2"></a><span class="kw">mean</span>(y) <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.025</span>, <span class="dt">df=</span><span class="kw">length</span>(y)<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span><span class="kw">sd</span>(y)<span class="op">/</span><span class="kw">sqrt</span>(n) </span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="basics.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lower limit of 95% CI</span></span>
+<span id="cb11-2"><a href="basics.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(y) <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="fu">length</span>(y)<span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="fu">sd</span>(y)<span class="sc">/</span><span class="fu">sqrt</span>(n) </span></code></pre></div>
 <pre><code>## [1] 40.89979</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="basics.html#cb13-1"></a><span class="co"># upper limit of 95% CI</span></span>
-<span id="cb13-2"><a href="basics.html#cb13-2"></a><span class="kw">mean</span>(y) <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df=</span><span class="kw">length</span>(y)<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span><span class="kw">sd</span>(y)<span class="op">/</span><span class="kw">sqrt</span>(n) </span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="basics.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># upper limit of 95% CI</span></span>
+<span id="cb13-2"><a href="basics.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(y) <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df=</span><span class="fu">length</span>(y)<span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="fu">sd</span>(y)<span class="sc">/</span><span class="fu">sqrt</span>(n) </span></code></pre></div>
 <pre><code>## [1] 46.72521</code></pre>
 <p>When applying the Bayes theorem for obtaining the posterior distribution of the mean we end up with the same t-distribution as described above, in case we use flat prior distributions for the mean and the standard deviation. Thus, the two different approaches end up with the same result!</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="basics.html#cb15-1"></a><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="fl">4.5</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb15-2"><a href="basics.html#cb15-2"></a><span class="kw">hist</span>(y, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">30</span>,<span class="dv">52</span>), <span class="dt">las=</span><span class="dv">1</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">main=</span><span class="ot">NA</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>))</span>
-<span id="cb15-3"><a href="basics.html#cb15-3"></a><span class="kw">abline</span>(<span class="dt">v=</span><span class="kw">mean</span>(y), <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;lightblue&quot;</span>)</span>
-<span id="cb15-4"><a href="basics.html#cb15-4"></a><span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">40</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb15-5"><a href="basics.html#cb15-5"></a><span class="kw">lines</span>(<span class="kw">density</span>(bsim<span class="op">@</span>coef))</span>
-<span id="cb15-6"><a href="basics.html#cb15-6"></a><span class="kw">text</span>(<span class="dv">45</span>, <span class="fl">0.3</span>, <span class="st">&quot;posterior distribution</span><span class="ch">\n</span><span class="st">of the mean of y&quot;</span>, <span class="dt">cex=</span><span class="fl">0.8</span>, <span class="dt">adj=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">xpd=</span><span class="ot">NA</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="basics.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.5</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb15-2"><a href="basics.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(y, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">30</span>,<span class="dv">52</span>), <span class="at">las=</span><span class="dv">1</span>, <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">main=</span><span class="cn">NA</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>))</span>
+<span id="cb15-3"><a href="basics.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">mean</span>(y), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;lightblue&quot;</span>)</span>
+<span id="cb15-4"><a href="basics.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">40</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb15-5"><a href="basics.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(bsim<span class="sc">@</span>coef))</span>
+<span id="cb15-6"><a href="basics.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">45</span>, <span class="fl">0.3</span>, <span class="st">&quot;posterior distribution</span><span class="sc">\n</span><span class="st">of the mean of y&quot;</span>, <span class="at">cex=</span><span class="fl">0.8</span>, <span class="at">adj=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xpd=</span><span class="cn">NA</span>)</span></code></pre></div>
 <div class="figure"><span id="fig:unnamed-chunk-8"></span>
 <img src="1.1-prerequisites_files/figure-html/unnamed-chunk-8-1.png" alt="Illustration of the posterior distribution of the mean. The blue histogram shows the distribution of the measured weights with the sample mean (lightblue) indicated as a vertical line. The black line is the posterior distribution that shows what we know about the mean after having looked at the data. The area under the posterior density function that is larger than 40 is the posterior probability of the hypothesis that the true mean Snwofinch weight is larger than 40g." width="672" />
 <p class="caption">
@@ -683,29 +775,29 @@ Figure 2.12: Illustration of the posterior distribution of the mean. The blue hi
 </p>
 </div>
 <p>The posterior probability of the hypothesis that the true mean Snowfinch weight is larger than 40g, <span class="math inline">\(P(H:\mu&gt;40) =\)</span>, is equal to the proportion of simulated random values from the posterior distribution, saved in the vector <code>bsim@coef</code>, that are larger than 40.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="basics.html#cb16-1"></a><span class="co"># Two ways of calculating the proportion of values </span></span>
-<span id="cb16-2"><a href="basics.html#cb16-2"></a><span class="co"># larger than a specific value within a vector of values</span></span>
-<span id="cb16-3"><a href="basics.html#cb16-3"></a><span class="kw">round</span>(<span class="kw">sum</span>(bsim<span class="op">@</span>coef[,<span class="dv">1</span>]<span class="op">&gt;</span><span class="dv">40</span>)<span class="op">/</span><span class="kw">nrow</span>(bsim<span class="op">@</span>coef),<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="basics.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Two ways of calculating the proportion of values </span></span>
+<span id="cb16-2"><a href="basics.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># larger than a specific value within a vector of values</span></span>
+<span id="cb16-3"><a href="basics.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sum</span>(bsim<span class="sc">@</span>coef[,<span class="dv">1</span>]<span class="sc">&gt;</span><span class="dv">40</span>)<span class="sc">/</span><span class="fu">nrow</span>(bsim<span class="sc">@</span>coef),<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 0.99</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="basics.html#cb18-1"></a><span class="kw">round</span>(<span class="kw">mean</span>(bsim<span class="op">@</span>coef[,<span class="dv">1</span>]<span class="op">&gt;</span><span class="dv">40</span>),<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="basics.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">mean</span>(bsim<span class="sc">@</span>coef[,<span class="dv">1</span>]<span class="sc">&gt;</span><span class="dv">40</span>),<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 0.99</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="basics.html#cb20-1"></a><span class="co"># Note: logical values TRUE and FALSE become </span></span>
-<span id="cb20-2"><a href="basics.html#cb20-2"></a><span class="co"># the numeric values 1 and 0 within the functions sum() and mean()</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="basics.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: logical values TRUE and FALSE become </span></span>
+<span id="cb20-2"><a href="basics.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the numeric values 1 and 0 within the functions sum() and mean()</span></span></code></pre></div>
 <p>We, thus, can be pretty sure that the mean Snowfinch weight (in the big world population) is larger than 40g. Such a conclusion is not very informative, because it does not tell us how much larger we can expect the mean Snowfinch weight to be. Therefore, we prefer reporting a credible interval (or compatibility interval or uncertainty interval) that tells us what values for the mean Snowfinch weight are compatible with the data (given the data model we used realistically reflects the data generating process). Based on such an interval, we can conclude that we are pretty sure that the mean Snowfinch weight is between 40 and 48g.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="basics.html#cb21-1"></a><span class="co"># 80% credible interval, compatibility interval, uncertainty interval</span></span>
-<span id="cb21-2"><a href="basics.html#cb21-2"></a><span class="kw">quantile</span>(bsim<span class="op">@</span>coef[,<span class="dv">1</span>], <span class="dt">probs=</span><span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="basics.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 80% credible interval, compatibility interval, uncertainty interval</span></span>
+<span id="cb21-2"><a href="basics.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(bsim<span class="sc">@</span>coef[,<span class="dv">1</span>], <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>))</span></code></pre></div>
 <pre><code>##      10%      90% 
 ## 42.07725 45.54080</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="basics.html#cb23-1"></a><span class="co"># 95% credible interval, compatibility interval, uncertainty interval</span></span>
-<span id="cb23-2"><a href="basics.html#cb23-2"></a><span class="kw">quantile</span>(bsim<span class="op">@</span>coef[,<span class="dv">1</span>], <span class="dt">probs=</span><span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="basics.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% credible interval, compatibility interval, uncertainty interval</span></span>
+<span id="cb23-2"><a href="basics.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(bsim<span class="sc">@</span>coef[,<span class="dv">1</span>], <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <pre><code>##     2.5%    97.5% 
 ## 40.90717 46.69152</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="basics.html#cb25-1"></a><span class="co"># 99% credible interval, compatibility interval, uncertainty interval</span></span>
-<span id="cb25-2"><a href="basics.html#cb25-2"></a><span class="kw">quantile</span>(bsim<span class="op">@</span>coef[,<span class="dv">1</span>], <span class="dt">probs=</span><span class="kw">c</span>(<span class="fl">0.005</span>, <span class="fl">0.995</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="basics.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 99% credible interval, compatibility interval, uncertainty interval</span></span>
+<span id="cb25-2"><a href="basics.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(bsim<span class="sc">@</span>coef[,<span class="dv">1</span>], <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.995</span>))</span></code></pre></div>
 <pre><code>##     0.5%    99.5% 
 ## 39.66181 48.10269</code></pre>
 </div>
-<div id="comparison-of-the-locations-between-two-groups-two-sample-t-test" class="section level3">
+<div id="comparison-of-the-locations-between-two-groups-two-sample-t-test" class="section level3" number="2.5.3">
 <h3><span class="header-section-number">2.5.3</span> Comparison of the locations between two groups (two-sample t-test)</h3>
 <p>Many research questions aim at measuring differences between groups. For example, we could be curious to know how different in size car owner are from people not owning a car.
 A boxplot is a nice possibility to visualize the ell length measurements of two (or more) groups (Fig. <a href="basics.html#fig:boxplt">2.13</a>). From the boxplot, we do not see how many observations are in the two samples. We can add that information to the plot. The boxplot visualizes the samples but it does not show what we know about the big (unmeasured) population mean. To show that, we need to add a compatibility interval (or uncertainty interval, credible interval, confidence interval, in brown in Fig. <a href="basics.html#fig:boxplt">2.13</a>).</p>
@@ -715,10 +807,10 @@ A boxplot is a nice possibility to visualize the ell length measurements of two 
 Figure 2.13: Ell length of car owners (Y) and people not owning a car (N). Horizontal bar = median, box = interquartile range, whiskers = extremest observation within 1.5 times the interquartile range from the quartile, circles=observations farther than 1.5 times the interquartile range from the quartile. Filled brown circles = means, vertical brown bars = 95% compatibility interval.
 </p>
 </div>
-<p>When we added the two means with a compatibility interval, we see what we know about the two means, but we do still not see what we know about the difference between the two means. The uncertainties of the means do not show the uncertainty of the difference between the means. To do so, we need to extract the difference between the two means from a model that describes (abstractly) how the data has been generated. Such a model is a linear model that we will introduce in Chapter <a href="lm.html#lm">10</a>. The second parameter measures the differences in the means of the two groups. And from the simulated posterior distribution we can extract a 95% compatibility interval.
+<p>When we added the two means with a compatibility interval, we see what we know about the two means, but we do still not see what we know about the difference between the two means. The uncertainties of the means do not show the uncertainty of the difference between the means. To do so, we need to extract the difference between the two means from a model that describes (abstractly) how the data has been generated. Such a model is a linear model that we will introduce in Chapter <a href="lm.html#lm">11</a>. The second parameter measures the differences in the means of the two groups. And from the simulated posterior distribution we can extract a 95% compatibility interval.
 Thus, we can conclude that the average ell length of car owners is with high probability between 0.5 cm smaller and 2.5 cm larger than the averag ell of people not having a car.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="basics.html#cb27-1"></a>mod &lt;-<span class="st"> </span><span class="kw">lm</span>(ell<span class="op">~</span>car, <span class="dt">data=</span>dat)</span>
-<span id="cb27-2"><a href="basics.html#cb27-2"></a>mod</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="basics.html#cb27-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(ell<span class="sc">~</span>car, <span class="at">data=</span>dat)</span>
+<span id="cb27-2"><a href="basics.html#cb27-2" aria-hidden="true" tabindex="-1"></a>mod</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = ell ~ car, data = dat)
@@ -726,18 +818,18 @@ Thus, we can conclude that the average ell length of car owners is with high pro
 ## Coefficients:
 ## (Intercept)         carY  
 ##      43.267        1.019</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="basics.html#cb29-1"></a>bsim &lt;-<span class="st"> </span><span class="kw">sim</span>(mod, <span class="dt">n.sim=</span>nsim)</span>
-<span id="cb29-2"><a href="basics.html#cb29-2"></a><span class="kw">quantile</span>(bsim<span class="op">@</span>coef[,<span class="st">&quot;carY&quot;</span>], <span class="dt">prob=</span><span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="basics.html#cb29-1" aria-hidden="true" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim)</span>
+<span id="cb29-2"><a href="basics.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(bsim<span class="sc">@</span>coef[,<span class="st">&quot;carY&quot;</span>], <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <pre><code>##      2.5%       50%     97.5% 
 ## -0.501348  1.014478  2.494324</code></pre>
-<p>The corresponding two-sample t-test gives a p-value for the null hypothesis: “The difference between the two means equals zero.”, a confidence interval for the difference and the two means. While the function <code>lm</code>gives the difference Y minus N, the function <code>t.test</code>gives the difference N minus Y. Luckily the two means are also given in the output, so we know which group mean is the larger one.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="basics.html#cb31-1"></a><span class="kw">t.test</span>(ell<span class="op">~</span>car, <span class="dt">data=</span>dat, <span class="dt">var.equal=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<p>The corresponding two-sample t-test gives a p-value for the null hypothesis: “The difference between the two means equals zero.” a confidence interval for the difference and the two means. While the function <code>lm</code>gives the difference Y minus N, the function <code>t.test</code>gives the difference N minus Y. Luckily the two means are also given in the output, so we know which group mean is the larger one.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="basics.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(ell<span class="sc">~</span>car, <span class="at">data=</span>dat, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
 ## data:  ell by car
 ## t = -1.4317, df = 20, p-value = 0.1677
-## alternative hypothesis: true difference in means is not equal to 0
+## alternative hypothesis: true difference in means between group N and group Y is not equal to 0
 ## 95 percent confidence interval:
 ##  -2.5038207  0.4657255
 ## sample estimates:
@@ -745,7 +837,7 @@ Thus, we can conclude that the average ell length of car owners is with high pro
 ##        43.26667        44.28571</code></pre>
 <p>In both possibilities, we used to compare the to means, the Bayesian posterior distribution of the difference and the t-test or the confidence interval of the difference, we used a data model. We thus assumed that the observations are normally distributed. In some cases, such an assumption is not a reasonable assumption. Then the result is not reliable. In such cases, we can either search for a more realistic model or use non-parametric (also called distribution free) methods. Nowadays, we have almost infinite possibilities to construct data models (e.g. generalized linear models and beyond). Therefore, we normally start looking for a model that fits the data better. However, in former days, all these possiblities did not exist (or were not easily available for non-mathematicians). Therefore, we here introduce two of such non-parametric methods, the Wilcoxon-test (or Mann-Whitney-U-test) and the randomisation test.</p>
 <p>Some of the distribution free statistical methods are based on the rank instead of the value of the observations. The principle of the Wilcoxon-test is to rank the observations and sum the ranks per group. It is not completely true that the non-parametric methods do not have a model. The model of the Wilcoxon-test “knows” how the difference in the sum of the ranks between two groups is distributed given the mean of the two groups do not differ (null hypothesis). Therefore, it is possible to get a p-value, e.g. by the function <code>wilcox.test</code>.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="basics.html#cb33-1"></a><span class="kw">wilcox.test</span>(ell<span class="op">~</span>car, <span class="dt">data=</span>dat)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="basics.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(ell<span class="sc">~</span>car, <span class="at">data=</span>dat)</span></code></pre></div>
 <pre><code>## 
 ##  Wilcoxon rank sum test with continuity correction
 ## 
@@ -756,13 +848,13 @@ Thus, we can conclude that the average ell length of car owners is with high pro
 <p>The result of the Wilcoxon-test tells us how probable it is to observe the difference in the rank sum between the two sample or a more extreme difference given the means of the two groups are equal. That is at least something.</p>
 <p>A similar result is obtained by using a randomisation test. This test is not based on ranks but on the original values. The aim of the randomisation is to simulate a distribution of the difference in the arithmetic mean between the two groups assuming this difference would be zero. To do so, the observed values are randomly distributed among the two groups. Because of the random distribution among the two groups, we expect that, if we repeat that virtual experiment many times, the average difference between the group means would be zero (both virtual samples are drawn from the same big population).</p>
 <p>We can use a loop in R for repeating the random re-assignement to the two groups and, each time, extracting the difference between the group means. As a result, we have a vector of many (<code>nsim</code>) values that all are possible differences between group means given the two samples were drawn from the same population. The proportion of these values that have an equal or larger absolute value give the probability that the observed or a larger difference between the group means is observed given the null hypothesis would be true, thus that is a p-value.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="basics.html#cb35-1"></a>diffH0 &lt;-<span class="st"> </span><span class="kw">numeric</span>(nsim)</span>
-<span id="cb35-2"><a href="basics.html#cb35-2"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim){</span>
-<span id="cb35-3"><a href="basics.html#cb35-3"></a>  randomcars &lt;-<span class="st"> </span><span class="kw">sample</span>(dat<span class="op">$</span>car)</span>
-<span id="cb35-4"><a href="basics.html#cb35-4"></a>  rmod &lt;-<span class="st"> </span><span class="kw">lm</span>(ell<span class="op">~</span>randomcars, <span class="dt">data=</span>dat)</span>
-<span id="cb35-5"><a href="basics.html#cb35-5"></a>  diffH0[i] &lt;-<span class="st"> </span><span class="kw">coef</span>(rmod)[<span class="st">&quot;randomcarsY&quot;</span>]</span>
-<span id="cb35-6"><a href="basics.html#cb35-6"></a>}</span>
-<span id="cb35-7"><a href="basics.html#cb35-7"></a><span class="kw">mean</span>(<span class="kw">abs</span>(diffH0)<span class="op">&gt;</span><span class="kw">abs</span>(<span class="kw">coef</span>(mod)[<span class="st">&quot;carY&quot;</span>])) <span class="co"># p-value</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="basics.html#cb35-1" aria-hidden="true" tabindex="-1"></a>diffH0 <span class="ot">&lt;-</span> <span class="fu">numeric</span>(nsim)</span>
+<span id="cb35-2"><a href="basics.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim){</span>
+<span id="cb35-3"><a href="basics.html#cb35-3" aria-hidden="true" tabindex="-1"></a>  randomcars <span class="ot">&lt;-</span> <span class="fu">sample</span>(dat<span class="sc">$</span>car)</span>
+<span id="cb35-4"><a href="basics.html#cb35-4" aria-hidden="true" tabindex="-1"></a>  rmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(ell<span class="sc">~</span>randomcars, <span class="at">data=</span>dat)</span>
+<span id="cb35-5"><a href="basics.html#cb35-5" aria-hidden="true" tabindex="-1"></a>  diffH0[i] <span class="ot">&lt;-</span> <span class="fu">coef</span>(rmod)[<span class="st">&quot;randomcarsY&quot;</span>]</span>
+<span id="cb35-6"><a href="basics.html#cb35-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-7"><a href="basics.html#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">abs</span>(diffH0)<span class="sc">&gt;</span><span class="fu">abs</span>(<span class="fu">coef</span>(mod)[<span class="st">&quot;carY&quot;</span>])) <span class="co"># p-value</span></span></code></pre></div>
 <pre><code>## [1] 0.1858</code></pre>
 <p>Visualizing the possible differences between the group means given the null hypothesis was true shows that the observed difference is well within what is expected if the two groups would not differ in their means (Fig. <a href="basics.html#fig:ranhist">2.14</a>).</p>
 <div class="figure"><span id="fig:ranhist"></span>
@@ -775,22 +867,22 @@ Figure 2.14: Histogram if differences between the means of randomly assigned gro
 <p>In order to get a compatibility interval without assuming a distribution for the data (thus non-parametric) we could bootstrap the samples.</p>
 <p>Bootstrapping is sampling observations from the data with replacement. For example, if we have a sample of 8 observations, we draw 8 times a random observation from the 8 observation. Each time, we assume that all 8 observations are available. Thus a bootstrapped sample could include some observations several times, whereas others are missing. In this way, we simulate the variance in the data that is due to the fact that our data do not contain the whole big population.</p>
 <p>Also bootstrapping can be programmed in R using a loop.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="basics.html#cb37-1"></a>diffboot &lt;-<span class="st"> </span><span class="kw">numeric</span>(<span class="dv">1000</span>)</span>
-<span id="cb37-2"><a href="basics.html#cb37-2"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nsim){</span>
-<span id="cb37-3"><a href="basics.html#cb37-3"></a>  ngroups &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb37-4"><a href="basics.html#cb37-4"></a>  <span class="cf">while</span>(ngroups<span class="op">==</span><span class="dv">1</span>){</span>
-<span id="cb37-5"><a href="basics.html#cb37-5"></a>    bootrows &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(dat), <span class="dt">replace=</span><span class="ot">TRUE</span>)</span>
-<span id="cb37-6"><a href="basics.html#cb37-6"></a>    ngroups &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(dat<span class="op">$</span>car[bootrows]))</span>
-<span id="cb37-7"><a href="basics.html#cb37-7"></a>    }</span>
-<span id="cb37-8"><a href="basics.html#cb37-8"></a>  rmod &lt;-<span class="st"> </span><span class="kw">lm</span>(ell<span class="op">~</span>car, <span class="dt">data=</span>dat[bootrows,])</span>
-<span id="cb37-9"><a href="basics.html#cb37-9"></a>  diffboot[i] &lt;-<span class="st"> </span><span class="kw">coef</span>(rmod)[<span class="dv">2</span>]</span>
-<span id="cb37-10"><a href="basics.html#cb37-10"></a>}</span>
-<span id="cb37-11"><a href="basics.html#cb37-11"></a><span class="kw">quantile</span>(diffboot, <span class="dt">prob=</span><span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="basics.html#cb37-1" aria-hidden="true" tabindex="-1"></a>diffboot <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">1000</span>)</span>
+<span id="cb37-2"><a href="basics.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim){</span>
+<span id="cb37-3"><a href="basics.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  ngroups <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb37-4"><a href="basics.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span>(ngroups<span class="sc">==</span><span class="dv">1</span>){</span>
+<span id="cb37-5"><a href="basics.html#cb37-5" aria-hidden="true" tabindex="-1"></a>    bootrows <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dat), <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb37-6"><a href="basics.html#cb37-6" aria-hidden="true" tabindex="-1"></a>    ngroups <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unique</span>(dat<span class="sc">$</span>car[bootrows]))</span>
+<span id="cb37-7"><a href="basics.html#cb37-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb37-8"><a href="basics.html#cb37-8" aria-hidden="true" tabindex="-1"></a>  rmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(ell<span class="sc">~</span>car, <span class="at">data=</span>dat[bootrows,])</span>
+<span id="cb37-9"><a href="basics.html#cb37-9" aria-hidden="true" tabindex="-1"></a>  diffboot[i] <span class="ot">&lt;-</span> <span class="fu">coef</span>(rmod)[<span class="dv">2</span>]</span>
+<span id="cb37-10"><a href="basics.html#cb37-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-11"><a href="basics.html#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(diffboot, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <pre><code>##       2.5%      97.5% 
 ## -0.3395643  2.4273810</code></pre>
 <p>The resulting values for the difference between the two group means can be interpreted as the distribution of those differences, if we had repeated the study many times (Fig. <a href="basics.html#fig:histboot">2.15</a>).
 A 95% interval of the distribution corresponds to a 95% compatibility interval (or confidence interval or uncertainty interval).</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="basics.html#cb39-1"></a><span class="kw">hist</span>(diffboot); <span class="kw">abline</span>(<span class="dt">v=</span><span class="kw">coef</span>(mod)[<span class="dv">2</span>], <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="basics.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(diffboot); <span class="fu">abline</span>(<span class="at">v=</span><span class="fu">coef</span>(mod)[<span class="dv">2</span>], <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <div class="figure"><span id="fig:histboot"></span>
 <img src="1.1-prerequisites_files/figure-html/histboot-1.png" alt="Histogram of the boostrapped differences between the group means (grey) and the observed difference." width="672" />
 <p class="caption">
@@ -800,7 +892,7 @@ Figure 2.15: Histogram of the boostrapped differences between the group means (g
 <p>For both methods, randomisation test and bootstrapping, we have to assume that all observations are independent. Randomization and bootstrapping becomes complicated or even unfeasible when data are structured.</p>
 </div>
 </div>
-<div id="summary" class="section level2">
+<div id="summary" class="section level2" number="2.6">
 <h2><span class="header-section-number">2.6</span> Summary</h2>
 <p>Bayesian data analysis is applying the Bayes theorem for summarizing knowledge based on data, priors and the model assumptions.</p>
 <p>Frequentist statistics is quantifying uncertainty by hypothetical repetitions.</p>
@@ -836,6 +928,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

@@ -1,5 +1,7 @@
+
 # Further topics {#furthertopics}
-This is a collection of short introductions or links with commented R code that cover other topics that might be usful for ecologists.
+
+This is a collection of short introductions or links with commented R code that cover other topics that might be useful for ecologists.
 
 ## Bioacoustic analyse
 Bioacoustic analyses are nicely covered in a blog by [Marcelo Araya-Salas](https://marce10.github.io).

@@ -1,0 +1,12 @@
+
+# Generalized linear mixed models {#glmm}
+
+THIS CHAPTER IS UNDER CONSTRUCTION!!! 
+
+## Introduction
+
+## Summary
+xxx
+
+
+
