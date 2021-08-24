@@ -138,13 +138,11 @@ firststanmod
 run-stan-from-r
 ridge_regression
 introduction-7
-summary-8
 SEM
 introduction-8
-summary-9
 spatial_glmm
 introduction-9
-summary-10
+summary-8
 PART-III
 model-notations
 zeroinflated-poisson-lmm
@@ -166,3 +164,4 @@ data-description
 model-description
 the-stan-code
 call-stan-from-r-check-convergence-and-look-at-results
+further-reading-2
