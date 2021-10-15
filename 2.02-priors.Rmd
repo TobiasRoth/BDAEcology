@@ -5,6 +5,7 @@ THIS CHAPTER IS UNDER CONSTRUCTION!!!
 
 ## Introduction
 
+[discussion on priors](https://bookdown.org/mrwhalen/bayes_book/parameter-estimation-analytical-methods.html#the-effect-of-different-priors)
 
 ## How to choose a prior {#choosepriors}
 > Tabelle von Fränzi (CourseIII_glm_glmmm/course2018/presentations_handouts/presentations)
