@@ -1,12 +1,143 @@
 
 # Generalized linear mixed models {#glmm}
 
-THIS CHAPTER IS UNDER CONSTRUCTION!!! 
-
 ## Introduction
+THIS CHAPTER IS UNDER CONSTRUCTION!!! 
+<!-- Steffis draft version, started 17.11.2021-->
+In chapter {#lmer} on linear mixed effect models we have introduced how to analyze metric outcome variables for which a normal distribution of residuals can be assumed (potentially after transformation), when the data that have a hierarchical structure and, as a consequence, observations are not independent.
+In chapter {#glm} on generalized linear models we have introduced how to analyze outcome variables for which a normal error distribution can not be assumed, as for example binary outcomes or count data. More precisely, we have extended modelling outcomes with normal error to modelling outcomes with error distributions from the exponential family (e.g., binomial or Poisson)
+Generalized linear mixed models combine the two complexities. In this chapter, we will thus show how to analyze outcome variables with error distributions from the exponential family, when the data have a hierarchical structure. Remember, a hierarchical structure of the data means that the predictor variables may be measured at different hierarchical levels (e.g. on smaller or larger units) which may also differ from the level at which the outcome variable is measured.
+
+<!-- Fragen an alle:
+Wie nennen wir die y? Response, dependent variable, outcome, endpoint?
+Fränzi: Outcome variable and predictors im alten Buch. Explanatory variables kam auch vor. Wir einigen uns auf outcome und predictors
+-->
+
+### Binomial Mixed Model
+
+#### Background
+
+```{r, echo=FALSE}
+data(swallowfarms)
+```
+
+<!-- text from old book, slightly modified
+to do:
+- add correct chapter reference for GLM model)
+https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html
+Items can be cited directly within the documentation using the syntax @key where key is the citation key in the first line of the entry, e.g., @R-base. To put citations in parentheses, use [@key]. To cite multiple entries, separate the keys by semicolons, e.g., [@key-1; @key-2; @key-3]. To suppress the mention of the author, add a minus sign before @, e.g., [-@R-base].
+-->
+To illustrate the binomial mixed model we use a subset of a data set used by @Gruebler2010 on barn swallow *Hirundo rustica* nestling survival (we selected a nonrandom sample to be able to fit a simple model; hence, the results do not add unbiased knowledge about the swallow biology!). For `r nrow(swallowfarms)` swallow broods, we know the clutch size and the number of the nestlings that
+fledged. The broods came from `r length(unique(swallowfarms$farm))` farms, thus some of them had more than one brood. There are three predictors measured at the level of the farm: colony size (the number of swallow broods on that farm), cow (whether there are cows on the farm or not), and dung heap (the number of dung heaps, piles of cow dung, within 500 m of the farm).
+The aim was to assess how swallows profit from insects that are attracted by livestock on the farm and by dung heaps. Broods from the same farm are not independent of each other. Also, the predictor variables were measured at the level of the farm, thus they are the same for all broods from a farm. We have to account for that when building the model by including farm as a random factor. The outcome variable consists of two values for each observation, as seen with the binomial model without random factors (Section
+8.2.2): number of successes (fledge) and number of failures (chicks that died = clutch size minus number that fledged).
+The random factor "farm" adds, to the intercept in the linear predictor, a farm-specific deviation $b_g$ . These deviations are modeled as normally distributed with mean $0$ and standard deviation $\sigma_g$.
+
+$$y_i \sim Binom(p_i, n_i)$$
+
+$$logit(p_i) = \beta_0 + b_{g[i]} + \beta_1\;colonysize_i + \beta_2\;I(cow_i = 1) + \beta_3\;dungheap_i$$
+
+$$b_g \sim Norm(0, \sigma_g)$$
+
+
+<!-- Frage an Fränzi: was war der Grund für das nonrandom sample? Könnte man das kurz erläutern? -->
+
+#### Fitting a Binomial Mixed Model in R
+
+#### Assessing Model Assumptions
+
+#### Drawing Conclusions
+
+
+```{r}
+
+#-------------------------------------------------------------------------------
+# Data on Barn Swallow (Hirundo rustica) nestling survival on farms
+# Data is part of what was published in Gr?ebler et al. 2010, J Appl Ecol 47:1340-1347
+# we selected the year 2003 and pairs with only one brood. We selected a non-random sample of the farms
+# to be able to fit a simple model, thus the analysis serves only illustrative purposes!
+# selected farms: 1001,1002,1004,1008,1010,1016,1019,1020,1021,1024,2102,2114,2117,2203,2204,2206,5102,5104,
+# 5105,5307,7003,7004,7005,7007,7013,13005,13014,13016,15012,16002,16012,16017,16025,16036,16040,16041,16059,
+# 17005,17009,18054,18057,18063,18064,18069,18124,18135,18145,18148,18155,18158,18165
+
+#-------------------------------------------------------------------------------
+# Settings
+#-------------------------------------------------------------------------------
+setwd("....")
+#-------------------------------------------------------------------------------
+library(blmeco)
+#-------------------------------------------------------------------------------
+# 9.1.2	Fitting a Binomial mixed model in R
+#-------------------------------------------------------------------------------
+data(swallowfarms)
+dat <- swallowfarms
+str(dat)
+# n = 63 broods
+# farm = ID of farm (= one colony), n_f=51 -> the random factor
+# colsize = size of the colony (nr of breeding pairs)
+# cow: 1 = there are cows (or other livestock) on the farm
+# dung = number of dungheaps within 500 m of the nesting site (flies near dungheaps are a good source of food for the Swallow)
+# colsize, cow and dung are variables measured at the level of the farm
+# clutch = clutch size
+# fledge = number of young fledged
+
+```
+
+dat$colsize.z <- scale(dat$colsize)   # scaled values for better model convergence
+dat$dung.z    <- scale(dat$dung)
+dat$die <- dat$clutch - dat$fledge
+dat$farm.f <- factor(dat$farm)     # for clarity we define farm as a factor to use it as the random factor
+
+library(arm)
+
+mod <- glmer(cbind(fledge,die) ~ colsize.z + cow + dung.z + (1|farm.f) , data=dat, family="binomial")
+mod
+
+#-------------------------------------------------------------------------------
+#9.1.3	Assessing model assumptions
+#-------------------------------------------------------------------------------
+# Figure 9.1
+#-------------------------------------------------------------------------------
+jpeg(filename="../figures/Figure9-1_swallow_residplots.jpg",
+     width = 9000, height = 9000, units = "px", res=1200)
+
+par(mfrow=c(2,2))    # check residuals
+qqnorm(resid(mod), main="qq-plot residuals")
+qqline(resid(mod))
+
+qqnorm(ranef(mod)$farm.f[,1], main="qq-plot, farm")
+qqline(ranef(mod)$farm.f[,1])
+
+plot(fitted(mod), resid(mod)) # residuals vs fitted values
+abline(h=0)
+
+dat$fitted <- fitted(mod)
+plot(dat$fitted,dat$fledge/dat$clutch)    # plot data vs. predicted values
+abline(0,1)
+
+dev.off()
+#-------------------------------------------------------------------------------
+
+mean(ranef(mod)$farm.f[,1])
+t.should <- plogis(fixef(mod)["(Intercept)"])                # expected value at the intercept
+t.is     <- plogis(fixef(mod)["(Intercept)"]-0.001690303)    # slightly reduced value because the mean farm random effect is not precisely 0
+# => the error at the Intercept is:
+(t.should-t.is)/t.should   # 0.09 %
+# or:
+exp(-0.001690303)
+# the multiplicative factor on the odds (i.e. fledge/die) is about 0.2% too small
+
+
+
+# check for overdispersion
+dispersion_glmer(mod)
 
 ## Summary
 xxx
+
+
+
+
 
 
 
