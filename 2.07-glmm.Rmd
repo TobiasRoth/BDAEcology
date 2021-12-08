@@ -18,7 +18,10 @@ Fränzi: Outcome variable and predictors im alten Buch. Explanatory variables ka
 #### Background
 
 ```{r, echo=FALSE}
+
+library(blmeco)
 data(swallowfarms)
+
 ```
 
 <!-- text from old book, slightly modified
@@ -45,14 +48,8 @@ b_g \sim Norm\left(0, \sigma_g\right)
 
 <!-- Frage an Fränzi: was war der Grund für das nonrandom sample? Könnte man das kurz erläutern? -->
 
-#### Fitting a Binomial Mixed Model in R
 
-#### Assessing Model Assumptions
-
-#### Drawing Conclusions
-
-
-```{r}
+```{r, inspect_data}
 
 #-------------------------------------------------------------------------------
 # Data on Barn Swallow (Hirundo rustica) nestling survival on farms
@@ -67,6 +64,7 @@ b_g \sim Norm\left(0, \sigma_g\right)
 library(blmeco)
 
 # Fitting a Binomial mixed model in R
+# A) using glmer function from lme4 package
 #-------------------------------------------------------------------------------
 data(swallowfarms)
 dat <- swallowfarms
@@ -80,46 +78,74 @@ str(dat)
 # clutch = clutch size
 # fledge = number of young fledged
 
+# check number of farms in the data set
+length(unique(dat$farm))
+
 ```
+
+#### Fitting a Binomial Mixed Model in R
+
+<!-- Steffis idea on 8.12.2021: use glmer first, then brms
+- brms: https://bookdown.org/content/4857/
+-->
+To fit the model in R we start by using the function ```glmer``` from the R package ```lme4```. The glmer function uses the Laplace approximation, which is an analytic method to solve
+integrals. This method is also often used in Bayesian statistics to obtain the posterior
+distribution of parameters. We z-transform the covariates (subtraction of the
+mean and division by the standard deviation so that the transformed variable
+has a mean of 0 and a standard deviation of 1). This often facilitates
+convergence of the model. 
+
+```{r, prepare_data}
 
 dat$colsize.z <- scale(dat$colsize)   # scaled values for better model convergence
 dat$dung.z    <- scale(dat$dung)
 dat$die <- dat$clutch - dat$fledge
 dat$farm.f <- factor(dat$farm)     # for clarity we define farm as a factor to use it as the random factor
 
-library(arm)
+```
 
-mod <- glmer(cbind(fledge,die) ~ colsize.z + cow + dung.z + (1|farm.f) , data=dat, family="binomial")
-mod
+The glmer function uses the standard way to formulate a statistical model in R, with the outcome on the left, followed by the ```~``` symbol, meaning "explained by", followed by the predictors, which are separated by ```+```. The notation for the random factor with only a random intercept was introduced in chapter \@ref(lmer) and is ```(1|farm.f)``` here. When the model is fitted, you can inspect the summary of the model object, which provides the fitting method, the model formula, statistics for the model fit including the Akaike information criterion (AIC), the Bayesian information criterion (BIC), the scaled residuals, the random effects variance and information about observations and groups, a table with coefficient estimates for the fixed effects (with standard errors and a z-test for the coefficient) and correlations between fixed effects. We recommend to always check if the number of observations and groups, i.e., 63 barn swallow nests from 51 farms here, is correct. This information shows if the glmer function has correctly recognized the hierarchical structure in the data. Here, this is correct.
+
+```{r, fit_model}
+
+library(lme4)
+mod.glmer <- glmer(cbind(fledge,die) ~ colsize.z + cow + dung.z + (1|farm.f) , data=dat, family="binomial")
+
+# move to inference part.
+summary(mod.glmer)
+confint(mod.glmer)
+
+```
+
+#### Assessing Model Assumptions
+
+```{r, assess_model_assumptions}
 
 #-------------------------------------------------------------------------------
 #9.1.3	Assessing model assumptions
 #-------------------------------------------------------------------------------
 # Figure 9.1
 #-------------------------------------------------------------------------------
-jpeg(filename="../figures/Figure9-1_swallow_residplots.jpg",
-     width = 9000, height = 9000, units = "px", res=1200)
 
+# STEFFI, 8.12.: hier weiter. Warum geht der Plot nicht? Ev. wie vorher mit jpg erstmals versuchen?
 par(mfrow=c(2,2))    # check residuals
-qqnorm(resid(mod), main="qq-plot residuals")
-qqline(resid(mod))
+qqnorm(resid(mod.glmer), main="qq-plot residuals")
+qqline(resid(mod.glmer))
 
-qqnorm(ranef(mod)$farm.f[,1], main="qq-plot, farm")
-qqline(ranef(mod)$farm.f[,1])
+qqnorm(ranef(mod.glmer)$farm.f[,1], main="qq-plot, farm")
+qqline(ranef(mod.glmer)$farm.f[,1])
 
-plot(fitted(mod), resid(mod)) # residuals vs fitted values
+plot(fitted(mod.glmer), resid(mod.glmer)) # residuals vs fitted values
 abline(h=0)
 
-dat$fitted <- fitted(mod)
+dat$fitted <- fitted(mod.glmer)
 plot(dat$fitted,dat$fledge/dat$clutch)    # plot data vs. predicted values
 abline(0,1)
-
-dev.off()
 #-------------------------------------------------------------------------------
 
-mean(ranef(mod)$farm.f[,1])
-t.should <- plogis(fixef(mod)["(Intercept)"])                # expected value at the intercept
-t.is     <- plogis(fixef(mod)["(Intercept)"]-0.001690303)    # slightly reduced value because the mean farm random effect is not precisely 0
+mean(ranef(mod.glmer)$farm.f[,1])
+t.should <- plogis(fixef(mod.glmer)["(Intercept)"])                # expected value at the intercept
+t.is     <- plogis(fixef(mod.glmer)["(Intercept)"]-0.001690303)    # slightly reduced value because the mean farm random effect is not precisely 0
 # => the error at the Intercept is:
 (t.should-t.is)/t.should   # 0.09 %
 # or:
@@ -129,10 +155,19 @@ exp(-0.001690303)
 
 
 # check for overdispersion
-dispersion_glmer(mod)
+dispersion_glmer(mod.glmer)
+
+```
+
+
+#### Drawing Conclusions
 
 ## Summary
-xxx
+
+<!-- Fragen an alle 
+- Wenn wir auf ein Chapter, eine Figure oder einen Table referenzieren, wie schreiben wir das (gross, klein, ausgeschrieben, abgekürzt?)
+- Wie wäre es, wenn ich glmm mit glmer und brms fitten würde? Um den Unterschied in der Inferenz zu zeigen?
+-->
 
 
 
