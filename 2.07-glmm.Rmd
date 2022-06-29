@@ -57,16 +57,9 @@ b_g \sim Norm\left(0, \sigma_g\right)
 
 library(blmeco)
 data(swallowfarms)
+?swallowfarms # to see the documentation of the data set
 dat <- swallowfarms
 str(dat)
-# dat contains n = 63 broods
-# farm = ID of farm (= one colony) -> the random factor
-# colsize = size of the colony (nr of breeding pairs)
-# cow: 1 = there are cows (or other livestock) on the farm
-# dung = number of dungheaps within 500 m of the nesting site (flies near dungheaps are a good source of food for the Swallow)
-# colsize, cow and dung are variables measured at the level of the farm
-# clutch = clutch size
-# fledge = number of young fledged
 
 # check number of farms in the data set
 length(unique(dat$farm))
@@ -103,7 +96,10 @@ mod.glmer <- glmer(cbind(fledge,die) ~ colsize.z + cow + dung.z + (1|farm.f) , d
 
 ##### Assessing Model Assumptions for the glmer fit
 
-```{r, assess_model_assumptions}
+The residuals of the model look fairly normal (top left panel of Figure below) with slightly wider tails. The random intercepts for the farms look perfectly normal as they should, by the way the random intercepts are fitted (top right panel). The plot of the residuals vs. fitted values (bottom left panel) shows a slight, but probably not dramatic increase in the residuals with increasing fitted values. The fitted proportions seem to slightly overestimate the observed proportions when these are large, but to underestimate them when small (bottom right panel).
+The mean of the random effects is close to zero. A slight overdispersion (dispersion parameter >1) seems to be present, but nothing to worry about.
+
+```{r, assess_model_assumptions, fig.cap="Diagnostic plots to assess model assumptions for mod.glmer. "}
 
 par(mfrow=c(2,2))    
 # check normal distribution of residuals
@@ -146,7 +142,7 @@ detach(package:lme4)
 Now we fit the same model using the function ```brm``` from the R package ```brms```. This function allows to fit Bayesian generalized (non-)linear multivariate multilevel models using Stan (REF) for full Bayesian inference. A wide range of distributions and link functions are supported, and the function offers many things more. Here we use it to fit the model as specified by the formula object above. In brm, it is of course possible to specify priors. However, we are going to use non-informative priors (or weakly informative priors) here, so we do not specify priors.
 Note that brm requires that a binomial outcome is specified in the format ```successes|trials()```, which is the number of fledged nestlings out of the total clutch size in our case. In contrast, the glmer function required to specify the number of nestlings that fledged and died (which together sum up to clutch size), in the format ```cbind(successes, failures)```.
 The family is also called ```binomial``` in ```brm```, but would be ```bernoulli``` for a binary outcome, whereas ```glmer``` would use binomial in both situations (Bernoulli distribution is a special case of the binomial). However, it is slightly confusing that (at the time of writing this chapter) the documentation for ```brmsfamily``` did not mention the binomial family under Usage, where it probably went missing, but it is mentioned under Arguments for the argument family.
-To apply MCMC sampling we need some more arguments: ```warmup``` specifies the number of iterations that should be discarded (also called burn-in period); ```iter``` specifies the total number of iterations (including those discarded); ```chains``` specifies the number of chains; ```inits``` specifies the starting values of the iterations (normally you can either use the maximum likelihood estimates of the parameters as starting values, or simply ask the algorithm to start with zeros); ```thin``` specifies the thinning of the chain, i.e., whether all iterations shouls be kept (thin=1) or for example every 4th only (thin=4); cores specifies the number of cores used for the algorithm; seed specifies the random seed, allowing for replication of results.
+To apply MCMC sampling we need some more arguments: ```warmup``` specifies the number of iterations that should be discarded (also called burn-in period); ```iter``` specifies the total number of iterations (including those discarded); ```chains``` specifies the number of chains; ```init``` specifies the starting values of the iterations (normally you can either use the maximum likelihood estimates of the parameters as starting values, or simply ask the algorithm to start with zeros); ```thin``` specifies the thinning of the chain, i.e., whether all iterations shouls be kept (thin=1) or for example every 4th only (thin=4); cores specifies the number of cores used for the algorithm; seed specifies the random seed, allowing for replication of results.
 
 ```{r, fit_model_brms}
 
@@ -157,16 +153,14 @@ mod.brm <- brm(fledge|trials(clutch) ~ colsize.z + cow + dung.z + (1|farm.f) , d
                warmup = 500, 
                iter = 2000, 
                chains = 2,
-               inits = "0", 
+               init = "0", 
                cores = 2,
                seed = 123)
 # note: thin=1 is default and we did not change this here.
 
 # Fragen:
-# - was für prior braucht es, wenn man sie nicht setzt? Reference priors? Proper/improper ...
+# - was für prior braucht es, wenn man sie nicht setzt? Reference priors? Proper/improper ... Mit mod.brm$prior sehe ich gewisse Infos, aber z.B. was die argumente bei student_t bedeuten, kann ich nicht herausfinden, da die Funktion student_t nicht dokumentiert ist.
 # - Modell so korrekt? Und ist hier der begriff mixed-effects eigentlich obsolet, oder kann man den auch verwenden?
-# - warum motzt es wegen der Klammer?
-# - kann nicht mehr pushen!¨
 
 ```
 
@@ -193,6 +187,7 @@ confint(mod.glmer)
 
 # brm
 summary(mod.brm)
+mod.brm$prior
 
 ```
 
