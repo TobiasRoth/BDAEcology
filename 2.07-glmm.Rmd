@@ -3,18 +3,11 @@
 
 ## Introduction
 THIS CHAPTER IS UNDER CONSTRUCTION!!! 
-<!-- Steffis draft version, started 17.11.2021
-TO DO:
-- mention nested and crossed random effects -->
+<!-- Steffis draft version, started 17.11.2021-->
 In chapter \@ref(lmer) on linear mixed effect models we have introduced how to analyze metric outcome variables for which a normal distribution of residuals can be assumed (potentially after transformation), when the data have a hierarchical structure and, as a consequence, observations are not independent.
 In chapter \@ref(glm) on generalized linear models we have introduced how to analyze outcome variables for which a normal error distribution can not be assumed, as for example binary outcomes or count data. More precisely, we have extended modelling outcomes with normal error to modelling outcomes with error distributions from the exponential family (e.g., binomial or Poisson).
-Generalized linear mixed models (GLMM) combine the two complexities and are thus used to analyze outcomes with a non-normal error distribution when the data have a hierarchical structure. In this chapter, we will thus show how to analyze such data. Remember, a hierarchical structure of the data means that the data are collected at different hierarchical levels, for example smaller and larger spatial units, or contains repeated measurements in time on a specific subject. Typically, the outcome variable is measured/observed at the lowest level but other variables may be measured at different levels. A first example is introduced in the next section.
+Generalized linear mixed models (GLMM) combine the two complexities and are thus used to analyze outcomes with a non-normal error distribution when the data have a hierarchical structure. In this chapter, we will thus show how to analyze such data. Remember, a hierarchical structure of the data means that the data are collected at different levels, for example smaller and larger spatial units, or contains repeated measurements in time on a specific subject. Typically, the outcome variable is measured/observed at the lowest level but other variables may be measured at different levels. A first example is introduced in the next section.
 
-
-<!-- Fragen an alle:
-Wie nennen wir die y? Response, dependent variable, outcome, endpoint?
-Fränzi: Outcome variable and predictors im alten Buch. Explanatory variables kam auch vor. Wir einigen uns auf outcome und predictors
--->
 
 ### Binomial Mixed Model
 
@@ -22,6 +15,7 @@ Fränzi: Outcome variable and predictors im alten Buch. Explanatory variables ka
 
 ```{r, echo=FALSE}
 
+# loading data to report some numbers in the text
 library(blmeco)
 data(swallowfarms)
 
@@ -32,8 +26,8 @@ https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html
 Items can be cited directly within the documentation using the syntax @key where key is the citation key in the first line of the entry, e.g., @R-base. To put citations in parentheses, use [@key]. To cite multiple entries, separate the keys by semicolons, e.g., [@key-1; @key-2; @key-3]. To suppress the mention of the author, add a minus sign before @, e.g., [-@R-base].
 -->
 To illustrate the binomial mixed model we use a subset of a data set used by @Gruebler2010 on barn swallow *Hirundo rustica* nestling survival (we selected a nonrandom sample to be able to fit a simple model; hence, the results do not add unbiased knowledge about the swallow biology!). For `r nrow(swallowfarms)` swallow broods, we know the clutch size and the number of the nestlings that
-fledged. The broods came from `r length(unique(swallowfarms$farm))` farms (larger unit), thus some of the farms had more than one brood. There are three predictors measured at the level of the farm: colony size (the number of swallow broods on that farm), cow (whether there are cows on the farm or not), and dung heap (the number of dung heaps, piles of cow dung, within 500 m of the farm).
-The aim was to assess how swallows profit from insects that are attracted by livestock on the farm and by dung heaps. Broods from the same farm are not independent of each other because they represent a smaller unit which belongs to a larger unit (farm), and thus share the characteristics of the same larger unit: predictor variables were measured at the level of the farm, and are thus the same for all broods from a farm. We have to account for that when building the model by including farm as a random factor. The outcome variable consists of two values for each observation, as seen with the binomial model without random factors (Section 8.2.2): 
+fledged. The broods came from `r length(unique(swallowfarms$farm))` farms (larger unit), thus some of the farms had more than one brood. Note that each farm can harbor one or several broods, and the broods are nested within farms (as opposed to crossed, see chapter \@ref(lmer)), i.e., each brood belongs to only one farm. There are three predictors measured at the level of the farm: colony size (the number of swallow broods on that farm), cow (whether there are cows on the farm or not), and dung heap (the number of dung heaps, piles of cow dung, within 500 m of the farm).
+The aim was to assess how swallows profit from insects that are attracted by livestock on the farm and by dung heaps. Broods from the same farm are not independent of each other because they represent a smaller unit which belongs to a larger unit (farm), and thus share the characteristics of the same larger unit: predictor variables were measured at the level of the farm, and are thus the same for all broods from a farm. We should account for that when building the model by including farm as a random factor. The outcome variable is a proportion (proportion fledged from clutch) and thus consists of two values for each observation, as seen with the binomial model without random factors (Section 8.2.2): 
 <!-- add correct chapter reference for GLM model -->
 the number of chicks that fledged (successes) and the number of chicks that died  (failures), i.e., the clutch size minus number that fledged.
 The random factor "farm" adds a farm-specific deviation $b_g$ to the intercept in the linear predictor. These deviations are modeled as normally distributed with mean $0$ and standard deviation $\sigma_g$.
@@ -46,15 +40,13 @@ logit\left(p_i\right) = \beta_0 + b_{g[i]} + \beta_1\;colonysize_i + \beta_2\;I\
 b_g \sim Norm\left(0, \sigma_g\right)
   (\#eq:b_g)
 \end{eqnarray} 
-<!-- You may refer to it using \@ref(eq:binom)-->
+<!-- You may refer to these equations using \@ref(eq:y_binom), etc.-->
 
 
-<!-- Frage an Fränzi: was war der Grund für das nonrandom sample? Könnte man das kurz erläutern? -->
 
 
 ```{r, inspect_data}
 
-#-------------------------------------------------------------------------------
 # Data on Barn Swallow (Hirundo rustica) nestling survival on farms
 # Data is part of what was published in Grüebler et al. 2010, J Appl Ecol 47:1340-1347
 # we selected the year 2003 and pairs with only one brood. We selected a non-random sample of the farms
@@ -63,17 +55,12 @@ b_g \sim Norm\left(0, \sigma_g\right)
 # 5105,5307,7003,7004,7005,7007,7013,13005,13014,13016,15012,16002,16012,16017,16025,16036,16040,16041,16059,
 # 17005,17009,18054,18057,18063,18064,18069,18124,18135,18145,18148,18155,18158,18165
 
-# -------------------------------------------------------------------------------
 library(blmeco)
-
-# Fitting a Binomial mixed model in R
-# A) using glmer function from lme4 package
-#-------------------------------------------------------------------------------
 data(swallowfarms)
 dat <- swallowfarms
 str(dat)
-# n = 63 broods
-# farm = ID of farm (= one colony), n_f=51 -> the random factor
+# dat contains n = 63 broods
+# farm = ID of farm (= one colony) -> the random factor
 # colsize = size of the colony (nr of breeding pairs)
 # cow: 1 = there are cows (or other livestock) on the farm
 # dung = number of dungheaps within 500 m of the nesting site (flies near dungheaps are a good source of food for the Swallow)
@@ -93,8 +80,7 @@ length(unique(dat$farm))
 <!-- Steffis idea on 8.12.2021: use glmer first, then brms
 - brms: https://bookdown.org/content/4857/
 -->
-To fit the model in R we start by using the function ```glmer``` from the R package ```lme4```. The glmer function uses the Laplace approximation, which is an analytic method to solve integrals. This method is also often used in Bayesian statistics to obtain the posterior distribution of parameters. We z-transform the covariates (subtraction of the
-mean and division by the standard deviation so that the transformed variable has a mean of 0 and a standard deviation of 1). This often facilitates convergence of the model. 
+To fit the model in R we start by using the function ```glmer``` from the R package ```lme4```. The glmer function uses the Laplace approximation, which is an analytic method to solve integrals. This method is also often used in Bayesian statistics to obtain the posterior distribution of parameters. We z-transform the covariates (subtraction of the mean and division by the standard deviation, such that the transformed variable has a mean of 0 and a standard deviation of 1). This often facilitates convergence of the model. 
 
 ```{r, prepare_data}
 
@@ -105,28 +91,19 @@ dat$farm.f <- factor(dat$farm)     # for clarity we define farm as a factor
 
 ```
 
-The glmer function uses the standard way to formulate a statistical model in R, with the outcome on the left, followed by the ```~``` symbol, meaning "explained by", followed by the predictors, which are separated by ```+```. The notation for the random factor with only a random intercept was introduced in chapter \@ref(lmer) and is ```(1|farm.f)``` here. When the model is fitted, you can inspect the summary of the model object, which provides the fitting method, the model formula, statistics for the model fit including the Akaike information criterion (AIC), the Bayesian information criterion (BIC), the scaled residuals, the random effects variance and information about observations and groups, a table with coefficient estimates for the fixed effects (with standard errors and a z-test for the coefficient) and correlations between fixed effects. We recommend to always check if the number of observations and groups, i.e., 63 barn swallow nests from 51 farms here, is correct. This information shows if the glmer function has correctly recognized the hierarchical structure in the data. Here, this is correct.
+The glmer function uses the standard way to formulate a statistical model in R, with the outcome on the left, followed by the ```~``` symbol, meaning "explained by", followed by the predictors, which are separated by ```+```. The notation for the random factor with only a random intercept was introduced in chapter \@ref(lmer) and is ```(1|farm.f)``` here. 
 
 ```{r, fit_model_glmer}
 
+# fit GLMM using glmer function from lme4 package
 library(lme4)
 mod.glmer <- glmer(cbind(fledge,die) ~ colsize.z + cow + dung.z + (1|farm.f) , data=dat, family=binomial)
-
-# move to inference part.
-summary(mod.glmer)
-confint(mod.glmer)
 
 ```
 
 ##### Assessing Model Assumptions for the glmer fit
 
 ```{r, assess_model_assumptions}
-
-#-------------------------------------------------------------------------------
-#9.1.3	Assessing model assumptions
-#-------------------------------------------------------------------------------
-# Figure 9.1
-#-------------------------------------------------------------------------------
 
 par(mfrow=c(2,2))    
 # check normal distribution of residuals
@@ -145,8 +122,8 @@ abline(h=0)
 dat$fitted <- fitted(mod.glmer)
 plot(dat$fitted,dat$fledge/dat$clutch)
 abline(0,1)
-#-------------------------------------------------------------------------------
 
+# check distribution of random effects
 mean.ranef <- mean(ranef(mod.glmer)$farm.f[,1])
 # expected value at the intercept
 t.should <- plogis(fixef(mod.glmer)["(Intercept)"])       
@@ -158,8 +135,6 @@ t.is     <- plogis(fixef(mod.glmer)["(Intercept)"]-mean.ranef)
 exp(mean.ranef)
 # the multiplicative factor on the odds (i.e. fledge/die) is about 0.25% too small
 
-
-
 # check for overdispersion
 dispersion_glmer(mod.glmer)
 
@@ -168,10 +143,10 @@ detach(package:lme4)
 ```
 ##### Using the brm function
 
-Now we fit the same model using the function ```brm``` from the R package ```brms```. This function allows to fit Bayesian generalized (non-)linear multivariate multilevel models using Stan (REF) for full Bayesian inference. A wide range of distributions and link functions are supported, and the function offers many things more. Here we use it to fit the model as specified by the formula object above. In brm, it is of course possible to specify priors. However, we are going to use non-informative priors here, so we do not specify priors.
+Now we fit the same model using the function ```brm``` from the R package ```brms```. This function allows to fit Bayesian generalized (non-)linear multivariate multilevel models using Stan (REF) for full Bayesian inference. A wide range of distributions and link functions are supported, and the function offers many things more. Here we use it to fit the model as specified by the formula object above. In brm, it is of course possible to specify priors. However, we are going to use non-informative priors (or weakly informative priors) here, so we do not specify priors.
 Note that brm requires that a binomial outcome is specified in the format ```successes|trials()```, which is the number of fledged nestlings out of the total clutch size in our case. In contrast, the glmer function required to specify the number of nestlings that fledged and died (which together sum up to clutch size), in the format ```cbind(successes, failures)```.
 The family is also called ```binomial``` in ```brm```, but would be ```bernoulli``` for a binary outcome, whereas ```glmer``` would use binomial in both situations (Bernoulli distribution is a special case of the binomial). However, it is slightly confusing that (at the time of writing this chapter) the documentation for ```brmsfamily``` did not mention the binomial family under Usage, where it probably went missing, but it is mentioned under Arguments for the argument family.
-To apply MCMC sampling we need some more arguments: ```warmup``` specifies the number of iterations that should be discarded (burn-in period); ```iter``` specifies the total number of iterations (including those discarded); ```chains``` specifies the number of chains; ```inits``` specifies the starting values of the iterations (normally you can either use the maximum likelihood estimates of the parameters as starting values, or simply ask the algorithm to start with zeros); cores specifies the number of cores used for the algorithm; seed specifies the random seed, allowing for replication of results.
+To apply MCMC sampling we need some more arguments: ```warmup``` specifies the number of iterations that should be discarded (also called burn-in period); ```iter``` specifies the total number of iterations (including those discarded); ```chains``` specifies the number of chains; ```inits``` specifies the starting values of the iterations (normally you can either use the maximum likelihood estimates of the parameters as starting values, or simply ask the algorithm to start with zeros); ```thin``` specifies the thinning of the chain, i.e., whether all iterations shouls be kept (thin=1) or for example every 4th only (thin=4); cores specifies the number of cores used for the algorithm; seed specifies the random seed, allowing for replication of results.
 
 ```{r, fit_model_brms}
 
@@ -185,27 +160,56 @@ mod.brm <- brm(fledge|trials(clutch) ~ colsize.z + cow + dung.z + (1|farm.f) , d
                inits = "0", 
                cores = 2,
                seed = 123)
-
-summary(mod.brm)
+# note: thin=1 is default and we did not change this here.
 
 # Fragen:
 # - was für prior braucht es, wenn man sie nicht setzt? Reference priors? Proper/improper ...
 # - Modell so korrekt? Und ist hier der begriff mixed-effects eigentlich obsolet, oder kann man den auch verwenden?
 # - warum motzt es wegen der Klammer?
+# - kann nicht mehr pushen!¨
 
 ```
 
 
 ##### Checking model convergence for the brm fit
 
-Hier weiter, siehe Kapitel 5.3 hier: https://www.rensvandeschoot.com/tutorials/generalised-linear-models-with-brms/
+TO DO: Hier weiter, siehe Kapitel 5.3 hier: https://www.rensvandeschoot.com/tutorials/generalised-linear-models-with-brms/
+Check the priors actually used, because we didn't specify them.
+
+
 #### Drawing Conclusions
+
+After performing the check of the model assumptions, we can start with the interpretation in case the assumptions are not violated. The generic ```summary`` function gives us the results for the model object containing the fitted model, and works for both the model fitted with glmer and brm. Let's start having a look at the summary from ```mod.glmer```. 
+The summary provides the fitting method, the model formula, statistics for the model fit including the Akaike information criterion (AIC), the Bayesian information criterion (BIC), the scaled residuals, the random effects variance and information about observations and groups, a table with coefficient estimates for the fixed effects (with standard errors and a z-test for the coefficient) and correlations between fixed effects. We recommend to always check if the number of observations and groups, i.e., 63 barn swallow nests from 51 farms here, is correct. This information shows if the glmer function has correctly recognized the hierarchical structure in the data. Here, this is correct. To assess the associations between the predictor variables and the outcome analyzed, we need to look at the column Estimate in the Table of Fixed effects. This column contains the estimated model coefficients, and the standard error for these estimates is given in the column Std. Error, along with a z-test for the null hypothesis of a coefficient of zero.
+Because we used the logit link function, these coefficients are actually on the logit scale and are a bit difficult to interpret. What we can say is that positive coefficients indicate an increase and negative coefficients indicate a decrease in the proportion of nestlings fledged. For continuous predictors, as colsize.z and dung.z, this coefficient refers to the change in the logit of the outcome with a one unit change in the predictor (slope). For categorical predictors, the coefficients represent a difference between one category and another (reference category is the one not shown in the table). Here, we can say...
+TO DO: hier weiter
+TO DO: explain ORs and logit scale coefficients
+
+```{r, conclusions_glmer_brm}
+
+# glmer
+summary(mod.glmer)
+confint(mod.glmer)
+
+# brm
+summary(mod.brm)
+
+```
+
 
 ## Summary
 
 <!-- Fragen an alle 
+- Schreiben wir American oder British English? Wäre gut, möglichst früh zu beschliessen.
 - Wenn wir auf ein Chapter, eine Figure oder einen Table referenzieren, wie schreiben wir das (gross, klein, ausgeschrieben, abgekürzt?)
 - Wie wäre es, wenn ich glmm mit glmer und brms fitten würde? Um den Unterschied in der Inferenz zu zeigen?
+- Fränzi: swallowfarms data, was war der Grund für das nonrandom sample? Könnte man das kurz erläutern? 
+- Im Alten Buch: Random factors can be nested or crossed. Each level of a factor that is nested within another factor occurs only in one level of the other factor (Figure 7-6, left). For example, the factor “nestling” is nested in the factor “nest” because
+the same nestling cannot be in two nests. In contrast, when two factors are crossed, all possible combinations of the factor levels occur in the data set (Figure 7-6, right). For example, the factors “month” and “year” are crossed, because all months occur in every year.-->
+
+<!-- Bereits besprochene Fragen an alle:
+1) Wie nennen wir die y? Response, dependent variable, outcome, endpoint?
+Fränzi: Outcome variable and predictors im alten Buch. Explanatory variables kam auch vor. Wir einigen uns auf outcome und predictors
 -->
 
 
