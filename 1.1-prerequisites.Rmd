@@ -1,10 +1,10 @@
 
-# Prerequisits: Basic statistical terms {#basics}
+# Prerequisites: Basic statistical terms {#basics}
  to add definition of y and x
  outcome and predictor
 
 This chapter introduces some important terms useful for doing data analyses.
-It also introduces the essentials of the classical frequentist tests such as t- and Chisquare test. Even though we will not use nullhypotheses tests later [@Amrhein.2019], we introduce them here because we need to understand 100 years of scientific literature. For each classical test, we provide a suggestion how to do it in a Bayesian way and we discuss some differences between the Bayesian and frequentist statistics. 
+It also introduces the essentials of the classical frequentist tests such as t- and Chi-square test. Even though we will not use nullhypotheses tests later [@Amrhein.2019], we introduce them here because we need to understand 100 years of scientific literature. For each classical test, we provide a suggestion how to do it in a Bayesian way and we discuss some differences between the Bayesian and frequentist statistics. 
 
 ## Variables and observations
 
@@ -439,7 +439,7 @@ In our example the the marginal distribution of the mean is a t-distribution (Ch
 
 ## Classical frequentist tests and alternatives
 
-### Nullhypothesis testing
+### Null hypothesis testing
 
 Null hypothesis testing is constructing a model that describes how the data would look like in case of what we expect to be would not be. Then, the data is compared to how the model thinks the data should look like. If the data does not look like the model thinks they should, we reject that model and accept that our expectation may be true. 
 
