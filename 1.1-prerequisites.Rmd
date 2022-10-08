@@ -1,8 +1,5 @@
 
 # Prerequisits: Basic statistical terms {#basics}
- to add definition of y and x
- outcome and predictor
-
 This chapter introduces some important terms useful for doing data analyses.
 It also introduces the essentials of the classical frequentist tests such as t- and Chisquare test. Even though we will not use nullhypotheses tests later [@Amrhein.2019], we introduce them here because we need to understand 100 years of scientific literature. For each classical test, we provide a suggestion how to do it in a Bayesian way and we discuss some differences between the Bayesian and frequentist statistics. 
 
@@ -18,6 +15,9 @@ Scale   | Examples          | Properties        | Coding in R |
 Nominal | Sex, genotype, habitat  | Identity (values have a unique meaning) | `factor()` |
 Ordinal | Elevational zones | Identity and magnitude (values have an ordered relationship) | `ordered()` |
 Numeric | Discrete: counts;  continuous: body weight, wing length | Identity, magnitude, and intervals or ratios | `intgeger()` `numeric()` |
+
+
+The aim of many studies is to describe how a variable of interest (y) is related to one or more predictor variables (x).  How these variables are named differs between authors. The y-variable is called "outcome variable", "response" or "dependent variable". The x-variables are called "predictors", "explanatory variables" or "independent variables". The choose of the terms for x and y is a matter of taste. We avoid the terms "dependent" and "independent" variables because often we do not know whether the variable y is in fact depending on the x variables and also, often the x-variables are not independent of each other. In this book, we try to use "outcome" and "predictor" variables because these terms sound most neutral to us in that they refer to how the statistical model is constructed rather than to a real life relationship. 
 
 
 ## Displaying and summarizing variables
