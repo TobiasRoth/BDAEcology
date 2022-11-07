@@ -3,7 +3,7 @@
 This chapter introduces some important terms useful for doing data analyses.
 It also introduces the essentials of the classical frequentist tests such as t- and Chisquare test. Even though we will not use nullhypotheses tests later [@Amrhein.2019], we introduce them here because we need to understand 100 years of scientific literature. For each classical test, we provide a suggestion how to do it in a Bayesian way and we discuss some differences between the Bayesian and frequentist statistics. 
 
-## Variables and observations 
+## Variables and observations  
 
 Empirical research involves data collection. Data are collected by recording measurements of variables for observational units. An observational unit may be, for example, an individual, a plot, a time interval or a combination of those. The collection of all units ideally build a random sample of the entire population of units in that we are interested. The measurements (or observations) of the random sample are stored in a data table (sometimes also called data set, but a data set may include several data tables. A collection of data tables belonging to the same study or system is normally bundled and stored in a data base). A data table is a collection of variables (columns). Data tables normally are handled as objects of class `data.frame` in R. All measurements on a row in a data table belong to the same observational unit. The variables can be of different scales (Table \@ref(tab:scalemeasurement)). 
 
