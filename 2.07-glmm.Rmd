@@ -32,15 +32,12 @@ The aim was to assess how swallows profit from insects that are attracted by liv
 the number of chicks that fledged (successes) and the number of chicks that died  (failures), i.e., the clutch size minus number that fledged.
 The random factor "farm" adds a farm-specific deviation $b_g$ to the intercept in the linear predictor. These deviations are modeled as normally distributed with mean $0$ and standard deviation $\sigma_g$.
 
-\begin{eqnarray} 
+$$ 
 y_i \sim Binom\left(p_i, n_i\right)\\
-  (\#eq:y_binom)
 logit\left(p_i\right) = \beta_0 + b_{g[i]} + \beta_1\;colonysize_i + \beta_2\;I\left(cow_i = 1\right) + \beta_3\;dungheap_i\\
-  (\#eq:logit_p)
 b_g \sim Norm\left(0, \sigma_g\right)
-  (\#eq:b_g)
-\end{eqnarray} 
-<!-- You may refer to these equations using \@ref(eq:y_binom), etc.-->
+$$
+<!-- You may refer to these equations using \@ref(eq:y_binom), etc., fk: das hat Rmarkdown nicht geschluckt, ich habe nun die $$ verwendet-->
 
 <!-- fk: can we hide/delete the selected farms in the code below?-->
 
@@ -106,16 +103,16 @@ mod.glmer <- glmer(cbind(fledge,die) ~ colsize.z + cow + dung.z + (1|farm.f) , d
 <!--fk: Reference to Figures and Tables. \@ref(type:name),
 in the below paragraph I added the cause for the seeming lack of fit-->
 
-The residuals of the model look fairly normal (top left panel of Figure \@fig:assess_model_assumptions) with slightly wider tails. The random intercepts for the farms look perfectly normal as they should<!--fk: i would delete:, by the way the random intercepts are fitted (top right panel)-->. The plot of the residuals vs. fitted values (bottom left panel) shows a slight<!--fk: i would delete:, but probably not dramatic--> increase in the residuals with increasing fitted values. Positive correlations between the residuals and the fitted values are common in mixed models due to the shrinkage effect (chapter \@ref(lmer)). Due to the same reason the fitted proportions slightly overestimate the observed proportions when these are large, but underestimate them when small (bottom right panel). What is looking like a lack of fit here can be seen as preventing an overestimation of the among farm variance based on the assumption that the farms in the data are a random sample of farms belonging to the same population.
+The residuals of the model look fairly normal (top left panel of Figure \@fig:assessmodelassumptions) with slightly wider tails. The random intercepts for the farms look perfectly normal as they should<!--fk: i would delete:, by the way the random intercepts are fitted (top right panel)-->. The plot of the residuals vs. fitted values (bottom left panel) shows a slight<!--fk: i would delete:, but probably not dramatic--> increase in the residuals with increasing fitted values. Positive correlations between the residuals and the fitted values are common in mixed models due to the shrinkage effect (chapter \@ref(lmer)). Due to the same reason the fitted proportions slightly overestimate the observed proportions when these are large, but underestimate them when small (bottom right panel). What is looking like a lack of fit here can be seen as preventing an overestimation of the among farm variance based on the assumption that the farms in the data are a random sample of farms belonging to the same population.
 
 <!--fk: maybe checking the mean of the random effects is no longer needed in recent R versions?  we may check that and if it is no longer needed, delete here-->
 The mean of the random effects is close to zero as it should. We check that because sometimes the glmer function fails to correctly separate the farm-specific intercepts from the overall intercept. A non-zero mean of random effects does not mean a lack of fit, but a failure of the model fitting algorithm. In such a case, we recommend using a different fitting algorithm, e.g. `stan_glmer` from the `rstanarm` package or `brm` (see below).
 
-A slight overdispersion (dispersion parameter >1) seems to be present, but nothing to worry about.
+A slight overdispersion (approximated dispersion parameter >1) seems to be present, but nothing to worry about.
 
 <!--fk: i would delete the calculation of the relative difference between the estimated population mean and what it should be (t.should, t.is, exp(mean.ranef)). it makes it too complicated. I only would check how close the mean ranef is to 0 and if not, use stan_glmer or brm-->
 
-```{r, assess_model_assumptions, fig.cap="Diagnostic plots to assess model assumptions for mod.glmer. "}
+```{r, assessmodelassumptions, fig.cap="Diagnostic plots to assess model assumptions for mod.glmer. "}
 
 par(mfrow=c(2,2))    
 # check normal distribution of residuals
@@ -203,29 +200,52 @@ mod.brm <- brm(fledge|trials(clutch) ~ colsize.z + cow + dung.z + (1|farm.f) , d
 
 ##### Checking model convergence for the brm fit
 
-We first check whether we find warnings in the R console about problems of the fitting algorithm. Warnings should be taken seriously. Often, we find help in the Stan online documentation (or when typing `launch_shinystan(mod.brm)` into the R-console) what to change when calling the `brm` function to get a fit that is running smoothly. Once, we got rid of all warnings, we need to check how well the Markov chains mixed. We can either do that by scanning through the plenty of diagnostics plots given by `launch_shinystan(mod)` or do the most important plots ourselves such as the traceplot (Figure \@ref(fig:check_convergence_model_brm)). 
+We first check whether we find warnings in the R console about problems of the fitting algorithm. Warnings should be taken seriously. Often, we find help in the Stan online documentation (or when typing `launch_shinystan(mod.brm)` into the R-console) what to change when calling the `brm` function to get a fit that is running smoothly. Once, we got rid of all warnings, we need to check how well the Markov chains mixed. We can either do that by scanning through the plenty of diagnostics plots given by `launch_shinystan(mod)` or do the most important plots ourselves such as the traceplot (Figure \@ref(fig:checkconvergencemodelbrm)). 
 
-```{r check_convergence_model_brm, fig.cap="Traceplot of the Markov chains. After convergence, both Markov chains should sample from the same stationary distribution. Indications of non-convergence would be, if the two chains diverge or vary around different means."}
+```{r checkconvergencemodelbrm, fig.cap="Traceplot of the Markov chains. After convergence, both Markov chains should sample from the same stationary distribution. Indications of non-convergence would be, if the two chains diverge or vary around different means."}
 par(mar=c(2,2,2,2))
 mcmc_plot(mod.brm, type = "trace")
 ```
 
 
-<!--siehe Kapitel 5.3 hier: https://www.rensvandeschoot.com/tutorials/generalised-linear-models-with-brms/-->
+<!--siehe Kapitel 5.3 hier: https://www.rensvandeschoot.com/tutorials/generalised-linear-models-with-brms/, fk: dieses Buch ist auch noch under construction. Ich würde glaubs nur zu fertigen Büchern einen Link anfügen.-->
 
 
-##### Checking model fit to the data
+##### Checking model fit by posterior predictive model checking
 
+To assess how well the model fits to the data we do posterior predictive model checking (chapter \@ref(modelchecking)). For binomial as well as for Poisson models the plot comparing the standard deviation of the data with those of replicated data from the model is particularly important. If the standard deviation of the real data woud be much higher compared to the ones of the replicated data from the model, overdispersion would be an issue. However, here, the model is able to capture the variance in the data correctly (Figure \@ref(fig:ppbinomial)). 
+The fitted vs observed plot also shows a good fit.
 
+```{r pppbinomial, fig.cap="Posterior predictive model checking: Histogram of the number of fledglings simulated from the model together with a histogram of the real data, and a histogram of the standard deviations of replicated data from the model together with the standard deviation of the data (vertical line in red). The third plot gives the fitted vs. observed values."}
 
+yrep <- posterior_predict(mod.brm)
+sdyrep <- apply(yrep, 1, sd)
+
+par(mfrow=c(1,2,3), mar=c(3,4,1,1))
+hist(yrep, freq=FALSE, main=NA, xlab="Number of fledglings")
+hist(dat$fledge, add=TRUE, col=rgb(1,0,0,0.3), freq=FALSE)
+legend(10, 0.15, fill=c("grey",rgb(1,0,0,0.3)), legend=c("yrep", "y"))
+
+hist(sdyrep)
+abline(v=sd(dat$fledge), col="red", lwd=2)
+
+plot(fitted(mod.brm)[,1], dat$fledge, pch=16, cex=0.6)
+abline(0,1)
+
+```
+
+After checking the diagnostic plots, the posterior predictive model checking and the general model fit, we assume that the model describes the data generating process reasonably well, so that we can proceed to drawing conclusions. 
 
 #### Drawing Conclusions
 
-After performing the check of the model assumptions, we can start with the interpretation in case the assumptions are not violated. The generic ```summary`` function gives us the results for the model object containing the fitted model, and works for both the model fitted with glmer and brm. Let's start having a look at the summary from ```mod.glmer```. 
+The generic `summary` function gives us the results for the model object containing the fitted model, and works for both the model fitted with glmer and brm. Let's start having a look at the summary from `mod.glmer`. 
 The summary provides the fitting method, the model formula, statistics for the model fit including the Akaike information criterion (AIC), the Bayesian information criterion (BIC), the scaled residuals, the random effects variance and information about observations and groups, a table with coefficient estimates for the fixed effects (with standard errors and a z-test for the coefficient) and correlations between fixed effects. We recommend to always check if the number of observations and groups, i.e., 63 barn swallow nests from 51 farms here, is correct. This information shows if the glmer function has correctly recognized the hierarchical structure in the data. Here, this is correct. To assess the associations between the predictor variables and the outcome analyzed, we need to look at the column Estimate in the Table of Fixed effects. This column contains the estimated model coefficients, and the standard error for these estimates is given in the column Std. Error, along with a z-test for the null hypothesis of a coefficient of zero.
-Because we used the logit link function, these coefficients are actually on the logit scale and are a bit difficult to interpret. What we can say is that positive coefficients indicate an increase and negative coefficients indicate a decrease in the proportion of nestlings fledged. For continuous predictors, as colsize.z and dung.z, this coefficient refers to the change in the logit of the outcome with a one unit change in the predictor (slope). For categorical predictors, the coefficients represent a difference between one category and another (reference category is the one not shown in the table). Here, we can say...
-TO DO: hier weiter
-TO DO: explain ORs and logit scale coefficients
+In the random effects Table, the among farm variance and standard deviation (square root of the variance) are given. 
+In the `summary` output of the model fitted by `brm` we see the model formula and some information on the Markov chains used to fit the model. In the Group-Level Effects (among group standard deviations) and Population-Level Effects (effect sizes, model coefficients) Tables some summary statistics of the posterior distribution of each parameter are given. The Estimate is the mean of the posterior distribution, the "Est.Error" is the standard deviation of the posterior distribution (which is the standard error of the parameter estimate). Then we see the lower and upper limit of the 95% credible interval. Also, some statistics for measuring how well the Markov chains converged are given: the Rhat and the effective sample size. 
+
+Because we used the logit link function, the coefficients are actually on the logit scale and are a bit difficult to interpret. What we can say is that positive coefficients indicate an increase and negative coefficients indicate a decrease in the proportion of nestlings fledged. For continuous predictors, as colsize.z and dung.z, this coefficient refers to the change in the logit of the outcome with a change of one in the predictor (e.g., for colsize.z an increase of one corresponds to an increase of a standard deviation of colsize). For categorical predictors, the coefficients represent a difference between one category and another (reference category is the one not shown in the table). For better interpretability, the coefficients could be transformed into odds ratios or effect plots could be drawn. 
+
+<!--TO DO: explain ORs and logit scale coefficients-->
 
 ```{r, conclusions_glmer_brm}
 
@@ -235,25 +255,30 @@ confint(mod.glmer)
 
 # brm
 summary(mod.brm)
-mod.brm$prior
 
 ```
 
 
+
+```{r effectplots}
+# draw an effect plot from a glmer and a brm model
+
+# partial effect of cow
+range(dat$cow)
+
+
+```
+
 ## Summary
 
 <!-- Fragen an alle 
-- Schreiben wir American oder British English? Wäre gut, möglichst früh zu beschliessen.
-- Wenn wir auf ein Chapter, eine Figure oder einen Table referenzieren, wie schreiben wir das (gross, klein, ausgeschrieben, abgekürzt?)
-- Wie wäre es, wenn ich glmm mit glmer und brms fitten würde? Um den Unterschied in der Inferenz zu zeigen?
+
+- Wie wäre es, wenn ich glmm mit glmer und brms fitten würde? Um den Unterschied in der Inferenz zu zeigen? fk: finde ich sehr gut! Die Inferenz sollte sich nicht unterscheiden, sonst wäre nicht so gut...
+
 - Fränzi: swallowfarms data, was war der Grund für das nonrandom sample? Könnte man das kurz erläutern? 
 - Im Alten Buch: Random factors can be nested or crossed. Each level of a factor that is nested within another factor occurs only in one level of the other factor (Figure 7-6, left). For example, the factor “nestling” is nested in the factor “nest” because
 the same nestling cannot be in two nests. In contrast, when two factors are crossed, all possible combinations of the factor levels occur in the data set (Figure 7-6, right). For example, the factors “month” and “year” are crossed, because all months occur in every year.-->
 
-<!-- Bereits besprochene Fragen an alle:
-1) Wie nennen wir die y? Response, dependent variable, outcome, endpoint?
-Fränzi: Outcome variable and predictors im alten Buch. Explanatory variables kam auch vor. Wir einigen uns auf outcome und predictors
--->
 
 
 

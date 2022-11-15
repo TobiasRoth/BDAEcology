@@ -1,5 +1,5 @@
 
-# Posterior predictive model checking {#model_checking}
+# Posterior predictive model checking {#modelchecking}
 
 THIS CHAPTER IS UNDER CONSTRUCTION!!! 
 
