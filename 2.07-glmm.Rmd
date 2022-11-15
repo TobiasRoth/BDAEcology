@@ -73,9 +73,8 @@ length(unique(dat$farm))
 - brms: https://bookdown.org/content/4857/
 -->
 
-<!--fk: i think it is possible to specify r-code-Schrit by just using one apostroph-->
+<!--fk: i think it is possible to specify r-code-Schrift by just using one apostroph-->
 
-<!--fk: i think it is possible to specify r-code-Schrit by just using one apostroph-->
 
 To fit the model in R we start by using the function ```glmer``` from the R package ```lme4```. The glmer function uses the Laplace approximation, which is an analytic method to solve integrals. This method is also often used in Bayesian statistics to obtain the posterior distribution of parameters. We z-transform the covariates (subtraction of the mean and division by the standard deviation, such that the transformed variable has a mean of 0 and a standard deviation of 1). This often facilitates convergence of the model. 
 
@@ -104,10 +103,17 @@ mod.glmer <- glmer(cbind(fledge,die) ~ colsize.z + cow + dung.z + (1|farm.f) , d
 
 ##### Assessing Model Assumptions for the glmer fit
 
-<!--fk: Reference to Figures and Tables. \@ref(type:name)-->
+<!--fk: Reference to Figures and Tables. \@ref(type:name),
+in the below paragraph I added the cause for the seeming lack of fit-->
 
-The residuals of the model look fairly normal (top left panel of Figure \@fig:assess_model_assumptions) with slightly wider tails. The random intercepts for the farms look perfectly normal as they should, by the way the random intercepts are fitted (top right panel). The plot of the residuals vs. fitted values (bottom left panel) shows a slight, but probably not dramatic increase in the residuals with increasing fitted values. The fitted proportions seem to slightly overestimate the observed proportions when these are large, but to underestimate them when small (bottom right panel).
-The mean of the random effects is close to zero. A slight overdispersion (dispersion parameter >1) seems to be present, but nothing to worry about.
+The residuals of the model look fairly normal (top left panel of Figure \@fig:assess_model_assumptions) with slightly wider tails. The random intercepts for the farms look perfectly normal as they should<!--fk: i would delete:, by the way the random intercepts are fitted (top right panel)-->. The plot of the residuals vs. fitted values (bottom left panel) shows a slight<!--fk: i would delete:, but probably not dramatic--> increase in the residuals with increasing fitted values. Positive correlations between the residuals and the fitted values are common in mixed models due to the shrinkage effect (chapter \@ref(lmer)). Due to the same reason the fitted proportions slightly overestimate the observed proportions when these are large, but underestimate them when small (bottom right panel). What is looking like a lack of fit here can be seen as preventing an overestimation of the among farm variance based on the assumption that the farms in the data are a random sample of farms belonging to the same population.
+
+<!--fk: maybe checking the mean of the random effects is no longer needed in recent R versions?  we may check that and if it is no longer needed, delete here-->
+The mean of the random effects is close to zero as it should. We check that because sometimes the glmer function fails to correctly separate the farm-specific intercepts from the overall intercept. A non-zero mean of random effects does not mean a lack of fit, but a failure of the model fitting algorithm. In such a case, we recommend using a different fitting algorithm, e.g. `stan_glmer` from the `rstanarm` package or `brm` (see below).
+
+A slight overdispersion (dispersion parameter >1) seems to be present, but nothing to worry about.
+
+<!--fk: i would delete the calculation of the relative difference between the estimated population mean and what it should be (t.should, t.is, exp(mean.ranef)). it makes it too complicated. I only would check how close the mean ranef is to 0 and if not, use stan_glmer or brm-->
 
 ```{r, assess_model_assumptions, fig.cap="Diagnostic plots to assess model assumptions for mod.glmer. "}
 
@@ -147,6 +153,7 @@ dispersion_glmer(mod.glmer)
 detach(package:lme4)
 
 ```
+
 ##### Using the brm function
 
 Now we fit the same model using the function ```brm``` from the R package ```brms```. This function allows to fit Bayesian generalized (non-)linear multivariate multilevel models using Stan (REF) for full Bayesian inference. A wide range of distributions and link functions are supported, and the function offers many things more. Here we use it to fit the model as specified by the formula object above. In brm, it is of course possible to specify priors. However, we are going to use non-informative priors (or weakly informative priors) here, so we do not specify priors.
