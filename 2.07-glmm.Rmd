@@ -3,7 +3,7 @@
 
 ## Introduction
 THIS CHAPTER IS UNDER CONSTRUCTION!!! 
-<!-- Steffis draft version, started 17.11.2021-->
+<!-- Steffis draft version, started 17.11.2021, fk worked on it 15.11.2022-->
 In chapter \@ref(lmer) on linear mixed effect models we have introduced how to analyze metric outcome variables for which a normal distribution of residuals can be assumed (potentially after transformation), when the data have a hierarchical structure and, as a consequence, observations are not independent.
 In chapter \@ref(glm) on generalized linear models we have introduced how to analyze outcome variables for which a normal error distribution can not be assumed, as for example binary outcomes or count data. More precisely, we have extended modelling outcomes with normal error to modelling outcomes with error distributions from the exponential family (e.g., binomial or Poisson).
 Generalized linear mixed models (GLMM) combine the two complexities <!--fk: or structures--> and are thus used to analyze outcomes with a non-normal error distribution when the data have a hierarchical structure. In this chapter, we will thus show how to analyze such data. Remember, a hierarchical structure of the data means that the data are collected at different levels, for example smaller and larger spatial units, or contains repeated measurements in time on a specific subject. Typically, the outcome variable is measured/observed at the lowest level but other variables may be measured at different levels. A first example is introduced in the next section.
@@ -56,7 +56,7 @@ b_g \sim Norm\left(0, \sigma_g\right)
 
 library(blmeco)
 data(swallowfarms)
-?swallowfarms # to see the documentation of the data set
+#?swallowfarms # to see the documentation of the data set
 dat <- swallowfarms
 str(dat)
 
@@ -156,36 +156,67 @@ detach(package:lme4)
 
 ##### Using the brm function
 
-Now we fit the same model using the function ```brm``` from the R package ```brms```. This function allows to fit Bayesian generalized (non-)linear multivariate multilevel models using Stan (REF) for full Bayesian inference. A wide range of distributions and link functions are supported, and the function offers many things more. Here we use it to fit the model as specified by the formula object above. In brm, it is of course possible to specify priors. However, we are going to use non-informative priors (or weakly informative priors) here, so we do not specify priors.
+Now we fit the same model using the function ```brm``` from the R package ```brms```. This function allows fitting Bayesian generalized (non-)linear multivariate multilevel models using Stan [@Betancourt2013_b] for full Bayesian inference. We shortly introduce the fitting algorithm used by Stan, Hamiltonian Monte Carlo, in chapter \@ref(stan). When using the function `brm` there is no need to install `rstan` or write the model in Stan-language. A wide range of distributions and link functions are supported, and the function offers many things more. Here we use it to fit the model as specified by the formula object above. <!--fk: i would delete that: In `brm`, it is of course possible to specify priors. However, we are going to use non-informative priors (or weakly informative priors) here, so we do not specify priors.-->
 Note that brm requires that a binomial outcome is specified in the format ```successes|trials()```, which is the number of fledged nestlings out of the total clutch size in our case. In contrast, the glmer function required to specify the number of nestlings that fledged and died (which together sum up to clutch size), in the format ```cbind(successes, failures)```.
 The family is also called ```binomial``` in ```brm```, but would be ```bernoulli``` for a binary outcome, whereas ```glmer``` would use binomial in both situations (Bernoulli distribution is a special case of the binomial). However, it is slightly confusing that (at the time of writing this chapter) the documentation for ```brmsfamily``` did not mention the binomial family under Usage, where it probably went missing, but it is mentioned under Arguments for the argument family.
-To apply MCMC sampling we need some more arguments: ```warmup``` specifies the number of iterations that should be discarded (also called burn-in period); ```iter``` specifies the total number of iterations (including those discarded); ```chains``` specifies the number of chains; ```init``` specifies the starting values of the iterations (normally you can either use the maximum likelihood estimates of the parameters as starting values, or simply ask the algorithm to start with zeros); ```thin``` specifies the thinning of the chain, i.e., whether all iterations shouls be kept (thin=1) or for example every 4th only (thin=4); cores specifies the number of cores used for the algorithm; seed specifies the random seed, allowing for replication of results.
+Prior distributions are an integral part of a Bayesian model, therefore we need to specify prior distributions. We can see what default prior distributions `brm` is using by applying the `get_prior` function to the model formula. The default prior for the effect sizes is a flat prior which gives a density of 1 for any value between minus and plus infinity. Because this is not a proper probability distribution it is also called an improper distribution. The intercept gets a t-distribution with mean of 0, standard deviation of 2.5 and 3 degrees of freedoms. Transforming this t-distribution to the proportion scale (using the inverse-logit function) is becomes something similar to a uniform distribution between 0 and 1 that can be seen as non-informative for a probability. For the among-farm standard deviation, it uses the same t-distribution as for the intercept. However, because variance parameters such as standard deviations only can take on positive numbers, it will use only the positive half of the t-distribution (this is not seen in the output of `get_prior`). When we have no prior information on any parameter, or if we would like to base the results solely on the information in the data, we specify weakly informative prior distributions that do not noticeably affect the results but they will facilitate the fitting algorithm. This is true for the priors of the intercept and among-farm standard deviation. However, for the effect sizes, we prefer specifying more narrow distributions (see chapter \@ref(priors)). To do so, we use the function `prior`.   
+
+To apply MCMC sampling we need some more arguments: ```warmup``` specifies the number of iterations during which we allow the algorithm to be adapted to our specific model and to converge to the posterior distribution. These iterations should be discarded (similar to the burn-in period when using, e.g., Gibbs sampling); ```iter``` specifies the total number of iterations (including those discarded); ```chains``` specifies the number of chains; <!--fk this was the version of svf: ```init``` specifies the starting values of the iterations (normally you can either use the maximum likelihood estimates of the parameters as starting values, or simply ask the algorithm to start with zeros); -->`init` specifies the starting values of the iterations. The default initial values are randomly chosen which is recommended because then different initial values are chosen for each chain wich helps identifying non-convergence. However, sometimes random initial values cause the Markov changs to behave badly. Then you can either use the maximum likelihood estimates of the parameters as starting values, or simply ask the algorithm to start with zeros.```thin``` specifies the thinning of the chain, i.e., whether all iterations should be kept (thin=1) or for example every 4th only (thin=4); cores specifies the number of cores used for the algorithm; seed specifies the random seed, allowing for replication of results.
+
+<!-- fk: i changed "init" to random because I think it is not a good idea to start all with 0 by default-->
 
 ```{r, fit_model_brms}
 
 library(brms)
 # check this website: https://www.rensvandeschoot.com/tutorials/generalised-linear-models-with-brms/
 # section 6: Bayesian Binomial Logistic Regression (with Non-Informative Priors)
+
+# check which parameters need a prior
+get_prior(fledge|trials(clutch) ~ colsize.z + cow + dung.z + (1|farm.f), data=dat,family=binomial(link="logit"))
+
+#make_stancode(fledge|trials(clutch) ~ colsize.z + cow + dung.z #+ (1|farm.f), data=dat,family=binomial(link="logit"))
+
+
+# specify own priors
+myprior <- prior(normal(0,5), class="b")
+             
+
 mod.brm <- brm(fledge|trials(clutch) ~ colsize.z + cow + dung.z + (1|farm.f) , data=dat, family=binomial(link="logit"),
+               prior=myprior,
                warmup = 500, 
                iter = 2000, 
                chains = 2,
-               init = "0", 
+               init = "random", 
                cores = 2,
                seed = 123)
 # note: thin=1 is default and we did not change this here.
 
 # Fragen:
 # - was für prior braucht es, wenn man sie nicht setzt? Reference priors? Proper/improper ... Mit mod.brm$prior sehe ich gewisse Infos, aber z.B. was die argumente bei student_t bedeuten, kann ich nicht herausfinden, da die Funktion student_t nicht dokumentiert ist.
+# fk: der Default ist flache priors für die Effektsizes, die in logistischen Modellen sehr ungeschickt sind. Fürs Intercept braucht es t mit df=3 und sigma 2.5, was ich nicht so schlecht finde.  Ich fände es schön, wenn wir die Modelle jeweils mit spezifizierten priors zeigen.
+
 # - Modell so korrekt? Und ist hier der begriff mixed-effects eigentlich obsolet, oder kann man den auch verwenden?
+# fk: -> ja sicher, weshalb meinst du, ist das obsolet? Wir haben ja immer noch modellierte (random effects) und unmodellierte (fixed effects) Parameter. Der Begriff mixed-models ist auch für frequentistsiche Modelle ungeschickt gewählt. 
 
 ```
 
 
 ##### Checking model convergence for the brm fit
 
-TO DO: Hier weiter, siehe Kapitel 5.3 hier: https://www.rensvandeschoot.com/tutorials/generalised-linear-models-with-brms/
-Check the priors actually used, because we didn't specify them.
+We first check whether we find warnings in the R console about problems of the fitting algorithm. Warnings should be taken seriously. Often, we find help in the Stan online documentation (or when typing `launch_shinystan(mod.brm)` into the R-console) what to change when calling the `brm` function to get a fit that is running smoothly. Once, we got rid of all warnings, we need to check how well the Markov chains mixed. We can either do that by scanning through the plenty of diagnostics plots given by `launch_shinystan(mod)` or do the most important plots ourselves such as the traceplot (Figure \@ref(fig:check_convergence_model_brm)). 
+
+```{r check_convergence_model_brm, fig.cap="Traceplot of the Markov chains. After convergence, both Markov chains should sample from the same stationary distribution. Indications of non-convergence would be, if the two chains diverge or vary around different means."}
+par(mar=c(2,2,2,2))
+mcmc_plot(mod.brm, type = "trace")
+```
+
+
+<!--siehe Kapitel 5.3 hier: https://www.rensvandeschoot.com/tutorials/generalised-linear-models-with-brms/-->
+
+
+##### Checking model fit to the data
+
+
 
 
 #### Drawing Conclusions

@@ -5,6 +5,12 @@ THIS CHAPTER IS UNDER CONSTRUCTION!!!
 
 ## Introduction
 
+The prior is an integral part of a Bayesian model. We must specify one.  
+
+When to use informative priors: in applied research, when information from two different data sets should be combined.
+
+when using non-informative priors: in basic reasearch when results should only report the information in the current data set.
+
 [discussion on priors](https://bookdown.org/mrwhalen/bayes_book/parameter-estimation-analytical-methods.html#the-effect-of-different-priors)
 
 ## How to choose a prior {#choosepriors}
