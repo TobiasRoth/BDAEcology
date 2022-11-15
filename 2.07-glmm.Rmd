@@ -221,7 +221,7 @@ The fitted vs observed plot also shows a good fit.
 yrep <- posterior_predict(mod.brm)
 sdyrep <- apply(yrep, 1, sd)
 
-par(mfrow=c(1,2,3), mar=c(3,4,1,1))
+par(mfrow=c(1,3), mar=c(3,4,1,1))
 hist(yrep, freq=FALSE, main=NA, xlab="Number of fledglings")
 hist(dat$fledge, add=TRUE, col=rgb(1,0,0,0.3), freq=FALSE)
 legend(10, 0.15, fill=c("grey",rgb(1,0,0,0.3)), legend=c("yrep", "y"))
