@@ -2,8 +2,9 @@
 # Generalized linear mixed models {#glmm}
 
 ## Introduction
-THIS CHAPTER IS UNDER CONSTRUCTION!!! 
+THIS CHAPTER IS UNDER CONSTRUCTION!!!   
 <!-- Steffis draft version, started 17.11.2021, fk worked on it 15.11.2022-->
+
 In chapter \@ref(lmer) on linear mixed effect models we have introduced how to analyze metric outcome variables for which a normal distribution of residuals can be assumed (potentially after transformation), when the data have a hierarchical structure and, as a consequence, observations are not independent.
 In chapter \@ref(glm) on generalized linear models we have introduced how to analyze outcome variables for which a normal error distribution can not be assumed, as for example binary outcomes or count data. More precisely, we have extended modelling outcomes with normal error to modelling outcomes with error distributions from the exponential family (e.g., binomial or Poisson).
 Generalized linear mixed models (GLMM) combine the two complexities <!--fk: or structures--> and are thus used to analyze outcomes with a non-normal error distribution when the data have a hierarchical structure. In this chapter, we will thus show how to analyze such data. Remember, a hierarchical structure of the data means that the data are collected at different levels, for example smaller and larger spatial units, or contains repeated measurements in time on a specific subject. Typically, the outcome variable is measured/observed at the lowest level but other variables may be measured at different levels. A first example is introduced in the next section.
@@ -44,12 +45,8 @@ $$
 ```{r, inspect_data}
 
 # Data on Barn Swallow (Hirundo rustica) nestling survival on farms
-# Data is part of what was published in Grüebler et al. 2010, J Appl Ecol 47:1340-1347
-# we selected the year 2003 and pairs with only one brood. We selected a non-random sample of the farms
-# to be able to fit a simple model, thus the analysis serves only illustrative purposes!
-# selected farms: 1001,1002,1004,1008,1010,1016,1019,1020,1021,1024,2102,2114,2117,2203,2204,2206,5102,5104,
-# 5105,5307,7003,7004,7005,7007,7013,13005,13014,13016,15012,16002,16012,16017,16025,16036,16040,16041,16059,
-# 17005,17009,18054,18057,18063,18064,18069,18124,18135,18145,18148,18155,18158,18165
+# Data is only a part of what was published in Grüebler et al. 2010, J Appl Ecol 47:1340-1347
+
 
 library(blmeco)
 data(swallowfarms)
@@ -103,7 +100,7 @@ mod.glmer <- glmer(cbind(fledge,die) ~ colsize.z + cow + dung.z + (1|farm.f) , d
 <!--fk: Reference to Figures and Tables. \@ref(type:name),
 in the below paragraph I added the cause for the seeming lack of fit-->
 
-The residuals of the model look fairly normal (top left panel of Figure \@fig:assessmodelassumptions) with slightly wider tails. The random intercepts for the farms look perfectly normal as they should<!--fk: i would delete:, by the way the random intercepts are fitted (top right panel)-->. The plot of the residuals vs. fitted values (bottom left panel) shows a slight<!--fk: i would delete:, but probably not dramatic--> increase in the residuals with increasing fitted values. Positive correlations between the residuals and the fitted values are common in mixed models due to the shrinkage effect (chapter \@ref(lmer)). Due to the same reason the fitted proportions slightly overestimate the observed proportions when these are large, but underestimate them when small (bottom right panel). What is looking like a lack of fit here can be seen as preventing an overestimation of the among farm variance based on the assumption that the farms in the data are a random sample of farms belonging to the same population.
+The residuals of the model look fairly normal (top left panel of Figure \@ref(fig:assessmodelassumptions) with slightly wider tails. The random intercepts for the farms look perfectly normal as they should<!--fk: i would delete:, by the way the random intercepts are fitted (top right panel)-->. The plot of the residuals vs. fitted values (bottom left panel) shows a slight<!--fk: i would delete:, but probably not dramatic--> increase in the residuals with increasing fitted values. Positive correlations between the residuals and the fitted values are common in mixed models due to the shrinkage effect (chapter \@ref(lmer)). Due to the same reason the fitted proportions slightly overestimate the observed proportions when these are large, but underestimate them when small (bottom right panel). What is looking like a lack of fit here can be seen as preventing an overestimation of the among farm variance based on the assumption that the farms in the data are a random sample of farms belonging to the same population.
 
 <!--fk: maybe checking the mean of the random effects is no longer needed in recent R versions?  we may check that and if it is no longer needed, delete here-->
 The mean of the random effects is close to zero as it should. We check that because sometimes the glmer function fails to correctly separate the farm-specific intercepts from the overall intercept. A non-zero mean of random effects does not mean a lack of fit, but a failure of the model fitting algorithm. In such a case, we recommend using a different fitting algorithm, e.g. `stan_glmer` from the `rstanarm` package or `brm` (see below).
@@ -133,16 +130,7 @@ plot(dat$fitted,dat$fledge/dat$clutch)
 abline(0,1)
 
 # check distribution of random effects
-mean.ranef <- mean(ranef(mod.glmer)$farm.f[,1])
-# expected value at the intercept
-t.should <- plogis(fixef(mod.glmer)["(Intercept)"])       
-# the actual value at the intercept is slightly reduced because the mean farm random effect is not precisely 0
-t.is     <- plogis(fixef(mod.glmer)["(Intercept)"]-mean.ranef)    
-# => the relative error at the Intercept is:
-(t.should-t.is)/t.should   
-# or:
-exp(mean.ranef)
-# the multiplicative factor on the odds (i.e. fledge/die) is about 0.25% too small
+ mean(ranef(mod.glmer)$farm.f[,1])
 
 # check for overdispersion
 dispersion_glmer(mod.glmer)
@@ -165,8 +153,6 @@ To apply MCMC sampling we need some more arguments: ```warmup``` specifies the n
 ```{r, fit_model_brms}
 
 library(brms)
-# check this website: https://www.rensvandeschoot.com/tutorials/generalised-linear-models-with-brms/
-# section 6: Bayesian Binomial Logistic Regression (with Non-Informative Priors)
 
 # check which parameters need a prior
 get_prior(fledge|trials(clutch) ~ colsize.z + cow + dung.z + (1|farm.f), data=dat,family=binomial(link="logit"))
@@ -187,13 +173,6 @@ mod.brm <- brm(fledge|trials(clutch) ~ colsize.z + cow + dung.z + (1|farm.f) , d
                cores = 2,
                seed = 123)
 # note: thin=1 is default and we did not change this here.
-
-# Fragen:
-# - was für prior braucht es, wenn man sie nicht setzt? Reference priors? Proper/improper ... Mit mod.brm$prior sehe ich gewisse Infos, aber z.B. was die argumente bei student_t bedeuten, kann ich nicht herausfinden, da die Funktion student_t nicht dokumentiert ist.
-# fk: der Default ist flache priors für die Effektsizes, die in logistischen Modellen sehr ungeschickt sind. Fürs Intercept braucht es t mit df=3 und sigma 2.5, was ich nicht so schlecht finde.  Ich fände es schön, wenn wir die Modelle jeweils mit spezifizierten priors zeigen.
-
-# - Modell so korrekt? Und ist hier der begriff mixed-effects eigentlich obsolet, oder kann man den auch verwenden?
-# fk: -> ja sicher, weshalb meinst du, ist das obsolet? Wir haben ja immer noch modellierte (random effects) und unmodellierte (fixed effects) Parameter. Der Begriff mixed-models ist auch für frequentistsiche Modelle ungeschickt gewählt. 
 
 ```
 
