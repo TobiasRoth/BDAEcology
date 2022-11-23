@@ -7,7 +7,7 @@ THIS CHAPTER IS UNDER CONSTRUCTION!!!
 
 In chapter \@ref(lmer) on linear mixed effect models we have introduced how to analyze metric outcome variables for which a normal distribution of residuals can be assumed (potentially after transformation), when the data have a hierarchical structure and, as a consequence, observations are not independent.
 In chapter \@ref(glm) on generalized linear models we have introduced how to analyze outcome variables for which a normal error distribution can not be assumed, as for example binary outcomes or count data. More precisely, we have extended modelling outcomes with normal error to modelling outcomes with error distributions from the exponential family (e.g., binomial or Poisson).
-Generalized linear mixed models (GLMM) combine the two complexities <!--fk: or structures, svf: i prefer complexities--> and are used to analyze outcomes with a non-normal error distribution when the data have a hierarchical structure. In this chapter, we will show how to analyze such data. Remember, a hierarchical structure of the data means that the data are collected at different levels, for example smaller and larger spatial units, or include repeated measurements in time on a specific subject. Typically, the outcome variable is measured/observed at the lowest level but other variables may be measured at different levels. A first example is introduced in the next section.
+Generalized linear mixed models (GLMM) combine the two complexities and are used to analyze outcomes with a non-normal error distribution when the data have a hierarchical structure. In this chapter, we will show how to analyze such data. Remember, a hierarchical structure of the data means that the data are collected at different levels, for example smaller and larger spatial units, or include repeated measurements in time on a specific subject. Typically, the outcome variable is measured/observed at the lowest level but other variables may be measured at different levels. A first example is introduced in the next section.
 
 
 ### Binomial Mixed Model
@@ -30,7 +30,7 @@ To illustrate the binomial mixed model we use a subset of a data set used by @Gr
 fledged. The broods came from `r length(unique(swallowfarms$farm))` farms (larger unit), thus some of the farms had more than one brood. Note that each farm can harbor one or several broods, and the broods are nested within farms (as opposed to crossed, see chapter \@ref(lmer)), i.e., each brood belongs to only one farm. There are three predictors measured at the level of the farm: colony size (the number of swallow broods on that farm), cow (whether there are cows on the farm or not), and dung heap (the number of dung heaps, piles of cow dung, within 500 m of the farm).
 The aim was to assess how swallows profit from insects that are attracted by livestock on the farm and by dung heaps. Broods from the same farm are not independent of each other because they belong to the same larger unit (farm), and thus share the characteristics of the farm (measured or unmeasured). Predictor variables were measured at the level of the farm, and are thus the same for all broods from a farm. In the model described and fitted below, we account for the non-independence of these clutches when building the model by including a random intercept per farm to model random variation between farms.
 <!-- we could also add a random slope model later on -->
-The outcome variable is a proportion (proportion fledged from clutch) and thus consists of two values for each observation, as seen with the binomial model without random factors (Section 8.2.2): 
+The outcome variable is a proportion (proportion fledged from clutch) and thus consists of two values for each observation, as seen with the binomial model without random factors (Section \@ref(glm).2.2): 
 <!-- add correct chapter reference for GLM model -->
 the number of chicks that fledged (successes) and the number of chicks that died (failures), i.e., the clutch size minus number that fledged.
 
@@ -44,7 +44,7 @@ $$
 <!-- You may refer to these equations using \@ref(eq:y_binom), etc., fk: das hat Rmarkdown nicht geschluckt, ich habe nun die $$ verwendet-->
 
 <!-- fk: can we hide/delete the selected farms in the code below?
-svf: komme nicht draus wo Du meinst.-->
+svf: komme nicht draus wo Du meinst.fk: ich habe die schon rausgestrichen, vorher waren alle Farm-Nummern in einem R-Code-Kommentar aufgelistet-->
 
 ```{r, inspect_data}
 
@@ -67,10 +67,6 @@ length(unique(dat$farm))
 
 ##### Using the glmer function
 
-<!-- Steffis idea on 8.12.2021: use glmer first, then brms
-- brms: https://bookdown.org/content/4857/
--->
-
 ```{r, prepare_data}
 
 dat$colsize.z <- scale(dat$colsize) # z-transform values for better model convergence
@@ -80,7 +76,7 @@ dat$farm.f <- factor(dat$farm)     # for clarity we define farm as a factor
 
 ```
 
-The glmer function uses the standard way to formulate a statistical model in R, with the outcome on the left, followed by the `~` symbol, meaning "explained by", followed by the predictors, which are separated by `+`. The notation for the random factor with only a random intercept was introduced in chapter \@ref(lmer) and is `(1|farm.f)` here. 
+The `glmer` function uses the standard way to formulate a statistical model in R, with the outcome on the left, followed by the `~` symbol, meaning "explained by", followed by the predictors, which are separated by `+`. The notation for the random factor with only a random intercept was introduced in chapter \@ref(lmer) and is `(1|farm.f)` here. 
 
 Remember that for fitting a binomial model we have to provide the number of successful events (number of fledglings that survived) and the number of failures (those that died) within a two-column matrix that we create using the function `cbind`. 
 
@@ -96,22 +92,19 @@ mod.glmer <- glmer(cbind(fledge,die) ~ colsize.z + cow + dung.z + (1|farm.f) ,
 
 ##### Assessing Model Assumptions for the glmer fit
 
-<!--fk: Reference to Figures and Tables. \@ref(type:name),
-in the below paragraph I added the cause for the seeming lack of fit-->
+<!--fk: Reference to Figures and Tables. \@ref(type:name)-->
 
-The residuals of the model look fairly normal (top left panel of Figure \@ref(fig:assessmodelassumptions) with slightly wider tails. The random intercepts for the farms look perfectly normal as they should<!--fk: i would delete:, by the way the random intercepts are fitted (top right panel), svf:ok-->. The plot of the residuals vs. fitted values (bottom left panel) shows a slight<!--fk: i would delete:, but probably not dramatic, svf: ok--> increase in the residuals with increasing fitted values. Positive correlations between the residuals and the fitted values are common in mixed models due to the shrinkage effect (chapter \@ref(lmer)). Due to the same reason the fitted proportions slightly overestimate the observed proportions when these are large, but underestimate them when small (bottom right panel). What is looking like a lack of fit here can be seen as preventing an overestimation of the among farm variance based on the assumption that the farms in the data are a random sample of farms belonging to the same population.
+The residuals of the model look fairly normal (top left panel of Figure \@ref(fig:assessmodelassumptions) with slightly wider tails. The random intercepts for the farms look perfectly normal as they should. The plot of the residuals vs. fitted values (bottom left panel) shows a slight increase in the residuals with increasing fitted values. Positive correlations between the residuals and the fitted values are common in mixed models due to the shrinkage effect (chapter \@ref(lmer)). Due to the same reason the fitted proportions slightly overestimate the observed proportions when these are large, but underestimate them when small (bottom right panel). What is looking like a lack of fit here can be seen as preventing an overestimation of the among farm variance based on the assumption that the farms in the data are a random sample of farms belonging to the same population.
 
 <!--fk: maybe checking the mean of the random effects is no longer needed in recent R versions?  we may check that and if it is no longer needed, delete here-->
-The mean of the random effects is close to zero as it should. We check that because sometimes the glmer function fails to correctly separate the farm-specific intercepts from the overall intercept. A non-zero mean of random effects does not mean a lack of fit, but a failure of the model fitting algorithm. In such a case, we recommend using a different fitting algorithm, e.g. `brm` (see below) or `stan_glmer` from the `rstanarm` package.
+The mean of the random effects is close to zero as it should. We check that because sometimes the `glmer` function fails to correctly separate the farm-specific intercepts from the overall intercept. A non-zero mean of random effects does not mean a lack of fit, but a failure of the model fitting algorithm. In such a case, we recommend using a different fitting algorithm, e.g. `brm` (see below) or `stan_glmer` from the `rstanarm` package.
 
 A slight overdispersion (approximated dispersion parameter >1) seems to be present, but nothing to worry about.
 
-<!--fk: i would delete the calculation of the relative difference between the estimated population mean and what it should be (t.should, t.is, exp(mean.ranef)). it makes it too complicated. I only would check how close the mean ranef is to 0 and if not, use stan_glmer or brm
-svf: agree-->
 
-```{r assessmodelassumptions, fig.cap='Diagnostic plots to assess model assumptions for mod.glmer.', fig.height=6, fig.width=6}
+```{r assessmodelassumptions, fig.cap='Diagnostic plots to assess model assumptions for mod.glmer. Uppper left: quantile-quantile plot of the residuals vs. theoretical quantiles of the normal distribution. Upper rihgt: quantile-quantile plot of the random effects "farm". Lower left: residuals vs. fitted values. Lower right: observed vs. fitted values.', fig.height=7, fig.width=6}
 
-par(mfrow=c(2,2), mar=c(3,3,1,1))    
+par(mfrow=c(2,2), mar=c(3,5,1,1))    
 # check normal distribution of residuals
 qqnorm(resid(mod.glmer), main="qq-plot residuals")
 qqline(resid(mod.glmer))
@@ -141,18 +134,16 @@ detach(package:lme4)
 
 ##### Using the brm function
 
-Now we fit the same model using the function `brm` from the R package `brms`. This function allows fitting Bayesian generalized (non-)linear multivariate multilevel models using Stan [@Betancourt2013_b] for full Bayesian inference. We shortly introduce the fitting algorithm used by Stan, Hamiltonian Monte Carlo, in chapter \@ref(stan). When using the function `brm` there is no need to install `rstan` or write the model in Stan-language. A wide range of distributions and link functions are supported, and the function offers many things more. Here we use it to fit the model as specified by the formula object above. <!--fk: i would delete that: In `brm`, it is of course possible to specify priors. However, we are going to use non-informative priors (or weakly informative priors) here, so we do not specify priors., svf: ok-->
-Note that brm requires that a binomial outcome is specified in the format `successes|trials()`, which is the number of fledged nestlings out of the total clutch size in our case. In contrast, the glmer function required to specify the number of nestlings that fledged and died (which together sum up to clutch size), in the format `cbind(successes, failures)`.
+Now we fit the same model using the function `brm` from the R package `brms`. This function allows fitting Bayesian generalized (non-)linear multivariate multilevel models using Stan [@Betancourt2013_b] for full Bayesian inference. We shortly introduce the fitting algorithm used by Stan, Hamiltonian Monte Carlo, in chapter \@ref(stan). When using the function `brm` there is no need to install `rstan` or write the model in Stan-language. A wide range of distributions and link functions are supported, and the function offers many things more. Here we use it to fit the model as specified by the formula object above. 
+Note that brm requires that a binomial outcome is specified in the format `successes|trials()`, which is the number of fledged nestlings out of the total clutch size in our case. In contrast, the `glmer` function required to specify the number of nestlings that fledged and died (which together sum up to clutch size), in the format `cbind(successes, failures)`.
 The family is also called `binomial` in `brm`, but would be `bernoulli` for a binary outcome, whereas `glmer` would use binomial in both situations (Bernoulli distribution is a special case of the binomial). However, it is slightly confusing that (at the time of writing this chapter) the documentation for `brmsfamily` did not mention the binomial family under Usage, where it probably went missing, but it is mentioned under Arguments for the argument family.
-Prior distributions are an integral part of a Bayesian model, therefore we need to specify prior distributions. We can see what default prior distributions `brm` is using by applying the `get_prior` function to the model formula. The default prior for the effect sizes is a flat prior which gives a density of 1 for any value between minus and plus infinity. Because this is not a proper probability distribution it is also called an improper distribution. The intercept gets a t-distribution with mean of 0, standard deviation of 2.5 and 3 degrees of freedoms. Transforming this t-distribution to the proportion scale (using the inverse-logit function) is becomes something similar to a uniform distribution between 0 and 1 that can be seen as non-informative for a probability. For the among-farm standard deviation, it uses the same t-distribution as for the intercept. However, because variance parameters such as standard deviations only can take on positive numbers, it will use only the positive half of the t-distribution (this is not seen in the output of `get_prior`). When we have no prior information on any parameter, or if we would like to base the results solely on the information in the data, we specify weakly informative prior distributions that do not noticeably affect the results but they will facilitate the fitting algorithm. This is true for the priors of the intercept and among-farm standard deviation. However, for the effect sizes, we prefer specifying more narrow distributions (see chapter \@ref(priors)). To do so, we use the function `prior`.   
-<!-- Question to fk: but the priors chosen below seem to be quite informative! Why do you prefer these over the default priors-->
+Prior distributions are an integral part of a Bayesian model, therefore we need to specify prior distributions. We can see what default prior distributions `brm` is using by applying the `get_prior` function to the model formula. The default prior for the effect sizes is a flat prior which gives a density of 1 for any value between minus and plus infinity. Because this is not a proper probability distribution it is also called an improper distribution. The intercept gets a t-distribution with mean of 0, standard deviation of 2.5 and 3 degrees of freedoms. Transforming this t-distribution to the proportion scale (using the inverse-logit function) becomes something similar to a uniform distribution between 0 and 1 that can be seen as non-informative for a probability. For the among-farm standard deviation, it uses the same t-distribution as for the intercept. However, because variance parameters such as standard deviations only can take on positive numbers, it will use only the positive half of the t-distribution (this is not seen in the output of `get_prior`). When we have no prior information on any parameter, or if we would like to base the results solely on the information in the data, we specify weakly informative prior distributions that do not noticeably affect the results but they will facilitate the fitting algorithm. This is true for the priors of the intercept and among-farm standard deviation. However, for the effect sizes, we prefer specifying more narrow distributions (see chapter \@ref(priors)). To do so, we use the function `prior`.   
+<!-- Question to fk: but the priors chosen below seem to be quite informative! Why do you prefer these over the default priors. answer of fk: normal(0,5) means that prior to looking at the data we give effect sizes of lower than -10 or larger than +10 low probability. An effect size of +/-10 in the logit-scale changes the probability from close to 0 to close to 1 or viceversa. This is, in my opinion essentially non-informative. I fitted the model with normal(0,5) and with the default flat priors and I I do not think that the estimated effects differ markedly. with normal(0,5):  0.40 (-0.06 - 0.88) vs. with the default flat priors: 0.41 (-0.10 - 0.94). very flat priors also contain information, i.e. that effect sizes of -1000 are equally plausible as effect sizes around 0, a statement that we would not support even prior to looking at the data.-->
 
 To apply MCMC sampling we need some more arguments: `warmup` specifies the number of iterations during which we allow the algorithm to be adapted to our specific model and to converge to the posterior distribution. These iterations should be discarded (similar to the burn-in period when using, e.g., Gibbs sampling); `iter` specifies the total number of iterations (including those discarded); `chains` specifies the number of chains; `init` specifies the starting values of the iterations. By default (`init=NULL`) or by setting `init="random"` the initial values are randomly chosen which is recommended because then different initial values are chosen for each chain which helps to identify non-convergence. However, sometimes random initial values cause the Markov chains to behave badly. 
-<!-- Question to fk: you write default is random, but default is init=NULL. I adapted the sentence above. But Iis NULL and random for the inits exactly the same? why are there two options then?-->
+<!-- Question to fk: you write default is random, but default is init=NULL. I adapted the sentence above. But Iis NULL and random for the inits exactly the same? why are there two options then? fk: in R version 4.0 the default is "random" and in R version 4.2. the default is NULL. looks like they changed most of the defaults to be specified with NULL, but what NULL means is what was the default before.... Maybe this will change in future again -->
 Then you can either use the maximum likelihood estimates of the parameters as starting values, or simply ask the algorithm to start with zeros. `thin` specifies the thinning of the chain, i.e., whether all iterations should be kept (thin=1) or for example every 4th only (thin=4); `cores` specifies the number of cores used for the algorithm; `seed` specifies the random seed, allowing for replication of results.
 
-<!-- fk: i changed "init" to random because I think it is not a good idea to start all with 0 by default,
-svf: agree-->
 
 ```{r, fit_model_brms}
 
@@ -178,10 +169,11 @@ mod.brm <- brm(fledge|trials(clutch) ~ colsize.z + cow + dung.z + (1|farm.f) ,
                seed = 123)
 # note: thin=1 is default and we did not change this here.
 
+
 ```
 <!-- Question to fk: I pasted this part of the code to this separate chunk. Do we need it and should I explain it?
-and why did you exclude the random intercept? Or did I do this by mistake?-->
-```{r, echo=FALSE}
+and why did you exclude the random intercept? Or did I do this by mistake?, fk: only in this code we see that the prior for the variance parameter is restricted to positive values. I would not show the code, otherwise we have to explain the Stan code. It is a good idea to have it in a junk that is not shown.-->
+```{r, echo=FALSE, eval=FALSE}
 
 make_stancode(fledge|trials(clutch) ~ colsize.z + cow + dung.z, #+ (1|farm.f)
               data=dat, family=binomial(link="logit"))
@@ -206,7 +198,7 @@ mcmc_plot(mod.brm, type = "trace")
 
 ##### Checking model fit by posterior predictive model checking
 
-To assess how well the model fits to the data we do posterior predictive model checking (Chapter \@ref(modelchecking)). For binomial as well as for Poisson models the plot comparing the standard deviation of the data with those of replicated data from the model is particularly important. If the standard deviation of the real data woud be much higher compared to the ones of the replicated data from the model, overdispersion would be an issue. However, here, the model is able to capture the variance in the data correctly (Figure \@ref(fig:ppbinomial)). 
+To assess how well the model fits to the data we do posterior predictive model checking (Chapter \@ref(modelchecking)). For binomial as well as for Poisson models comparing the standard deviation of the data with those of replicated data from the model is particularly important. If the standard deviation of the real data would be much higher compared to the ones of the replicated data from the model, overdispersion would be an issue. However, here, the model is able to capture the variance in the data correctly (Figure \@ref(fig:ppbinomial)). 
 The fitted vs observed plot also shows a good fit.
 
 ```{r ppbinomial, fig.cap="Posterior predictive model checking: Histogram of the number of fledglings simulated from the model together with a histogram of the real data, and a histogram of the standard deviations of replicated data from the model together with the standard deviation of the data (vertical line in red). The third plot gives the fitted vs. observed values."}
@@ -232,11 +224,11 @@ After checking the diagnostic plots, the posterior predictive model checking and
 #### Drawing Conclusions
 
 The generic `summary` function gives us the results for the model object containing the fitted model, and works for both the model fitted with `glmer` and `brm`. Let's start having a look at the summary from `mod.glmer`. 
-The summary provides the fitting method, the model formula, statistics for the model fit including the Akaike information criterion (AIC), the Bayesian information criterion (BIC), the scaled residuals, the random effects variance and information about observations and groups, a table with coefficient estimates for the fixed effects (with standard errors and a z-test for the coefficient) and correlations between fixed effects. We recommend to always check if the number of observations and groups, i.e., 63 barn swallow nests from 51 farms here, is correct. This information shows if the glmer function has correctly recognized the hierarchical structure in the data. Here, this is correct. To assess the associations between the predictor variables and the outcome analyzed, we need to look at the column "Estimate" in the table of fixed effects. This column contains the estimated model coefficients, and the standard error for these estimates is given in the column "Std. Error", along with a z-test for the null hypothesis of a coefficient of zero.
+The summary provides the fitting method, the model formula, statistics for the model fit including the Akaike information criterion (AIC), the Bayesian information criterion (BIC), the scaled residuals, the random effects variance and information about observations and groups, a table with coefficient estimates for the fixed effects (with standard errors and a z-test for the coefficient) and correlations between fixed effects. We recommend to always check if the number of observations and groups, i.e., 63 barn swallow nests from 51 farms here, is correct. This information shows if the `glmer` function has correctly recognized the hierarchical structure in the data. Here, this is correct. To assess the associations between the predictor variables and the outcome analyzed, we need to look at the column "Estimate" in the table of fixed effects. This column contains the estimated model coefficients, and the standard error for these estimates is given in the column "Std. Error", along with a z-test for the null hypothesis of a coefficient of zero.
 In the random effects table, the among farm variance and standard deviation (square root of the variance) are given. 
 The function `confint` shows the 95% confidence intervals for the random effects (`.sig01`) and fixed effects estimates. 
 
-In the `summary` output from `mod.brm` we see the model formula and some information on the Markov chains used to fit the model. In the  group-level effects (between group standard deviations) and population-level effects (effect sizes, model coefficients) tables some summary statistics of the posterior distribution of each parameter are given. The "Estimate" is the mean of the posterior distribution, the "Est.Error" is the standard deviation of the posterior distribution (which is the standard error of the parameter estimate). Then we see the lower and upper limit of the 95% credible interval. Also, some statistics for measuring how well the Markov chains converged are given: the "Rhat" and the effective sample size (ESS). 
+In the `summary` output from `mod.brm` we see the model formula and some information on the Markov chains after the warm-up. In the  group-level effects (between group standard deviations) and population-level effects (effect sizes, model coefficients) tables some summary statistics of the posterior distribution of each parameter are given. The "Estimate" is the mean of the posterior distribution, the "Est.Error" is the standard deviation of the posterior distribution (which is the standard error of the parameter estimate). Then we see the lower and upper limit of the 95% credible interval. Also, some statistics for measuring how well the Markov chains converged are given: the "Rhat" and the effective sample size (ESS). 
 
 Because we used the logit link function, the coefficients are actually on the logit scale and are a bit difficult to interpret. What we can say is that positive coefficients indicate an increase and negative coefficients indicate a decrease in the proportion of nestlings fledged. For continuous predictors, as colsize.z and dung.z, this coefficient refers to the change in the logit of the outcome with a change of one in the predictor (e.g., for colsize.z an increase of one corresponds to an increase of a standard deviation of colsize). For categorical predictors, the coefficients represent a difference between one category and another (reference category is the one not shown in the table). 
 To visualize the coefficients we could draw effect plots.
@@ -252,7 +244,7 @@ summary(mod.brm)
 
 ```
 
-From the results we conclude that in farms without cows (when cow=0) and for average colony sizes (when colsize.z=0) and average number uf dung heaps (when dung.z=0) the average nestling survival of Barn swallows is the inverse-logit function of the Intercept, thus, `plogis(``r round(fixef(mod.brm)[1,1], 2)``)` = `r round(plogis(fixef(mod.brm)[1,1]), 2)` with a 95% uncertainty interval of `r round(plogis(fixef(mod.brm)[1,3]), 2)` - `r round(plogis(fixef(mod.brm)[1,4]), 2)`. We further see that colony size and number of dung heaps are less important than whether cows are present or not. Their estimated partial effect is small and their uncertainty interval includes only values close to zero. However, whether cows are present or not may be important for the survival of nestlings. The average nestling survival in farms with cows is `plogis(``r round(fixef(mod.brm)[1,1], 2)`` +``r round(fixef(mod.brm)[3,1], 2)`` )` = `r round(plogis(fixef(mod.brm)[1,1] + fixef(mod.brm)[3,1]), 2)`. For getting the uncertainty interval of this survival estimate, we need to do the calculation for every simulation from the posterior distribution of both parameters. 
+From the results we conclude that in farms without cows (when cow=0) and for average colony sizes (when colsize.z=0) and average number of dung heaps (when dung.z=0) the average nestling survival of Barn swallows is the inverse-logit function of the Intercept, thus, `plogis(``r round(fixef(mod.brm)[1,1], 2)``)` = `r round(plogis(fixef(mod.brm)[1,1]), 2)` with a 95% uncertainty interval of `r round(plogis(fixef(mod.brm)[1,3]), 2)` - `r round(plogis(fixef(mod.brm)[1,4]), 2)`. We further see that colony size and number of dung heaps are less important than whether cows are present or not. Their estimated partial effect is small and their uncertainty interval includes only values close to zero. However, whether cows are present or not may be important for the survival of nestlings. The average nestling survival in farms with cows is `plogis(``r round(fixef(mod.brm)[1,1], 2)`` +``r round(fixef(mod.brm)[3,1], 2)`` )` = `r round(plogis(fixef(mod.brm)[1,1] + fixef(mod.brm)[3,1]), 2)`. For getting the uncertainty interval of this survival estimate, we need to do the calculation for every simulation from the posterior distribution of both parameters. 
 
 
 ```{r ui}
@@ -263,6 +255,7 @@ survivalest <- plogis(bsim$b_Intercept + bsim$b_cow)
 quantile(survivalest, probs=c(0.025, 0.975)) # 95% uncertainty interval
 
 ```
+
 In medical research, it is standard to report the fixed-effects coefficients from GLMM with binomial or Bernoulli error as odds ratios by taking the exponent (R function `exp` for $e^{()}$) of the coefficient on the logit-scale. For example, the coefficient for cow from `mod.glmer`, `r sprintf("%.2f", fixef(mod.glmer)["cow"])` (95% CI from `r sprintf("%.2f", confint.95["cow", 1])` to `r sprintf("%.2f", confint.95["cow", 1])`), represents an odds ratio of exp(
 `r sprintf("%.2f", fixef(mod.glmer)["cow"])`)=`r sprintf("%.2f", exp(fixef(mod.glmer)["cow"]))` (95% CI from `r sprintf("%.2f", exp(confint.95["cow", 1]))` to `r sprintf("%.2f", exp(confint.95["cow", 1]))`). This means that the odds for fledging (vs. not fledging) from a clutch from a farm with livestock present is about 1.5 times larger than the odds for fledging if no livestock is present (relative effect). 
 
