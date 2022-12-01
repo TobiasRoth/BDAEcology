@@ -1,6 +1,6 @@
 # Daily nest survival {#dailynestsurv}
 
-<<!-- todo: explain why we need to start with first at day of detection, give literatur to describe the known fate model (e.g. King's book) -->>
+<!-- todo: explain why we need to start with first at day of detection, give literatur to describe the known fate model (e.g. King's book) -->
 
 ## Background
 
