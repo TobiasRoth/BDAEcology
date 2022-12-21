@@ -461,25 +461,116 @@ sum(m.g2 > m.g1) / nsim
 
 This means that in all of the `r nsim %>% as.integer` simulations from the joint posterior distribution, the mean of group 2 was larger than the mean of group 1. Therefore, there is a very high probability (i.e., it is close to 1; because probabilities are never exactly 1, we write >0.999) that the mean of group 2 is larger than the mean of group 1.
 
-### Frequentist Results from a One-Way ANOVA
 
-### Two-Way ANOVA
 
-### Frequentist Results from a Two-Way ANOVA
+### Other variants of normal linear models: Two-way anova, analysis of covariance and multiple regression
 
-### Multiple Comparisons and Post Hoc Tests
+### Partial coefficients and some comments on collinearity
 
-### Analysis of Covariance
+Many of our customers think that it is forbidden to include correlated predictor variables in a model. They use variance inflating factors (VIF) to omit some of the variables. However, we argue that omitting important variables from the model just because a correlation coefficient exceeds a threshold value can have undesirable effects. Here, we explain why and we present the usefulness and limits of partial coefficients (also called partial correlation or partial effects). We start with an example illustrating the usefulness of partial coefficients and then, give some guidelines on how to assess and deal with collinearity.
 
-### Multiple Regression and Collinearity
+
+example
+
+```{r sfex}
+load("RData/snowfinch_hatching_date.rda")
+
+plot(datsf$elevation, datsf$meltstart)
+cor(datsf$elevation, datsf$meltstart, use = "pairwise.complete")
+
+abline(lm(meltstart~elevation, data=datsf))
+
+mod <- lm(hatchday.mean~elevation + meltstart, data=datsf)
+mod1 <- lm(hatchday.mean~meltstart, data=datsf)
+summary(mod)
+
+nsim <- 5000
+bsim <- sim(mod, n.sim=nsim)
+bsim1 <- sim(mod1, n.sim=nsim)
+
+newdat <- data.frame(meltstart=c(60:130, 70:150, 100:160),
+                     elevation=rep(c(2000, 2400, 2800), 
+                                   times=c(length(60:130), length(70:150),length(100:160))))
+
+Xmat <- model.matrix(~elevation + meltstart, data=newdat)
+Xmat1 <- model.matrix(~meltstart, data=newdat)
+fitmat <- matrix(ncol=nsim, nrow=nrow(newdat))
+fitmat1 <- matrix(ncol=nsim, nrow=nrow(newdat))
+for(i in 1:nsim){
+  fitmat[,i] <- Xmat%*%bsim@coef[i,]
+  fitmat1[,i] <- Xmat1%*%bsim1@coef[i,]
+}
+newdat$fit <- apply(fitmat, 1, mean)
+newdat$lwr <- apply(fitmat, 1, quantile, probs=0.025)
+newdat$upr <- apply(fitmat, 1, quantile, probs=0.975)
+
+newdat$fit1 <- apply(fitmat1, 1, mean)
+newdat$lwr1 <- apply(fitmat1, 1, quantile, probs=0.025)
+newdat$upr1 <- apply(fitmat1, 1, quantile, probs=0.975)
+
+par(mfrow=c(2,2), mar=c(3.4,3,1,1), mgp=c(2,0.5,0))
+colkey <- c("orange", "brown", "blue")
+plot(datsf$meltstart, datsf$hatchday.mean, pch=16, col=rgb(0.6,0,0.9,0.5),
+     xlab="Start day of snowmelt [d since 1/1]", ylab="Hatching date [d since 1/1]", las=1, cex=0.5)
+index <- newdat$elevation==2000
+lines(newdat$meltstart[index], newdat$fit[index], lwd=2, col=colkey[1])
+lines(newdat$meltstart[index], newdat$lwr[index], lwd=1, lty=3, col=colkey[1])
+lines(newdat$meltstart[index], newdat$upr[index], lwd=1, lty=3, col=colkey[1])
+
+index <- newdat$elevation==2400
+lines(newdat$meltstart[index], newdat$fit[index], lwd=2, col=colkey[2])
+lines(newdat$meltstart[index], newdat$lwr[index], lwd=1, lty=3, col=colkey[2])
+lines(newdat$meltstart[index], newdat$upr[index], lwd=1, lty=3, col=colkey[2])
+
+index <- newdat$elevation==2800
+lines(newdat$meltstart[index], newdat$fit[index], lwd=2, col=colkey[3])
+lines(newdat$meltstart[index], newdat$lwr[index], lwd=1, lty=3, col=colkey[3])
+lines(newdat$meltstart[index], newdat$upr[index], lwd=1, lty=3, col=colkey[3])
+
+plot(datsf$elevation, datsf$meltstart, pch=16, col=rgb(0,0,0,0.5),
+     xlab="Elevation [m asl]", ylab="Start of snowmelt [d since 1/1]")
+segments(2000, 60, 2000, 130, lwd=2, col=colkey[1])
+segments(2400, 70, 2400, 150, lwd=2, col=colkey[2])
+segments(2800, 100, 2800, 160, lwd=2, col=colkey[3])
+
+
+plot(datsf$meltstart, datsf$hatchday.mean, pch=16, col=rgb(0.6,0,0.9,0.5),
+     xlab="Start day of snowmelt [d since 1/1]", ylab="Hatching date [d since 1/1]", 
+     las=1, cex=0.5, ylim=c(165, 185))
+index <- newdat$elevation==2000
+lines(newdat$meltstart[index], newdat$fit[index], lwd=2, col=colkey[1])
+lines(newdat$meltstart[index], newdat$lwr[index], lwd=1, lty=3, col=colkey[1])
+lines(newdat$meltstart[index], newdat$upr[index], lwd=1, lty=3, col=colkey[1])
+
+index <- newdat$elevation==2400
+lines(newdat$meltstart[index], newdat$fit[index], lwd=2, col=colkey[2])
+lines(newdat$meltstart[index], newdat$lwr[index], lwd=1, lty=3, col=colkey[2])
+lines(newdat$meltstart[index], newdat$upr[index], lwd=1, lty=3, col=colkey[2])
+
+index <- newdat$elevation==2800
+lines(newdat$meltstart[index], newdat$fit[index], lwd=2, col=colkey[3])
+lines(newdat$meltstart[index], newdat$lwr[index], lwd=1, lty=3, col=colkey[3])
+lines(newdat$meltstart[index], newdat$upr[index], lwd=1, lty=3, col=colkey[3])
+
+index <- order(newdat$meltstart)
+lines(newdat$meltstart[index], newdat$fit1[index], lwd=2)
+lines(newdat$meltstart[index], newdat$lwr1[index], lwd=1, lty=3)
+lines(newdat$meltstart[index], newdat$upr1[index], lwd=1, lty=3)
+
+plot(0:1, 0:1, type="n", axes=FALSE, xlab=NA, ylab=NA)
+legend(-0.1,1, lwd=2, col=c(colkey, 1), 
+       legend=c("2000 m", "2400 m", "2800 m", "not corrected for elevation"), xpd=NA)
+
+
+```
+
+
+guideline how to deal with collinearity
+
 
 ### Ordered Factors and Contrasts {#orderedfactors}
 
 ### Quadratic and Higher Polynomial Terms
-
-## Pendenzen
-
-- [ ] Manchmal schreiben wir $\sigma$ und manchmal $\sigma^2$. Bin mir nicht sicher, ob die Unterscheidung jedes Mal richtig ist. Das sollten wir noch kontrollieren und irgendwo im Text auch auf den Unterschied hinweisen.
 
 
   
