@@ -1,9 +1,17 @@
-# Normal Linear Models {#lm}
 
-## Linear Regression
+# Normal Linear Models{#lm}
+
+## Linear regression
 
 ```{r fig.align='center', echo=FALSE, fig.link=''}
 knitr::include_graphics('images/snowfinch3.jpg', dpi = 150)
+```
+
+------
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(arm)
 ```
 
 
