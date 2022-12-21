@@ -11,7 +11,7 @@ library(Rmisc)
 # Knitr settings 
 options(scipen = 6);
 opts_chunk$set(echo = TRUE, hide = TRUE, cache = FALSE, warning = FALSE, message = FALSE,
-               fig.asp = .45, fig.width = 8)
+               fig.width = 8)#fig.asp=.45
 
 # Darstellung von R-Berechnungen innerhalb von Text
 inline_hook <- function(x) {

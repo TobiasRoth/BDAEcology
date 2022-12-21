@@ -2,6 +2,11 @@
 
 ## Linear Regression
 
+```{r fig.align='center', echo=FALSE, fig.link=''}
+knitr::include_graphics('images/snowfinch3.jpg', dpi = 150)
+```
+
+
 ### Background
 
 Linear regression is the basis of a large part of applied statistical analysis. Analysis of variance (ANOVA) and analysis of covariance (ANCOVA) can be considered special cases of linear regression, and generalized linear models are extensions of linear regression. 
@@ -110,7 +115,7 @@ summary(mod)$sigma
 
 The object “mod” produced by `lm` contains the estimates for the intercept, $\beta_0$ , and the slope, $\beta_1$. The residual standard deviation $\sigma^2$ is extracted using the function `summary`. We can show the result of the linear regression as a line in  a scatter plot with the covariate (`x`) on the x-axis and the observations (`y`) on the y-axis (Fig. \@ref(fig:figlm)).
 
-```{r figlm, echo=FALSE, fig.cap="Linear regression. Black dots = observations, blue solid line = regression line, orange dotted lines = residuals. The ﬁtted values lie where the orange dotted lines touch the blue regression line."}
+```{r figlm, echo=FALSE, fig.cap="Linear regression. Black dots = observations, blue solid line = regression line, orange dotted lines = residuals. The ﬁtted values lie where the orange dotted lines touch the blue regression line.", fig.asp=.45}
 dat %>% 
   mutate(ypred = fitted(lm(y~x))) %>% 
   ggplot(aes(x = x, y = y, xend = x, yend = ypred)) +
@@ -198,7 +203,7 @@ From this, there is very little evidence in the data that the slope is larger th
 
 We often want to show the effect of $x$ on $y$ graphically, with information about the uncertainty of the parameter estimates included in the graph. To draw such effect plots, we use the simulated values from the posterior distribution of the model parameters. From the deterministic part of the model, we know the regression line $\mu = \beta_0 + \beta_1 x_i$. The simulation from the joint posterior distribution of $\beta_0$ and $\beta_1$ gives 1000 pairs of intercepts and slopes that describe 1000 different regression lines. We can draw these regression lines in an x-y plot (scatter plot) to show the uncertainty in the regression line estimation (Fig. \@ref(fig:figlmer1), left). Note, that in this case it is not advisable to use `ggplot` because we draw many lines in one plot, which makes `ggplot` rather slow.
 
-```{r figlmer1, fig.cap = "Regression with 1000 lines based on draws form the joint posterior distribution for the intercept and slope parameters to visualize the uncertainty of the estimated regression line."}
+```{r figlmer1, fig.cap = "Regression with 1000 lines based on draws form the joint posterior distribution for the intercept and slope parameters to visualize the uncertainty of the estimated regression line.", fig.asp=0.45}
 par(mar = c(4, 4, 0, 0))
 plot(x, y, pch = 16, las = 1, 
      xlab = "Covariate (x)", 
@@ -210,7 +215,7 @@ for(i in 1:nsim) {
 
 A more convenient way to show uncertainty is to draw the 95% credible interval, CrI, of the regression line. To this end, we ﬁrst deﬁne new x-values for which we would like to have the ﬁtted values (about 100 points across the range of x will produce smooth-looking lines when connected by line segments). We save these new x-values within the new tibble `newdat`. Then, we create a new model matrix that contains these new x-values (`newmodmat`) using the function `model.matrix`. We then calculate the 1000 ﬁtted values for each element of the new x (one value for each of the 1000 simulated regressions, Fig. \@ref(fig:figlmer1)), using matrix multiplication (%*%). We save these values in the matrix “ﬁtmat”. Finally, we extract the 2.5% and 97.5% quantiles for each x-value from ﬁtmat, and draw the lines for the lower and upper limits of the credible interval (Fig. \@ref(fig:figlmer2)).
 
-```{r figlmer2, fig.cap = "Regression with 95% credible interval of the posterior distribution of the ﬁtted values."}
+```{r figlmer2, fig.cap = "Regression with 95% credible interval of the posterior distribution of the ﬁtted values.", fig.asp=0.45}
 # Calculate 95% credible interval
 newdat <- tibble(x = seq(10, 30, by = 0.1))
 newmodmat <- model.matrix( ~ x, data = newdat)
@@ -234,7 +239,7 @@ The interpretation of the 95% credible interval is straightforward: We are 95% s
 
 The credible interval measures uncertainty of the regression line, but it does not describe how new observations would scatter around the regression line. If we want to describe where future observations will be, we have to report the posterior predictive distribution. We can get a sample of random draws from the posterior predictive distribution $\hat{y}|\boldsymbol{\beta},\sigma^2,\boldsymbol{X}\sim Norm( \boldsymbol{X \beta, \sigma^2})$ using the simulated joint posterior distributions of the model parameters, thus taking the uncertainty of the parameter estimates into account. We draw a new $\hat{y}$-value from $Norm( \boldsymbol{X \beta, \sigma^2})$ for each simulated set of model parameters. Then, we can visualize the 2.5% and 97.5% quantiles of this distribution for each new x-value.
 
-```{r figlmer3, cache = TRUE, fig.cap = "Regression line with 95% credible interval (dotted lines) and the 95% interval of the simulated predictive distribution (broken lines). Note that we increased the number of simulations to 50,000 to produce smooth lines."}
+```{r figlmer3, cache = TRUE, fig.cap = "Regression line with 95% credible interval (dotted lines) and the 95% interval of the simulated predictive distribution (broken lines). Note that we increased the number of simulations to 50,000 to produce smooth lines.", fig.asp=0.45}
 
 # increase number of simulation to procude smooth lines of the posterior
 # predictive distribution
@@ -467,23 +472,47 @@ This means that in all of the `r nsim %>% as.integer` simulations from the joint
 
 ### Partial coefficients and some comments on collinearity
 
-Many of our customers think that it is forbidden to include correlated predictor variables in a model. They use variance inflating factors (VIF) to omit some of the variables. However, we argue that omitting important variables from the model just because a correlation coefficient exceeds a threshold value can have undesirable effects. Here, we explain why and we present the usefulness and limits of partial coefficients (also called partial correlation or partial effects). We start with an example illustrating the usefulness of partial coefficients and then, give some guidelines on how to assess and deal with collinearity.
+Many biologists think that it is forbidden to include correlated predictor variables in a model. They use variance inflating factors (VIF) to omit some of the variables. However, omitting important variables from the model just because a correlation coefficient exceeds a threshold value can have undesirable effects. Here, we explain why and we present the usefulness and limits of partial coefficients (also called partial correlation or partial effects). We start with an example illustrating the usefulness of partial coefficients and then, give some guidelines on how to assess and deal with collinearity.
 
 
-example
+As an example, we look at hatching dates of Snowfinches and how these dates relate to the date when snow melt started defined as the first date in the season when a minimum of 5% ground is snow free. A thorough analyses of the data is presented by @Schano.2021. An important question is how well can Snowfinches adjust their hatching dates to the snow conditions. Snowfinch nestlings grow faster when they are reared during the snow melt compared to after snow has completely melted, because their parents find nutrient rich insect larvae in the edges of melting snow patches. 
 
-```{r sfex}
+
+```{r sfdat}
 load("RData/snowfinch_hatching_date.rda")
 
-plot(datsf$elevation, datsf$meltstart)
+# Pearson's correlation coefficient
 cor(datsf$elevation, datsf$meltstart, use = "pairwise.complete")
+mod <- lm(meltstart~elevation, data=datsf)
+100*coef(mod)[2] # change in meltstart with 100m change in elevation
 
-abline(lm(meltstart~elevation, data=datsf))
+```
 
-mod <- lm(hatchday.mean~elevation + meltstart, data=datsf)
+Hatching dates of Snowfinch broods were inferred from citizen science data from the Alps, where snow melt starts later at higher elevations compared to lower elevations. Thus, the start of snow melt is correlated with elevation (Pearson's correlation coefficient `r round(cor(datsf$elevation, datsf$meltstart, use = "pairwise.complete") ,2)`). In average, snow starts melting `r round(100*coef(mod)[2])` days later with every 100m increase in elevation. 
+
+
+```{r sfex1}
 mod1 <- lm(hatchday.mean~meltstart, data=datsf)
-summary(mod)
+mod1
 
+```
+
+From a a normal linear regression of hatching date on the snow melt date, we obtain an estimate of `r round(coef(mod1)[2],2)` days delay in hatching date with one day later snow melt. This effect sizes describes what we see in the data, i.e. for data collected along an elevational gradient. Along the elevational gradient there are other factors than the start of snow melt that change such as average temperature, air pressure or sun radiation, and that may have an influence on the birds decision to start breeding. However, we are interested in the correlation between hatching date and date of snow melt independent of other factors changing with elevation. In other words, we would like to measure how much in average hatching date delays when snow melt starts one day later while all other factors are kept constant. This is called the partial effect of snow melt date. Therefore, we include elevation as a covariate in the model.  
+
+
+```{r sfex}
+library(arm)
+mod <- lm(hatchday.mean~elevation + meltstart, data=datsf)
+mod
+```
+
+
+From this model, we obtain an estimate of `r round(coef(mod)["meltstart"],2)` days delay in hatching date with one day later snow melt at a given elevation. We further get an estimate of `r round(100*coef(mod)["elevation"],2)` days later hatching date for each 100m shift in elevation. The difference in hatching date between early and late years (around one month difference in snow melt date) at a given elevation is `r round(30*coef(mod)["meltstart"],2)` days (Figure \@ref(fig:sfexfig)).
+
+The correlation between hatching date and start of snow melt date we estimate in the first model (black regression line in Figure \@ref(fig:sfexfig)), that does not include elevation, is called "pseudocorrelation" because its is not purely "caused" by the date of snow melt. When we estimate the correlation within a constant elevation (coloured regression lines), it is much lower and closer to a causal relationship. However, in such observational studies, we never can be sure whether the partial coefficients can be interpreted as a causal relationship unless we include all factors that influence hatching date. Nevertheless, partial effects give much more insight into a system compared to univariate analyses because we can separated effects of simultaneously acting variables.  
+
+
+```{r sfexfig, echo=FALSE, fig.cap="Illustration of the partial coefficient of snow melt date in a  model of hatching date. Panel A shows the entire raw data together with the regression lines drawn for three different elevations. The regression lines span the range of snow melt dates occurring at the respective elevation (shown in panel C). Panel B is the same as panel A, but zoomed in to the better see the regression lines and with an additional regression line (in black) from the model that does not take elevation into account is added."}
 nsim <- 5000
 bsim <- sim(mod, n.sim=nsim)
 bsim1 <- sim(mod1, n.sim=nsim)
@@ -511,7 +540,9 @@ newdat$upr1 <- apply(fitmat1, 1, quantile, probs=0.975)
 par(mfrow=c(2,2), mar=c(3.4,3,1,1), mgp=c(2,0.5,0))
 colkey <- c("orange", "brown", "blue")
 plot(datsf$meltstart, datsf$hatchday.mean, pch=16, col=rgb(0.6,0,0.9,0.5),
-     xlab="Start day of snowmelt [d since 1/1]", ylab="Hatching date [d since 1/1]", las=1, cex=0.5)
+     xlab="Start day of snowmelt [d since 1/1]", 
+     ylab="Hatching date [d since 1/1]", las=1, cex=0.5)
+text(55, 225, "A", adj=c(0,0))
 index <- newdat$elevation==2000
 lines(newdat$meltstart[index], newdat$fit[index], lwd=2, col=colkey[1])
 lines(newdat$meltstart[index], newdat$lwr[index], lwd=1, lty=3, col=colkey[1])
@@ -528,7 +559,8 @@ lines(newdat$meltstart[index], newdat$lwr[index], lwd=1, lty=3, col=colkey[3])
 lines(newdat$meltstart[index], newdat$upr[index], lwd=1, lty=3, col=colkey[3])
 
 plot(datsf$elevation, datsf$meltstart, pch=16, col=rgb(0,0,0,0.5),
-     xlab="Elevation [m asl]", ylab="Start of snowmelt [d since 1/1]")
+     xlab="Elevation [m asl]", ylab="Start of snowmelt [d since 1/1]", las=1)
+text(1500, 150, "C", adj=c(0,0))
 segments(2000, 60, 2000, 130, lwd=2, col=colkey[1])
 segments(2400, 70, 2400, 150, lwd=2, col=colkey[2])
 segments(2800, 100, 2800, 160, lwd=2, col=colkey[3])
@@ -537,6 +569,7 @@ segments(2800, 100, 2800, 160, lwd=2, col=colkey[3])
 plot(datsf$meltstart, datsf$hatchday.mean, pch=16, col=rgb(0.6,0,0.9,0.5),
      xlab="Start day of snowmelt [d since 1/1]", ylab="Hatching date [d since 1/1]", 
      las=1, cex=0.5, ylim=c(165, 185))
+text(55, 183.5, "B", adj=c(0,0))
 index <- newdat$elevation==2000
 lines(newdat$meltstart[index], newdat$fit[index], lwd=2, col=colkey[1])
 lines(newdat$meltstart[index], newdat$lwr[index], lwd=1, lty=3, col=colkey[1])
@@ -565,7 +598,24 @@ legend(-0.1,1, lwd=2, col=c(colkey, 1),
 ```
 
 
-guideline how to deal with collinearity
+We have seen that it can be very useful to include more than one predictor variable in a model even if they are correlated with each other. In fact, there is nothing wrong with that. However, correlated predictors (collinearity) make things more complicated. 
+
+For example, partial regression lines should not be drawn across the whole range of values of a variable, to avoid extrapolating out of data. At 2800 m asl snow melt never starts in the beginning of March. Therefore, the blue regression line would not make sense for snow melt dates in March.
+
+Further, sometimes correlations among predictors indicate that these predictors measure the same underlying aspect and we are actually interested in the effect of this underlying aspect on our response. For example, we could include also the date of the end of snow melt. Both variables, the start and the end of the snow melt measure the timing of snow melt. Including both as predictor in the model would result in partial coefficients that measure how much hatching date changes when the snow melt starts one day later, while the end date is constant. That interpretation is a mixture of the effect of timing and duration rather than of snow melt timing alone. Similarly, the coefficient of the end of snow melt measures a mixture of duration and timing. Thus, if we include two variables that are correlated because they measure the same aspect (just a little bit differently), we get coefficients that are hard to interpret and may not measure what we actually are interested in. In such a cases, we get easier to interpret model coefficients, if we include just one variable of each aspect that we are interested in, e.g. we could include one timing variable (e.g. start of snow melt) and the duration of snow melt that may or may not be correlated with the start of snow melt.   
+To summarize, the decision of what to do with correlated predictors primarily relies on the question we are interested in, i.e., what exactly should the partial coefficients be an estimate for. 
+
+A further drawback of collinearity is that model fitting can become difficult. When strong correlations are present, model fitting algorithms may fail. If they do not fail, the statistical uncertainty of the estimates often becomes large. This is because the partial coefficient of one variable needs to be estimated for constant values of the other predictors in the model which means that a reduced range of values is available as illustrated in Figure \@ref(fig:sfexfig) C. However, if uncertainty intervals (confidence, credible or compatibility intervals) are reported alongside the estimates, then using correlated predictors in the same model is absolutely fine, if the fitting algorithm was successful.
+
+The correlations per se can be interesting. Further readings on how to visualize and analyse data with complex correlation structures:  
+
+- principal component analysis [@Manly.1994]  
+- path analyses (e.g. @Shipley.2009)  
+- structural equation models [@Hoyle2012]
+
+```{r fig.align='center', echo=FALSE, fig.link=''}
+knitr::include_graphics('images/ruchen.jpg', dpi = 150)
+```
 
 
 ### Ordered Factors and Contrasts {#orderedfactors}
