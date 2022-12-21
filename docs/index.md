@@ -1,10 +1,10 @@
 --- 
 title: "Bayesian Data Analysis in Ecology with R and Stan"
 author: "Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt"
-date: "2021-08-24"
+date: "2022-12-21"
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: [references/References_fk.bib, references/References_new.bib]
+bibliography: [references/References_fk.bib, references/References_new.bib, references/References_svf.bib]
 link-citations: yes
 github-repo: TobiasRoth/BDAEcology
 cover-image: images/cover.jpg
@@ -28,7 +28,7 @@ It is open so that everybody with a [GitHub](https://github.com) account can mak
 
 ## Acknowledgments {-}
 We thank *Yihui Xie* for providing [bookdown](bhttps://bookdown.org/yihui/bookdown/) which makes it much fun to write open books such as ours. 
-
+We thank many anonymous students and collaborators who searched information on new software, reported updates and gave feedback on earlier versions of the book. Specifically, we thank Carole Niffenegger for looking up the difference between the bulk and tail ESS in the brm output, Martin Küblbeck for using the conditional logistic regression in rstanarm, ...  
 
 
 
