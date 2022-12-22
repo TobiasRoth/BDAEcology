@@ -478,7 +478,7 @@ This means that in all of the `r nsim %>% as.integer` simulations from the joint
 
 ### Other variants of normal linear models: Two-way anova, analysis of covariance and multiple regression
 
-### Partial coefficients and some comments on collinearity
+## Partial coefficients and some comments on collinearity
 
 Many biologists think that it is forbidden to include correlated predictor variables in a model. They use variance inflating factors (VIF) to omit some of the variables. However, omitting important variables from the model just because a correlation coefficient exceeds a threshold value can have undesirable effects. Here, we explain why and we present the usefulness and limits of partial coefficients (also called partial correlation or partial effects). We start with an example illustrating the usefulness of partial coefficients and then, give some guidelines on how to assess and deal with collinearity.
 
@@ -520,7 +520,7 @@ From this model, we obtain an estimate of `r round(coef(mod)["meltstart"],2)` da
 The correlation between hatching date and start of snow melt date we estimate in the first model (black regression line in Figure \@ref(fig:sfexfig)), that does not include elevation, is called "pseudocorrelation" because its is not purely "caused" by the date of snow melt. When we estimate the correlation within a constant elevation (coloured regression lines), it is much lower and closer to a causal relationship. However, in such observational studies, we never can be sure whether the partial coefficients can be interpreted as a causal relationship unless we include all factors that influence hatching date. Nevertheless, partial effects give much more insight into a system compared to univariate analyses because we can separated effects of simultaneously acting variables.  
 
 
-```{r sfexfig, echo=FALSE, fig.cap="Illustration of the partial coefficient of snow melt date in a  model of hatching date. Panel A shows the entire raw data together with the regression lines drawn for three different elevations. The regression lines span the range of snow melt dates occurring at the respective elevation (shown in panel C). Panel B is the same as panel A, but zoomed in to the better see the regression lines and with an additional regression line (in black) from the model that does not take elevation into account is added."}
+```{r sfexfig, echo=FALSE, fig.cap="Illustration of the partial coefficient of snow melt date in a  model of hatching date. Panel A shows the entire raw data together with the regression lines drawn for three different elevations. The regression lines span the range of snow melt dates occurring at the respective elevation (shown in panel C). Panel B is the same as panel A, but zoomed in to the better see the regression lines and with an additional regression line (in black) from the model that does not take elevation into account."}
 nsim <- 5000
 bsim <- sim(mod, n.sim=nsim)
 bsim1 <- sim(mod1, n.sim=nsim)
@@ -618,7 +618,7 @@ A further drawback of collinearity is that model fitting can become difficult. W
 The correlations per se can be interesting. Further readings on how to visualize and analyse data with complex correlation structures:  
 
 - principal component analysis [@Manly.1994]  
-- path analyses (e.g. @Shipley.2009)  
+- path analyses, e.g. @Shipley.2009  
 - structural equation models [@Hoyle2012]
 
 ```{r fig.align='center', echo=FALSE, fig.link=''}
@@ -626,9 +626,9 @@ knitr::include_graphics('images/ruchen.jpg', dpi = 150)
 ```
 
 
-### Ordered Factors and Contrasts {#orderedfactors}
+## Ordered Factors and Contrasts {#orderedfactors}
 
-### Quadratic and Higher Polynomial Terms
+## Quadratic and Higher Polynomial Terms
 
 
   
