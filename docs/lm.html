@@ -24,7 +24,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2022-12-21" />
+<meta name="date" content="2023-01-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -188,14 +188,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="distributions.html#distributions" id="toc-distributions"><span class="toc-section-number">4</span> Probability distributions</a>
 <ul>
 <li><a href="distributions.html#introduction" id="toc-introduction"><span class="toc-section-number">4.1</span> Introduction</a></li>
-<li><a href="distributions.html#normal-distribution" id="toc-normal-distribution"><span class="toc-section-number">4.2</span> Normal distribution</a></li>
-<li><a href="distributions.html#poisson-distribution" id="toc-poisson-distribution"><span class="toc-section-number">4.3</span> Poisson distribution</a></li>
-<li><a href="distributions.html#gamma-distribution" id="toc-gamma-distribution"><span class="toc-section-number">4.4</span> Gamma distribution</a>
+<li><a href="distributions.html#discrete-distributions" id="toc-discrete-distributions"><span class="toc-section-number">4.2</span> Discrete distributions</a>
 <ul>
-<li><a href="distributions.html#cauchydistri" id="toc-cauchydistri"><span class="toc-section-number">4.4.1</span> Cauchy distribution</a></li>
-<li><a href="distributions.html#t-distribution" id="toc-t-distribution"><span class="toc-section-number">4.4.2</span> t-distribution</a></li>
+<li><a href="distributions.html#bernoulli-distribution" id="toc-bernoulli-distribution"><span class="toc-section-number">4.2.1</span> Bernoulli distribution</a></li>
+<li><a href="distributions.html#binomial-distribution" id="toc-binomial-distribution"><span class="toc-section-number">4.2.2</span> Binomial distribution</a></li>
+<li><a href="distributions.html#poisson-distribution" id="toc-poisson-distribution"><span class="toc-section-number">4.2.3</span> Poisson distribution</a></li>
+<li><a href="distributions.html#negative-binomial-distribution" id="toc-negative-binomial-distribution"><span class="toc-section-number">4.2.4</span> Negative-binomial distribution</a></li>
 </ul></li>
-<li><a href="distributions.html#f-distribution" id="toc-f-distribution"><span class="toc-section-number">4.5</span> F-distribution</a></li>
+<li><a href="distributions.html#continuous-distributions" id="toc-continuous-distributions"><span class="toc-section-number">4.3</span> Continuous distributions</a>
+<ul>
+<li><a href="distributions.html#beta-distribution" id="toc-beta-distribution"><span class="toc-section-number">4.3.1</span> Beta distribution</a></li>
+<li><a href="distributions.html#normal-distribution" id="toc-normal-distribution"><span class="toc-section-number">4.3.2</span> Normal distribution</a></li>
+<li><a href="distributions.html#gamma-distribution" id="toc-gamma-distribution"><span class="toc-section-number">4.3.3</span> Gamma distribution</a></li>
+<li><a href="distributions.html#cauchydistri" id="toc-cauchydistri"><span class="toc-section-number">4.3.4</span> Cauchy distribution</a></li>
+<li><a href="distributions.html#t-distribution" id="toc-t-distribution"><span class="toc-section-number">4.3.5</span> t-distribution</a></li>
+<li><a href="distributions.html#f-distribution" id="toc-f-distribution"><span class="toc-section-number">4.3.6</span> F-distribution</a></li>
+</ul></li>
 </ul></li>
 <li><a href="rfunctions.html#rfunctions" id="toc-rfunctions"><span class="toc-section-number">5</span> Important R-functions</a>
 <ul>
@@ -242,10 +250,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><a href="lm.html#one-way-anova" id="toc-one-way-anova"><span class="toc-section-number">11.2.1</span> One-Way ANOVA</a></li>
 <li><a href="lm.html#other-variants-of-normal-linear-models-two-way-anova-analysis-of-covariance-and-multiple-regression" id="toc-other-variants-of-normal-linear-models-two-way-anova-analysis-of-covariance-and-multiple-regression"><span class="toc-section-number">11.2.2</span> Other variants of normal linear models: Two-way anova, analysis of covariance and multiple regression</a></li>
-<li><a href="lm.html#partial-coefficients-and-some-comments-on-collinearity" id="toc-partial-coefficients-and-some-comments-on-collinearity"><span class="toc-section-number">11.2.3</span> Partial coefficients and some comments on collinearity</a></li>
-<li><a href="lm.html#orderedfactors" id="toc-orderedfactors"><span class="toc-section-number">11.2.4</span> Ordered Factors and Contrasts</a></li>
-<li><a href="lm.html#quadratic-and-higher-polynomial-terms" id="toc-quadratic-and-higher-polynomial-terms"><span class="toc-section-number">11.2.5</span> Quadratic and Higher Polynomial Terms</a></li>
 </ul></li>
+<li><a href="lm.html#partial-coefficients-and-some-comments-on-collinearity" id="toc-partial-coefficients-and-some-comments-on-collinearity"><span class="toc-section-number">11.3</span> Partial coefficients and some comments on collinearity</a></li>
+<li><a href="lm.html#orderedfactors" id="toc-orderedfactors"><span class="toc-section-number">11.4</span> Ordered Factors and Contrasts</a></li>
+<li><a href="lm.html#quadratic-and-higher-polynomial-terms" id="toc-quadratic-and-higher-polynomial-terms"><span class="toc-section-number">11.5</span> Quadratic and Higher Polynomial Terms</a></li>
 </ul></li>
 <li><a href="residualanalysis.html#residualanalysis" id="toc-residualanalysis"><span class="toc-section-number">12</span> Assessing Model Assumptions</a>
 <ul>
@@ -687,7 +695,7 @@ Figure 11.6: Weights (g) of the 30 individuals in each group. The dark horizonta
       0 &amp; 0 &amp; 1 \\
   \end{pmatrix}
 \end{align}\]</span></p>
-<p>Other possibilities of model parameterizations, particularly for ordered factors, are introduced in Section <a href="lm.html#orderedfactors">11.2.4</a>.</p>
+<p>Other possibilities of model parameterizations, particularly for ordered factors, are introduced in Section <a href="lm.html#orderedfactors">11.4</a>.</p>
 <p>To obtain the parameter estimates for model parameterized according to Equation <a href="lm.html#eq:anovamw">(11.6)</a> we ﬁt the model in R:</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="lm.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model</span></span>
 <span id="cb62-2"><a href="lm.html#cb62-2" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>group)  </span>
@@ -762,10 +770,11 @@ Figure 11.7: Distribution of the simulated values from the posterior distributio
 <div id="other-variants-of-normal-linear-models-two-way-anova-analysis-of-covariance-and-multiple-regression" class="section level3" number="11.2.2">
 <h3><span class="header-section-number">11.2.2</span> Other variants of normal linear models: Two-way anova, analysis of covariance and multiple regression</h3>
 </div>
-<div id="partial-coefficients-and-some-comments-on-collinearity" class="section level3" number="11.2.3">
-<h3><span class="header-section-number">11.2.3</span> Partial coefficients and some comments on collinearity</h3>
-<p>Many biologists think that it is forbidden to include correlated predictor variables in a model. They use variance inflating factors (VIF) to omit some of the variables. However, omitting important variables from the model just because a correlation coefficient exceeds a threshold value can have undesirable effects. Here, we explain why and we present the usefulness and limits of partial coefficients (also called partial correlation or partial effects). We start with an example illustrating the usefulness of partial coefficients and then, give some guidelines on how to assess and deal with collinearity.</p>
-<p>As an example, we look at hatching dates of Snowfinches and how these dates relate to the date when snow melt started defined as the first date in the season when a minimum of 5% ground is snow free. A thorough analyses of the data is presented by <span class="citation">Schano et al. (<a href="referenzen.html#ref-Schano.2021" role="doc-biblioref">2021</a>)</span>. An important question is how well can Snowfinches adjust their hatching dates to the snow conditions. Snowfinch nestlings grow faster when they are reared during the snow melt compared to after snow has completely melted, because their parents find nutrient rich insect larvae in the edges of melting snow patches.</p>
+</div>
+<div id="partial-coefficients-and-some-comments-on-collinearity" class="section level2" number="11.3">
+<h2><span class="header-section-number">11.3</span> Partial coefficients and some comments on collinearity</h2>
+<p>Many biologists think that it is forbidden to include correlated predictor variables in a model. They use variance inflating factors (VIF) to omit some of the variables. However, omitting important variables from the model just because a correlation coefficient exceeds a threshold value can have undesirable effects. Here, we explain why and we present the usefulness and limits of partial coefficients (also called partial correlation or partial effects). We start with an example illustrating the usefulness of partial coefficients and then, give some guidelines on how to deal with collinearity.</p>
+<p>As an example, we look at hatching dates of Snowfinches and how these dates relate to the date when snow melt started (first date in the season when a minimum of 5% ground is snow free). A thorough analyses of the data is presented by <span class="citation">Schano et al. (<a href="referenzen.html#ref-Schano.2021" role="doc-biblioref">2021</a>)</span>. An important question is how well can Snowfinches adjust their hatching dates to the snow conditions. For Snowfinches, it is important to raise their nestlings during snow melt. Their nestlings grow faster when they are reared during the snow melt compared to after snow has completely melted, because their parents find nutrient rich insect larvae in the edges of melting snow patches.</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="lm.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;RData/snowfinch_hatching_date.rda&quot;</span>)</span>
 <span id="cb75-2"><a href="lm.html#cb75-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb75-3"><a href="lm.html#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson&#39;s correlation coefficient</span></span>
@@ -785,7 +794,7 @@ Figure 11.7: Distribution of the simulated values from the posterior distributio
 ## Coefficients:
 ## (Intercept)    meltstart  
 ##   167.99457      0.06325</code></pre>
-<p>From a a normal linear regression of hatching date on the snow melt date, we obtain an estimate of 0.06 days delay in hatching date with one day later snow melt. This effect sizes describes what we see in the data, i.e. for data collected along an elevational gradient. Along the elevational gradient there are other factors than the start of snow melt that change such as average temperature, air pressure or sun radiation, and that may have an influence on the birds decision to start breeding. However, we are interested in the correlation between hatching date and date of snow melt independent of other factors changing with elevation. In other words, we would like to measure how much in average hatching date delays when snow melt starts one day later while all other factors are kept constant. This is called the partial effect of snow melt date. Therefore, we include elevation as a covariate in the model.</p>
+<p>From a a normal linear regression of hatching date on the snow melt date, we obtain an estimate of 0.06 days delay in hatching date with one day later snow melt. This effect sizes describes the relationship in the data that were collected along an elevational gradient. Along the elevational gradient there are many factors that change such as average temperature, air pressure or sun radiation. All these factors may have an influence on the birds decision to start breeding. Consequentily, from the raw correlation between hatching dates and start of snow melt we cannot conclude how Snowfinches react to changes in the start of snow melt because the correlation seen in the data may be caused by other factors changing with elevation (such a correlation is called “pseudocorrelation”). However, we are interested in the correlation between hatching date and date of snow melt independent of other factors changing with elevation. In other words, we would like to measure how much in average hatching date delays when snow melt starts one day later while all other factors are kept constant. This is called the partial effect of snow melt date. Therefore, we include elevation as a covariate in the model.</p>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="lm.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
 <span id="cb81-2"><a href="lm.html#cb81-2" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(hatchday.mean<span class="sc">~</span>elevation <span class="sc">+</span> meltstart, <span class="at">data=</span>datsf)</span>
 <span id="cb81-3"><a href="lm.html#cb81-3" aria-hidden="true" tabindex="-1"></a>mod</span></code></pre></div>
@@ -796,12 +805,12 @@ Figure 11.7: Distribution of the simulated values from the posterior distributio
 ## Coefficients:
 ## (Intercept)    elevation    meltstart  
 ##  154.383936     0.007079     0.037757</code></pre>
-<p>From this model, we obtain an estimate of 0.04 days delay in hatching date with one day later snow melt at a given elevation. We further get an estimate of 0.71 days later hatching date for each 100m shift in elevation. The difference in hatching date between early and late years (around one month difference in snow melt date) at a given elevation is 1.13 days (Figure <a href="lm.html#fig:sfexfig">11.8</a>).</p>
-<p>The correlation between hatching date and start of snow melt date we estimate in the first model (black regression line in Figure <a href="lm.html#fig:sfexfig">11.8</a>), that does not include elevation, is called “pseudocorrelation” because its is not purely “caused” by the date of snow melt. When we estimate the correlation within a constant elevation (coloured regression lines), it is much lower and closer to a causal relationship. However, in such observational studies, we never can be sure whether the partial coefficients can be interpreted as a causal relationship unless we include all factors that influence hatching date. Nevertheless, partial effects give much more insight into a system compared to univariate analyses because we can separated effects of simultaneously acting variables.</p>
+<p>From this model, we obtain an estimate of 0.04 days delay in hatching date with one day later snow melt at a given elevation. That gives a difference in hatching date between early and late years (around one month difference in snow melt date) at a given elevation of 1.13 days (Figure <a href="lm.html#fig:sfexfig">11.8</a>). We further get an estimate of 0.71 days later hatching date for each 100m shift in elevation. Thus, a 18.75 days later snow melt corresponds to a similar delay in average hatching date when elevation increases by 100m.</p>
+<p>When we estimate the coefficient within a constant elevation (coloured regression lines in Figure <a href="lm.html#fig:sfexfig">11.8</a>), it is lower than the raw correlation and closer to a causal relationship, because it is corrected for elevation. However, in observational studies, we never can be sure whether the partial coefficients can be interpreted as a causal relationship unless we include all factors that influence hatching date. Nevertheless, partial effects give much more insight into a system compared to univariate analyses because we can separated effects of simultaneously acting variables (that we have measured). The result indicates that Snowfinches may not react very sensibly to varying timing of snow melt, whereas at higher elevations they clearly breed later compared to lower elevations.</p>
 <div class="figure"><span id="fig:sfexfig"></span>
-<img src="2.03-lm_files/figure-html/sfexfig-1.png" alt="Illustration of the partial coefficient of snow melt date in a  model of hatching date. Panel A shows the entire raw data together with the regression lines drawn for three different elevations. The regression lines span the range of snow melt dates occurring at the respective elevation (shown in panel C). Panel B is the same as panel A, but zoomed in to the better see the regression lines and with an additional regression line (in black) from the model that does not take elevation into account is added." width="672" />
+<img src="2.03-lm_files/figure-html/sfexfig-1.png" alt="Illustration of the partial coefficient of snow melt date in a  model of hatching date. Panel A shows the entire raw data together with the regression lines drawn for three different elevations. The regression lines span the range of snow melt dates occurring at the respective elevation (shown in panel C). Panel B is the same as panel A, but zoomed in to the better see the regression lines and with an additional regression line (in black) from the model that does not take elevation into account." width="672" />
 <p class="caption">
-Figure 11.8: Illustration of the partial coefficient of snow melt date in a model of hatching date. Panel A shows the entire raw data together with the regression lines drawn for three different elevations. The regression lines span the range of snow melt dates occurring at the respective elevation (shown in panel C). Panel B is the same as panel A, but zoomed in to the better see the regression lines and with an additional regression line (in black) from the model that does not take elevation into account is added.
+Figure 11.8: Illustration of the partial coefficient of snow melt date in a model of hatching date. Panel A shows the entire raw data together with the regression lines drawn for three different elevations. The regression lines span the range of snow melt dates occurring at the respective elevation (shown in panel C). Panel B is the same as panel A, but zoomed in to the better see the regression lines and with an additional regression line (in black) from the model that does not take elevation into account.
 </p>
 </div>
 <p>We have seen that it can be very useful to include more than one predictor variable in a model even if they are correlated with each other. In fact, there is nothing wrong with that. However, correlated predictors (collinearity) make things more complicated.</p>
@@ -813,19 +822,18 @@ To summarize, the decision of what to do with correlated predictors primarily re
 <ul>
 <li>principal component analysis <span class="citation">(<a href="referenzen.html#ref-Manly.1994" role="doc-biblioref">Manly 1994</a>)</span><br />
 </li>
-<li>path analyses (e.g. <span class="citation">Shipley (<a href="referenzen.html#ref-Shipley.2009" role="doc-biblioref">2009</a>)</span>)<br />
+<li>path analyses, e.g. <span class="citation">Shipley (<a href="referenzen.html#ref-Shipley.2009" role="doc-biblioref">2009</a>)</span><br />
 </li>
 <li>structural equation models <span class="citation">(<a href="referenzen.html#ref-Hoyle2012" role="doc-biblioref">Hoyle 2012</a>)</span></li>
 </ul>
 <p><a href="" target="_blank"><img src="images/ruchen.jpg" width="1452" style="display: block; margin: auto;" /></a></p>
 </div>
-<div id="orderedfactors" class="section level3" number="11.2.4">
-<h3><span class="header-section-number">11.2.4</span> Ordered Factors and Contrasts</h3>
+<div id="orderedfactors" class="section level2" number="11.4">
+<h2><span class="header-section-number">11.4</span> Ordered Factors and Contrasts</h2>
 </div>
-<div id="quadratic-and-higher-polynomial-terms" class="section level3" number="11.2.5">
-<h3><span class="header-section-number">11.2.5</span> Quadratic and Higher Polynomial Terms</h3>
+<div id="quadratic-and-higher-polynomial-terms" class="section level2" number="11.5">
+<h2><span class="header-section-number">11.5</span> Quadratic and Higher Polynomial Terms</h2>
 
-</div>
 </div>
 </div>
             </section>

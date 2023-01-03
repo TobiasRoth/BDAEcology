@@ -15,6 +15,7 @@ fig:unnamed-chunk-8
 fig:boxplt
 fig:ranhist
 fig:histboot
+fig:betadist
 fig:unnamed-chunk-1
 eq:lm
 eq:lmalternativ
@@ -72,8 +73,14 @@ step9
 step10
 distributions
 introduction
-normal-distribution
+discrete-distributions
+bernoulli-distribution
+binomial-distribution
 poisson-distribution
+negative-binomial-distribution
+continuous-distributions
+beta-distribution
+normal-distribution
 gamma-distribution
 cauchydistri
 t-distribution

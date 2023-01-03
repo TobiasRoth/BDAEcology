@@ -24,7 +24,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2022-12-21" />
+<meta name="date" content="2023-01-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -188,14 +188,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="distributions.html#distributions" id="toc-distributions"><span class="toc-section-number">4</span> Probability distributions</a>
 <ul>
 <li><a href="distributions.html#introduction" id="toc-introduction"><span class="toc-section-number">4.1</span> Introduction</a></li>
-<li><a href="distributions.html#normal-distribution" id="toc-normal-distribution"><span class="toc-section-number">4.2</span> Normal distribution</a></li>
-<li><a href="distributions.html#poisson-distribution" id="toc-poisson-distribution"><span class="toc-section-number">4.3</span> Poisson distribution</a></li>
-<li><a href="distributions.html#gamma-distribution" id="toc-gamma-distribution"><span class="toc-section-number">4.4</span> Gamma distribution</a>
+<li><a href="distributions.html#discrete-distributions" id="toc-discrete-distributions"><span class="toc-section-number">4.2</span> Discrete distributions</a>
 <ul>
-<li><a href="distributions.html#cauchydistri" id="toc-cauchydistri"><span class="toc-section-number">4.4.1</span> Cauchy distribution</a></li>
-<li><a href="distributions.html#t-distribution" id="toc-t-distribution"><span class="toc-section-number">4.4.2</span> t-distribution</a></li>
+<li><a href="distributions.html#bernoulli-distribution" id="toc-bernoulli-distribution"><span class="toc-section-number">4.2.1</span> Bernoulli distribution</a></li>
+<li><a href="distributions.html#binomial-distribution" id="toc-binomial-distribution"><span class="toc-section-number">4.2.2</span> Binomial distribution</a></li>
+<li><a href="distributions.html#poisson-distribution" id="toc-poisson-distribution"><span class="toc-section-number">4.2.3</span> Poisson distribution</a></li>
+<li><a href="distributions.html#negative-binomial-distribution" id="toc-negative-binomial-distribution"><span class="toc-section-number">4.2.4</span> Negative-binomial distribution</a></li>
 </ul></li>
-<li><a href="distributions.html#f-distribution" id="toc-f-distribution"><span class="toc-section-number">4.5</span> F-distribution</a></li>
+<li><a href="distributions.html#continuous-distributions" id="toc-continuous-distributions"><span class="toc-section-number">4.3</span> Continuous distributions</a>
+<ul>
+<li><a href="distributions.html#beta-distribution" id="toc-beta-distribution"><span class="toc-section-number">4.3.1</span> Beta distribution</a></li>
+<li><a href="distributions.html#normal-distribution" id="toc-normal-distribution"><span class="toc-section-number">4.3.2</span> Normal distribution</a></li>
+<li><a href="distributions.html#gamma-distribution" id="toc-gamma-distribution"><span class="toc-section-number">4.3.3</span> Gamma distribution</a></li>
+<li><a href="distributions.html#cauchydistri" id="toc-cauchydistri"><span class="toc-section-number">4.3.4</span> Cauchy distribution</a></li>
+<li><a href="distributions.html#t-distribution" id="toc-t-distribution"><span class="toc-section-number">4.3.5</span> t-distribution</a></li>
+<li><a href="distributions.html#f-distribution" id="toc-f-distribution"><span class="toc-section-number">4.3.6</span> F-distribution</a></li>
+</ul></li>
 </ul></li>
 <li><a href="rfunctions.html#rfunctions" id="toc-rfunctions"><span class="toc-section-number">5</span> Important R-functions</a>
 <ul>
@@ -242,10 +250,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><a href="lm.html#one-way-anova" id="toc-one-way-anova"><span class="toc-section-number">11.2.1</span> One-Way ANOVA</a></li>
 <li><a href="lm.html#other-variants-of-normal-linear-models-two-way-anova-analysis-of-covariance-and-multiple-regression" id="toc-other-variants-of-normal-linear-models-two-way-anova-analysis-of-covariance-and-multiple-regression"><span class="toc-section-number">11.2.2</span> Other variants of normal linear models: Two-way anova, analysis of covariance and multiple regression</a></li>
-<li><a href="lm.html#partial-coefficients-and-some-comments-on-collinearity" id="toc-partial-coefficients-and-some-comments-on-collinearity"><span class="toc-section-number">11.2.3</span> Partial coefficients and some comments on collinearity</a></li>
-<li><a href="lm.html#orderedfactors" id="toc-orderedfactors"><span class="toc-section-number">11.2.4</span> Ordered Factors and Contrasts</a></li>
-<li><a href="lm.html#quadratic-and-higher-polynomial-terms" id="toc-quadratic-and-higher-polynomial-terms"><span class="toc-section-number">11.2.5</span> Quadratic and Higher Polynomial Terms</a></li>
 </ul></li>
+<li><a href="lm.html#partial-coefficients-and-some-comments-on-collinearity" id="toc-partial-coefficients-and-some-comments-on-collinearity"><span class="toc-section-number">11.3</span> Partial coefficients and some comments on collinearity</a></li>
+<li><a href="lm.html#orderedfactors" id="toc-orderedfactors"><span class="toc-section-number">11.4</span> Ordered Factors and Contrasts</a></li>
+<li><a href="lm.html#quadratic-and-higher-polynomial-terms" id="toc-quadratic-and-higher-polynomial-terms"><span class="toc-section-number">11.5</span> Quadratic and Higher Polynomial Terms</a></li>
 </ul></li>
 <li><a href="residualanalysis.html#residualanalysis" id="toc-residualanalysis"><span class="toc-section-number">12</span> Assessing Model Assumptions</a>
 <ul>
@@ -364,7 +372,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Bayesian Data Analysis in Ecology with R and Stan</h1>
 <p class="author"><em>Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt</em></p>
-<p class="date"><em>2022-12-21</em></p>
+<p class="date"><em>2023-01-03</em></p>
 </div>
 <div id="preface" class="section level1 unnumbered">
 <h1>Preface</h1>
