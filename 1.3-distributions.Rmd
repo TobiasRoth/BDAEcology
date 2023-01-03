@@ -10,12 +10,42 @@ Probability distributions are grouped into discrete and continuous distributions
 ## Discrete distributions
 
 ### Bernoulli distribution
-to do
+
+Bernoulli distributed data take on the exact values 0 or 1. The value 1 occurs with probability $p$.    
+
+$ x \sim Bernoulli(p)$  
+
+The probability function is $p(x) = p^x(1-p)^{1-x}$. 
+The expected value is $E(x) = p$ and the variance is $Var(x) = p(1-p)$.
+
+The flipping experiment of a fair coin produces Bernoulli distributed data with $p=0.5$ if head is taken as one and tail is taken as zero. The Bernoulli distribution is usually used as a data model for binary data such as whether a nest box is used or not, whether a seed germinated or not, whether a species occurs or not in a plot etc. 
 
 ### Binomial distribution
 
+The binomial distribution describes the number of ones among a predefined number of Bernoulli trials. For example, the number of heads among 20 coin flips, the number of used nest boxes among the 50 nest boxes of the study area, or the number of seed that germinated among the 10 seeds in the pot. Binomially distributed data are counts with an upper limit ($n$).
+
+$ x \sim binomial(p,n)$ 
+
+The probability function is $p(x) = {n\choose x} p^x(1-p)^{(n-x)}$.
+The expected value is $E(x) = np$ and the variance is $Var(x) = np(1-p)$.
+
+
 ### Poisson distribution
-xxx
+
+The Poisson distribution describes the distribution of counts without upper boundary, i.e., when we know how many times something happened but we do not know how many times it did not happen. A typical Poisson distributed variable is the number of raindrops in equally-sized grid cells on the floor, if we can assume that every rain drop falls down completely independent of the other raindrops and at a completely random point. 
+
+$ p(x) \sim Poisson(\lambda)$  
+
+The probability function is $p(x) = \frac{1}{x!}\lambda^xexp(-\lambda)$.
+The expected values is $E(x) = \lambda$ and the variance is $Var(x) = \lambda$.
+
+An important property of the Poisson distribution is that it has only one parameter $\lambda$. As a consequence, it does not allow for any combination of means and variances. In fact, they are assumed to be the same. In the real world, most count data do not behave like rain drops, that means variances of count data are in most real world examples not equal to the mean as assumed by the Poisson distribution. Therefore, when using the Poisson distribution as a data model, it is important to check for overdispersion.
+
+Further, note that not all variables measured as an integer number are count data! For example, the number of days an animal spends in a specific area before moving away looks like a count. However, it is a continuous measurement. The duration an animal spends in a specific areas could also be measured in hours or minutes. The Poisson model assumes that the counts are all events that happened. However, an emigration of an animal is just one event, independent of how long it stayed.  
+
+
+### Negative-binomial distribution
+UNDER CONSTRUCTION
 
 ## Continuous distributions
 
@@ -36,7 +66,7 @@ The variance parameter can be specified to be a variance, a standard deviation o
 
 
 ### Gamma distribution
-xxx
+UNDER CONSTRUCTION
 
 ### Cauchy distribution {#cauchydistri}
 We sometimes use the Cauchy distiribution to specify the prior distirbution of the standart deviation and similar parameters in a model. An example for this is the regression model that we used to introduce Stan (Chapter \@ref(firststanmod)).
