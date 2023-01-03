@@ -11,7 +11,7 @@ Probability distributions are grouped into discrete and continuous distributions
 
 ### Bernoulli distribution
 
-
+### Binomial distribution
 
 ### Poisson distribution
 xxx
