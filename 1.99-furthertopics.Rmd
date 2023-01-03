@@ -7,6 +7,6 @@ This is a collection of short introductions or links with commented R code that 
 Bioacoustic analyses are nicely covered in a blog by [Marcelo Araya-Salas](https://marce10.github.io).
 
 ## Python {#python}
-Like R, python is a high-level programming language that is used by many ecologists. The [reticulate](https://rstudio.github.io/reticulate/index.html) package provides a comprehensive set of tools for interoperability between Python and R. 
+Like R, python is a high-level programming language that is used by many ecologists. The [reticulate](https://rstudio.github.io/reticulate/index.html) package provides a comprehensive set of tools for interoperability between Python and R.
 
 
