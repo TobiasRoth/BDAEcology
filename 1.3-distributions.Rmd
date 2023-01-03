@@ -10,6 +10,7 @@ Probability distributions are grouped into discrete and continuous distributions
 ## Discrete distributions
 
 ### Bernoulli distribution
+to do
 
 ### Binomial distribution
 
