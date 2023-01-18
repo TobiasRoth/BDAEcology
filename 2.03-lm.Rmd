@@ -27,7 +27,7 @@ Typical questions that can be answered using linear regression are: How does $y$
   (\#eq:lm)
 \end{align}
 
-While the first part of Equation \@ref(eq:lm) describes the regression line, the second part describes the differences between predicted values $\mu_i$ and observations $y_i$. In other words: the observation $y_i$ stems from a normal distribution with mean $\mu_i$ and variance $\sigma^2$ . The mean of the normal distribution, $\mu_i$ , equals the sum of the intercept ($b_0$ ) and the product of the slope ($b_1$) and the continuous predictor value, $x_i$.
+While the first part of Equation \@ref(eq:lm) describes the regression line, the second part describes how the data points, also called observations, are distributed around the regression line. In other words: the observation $y_i$ stems from a normal distribution with mean $\mu_i$ and variance $\sigma^2$. The mean of the normal distribution, $\mu_i$ , equals the sum of the intercept ($b_0$ ) and the product of the slope ($b_1$) and the continuous predictor value, $x_i$.
 
 The differences between observation $y_i$ and the predicted values $\mu_i$ are the residuals (i.e., $\epsilon_i=y_i-\mu_i$). Equivalently to Equation \@ref(eq:lm), the regression could thus be written as:
 
