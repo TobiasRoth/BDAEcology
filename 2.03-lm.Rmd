@@ -23,21 +23,62 @@ Typical questions that can be answered using linear regression are: How does $y$
 
 \begin{align} 
   \mu_i &=\beta_0 + \beta_1 x_i \\
-  y_i &\sim Norm(\mu_i, \sigma^2)
+  y_i &\sim normal(\mu_i, \sigma^2)
   (\#eq:lm)
 \end{align}
 
-While the first part of Equation \@ref(eq:lm) describes the regression line, the second part describes how the data points, also called observations, are distributed around the regression line. In other words: the observation $y_i$ stems from a normal distribution with mean $\mu_i$ and variance $\sigma^2$. The mean of the normal distribution, $\mu_i$ , equals the sum of the intercept ($b_0$ ) and the product of the slope ($b_1$) and the continuous predictor value, $x_i$.
+While the first part of Equation \@ref(eq:lm) describes the regression line, the second part describes how the data points, also called observations, are distributed around the regression line (Figure \@ref(fig:illlm)). In other words: the observation $y_i$ stems from a normal distribution with mean $\mu_i$ and variance $\sigma^2$. The mean of the normal distribution, $\mu_i$ , equals the sum of the intercept ($b_0$ ) and the product of the slope ($b_1$) and the continuous predictor value, $x_i$.
+
+Equation \@ref(eq:lm) is called the data model, because it describes mathematically the process that has (or, better, that we think has) produced the data. This nomenclature also helps to distinguish data models from models for parameters such as prior or posterior distributions.
 
 The differences between observation $y_i$ and the predicted values $\mu_i$ are the residuals (i.e., $\epsilon_i=y_i-\mu_i$). Equivalently to Equation \@ref(eq:lm), the regression could thus be written as:
 
 \begin{align} 
   y_i &= \beta_0 + \beta_1 x_i + \epsilon_i\\
-  \epsilon_i &\sim Norm(0, \sigma^2)
+  \epsilon_i &\sim normal(0, \sigma^2)
   (\#eq:lmalternativ)
 \end{align} 
 
 We prefer the notation in Equation \@ref(eq:lm) because, in this formula, the stochastic part (second row) is nicely separated from the deterministic part (first row) of the model, whereas, in the second notation \@ref(eq:lmalternativ) the ﬁrst row contains both stochastic and deterministic parts. 
+
+For illustration, we here simulate a data set and below ﬁt a linear regression to these simulated data. The advantage of simulating data is that the following analyses can be reproduced without having to read data into R. Further, for simulating data, we need to translate the algebraic model formula into R language which helps us understanding the model structure.
+
+```{r lmsimulation}
+set.seed(34)            # set a seed for the random number generator
+# define the data structure
+n <- 50                 # sample size
+x <- runif(n, 10, 30)   # sample values of the predictor variable
+
+# define values for each model parameter
+sigma <- 5              # standard deviation of the residuals
+b0 <- 2                 # intercept
+b1 <- 0.7               # slope
+
+# simulate y-values from the model
+mu <- b0 + b1 * x       # define the regression line (deterministic part)
+y <- rnorm(n, mu, sd = sigma) # simulate y-values
+
+# save data in a data.frame
+dat <- tibble(x = x, y = y)
+```
+
+
+```{r illlm, fig.asp=0.45, fig.cap="Illustration of a linear regression. The blue line represents the deterministic part of the model, i.e., here regression line. The stochastic part is represented by a probability distribution, here the normal distribution. The normal distribution changes its mean but not the variance along the x-axis, and it describes how the data are distributed. The blue line and the orange distribution together are a statistical model, i.e., an abstract representation of the data which is given in black.", echo=FALSE}
+mod <- lm(y~x, data=dat)
+
+par(mar=c(3,4,0.5,0.5))
+plot(dat$x, dat$y, pch=16, las=1, xlab="Predictor (x)",
+     ylab="Outcome (y)")
+abline(mod, lwd=2, col="blue")
+ynew <- seq(0,30, length=100)
+for(xx in c(14,24)){
+dynew <- dnorm(ynew, coef(mod)[1]+xx*coef(mod)[2], summary(mod)$sigma)
+lines(xx+dynew/max(dynew)*4, ynew, lwd=2, col="orange")
+abline(v=xx)
+}
+
+```
+
 
 Using matrix notation equation \@ref(eq:lm) can also be written in one row:
 
@@ -91,29 +132,9 @@ where $x_1 , \dots, x_n$ are the observed values for the predictor variable, $x$
 
 
 ### Fitting a Linear Regression in R
-In Equation \@ref(eq:lm), the predicted (synonym: fitted) values $\mu_i$ are directly deﬁned by the model coefﬁcients, $\beta_{0}$ and $\beta_{1}$ . Therefore, when we can estimate $\beta_{0}$, $\beta_{1}$ , and $\sigma^2$, the model is fully deﬁned . The last parameter $\sigma^2$ describes how the observations scatter around the regression line and relies on the assumption that the residuals are normally distributed. The estimates for the model parameters of a linear regression are obtained by searching for the best ﬁtting regression line. To do so, we search for the regression line that minimizes the sum of the squared residuals. This model ﬁtting method is called the least-squares method, abbreviated as LS. It has a very simple solution using matrix algebra [see e.g., @Aitkin.2009]. 
+In Equation \@ref(eq:lm), the fitted values $\mu_i$ are directly deﬁned by the model coefﬁcients, $\beta_{0}$ and $\beta_{1}$ . Therefore, when we can estimate $\beta_{0}$, $\beta_{1}$ , and $\sigma^2$, the model is fully deﬁned. The last parameter $\sigma^2$ describes how the observations scatter around the regression line and relies on the assumption that the residuals are normally distributed. The estimates for the model parameters of a linear regression are obtained by searching for the best ﬁtting regression line. To do so, we search for the regression line that minimizes the sum of the squared residuals. This model ﬁtting method is called the least-squares method, abbreviated as LS. It has a very simple solution using matrix algebra [see e.g., @Aitkin.2009]. 
 
-Note that we can apply LS techniques independent of whether we use a Bayesian or frequentist framework to draw inference. In Bayesian statistics, Equation \@ref(eq:lm) is called the data model, because it describes mathematically the process that has (or, better, that we think has) produced the data. This nomenclature also helps to distinguish data models from models for parameters such as prior distributions.
-
-The least-squares estimates for the model parameters of a linear regression are obtained in R using the function `lm`. For illustration, we ﬁrst simulate a data set and then ﬁt a linear regression to these simulated data. The advantage of simulating data is that the following analyses can be reproduced without having to read data into R.
-
-```{r lm_simulation}
-set.seed(34)            # set a seed for the random number generator
-n <- 50                 # sample size
-sigma <- 5              # standard deviation of the residuals
-b0 <- 2                 # intercept
-b1 <- 0.7               # slope
-
-x <- runif(n, 10, 30)   # sample values of the covariate
-
-mu <- b0 + b1 * x
-y <- rnorm(n, mu, sd = sigma)
-
-# Save data in table
-dat <- tibble(x = x, y = y)
-```
-
-Then, we ﬁt a linear regression to the data to obtain the results of the three parameters of the linear regression, that is intercept, slope and residual standard deviation. 
+The least-squares estimates for the model parameters of a linear regression are obtained in R using the function `lm`. 
 
 ```{r}
 mod <-  lm(y ~ x, data = dat)
@@ -131,27 +152,34 @@ dat %>%
   geom_point() +
   geom_smooth(method = lm, se = FALSE) +
   # alternative: geom_abline(intercept = coef(mod)[1] +
-  labs(x = "Covariate (x)", y = "Dependend variable (y)") 
+  labs(x = "Predictor (x)", y = "Outcome (y)") 
 ```
 
 Conclusions drawn from a model depend on the model assumptions. When model assumptions are violated, estimates usually are biased and inappropriate conclusions can be drawn. We devote Chapter \@ref(residualanalysis) to the assessment of model assumptions, given its importance.
 
 ### Drawing Conclusions
 
-To answer the question about how strongly $y$ is related to $x$, or to predict $y$ from $x$, and because we usually draw inference in a Bayesian framework, we are interested in the joint posterior distribution of $\boldsymbol{\beta}$ (vector that contains $\beta_{0}$ and $\beta_{1}$ ) and $\sigma^2$ , the residual variance. The function `sim` does this for us. To somewhat demystify the `sim` function we brieﬂy explain what `sim` does. The principle is to ﬁrst draw a random value from the marginal posterior distribution of $\sigma^2$, and then to draw random values from the conditional posterior distribution for $\boldsymbol{\beta}$ [@Gelman.2014].
+To answer the question about how strongly $y$ is related to $x$ taking into account statistical uncertainty we look at the joint posterior distribution of $\boldsymbol{\beta}$ (vector that contains $\beta_{0}$ and $\beta_{1}$ ) and $\sigma^2$ , the residual variance. The function `sim` calculates the joint posterior distribution and renders a simulated values from this distribution. 
 
-The conditional posterior distribution of the parameter vector $\boldsymbol{\beta}$, $p(\boldsymbol{\beta}|\sigma^2,\boldsymbol{y,X})$ is the posterior distribution of $\boldsymbol{\beta}$ given a speciﬁc value for $\sigma^2$ . This conditional distribution can be analytically derived. With ﬂat prior distributions, it is a uni- or multivariate normal distribution $p(\boldsymbol{\beta}|\sigma^2,\boldsymbol{y,X})=Norm(\boldsymbol{\hat{\beta}},V_\beta,\sigma^2)$ with:
+:::{#sim style="size: small; border: 2px solid grey"}
+What does `sim` do?  
+It simulates parameter values from the joint posterior distribution of a model assuming flat prior distributions. For a normal linear regression, it ﬁrst draws a random value, $\sigma^*$ from the marginal posterior distribution of $\sigma$, and then draws random values from the conditional posterior distribution for $\boldsymbol{\beta}$ given $\sigma^*$  [@Gelman.2014].
+
+The conditional posterior distribution of the parameter vector $\boldsymbol{\beta}$, $p(\boldsymbol{\beta}|\sigma^*,\boldsymbol{y,X})$ can be analytically derived. With ﬂat prior distributions, it is a uni- or multivariate normal distribution $p(\boldsymbol{\beta}|\sigma^*,\boldsymbol{y,X})=normal(\boldsymbol{\hat{\beta}},V_\beta,(\sigma^*)^2)$ with:
 
 \begin{align}
   \boldsymbol{\hat{\beta}=(\boldsymbol{X^TX})^{-1}X^Ty}
   (\#eq:sim)
 \end{align} 
 
-and $V_\beta = (\boldsymbol{X^T X})^{-1}$ . For models with the normal error distribution, the LS estimates for $\boldsymbol{\beta}$ (given by Eq. \@ref(eq:sim)) equal the maximum likelihood (ML) estimates ==(see Chapter 5)==.
+and $V_\beta = (\boldsymbol{X^T X})^{-1}$. 
 
-The marginal posterior distribution of $\sigma^2$ is independent of speciﬁc values of $\boldsymbol{\beta}$. It is, for ﬂat prior distributions, an inverse chi-square distribution $p(\sigma^2|\boldsymbol{y,X})=Inv-\chi^2(n-k,\sigma^2)$, where $\sigma^2 = \frac{1}{n-k}(\boldsymbol{y}-\boldsymbol{X,\hat{\beta}})^T(\boldsymbol{y}-\boldsymbol{X,\hat{\beta}})$, and $k$ is the number of parameters. The marginal posterior distribution of $\boldsymbol{\beta}$ can be obtained by integrating the conditional posterior distribution $p(\boldsymbol{\beta}|\sigma^2,\boldsymbol{y,X})=Norm(\boldsymbol{\hat{\beta}},V_\beta\sigma^2)$ over the distribution of $\sigma^2$ . This results in a uni- or multivariate $t$-distribution. 
+The marginal posterior distribution of $\sigma^2$ is independent of speciﬁc values of $\boldsymbol{\beta}$. It is, for ﬂat prior distributions, an inverse chi-square distribution $p(\sigma^2|\boldsymbol{y,X})=Inv-\chi^2(n-k,\sigma^2)$, where $\sigma^2 = \frac{1}{n-k}(\boldsymbol{y}-\boldsymbol{X,\hat{\beta}})^T(\boldsymbol{y}-\boldsymbol{X,\hat{\beta}})$, and $k$ is the number of parameters. The marginal posterior distribution of $\boldsymbol{\beta}$ can be obtained by integrating the conditional posterior distribution $p(\boldsymbol{\beta}|\sigma^2,\boldsymbol{y,X})=normal(\boldsymbol{\hat{\beta}},V_\beta\sigma^2)$ over the distribution of $\sigma^2$ . This results in a uni- or multivariate $t$-distribution.  
 
-However, it is not necessary to do this analytically. Using the function `sim` from the package, we can draw samples from $p(\sigma^2|\boldsymbol{y,X})$ and describe the marginal posterior distributions of $\boldsymbol{\beta}$ using the simulated values.
+Because `sim` simulates values $\beta_0^*$ and $\beta_1^*$ always conditional on $\sigma^*$, a triplet of values ($\beta_0^*$, $\beta_1^*$, $\sigma^*$) is one draw of the joint posterior distribution. When we visualize the distribution of the simulated values for one parameter only, ignoring the values for the other, we display the marginal posterior distribution of that parameter. Thus, the distribution of all simulated values for the parameter $\beta_0$ is a $t$-distribution even if a normal distribution has been used for simulating the values. The $t$-distribution is a consequence of using a different $\sigma^2$-value for every draw of $\beta_0$.
+:::
+
+Using the function `sim` from the package, we can draw samples from $p(\sigma^2|\boldsymbol{y,X})$ and describe the marginal posterior distributions of $\boldsymbol{\beta}$ using the simulated values.
 
 ```{r}
 library(arm)
@@ -184,26 +212,26 @@ pairs(
 )
 ```
 
-The posterior distributions describe the range of plausible parameter values given the data and the model. They express our uncertainty about the model parameters; they show what we know about the model parameters after having looked at the data and given the model is realistic.
+The posterior distribution describes, given the data and the model, which values relative to each other are more likely to correspond to the parameter value we aim at measuring. It expresses the uncertainty of the parameter estimate. It shows what we know about the model parameter after having looked at the data and given the model is realistic.
 
-The 2.5% and 97.5% quantiles of the marginal posterior distributions can be used as 95% credible intervals of the model parameters. The function `coef` extracts the simulated values for the beta coefﬁcients, returning a matrix with *nsim* rows and the number of columns corresponding to the number of parameters. In our example, the ﬁrst column contains the simulated values from the posterior distribution of the intercept and the second column contains values from the posterior distribution of the slope. The "2" in the second argument of the apply-function (see Chapter \@ref(rmisc)) indicates that the `quantile` function is applied columnwise.
+The 2.5% and 97.5% quantiles of the marginal posterior distributions can be used as 95% uncertainty intervals of the model parameters. The function `coef` extracts the simulated values for the beta coefﬁcients, returning a matrix with *nsim* rows and the number of columns corresponding to the number of parameters. In our example, the ﬁrst column contains the simulated values from the posterior distribution of the intercept and the second column contains values from the posterior distribution of the slope. The "2" in the second argument of the apply-function (see Chapter \@ref(rmisc)) indicates that the `quantile` function is applied columnwise.
 
 ```{r}
 apply(X = coef(bsim), MARGIN = 2, FUN = quantile, probs = c(0.025, 0.975)) %>% 
   round(2)
 ```
 
-We also can calculate a credible interval of the estimated residual standard deviation, $\hat{\sigma}$.
+We also can calculate an uncertainty interval of the estimated residual standard deviation, $\hat{\sigma}$.
 
 ```{r}
 quantile(bsim@sigma, probs = c(0.025, 0.975)) %>% 
   round(1)
 ```
 
-Using Bayesian methods allows us to get a posterior probability for speciﬁc hypotheses, such as “The slope parameter is larger than 1” or “The slope parameter is larger than 0.5”. These probabilities are the proportion of simulated values from the posterior distribution that are larger than 1 and 0.5, respectively.
+We can further get a posterior probability for speciﬁc hypotheses, such as “The slope parameter is larger than 1” or “The slope parameter is larger than 0.5”. These probabilities are the proportion of simulated values from the posterior distribution that are larger than 1 and 0.5, respectively.
 
 ```{r}
-sum(coef(bsim)[,2] > 1) / nsim
+sum(coef(bsim)[,2] > 1) / nsim     # alternatively: mean(coef(bsim)[,2]>1)
 sum(coef(bsim)[,2] > 0.5) / nsim
 ```
 
@@ -214,14 +242,13 @@ We often want to show the effect of $x$ on $y$ graphically, with information abo
 ```{r figlmer1, fig.cap = "Regression with 1000 lines based on draws form the joint posterior distribution for the intercept and slope parameters to visualize the uncertainty of the estimated regression line.", fig.asp=0.45}
 par(mar = c(4, 4, 0, 0))
 plot(x, y, pch = 16, las = 1, 
-     xlab = "Covariate (x)", 
-     ylab = "Dependend variable (y)")
+     xlab = "Outcome (y)")
 for(i in 1:nsim) {
   abline(coef(bsim)[i,1], coef(bsim)[i,2], col = rgb(0, 0, 0, 0.05))
 }
 ```
 
-A more convenient way to show uncertainty is to draw the 95% credible interval, CrI, of the regression line. To this end, we ﬁrst deﬁne new x-values for which we would like to have the ﬁtted values (about 100 points across the range of x will produce smooth-looking lines when connected by line segments). We save these new x-values within the new tibble `newdat`. Then, we create a new model matrix that contains these new x-values (`newmodmat`) using the function `model.matrix`. We then calculate the 1000 ﬁtted values for each element of the new x (one value for each of the 1000 simulated regressions, Fig. \@ref(fig:figlmer1)), using matrix multiplication (%*%). We save these values in the matrix “ﬁtmat”. Finally, we extract the 2.5% and 97.5% quantiles for each x-value from ﬁtmat, and draw the lines for the lower and upper limits of the credible interval (Fig. \@ref(fig:figlmer2)).
+A more convenient way to show uncertainty is to draw the 95% uncertainty interval, CrI, of the regression line. To this end, we ﬁrst deﬁne new x-values for which we would like to have the ﬁtted values (about 100 points across the range of x will produce smooth-looking lines when connected by line segments). We save these new x-values within the new tibble `newdat`. Then, we create a new model matrix that contains these new x-values (`newmodmat`) using the function `model.matrix`. We then calculate the 1000 ﬁtted values for each element of the new x (one value for each of the 1000 simulated regressions, Fig. \@ref(fig:figlmer1)), using matrix multiplication (%*%). We save these values in the matrix “ﬁtmat”. Finally, we extract the 2.5% and 97.5% quantiles for each x-value from ﬁtmat, and draw the lines for the lower and upper limits of the credible interval (Fig. \@ref(fig:figlmer2)).
 
 ```{r figlmer2, fig.cap = "Regression with 95% credible interval of the posterior distribution of the ﬁtted values.", fig.asp=0.45}
 # Calculate 95% credible interval
@@ -239,17 +266,17 @@ regplot <-
   geom_smooth(method = lm, se = FALSE) +
   geom_line(data = newdat, aes(x = x, y = CrI_lo), lty = 3) +
   geom_line(data = newdat, aes(x = x, y = CrI_up), lty = 3) +
-  labs(x = "Covariate (x)", y = "Dependend variable (y)")
+  labs(x = "Predictor (x)", y = "Outcome (y)")
 regplot
 ```
 
-The interpretation of the 95% credible interval is straightforward: We are 95% sure that the true regression line is within the credible interval. As always, this interpretation is only true if the the model is correct. The larger the sample size, the narrower the interval, because each additional data point increases information about the true regression line.
+The interpretation of the 95% uncertainty interval is straightforward: We are 95% sure that the true regression line is within the credible interval (given the data and the model). As with all statistical results, this interpretation is only valid in the model world (if the world would look like the model). The larger the sample size, the narrower the interval, because each additional data point increases information about the true regression line.
 
-The credible interval measures uncertainty of the regression line, but it does not describe how new observations would scatter around the regression line. If we want to describe where future observations will be, we have to report the posterior predictive distribution. We can get a sample of random draws from the posterior predictive distribution $\hat{y}|\boldsymbol{\beta},\sigma^2,\boldsymbol{X}\sim Norm( \boldsymbol{X \beta, \sigma^2})$ using the simulated joint posterior distributions of the model parameters, thus taking the uncertainty of the parameter estimates into account. We draw a new $\hat{y}$-value from $Norm( \boldsymbol{X \beta, \sigma^2})$ for each simulated set of model parameters. Then, we can visualize the 2.5% and 97.5% quantiles of this distribution for each new x-value.
+The uncertainty interval measures statistical uncertainty of the regression line, but it does not describe how new observations would scatter around the regression line. If we want to describe where future observations will be, we have to report the posterior predictive distribution. We can get a sample of random draws from the posterior predictive distribution $\hat{y}|\boldsymbol{\beta},\sigma^2,\boldsymbol{X}\sim normal( \boldsymbol{X \beta, \sigma^2})$ using the simulated joint posterior distributions of the model parameters, thus taking the uncertainty of the parameter estimates into account. We draw a new $\hat{y}$-value from $normal( \boldsymbol{X \beta, \sigma^2})$ for each simulated set of model parameters. Then, we can visualize the 2.5% and 97.5% quantiles of this distribution for each new x-value.
 
-```{r figlmer3, cache = TRUE, fig.cap = "Regression line with 95% credible interval (dotted lines) and the 95% interval of the simulated predictive distribution (broken lines). Note that we increased the number of simulations to 50,000 to produce smooth lines.", fig.asp=0.45}
+```{r figlmer3, cache = TRUE, fig.cap = "Regression line with 95% uncertainty interval (dotted lines) and the 95% interval of the simulated predictive distribution (broken lines). Note that we increased the number of simulations to 50,000 to produce smooth lines.", fig.asp=0.45}
 
-# increase number of simulation to procude smooth lines of the posterior
+# increase number of simulation to produce smooth lines of the posterior
 # predictive distribution
 set.seed(34)
 nsim <- 50000
@@ -275,7 +302,7 @@ regplot +
   geom_line(data = newdat, aes(x = x, y = pred_up), lty = 2)
 ```
 
-Future observations are expected to be within the interval deﬁned by the broken lines in Fig. \@ref(fig:figlmer3) with a probability of 0.95. Increasing sample size will not necessarily give a narrower predictive distribution because the predictive distribution also depends on the residual variance $\sigma^2$.
+Of future observations, 95% are expected to be within the interval deﬁned by the broken lines in Fig. \@ref(fig:figlmer3). Increasing sample size will not give a narrower predictive distribution because the predictive distribution primarily depends on the residual variance $\sigma^2$ which is a property of the data that is independent of sample size.
 
 The way we produced Fig. \@ref(fig:figlmer3) is somewhat tedious compared to how easy we could have obtained the same ﬁgure using frequentist methods: `predict(mod, newdata = newdat, interval = "prediction")` would have produced the y-values for the lower and upper lines in Fig. \@ref(fig:figlmer3) in one R-code line. However, once we have a simulated sample of the posterior predictive distribution, we have much more information than is contained in the frequentist prediction interval. For example, we could give an estimate for the proportion of observations greater than 20, given $x = 25$.
 
@@ -296,7 +323,9 @@ summary(mod)
 
 The summary output ﬁrst gives a rough summary of the residual distribution. However, we will do more rigorous residual analyses in Chapter \@ref(residualanalysis). The estimates of the model coefﬁcients follow. The column "Estimate" contains the estimates for the intercept $\beta_0$ and the slope $\beta_1$ . The column "Std. Error" contains the estimated (frequentist) standard errors of the estimates. The last two columns contain the t-value and the p-value of the classical t-test for the null hypothesis that the coefﬁcient equals zero. The last part of the summary output gives the parameter $\sigma$ of the model, named "residual standard error" and the residual degrees of freedom.
 
-We try to avoid the name "residual standard error" and use "sigma" instead, because $\sigma$ is not a measurement of uncertainty of a parameter estimate like the standard errors of the model coefﬁcients are. $\sigma$ is a model parameter that describes how the observations scatter around the ﬁtted values, that is, it is a standard deviation. It is independent of sample size, whereas the standard errors of the estimates for the model parameters will decrease with increasing sample size. Such a standard error of the estimate of $\sigma$, however, is not given in the summary output. Note that, by using Bayesian methods, we could easily obtain the standard error of the estimated $\sigma$ by calculating the standard deviation of the posterior distribution of $\sigma$. The $R^2$ and the adjusted $R^2$ are explained in Section == "Posterior Predictive Model Checking and Proportion of Explained Variance"==.
+We try to avoid the name "residual standard error" and use "sigma" instead, because $\sigma$ is not a measurement of uncertainty of a parameter estimate like the standard errors of the model coefﬁcients are. $\sigma$ is a model parameter that describes how the observations scatter around the ﬁtted values, that is, it is a standard deviation. It is independent of sample size, whereas the standard errors of the estimates for the model parameters will decrease with increasing sample size. Such a standard error of the estimate of $\sigma$, however, is not given in the summary output. Note that, by using Bayesian methods, we could easily obtain the standard error of the estimated $\sigma$ by calculating the standard deviation of the posterior distribution of $\sigma$. 
+
+The $R^2$ and the adjusted $R^2$ measure the proportion of variance in the outcome variable $y$ that is explained by the predictors in the model. 
 
 ## Regression Variants: ANOVA, ANCOVA, and Multiple Regression
 
