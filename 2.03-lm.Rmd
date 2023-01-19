@@ -161,7 +161,7 @@ Conclusions drawn from a model depend on the model assumptions. When model assum
 
 To answer the question about how strongly $y$ is related to $x$ taking into account statistical uncertainty we look at the joint posterior distribution of $\boldsymbol{\beta}$ (vector that contains $\beta_{0}$ and $\beta_{1}$ ) and $\sigma^2$ , the residual variance. The function `sim` calculates the joint posterior distribution and renders a simulated values from this distribution. 
 
-:::{#sim style="size: small; border: 2px solid grey"}
+:::{#sim style="size: "1"; border: 2px solid grey"}
 What does `sim` do?  
 It simulates parameter values from the joint posterior distribution of a model assuming flat prior distributions. For a normal linear regression, it ﬁrst draws a random value, $\sigma^*$ from the marginal posterior distribution of $\sigma$, and then draws random values from the conditional posterior distribution for $\boldsymbol{\beta}$ given $\sigma^*$  [@Gelman.2014].
 
@@ -314,7 +314,7 @@ Thus, we expect 44% of future observations with $x = 25$ to be higher than 20. W
 
 Another reason to learn the more complicated R code we presented here, compared to the frequentist methods, is that, for more complicated models such as mixed models, the frequentist methods to obtain conﬁdence intervals of ﬁtted values are much more complicated than the Bayesian method just presented. The latter can be used with only slight adaptations for mixed models and also for generalized linear mixed models.
 
-### Frequentist Results
+### Interpretation of the R summary output
 The solution for $\boldsymbol{\beta}$ is the Equation \@ref(eq:lmmatrix). Most statistical software, including R, return an estimated frequentist standard error for each $\beta_k$. We extract these standard errors together with the estimates for the model parameters using the `summary` function.
 
 ```{r}
@@ -323,16 +323,17 @@ summary(mod)
 
 The summary output ﬁrst gives a rough summary of the residual distribution. However, we will do more rigorous residual analyses in Chapter \@ref(residualanalysis). The estimates of the model coefﬁcients follow. The column "Estimate" contains the estimates for the intercept $\beta_0$ and the slope $\beta_1$ . The column "Std. Error" contains the estimated (frequentist) standard errors of the estimates. The last two columns contain the t-value and the p-value of the classical t-test for the null hypothesis that the coefﬁcient equals zero. The last part of the summary output gives the parameter $\sigma$ of the model, named "residual standard error" and the residual degrees of freedom.
 
-We try to avoid the name "residual standard error" and use "sigma" instead, because $\sigma$ is not a measurement of uncertainty of a parameter estimate like the standard errors of the model coefﬁcients are. $\sigma$ is a model parameter that describes how the observations scatter around the ﬁtted values, that is, it is a standard deviation. It is independent of sample size, whereas the standard errors of the estimates for the model parameters will decrease with increasing sample size. Such a standard error of the estimate of $\sigma$, however, is not given in the summary output. Note that, by using Bayesian methods, we could easily obtain the standard error of the estimated $\sigma$ by calculating the standard deviation of the posterior distribution of $\sigma$. 
+We think the name "residual standard error" for "sigma" is confusing, because $\sigma$ is not a measurement of uncertainty of a parameter estimate like the standard errors of the model coefﬁcients are. $\sigma$ is a model parameter that describes how the observations scatter around the ﬁtted values, that is, it is a standard deviation. It is independent of sample size, whereas the standard errors of the estimates for the model parameters will decrease with increasing sample size. Such a standard error of the estimate of $\sigma$, however, is not given in the summary output. Note that, by using Bayesian methods, we could easily obtain the standard error of the estimated $\sigma$ by calculating the standard deviation of the posterior distribution of $\sigma$. 
 
-The $R^2$ and the adjusted $R^2$ measure the proportion of variance in the outcome variable $y$ that is explained by the predictors in the model. 
+The $R^2$ and the adjusted $R^2$ measure the proportion of variance in the outcome variable $y$ that is explained by the predictors in the model. $R^2$ is calculated from the sum of squared residuals, $SSR = \sum_{i=1}^{n}(y_i - \hat{y})$, and the "total sum of squares", $SST = \sum_{i=1}^{n}(y_i - \bar{y})$, where $\bar{y})$ is the mean of $y$. $SST$ is a measure of total variance in $y$ and $SSR$
+ is a measure of variance that cannot be explained by the model, thus $R^2 = 1- \frac{SSR}{SST}$ is a measure of variance that can be explained by the model. If $SSR$ is close to $SST$, $R^2$ is close to zero and the model cannot explain a lot of variance. The smaller $SSR$, the closer $R^2$ is to 1. This version of $R2$ approximates 1 if the number of model parameters approximates sample size even if none of the predictor variables correlates with the outcome. It is exactly 1 when the number of model parameters equals sample size, because $n$ measurements can be exactly described by $n$ parameters. The adjusted $R^2$, $R^2 = \frac{var(y)-\hat\sigma^2}{var(y)}$ takes sample size $n$ and the number of model parameters $k$ into account (see explanation to variance in chapter \@ref(basics)). Therefore, the adjusted $R^2$ is recommended as a measurement of the proportion of explained variance.
 
 ## Regression Variants: ANOVA, ANCOVA, and Multiple Regression
 
 ### One-Way ANOVA
-The aim of analysis of variance (ANOVA) is to compare means of an outcome variable y between different groups (categorical variables). To do so in the frequentist’s framework, variances between and within the groups are compared (hence the name “analysis of variance”). If the variance between the group means is larger than expected by chance , we reject the null hypothesis of no differences between the groups. When doing an ANOVA in a Bayesian way, inference is based on the posterior distributions of the group means and the differences between the group means.
+The aim of analysis of variance (ANOVA) is to compare means of an outcome variable $y$ between different groups. To do so in the frequentist’s framework, variances between and within the groups are compared using F-tests (hence the name “analysis of variance”). When doing an ANOVA in a Bayesian way, inference is based on the posterior distributions of the group means and the differences between the group means.
 
-One-way ANOVA means that we only have one explanatory variable (a factor). We illustrate the one-way ANOVA based on an example of simulated data (Fig. \@ref(fig:figanova)). We have measured weights of 30 virtual individuals for each of 3 groups. Possible research questions could be: How big are the differences between the group means? Are individuals from group 2 heavier than the ones from group 1? Which group mean is higher than 7.5 g?
+One-way ANOVA means that we only have one predictor variable, specifically a categorical predictor variable (in R defined as a "factor"). We illustrate the one-way ANOVA based on an example of simulated data (Fig. \@ref(fig:figanova)). We have measured weights of 30 virtual individuals for each of 3 groups. Possible research questions could be: How big are the differences between the group means? Are individuals from group 2 heavier than the ones from group 1? Which group mean is higher than 7.5 g?
 
 ```{r figanova, fig.cap = "Weights (g) of the 30 individuals in each group. The dark horizontal line is the median, the box contains 50% of the observations (i.e., the interquartile range), the whiskers mark the range of all observations that are less than 1.5 times the interquartile range away from the edge of the box."}
 # settings for the simulation
@@ -360,15 +361,15 @@ dat %>%
   ylim(0, NA)
 ```
 
-An ANOVA is a linear regression with a categorical predictor variable instead of a continuous one. The categorical predictor variable with $k$ levels is (as a default in R) transformed to $k-1$ indicator variables. An indicator variable is a binary variable containing 0 and 1 where 1 indicates a speciﬁc level (a category of a nominal variable). Often, one indicator variable is constructed for every level except for the reference level. In our example, the categorical variable is group ($g$) with the three levels "group 1", "group 2", and "group 3" ($k = 3$). Group 1 is taken as the reference level, and for each of the other two groups an indicator variable is constructed, $I(g_i = 2)$ and $I(g_i = 3)$. We can write the model as a formula:
+An ANOVA is a linear regression with a categorical predictor variable instead of a continuous one. The categorical predictor variable with $k$ levels is (as a default in R) transformed to $k-1$ indicator variables. An indicator variable is a binary variable containing 0 and 1 where 1 indicates a speciﬁc level (a category of the predictor variable). Often, one indicator variable is constructed for every level except for the reference level. In our example, the categorical variable is "group" with the three levels "group 1", "group 2", and "group 3" ($k = 3$). Group 1 is taken as the reference level (default in R is the first in the alphabeth), and for each of the other two groups an indicator variable is constructed, $I(group_i = 2)$ and $I(group_i = 3)$. The function $I()$ gives out 1, if the expression is true and 0 otherwise. We can write the model as a formula:
 
 \begin{align} 
-  \mu_i &=\beta_0 + \beta_1 I(g_i=2) + \beta_1 I(g_i=3) \\
-  y_i &\sim Norm(\mu_i, \sigma^2)
+  \mu_i &=\beta_0 + \beta_1 I(group_i=2) + \beta_1 I(group_i=3) \\
+  y_i &\sim normal(\mu_i, \sigma^2)
   (\#eq:anova)
 \end{align}
 
-where $yi$ is the $i$-th observation (weight measurement for individual i in our example), and $\beta_{0,1,2}$ are the model coefﬁcients. The residual variance is $\sigma^2$. The model coefﬁcients $\beta_{0,1,2}$ constitute the deterministic part of the model. From the model formula it follows that the group means, $m_g$, are:
+where $y_i$ is the $i$-th observation (weight measurement for individual $i$ in our example), and $\beta_{0,1,2}$ are the model coefﬁcients. The residual variance is $\sigma^2$. The model coefﬁcients $\beta_{0,1,2}$ constitute the deterministic part of the model. From the model formula it follows that the group means, $m_g$, are:
 
 \begin{align} 
   m_1 &=\beta_0 \\
@@ -389,14 +390,14 @@ There are other possibilities to describe three group means with three parameter
 In this case, the model formula would be:
 
 \begin{align} 
-  \mu_i &= \beta_1 I(g_i=1) + \beta_2 I(g_i=2) + \beta_3 I(g_i=3) \\
+  \mu_i &= \beta_1 I(group_i=1) + \beta_2 I(group_i=2) + \beta_3 I(group_i=3) \\
   y_i &\sim Norm(\mu_i, \sigma^2)
   (\#eq:anovaalt)
 \end{align}
 
-The way the group means are described is called the parameterization of the model. Different statistical softwares use different parameterizations. The parameterization used by R by default is the one shown in Equation \@ref(eq:anova). R automatically takes the ﬁrst level as the reference (the ﬁrst level is the ﬁrst one alphabetically unless the user deﬁnes a different order for the levels). The mean of the ﬁrst group (i.e., of the ﬁrst factor level) is the intercept, $b_0$ , of the model. The mean of another factor level is obtained by adding, to the intercept, the estimate of the corresponding parameter (which is the difference from the reference group mean). R calls this parameterization "treatment contrasts".
+The way the group means are calculated within a model is called the parameterization of the model. Different statistical software use different parameterizations. The parameterization used by R by default is the one shown in Equation \@ref(eq:anova). R automatically takes the ﬁrst level as the reference (the ﬁrst level is the ﬁrst one alphabetically unless the user deﬁnes a different order for the levels). The mean of the ﬁrst group (i.e., of the ﬁrst factor level) is the intercept, $b_0$ , of the model. The mean of another factor level is obtained by adding, to the intercept, the estimate of the corresponding parameter (which is the difference from the reference group mean). 
 
-The parameterization of the model is deﬁned by the model matrix. In the case of a one-way ANOVA, there are as many columns in the model matrix as there are factor levels (i.e., groups); thus there are k factor levels and k model coefﬁcients. Recall from Equation \@ref(eq:lmmatrix) that for each observation, the entry in the $j$-th column of the model matrix is multiplied by the $j$-th element of the model coefﬁcients and the $k$ products are summed to obtain the ﬁtted values. For a data set with $n = 5$ observations of which the ﬁrst two are from group 1, the third from group 2, and the last two from group 3, the model matrix used for the parameterization described in Equation \@ref(eq:anovamw) is
+The parameterization of the model is deﬁned by the model matrix. In the case of a one-way ANOVA, there are as many columns in the model matrix as there are factor levels (i.e., groups); thus there are k factor levels and k model coefﬁcients. Recall from Equation \@ref(eq:lmmatrix) that for each observation, the entry in the $j$-th column of the model matrix is multiplied by the $j$-th element of the model coefﬁcients and the $k$ products are summed to obtain the ﬁtted values. For a data set with $n = 5$ observations of which the ﬁrst two are from group 1, the third from group 2, and the last two from group 3, the model matrix used for the parameterization described in Equation \@ref(eq:anovamw) and defined in R by the formula `~ group` is
 
 \begin{align} 
 \boldsymbol{X}=
@@ -409,7 +410,7 @@ The parameterization of the model is deﬁned by the model matrix. In the case o
   \end{pmatrix}
 \end{align} 
 
-If parameterization of Equation \@ref(eq:anovamwalt) were used,
+If parameterization of Equation \@ref(eq:anovamwalt) (corresponding R formula: `~ group - 1`) were used,
 
 \begin{align} 
 \boldsymbol{X}=
@@ -422,13 +423,12 @@ If parameterization of Equation \@ref(eq:anovamwalt) were used,
   \end{pmatrix}
 \end{align} 
 
-Other possibilities of model parameterizations, particularly for ordered factors, are introduced in Section \@ref(orderedfactors).
 
 To obtain the parameter estimates for model parameterized according to Equation \@ref(eq:anovamw) we ﬁt the model in R:
 
 ```{r}
 # fit the model
-mod <- lm(y~group)  
+mod <- lm(y~group, data=dat)  
 
 # parameter estimates 
 mod
@@ -453,9 +453,9 @@ m.g2 <- coef(bsim)[,1] + coef(bsim)[,2]
 m.g3 <- coef(bsim)[,1] + coef(bsim)[,3] 
 ```
 
-The histograms of the simulated values from the posterior distributions of the three means are given in Fig. \@ref(fig:figanovares). The three means are well separated and, based on our data, we are conﬁdent that the group means differ. From these simulated posterior distributions we obtain the means and use the 2.5% and 97.5% quantiles as limits of the 95% credible intervals (Fig. \@ref(fig:figanovares), right).
+The histograms of the simulated values from the posterior distributions of the three means are given in Fig. \@ref(fig:figanovares). The three means are well separated and, based on our data, we are conﬁdent that the group means differ. From these simulated posterior distributions we obtain the means and use the 2.5% and 97.5% quantiles as limits of the 95% uncertainty intervals (Fig. \@ref(fig:figanovares), right).
 
-```{r figanovares, fig.cap = "Distribution of the simulated values from the posterior distributions of the group means (left); group means with 95% credible intervals obtained from the simulated distributions (right)."}
+```{r figanovares, fig.cap = "Distribution of the simulated values from the posterior distributions of the group means (left); group means with 95% uncertainty intervals obtained from the simulated distributions (right)."}
 # save simulated values from posterior distribution in  tibble
 post <- 
   tibble(`group 1` = m.g1, `group 2` = m.g2, `group 3` = m.g3) %>% 
@@ -493,7 +493,7 @@ mean(d.g1.2)
 quantile(d.g1.2, probs = c(0.025, 0.975))
 ```
 
-The estimated difference is `r mean(d.g1.2)`. We are 95% sure that the difference between the means of group 1 and 2 is between `r quantile(d.g1.2, probs = 0.025)` and `r quantile(d.g1.2, probs = 0.975)`.
+The estimated difference is `r mean(d.g1.2)`. In the small model world, we are 95% sure that the difference between the means of group 1 and 2 is between `r quantile(d.g1.2, probs = 0.025)` and `r quantile(d.g1.2, probs = 0.975)`.
 
 How strongly do the data support the hypothesis that the mean of group 2 is larger than the mean of group 1? To answer this question we calculate the proportion of the draws from the joint posterior distribution for which the mean of group 2 is larger than the mean of group 1.
 
@@ -504,8 +504,14 @@ sum(m.g2 > m.g1) / nsim
 This means that in all of the `r nsim %>% as.integer` simulations from the joint posterior distribution, the mean of group 2 was larger than the mean of group 1. Therefore, there is a very high probability (i.e., it is close to 1; because probabilities are never exactly 1, we write >0.999) that the mean of group 2 is larger than the mean of group 1.
 
 
-
 ### Other variants of normal linear models: Two-way anova, analysis of covariance and multiple regression
+
+Up to now, we introduced normal linear models with one predictor only. We can add more predictors to the model and these can be numerical or categorical ones. Traditionally, models with 2 or 3 categorical predictors are called two-way or three-way ANOVA, respectively. Models with a mixture of categorical and numerical predictors are called ANCOVA. And, models containing only numerical predictors are called multiple regressions. Nowadays, we only use the term "normal linear model" as an umbrella term for all these types of models. 
+While it is easy to add additional predictors in the R formula of the model, it becomes more difficult to interpret the coefficients of such multi-dimensional models. Two important topics arise with multi-dimensional models, *interactions* and *partial effects*. We dedicate partial effects the full next chapter and introduce interactions in this chapter using two examples. The first, is a model including two categorical predictors and the second is a model with one categorical and one numeric predictor. 
+
+
+
+
 
 ## Partial coefficients and some comments on collinearity
 
