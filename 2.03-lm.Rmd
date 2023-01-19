@@ -162,7 +162,7 @@ Conclusions drawn from a model depend on the model assumptions. When model assum
 To answer the question about how strongly $y$ is related to $x$ taking into account statistical uncertainty we look at the joint posterior distribution of $\boldsymbol{\beta}$ (vector that contains $\beta_{0}$ and $\beta_{1}$ ) and $\sigma^2$ , the residual variance. The function `sim` calculates the joint posterior distribution and renders a simulated values from this distribution. 
 
 <font size="1"> 
-:::{#sim style="border: 2px solid grey;"}
+<div style="border: 2px solid grey;">
 What does `sim` do?  
 It simulates parameter values from the joint posterior distribution of a model assuming flat prior distributions. For a normal linear regression, it ﬁrst draws a random value, $\sigma^*$ from the marginal posterior distribution of $\sigma$, and then draws random values from the conditional posterior distribution for $\boldsymbol{\beta}$ given $\sigma^*$  [@Gelman.2014].
 
@@ -178,7 +178,7 @@ and $V_\beta = (\boldsymbol{X^T X})^{-1}$.
 The marginal posterior distribution of $\sigma^2$ is independent of speciﬁc values of $\boldsymbol{\beta}$. It is, for ﬂat prior distributions, an inverse chi-square distribution $p(\sigma^2|\boldsymbol{y,X})=Inv-\chi^2(n-k,\sigma^2)$, where $\sigma^2 = \frac{1}{n-k}(\boldsymbol{y}-\boldsymbol{X,\hat{\beta}})^T(\boldsymbol{y}-\boldsymbol{X,\hat{\beta}})$, and $k$ is the number of parameters. The marginal posterior distribution of $\boldsymbol{\beta}$ can be obtained by integrating the conditional posterior distribution $p(\boldsymbol{\beta}|\sigma^2,\boldsymbol{y,X})=normal(\boldsymbol{\hat{\beta}},V_\beta\sigma^2)$ over the distribution of $\sigma^2$ . This results in a uni- or multivariate $t$-distribution.  
 
 Because `sim` simulates values $\beta_0^*$ and $\beta_1^*$ always conditional on $\sigma^*$, a triplet of values ($\beta_0^*$, $\beta_1^*$, $\sigma^*$) is one draw of the joint posterior distribution. When we visualize the distribution of the simulated values for one parameter only, ignoring the values for the other, we display the marginal posterior distribution of that parameter. Thus, the distribution of all simulated values for the parameter $\beta_0$ is a $t$-distribution even if a normal distribution has been used for simulating the values. The $t$-distribution is a consequence of using a different $\sigma^2$-value for every draw of $\beta_0$.
-:::
+</div>
 </font>
 
 Using the function `sim` from the package, we can draw values from the joint posterior distribution of the model parameters and describe the marginal posterior distribution of each model parameter using these simulated values.
@@ -191,7 +191,7 @@ bsim <- sim(mod, n.sim = nsim)
 
 The function `sim` simulates (in our example) 1000 values from the joint posterior distribution of the three model parameters $\beta_0$ , $\beta_1$, and $\sigma$. These simulated values are shown in Figure \@ref(fig:simfirstexample).
 
-```{r simfirstexample, echo=FALSE, fig.dim = c(8,7), fig.cap="Joint (scatterplots) and marginal (histograms) posterior distribution of the model parameters. The six scatterplots show, using different axes, the three-dimensional cloud of 1000 simulations from the joint posterior distribution of the three parameters."}
+```{r simfirstexample, echo=FALSE, fig.dim = c(8,6.5), fig.cap="Joint (scatterplots) and marginal (histograms) posterior distribution of the model parameters. The six scatterplots show, using different axes, the three-dimensional cloud of 1000 simulations from the joint posterior distribution of the three parameters."}
 histofun <- function(x) {
   basicdat <- hist(x, plot = FALSE)
   segments(
@@ -537,7 +537,7 @@ summary(mod)$sigma
 R has taken the first level of the factors age and sex (as defined in the data.frame dat) as the reference levels. The intercept is the expected wing length for individuals having the reference level in age and sex, thus adult female. The other two parameters provide estimates of what is to be added to the intercept to get the expected wing length for the other levels. The parameter `sexmale` is the average difference between females and males. We can conclude that in males have in average a `r round(coef(mod)[2],1)` mm longer wing than females. Similarly, the parameter `agejuvenile` measures the differences between the age classes and we can conclude that, in average, juveniles have a `r abs(round(coef(mod)[3],1))` shorter wing than adults. When we insert the parameter estimates into the model formula, we get the receipt to calculate expected values for each age and sex combination: 
 
 $\hat{y_i} = \hat{\beta_0} + \hat{\beta_1}I(sex=male) + \hat{\beta_2}I(age=juvenile)$ which yields  
-$\hat{y_i} = $ `r round(coef(mod)[1],1)` $ + $ `r round(coef(mod)[2],1)` $I(sex=male) + $ `r round(coef(mod)[3],1)` $I(age=juvenile)$
+$\hat{y_i}$ = `r round(coef(mod)[1],1)` $+$ `r round(coef(mod)[2],1)` $I(sex=male) +$ `r round(coef(mod)[3],1)` $I(age=juvenile)$.
 
 Alternatively, we could use matrix notation. We construct a new data set that contains one virtual individual for each age and sex class. 
 ```{r wingnd}
@@ -679,7 +679,8 @@ From these parameters we obtain the estimated differences in wing length between
 ### A linear model with a categorical and a numeric predictor (ANCOVA)
 
 An analysis of covariance, ANCOVA, is a normal linear model that contains at least one factor and one continuous variable as predictor variables. The continuous variable is also called a covariate, hence the name analysis of covariance. An ANCOVA can be used, for example, when we are interested in how the biomass of grass depends on the distance from the surface of the soil to the ground water in two different species (*Alopecurus pratensis*, *Dactylis glomerata*). The two species were grown by @Ellenberg1953 in tanks that showed a gradient in distance from the soil surface to the ground water. The distance from the soil surface to the ground water is used as a covariate (‘water’). We further assume that the species react differently to the water conditions. Therefore, we include an interaction between species and water. The model formula is then
-$\hat{y_i} = \beta_0 + \beta_1I(species=Dg) + \beta_2water_i + \beta_3I(species=Dg)water_i$
+$\hat{y_i} = \beta_0 + \beta_1I(species=Dg) + \beta_2water_i + \beta_3I(species=Dg)water_i$  
+$y_i \sim normal(\hat{y_i}, \sigma^2)$
  
 To fit the model, it is important to first check whether the factor is indeed defined as a factor and the continuous variable contains numbers (i.e., numeric or integer values) in the data frame.
 
@@ -699,7 +700,9 @@ mod <- lm(log(Yi.g) ~ Species + Water + Species:Water, data=dat)
 # plot(mod)  # 4 standard residual plots
 ```
 
-We log-transform the biomass to make the residuals closer to normally distributed. Let's have a look at the model matrix (first and last six rows only).
+We log-transform the biomass to make the residuals closer to normally distributed. So, the normal distribution assumption is met well. However, a slight banana shaped relationship exists between the residuals and the fitted values indicating a slight non-linear relationship between biomass and water. Further, residuals showed substantial autocorrelation because the grass biomass was measured in different tanks. Measurements from the same tank were more similar than measurements from different tanks after correcting for the distance to water. Thus, the analysis we have done here suffers from pseudoreplication. We will re-analyze the example data in a more appropriate way in Chapter \@ref(lmer).
+
+Let's have a look at the model matrix (first and last six rows only).
 
 ```{r}
 head(model.matrix(mod))  # print the first 6 rows of the matrix
@@ -709,41 +712,46 @@ tail(model.matrix(mod))  # print the last 6 rows of the matrix
 
 The first column of the model matrix contains only 1s. These are multiplied by the intercept in the matrix multiplication that yields the fitted values. The second column contains the indicator variable for species *Dactylis glomerata* (Dg). Species *Alopecurus pratensis* (Ap) is the reference level. The third column contains the values for the covariate. The last column contains the product of the indicator for species Dg and water. This column specifies the interaction between species and water.  
 
+The parameters are the intercept, the difference between the species, a slope for water and the interaction parameter. 
 
-The parameters are the intercept ( ), the difference between the grass species ( ), and the slope for water ( ). The regression lines are   =  + wateri for species Ap and   =  + + wateri for species Dg. The model we have chosen above includes only one slope for water (i.e., the same slope for both species). Therefore, two parallel regression lines are fitted (Fig. 4-11 right panel). However, it is pretty obvious that the two species react differently to water. Therefore, we need to include an interaction in the model. The model formula then is:
- 
-The two regression lines are:  =  + Wateri for species Ap and   =  + + ( + ) Wateri for species Dg. β1 is the difference in the intercept between the species and β3 is the difference in the slope. When we fit the model including an interaction, we get exactly the same two regression lines as if we had fit two separate regressions, one for each species (Fig. 4-11 left panel).
-mod2 <- lm(log(Yi.g) ~ Species*Water, data=dat)
-summary(mod2)
-Call:
-lm(formula = log(Yi.g) ~ (Species + Water)^2, data = dat)
+```{r}
+mod
+summary(mod)$sigma
+```
 
-Residuals:
-    Min      1Q  Median      3Q     Max 
--1.6158 -0.6135 -0.1063  0.5876  3.3203 
+These four parameters define two regression lines, one for each species (Figure \@ref(fig:fgbiom) Left). For Ap, it is $\hat{y_i} = \beta_0  + \beta_2water_i$, and for Dg it is $\hat{y_i} = (\beta_0 + \beta_1) + (\beta_2 + \beta_3)water_i$. Thus, $\beta_1$ is the difference in the intercept between the species and $\beta_3$ is the difference in the slope. 
 
-Coefficients:
-                 Estimate Std. Error t value Pr(>|t|)    
-(Intercept)      4.330406   0.253108  17.109  < 2e-16 ***
-SpeciesDg       -0.236995   0.357948  -0.662     0.51    
-Water           -0.017911   0.003075  -5.825 1.15e-07 ***
-SpeciesDg:Water  0.018935   0.004349   4.354 3.92e-05 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```{r, fgbiom, fig.asp=0.45, echo=FALSE, fig.cap="Aboveground biomass (g, log-transformed) in relation to distance to ground water and species (two grass species). Fitted values from a model including an interaction species x water (left) and a model without interaction (right) are added. The dotted line indicates water=0."}
+par(mfrow=c(1,2), mgp=c(2, 0.5, 0), mar=c(5.5,2,2,0.5), oma=c(0,2,0,0))
+plot(dat$Water, log(dat$Yi.g), col=c("orange", "blue")[as.numeric(dat$Species)],
+     las=1, ylab=NA,
+     xlab="Average distance to ground water (cm)", pch=c(16, 17)[as.numeric(dat$Species)])
+mtext("log(Yi.g) ~ Species * Water", side=3, adj=0)
+mtext(expression(paste("Above-ground biomass ", (g/m^2),  " [log]")), 
+      side=2, outer=TRUE)
+# insert regression lines per species
+abline(coef(mod)[1], coef(mod)[3], lwd=2, col="orange")
+abline(coef(mod)[1]+coef(mod)[2], coef(mod)[3]+coef(mod)[4], lwd=2, col="blue")
+abline(v=0, lty=3)
 
-***Insert Figure4-11_ANCOVA.jpg here****
-You may have noticed that the main effect of species turns negative ( = -0.2) when we include an interaction in the model while, when no interaction is included, it was positive ( =1.1). This is because the main effect is the difference at the intercept, and the intercept is the value of the dependent variable when the covariate is zero. If zero is at the edge or far away from the range of the covariate values (here: water), and if we have a model with non-parallel regression lines (i.e., because we have included an interaction) the difference in the intercept is very different compared to the difference between the means of the species in the center of the data. Therefore, we do not interpret the main effects of terms that are involved in an interaction unless we have centered the covariate (i.e., subtracted the mean) before fitting the model. By centering, zero moves into the middle of the data, so that the intercept corresponds to the difference in fitted values measured in the center of the covariate.
-Before drawing conclusions from the model, of course, we have to check the residuals violations of assumptions as described in Chapter 6. In the case of an ANCOVA, it makes sense to also plot the residuals against the covariate for each group separately. In our example, residual analyses showed a slight deviation from a linear relationship and substantial autocorrelation because the grass biomass was measured in different tanks. Measurements from the same tank were more similar than measurements from different tanks after correcting for the distance to water. Thus, the analysis we have done here suffers from pseudoreplication. We will re-analyze the example data in a more appropriate way in Chapter 7. Let’s see what we would conclude from the current analysis (and compare this conclusion to the one from a mixed model later).
-An ecologically important question could be: ‘At what distance to water does species Dg outperform species Ap?’ We say that species Dg outperforms species Ap when its average biomass is larger than the one of Ap, thus to the right of the cross-point of the two regression lines. We can get the distance to water for the cross-point numerically by finding the difference between the two intercepts divided by the negative difference between the two slopes, or by the R-function crosspoint. This crosspoint is a quantity that we derive from the parameter estimates from our model. Therefore, we have to propagate the uncertainty of the parameter estimates to the crosspoint. This is done by calculating the cross-point for 2000 sets of model parameters from the joint posterior distribution. Then, the cumulative density distribution of the water-level values at the cross-point gives the posterior probability that Dg outperforms Ap in relation to distance to water (Fig. 4-12). 
-nsim <- 2000
-bsim <- sim(mod2, n.sim=nsim)
-xatcross <- crosspoint(coef(bsim)[,1], coef(bsim)[,3], 
-  coef(bsim)[,1]+coef(bsim)[,2], coef(bsim)[,3]+coef(bsim)[,4])[,1]
-xatcross[xatcross< (-5)] <- -5 
-th <- hist(xatcross, breaks=seq(-5.5, 140.5, by=5))
-plot(th$mids, cumsum(th$counts)/2000, type="l", lwd=2, las=1,ylim=c(0,1),
-  ylab="P(Dg > Ap | data)", xlab="Average distance to ground water (cm)")
+legend(0, -1.2, pch=c(16, 17), lty=1, lwd=2, col=c("orange", "blue"), 
+       legend=c("Species Ap", "Species Dg"), horiz=TRUE, xpd=NA, bty="n")
+mod2 <- lm(log(Yi.g)~Species + Water, data=dat)
+# visualise the model
+plot(dat$Water, log(dat$Yi.g), col=c("orange", "blue")[as.numeric(dat$Species)],
+     las=1, ylab=NA, yaxt="n", 
+     xlab="Average distance to ground water (cm)", pch=c(16, 17)[as.numeric(dat$Species)])
+mtext("log(Yi.g) ~ Species + Water", side=3, adj=0)
+abline(coef(mod2)[1], coef(mod2)[3], lwd=2, col="orange")
+abline(coef(mod2)[1]+coef(mod2)[2], coef(mod2)[3], lwd=2, col="blue")
+abline(v=0, lty=3)
 
+```
+
+As a consequence of including an interaction in the model, the interpretation of the main effects become difficult. From the above model output, we read that the intercept of the species Dg is lower than the intercept of the species Ap. However, from a graphical inspection of the data, we would expect that the average biomass of species Dg is higher than the one of species Ap. The estimated main effect of species is counter-intuitive because it is measured where water is zero (i.e, it is the difference in the intercepts and not between the mean biomasses of the species). Therefore, the main effect of species in the above model does not have a biologically meaningful interpretation. We have two possibilities to get a meaningful species effect. First, we could delete the interaction from the model (Figure \@ref(fig:fgbiom) Right). Then the difference in the intercept reflects an average difference between the species. However, the fit for such an additive model is much worth compared to the model with interaction, and an average difference between the species may not make much sense because this difference so much depends on water. Therefore, we prefer to use a model including the interaction and may opt for th second possibility. Second, we could move the location where water equals 0 to the center of the data by transforming, specifically centering, the variable water: $water.c = water - mean(water)$. When the predictor variable (water) is centered, then the intercept corresponds to the difference in fitted values measured in the center of the data.
+
+
+For drawing biological conclusions from these data, we refer to Chapter \@ref(lmer), where we use a more appropriate model.
 
 
 
@@ -896,7 +904,70 @@ knitr::include_graphics('images/ruchen.jpg', dpi = 150)
 
 ## Ordered Factors and Contrasts {#orderedfactors}
 
+In this chapter, we have seen that the model matrix is an $n \times k$ matrix (with $n$ = sample size and $k$ = number of model coefficients) that is multiplied by the vector of the $k$ model coefficients to obtain the fitted values of a normal linear model. The first column of the model matrix normally contains only ones. This column is multiplied by the intercept. The other columns contain the observed values of the predictor variables if these are numeric variables, or indicator variables (= dummy variables) for factor levels if the predictors are categorical variables (= factors). For categorical variables the model matrix can be constructed in a number of ways. How it is constructed determines how the model coefficients can be interpreted. For example, coefficients could represent differences between means of specific factor levels to the mean of the reference level. That is what we have introduced above. However, they could also represent a linear, quadratic or cubic effect of an ordered factor. Here, we show how this works.   
+
+An ordered factor is a categorical variable with levels that have a natural order, for example, ‘low’, ‘medium’ and ‘high’. How do we tell R that a factor is ordered? The swallow data contain a factor ‘nesting_aid’ that contains the type aid provided in a barn for the nesting swallows. The natural order of the levels is none < support (e.g., a wooden stick in the wall that helps support a nest built by the swallow) < artificial_nest < both (support and artificial nest). However, when we read in the data R orders these levels alphabetically rather than according to the logical order.
+
+```{r}
+data(swallows)
+levels(swallows$nesting_aid) 
+```
+
+And with the function contrasts we see how R will construct the model matrix.
+
+```{r}
+contrasts(swallows$nesting_aid)
+```
+
+R will construct three dummy variables and call them ‘both’, ‘none’, and ‘support’. The variable ‘both’ will have an entry of one when the observation is ‘both’ and zero otherwise. Similarly, the other two dummy variables are indicator variables of the other two levels and ‘artif_nest’ is the reference level. The model coefficients can then be interpreted as the difference between ‘artif_nest’ and each of the other levels. The instruction how to transform a factor into columns of a model matrix is called the contrasts. 
+Now, let's bring the levels into their natural order and define the factor as an ordered factor. 
+
+```{r}
+swallows$nesting_aid <- factor(swallows$nesting_aid, levels=c("none", "support", "artif_nest", "both"), ordered=TRUE)
+levels(swallows$nesting_aid)
+```
+
+The levels are now in the natural order. R will, from now on, use this order for analyses, tables, and plots, and because we defined the factor to be an ordered factor, R will use polynomial contrasts:
+```{r}
+contrasts(swallows$nesting_aid)
+```
+
+When using polynomial contrasts, R will construct three (= number of levels minus one) variables that are called ‘.L’, ‘.Q’, and ‘.C’ for linear, quadratic and cubic effects. The contrast matrix defines which numeric value will be inserted in each of the three corresponding columns in the model matrix for each observation, for example, an observation with ‘support’ in the factor ‘nesting_aid’ will get the values -0.224, -0.5 and 0.671 in the columns L, Q and C of the model matrix. These contrasts define yet another way to get 4 different group means:  
+$m1 =  \beta_0 – 0.671* \beta_1 + 0.5*\beta_2 - 0.224* \beta_3$  
+$m2 =  \beta_0 – 0.224* \beta_1 - 0.5*\beta_2 + 0.671* \beta_3$    
+$m3 =  \beta_0 + 0.224* \beta_1 - 0.5*\beta_2 - 0.671* \beta_3$   
+$m4 =  \beta_0 + 0.671* \beta_1 + 0.5*\beta_2 + 0.224* \beta_3$   
+
+The group means are the same, independent of whether a factor is defined as ordered or not. The ordering also has no effect on the variance that is explained by the factor ‘nesting_aid’ or the overall model fit. Only the model coefficients and their interpretation depend on whether a factor is defined as ordered or not. When we define a factor as ordered, the coefficients can be interpreted as linear, quadratic, cubic, or higher order polynomial effects. The number of the polynomials will always be the number of factor levels minus one (unless the intercept is omitted from the model in which case it is the number of factor levels). Linear, quadratic, and further polynomial effects normally are more interesting for ordered factors than single differences from a reference level because linear and polynomial trends tell us something about consistent changes in the outcome along the ordered factor levels. Therefore, an ordered factor with k levels is treated like a covariate consisting of the centered level numbers (-1.5, -0.5, 0.5, 1.5 in our case with four levels) and k-1 orthogonal polynomials of this covariate are included in the model. Thus, if we have an ordered factor A with three levels, `y~A` is equivalent to `y~x+I(x^2)`, with x=-1 for the lowest, x=0 for the middle and x=1 for the highest level.
+Note that it is also possible to define own contrasts if we are interested in specific differences or trends. However, it is not trivial to find meaningful and orthogonal (= uncorrelated) contrasts.
+
+
 ## Quadratic and Higher Polynomial Terms
 
+The straight regression line for the biomass of grass species Ap *Alopecurus pratensis* dependent on the distance to the ground water does not fit well (Figure \@ref(fig:fgbiom)). The residuals at low and high values of water tend to be positive and intermediate water levels are associated with negative residuals. This points out a possible violation of the model assumptions.
+The problem is that the relationship between distance to water and biomass of species Ap is not linear. In real life, we often find non-linear relationships, but if the shape of the relationship is quadratic (plus, potentially, a few more polynomials) we can still use ‘linear modeling’ (the term 'linear' refers to the linear function used to describe the relationship between the outcome and the predictor variables: $f(x) = \beta_0 + \beta_1x + \beta_2x^2$ is a linear function compared to, e.g., $f(x) = \beta^x$, which is not a linear function). We simply add the quadratic term of the predictor variable, that is, water in our example, as a further predictor in the linear predictor:
+$\hat{y_i} = \beta_0+\beta_1water_i+\beta_2water_i^2$.
+A quadratic term can be fitted in R using the function `I()` which tells R that we want the squared values of distance to water. If we do not use `I()` the `^2` indicates a two-way interaction. The model specification is then `lm(log(Yi.g) ~ Water + I(Water^2), data=...)`. 
+The cubic term would be added by `+I(Water^3)`.
+As with interactions, a polynomial term changes the interpretation of lower level polynomials. Therefore, we normally include all polynomials up to a specific degree. Furthermore, polynomials are normally correlated (if no special transformation is used, see below) which could cause problems when fitting the model such as non-convergence. To avoid collinearity among polynomials, so called orthogonal polynomials can be used. These are polynomials that are uncorrelated. To that end, we can use the function `poly` which creates as many orthogonal polynomials of the variable as we want:
+`poly(dat$Water, 2)` creates two columns, the first one can be used to model the linear effect of water, the second one to model the quadratic term of water:
+
+```{r}
+t.poly <- poly(dat$Water, 2)
+dat$Water.l <- t.poly[,1]   # linear term for water
+dat$Water.q <- t.poly[,2]   # quadratic term for water
+mod <- lm(log(Yi.g) ~ Water.l + Water.q, data=dat)
+```
+
+When orthogonal polynomials are used, the estimated linear and quadratic effects can be interpreted as purely linear and purely quadratic influences of the predictor on the outcome. The function poly applies a specific transformation to the original variables. To reproduce the transformation (e.g. for getting the corresponding orthogonal polynomials for new data used to draw an effect plot), the function predict can be used with the poly-object created based on the original data.
+
+```{r}
+newdat <- data.frame(Water = seq(0,130)) 
+# transformation analogous to the one used to fit the model:
+newdat$Water.l <- predict(t.poly, newdat$Water)[,1]
+newdat$Water.q <- predict(t.poly, newdat$Water)[,2]
+```
+
+These transformed variables can then be used to calculate fitted values that correspond to the water values specified in the new data.
 
   
