@@ -19,6 +19,7 @@ fig:betadist
 fig:unnamed-chunk-1
 eq:lm
 eq:lmalternativ
+fig:illlm
 eq:lmmatrix
 fig:figlm
 eq:sim
@@ -32,6 +33,9 @@ eq:anovamw
 eq:anovamwalt
 eq:anovaalt
 fig:figanovares
+fig:fgwingpa
+tab:sumtabpa
+fig:fgbiom
 fig:sfexfig
 fig:pooling
 fig:assessmodelassumptions
@@ -108,10 +112,11 @@ linear-regression
 background
 fitting-a-linear-regression-in-r
 drawing-conclusions
-frequentist-results
-regression-variants-anova-ancova-and-multiple-regression
-one-way-anova
+interpretation-of-the-r-summary-output
+linear-model-with-one-categorical-predictor-one-way-anova
 other-variants-of-normal-linear-models-two-way-anova-analysis-of-covariance-and-multiple-regression
+linear-model-with-two-categorical-predictors-two-way-anova
+a-linear-model-with-a-categorical-and-a-numeric-predictor-ancova
 partial-coefficients-and-some-comments-on-collinearity
 orderedfactors
 quadratic-and-higher-polynomial-terms
