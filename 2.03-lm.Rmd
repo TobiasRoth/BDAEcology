@@ -105,17 +105,17 @@ $$\boldsymbol{X} =
 where $x_1 , \dots, x_n$ are the observed values for the predictor variable, $x$. The ﬁrst column of $\boldsymbol{X}$ contains only ones because the values in this column are multiplied with the intercept, $\beta_0$ . To the intercept, the product of the second element of $\boldsymbol{\beta}$, $\beta_1$ , with each element in the second column of $\boldsymbol{X}$ is added to obtain the predicted value for each observation, $\boldsymbol{\mu}$:
 
 \begin{align} 
-\boldsymbol{\beta X}=
-\begin{pmatrix} 
-	\beta_0 \\ 
-	\beta_1 
-\end{pmatrix}
-\times
+\boldsymbol{X \beta}=
 \begin{pmatrix} 
       1     & x_1   \\ 
       \dots & \dots \\ 
       1     & x_n
-  \end{pmatrix} =
+  \end{pmatrix} 
+  \times 
+  \begin{pmatrix} 
+	\beta_0 \\ 
+	\beta_1 
+\end{pmatrix} =
   \begin{pmatrix} 
 	\beta_0 + \beta_1x_1 \\ 
 	\dots \\
@@ -161,7 +161,8 @@ Conclusions drawn from a model depend on the model assumptions. When model assum
 
 To answer the question about how strongly $y$ is related to $x$ taking into account statistical uncertainty we look at the joint posterior distribution of $\boldsymbol{\beta}$ (vector that contains $\beta_{0}$ and $\beta_{1}$ ) and $\sigma^2$ , the residual variance. The function `sim` calculates the joint posterior distribution and renders a simulated values from this distribution. 
 
-:::{#sim style="size: "1"; border: 2px solid grey"}
+<font size="1"> 
+:::{#sim style="border: 2px solid grey;"}
 What does `sim` do?  
 It simulates parameter values from the joint posterior distribution of a model assuming flat prior distributions. For a normal linear regression, it ﬁrst draws a random value, $\sigma^*$ from the marginal posterior distribution of $\sigma$, and then draws random values from the conditional posterior distribution for $\boldsymbol{\beta}$ given $\sigma^*$  [@Gelman.2014].
 
@@ -178,8 +179,9 @@ The marginal posterior distribution of $\sigma^2$ is independent of speciﬁc va
 
 Because `sim` simulates values $\beta_0^*$ and $\beta_1^*$ always conditional on $\sigma^*$, a triplet of values ($\beta_0^*$, $\beta_1^*$, $\sigma^*$) is one draw of the joint posterior distribution. When we visualize the distribution of the simulated values for one parameter only, ignoring the values for the other, we display the marginal posterior distribution of that parameter. Thus, the distribution of all simulated values for the parameter $\beta_0$ is a $t$-distribution even if a normal distribution has been used for simulating the values. The $t$-distribution is a consequence of using a different $\sigma^2$-value for every draw of $\beta_0$.
 :::
+</font>
 
-Using the function `sim` from the package, we can draw samples from $p(\sigma^2|\boldsymbol{y,X})$ and describe the marginal posterior distributions of $\boldsymbol{\beta}$ using the simulated values.
+Using the function `sim` from the package, we can draw values from the joint posterior distribution of the model parameters and describe the marginal posterior distribution of each model parameter using these simulated values.
 
 ```{r}
 library(arm)
@@ -189,7 +191,7 @@ bsim <- sim(mod, n.sim = nsim)
 
 The function `sim` simulates (in our example) 1000 values from the joint posterior distribution of the three model parameters $\beta_0$ , $\beta_1$, and $\sigma$. These simulated values are shown in Figure \@ref(fig:simfirstexample).
 
-```{r simfirstexample, echo=FALSE, fig.dim = c(8,8), fig.cap="Joint (scatterplots) and marginal (histograms) posterior distribution of the model parameters. The six scatterplots show, using different axes, the three-dimensional cloud of 1000 simulations from the joint posterior distribution of the three parameters."}
+```{r simfirstexample, echo=FALSE, fig.dim = c(8,7), fig.cap="Joint (scatterplots) and marginal (histograms) posterior distribution of the model parameters. The six scatterplots show, using different axes, the three-dimensional cloud of 1000 simulations from the joint posterior distribution of the three parameters."}
 histofun <- function(x) {
   basicdat <- hist(x, plot = FALSE)
   segments(
@@ -328,14 +330,13 @@ We think the name "residual standard error" for "sigma" is confusing, because $\
 The $R^2$ and the adjusted $R^2$ measure the proportion of variance in the outcome variable $y$ that is explained by the predictors in the model. $R^2$ is calculated from the sum of squared residuals, $SSR = \sum_{i=1}^{n}(y_i - \hat{y})$, and the "total sum of squares", $SST = \sum_{i=1}^{n}(y_i - \bar{y})$, where $\bar{y})$ is the mean of $y$. $SST$ is a measure of total variance in $y$ and $SSR$
  is a measure of variance that cannot be explained by the model, thus $R^2 = 1- \frac{SSR}{SST}$ is a measure of variance that can be explained by the model. If $SSR$ is close to $SST$, $R^2$ is close to zero and the model cannot explain a lot of variance. The smaller $SSR$, the closer $R^2$ is to 1. This version of $R2$ approximates 1 if the number of model parameters approximates sample size even if none of the predictor variables correlates with the outcome. It is exactly 1 when the number of model parameters equals sample size, because $n$ measurements can be exactly described by $n$ parameters. The adjusted $R^2$, $R^2 = \frac{var(y)-\hat\sigma^2}{var(y)}$ takes sample size $n$ and the number of model parameters $k$ into account (see explanation to variance in chapter \@ref(basics)). Therefore, the adjusted $R^2$ is recommended as a measurement of the proportion of explained variance.
 
-## Regression Variants: ANOVA, ANCOVA, and Multiple Regression
+## Linear model with one categorical predictor (one-way ANOVA)
 
-### One-Way ANOVA
 The aim of analysis of variance (ANOVA) is to compare means of an outcome variable $y$ between different groups. To do so in the frequentist’s framework, variances between and within the groups are compared using F-tests (hence the name “analysis of variance”). When doing an ANOVA in a Bayesian way, inference is based on the posterior distributions of the group means and the differences between the group means.
 
 One-way ANOVA means that we only have one predictor variable, specifically a categorical predictor variable (in R defined as a "factor"). We illustrate the one-way ANOVA based on an example of simulated data (Fig. \@ref(fig:figanova)). We have measured weights of 30 virtual individuals for each of 3 groups. Possible research questions could be: How big are the differences between the group means? Are individuals from group 2 heavier than the ones from group 1? Which group mean is higher than 7.5 g?
 
-```{r figanova, fig.cap = "Weights (g) of the 30 individuals in each group. The dark horizontal line is the median, the box contains 50% of the observations (i.e., the interquartile range), the whiskers mark the range of all observations that are less than 1.5 times the interquartile range away from the edge of the box."}
+```{r figanova, fig.asp=0.45, fig.cap = "Weights (g) of the 30 individuals in each group. The dark horizontal line is the median, the box contains 50% of the observations (i.e., the interquartile range), the whiskers mark the range of all observations that are less than 1.5 times the interquartile range away from the edge of the box."}
 # settings for the simulation
 set.seed(626436)
 b0 <- 12        # mean of group 1 (reference group)
@@ -455,7 +456,7 @@ m.g3 <- coef(bsim)[,1] + coef(bsim)[,3]
 
 The histograms of the simulated values from the posterior distributions of the three means are given in Fig. \@ref(fig:figanovares). The three means are well separated and, based on our data, we are conﬁdent that the group means differ. From these simulated posterior distributions we obtain the means and use the 2.5% and 97.5% quantiles as limits of the 95% uncertainty intervals (Fig. \@ref(fig:figanovares), right).
 
-```{r figanovares, fig.cap = "Distribution of the simulated values from the posterior distributions of the group means (left); group means with 95% uncertainty intervals obtained from the simulated distributions (right)."}
+```{r figanovares, fig.asp=0.45, fig.cap = "Distribution of the simulated values from the posterior distributions of the group means (left); group means with 95% uncertainty intervals obtained from the simulated distributions (right)."}
 # save simulated values from posterior distribution in  tibble
 post <- 
   tibble(`group 1` = m.g1, `group 2` = m.g2, `group 3` = m.g3) %>% 
@@ -504,11 +505,244 @@ sum(m.g2 > m.g1) / nsim
 This means that in all of the `r nsim %>% as.integer` simulations from the joint posterior distribution, the mean of group 2 was larger than the mean of group 1. Therefore, there is a very high probability (i.e., it is close to 1; because probabilities are never exactly 1, we write >0.999) that the mean of group 2 is larger than the mean of group 1.
 
 
-### Other variants of normal linear models: Two-way anova, analysis of covariance and multiple regression
+## Other variants of normal linear models: Two-way anova, analysis of covariance and multiple regression
 
 Up to now, we introduced normal linear models with one predictor only. We can add more predictors to the model and these can be numerical or categorical ones. Traditionally, models with 2 or 3 categorical predictors are called two-way or three-way ANOVA, respectively. Models with a mixture of categorical and numerical predictors are called ANCOVA. And, models containing only numerical predictors are called multiple regressions. Nowadays, we only use the term "normal linear model" as an umbrella term for all these types of models. 
 While it is easy to add additional predictors in the R formula of the model, it becomes more difficult to interpret the coefficients of such multi-dimensional models. Two important topics arise with multi-dimensional models, *interactions* and *partial effects*. We dedicate partial effects the full next chapter and introduce interactions in this chapter using two examples. The first, is a model including two categorical predictors and the second is a model with one categorical and one numeric predictor. 
 
+### Linear model with two categorical predictors (two-way ANOVA)
+In the first example, we ask how large are the differences in wing length between age and sex classes of the Coal tit *Periparus ater*. Wing lengths were measured on 19 coal tit museum skins with known sex and age class.
+
+
+```{r}
+data(periparusater)
+dat <- tibble(periparusater) # give the data a short handy name
+dat$age <- recode_factor(dat$age, "4"="adult", "3"="juvenile") # replace EURING code
+dat$sex <- recode_factor(dat$sex, "2"="female", "1"="male")    # replace EURING code
+```
+
+To describe differences in wing length between the age classes or between the sexes a normal linear model with two categorical predictors is fitted to the data. The two predictors are specified on the right side of the model formula separated by the "+" sign, which means that the model is an additive combination of the two effects (as opposed to an interaction, see following). 
+
+```{r}
+mod <- lm(wing ~ sex + age, data=dat)
+```
+
+After having seen that the residual distribution does not appear to violate the model assumptions (as assessed with diagnostic residual plots, see Chapter \@ref(residualanalysis)), we can draw inferences. We first have a look at the model parameter estimates:
+
+```{r}
+mod
+summary(mod)$sigma
+```
+
+R has taken the first level of the factors age and sex (as defined in the data.frame dat) as the reference levels. The intercept is the expected wing length for individuals having the reference level in age and sex, thus adult female. The other two parameters provide estimates of what is to be added to the intercept to get the expected wing length for the other levels. The parameter `sexmale` is the average difference between females and males. We can conclude that in males have in average a `r round(coef(mod)[2],1)` mm longer wing than females. Similarly, the parameter `agejuvenile` measures the differences between the age classes and we can conclude that, in average, juveniles have a `r abs(round(coef(mod)[3],1))` shorter wing than adults. When we insert the parameter estimates into the model formula, we get the receipt to calculate expected values for each age and sex combination: 
+
+$\hat{y_i} = \hat{\beta_0} + \hat{\beta_1}I(sex=male) + \hat{\beta_2}I(age=juvenile)$ which yields  
+$\hat{y_i} = $ `r round(coef(mod)[1],1)` $ + $ `r round(coef(mod)[2],1)` $I(sex=male) + $ `r round(coef(mod)[3],1)` $I(age=juvenile)$
+
+Alternatively, we could use matrix notation. We construct a new data set that contains one virtual individual for each age and sex class. 
+```{r wingnd}
+newdat <- tibble(expand.grid(sex=factor(levels(dat$sex)),
+                      age=factor(levels(dat$age))))
+# expand.grid creates a data frame with all combination of values given
+newdat
+
+newdat$fit <- predict(mod, newdata=newdat)  # fast way of getting fitted values
+# or
+Xmat <- model.matrix(~sex+age, data=newdat) # creates a model matrix
+newdat$fit <- Xmat %*% coef(mod)
+
+```
+
+For this new data set the model matrix contains four rows (one for each combination of age class and sex) and three columns. The first column contains only ones because the values of this column are multiplied by the intercept ($\beta_0$) in the matrix multiplication. The second column contains an indicator variable for males (so only the rows corresponding to males contain a one) and the third column has ones for juveniles.
+
+\begin{align} 
+\hat{y} = 
+\boldsymbol{X \hat{\beta}} =
+\begin{pmatrix} 
+      1 & 0 & 0 \\ 
+      1 & 1 & 0 \\ 
+      1 & 0 & 1 \\
+      1 & 1 & 1 \\
+  \end{pmatrix} 
+  \times 
+  \begin{pmatrix} 
+	`r round(coef(mod)[1],1)` \\ 
+	`r round(coef(mod)[2],1)` \\
+	`r round(coef(mod)[3],1)` 
+\end{pmatrix} =
+  \begin{pmatrix} 
+	`r round(newdat$fit[1],1)` \\ 
+	`r round(newdat$fit[2],1)` \\
+	`r round(newdat$fit[3],1)` \\
+	`r round(newdat$fit[4],1)`
+\end{pmatrix} =
+\boldsymbol{\mu}
+(\#eq:lmmatrix)
+\end{align} 
+
+The result of the matrix multiplication is a vector containing the expected wing length for adult and juvenile females and adult and juvenile males.  
+
+When creating the model matrix with `model.matrix` care has to be taken that the columns in the model matrix match the parameters in the vector of model coefficients. To achieve that, it is required that the model formula is identical to the model formula of the model (same order of terms!), and that the factors in newdat are identical in their levels and their order as in the data the model was fitted to.
+
+To describe the uncertainty of the fitted values, we use 2000 sets of parameter values of the joint posterior distribution to obtain 2000 values for each of the four fitted values. These are stored in the object "fitmat". In the end, we extract for every fitted value, i.e., for every row in fitmat, the 2.5% and 97.5% quantiles as the lower and upper limits of the 95% uncertainty interval.
+
+```{r }
+nsim <- 2000
+bsim <- sim(mod, n.sim=nsim)
+fitmat <- matrix(ncol=nsim, nrow=nrow(newdat))
+for(i in 1:nsim) fitmat[,i] <- Xmat %*% coef(bsim)[i,] 
+newdat$lwr <- apply(fitmat, 1, quantile, probs=0.025)
+newdat$upr <- apply(fitmat, 1, quantile, probs=0.975)
+```
+
+```{r fgwingpa, fig.asp=0.45, fig.cap="Wing length measurements on 19 museumm skins of coal tits per age class and sex. Fitted values are from the additive model (black triangles) and from the model including an interaction (black dots). Vertical bars = 95% uncertainty intervals."}
+dat$sexage <- factor(paste(dat$sex, dat$age))
+newdat$sexage <- factor(paste(newdat$sex, newdat$age))
+dat$pch <- 21
+dat$pch[dat$sex=="male"] <- 22
+dat$col="blue"
+dat$col[dat$age=="adult"] <- "orange"
+
+par(mar=c(4,4,0.5,0.5))
+plot(wing~jitter(as.numeric(sexage), amount=0.05), data=dat, las=1, 
+     ylab="Wing length (mm)", xlab="Sex and age", xaxt="n", pch=dat$pch, 
+     bg=dat$col, cex.lab=1.2, cex=1, cex.axis=1, xlim=c(0.5, 4.5))
+axis(1, at=c(1:4), labels=levels(dat$sexage), cex.axis=1)
+
+segments(as.numeric(newdat$sexage), newdat$lwr, as.numeric(newdat$sexage), newdat$upr, lwd=2,
+         lend="butt")
+points(as.numeric(newdat$sexage), newdat$fit, pch=17)
+
+```
+
+
+We can see that the fitted values are not equal to the arithmetic means of the groups; this is especially clear for juvenile males. The fitted values are constrained because only three parameters were used to estimate four means. In other words, this model assumes that the age difference is equal in both sexes and, vice versa, that the difference between the sexes does not change with age. If the effect of sex changes with age, we would include an *interaction* between sex and age in the model. Including an interaction adds a fourth parameter enabling us to estimate the group means exactly. In R, an interaction is indicated with the `:` sign.
+
+```{r}
+mod2 <- lm(wing ~ sex + age + sex:age, data=dat)
+
+# alternative formulations of the same model:
+# mod2 <- lm(wing ~ sex * age, data=dat)
+# mod2 <- lm(wing ~ (sex + age)^2, data=dat)
+
+```
+
+
+The formula for this model is $\hat{y_i} = \hat{\beta_0} + \hat{\beta_1}I(sex=male) + \hat{\beta_2}I(age=juvenile) + \hat{\beta_3}I(age=juvenile)I(sex=male)$. From this formula we get the following expected values for the sexes and age classes:  
+
+for adult females: $\hat{y} = \beta_0$  
+for adult males: $\hat{y} = \beta_0 + \beta_1$  
+for juveniles females: $\hat{y} = \beta_0 + \beta_2$  
+for juveniles males: $\hat{y} = \beta_0 + \beta_1 + \beta_2 + \beta_3$
+
+The interaction parameter measures how much different between age classes is the difference between the sexes.  
+
+To obtain the fitted values the R-code above can be recycled with two adaptations. First, the model name needs to be changed to "mod2". Second, importantly, the model matrix needs to be adapted to the new model formula. 
+```{r}
+newdat$fit2 <- predict(mod2, newdata=newdat)
+bsim <- sim(mod2, n.sim=nsim)
+Xmat <- model.matrix(~ sex + age + sex:age, data=newdat)
+fitmat <- matrix(ncol=nsim, nrow=nrow(newdat))
+for(i in 1:nsim) fitmat[,i] <- Xmat %*% coef(bsim)[i,] 
+newdat$lwr2 <- apply(fitmat, 1, quantile, probs=0.025)
+newdat$upr2 <- apply(fitmat, 1, quantile, probs=0.975)
+print(newdat[,c(1:5,7:9)], digits=3)
+
+```
+
+These fitted values are now exactly equal to the arithmetic means of each groups.
+
+```{r}
+tapply(dat$wing, list(dat$age, dat$sex), mean) # arithmetic mean per group
+```
+
+We can also see that the uncertainty of the fitted values is larger for the model with an interaction than for the additive model. This is because, in the model including the interaction, an additional parameter has to be estimated based on the same amount of data. Therefore, the information available per parameter is smaller than in the additive model. In the additive model, some information is pooled between the groups by making the assumption that the difference between the sexes does not depend on age. 
+
+The degree to which a difference in wing length is ‘important’ depends on the context of the study. Here, for example, we could consider effects of wing length on flight energetics and maneuverability or methodological aspects like measurement error. Mean between-observer difference in wing length measurement is around 0.3 mm [@Jenni.1989]. Therefore, we may consider that the interaction is important because its point estimate is larger than 0.3 mm. 
+
+```{r}
+mod2
+summary(mod2)$sigma
+```
+
+Further, we think a difference of 1 mm in wing length may be relevant compared to the among-individual variation of which the standard deviation is around 2 mm. Therefore, we report the parameter estimates of the model including the interaction together with their uncertainty intervals.
+
+```{r sumtabpa, results="as.is", echo=FALSE}
+tab <- data.frame(Estimate=coef(mod2),
+                  lwr= apply(bsim@coef, 2, quantile, prob=0.025),
+                  upr= apply(bsim@coef, 2, quantile, prob=0.975))
+kable(tab, caption="Parameter estimates of the model for wing length of Coal tits with 95% uncertainty interval.", rownames="Parameter", dig=2)
+```                  
+
+From these parameters we obtain the estimated differences in wing length between the sexes for adults of `r round(coef(mod2)[2], 1)`mm and the posterior probability of the hypotheses that males have an average wing length that is at least 1mm larger compared to females is `mean(bsim@coef[,2]>1)` which is `r round(mean(bsim@coef[,2]>1),2)`. Thus, there is some evidence that adult Coal tit males have substantially larger wings than adult females in these data. However, we do not draw further conclusions on other differences from these data because statistical uncertainty is large due to the low sample size. 
+
+### A linear model with a categorical and a numeric predictor (ANCOVA)
+
+An analysis of covariance, ANCOVA, is a normal linear model that contains at least one factor and one continuous variable as predictor variables. The continuous variable is also called a covariate, hence the name analysis of covariance. An ANCOVA can be used, for example, when we are interested in how the biomass of grass depends on the distance from the surface of the soil to the ground water in two different species (*Alopecurus pratensis*, *Dactylis glomerata*). The two species were grown by @Ellenberg1953 in tanks that showed a gradient in distance from the soil surface to the ground water. The distance from the soil surface to the ground water is used as a covariate (‘water’). We further assume that the species react differently to the water conditions. Therefore, we include an interaction between species and water. The model formula is then
+$\hat{y_i} = \beta_0 + \beta_1I(species=Dg) + \beta_2water_i + \beta_3I(species=Dg)water_i$
+ 
+To fit the model, it is important to first check whether the factor is indeed defined as a factor and the continuous variable contains numbers (i.e., numeric or integer values) in the data frame.
+
+```{r}
+data(ellenberg)
+index <- is.element(ellenberg$Species, c("Ap", "Dg")) & complete.cases(ellenberg$Yi.g)
+dat <- ellenberg[index,c("Water", "Species", "Yi.g")] # select two species
+dat <- droplevels(dat)
+str(dat)
+```
+
+
+Species is a factor with two levels and Water is an integer variable, so we are fine and we can fit the model 
+
+```{r}
+mod <- lm(log(Yi.g) ~ Species + Water + Species:Water, data=dat)
+# plot(mod)  # 4 standard residual plots
+```
+
+We log-transform the biomass to make the residuals closer to normally distributed. Let's have a look at the model matrix (first and last six rows only).
+
+```{r}
+head(model.matrix(mod))  # print the first 6 rows of the matrix
+tail(model.matrix(mod))  # print the last 6 rows of the matrix
+```
+
+
+The first column of the model matrix contains only 1s. These are multiplied by the intercept in the matrix multiplication that yields the fitted values. The second column contains the indicator variable for species *Dactylis glomerata* (Dg). Species *Alopecurus pratensis* (Ap) is the reference level. The third column contains the values for the covariate. The last column contains the product of the indicator for species Dg and water. This column specifies the interaction between species and water.  
+
+
+The parameters are the intercept ( ), the difference between the grass species ( ), and the slope for water ( ). The regression lines are   =  + wateri for species Ap and   =  + + wateri for species Dg. The model we have chosen above includes only one slope for water (i.e., the same slope for both species). Therefore, two parallel regression lines are fitted (Fig. 4-11 right panel). However, it is pretty obvious that the two species react differently to water. Therefore, we need to include an interaction in the model. The model formula then is:
+ 
+The two regression lines are:  =  + Wateri for species Ap and   =  + + ( + ) Wateri for species Dg. β1 is the difference in the intercept between the species and β3 is the difference in the slope. When we fit the model including an interaction, we get exactly the same two regression lines as if we had fit two separate regressions, one for each species (Fig. 4-11 left panel).
+mod2 <- lm(log(Yi.g) ~ Species*Water, data=dat)
+summary(mod2)
+Call:
+lm(formula = log(Yi.g) ~ (Species + Water)^2, data = dat)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.6158 -0.6135 -0.1063  0.5876  3.3203 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)      4.330406   0.253108  17.109  < 2e-16 ***
+SpeciesDg       -0.236995   0.357948  -0.662     0.51    
+Water           -0.017911   0.003075  -5.825 1.15e-07 ***
+SpeciesDg:Water  0.018935   0.004349   4.354 3.92e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+***Insert Figure4-11_ANCOVA.jpg here****
+You may have noticed that the main effect of species turns negative ( = -0.2) when we include an interaction in the model while, when no interaction is included, it was positive ( =1.1). This is because the main effect is the difference at the intercept, and the intercept is the value of the dependent variable when the covariate is zero. If zero is at the edge or far away from the range of the covariate values (here: water), and if we have a model with non-parallel regression lines (i.e., because we have included an interaction) the difference in the intercept is very different compared to the difference between the means of the species in the center of the data. Therefore, we do not interpret the main effects of terms that are involved in an interaction unless we have centered the covariate (i.e., subtracted the mean) before fitting the model. By centering, zero moves into the middle of the data, so that the intercept corresponds to the difference in fitted values measured in the center of the covariate.
+Before drawing conclusions from the model, of course, we have to check the residuals violations of assumptions as described in Chapter 6. In the case of an ANCOVA, it makes sense to also plot the residuals against the covariate for each group separately. In our example, residual analyses showed a slight deviation from a linear relationship and substantial autocorrelation because the grass biomass was measured in different tanks. Measurements from the same tank were more similar than measurements from different tanks after correcting for the distance to water. Thus, the analysis we have done here suffers from pseudoreplication. We will re-analyze the example data in a more appropriate way in Chapter 7. Let’s see what we would conclude from the current analysis (and compare this conclusion to the one from a mixed model later).
+An ecologically important question could be: ‘At what distance to water does species Dg outperform species Ap?’ We say that species Dg outperforms species Ap when its average biomass is larger than the one of Ap, thus to the right of the cross-point of the two regression lines. We can get the distance to water for the cross-point numerically by finding the difference between the two intercepts divided by the negative difference between the two slopes, or by the R-function crosspoint. This crosspoint is a quantity that we derive from the parameter estimates from our model. Therefore, we have to propagate the uncertainty of the parameter estimates to the crosspoint. This is done by calculating the cross-point for 2000 sets of model parameters from the joint posterior distribution. Then, the cumulative density distribution of the water-level values at the cross-point gives the posterior probability that Dg outperforms Ap in relation to distance to water (Fig. 4-12). 
+nsim <- 2000
+bsim <- sim(mod2, n.sim=nsim)
+xatcross <- crosspoint(coef(bsim)[,1], coef(bsim)[,3], 
+  coef(bsim)[,1]+coef(bsim)[,2], coef(bsim)[,3]+coef(bsim)[,4])[,1]
+xatcross[xatcross< (-5)] <- -5 
+th <- hist(xatcross, breaks=seq(-5.5, 140.5, by=5))
+plot(th$mids, cumsum(th$counts)/2000, type="l", lwd=2, las=1,ylim=c(0,1),
+  ylab="P(Dg > Ap | data)", xlab="Average distance to ground water (cm)")
 
 
 
