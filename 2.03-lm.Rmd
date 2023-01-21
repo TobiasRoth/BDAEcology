@@ -1,13 +1,13 @@
 
 # Normal Linear Models{#lm}
 
-## Linear regression
-
 ```{r fig.align='center', echo=FALSE, fig.link=''}
 knitr::include_graphics('images/snowfinch3.jpg', dpi = 150)
 ```
 
 ------
+
+## Linear regression
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
