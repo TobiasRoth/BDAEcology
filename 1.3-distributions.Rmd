@@ -84,7 +84,7 @@ legend(0.5, 6, lwd=2, col=c("orange", "brown", "blue"),
 ```
 
 
-### Normal distribution
+### Normal distribution {#normdist}
 
 The normal, or Gaussian distribution is widely used since a long time in statistics. It describes the distribution of measurements that vary because of a sum of random errors. Based on the central limit theorem, sample averages are approximately normally distributed (\@ref(basics)).    
  
@@ -101,7 +101,7 @@ The normal distribution also serves as prior distribution for parameters that ca
 
 The standard normal distribution is a normal distribution with a mean of zero and a variance of one, $z \sim normal(0, 1)$. The standard normal distribution is also called the z-distribution. Or, a z-variable is a variable with a mean of zero and a standard deviation of one.
 
-```{r}
+```{r normdistplot, fig.cap="Standard normal distribution", fig.asp=0.45, echo=TRUE}
 x <- seq(-3, 3, length=100)
 y <- dnorm(x) # density function of a standard normal distribution
 dat <- tibble(x=x,y=y)
