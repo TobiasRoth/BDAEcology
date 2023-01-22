@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2023-01-19" />
+<meta name="date" content="2023-01-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -167,7 +167,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.1" data-path="PART-I.html"><a href="PART-I.html#further-reading"><i class="fa fa-check"></i><b>1.1</b> Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Prerequisits: Basic statistical terms</a>
+<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Prerequisites: Basic statistical terms</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#variables-and-observations"><i class="fa fa-check"></i><b>2.1</b> Variables and observations</a></li>
 <li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-variables"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing variables</a>
@@ -222,7 +222,7 @@ div.csl-indent {
 <li class="chapter" data-level="4.3" data-path="distributions.html"><a href="distributions.html#continuous-distributions"><i class="fa fa-check"></i><b>4.3</b> Continuous distributions</a>
 <ul>
 <li class="chapter" data-level="4.3.1" data-path="distributions.html"><a href="distributions.html#beta-distribution"><i class="fa fa-check"></i><b>4.3.1</b> Beta distribution</a></li>
-<li class="chapter" data-level="4.3.2" data-path="distributions.html"><a href="distributions.html#normal-distribution"><i class="fa fa-check"></i><b>4.3.2</b> Normal distribution</a></li>
+<li class="chapter" data-level="4.3.2" data-path="distributions.html"><a href="distributions.html#normdist"><i class="fa fa-check"></i><b>4.3.2</b> Normal distribution</a></li>
 <li class="chapter" data-level="4.3.3" data-path="distributions.html"><a href="distributions.html#gamma-distribution"><i class="fa fa-check"></i><b>4.3.3</b> Gamma distribution</a></li>
 <li class="chapter" data-level="4.3.4" data-path="distributions.html"><a href="distributions.html#cauchydistri"><i class="fa fa-check"></i><b>4.3.4</b> Cauchy distribution</a></li>
 <li class="chapter" data-level="4.3.5" data-path="distributions.html"><a href="distributions.html#t-distribution"><i class="fa fa-check"></i><b>4.3.5</b> t-distribution</a></li>
@@ -296,6 +296,8 @@ div.csl-indent {
 <li class="chapter" data-level="13.1.1" data-path="lmer.html"><a href="lmer.html#why-mixed-effects-models"><i class="fa fa-check"></i><b>13.1.1</b> Why Mixed Effects Models?</a></li>
 <li class="chapter" data-level="13.1.2" data-path="lmer.html"><a href="lmer.html#random-factors-and-partial-pooling"><i class="fa fa-check"></i><b>13.1.2</b> Random Factors and Partial Pooling</a></li>
 </ul></li>
+<li class="chapter" data-level="13.2" data-path="lmer.html"><a href="lmer.html#fitting-a-normal-linear-mixed-model-in-r"><i class="fa fa-check"></i><b>13.2</b> Fitting a normal linear mixed model in R</a></li>
+<li class="chapter" data-level="13.3" data-path="lmer.html"><a href="lmer.html#restricted-maximum-likelihood-estimation-reml"><i class="fa fa-check"></i><b>13.3</b> Restricted maximum likelihood estimation (REML)</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>14</b> Generalized linear models</a>
 <ul>
@@ -452,15 +454,30 @@ Figure 4.1: Beta distributions with different parameter values.
 </p>
 </div>
 </div>
-<div id="normal-distribution" class="section level3 hasAnchor" number="4.3.2">
-<h3><span class="header-section-number">4.3.2</span> Normal distribution<a href="distributions.html#normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="normdist" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Normal distribution<a href="distributions.html#normdist" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The normal, or Gaussian distribution is widely used since a long time in statistics. It describes the distribution of measurements that vary because of a sum of random errors. Based on the central limit theorem, sample averages are approximately normally distributed (<a href="basics.html#basics">2</a>).</p>
 <p><span class="math inline">\(x \sim normal(\mu, \sigma^2)\)</span></p>
 <p>The density function is <span class="math inline">\(p(x) = \frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{1}{2\sigma^2}(x -\mu)^2)\)</span> and it is implemented in the R-function <code>dnorm</code>.</p>
 <p>The expected value is <span class="math inline">\(E(x) = \mu\)</span> and the variance is <span class="math inline">\(Var(x) = \sigma^2\)</span>.</p>
-<p>The variance parameter can be specified to be a variance, a standard deviation or a precision. Different software (or author of the paper) have different habits, e.g., R and Stan use the standard deviation sigma <span class="math inline">\(\sigma\)</span>, whereas BUGS (WinBugs, OpenBUGS or jags) use the precision, which is the inverse of the variance $= $.</p>
-<p>The normal distribution is used as a data model for measurements that scatter symmetrically around a mean, such as body size (in m), food consumption (in g), body temperature (°C).
+<p>The variance parameter can be specified to be a variance, a standard deviation or a precision. Different software (or authors) have different habits, e.g., R and Stan use the standard deviation sigma <span class="math inline">\(\sigma\)</span>, whereas BUGS (WinBugs, OpenBUGS or jags) use the precision, which is the inverse of the variance $= $.</p>
+<p>The normal distribution is used as a data model for measurements that scatter symmetrically around a mean, such as body size (in m), food consumption (in g), or body temperature (°C).
 The normal distribution also serves as prior distribution for parameters that can take on negative or positive values. The larger the variance, the flatter (less informative) is the distribution.</p>
+<p>The standard normal distribution is a normal distribution with a mean of zero and a variance of one, <span class="math inline">\(z \sim normal(0, 1)\)</span>. The standard normal distribution is also called the z-distribution. Or, a z-variable is a variable with a mean of zero and a standard deviation of one.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="distributions.html#cb40-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
+<span id="cb40-2"><a href="distributions.html#cb40-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x) <span class="co"># density function of a standard normal distribution</span></span>
+<span id="cb40-3"><a href="distributions.html#cb40-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span>x,<span class="at">y=</span>y)</span>
+<span id="cb40-4"><a href="distributions.html#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;#d95f0e&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">ylab=</span><span class="st">&quot;normal density of x&quot;</span>)</span>
+<span id="cb40-5"><a href="distributions.html#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(<span class="dv">0</span>, <span class="fu">dnorm</span>(<span class="dv">1</span>), <span class="dv">1</span>, <span class="fu">dnorm</span>(<span class="dv">1</span>), <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb40-6"><a href="distributions.html#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(<span class="dv">0</span>, <span class="fu">dnorm</span>(<span class="dv">0</span>), <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb40-7"><a href="distributions.html#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">0.5</span>, <span class="fl">0.23</span>, <span class="fu">expression</span>(sigma))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:normdistplot"></span>
+<img src="1.3-distributions_files/figure-html/normdistplot-1.png" alt="Standard normal distribution" width="672" />
+<p class="caption">
+Figure 4.2: Standard normal distribution
+</p>
+</div>
+<p>Plus minus one times the standard deviation (<span class="math inline">\(\sigma\)</span>) from the mean includes around 68% of the area under the curve (corresponding to around 68% of the data points in case the normal distribution is used as a data model, or 68% of the prior or posterior mass if the normal distribution is used to describe the knowledge about a parameter). Plus minus two times the standard deviation includes around 95% of the area under the curve.</p>
 </div>
 <div id="gamma-distribution" class="section level3 hasAnchor" number="4.3.3">
 <h3><span class="header-section-number">4.3.3</span> Gamma distribution<a href="distributions.html#gamma-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -492,7 +509,7 @@ Ratios of sample variances drawn from populations with equal variances follow an
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-1"></span>
 <img src="1.3-distributions_files/figure-html/unnamed-chunk-1-1.png" alt="Different density functions of the F statistics" width="672" />
 <p class="caption">
-Figure 4.2: Different density functions of the F statistics
+Figure 4.3: Different density functions of the F statistics
 </p>
 </div>
 

@@ -16,6 +16,7 @@ fig:boxplt
 fig:ranhist
 fig:histboot
 fig:betadist
+fig:normdistplot
 fig:unnamed-chunk-1
 eq:lm
 eq:lmalternativ
@@ -38,6 +39,7 @@ tab:sumtabpa
 fig:fgbiom
 fig:sfexfig
 fig:pooling
+fig:corttest
 fig:assessmodelassumptions
 fig:checkconvergencemodelbrm
 fig:ppbinomial
@@ -84,7 +86,7 @@ poisson-distribution
 negative-binomial-distribution
 continuous-distributions
 beta-distribution
-normal-distribution
+normdist
 gamma-distribution
 cauchydistri
 t-distribution
@@ -131,6 +133,8 @@ lmer
 background-1
 why-mixed-effects-models
 random-factors-and-partial-pooling
+fitting-a-normal-linear-mixed-model-in-r
+restricted-maximum-likelihood-estimation-reml
 glm
 introduction-3
 summary-4
