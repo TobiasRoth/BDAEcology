@@ -1,10 +1,10 @@
 --- 
 title: "Bayesian Data Analysis in Ecology with R and Stan"
 author: "Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt"
-date: "2021-08-24"
+date: "2023-01-22"
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: [references/References_fk.bib, references/References_new.bib]
+bibliography: [references/References_fk.bib, references/References_new.bib, references/References_svf.bib]
 link-citations: yes
 github-repo: TobiasRoth/BDAEcology
 cover-image: images/cover.jpg
@@ -13,7 +13,7 @@ description: "This GitHub-book is collection of updates and additional material 
 
 # Preface {-}
 
-<img src="images/cover.jpg" width="655" style="display: block; margin: auto;" />
+<img src="images/cover.jpg" style="display: block; margin: auto;" />
 
 ## Why this book? {-}
 In 2015, we wrote a statistics book for Master/PhD level Bayesian data analyses in ecology [@KornerNievergelt2015]. You can order it [here](https://www.elsevier.com/books/bayesian-data-analysis-in-ecology-using-linear-models-with-r-bugs-and-stan/korner-nievergelt/978-0-12-801370-0). People seemed to like it (e.g. [@Harju2016]). Since then, two parallel processes happen. First, we learn more and we become more confident in what we do, or what we do not, and why we do what we do. Second, several really clever people develop software that broaden the spectrum of ecological models that now easily can be applied by ecologists used to work with R.  With this e-book, we open the possibility to add new or substantially revised material. In most of the time, it should be in a state that it can be printed and used together with the book as handout for our stats courses. 
@@ -28,7 +28,7 @@ It is open so that everybody with a [GitHub](https://github.com) account can mak
 
 ## Acknowledgments {-}
 We thank *Yihui Xie* for providing [bookdown](bhttps://bookdown.org/yihui/bookdown/) which makes it much fun to write open books such as ours. 
-
+We thank many anonymous students and collaborators who searched information on new software, reported updates and gave feedback on earlier versions of the book. Specifically, we thank Carole Niffenegger for looking up the difference between the bulk and tail ESS in the brm output, Martin Küblbeck for using the conditional logistic regression in rstanarm, ...  
 
 
 

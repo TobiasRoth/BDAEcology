@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>18 MCMC using Stan | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
   <meta property="og:title" content="18 MCMC using Stan | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
-  
   <meta property="og:image" content="/images/cover.jpg" />
   <meta property="og:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="github-repo" content="TobiasRoth/BDAEcology" />
@@ -24,17 +23,17 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2021-08-24" />
+<meta name="date" content="2023-01-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="model-comparison.html"/>
-<link rel="next" href="ridge-regression.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link rel="prev" href="model_comparison.html"/>
+<link rel="next" href="ridge_regression.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -93,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -143,7 +142,7 @@ div.csl-indent {
 }
 </style>
 
-<link rel="stylesheet" href="Settings/style.css" type="text/css" />
+<link rel="stylesheet" href="settings/style.css" type="text/css" />
 </head>
 
 <body>
@@ -168,7 +167,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.1" data-path="PART-I.html"><a href="PART-I.html#further-reading"><i class="fa fa-check"></i><b>1.1</b> Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Prerequisits: Basic statistical terms</a>
+<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Prerequisites: Basic statistical terms</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#variables-and-observations"><i class="fa fa-check"></i><b>2.1</b> Variables and observations</a></li>
 <li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-variables"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing variables</a>
@@ -196,31 +195,39 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.6</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="analyses-steps.html"><a href="analyses-steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a>
+<li class="chapter" data-level="3" data-path="analyses_steps.html"><a href="analyses_steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="analyses-steps.html"><a href="analyses-steps.html#step1"><i class="fa fa-check"></i><b>3.1</b> Plausibility of Data</a></li>
-<li class="chapter" data-level="3.2" data-path="analyses-steps.html"><a href="analyses-steps.html#step2"><i class="fa fa-check"></i><b>3.2</b> Relationships</a></li>
-<li class="chapter" data-level="3.3" data-path="analyses-steps.html"><a href="analyses-steps.html#step3"><i class="fa fa-check"></i><b>3.3</b> Data Distribution</a></li>
-<li class="chapter" data-level="3.4" data-path="analyses-steps.html"><a href="analyses-steps.html#step4"><i class="fa fa-check"></i><b>3.4</b> Preparation of Explanatory Variables</a></li>
-<li class="chapter" data-level="3.5" data-path="analyses-steps.html"><a href="analyses-steps.html#step5"><i class="fa fa-check"></i><b>3.5</b> Data Structure</a></li>
-<li class="chapter" data-level="3.6" data-path="analyses-steps.html"><a href="analyses-steps.html#step6"><i class="fa fa-check"></i><b>3.6</b> Define Prior Distributions</a></li>
-<li class="chapter" data-level="3.7" data-path="analyses-steps.html"><a href="analyses-steps.html#step7"><i class="fa fa-check"></i><b>3.7</b> Fit the Model</a></li>
-<li class="chapter" data-level="3.8" data-path="analyses-steps.html"><a href="analyses-steps.html#step8"><i class="fa fa-check"></i><b>3.8</b> Check Model</a></li>
-<li class="chapter" data-level="3.9" data-path="analyses-steps.html"><a href="analyses-steps.html#step9"><i class="fa fa-check"></i><b>3.9</b> Model Uncertainty</a></li>
-<li class="chapter" data-level="3.10" data-path="analyses-steps.html"><a href="analyses-steps.html#step10"><i class="fa fa-check"></i><b>3.10</b> Draw Conclusions</a></li>
-<li class="chapter" data-level="" data-path="analyses-steps.html"><a href="analyses-steps.html#further-reading-1"><i class="fa fa-check"></i>Further reading</a></li>
+<li class="chapter" data-level="3.1" data-path="analyses_steps.html"><a href="analyses_steps.html#step1"><i class="fa fa-check"></i><b>3.1</b> Plausibility of Data</a></li>
+<li class="chapter" data-level="3.2" data-path="analyses_steps.html"><a href="analyses_steps.html#step2"><i class="fa fa-check"></i><b>3.2</b> Relationships</a></li>
+<li class="chapter" data-level="3.3" data-path="analyses_steps.html"><a href="analyses_steps.html#step3"><i class="fa fa-check"></i><b>3.3</b> Data Distribution</a></li>
+<li class="chapter" data-level="3.4" data-path="analyses_steps.html"><a href="analyses_steps.html#step4"><i class="fa fa-check"></i><b>3.4</b> Preparation of Explanatory Variables</a></li>
+<li class="chapter" data-level="3.5" data-path="analyses_steps.html"><a href="analyses_steps.html#step5"><i class="fa fa-check"></i><b>3.5</b> Data Structure</a></li>
+<li class="chapter" data-level="3.6" data-path="analyses_steps.html"><a href="analyses_steps.html#step6"><i class="fa fa-check"></i><b>3.6</b> Define Prior Distributions</a></li>
+<li class="chapter" data-level="3.7" data-path="analyses_steps.html"><a href="analyses_steps.html#step7"><i class="fa fa-check"></i><b>3.7</b> Fit the Model</a></li>
+<li class="chapter" data-level="3.8" data-path="analyses_steps.html"><a href="analyses_steps.html#step8"><i class="fa fa-check"></i><b>3.8</b> Check Model</a></li>
+<li class="chapter" data-level="3.9" data-path="analyses_steps.html"><a href="analyses_steps.html#step9"><i class="fa fa-check"></i><b>3.9</b> Model Uncertainty</a></li>
+<li class="chapter" data-level="3.10" data-path="analyses_steps.html"><a href="analyses_steps.html#step10"><i class="fa fa-check"></i><b>3.10</b> Draw Conclusions</a></li>
+<li class="chapter" data-level="" data-path="analyses_steps.html"><a href="analyses_steps.html#further-reading-1"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>4</b> Probability distributions</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="distributions.html"><a href="distributions.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
-<li class="chapter" data-level="4.2" data-path="distributions.html"><a href="distributions.html#normal-distribution"><i class="fa fa-check"></i><b>4.2</b> Normal distribution</a></li>
-<li class="chapter" data-level="4.3" data-path="distributions.html"><a href="distributions.html#poisson-distribution"><i class="fa fa-check"></i><b>4.3</b> Poisson distribution</a></li>
-<li class="chapter" data-level="4.4" data-path="distributions.html"><a href="distributions.html#gamma-distribution"><i class="fa fa-check"></i><b>4.4</b> Gamma distribution</a>
+<li class="chapter" data-level="4.2" data-path="distributions.html"><a href="distributions.html#discrete-distributions"><i class="fa fa-check"></i><b>4.2</b> Discrete distributions</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="distributions.html"><a href="distributions.html#cauchydistri"><i class="fa fa-check"></i><b>4.4.1</b> Cauchy distribution</a></li>
-<li class="chapter" data-level="4.4.2" data-path="distributions.html"><a href="distributions.html#t-distribution"><i class="fa fa-check"></i><b>4.4.2</b> t-distribution</a></li>
+<li class="chapter" data-level="4.2.1" data-path="distributions.html"><a href="distributions.html#bernoulli-distribution"><i class="fa fa-check"></i><b>4.2.1</b> Bernoulli distribution</a></li>
+<li class="chapter" data-level="4.2.2" data-path="distributions.html"><a href="distributions.html#binomial-distribution"><i class="fa fa-check"></i><b>4.2.2</b> Binomial distribution</a></li>
+<li class="chapter" data-level="4.2.3" data-path="distributions.html"><a href="distributions.html#poisson-distribution"><i class="fa fa-check"></i><b>4.2.3</b> Poisson distribution</a></li>
+<li class="chapter" data-level="4.2.4" data-path="distributions.html"><a href="distributions.html#negative-binomial-distribution"><i class="fa fa-check"></i><b>4.2.4</b> Negative-binomial distribution</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="distributions.html"><a href="distributions.html#f-distribution"><i class="fa fa-check"></i><b>4.5</b> F-distribution</a></li>
+<li class="chapter" data-level="4.3" data-path="distributions.html"><a href="distributions.html#continuous-distributions"><i class="fa fa-check"></i><b>4.3</b> Continuous distributions</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="distributions.html"><a href="distributions.html#beta-distribution"><i class="fa fa-check"></i><b>4.3.1</b> Beta distribution</a></li>
+<li class="chapter" data-level="4.3.2" data-path="distributions.html"><a href="distributions.html#normdist"><i class="fa fa-check"></i><b>4.3.2</b> Normal distribution</a></li>
+<li class="chapter" data-level="4.3.3" data-path="distributions.html"><a href="distributions.html#gamma-distribution"><i class="fa fa-check"></i><b>4.3.3</b> Gamma distribution</a></li>
+<li class="chapter" data-level="4.3.4" data-path="distributions.html"><a href="distributions.html#cauchydistri"><i class="fa fa-check"></i><b>4.3.4</b> Cauchy distribution</a></li>
+<li class="chapter" data-level="4.3.5" data-path="distributions.html"><a href="distributions.html#t-distribution"><i class="fa fa-check"></i><b>4.3.5</b> t-distribution</a></li>
+<li class="chapter" data-level="4.3.6" data-path="distributions.html"><a href="distributions.html#f-distribution"><i class="fa fa-check"></i><b>4.3.6</b> F-distribution</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="rfunctions.html"><a href="rfunctions.html"><i class="fa fa-check"></i><b>5</b> Important R-functions</a>
 <ul>
@@ -231,6 +238,7 @@ div.csl-indent {
 <li class="chapter" data-level="6" data-path="reproducibleresearch.html"><a href="reproducibleresearch.html"><i class="fa fa-check"></i><b>6</b> Reproducible research</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="reproducibleresearch.html"><a href="reproducibleresearch.html#summary-2"><i class="fa fa-check"></i><b>6.1</b> Summary</a></li>
+<li class="chapter" data-level="6.2" data-path="reproducibleresearch.html"><a href="reproducibleresearch.html#further-reading-2"><i class="fa fa-check"></i><b>6.2</b> Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="furthertopics.html"><a href="furthertopics.html"><i class="fa fa-check"></i><b>7</b> Further topics</a>
 <ul>
@@ -240,12 +248,12 @@ div.csl-indent {
 <li class="part"><span><b>II BAYESIAN DATA ANALYSIS</b></span></li>
 <li class="chapter" data-level="8" data-path="PART-II.html"><a href="PART-II.html"><i class="fa fa-check"></i><b>8</b> Introduction to PART II</a>
 <ul>
-<li class="chapter" data-level="" data-path="PART-II.html"><a href="PART-II.html#further-reading-2"><i class="fa fa-check"></i>Further reading</a></li>
+<li class="chapter" data-level="" data-path="PART-II.html"><a href="PART-II.html#further-reading-3"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="bayesian-paradigm.html"><a href="bayesian-paradigm.html"><i class="fa fa-check"></i><b>9</b> The Bayesian paradigm</a>
+<li class="chapter" data-level="9" data-path="bayesian_paradigm.html"><a href="bayesian_paradigm.html"><i class="fa fa-check"></i><b>9</b> The Bayesian paradigm</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="bayesian-paradigm.html"><a href="bayesian-paradigm.html#introduction-1"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
-<li class="chapter" data-level="9.2" data-path="bayesian-paradigm.html"><a href="bayesian-paradigm.html#summary-3"><i class="fa fa-check"></i><b>9.2</b> Summary</a></li>
+<li class="chapter" data-level="9.1" data-path="bayesian_paradigm.html"><a href="bayesian_paradigm.html#introduction-1"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="bayesian_paradigm.html"><a href="bayesian_paradigm.html#summary-3"><i class="fa fa-check"></i><b>9.2</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i><b>10</b> Prior distributions</a>
 <ul>
@@ -255,26 +263,22 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="11" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>11</b> Normal Linear Models</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="lm.html"><a href="lm.html#linear-regression"><i class="fa fa-check"></i><b>11.1</b> Linear Regression</a>
+<li class="chapter" data-level="11.1" data-path="lm.html"><a href="lm.html#linear-regression"><i class="fa fa-check"></i><b>11.1</b> Linear regression</a>
 <ul>
 <li class="chapter" data-level="11.1.1" data-path="lm.html"><a href="lm.html#background"><i class="fa fa-check"></i><b>11.1.1</b> Background</a></li>
 <li class="chapter" data-level="11.1.2" data-path="lm.html"><a href="lm.html#fitting-a-linear-regression-in-r"><i class="fa fa-check"></i><b>11.1.2</b> Fitting a Linear Regression in R</a></li>
 <li class="chapter" data-level="11.1.3" data-path="lm.html"><a href="lm.html#drawing-conclusions"><i class="fa fa-check"></i><b>11.1.3</b> Drawing Conclusions</a></li>
-<li class="chapter" data-level="11.1.4" data-path="lm.html"><a href="lm.html#frequentist-results"><i class="fa fa-check"></i><b>11.1.4</b> Frequentist Results</a></li>
+<li class="chapter" data-level="11.1.4" data-path="lm.html"><a href="lm.html#interpretation-of-the-r-summary-output"><i class="fa fa-check"></i><b>11.1.4</b> Interpretation of the R summary output</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="lm.html"><a href="lm.html#regression-variants-anova-ancova-and-multiple-regression"><i class="fa fa-check"></i><b>11.2</b> Regression Variants: ANOVA, ANCOVA, and Multiple Regression</a>
+<li class="chapter" data-level="11.2" data-path="lm.html"><a href="lm.html#linear-model-with-one-categorical-predictor-one-way-anova"><i class="fa fa-check"></i><b>11.2</b> Linear model with one categorical predictor (one-way ANOVA)</a></li>
+<li class="chapter" data-level="11.3" data-path="lm.html"><a href="lm.html#other-variants-of-normal-linear-models-two-way-anova-analysis-of-covariance-and-multiple-regression"><i class="fa fa-check"></i><b>11.3</b> Other variants of normal linear models: Two-way anova, analysis of covariance and multiple regression</a>
 <ul>
-<li class="chapter" data-level="11.2.1" data-path="lm.html"><a href="lm.html#one-way-anova"><i class="fa fa-check"></i><b>11.2.1</b> One-Way ANOVA</a></li>
-<li class="chapter" data-level="11.2.2" data-path="lm.html"><a href="lm.html#frequentist-results-from-a-one-way-anova"><i class="fa fa-check"></i><b>11.2.2</b> Frequentist Results from a One-Way ANOVA</a></li>
-<li class="chapter" data-level="11.2.3" data-path="lm.html"><a href="lm.html#two-way-anova"><i class="fa fa-check"></i><b>11.2.3</b> Two-Way ANOVA</a></li>
-<li class="chapter" data-level="11.2.4" data-path="lm.html"><a href="lm.html#frequentist-results-from-a-two-way-anova"><i class="fa fa-check"></i><b>11.2.4</b> Frequentist Results from a Two-Way ANOVA</a></li>
-<li class="chapter" data-level="11.2.5" data-path="lm.html"><a href="lm.html#multiple-comparisons-and-post-hoc-tests"><i class="fa fa-check"></i><b>11.2.5</b> Multiple Comparisons and Post Hoc Tests</a></li>
-<li class="chapter" data-level="11.2.6" data-path="lm.html"><a href="lm.html#analysis-of-covariance"><i class="fa fa-check"></i><b>11.2.6</b> Analysis of Covariance</a></li>
-<li class="chapter" data-level="11.2.7" data-path="lm.html"><a href="lm.html#multiple-regression-and-collinearity"><i class="fa fa-check"></i><b>11.2.7</b> Multiple Regression and Collinearity</a></li>
-<li class="chapter" data-level="11.2.8" data-path="lm.html"><a href="lm.html#orderedfactors"><i class="fa fa-check"></i><b>11.2.8</b> Ordered Factors and Contrasts</a></li>
-<li class="chapter" data-level="11.2.9" data-path="lm.html"><a href="lm.html#quadratic-and-higher-polynomial-terms"><i class="fa fa-check"></i><b>11.2.9</b> Quadratic and Higher Polynomial Terms</a></li>
+<li class="chapter" data-level="11.3.1" data-path="lm.html"><a href="lm.html#linear-model-with-two-categorical-predictors-two-way-anova"><i class="fa fa-check"></i><b>11.3.1</b> Linear model with two categorical predictors (two-way ANOVA)</a></li>
+<li class="chapter" data-level="11.3.2" data-path="lm.html"><a href="lm.html#a-linear-model-with-a-categorical-and-a-numeric-predictor-ancova"><i class="fa fa-check"></i><b>11.3.2</b> A linear model with a categorical and a numeric predictor (ANCOVA)</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="lm.html"><a href="lm.html#pendenzen"><i class="fa fa-check"></i><b>11.3</b> Pendenzen</a></li>
+<li class="chapter" data-level="11.4" data-path="lm.html"><a href="lm.html#partial-coefficients-and-some-comments-on-collinearity"><i class="fa fa-check"></i><b>11.4</b> Partial coefficients and some comments on collinearity</a></li>
+<li class="chapter" data-level="11.5" data-path="lm.html"><a href="lm.html#orderedfactors"><i class="fa fa-check"></i><b>11.5</b> Ordered Factors and Contrasts</a></li>
+<li class="chapter" data-level="11.6" data-path="lm.html"><a href="lm.html#quadratic-and-higher-polynomial-terms"><i class="fa fa-check"></i><b>11.6</b> Quadratic and Higher Polynomial Terms</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="residualanalysis.html"><a href="residualanalysis.html"><i class="fa fa-check"></i><b>12</b> Assessing Model Assumptions</a>
 <ul>
@@ -285,13 +289,15 @@ div.csl-indent {
 <li class="chapter" data-level="12.5" data-path="residualanalysis.html"><a href="residualanalysis.html#spatialautocorrelation"><i class="fa fa-check"></i><b>12.5</b> Spatial Autocorrelation</a></li>
 <li class="chapter" data-level="12.6" data-path="residualanalysis.html"><a href="residualanalysis.html#Heteroscedasticity"><i class="fa fa-check"></i><b>12.6</b> Heteroscedasticity</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="lmer.html"><a href="lmer.html"><i class="fa fa-check"></i><b>13</b> Linear mixed effect models</a>
+<li class="chapter" data-level="13" data-path="lmer.html"><a href="lmer.html"><i class="fa fa-check"></i><b>13</b> Linear Mixed Effect Models</a>
 <ul>
 <li class="chapter" data-level="13.1" data-path="lmer.html"><a href="lmer.html#background-1"><i class="fa fa-check"></i><b>13.1</b> Background</a>
 <ul>
 <li class="chapter" data-level="13.1.1" data-path="lmer.html"><a href="lmer.html#why-mixed-effects-models"><i class="fa fa-check"></i><b>13.1.1</b> Why Mixed Effects Models?</a></li>
 <li class="chapter" data-level="13.1.2" data-path="lmer.html"><a href="lmer.html#random-factors-and-partial-pooling"><i class="fa fa-check"></i><b>13.1.2</b> Random Factors and Partial Pooling</a></li>
 </ul></li>
+<li class="chapter" data-level="13.2" data-path="lmer.html"><a href="lmer.html#fitting-a-normal-linear-mixed-model-in-r"><i class="fa fa-check"></i><b>13.2</b> Fitting a normal linear mixed model in R</a></li>
+<li class="chapter" data-level="13.3" data-path="lmer.html"><a href="lmer.html#restricted-maximum-likelihood-estimation-reml"><i class="fa fa-check"></i><b>13.3</b> Restricted maximum likelihood estimation (REML)</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>14</b> Generalized linear models</a>
 <ul>
@@ -300,39 +306,42 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="15" data-path="glmm.html"><a href="glmm.html"><i class="fa fa-check"></i><b>15</b> Generalized linear mixed models</a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="glmm.html"><a href="glmm.html#introduction-4"><i class="fa fa-check"></i><b>15.1</b> Introduction</a></li>
+<li class="chapter" data-level="15.1" data-path="glmm.html"><a href="glmm.html#introduction-4"><i class="fa fa-check"></i><b>15.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="glmm.html"><a href="glmm.html#binomial-mixed-model"><i class="fa fa-check"></i><b>15.1.1</b> Binomial Mixed Model</a></li>
+</ul></li>
 <li class="chapter" data-level="15.2" data-path="glmm.html"><a href="glmm.html#summary-5"><i class="fa fa-check"></i><b>15.2</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="model-checking.html"><a href="model-checking.html"><i class="fa fa-check"></i><b>16</b> Posterior predictive model checking</a>
+<li class="chapter" data-level="16" data-path="modelchecking.html"><a href="modelchecking.html"><i class="fa fa-check"></i><b>16</b> Posterior predictive model checking</a>
 <ul>
-<li class="chapter" data-level="16.1" data-path="model-checking.html"><a href="model-checking.html#introduction-5"><i class="fa fa-check"></i><b>16.1</b> Introduction</a></li>
-<li class="chapter" data-level="16.2" data-path="model-checking.html"><a href="model-checking.html#summary-6"><i class="fa fa-check"></i><b>16.2</b> Summary</a></li>
+<li class="chapter" data-level="16.1" data-path="modelchecking.html"><a href="modelchecking.html#introduction-5"><i class="fa fa-check"></i><b>16.1</b> Introduction</a></li>
+<li class="chapter" data-level="16.2" data-path="modelchecking.html"><a href="modelchecking.html#summary-6"><i class="fa fa-check"></i><b>16.2</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i><b>17</b> Model comparison and multimodel inference</a>
+<li class="chapter" data-level="17" data-path="model_comparison.html"><a href="model_comparison.html"><i class="fa fa-check"></i><b>17</b> Model comparison and multimodel inference</a>
 <ul>
-<li class="chapter" data-level="17.1" data-path="model-comparison.html"><a href="model-comparison.html#introduction-6"><i class="fa fa-check"></i><b>17.1</b> Introduction</a></li>
-<li class="chapter" data-level="17.2" data-path="model-comparison.html"><a href="model-comparison.html#summary-7"><i class="fa fa-check"></i><b>17.2</b> Summary</a></li>
+<li class="chapter" data-level="17.1" data-path="model_comparison.html"><a href="model_comparison.html#introduction-6"><i class="fa fa-check"></i><b>17.1</b> Introduction</a></li>
+<li class="chapter" data-level="17.2" data-path="model_comparison.html"><a href="model_comparison.html#summary-7"><i class="fa fa-check"></i><b>17.2</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="18" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>18</b> MCMC using Stan</a>
 <ul>
-<li class="chapter" data-level="18.1" data-path="stan.html"><a href="stan.html#background-2"><i class="fa fa-check"></i><b>18.1</b> Background</a></li>
+<li class="chapter" data-level="18.1" data-path="stan.html"><a href="stan.html#background-3"><i class="fa fa-check"></i><b>18.1</b> Background</a></li>
 <li class="chapter" data-level="18.2" data-path="stan.html"><a href="stan.html#install-rstan"><i class="fa fa-check"></i><b>18.2</b> Install <code>rstan</code></a></li>
 <li class="chapter" data-level="18.3" data-path="stan.html"><a href="stan.html#firststanmod"><i class="fa fa-check"></i><b>18.3</b> Writing a Stan model</a></li>
 <li class="chapter" data-level="18.4" data-path="stan.html"><a href="stan.html#run-stan-from-r"><i class="fa fa-check"></i><b>18.4</b> Run Stan from R</a></li>
-<li class="chapter" data-level="" data-path="stan.html"><a href="stan.html#further-reading-3"><i class="fa fa-check"></i>Further reading</a></li>
+<li class="chapter" data-level="" data-path="stan.html"><a href="stan.html#further-reading-4"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="ridge-regression.html"><a href="ridge-regression.html"><i class="fa fa-check"></i><b>19</b> Ridge Regression</a>
+<li class="chapter" data-level="19" data-path="ridge_regression.html"><a href="ridge_regression.html"><i class="fa fa-check"></i><b>19</b> Ridge Regression</a>
 <ul>
-<li class="chapter" data-level="19.1" data-path="ridge-regression.html"><a href="ridge-regression.html#introduction-7"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
+<li class="chapter" data-level="19.1" data-path="ridge_regression.html"><a href="ridge_regression.html#introduction-7"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
 </ul></li>
 <li class="chapter" data-level="20" data-path="SEM.html"><a href="SEM.html"><i class="fa fa-check"></i><b>20</b> Structural equation models</a>
 <ul>
 <li class="chapter" data-level="20.1" data-path="SEM.html"><a href="SEM.html#introduction-8"><i class="fa fa-check"></i><b>20.1</b> Introduction</a></li>
 </ul></li>
-<li class="chapter" data-level="21" data-path="spatial-glmm.html"><a href="spatial-glmm.html"><i class="fa fa-check"></i><b>21</b> Modeling spatial data using GLMM</a>
+<li class="chapter" data-level="21" data-path="spatial_glmm.html"><a href="spatial_glmm.html"><i class="fa fa-check"></i><b>21</b> Modeling spatial data using GLMM</a>
 <ul>
-<li class="chapter" data-level="21.1" data-path="spatial-glmm.html"><a href="spatial-glmm.html#introduction-9"><i class="fa fa-check"></i><b>21.1</b> Introduction</a></li>
-<li class="chapter" data-level="21.2" data-path="spatial-glmm.html"><a href="spatial-glmm.html#summary-8"><i class="fa fa-check"></i><b>21.2</b> Summary</a></li>
+<li class="chapter" data-level="21.1" data-path="spatial_glmm.html"><a href="spatial_glmm.html#introduction-9"><i class="fa fa-check"></i><b>21.1</b> Introduction</a></li>
+<li class="chapter" data-level="21.2" data-path="spatial_glmm.html"><a href="spatial_glmm.html#summary-8"><i class="fa fa-check"></i><b>21.2</b> Summary</a></li>
 </ul></li>
 <li class="part"><span><b>III ECOLOGICAL MODELS</b></span></li>
 <li class="chapter" data-level="22" data-path="PART-III.html"><a href="PART-III.html"><i class="fa fa-check"></i><b>22</b> Introduction to PART III</a>
@@ -347,7 +356,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="24" data-path="dailynestsurv.html"><a href="dailynestsurv.html"><i class="fa fa-check"></i><b>24</b> Daily nest survival</a>
 <ul>
-<li class="chapter" data-level="24.1" data-path="dailynestsurv.html"><a href="dailynestsurv.html#background-3"><i class="fa fa-check"></i><b>24.1</b> Background</a></li>
+<li class="chapter" data-level="24.1" data-path="dailynestsurv.html"><a href="dailynestsurv.html#background-4"><i class="fa fa-check"></i><b>24.1</b> Background</a></li>
 <li class="chapter" data-level="24.2" data-path="dailynestsurv.html"><a href="dailynestsurv.html#models-for-estimating-daily-nest-survival"><i class="fa fa-check"></i><b>24.2</b> Models for estimating daily nest survival</a></li>
 <li class="chapter" data-level="24.3" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model"><i class="fa fa-check"></i><b>24.3</b> Known fate model</a></li>
 <li class="chapter" data-level="24.4" data-path="dailynestsurv.html"><a href="dailynestsurv.html#dailynestsurvstan"><i class="fa fa-check"></i><b>24.4</b> The Stan model</a></li>
@@ -355,15 +364,15 @@ div.csl-indent {
 <li class="chapter" data-level="24.6" data-path="dailynestsurv.html"><a href="dailynestsurv.html#check-convergence"><i class="fa fa-check"></i><b>24.6</b> Check convergence</a></li>
 <li class="chapter" data-level="24.7" data-path="dailynestsurv.html"><a href="dailynestsurv.html#look-at-results"><i class="fa fa-check"></i><b>24.7</b> Look at results</a></li>
 <li class="chapter" data-level="24.8" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model-for-irregular-nest-controls"><i class="fa fa-check"></i><b>24.8</b> Known fate model for irregular nest controls</a></li>
-<li class="chapter" data-level="" data-path="dailynestsurv.html"><a href="dailynestsurv.html#further-reading-4"><i class="fa fa-check"></i>Further reading</a></li>
+<li class="chapter" data-level="" data-path="dailynestsurv.html"><a href="dailynestsurv.html#further-reading-5"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html"><i class="fa fa-check"></i><b>25</b> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</a>
+<li class="chapter" data-level="25" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html"><i class="fa fa-check"></i><b>25</b> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</a>
 <ul>
-<li class="chapter" data-level="25.1" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#introduction-11"><i class="fa fa-check"></i><b>25.1</b> Introduction</a></li>
-<li class="chapter" data-level="25.2" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#data-description"><i class="fa fa-check"></i><b>25.2</b> Data description</a></li>
-<li class="chapter" data-level="25.3" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#model-description"><i class="fa fa-check"></i><b>25.3</b> Model description</a></li>
-<li class="chapter" data-level="25.4" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#the-stan-code"><i class="fa fa-check"></i><b>25.4</b> The Stan code</a></li>
-<li class="chapter" data-level="25.5" data-path="cjs-with-mix.html"><a href="cjs-with-mix.html#call-stan-from-r-check-convergence-and-look-at-results"><i class="fa fa-check"></i><b>25.5</b> Call Stan from R, check convergence and look at results</a></li>
+<li class="chapter" data-level="25.1" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#introduction-11"><i class="fa fa-check"></i><b>25.1</b> Introduction</a></li>
+<li class="chapter" data-level="25.2" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#data-description"><i class="fa fa-check"></i><b>25.2</b> Data description</a></li>
+<li class="chapter" data-level="25.3" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#model-description"><i class="fa fa-check"></i><b>25.3</b> Model description</a></li>
+<li class="chapter" data-level="25.4" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#the-stan-code"><i class="fa fa-check"></i><b>25.4</b> The Stan code</a></li>
+<li class="chapter" data-level="25.5" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#call-stan-from-r-check-convergence-and-look-at-results"><i class="fa fa-check"></i><b>25.5</b> Call Stan from R, check convergence and look at results</a></li>
 </ul></li>
 <li class="part"><span><b>IV APPENDICES</b></span></li>
 <li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
@@ -387,67 +396,67 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="stan" class="section level1" number="18">
-<h1><span class="header-section-number">18</span> MCMC using Stan</h1>
-<div id="background-2" class="section level2" number="18.1">
-<h2><span class="header-section-number">18.1</span> Background</h2>
+<div id="stan" class="section level1 hasAnchor" number="18">
+<h1><span class="header-section-number">18</span> MCMC using Stan<a href="stan.html#stan" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="background-3" class="section level2 hasAnchor" number="18.1">
+<h2><span class="header-section-number">18.1</span> Background<a href="stan.html#background-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Markov chain Monte Carlo (MCMC) simulation techniques were developed in the mid-1950s by physicists (Metropolis et al., 1953). Later, statisticians discovered MCMC (Hastings, 1970; Geman &amp; Geman, 1984; Tanner &amp; Wong, 1987; Gelfand et al., 1990; Gelfand &amp; Smith, 1990). MCMC methods make it possible to obtain posterior distributions for parameters and latent variables (unobserved variables) of complex models. In parallel, personal computer capacities increased in the 1990s and user-friendly software such as the different programs based on the programming language BUGS (Spiegelhalter et al., 2003) came out. These developments boosted the use of Bayesian data analyses, particularly in genetics and ecology.</p>
 </div>
-<div id="install-rstan" class="section level2" number="18.2">
-<h2><span class="header-section-number">18.2</span> Install <code>rstan</code></h2>
+<div id="install-rstan" class="section level2 hasAnchor" number="18.2">
+<h2><span class="header-section-number">18.2</span> Install <code>rstan</code><a href="stan.html#install-rstan" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this book we use the program <a href="http://mc-stan.org">Stan</a> to draw random samples from the joint posterior distribution of the model parameters given a model, the data, prior distributions, and initial values. To do so, it uses the “no-U-turn sampler,” which is a type of Hamiltonian Monte Carlo simulation <span class="citation">(<a href="referenzen.html#ref-Hoffman2014" role="doc-biblioref">Hoffman and Gelman 2014</a>; <a href="referenzen.html#ref-Betancourt2013_b" role="doc-biblioref">Betancourt 2013</a>)</span>, and optimization-based point estimation. These algorithms are more efficient than the ones implemented in BUGS programs and they can handle larger data sets. Stan works particularly well for hierar- chical models <span class="citation">(<a href="referenzen.html#ref-Betancourt2013" role="doc-biblioref">Betancourt and Girolami 2013</a>)</span>. Stan runs on Windows, Mac, and Linux and can be used via the R interface <code>rstan</code>. Stan is automatically installed when the R package <code>rstan</code> is installed. For <a href="https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started">installing rstan</a>, it is advised to follow closely the system-specific instructions.</p>
 </div>
-<div id="firststanmod" class="section level2" number="18.3">
-<h2><span class="header-section-number">18.3</span> Writing a Stan model</h2>
+<div id="firststanmod" class="section level2 hasAnchor" number="18.3">
+<h2><span class="header-section-number">18.3</span> Writing a Stan model<a href="stan.html#firststanmod" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The statistical model is written in the Stan language and saved in a text file. The Stan language is rather strict, forcing the user to write unambiguous models. Stan is very well documented and the <a href="http://mc-stan.org/users/documentation/index.html">Stan Documentation</a> contains a comprehensive Language Manual, a Wiki documentation and various tutorials.</p>
 <p>We here provide a normal regression with one predictor variable as a worked example. The entire Stan model is as following (saved as <code>linreg.stan</code>)</p>
-<pre class="stan"><code>data {
-  int&lt;lower=0&gt; n;
-  vector[n] y;
-  vector[n] x;
-}
-
-parameters {
-  vector[2] beta;
-  real&lt;lower=0&gt; sigma;
-}
-
-model {
-  //priors
-  beta ~ normal(0,5);
-  sigma ~ cauchy(0,5);
-  // likelihood
-  y ~ normal(beta[1] + beta[2] * x, sigma);
-}</code></pre>
+<div class="sourceCode" id="cb159"><pre class="sourceCode stan"><code class="sourceCode stan"><span id="cb159-1"><a href="stan.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb159-2"><a href="stan.html#cb159-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; n;</span>
+<span id="cb159-3"><a href="stan.html#cb159-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>[n] y;</span>
+<span id="cb159-4"><a href="stan.html#cb159-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>[n] x;</span>
+<span id="cb159-5"><a href="stan.html#cb159-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb159-6"><a href="stan.html#cb159-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-7"><a href="stan.html#cb159-7" aria-hidden="true" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb159-8"><a href="stan.html#cb159-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>[<span class="dv">2</span>] beta;</span>
+<span id="cb159-9"><a href="stan.html#cb159-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; sigma;</span>
+<span id="cb159-10"><a href="stan.html#cb159-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb159-11"><a href="stan.html#cb159-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-12"><a href="stan.html#cb159-12" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb159-13"><a href="stan.html#cb159-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">//priors</span></span>
+<span id="cb159-14"><a href="stan.html#cb159-14" aria-hidden="true" tabindex="-1"></a>  beta ~ normal(<span class="dv">0</span>,<span class="dv">5</span>);</span>
+<span id="cb159-15"><a href="stan.html#cb159-15" aria-hidden="true" tabindex="-1"></a>  sigma ~ cauchy(<span class="dv">0</span>,<span class="dv">5</span>);</span>
+<span id="cb159-16"><a href="stan.html#cb159-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">// likelihood</span></span>
+<span id="cb159-17"><a href="stan.html#cb159-17" aria-hidden="true" tabindex="-1"></a>  y ~ normal(beta[<span class="dv">1</span>] + beta[<span class="dv">2</span>] * x, sigma);</span>
+<span id="cb159-18"><a href="stan.html#cb159-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>A Stan model consists of different named blocks. These blocks are (from first to last): data, transformed data, parameters, trans- formed parameters, model, and generated quantities. The blocks must appear in this order. The model block is mandatory; all other blocks are optional.</p>
 <p>In the <em>data</em> block, the type, dimension, and name of every variable has to be declared. Optionally, the range of possible values can be specified. For example, <code>vector[N] y;</code> means that y is a vector (type real) of length N, and <code>int&lt;lower=0&gt; N;</code> means that N is an integer with nonnegative values (the bounds, here 0, are included). Note that the restriction to a possible range of values is not strictly necessary but this will help specifying the correct model and it will improve speed. We also see that each line needs to be closed by a column sign. In the parameters block, all model parameters have to be defined. The coefficients of the linear predictor constitute a vector of length 2, <code>vector[2] beta;</code>. Alternatively, <code>real beta[2];</code> could be used. The sigma parameter is a one-number parameter that has to be positive, therefore <code>real&lt;lower=0&gt; sigma;</code>.</p>
 <p>The <em>model</em> block contains the model specification. Stan functions can handle vectors and we do not have to loop over all observations as typical for BUGS . Here, we use a <a href="distributions.html#cauchydistri">Cauchy distribution</a> as a prior distribution for sigma. This distribution can have negative values, but because we defined the lower limit of sigma to be 0 in the parameters block, the prior distribution actually used in the model is a truncated Cauchy distribution (truncated at zero). In Chapter <a href="priors.html#choosepriors">10.2</a> we explain how to choose prior distributions.</p>
 <p>Further characteristics of the Stan language that are good to know include: The variance parameter for the normal distribution is specified as the standard deviation (like in R but different from BUGS, where the precision is used). If no prior is specified, Stan uses a uniform prior over the range of possible values as specified in the parameter block. Variable names must not contain periods, for example, <code>x.z</code> would not be allowed, but <code>x_z</code> is allowed. To comment out a line, use double forward-slashes <code>//</code>.</p>
 </div>
-<div id="run-stan-from-r" class="section level2" number="18.4">
-<h2><span class="header-section-number">18.4</span> Run Stan from R</h2>
+<div id="run-stan-from-r" class="section level2 hasAnchor" number="18.4">
+<h2><span class="header-section-number">18.4</span> Run Stan from R<a href="stan.html#run-stan-from-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We fit the model to simulated data. Stan needs a vector containing the names of the data objects. In our case, <code>x</code>, <code>y,</code> and <code>N</code> are objects that exist in the R console.</p>
 <p>The function <code>stan()</code> starts Stan and returns an object containing MCMCs for every model parameter. We have to specify the name of the file that contains the model specification, the data, the number of chains, and the number of iterations per chain we would like to have. The first half of the iterations of each chain is declared as the warm-up. During the warm-up, Stan is not simulating a Markov chain, because in every step the algorithm is adapted. After the warm-up the algorithm is fixed and Stan simulates Markov chains.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="stan.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
-<span id="cb76-2"><a href="stan.html#cb76-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-3"><a href="stan.html#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate fake data </span></span>
-<span id="cb76-4"><a href="stan.html#cb76-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span>                                      <span class="co"># sample size</span></span>
-<span id="cb76-5"><a href="stan.html#cb76-5" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">5</span>                                   <span class="co"># standard deviation of the residuals</span></span>
-<span id="cb76-6"><a href="stan.html#cb76-6" aria-hidden="true" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">2</span>                                      <span class="co"># intercept</span></span>
-<span id="cb76-7"><a href="stan.html#cb76-7" aria-hidden="true" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fl">0.7</span>                                    <span class="co"># slope</span></span>
-<span id="cb76-8"><a href="stan.html#cb76-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-9"><a href="stan.html#cb76-9" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">10</span>, <span class="dv">30</span>)                        <span class="co"># random numbers of the covariate</span></span>
-<span id="cb76-10"><a href="stan.html#cb76-10" aria-hidden="true" tabindex="-1"></a>simresid <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="at">sd=</span>sigma)            <span class="co"># residuals</span></span>
-<span id="cb76-11"><a href="stan.html#cb76-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-12"><a href="stan.html#cb76-12" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> b0 <span class="sc">+</span> b1<span class="sc">*</span>x <span class="sc">+</span> simresid                    <span class="co"># calculate y, i.e. the data</span></span>
-<span id="cb76-13"><a href="stan.html#cb76-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-14"><a href="stan.html#cb76-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Bundle data into a list </span></span>
-<span id="cb76-15"><a href="stan.html#cb76-15" aria-hidden="true" tabindex="-1"></a>datax <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">n=</span><span class="fu">length</span>(y), <span class="at">y=</span>y, <span class="at">x=</span>x)</span>
-<span id="cb76-16"><a href="stan.html#cb76-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-17"><a href="stan.html#cb76-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Run STAN</span></span>
-<span id="cb76-18"><a href="stan.html#cb76-18" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">stan</span>(<span class="at">file =</span> <span class="st">&quot;stanmodels/linreg.stan&quot;</span>, <span class="at">data=</span>datax, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="stan.html#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
+<span id="cb160-2"><a href="stan.html#cb160-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-3"><a href="stan.html#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate fake data </span></span>
+<span id="cb160-4"><a href="stan.html#cb160-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span>                                      <span class="co"># sample size</span></span>
+<span id="cb160-5"><a href="stan.html#cb160-5" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">5</span>                                   <span class="co"># standard deviation of the residuals</span></span>
+<span id="cb160-6"><a href="stan.html#cb160-6" aria-hidden="true" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">2</span>                                      <span class="co"># intercept</span></span>
+<span id="cb160-7"><a href="stan.html#cb160-7" aria-hidden="true" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fl">0.7</span>                                    <span class="co"># slope</span></span>
+<span id="cb160-8"><a href="stan.html#cb160-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-9"><a href="stan.html#cb160-9" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">10</span>, <span class="dv">30</span>)                        <span class="co"># random numbers of the covariate</span></span>
+<span id="cb160-10"><a href="stan.html#cb160-10" aria-hidden="true" tabindex="-1"></a>simresid <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="at">sd=</span>sigma)            <span class="co"># residuals</span></span>
+<span id="cb160-11"><a href="stan.html#cb160-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-12"><a href="stan.html#cb160-12" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> b0 <span class="sc">+</span> b1<span class="sc">*</span>x <span class="sc">+</span> simresid                    <span class="co"># calculate y, i.e. the data</span></span>
+<span id="cb160-13"><a href="stan.html#cb160-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-14"><a href="stan.html#cb160-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Bundle data into a list </span></span>
+<span id="cb160-15"><a href="stan.html#cb160-15" aria-hidden="true" tabindex="-1"></a>datax <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">n=</span><span class="fu">length</span>(y), <span class="at">y=</span>y, <span class="at">x=</span>x)</span>
+<span id="cb160-16"><a href="stan.html#cb160-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-17"><a href="stan.html#cb160-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Run STAN</span></span>
+<span id="cb160-18"><a href="stan.html#cb160-18" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">stan</span>(<span class="at">file =</span> <span class="st">&quot;stanmodels/linreg.stan&quot;</span>, <span class="at">data=</span>datax, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## 
-## SAMPLING FOR MODEL &#39;linreg&#39; NOW (CHAIN 1).
+## SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 1).
 ## Chain 1: 
 ## Chain 1: Gradient evaluation took 2.5e-05 seconds
 ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.25 seconds.
@@ -467,15 +476,15 @@ model {
 ## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 1: 
-## Chain 1:  Elapsed Time: 0.112551 seconds (Warm-up)
-## Chain 1:                0.082288 seconds (Sampling)
-## Chain 1:                0.194839 seconds (Total)
+## Chain 1:  Elapsed Time: 0.055 seconds (Warm-up)
+## Chain 1:                0.043 seconds (Sampling)
+## Chain 1:                0.098 seconds (Total)
 ## Chain 1: 
 ## 
-## SAMPLING FOR MODEL &#39;linreg&#39; NOW (CHAIN 2).
+## SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 2).
 ## Chain 2: 
-## Chain 2: Gradient evaluation took 6e-06 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
+## Chain 2: Gradient evaluation took 5e-06 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
 ## Chain 2: Adjust your expectations accordingly!
 ## Chain 2: 
 ## Chain 2: 
@@ -492,15 +501,15 @@ model {
 ## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 2: 
-## Chain 2:  Elapsed Time: 0.100583 seconds (Warm-up)
-## Chain 2:                0.07789 seconds (Sampling)
-## Chain 2:                0.178473 seconds (Total)
+## Chain 2:  Elapsed Time: 0.049 seconds (Warm-up)
+## Chain 2:                0.043 seconds (Sampling)
+## Chain 2:                0.092 seconds (Total)
 ## Chain 2: 
 ## 
-## SAMPLING FOR MODEL &#39;linreg&#39; NOW (CHAIN 3).
+## SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 3).
 ## Chain 3: 
-## Chain 3: Gradient evaluation took 6e-06 seconds
-## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
+## Chain 3: Gradient evaluation took 5e-06 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
 ## Chain 3: Adjust your expectations accordingly!
 ## Chain 3: 
 ## Chain 3: 
@@ -517,15 +526,15 @@ model {
 ## Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 3: 
-## Chain 3:  Elapsed Time: 0.105488 seconds (Warm-up)
-## Chain 3:                0.088731 seconds (Sampling)
-## Chain 3:                0.194219 seconds (Total)
+## Chain 3:  Elapsed Time: 0.049 seconds (Warm-up)
+## Chain 3:                0.048 seconds (Sampling)
+## Chain 3:                0.097 seconds (Total)
 ## Chain 3: 
 ## 
-## SAMPLING FOR MODEL &#39;linreg&#39; NOW (CHAIN 4).
+## SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 4).
 ## Chain 4: 
-## Chain 4: Gradient evaluation took 4e-06 seconds
-## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
+## Chain 4: Gradient evaluation took 6e-06 seconds
+## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 ## Chain 4: Adjust your expectations accordingly!
 ## Chain 4: 
 ## Chain 4: 
@@ -542,13 +551,13 @@ model {
 ## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 4: 
-## Chain 4:  Elapsed Time: 0.108185 seconds (Warm-up)
-## Chain 4:                0.100074 seconds (Sampling)
-## Chain 4:                0.208259 seconds (Total)
+## Chain 4:  Elapsed Time: 0.051 seconds (Warm-up)
+## Chain 4:                0.046 seconds (Sampling)
+## Chain 4:                0.097 seconds (Total)
 ## Chain 4:</code></pre>
 </div>
-<div id="further-reading-3" class="section level2 unnumbered">
-<h2>Further reading</h2>
+<div id="further-reading-4" class="section level2 unnumbered hasAnchor">
+<h2>Further reading<a href="stan.html#further-reading-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li><a href="http://mc-stan.org">Stan-Homepage</a>: It contains the documentation for Stand a a lot of tutorials.</li>
 </ul>
@@ -560,12 +569,11 @@ model {
           </div>
         </div>
       </div>
-<a href="model-comparison.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ridge-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="model_comparison.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ridge_regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -605,6 +613,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -618,7 +630,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

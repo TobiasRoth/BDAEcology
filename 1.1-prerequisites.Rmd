@@ -1,5 +1,5 @@
 
-# Prerequisits: Basic statistical terms {#basics}
+# Prerequisites: Basic statistical terms {#basics} 
 This chapter introduces some important terms useful for doing data analyses.
 It also introduces the essentials of the classical frequentist tests such as t- and Chisquare test. Even though we will not use nullhypotheses tests later [@Amrhein.2019], we introduce them here because we need to understand 100 years of scientific literature. For each classical test, we provide a suggestion how to do it in a Bayesian way and we discuss some differences between the Bayesian and frequentist statistics. 
 
