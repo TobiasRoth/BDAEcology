@@ -37,9 +37,9 @@ the number of chicks that fledged (successes) and the number of chicks that died
 The random factor "farm" adds a farm-specific deviation $b_g$ to the intercept in the linear predictor. These deviations are modeled as normally distributed with mean $0$ and standard deviation $\sigma_g$.
 
 $$ 
-y_i \sim Binom\left(p_i, n_i\right)\\
+y_i \sim binomial\left(p_i, n_i\right)\\
 logit\left(p_i\right) = \beta_0 + b_{g[i]} + \beta_1\;colonysize_i + \beta_2\;I\left(cow_i = 1\right) + \beta_3\;dungheap_i\\
-b_g \sim Norm\left(0, \sigma_g\right)
+b_g \sim normal\left(0, \sigma_g\right)
 $$
 <!-- You may refer to these equations using \@ref(eq:y_binom), etc., fk: das hat Rmarkdown nicht geschluckt, ich habe nun die $$ verwendet-->
 
