@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2023-01-22" />
+<meta name="date" content="2023-03-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,7 +258,10 @@ div.csl-indent {
 <li class="chapter" data-level="10" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i><b>10</b> Prior distributions</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="priors.html"><a href="priors.html#introduction-2"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
-<li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a></li>
+<li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="priors.html"><a href="priors.html#priors-for-variance-parameters"><i class="fa fa-check"></i><b>10.2.1</b> Priors for variance parameters</a></li>
+</ul></li>
 <li class="chapter" data-level="10.3" data-path="priors.html"><a href="priors.html#prior-sensitivity"><i class="fa fa-check"></i><b>10.3</b> Prior sensitivity</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>11</b> Normal Linear Models</a>
@@ -497,7 +500,7 @@ The part of the Cauchy distribution for positive values, i.e., half of the Cauch
 <div id="t-distribution" class="section level3 hasAnchor" number="4.3.5">
 <h3><span class="header-section-number">4.3.5</span> t-distribution<a href="distributions.html#t-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The t-distribution is the marginal posterior distribution of a the mean of a sample with unknown variance when conjugate prior distributions are used to obtain the posterior distribution. The t-distribution has three parameters, the degrees of freedom <span class="math inline">\(v\)</span>, the location <span class="math inline">\(\mu\)</span> and the scale <span class="math inline">\(\sigma\)</span>.</p>
-<p>$ x t(v, , )$</p>
+<p><span class="math inline">\(x \sim t(v, \mu, \sigma)\)</span></p>
 <p>Its density function is <span class="math inline">\(p(x) = \frac{\Gamma((v+1)/2)}{\Gamma(v/2)\sqrt{v\pi}\sigma}(1+\frac{1}{v}(\frac{x-\mu}{\sigma})^2)^{-(v+1)/2}\)</span>. Its expected value is <span class="math inline">\(E(x) = \mu\)</span> for <span class="math inline">\(v&gt;1\)</span> and the variance is <span class="math inline">\(Var(x) = \frac{v}{v-2}\sigma ^2\)</span> for <span class="math inline">\(v&gt;2\)</span>.</p>
 <p>The t-distribution is sometimes used as data model. Because of its heavier tails compared to the normal model, the model parameters are less influenced by measurement errors when a t-distribution is used instead of a normal distribution. This is called “robust statistics”.</p>
 <p>Similar to the Cauchy distribution, the folded t-distribution, i.e., the positive part of the t-distribution, can serve as a prior distribution for variance parameters.</p>

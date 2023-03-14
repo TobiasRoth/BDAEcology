@@ -18,6 +18,7 @@ fig:histboot
 fig:betadist
 fig:normdistplot
 fig:unnamed-chunk-1
+fig:tdjags
 eq:lm
 eq:lmalternativ
 fig:illlm
@@ -108,6 +109,7 @@ summary-3
 priors
 introduction-2
 choosepriors
+priors-for-variance-parameters
 prior-sensitivity
 lm
 linear-regression

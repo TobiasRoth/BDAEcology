@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2023-01-22" />
+<meta name="date" content="2023-03-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,7 +258,10 @@ div.csl-indent {
 <li class="chapter" data-level="10" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i><b>10</b> Prior distributions</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="priors.html"><a href="priors.html#introduction-2"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
-<li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a></li>
+<li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="priors.html"><a href="priors.html#priors-for-variance-parameters"><i class="fa fa-check"></i><b>10.2.1</b> Priors for variance parameters</a></li>
+</ul></li>
 <li class="chapter" data-level="10.3" data-path="priors.html"><a href="priors.html#prior-sensitivity"><i class="fa fa-check"></i><b>10.3</b> Prior sensitivity</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>11</b> Normal Linear Models</a>
@@ -402,7 +405,7 @@ div.csl-indent {
 <p>There is a chance and danger at the same time: we may find interesting results that answer different questions than we asked originally. They may be very exciting and important, however they may be biased. We can report such findings, but we should state that they appeared (more or less by chance) during the data exploration and model fitting phase, and we have to be aware that the estimates may be biased because the study was not optimally designed with respect to these findings. It is important to always keep the original aim of the study in mind. Do not adjust the study question according to the data. We also recommend reporting what the model started with at the first iteration and describing the strategy and reasoning behind the model development process.</p>
 <div id="step1" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Plausibility of Data<a href="analyses_steps.html#step1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Prepare the data and check graphically, or via summary statistics, whether all the data are plausible. Prepare the data so that errors (typos, etc.) are minimal, for example, by double-checking the entries. See chapter <a href="#datamanip"><strong>??</strong></a> for useful R-code that can be used for data preparation and to make plausibility controls.</p>
+<p>Prepare the data and check graphically, or via summary statistics, whether all the data are plausible. Prepare the data so that errors (typos, etc.) are minimal, for example, by double-checking the entries. See chapter <a href="rfunctions.html#rfunctions">5</a> for useful R-code that can be used for data preparation and to make plausibility controls.</p>
 </div>
 <div id="step2" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Relationships<a href="analyses_steps.html#step2" class="anchor-section" aria-label="Anchor link to header"></a></h2>

@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2023-01-22" />
+<meta name="date" content="2023-03-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,7 +258,10 @@ div.csl-indent {
 <li class="chapter" data-level="10" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i><b>10</b> Prior distributions</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="priors.html"><a href="priors.html#introduction-2"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
-<li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a></li>
+<li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="priors.html"><a href="priors.html#priors-for-variance-parameters"><i class="fa fa-check"></i><b>10.2.1</b> Priors for variance parameters</a></li>
+</ul></li>
 <li class="chapter" data-level="10.3" data-path="priors.html"><a href="priors.html#prior-sensitivity"><i class="fa fa-check"></i><b>10.3</b> Prior sensitivity</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>11</b> Normal Linear Models</a>
@@ -402,7 +405,7 @@ div.csl-indent {
 <h2><span class="header-section-number">15.1</span> Introduction<a href="glmm.html#introduction-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>THIS CHAPTER IS UNDER CONSTRUCTION!!!<br />
 <!-- Steffis draft version, started 17.11.2021, fk worked on it 15.11.2022, svf revised it 22.11.2022--></p>
-<p>In chapter <a href="lmer.html#lmer">13</a> on linear mixed effect models we have introduced how to analyze metric outcome variables for which a normal distribution of residuals can be assumed (potentially after transformation), when the data have a hierarchical structure and, as a consequence, observations are not independent.
+<p>In chapter <a href="lmer.html#lmer">13</a> on linear mixed effect models we have introduced how to analyze metric outcome variables for which a normal error distribution can be assumed (potentially after transformation), when the data have a hierarchical structure and, as a consequence, observations are not independent.
 In chapter <a href="glm.html#glm">14</a> on generalized linear models we have introduced how to analyze outcome variables for which a normal error distribution can not be assumed, as for example binary outcomes or count data. More precisely, we have extended modelling outcomes with normal error to modelling outcomes with error distributions from the exponential family (e.g., binomial or Poisson).
 Generalized linear mixed models (GLMM) combine the two complexities and are used to analyze outcomes with a non-normal error distribution when the data have a hierarchical structure. In this chapter, we will show how to analyze such data. Remember, a hierarchical structure of the data means that the data are collected at different levels, for example smaller and larger spatial units, or include repeated measurements in time on a specific subject. Typically, the outcome variable is measured/observed at the lowest level but other variables may be measured at different levels. A first example is introduced in the next section.</p>
 <div id="binomial-mixed-model" class="section level3 hasAnchor" number="15.1.1">
@@ -422,9 +425,9 @@ The outcome variable is a proportion (proportion fledged from clutch) and thus c
 the number of chicks that fledged (successes) and the number of chicks that died (failures), i.e., the clutch size minus number that fledged.</p>
 <p>The random factor “farm” adds a farm-specific deviation <span class="math inline">\(b_g\)</span> to the intercept in the linear predictor. These deviations are modeled as normally distributed with mean <span class="math inline">\(0\)</span> and standard deviation <span class="math inline">\(\sigma_g\)</span>.</p>
 <p><span class="math display">\[
-y_i \sim Binom\left(p_i, n_i\right)\\
+y_i \sim binomial\left(p_i, n_i\right)\\
 logit\left(p_i\right) = \beta_0 + b_{g[i]} + \beta_1\;colonysize_i + \beta_2\;I\left(cow_i = 1\right) + \beta_3\;dungheap_i\\
-b_g \sim Norm\left(0, \sigma_g\right)
+b_g \sim normal\left(0, \sigma_g\right)
 \]</span>
 <!-- You may refer to these equations using \@ref(eq:y_binom), etc., fk: das hat Rmarkdown nicht geschluckt, ich habe nun die $$ verwendet--></p>
 <!-- fk: can we hide/delete the selected farms in the code below?

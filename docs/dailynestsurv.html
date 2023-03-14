@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2023-01-22" />
+<meta name="date" content="2023-03-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,7 +258,10 @@ div.csl-indent {
 <li class="chapter" data-level="10" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i><b>10</b> Prior distributions</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="priors.html"><a href="priors.html#introduction-2"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
-<li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a></li>
+<li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="priors.html"><a href="priors.html#priors-for-variance-parameters"><i class="fa fa-check"></i><b>10.2.1</b> Priors for variance parameters</a></li>
+</ul></li>
 <li class="chapter" data-level="10.3" data-path="priors.html"><a href="priors.html#prior-sensitivity"><i class="fa fa-check"></i><b>10.3</b> Prior sensitivity</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>11</b> Normal Linear Models</a>
@@ -417,6 +420,11 @@ div.csl-indent {
 </ol>
 <table>
 <caption><span id="tab:nestsurvmod">Table 24.1: </span> Models useful for estimating daily nest survival. Data numbers correspond to the descriptions above.</caption>
+<colgroup>
+<col width="17%" />
+<col width="41%" />
+<col width="41%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">Model</th>
@@ -445,8 +453,14 @@ div.csl-indent {
 <td align="left">3, 4</td>
 <td align="left">Stan code below</td>
 </tr>
+<tr class="odd">
+<td align="left">Logistic exposure model</td>
+<td align="left">1,2,3,4</td>
+<td align="left"><code>glm</code>, <code>glmer</code>using a link function that depends on exposure time</td>
+</tr>
 </tbody>
 </table>
+<p><span class="citation">Shaffer (<a href="referenzen.html#ref-Shaffer2004" role="doc-biblioref">2004</a>)</span> explains how to adapt the link function in a Bernoulli model to account for having found the nests at different nest ages (exposure time). Ben Bolker explains how to implement the logistic exposure model in R <a href="https://rpubs.com/bbolker/logregexp">here</a>.</p>
 </div>
 <div id="known-fate-model" class="section level2 hasAnchor" number="24.3">
 <h2><span class="header-section-number">24.3</span> Known fate model<a href="dailynestsurv.html#known-fate-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>

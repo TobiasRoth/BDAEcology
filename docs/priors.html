@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2023-01-22" />
+<meta name="date" content="2023-03-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,7 +258,10 @@ div.csl-indent {
 <li class="chapter" data-level="10" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i><b>10</b> Prior distributions</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="priors.html"><a href="priors.html#introduction-2"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
-<li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a></li>
+<li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="priors.html"><a href="priors.html#priors-for-variance-parameters"><i class="fa fa-check"></i><b>10.2.1</b> Priors for variance parameters</a></li>
+</ul></li>
 <li class="chapter" data-level="10.3" data-path="priors.html"><a href="priors.html#prior-sensitivity"><i class="fa fa-check"></i><b>10.3</b> Prior sensitivity</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>11</b> Normal Linear Models</a>
@@ -402,16 +405,26 @@ div.csl-indent {
 <div id="introduction-2" class="section level2 hasAnchor" number="10.1">
 <h2><span class="header-section-number">10.1</span> Introduction<a href="priors.html#introduction-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The prior is an integral part of a Bayesian model. We must specify one.</p>
-<p>When to use informative priors: in applied research, when information from two different data sets should be combined.</p>
-<p>when using non-informative priors: in basic reasearch when results should only report the information in the current data set.</p>
-<p><a href="https://bookdown.org/mrwhalen/bayes_book/parameter-estimation-analytical-methods.html#the-effect-of-different-priors">discussion on priors</a></p>
+<p>When to use informative priors: In practise (management, politics etc.) we would like to base our decisions on all information available. Therefore, we consider it to be responsible including informative priors in applied research whenever possible. Priors allow combining information from the literature with information in data or combining information from different data sets.</p>
+<p>When using non-informative priors: in basic research when results should only report the information in the current data set. Results from a case study may later be used in a meta-analyses that assumes independence across the different studies included.</p>
 </div>
 <div id="choosepriors" class="section level2 hasAnchor" number="10.2">
 <h2><span class="header-section-number">10.2</span> How to choose a prior<a href="priors.html#choosepriors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<blockquote>
-<p>Tabelle von Fränzi (CourseIII_glm_glmmm/course2018/presentations_handouts/presentations)</p>
-</blockquote>
-<p>new references to be included: Lemoine.2019</p>
+<!-- Tabelle von Fränzi (CourseIII_glm_glmmm/course2018/presentations_handouts/presentations) -->
+<p>important reference: <span class="citation">Lemoine (<a href="referenzen.html#ref-Lemoine.2019" role="doc-biblioref">2019</a>)</span></p>
+<p>TODO</p>
+<div id="priors-for-variance-parameters" class="section level3 hasAnchor" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> Priors for variance parameters<a href="priors.html#priors-for-variance-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="citation">A. Gelman (<a href="referenzen.html#ref-Gelman.2006" role="doc-biblioref">2006</a>)</span> discusses advantages of using folded t-distributions or cauchy distributions as prior distributions for variance parameters in hierarchical models.</p>
+<p>When specifying t-distributions, we find it hard to imagine how the distributions looks like with what parameter values. Therefore, we simulate values from different distributions and look at the histograms. Because the parameterisation of the t-distribution differst among software language, it is important to use the software the model is finally fitted in Figure <a href="priors.html#fig:tdjags">10.1</a> we give some examples of folded t-distributions specified in jags using different values for the precision (second parameter) and degrees of freedom (third parameter).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:tdjags"></span>
+<a href="" target="_blank"><img src="images/example_t_distributions_jags.jpg" alt="Folded t-distributions with different precisions and degrees of freedom. The panel titles give the jags code of the distribution. Dark blue vertical lines indicate 90% quantiles, light-blue lines indicate 98% quantiles." width="3840" /></a>
+<p class="caption">
+Figure 10.1: Folded t-distributions with different precisions and degrees of freedom. The panel titles give the jags code of the distribution. Dark blue vertical lines indicate 90% quantiles, light-blue lines indicate 98% quantiles.
+</p>
+</div>
+<p>GIVE EXAMPLE FOR STAN TOO</p>
+</div>
 </div>
 <div id="prior-sensitivity" class="section level2 hasAnchor" number="10.3">
 <h2><span class="header-section-number">10.3</span> Prior sensitivity<a href="priors.html#prior-sensitivity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
