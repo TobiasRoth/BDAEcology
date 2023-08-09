@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2023-03-14" />
+<meta name="date" content="2023-08-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -167,13 +167,15 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.1" data-path="PART-I.html"><a href="PART-I.html#further-reading"><i class="fa fa-check"></i><b>1.1</b> Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Prerequisites: Basic statistical terms</a>
+<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Basics of statistics</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#variables-and-observations"><i class="fa fa-check"></i><b>2.1</b> Variables and observations</a></li>
-<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-variables"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing variables</a>
+<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-data"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing data</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="basics.html"><a href="basics.html#correlations"><i class="fa fa-check"></i><b>2.2.1</b> Correlations</a></li>
-<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#principal-components-analyses-pca"><i class="fa fa-check"></i><b>2.2.2</b> Principal components analyses PCA</a></li>
+<li class="chapter" data-level="2.2.1" data-path="basics.html"><a href="basics.html#histogram"><i class="fa fa-check"></i><b>2.2.1</b> Histogram</a></li>
+<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#location-and-scatter"><i class="fa fa-check"></i><b>2.2.2</b> Location and scatter</a></li>
+<li class="chapter" data-level="2.2.3" data-path="basics.html"><a href="basics.html#correlations"><i class="fa fa-check"></i><b>2.2.3</b> Correlations</a></li>
+<li class="chapter" data-level="2.2.4" data-path="basics.html"><a href="basics.html#principal-components-analyses-pca"><i class="fa fa-check"></i><b>2.2.4</b> Principal components analyses PCA</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="basics.html"><a href="basics.html#inferential-statistics"><i class="fa fa-check"></i><b>2.3</b> Inferential statistics</a>
 <ul>
@@ -190,7 +192,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#classical-frequentist-tests-and-alternatives"><i class="fa fa-check"></i><b>2.5</b> Classical frequentist tests and alternatives</a>
 <ul>
 <li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#nullhypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Nullhypothesis testing</a></li>
-<li class="chapter" data-level="2.5.2" data-path="basics.html"><a href="basics.html#comparison-of-a-sample-with-a-fixed-values-one-sample-t-test"><i class="fa fa-check"></i><b>2.5.2</b> Comparison of a sample with a fixed values (one-sample t-test)</a></li>
+<li class="chapter" data-level="2.5.2" data-path="basics.html"><a href="basics.html#comparison-of-a-sample-with-a-fixed-value-one-sample-t-test"><i class="fa fa-check"></i><b>2.5.2</b> Comparison of a sample with a fixed value (one-sample t-test)</a></li>
 <li class="chapter" data-level="2.5.3" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups-two-sample-t-test"><i class="fa fa-check"></i><b>2.5.3</b> Comparison of the locations between two groups (two-sample t-test)</a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.6</b> Summary</a></li>
@@ -411,11 +413,11 @@ div.csl-indent {
 <div id="choosepriors" class="section level2 hasAnchor" number="10.2">
 <h2><span class="header-section-number">10.2</span> How to choose a prior<a href="priors.html#choosepriors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- Tabelle von Fränzi (CourseIII_glm_glmmm/course2018/presentations_handouts/presentations) -->
-<p>important reference: <span class="citation">Lemoine (<a href="referenzen.html#ref-Lemoine.2019" role="doc-biblioref">2019</a>)</span></p>
+<p>important reference: <span class="citation">Lemoine (<a href="referenzen.html#ref-Lemoine.2019">2019</a>)</span></p>
 <p>TODO</p>
 <div id="priors-for-variance-parameters" class="section level3 hasAnchor" number="10.2.1">
 <h3><span class="header-section-number">10.2.1</span> Priors for variance parameters<a href="priors.html#priors-for-variance-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><span class="citation">A. Gelman (<a href="referenzen.html#ref-Gelman.2006" role="doc-biblioref">2006</a>)</span> discusses advantages of using folded t-distributions or cauchy distributions as prior distributions for variance parameters in hierarchical models.</p>
+<p><span class="citation">A. Gelman (<a href="referenzen.html#ref-Gelman.2006">2006</a>)</span> discusses advantages of using folded t-distributions or cauchy distributions as prior distributions for variance parameters in hierarchical models.</p>
 <p>When specifying t-distributions, we find it hard to imagine how the distributions looks like with what parameter values. Therefore, we simulate values from different distributions and look at the histograms. Because the parameterisation of the t-distribution differst among software language, it is important to use the software the model is finally fitted in Figure <a href="priors.html#fig:tdjags">10.1</a> we give some examples of folded t-distributions specified in jags using different values for the precision (second parameter) and degrees of freedom (third parameter).</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:tdjags"></span>
 <a href="" target="_blank"><img src="images/example_t_distributions_jags.jpg" alt="Folded t-distributions with different precisions and degrees of freedom. The panel titles give the jags code of the distribution. Dark blue vertical lines indicate 90% quantiles, light-blue lines indicate 98% quantiles." width="3840" /></a>

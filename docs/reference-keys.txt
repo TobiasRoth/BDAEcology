@@ -51,7 +51,9 @@ PART-I
 further-reading
 basics
 variables-and-observations
-displaying-and-summarizing-variables
+displaying-and-summarizing-data
+histogram
+location-and-scatter
 correlations
 principal-components-analyses-pca
 inferential-statistics
@@ -64,7 +66,7 @@ estimating-a-mean-assuming-that-the-variance-is-known
 estimating-the-mean-and-the-variance
 classical-frequentist-tests-and-alternatives
 nullhypothesis-testing
-comparison-of-a-sample-with-a-fixed-values-one-sample-t-test
+comparison-of-a-sample-with-a-fixed-value-one-sample-t-test
 comparison-of-the-locations-between-two-groups-two-sample-t-test
 summary
 analyses_steps
