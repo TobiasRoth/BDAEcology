@@ -193,3 +193,5 @@ data-description
 model-description
 the-stan-code
 call-stan-from-r-check-convergence-and-look-at-results
+samplesize
+introduction-12
