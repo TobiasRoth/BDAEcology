@@ -1,0 +1,9 @@
+
+# What sample size?  {#samplesize}
+
+## Introduction
+
+What sample size is needed, is an important question when planning an empirical study?
+
+Some authorities even ask for a justification for the planned sample size of an animal experiment. 
+
