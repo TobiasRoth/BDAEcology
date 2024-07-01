@@ -5,7 +5,7 @@ This repository mainly contains the files to produce the online book  "Data Anal
 ## Content
 1. **Top level of the repository**
 
-   Te top level of the repository mainly contains the files that are used by [bookdown](https://bookdown.org/yihui/bookdown/) to build the online book. These mainly include the `.yml` files for different settings of the book and the `.Rmd` files that contain the content of the book with one such file for each chapter of the book.
+   The top level of the repository mainly contains the files that are used by [bookdown](https://bookdown.org/yihui/bookdown/) to build the online book. These mainly include the `.yml` files for different settings of the book and the `.Rmd` files that contain the content of the book with one such file for each chapter of the book.
 
 2. **admin-Folder**
 
