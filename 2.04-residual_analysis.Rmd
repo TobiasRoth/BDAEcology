@@ -62,8 +62,11 @@ plot(mod)
 
 ```
 
-## The QQ-Plot {#qqplot}
+The four plots produced by `plot(mod)` show the most important aspects of the model fit. However, often these four plots are not sufficient. IN addition, we recommend plotting the residuals against all variables in the data set (including those not used in the current model). It is further recommended to think about the data structure. Can we assume that all observations are independent of each other? May there be spatial or temporal correlation?  
 
+## The QQ-Plot {#qqplot}
+Each residual represents a quantile of the sample of $n$ residuals. These quantiles are defined by the sample size $n$. A useful choice is the $((1,...,n)-0.5)/n$-th quantiles. A QQ-plot shows the residuals on the y-axis and the values of the $((1,...,n)-0.5)/n$-th quantiles of a theoretical normal distribution on the x-axis. A QQ-plot could also be used to compare the distribution of whatever variable with any distribution, but we want to use the normal distribution here because that is the assumed distribution of the residuals in the model. If the residuals are normally distributed, the points are expected to lie along the diagonal line in the QQ-plot. 
+It is often rather difficult to decide whether a deviation from the line is tolerable or not. The function `compareqqnorm` may help. It draws, eight times, a random sample of $n$ values from a normal distribution with a mean of zero and a standard deviation equal to the residual standard deviation of the model. It then creates a QQ-plot for all eight random samples and for the residuals in a random order. If the QQ-plot of the residuals can easily be identified amont the nine QQ-plots, there is reason to think the distribution of the residuals deviates from normal. Otherwise, there is no indication to suspect violation of the normality assumption. The position of the residual plot of the model in the nine panels is printed to the R console.  
 
 ## Temporal Autocorrelation {#tempautocorrelation}
 
