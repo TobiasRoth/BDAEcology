@@ -39,6 +39,9 @@ fig:fgwingpa
 tab:sumtabpa
 fig:fgbiom
 fig:sfexfig
+fig:diagplotdg
+fig:diagplotap
+fig:diagplotaplog
 fig:pooling
 fig:corttest
 fig:assessmodelassumptions

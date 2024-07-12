@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2023-12-20" />
+<meta name="date" content="2024-07-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -56,7 +56,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -128,6 +128,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -483,47 +484,47 @@ It is also possible to add random effects if needed.</p>
 <div id="dailynestsurvstan" class="section level2 hasAnchor" number="24.4">
 <h2><span class="header-section-number">24.4</span> The Stan model<a href="dailynestsurv.html#dailynestsurvstan" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The following Stan model code is saved as <code>daily_nest_survival.stan</code>.</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode stan"><code class="sourceCode stan"><span id="cb164-1"><a href="dailynestsurv.html#cb164-1" tabindex="-1"></a><span class="kw">data</span> {</span>
-<span id="cb164-2"><a href="dailynestsurv.html#cb164-2" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; Nnests;                  <span class="co">// number of nests</span></span>
-<span id="cb164-3"><a href="dailynestsurv.html#cb164-3" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; last[Nnests];            <span class="co">// day of last observation (alive or dead)</span></span>
-<span id="cb164-4"><a href="dailynestsurv.html#cb164-4" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; first[Nnests];           <span class="co">// day of first observation (alive or dead)</span></span>
-<span id="cb164-5"><a href="dailynestsurv.html#cb164-5" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; maxage;                  <span class="co">// maximum of last</span></span>
-<span id="cb164-6"><a href="dailynestsurv.html#cb164-6" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; y[Nnests, maxage];       <span class="co">// indicator of alive nests</span></span>
-<span id="cb164-7"><a href="dailynestsurv.html#cb164-7" tabindex="-1"></a>  <span class="dt">real</span> cover[Nnests];                 <span class="co">// a covariate of the nest</span></span>
-<span id="cb164-8"><a href="dailynestsurv.html#cb164-8" tabindex="-1"></a>  <span class="dt">real</span> age[maxage];                   <span class="co">// a covariate of the date</span></span>
-<span id="cb164-9"><a href="dailynestsurv.html#cb164-9" tabindex="-1"></a>}</span>
-<span id="cb164-10"><a href="dailynestsurv.html#cb164-10" tabindex="-1"></a></span>
-<span id="cb164-11"><a href="dailynestsurv.html#cb164-11" tabindex="-1"></a><span class="kw">parameters</span> {</span>
-<span id="cb164-12"><a href="dailynestsurv.html#cb164-12" tabindex="-1"></a>  <span class="dt">vector</span>[<span class="dv">3</span>] b;                          <span class="co">// coef of linear pred for S</span></span>
-<span id="cb164-13"><a href="dailynestsurv.html#cb164-13" tabindex="-1"></a>}</span>
-<span id="cb164-14"><a href="dailynestsurv.html#cb164-14" tabindex="-1"></a></span>
-<span id="cb164-15"><a href="dailynestsurv.html#cb164-15" tabindex="-1"></a><span class="kw">model</span> {</span>
-<span id="cb164-16"><a href="dailynestsurv.html#cb164-16" tabindex="-1"></a>  <span class="dt">real</span> S[Nnests, maxage<span class="dv">-1</span>];             <span class="co">// survival probability</span></span>
-<span id="cb164-17"><a href="dailynestsurv.html#cb164-17" tabindex="-1"></a>                </span>
-<span id="cb164-18"><a href="dailynestsurv.html#cb164-18" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span>:Nnests){  </span>
-<span id="cb164-19"><a href="dailynestsurv.html#cb164-19" tabindex="-1"></a>    <span class="cf">for</span>(t <span class="cf">in</span> first[i]:(last[i]-<span class="dv">1</span>)){ </span>
-<span id="cb164-20"><a href="dailynestsurv.html#cb164-20" tabindex="-1"></a>      S[i,t] = inv_logit(b[<span class="dv">1</span>] + b[<span class="dv">2</span>]*cover[i] + b[<span class="dv">3</span>]*age[t]); </span>
-<span id="cb164-21"><a href="dailynestsurv.html#cb164-21" tabindex="-1"></a>    }</span>
-<span id="cb164-22"><a href="dailynestsurv.html#cb164-22" tabindex="-1"></a>  }</span>
-<span id="cb164-23"><a href="dailynestsurv.html#cb164-23" tabindex="-1"></a></span>
-<span id="cb164-24"><a href="dailynestsurv.html#cb164-24" tabindex="-1"></a>  <span class="co">// priors</span></span>
-<span id="cb164-25"><a href="dailynestsurv.html#cb164-25" tabindex="-1"></a>  b[<span class="dv">1</span>]~normal(<span class="dv">0</span>,<span class="dv">5</span>);</span>
-<span id="cb164-26"><a href="dailynestsurv.html#cb164-26" tabindex="-1"></a>  b[<span class="dv">2</span>]~normal(<span class="dv">0</span>,<span class="dv">3</span>);</span>
-<span id="cb164-27"><a href="dailynestsurv.html#cb164-27" tabindex="-1"></a>  b[<span class="dv">3</span>]~normal(<span class="dv">0</span>,<span class="dv">3</span>);  </span>
-<span id="cb164-28"><a href="dailynestsurv.html#cb164-28" tabindex="-1"></a></span>
-<span id="cb164-29"><a href="dailynestsurv.html#cb164-29" tabindex="-1"></a>  <span class="co">// likelihood</span></span>
-<span id="cb164-30"><a href="dailynestsurv.html#cb164-30" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:Nnests) {</span>
-<span id="cb164-31"><a href="dailynestsurv.html#cb164-31" tabindex="-1"></a>    <span class="cf">for</span>(t <span class="cf">in</span> (first[i]+<span class="dv">1</span>):last[i]){</span>
-<span id="cb164-32"><a href="dailynestsurv.html#cb164-32" tabindex="-1"></a>      y[i,t]~bernoulli(y[i,t<span class="dv">-1</span>]*S[i,t<span class="dv">-1</span>]);</span>
-<span id="cb164-33"><a href="dailynestsurv.html#cb164-33" tabindex="-1"></a>    }</span>
-<span id="cb164-34"><a href="dailynestsurv.html#cb164-34" tabindex="-1"></a>  }</span>
-<span id="cb164-35"><a href="dailynestsurv.html#cb164-35" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode stan"><code class="sourceCode stan"><span id="cb167-1"><a href="dailynestsurv.html#cb167-1" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb167-2"><a href="dailynestsurv.html#cb167-2" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; Nnests;                  <span class="co">// number of nests</span></span>
+<span id="cb167-3"><a href="dailynestsurv.html#cb167-3" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; last[Nnests];            <span class="co">// day of last observation (alive or dead)</span></span>
+<span id="cb167-4"><a href="dailynestsurv.html#cb167-4" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; first[Nnests];           <span class="co">// day of first observation (alive or dead)</span></span>
+<span id="cb167-5"><a href="dailynestsurv.html#cb167-5" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; maxage;                  <span class="co">// maximum of last</span></span>
+<span id="cb167-6"><a href="dailynestsurv.html#cb167-6" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; y[Nnests, maxage];       <span class="co">// indicator of alive nests</span></span>
+<span id="cb167-7"><a href="dailynestsurv.html#cb167-7" tabindex="-1"></a>  <span class="dt">real</span> cover[Nnests];                 <span class="co">// a covariate of the nest</span></span>
+<span id="cb167-8"><a href="dailynestsurv.html#cb167-8" tabindex="-1"></a>  <span class="dt">real</span> age[maxage];                   <span class="co">// a covariate of the date</span></span>
+<span id="cb167-9"><a href="dailynestsurv.html#cb167-9" tabindex="-1"></a>}</span>
+<span id="cb167-10"><a href="dailynestsurv.html#cb167-10" tabindex="-1"></a></span>
+<span id="cb167-11"><a href="dailynestsurv.html#cb167-11" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb167-12"><a href="dailynestsurv.html#cb167-12" tabindex="-1"></a>  <span class="dt">vector</span>[<span class="dv">3</span>] b;                          <span class="co">// coef of linear pred for S</span></span>
+<span id="cb167-13"><a href="dailynestsurv.html#cb167-13" tabindex="-1"></a>}</span>
+<span id="cb167-14"><a href="dailynestsurv.html#cb167-14" tabindex="-1"></a></span>
+<span id="cb167-15"><a href="dailynestsurv.html#cb167-15" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb167-16"><a href="dailynestsurv.html#cb167-16" tabindex="-1"></a>  <span class="dt">real</span> S[Nnests, maxage<span class="dv">-1</span>];             <span class="co">// survival probability</span></span>
+<span id="cb167-17"><a href="dailynestsurv.html#cb167-17" tabindex="-1"></a>                </span>
+<span id="cb167-18"><a href="dailynestsurv.html#cb167-18" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span>:Nnests){  </span>
+<span id="cb167-19"><a href="dailynestsurv.html#cb167-19" tabindex="-1"></a>    <span class="cf">for</span>(t <span class="cf">in</span> first[i]:(last[i]-<span class="dv">1</span>)){ </span>
+<span id="cb167-20"><a href="dailynestsurv.html#cb167-20" tabindex="-1"></a>      S[i,t] = inv_logit(b[<span class="dv">1</span>] + b[<span class="dv">2</span>]*cover[i] + b[<span class="dv">3</span>]*age[t]); </span>
+<span id="cb167-21"><a href="dailynestsurv.html#cb167-21" tabindex="-1"></a>    }</span>
+<span id="cb167-22"><a href="dailynestsurv.html#cb167-22" tabindex="-1"></a>  }</span>
+<span id="cb167-23"><a href="dailynestsurv.html#cb167-23" tabindex="-1"></a></span>
+<span id="cb167-24"><a href="dailynestsurv.html#cb167-24" tabindex="-1"></a>  <span class="co">// priors</span></span>
+<span id="cb167-25"><a href="dailynestsurv.html#cb167-25" tabindex="-1"></a>  b[<span class="dv">1</span>]~normal(<span class="dv">0</span>,<span class="dv">5</span>);</span>
+<span id="cb167-26"><a href="dailynestsurv.html#cb167-26" tabindex="-1"></a>  b[<span class="dv">2</span>]~normal(<span class="dv">0</span>,<span class="dv">3</span>);</span>
+<span id="cb167-27"><a href="dailynestsurv.html#cb167-27" tabindex="-1"></a>  b[<span class="dv">3</span>]~normal(<span class="dv">0</span>,<span class="dv">3</span>);  </span>
+<span id="cb167-28"><a href="dailynestsurv.html#cb167-28" tabindex="-1"></a></span>
+<span id="cb167-29"><a href="dailynestsurv.html#cb167-29" tabindex="-1"></a>  <span class="co">// likelihood</span></span>
+<span id="cb167-30"><a href="dailynestsurv.html#cb167-30" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:Nnests) {</span>
+<span id="cb167-31"><a href="dailynestsurv.html#cb167-31" tabindex="-1"></a>    <span class="cf">for</span>(t <span class="cf">in</span> (first[i]+<span class="dv">1</span>):last[i]){</span>
+<span id="cb167-32"><a href="dailynestsurv.html#cb167-32" tabindex="-1"></a>      y[i,t]~bernoulli(y[i,t<span class="dv">-1</span>]*S[i,t<span class="dv">-1</span>]);</span>
+<span id="cb167-33"><a href="dailynestsurv.html#cb167-33" tabindex="-1"></a>    }</span>
+<span id="cb167-34"><a href="dailynestsurv.html#cb167-34" tabindex="-1"></a>  }</span>
+<span id="cb167-35"><a href="dailynestsurv.html#cb167-35" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="prepare-data-and-run-stan" class="section level2 hasAnchor" number="24.5">
 <h2><span class="header-section-number">24.5</span> Prepare data and run Stan<a href="dailynestsurv.html#prepare-data-and-run-stan" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Data is from <span class="citation">(<a href="#ref-Grendelmeier2018"><strong>Grendelmeier2018?</strong></a>)</span>.</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="dailynestsurv.html#cb165-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;RData/nest_surv_data.rda&quot;</span>)</span>
-<span id="cb165-2"><a href="dailynestsurv.html#cb165-2" tabindex="-1"></a><span class="fu">str</span>(datax)</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="dailynestsurv.html#cb168-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;RData/nest_surv_data.rda&quot;</span>)</span>
+<span id="cb168-2"><a href="dailynestsurv.html#cb168-2" tabindex="-1"></a><span class="fu">str</span>(datax)</span></code></pre></div>
 <pre><code>## List of 7
 ##  $ y     : int [1:156, 1:31] 1 NA 1 NA 1 NA NA 1 1 1 ...
 ##  $ Nnests: int 156
@@ -532,12 +533,12 @@ It is also possible to add random effects if needed.</p>
 ##  $ cover : num [1:156] -0.943 -0.215 0.149 0.149 -0.215 ...
 ##  $ age   : num [1:31] -1.65 -1.54 -1.43 -1.32 -1.21 ...
 ##  $ maxage: int 31</code></pre>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="dailynestsurv.html#cb167-1" tabindex="-1"></a>datax<span class="sc">$</span>y[<span class="fu">is.na</span>(datax<span class="sc">$</span>y)] <span class="ot">&lt;-</span> <span class="dv">0</span>  <span class="co"># Stan does not allow for NA&#39;s in the outcome</span></span></code></pre></div>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="dailynestsurv.html#cb168-1" tabindex="-1"></a><span class="co"># Run STAN</span></span>
-<span id="cb168-2"><a href="dailynestsurv.html#cb168-2" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
-<span id="cb168-3"><a href="dailynestsurv.html#cb168-3" tabindex="-1"></a></span>
-<span id="cb168-4"><a href="dailynestsurv.html#cb168-4" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">stan</span>(<span class="at">file =</span> <span class="st">&quot;stanmodels/daily_nest_survival.stan&quot;</span>, <span class="at">data=</span>datax, </span>
-<span id="cb168-5"><a href="dailynestsurv.html#cb168-5" tabindex="-1"></a>            <span class="at">chains=</span><span class="dv">5</span>, <span class="at">iter=</span><span class="dv">2500</span>, <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.9</span>), <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="dailynestsurv.html#cb170-1" tabindex="-1"></a>datax<span class="sc">$</span>y[<span class="fu">is.na</span>(datax<span class="sc">$</span>y)] <span class="ot">&lt;-</span> <span class="dv">0</span>  <span class="co"># Stan does not allow for NA&#39;s in the outcome</span></span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="dailynestsurv.html#cb171-1" tabindex="-1"></a><span class="co"># Run STAN</span></span>
+<span id="cb171-2"><a href="dailynestsurv.html#cb171-2" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
+<span id="cb171-3"><a href="dailynestsurv.html#cb171-3" tabindex="-1"></a></span>
+<span id="cb171-4"><a href="dailynestsurv.html#cb171-4" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">stan</span>(<span class="at">file =</span> <span class="st">&quot;stanmodels/daily_nest_survival.stan&quot;</span>, <span class="at">data=</span>datax, </span>
+<span id="cb171-5"><a href="dailynestsurv.html#cb171-5" tabindex="-1"></a>            <span class="at">chains=</span><span class="dv">5</span>, <span class="at">iter=</span><span class="dv">2500</span>, <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.9</span>), <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div id="check-convergence" class="section level2 hasAnchor" number="24.6">
 <h2><span class="header-section-number">24.6</span> Check convergence<a href="dailynestsurv.html#check-convergence" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -546,8 +547,8 @@ It is also possible to add random effects if needed.</p>
 <div id="look-at-results" class="section level2 hasAnchor" number="24.7">
 <h2><span class="header-section-number">24.7</span> Look at results<a href="dailynestsurv.html#look-at-results" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>It looks like cover does not affect daily nest survival, but daily nest survival decreases with the age of the nestlings.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="dailynestsurv.html#cb169-1" tabindex="-1"></a><span class="co">#launch_shinystan(mod)</span></span>
-<span id="cb169-2"><a href="dailynestsurv.html#cb169-2" tabindex="-1"></a><span class="fu">print</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="dailynestsurv.html#cb172-1" tabindex="-1"></a><span class="co">#launch_shinystan(mod)</span></span>
+<span id="cb172-2"><a href="dailynestsurv.html#cb172-2" tabindex="-1"></a><span class="fu">print</span>(mod)</span></code></pre></div>
 <pre><code>## Inference for Stan model: anon_model.
 ## 5 chains, each with iter=2500; warmup=1250; thin=1; 
 ## post-warmup draws per chain=1250, total post-warmup draws=6250.
@@ -562,23 +563,23 @@ It is also possible to add random effects if needed.</p>
 ## For each parameter, n_eff is a crude measure of effective sample size,
 ## and Rhat is the potential scale reduction factor on split chains (at 
 ## convergence, Rhat=1).</code></pre>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="dailynestsurv.html#cb171-1" tabindex="-1"></a><span class="co"># effect plot</span></span>
-<span id="cb171-2"><a href="dailynestsurv.html#cb171-2" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(mod)</span>
-<span id="cb171-3"><a href="dailynestsurv.html#cb171-3" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="fu">nrow</span>(bsim)</span>
-<span id="cb171-4"><a href="dailynestsurv.html#cb171-4" tabindex="-1"></a></span>
-<span id="cb171-5"><a href="dailynestsurv.html#cb171-5" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">age=</span><span class="fu">seq</span>(<span class="dv">1</span>, datax<span class="sc">$</span>maxage, <span class="at">length=</span><span class="dv">100</span>))</span>
-<span id="cb171-6"><a href="dailynestsurv.html#cb171-6" tabindex="-1"></a>newdat<span class="sc">$</span>age.z <span class="ot">&lt;-</span> (newdat<span class="sc">$</span>age<span class="sc">-</span><span class="fu">mean</span>(<span class="dv">1</span><span class="sc">:</span>datax<span class="sc">$</span>maxage))<span class="sc">/</span><span class="fu">sd</span>((<span class="dv">1</span><span class="sc">:</span>datax<span class="sc">$</span>maxage))</span>
-<span id="cb171-7"><a href="dailynestsurv.html#cb171-7" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>age.z, <span class="at">data=</span>newdat)</span>
-<span id="cb171-8"><a href="dailynestsurv.html#cb171-8" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nsim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
-<span id="cb171-9"><a href="dailynestsurv.html#cb171-9" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) fitmat[,i] <span class="ot">&lt;-</span> <span class="fu">plogis</span>(Xmat<span class="sc">%*%</span><span class="fu">as.numeric</span>(bsim[i,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]))</span>
-<span id="cb171-10"><a href="dailynestsurv.html#cb171-10" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, median)</span>
-<span id="cb171-11"><a href="dailynestsurv.html#cb171-11" tabindex="-1"></a>newdat<span class="sc">$</span>lwr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.025</span>)</span>
-<span id="cb171-12"><a href="dailynestsurv.html#cb171-12" tabindex="-1"></a>newdat<span class="sc">$</span>upr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.975</span>)</span>
-<span id="cb171-13"><a href="dailynestsurv.html#cb171-13" tabindex="-1"></a></span>
-<span id="cb171-14"><a href="dailynestsurv.html#cb171-14" tabindex="-1"></a><span class="fu">plot</span>(newdat<span class="sc">$</span>age, newdat<span class="sc">$</span>fit, <span class="at">ylim=</span><span class="fu">c</span>(<span class="fl">0.8</span>,<span class="dv">1</span>), <span class="at">type=</span><span class="st">&quot;l&quot;</span>,</span>
-<span id="cb171-15"><a href="dailynestsurv.html#cb171-15" tabindex="-1"></a>     <span class="at">las=</span><span class="dv">1</span>, <span class="at">ylab=</span><span class="st">&quot;Daily nest survival&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Age [d]&quot;</span>)</span>
-<span id="cb171-16"><a href="dailynestsurv.html#cb171-16" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>age, newdat<span class="sc">$</span>lwr, <span class="at">lty=</span><span class="dv">3</span>)</span>
-<span id="cb171-17"><a href="dailynestsurv.html#cb171-17" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>age, newdat<span class="sc">$</span>upr, <span class="at">lty=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="dailynestsurv.html#cb174-1" tabindex="-1"></a><span class="co"># effect plot</span></span>
+<span id="cb174-2"><a href="dailynestsurv.html#cb174-2" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(mod)</span>
+<span id="cb174-3"><a href="dailynestsurv.html#cb174-3" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="fu">nrow</span>(bsim)</span>
+<span id="cb174-4"><a href="dailynestsurv.html#cb174-4" tabindex="-1"></a></span>
+<span id="cb174-5"><a href="dailynestsurv.html#cb174-5" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">age=</span><span class="fu">seq</span>(<span class="dv">1</span>, datax<span class="sc">$</span>maxage, <span class="at">length=</span><span class="dv">100</span>))</span>
+<span id="cb174-6"><a href="dailynestsurv.html#cb174-6" tabindex="-1"></a>newdat<span class="sc">$</span>age.z <span class="ot">&lt;-</span> (newdat<span class="sc">$</span>age<span class="sc">-</span><span class="fu">mean</span>(<span class="dv">1</span><span class="sc">:</span>datax<span class="sc">$</span>maxage))<span class="sc">/</span><span class="fu">sd</span>((<span class="dv">1</span><span class="sc">:</span>datax<span class="sc">$</span>maxage))</span>
+<span id="cb174-7"><a href="dailynestsurv.html#cb174-7" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>age.z, <span class="at">data=</span>newdat)</span>
+<span id="cb174-8"><a href="dailynestsurv.html#cb174-8" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nsim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
+<span id="cb174-9"><a href="dailynestsurv.html#cb174-9" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) fitmat[,i] <span class="ot">&lt;-</span> <span class="fu">plogis</span>(Xmat<span class="sc">%*%</span><span class="fu">as.numeric</span>(bsim[i,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]))</span>
+<span id="cb174-10"><a href="dailynestsurv.html#cb174-10" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, median)</span>
+<span id="cb174-11"><a href="dailynestsurv.html#cb174-11" tabindex="-1"></a>newdat<span class="sc">$</span>lwr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.025</span>)</span>
+<span id="cb174-12"><a href="dailynestsurv.html#cb174-12" tabindex="-1"></a>newdat<span class="sc">$</span>upr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.975</span>)</span>
+<span id="cb174-13"><a href="dailynestsurv.html#cb174-13" tabindex="-1"></a></span>
+<span id="cb174-14"><a href="dailynestsurv.html#cb174-14" tabindex="-1"></a><span class="fu">plot</span>(newdat<span class="sc">$</span>age, newdat<span class="sc">$</span>fit, <span class="at">ylim=</span><span class="fu">c</span>(<span class="fl">0.8</span>,<span class="dv">1</span>), <span class="at">type=</span><span class="st">&quot;l&quot;</span>,</span>
+<span id="cb174-15"><a href="dailynestsurv.html#cb174-15" tabindex="-1"></a>     <span class="at">las=</span><span class="dv">1</span>, <span class="at">ylab=</span><span class="st">&quot;Daily nest survival&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Age [d]&quot;</span>)</span>
+<span id="cb174-16"><a href="dailynestsurv.html#cb174-16" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>age, newdat<span class="sc">$</span>lwr, <span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb174-17"><a href="dailynestsurv.html#cb174-17" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>age, newdat<span class="sc">$</span>upr, <span class="at">lty=</span><span class="dv">3</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:effplots"></span>
 <img src="3.2_daily_nest_survival_files/figure-html/effplots-1.png" alt="Estimated daily nest survival probability in relation to nest age. Dotted lines are 95% uncertainty intervals of the regression line." width="672" />
 <p class="caption">
@@ -590,82 +591,82 @@ Figure 24.1: Estimated daily nest survival probability in relation to nest age. 
 <h2><span class="header-section-number">24.8</span> Known fate model for irregular nest controls<a href="dailynestsurv.html#known-fate-model-for-irregular-nest-controls" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When nest are controlled only irregularly, it may happen that a nest is found predated or dead after a longer break in controlling. In such cases, we know that the nest was predated or it died due to other causes some when between the last control when the nest was still alive and when it was found dead. In such cases, we need to tell the model that the nest could have died any time during the interval when we were not controlling.</p>
 <p>To do so, we create a variable that indicates the time (e.g. day since first egg) when the nest was last seen alive (<code>lastlive</code>). A second variable indicates the time of the last check which is either the equal to <code>lastlive</code> when the nest survived until the last check, or it is larger than <code>lastlive</code> when the nest failure has been recorded. A last variable, <code>gap</code>, measures the time interval in which the nest failure occurred. A <code>gap</code> of zero means that the nest was still alive at the last control, a <code>gap</code>of 1 means that the nest failure occurred during the first day after <code>lastlive</code>, a <code>gap</code> of 2 means that the nest failure either occurred at the first or second day after <code>lastlive</code>.</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="dailynestsurv.html#cb172-1" tabindex="-1"></a><span class="co"># time when nest was last observed alive</span></span>
-<span id="cb172-2"><a href="dailynestsurv.html#cb172-2" tabindex="-1"></a>lastlive <span class="ot">&lt;-</span> <span class="fu">apply</span>(datax<span class="sc">$</span>y, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">max</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x))[x<span class="sc">==</span><span class="dv">1</span>]))</span>
-<span id="cb172-3"><a href="dailynestsurv.html#cb172-3" tabindex="-1"></a></span>
-<span id="cb172-4"><a href="dailynestsurv.html#cb172-4" tabindex="-1"></a><span class="co"># time when nest was last checked (alive or dead)</span></span>
-<span id="cb172-5"><a href="dailynestsurv.html#cb172-5" tabindex="-1"></a>lastcheck <span class="ot">&lt;-</span> lastlive<span class="sc">+</span><span class="dv">1</span> </span>
-<span id="cb172-6"><a href="dailynestsurv.html#cb172-6" tabindex="-1"></a><span class="co"># here, we turn the above data into a format that can be used for</span></span>
-<span id="cb172-7"><a href="dailynestsurv.html#cb172-7" tabindex="-1"></a><span class="co"># irregular nest controls. WOULD BE NICE TO HAVE A REAL DATA EXAMPLE!</span></span>
-<span id="cb172-8"><a href="dailynestsurv.html#cb172-8" tabindex="-1"></a></span>
-<span id="cb172-9"><a href="dailynestsurv.html#cb172-9" tabindex="-1"></a><span class="co"># when nest was observed alive at the last check, then lastcheck equals lastlive</span></span>
-<span id="cb172-10"><a href="dailynestsurv.html#cb172-10" tabindex="-1"></a>lastcheck[lastlive<span class="sc">==</span>datax<span class="sc">$</span>last] <span class="ot">&lt;-</span> datax<span class="sc">$</span>last[lastlive<span class="sc">==</span>datax<span class="sc">$</span>last]</span>
-<span id="cb172-11"><a href="dailynestsurv.html#cb172-11" tabindex="-1"></a></span>
-<span id="cb172-12"><a href="dailynestsurv.html#cb172-12" tabindex="-1"></a>datax1 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Nnests=</span>datax<span class="sc">$</span>Nnests,</span>
-<span id="cb172-13"><a href="dailynestsurv.html#cb172-13" tabindex="-1"></a>               <span class="at">lastlive =</span> lastlive,</span>
-<span id="cb172-14"><a href="dailynestsurv.html#cb172-14" tabindex="-1"></a>               <span class="at">lastcheck=</span> lastcheck,</span>
-<span id="cb172-15"><a href="dailynestsurv.html#cb172-15" tabindex="-1"></a>               <span class="at">first=</span>datax<span class="sc">$</span>first,</span>
-<span id="cb172-16"><a href="dailynestsurv.html#cb172-16" tabindex="-1"></a>               <span class="at">cover=</span>datax<span class="sc">$</span>cover,</span>
-<span id="cb172-17"><a href="dailynestsurv.html#cb172-17" tabindex="-1"></a>               <span class="at">age=</span>datax<span class="sc">$</span>age,</span>
-<span id="cb172-18"><a href="dailynestsurv.html#cb172-18" tabindex="-1"></a>               <span class="at">maxage=</span>datax<span class="sc">$</span>maxage)</span>
-<span id="cb172-19"><a href="dailynestsurv.html#cb172-19" tabindex="-1"></a><span class="co"># time between last seen alive and first seen dead (= lastcheck)</span></span>
-<span id="cb172-20"><a href="dailynestsurv.html#cb172-20" tabindex="-1"></a>datax1<span class="sc">$</span>gap <span class="ot">&lt;-</span> datax1<span class="sc">$</span>lastcheck<span class="sc">-</span>datax1<span class="sc">$</span>lastlive</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="dailynestsurv.html#cb175-1" tabindex="-1"></a><span class="co"># time when nest was last observed alive</span></span>
+<span id="cb175-2"><a href="dailynestsurv.html#cb175-2" tabindex="-1"></a>lastlive <span class="ot">&lt;-</span> <span class="fu">apply</span>(datax<span class="sc">$</span>y, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">max</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x))[x<span class="sc">==</span><span class="dv">1</span>]))</span>
+<span id="cb175-3"><a href="dailynestsurv.html#cb175-3" tabindex="-1"></a></span>
+<span id="cb175-4"><a href="dailynestsurv.html#cb175-4" tabindex="-1"></a><span class="co"># time when nest was last checked (alive or dead)</span></span>
+<span id="cb175-5"><a href="dailynestsurv.html#cb175-5" tabindex="-1"></a>lastcheck <span class="ot">&lt;-</span> lastlive<span class="sc">+</span><span class="dv">1</span> </span>
+<span id="cb175-6"><a href="dailynestsurv.html#cb175-6" tabindex="-1"></a><span class="co"># here, we turn the above data into a format that can be used for</span></span>
+<span id="cb175-7"><a href="dailynestsurv.html#cb175-7" tabindex="-1"></a><span class="co"># irregular nest controls. WOULD BE NICE TO HAVE A REAL DATA EXAMPLE!</span></span>
+<span id="cb175-8"><a href="dailynestsurv.html#cb175-8" tabindex="-1"></a></span>
+<span id="cb175-9"><a href="dailynestsurv.html#cb175-9" tabindex="-1"></a><span class="co"># when nest was observed alive at the last check, then lastcheck equals lastlive</span></span>
+<span id="cb175-10"><a href="dailynestsurv.html#cb175-10" tabindex="-1"></a>lastcheck[lastlive<span class="sc">==</span>datax<span class="sc">$</span>last] <span class="ot">&lt;-</span> datax<span class="sc">$</span>last[lastlive<span class="sc">==</span>datax<span class="sc">$</span>last]</span>
+<span id="cb175-11"><a href="dailynestsurv.html#cb175-11" tabindex="-1"></a></span>
+<span id="cb175-12"><a href="dailynestsurv.html#cb175-12" tabindex="-1"></a>datax1 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Nnests=</span>datax<span class="sc">$</span>Nnests,</span>
+<span id="cb175-13"><a href="dailynestsurv.html#cb175-13" tabindex="-1"></a>               <span class="at">lastlive =</span> lastlive,</span>
+<span id="cb175-14"><a href="dailynestsurv.html#cb175-14" tabindex="-1"></a>               <span class="at">lastcheck=</span> lastcheck,</span>
+<span id="cb175-15"><a href="dailynestsurv.html#cb175-15" tabindex="-1"></a>               <span class="at">first=</span>datax<span class="sc">$</span>first,</span>
+<span id="cb175-16"><a href="dailynestsurv.html#cb175-16" tabindex="-1"></a>               <span class="at">cover=</span>datax<span class="sc">$</span>cover,</span>
+<span id="cb175-17"><a href="dailynestsurv.html#cb175-17" tabindex="-1"></a>               <span class="at">age=</span>datax<span class="sc">$</span>age,</span>
+<span id="cb175-18"><a href="dailynestsurv.html#cb175-18" tabindex="-1"></a>               <span class="at">maxage=</span>datax<span class="sc">$</span>maxage)</span>
+<span id="cb175-19"><a href="dailynestsurv.html#cb175-19" tabindex="-1"></a><span class="co"># time between last seen alive and first seen dead (= lastcheck)</span></span>
+<span id="cb175-20"><a href="dailynestsurv.html#cb175-20" tabindex="-1"></a>datax1<span class="sc">$</span>gap <span class="ot">&lt;-</span> datax1<span class="sc">$</span>lastcheck<span class="sc">-</span>datax1<span class="sc">$</span>lastlive</span></code></pre></div>
 <p>In the Stan model code, we specify the likelihood for each gap separately.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode stan"><code class="sourceCode stan"><span id="cb173-1"><a href="dailynestsurv.html#cb173-1" tabindex="-1"></a><span class="kw">data</span> {</span>
-<span id="cb173-2"><a href="dailynestsurv.html#cb173-2" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; Nnests;                <span class="co">// number of nests</span></span>
-<span id="cb173-3"><a href="dailynestsurv.html#cb173-3" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; lastlive[Nnests];      <span class="co">// day of last observation (alive)</span></span>
-<span id="cb173-4"><a href="dailynestsurv.html#cb173-4" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; lastcheck[Nnests];       <span class="co">// day of observed death or, if alive, last day of study </span></span>
-<span id="cb173-5"><a href="dailynestsurv.html#cb173-5" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; first[Nnests];         <span class="co">// day of first observation (alive or dead)</span></span>
-<span id="cb173-6"><a href="dailynestsurv.html#cb173-6" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; maxage;                <span class="co">// maximum of last</span></span>
-<span id="cb173-7"><a href="dailynestsurv.html#cb173-7" tabindex="-1"></a>  <span class="dt">real</span> cover[Nnests];                 <span class="co">// a covariate of the nest</span></span>
-<span id="cb173-8"><a href="dailynestsurv.html#cb173-8" tabindex="-1"></a>  <span class="dt">real</span> age[maxage];                   <span class="co">// a covariate of the date</span></span>
-<span id="cb173-9"><a href="dailynestsurv.html#cb173-9" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; gap[Nnests];           <span class="co">// obsdead - lastlive</span></span>
-<span id="cb173-10"><a href="dailynestsurv.html#cb173-10" tabindex="-1"></a>}</span>
-<span id="cb173-11"><a href="dailynestsurv.html#cb173-11" tabindex="-1"></a></span>
-<span id="cb173-12"><a href="dailynestsurv.html#cb173-12" tabindex="-1"></a><span class="kw">parameters</span> {</span>
-<span id="cb173-13"><a href="dailynestsurv.html#cb173-13" tabindex="-1"></a>  <span class="dt">vector</span>[<span class="dv">3</span>] b;                          <span class="co">// coef of linear pred for S</span></span>
-<span id="cb173-14"><a href="dailynestsurv.html#cb173-14" tabindex="-1"></a>}</span>
-<span id="cb173-15"><a href="dailynestsurv.html#cb173-15" tabindex="-1"></a></span>
-<span id="cb173-16"><a href="dailynestsurv.html#cb173-16" tabindex="-1"></a><span class="kw">model</span> {</span>
-<span id="cb173-17"><a href="dailynestsurv.html#cb173-17" tabindex="-1"></a>  <span class="dt">real</span> S[Nnests, maxage<span class="dv">-1</span>];             <span class="co">// survival probability</span></span>
-<span id="cb173-18"><a href="dailynestsurv.html#cb173-18" tabindex="-1"></a>                </span>
-<span id="cb173-19"><a href="dailynestsurv.html#cb173-19" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span>:Nnests){  </span>
-<span id="cb173-20"><a href="dailynestsurv.html#cb173-20" tabindex="-1"></a>    <span class="cf">for</span>(t <span class="cf">in</span> first[i]:(lastcheck[i]-<span class="dv">1</span>)){ </span>
-<span id="cb173-21"><a href="dailynestsurv.html#cb173-21" tabindex="-1"></a>      S[i,t] = inv_logit(b[<span class="dv">1</span>] + b[<span class="dv">2</span>]*cover[i] + b[<span class="dv">3</span>]*age[t]); </span>
-<span id="cb173-22"><a href="dailynestsurv.html#cb173-22" tabindex="-1"></a>    }</span>
-<span id="cb173-23"><a href="dailynestsurv.html#cb173-23" tabindex="-1"></a>  }</span>
-<span id="cb173-24"><a href="dailynestsurv.html#cb173-24" tabindex="-1"></a></span>
-<span id="cb173-25"><a href="dailynestsurv.html#cb173-25" tabindex="-1"></a>  <span class="co">// priors</span></span>
-<span id="cb173-26"><a href="dailynestsurv.html#cb173-26" tabindex="-1"></a>  b[<span class="dv">1</span>]~normal(<span class="dv">0</span>,<span class="fl">1.5</span>);</span>
-<span id="cb173-27"><a href="dailynestsurv.html#cb173-27" tabindex="-1"></a>  b[<span class="dv">2</span>]~normal(<span class="dv">0</span>,<span class="dv">3</span>);</span>
-<span id="cb173-28"><a href="dailynestsurv.html#cb173-28" tabindex="-1"></a>  b[<span class="dv">3</span>]~normal(<span class="dv">0</span>,<span class="dv">3</span>);  </span>
-<span id="cb173-29"><a href="dailynestsurv.html#cb173-29" tabindex="-1"></a></span>
-<span id="cb173-30"><a href="dailynestsurv.html#cb173-30" tabindex="-1"></a>  <span class="co">// likelihood</span></span>
-<span id="cb173-31"><a href="dailynestsurv.html#cb173-31" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:Nnests) {</span>
-<span id="cb173-32"><a href="dailynestsurv.html#cb173-32" tabindex="-1"></a>    <span class="cf">for</span>(t <span class="cf">in</span> (first[i]+<span class="dv">1</span>):lastlive[i]){</span>
-<span id="cb173-33"><a href="dailynestsurv.html#cb173-33" tabindex="-1"></a>      <span class="dv">1</span>~bernoulli(S[i,t<span class="dv">-1</span>]);</span>
-<span id="cb173-34"><a href="dailynestsurv.html#cb173-34" tabindex="-1"></a>    }</span>
-<span id="cb173-35"><a href="dailynestsurv.html#cb173-35" tabindex="-1"></a>    <span class="cf">if</span>(gap[i]==<span class="dv">1</span>){</span>
-<span id="cb173-36"><a href="dailynestsurv.html#cb173-36" tabindex="-1"></a>      <span class="kw">target +=</span> log(<span class="dv">1</span>-S[i,lastlive[i]]);  <span class="co">// </span></span>
-<span id="cb173-37"><a href="dailynestsurv.html#cb173-37" tabindex="-1"></a>    }</span>
-<span id="cb173-38"><a href="dailynestsurv.html#cb173-38" tabindex="-1"></a>    <span class="cf">if</span>(gap[i]==<span class="dv">2</span>){</span>
-<span id="cb173-39"><a href="dailynestsurv.html#cb173-39" tabindex="-1"></a>      <span class="kw">target +=</span> log((<span class="dv">1</span>-S[i,lastlive[i]]) + S[i,lastlive[i]]*(<span class="dv">1</span>-S[i,lastlive[i]+<span class="dv">1</span>]));  <span class="co">// </span></span>
-<span id="cb173-40"><a href="dailynestsurv.html#cb173-40" tabindex="-1"></a>    }</span>
-<span id="cb173-41"><a href="dailynestsurv.html#cb173-41" tabindex="-1"></a>    <span class="cf">if</span>(gap[i]==<span class="dv">3</span>){</span>
-<span id="cb173-42"><a href="dailynestsurv.html#cb173-42" tabindex="-1"></a>      <span class="kw">target +=</span> log((<span class="dv">1</span>-S[i,lastlive[i]]) + S[i,lastlive[i]]*(<span class="dv">1</span>-S[i,lastlive[i]+<span class="dv">1</span>]) +</span>
-<span id="cb173-43"><a href="dailynestsurv.html#cb173-43" tabindex="-1"></a>                    prod(S[i,lastlive[i]:(lastlive[i]+<span class="dv">1</span>)])*(<span class="dv">1</span>-S[i,lastlive[i]+<span class="dv">2</span>]));  <span class="co">// </span></span>
-<span id="cb173-44"><a href="dailynestsurv.html#cb173-44" tabindex="-1"></a>    }</span>
-<span id="cb173-45"><a href="dailynestsurv.html#cb173-45" tabindex="-1"></a>    <span class="cf">if</span>(gap[i]==<span class="dv">4</span>){</span>
-<span id="cb173-46"><a href="dailynestsurv.html#cb173-46" tabindex="-1"></a>      <span class="kw">target +=</span> log((<span class="dv">1</span>-S[i,lastlive[i]]) + S[i,lastlive[i]]*(<span class="dv">1</span>-S[i,lastlive[i]+<span class="dv">1</span>]) +</span>
-<span id="cb173-47"><a href="dailynestsurv.html#cb173-47" tabindex="-1"></a>                    prod(S[i,lastlive[i]:(lastlive[i]+<span class="dv">1</span>)])*(<span class="dv">1</span>-S[i,lastlive[i]+<span class="dv">2</span>]) +</span>
-<span id="cb173-48"><a href="dailynestsurv.html#cb173-48" tabindex="-1"></a>                    prod(S[i,lastlive[i]:(lastlive[i]+<span class="dv">2</span>)])*(<span class="dv">1</span>-S[i,lastlive[i]+<span class="dv">3</span>]));  <span class="co">// </span></span>
-<span id="cb173-49"><a href="dailynestsurv.html#cb173-49" tabindex="-1"></a>    }</span>
-<span id="cb173-50"><a href="dailynestsurv.html#cb173-50" tabindex="-1"></a></span>
-<span id="cb173-51"><a href="dailynestsurv.html#cb173-51" tabindex="-1"></a>  }</span>
-<span id="cb173-52"><a href="dailynestsurv.html#cb173-52" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="dailynestsurv.html#cb174-1" tabindex="-1"></a><span class="co"># Run STAN</span></span>
-<span id="cb174-2"><a href="dailynestsurv.html#cb174-2" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">stan</span>(<span class="at">file =</span> <span class="st">&quot;stanmodels/daily_nest_survival_irreg.stan&quot;</span>, <span class="at">data=</span>datax1, </span>
-<span id="cb174-3"><a href="dailynestsurv.html#cb174-3" tabindex="-1"></a>            <span class="at">chains=</span><span class="dv">5</span>, <span class="at">iter=</span><span class="dv">2500</span>, <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.9</span>), <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode stan"><code class="sourceCode stan"><span id="cb176-1"><a href="dailynestsurv.html#cb176-1" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb176-2"><a href="dailynestsurv.html#cb176-2" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; Nnests;                <span class="co">// number of nests</span></span>
+<span id="cb176-3"><a href="dailynestsurv.html#cb176-3" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; lastlive[Nnests];      <span class="co">// day of last observation (alive)</span></span>
+<span id="cb176-4"><a href="dailynestsurv.html#cb176-4" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; lastcheck[Nnests];       <span class="co">// day of observed death or, if alive, last day of study </span></span>
+<span id="cb176-5"><a href="dailynestsurv.html#cb176-5" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; first[Nnests];         <span class="co">// day of first observation (alive or dead)</span></span>
+<span id="cb176-6"><a href="dailynestsurv.html#cb176-6" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; maxage;                <span class="co">// maximum of last</span></span>
+<span id="cb176-7"><a href="dailynestsurv.html#cb176-7" tabindex="-1"></a>  <span class="dt">real</span> cover[Nnests];                 <span class="co">// a covariate of the nest</span></span>
+<span id="cb176-8"><a href="dailynestsurv.html#cb176-8" tabindex="-1"></a>  <span class="dt">real</span> age[maxage];                   <span class="co">// a covariate of the date</span></span>
+<span id="cb176-9"><a href="dailynestsurv.html#cb176-9" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; gap[Nnests];           <span class="co">// obsdead - lastlive</span></span>
+<span id="cb176-10"><a href="dailynestsurv.html#cb176-10" tabindex="-1"></a>}</span>
+<span id="cb176-11"><a href="dailynestsurv.html#cb176-11" tabindex="-1"></a></span>
+<span id="cb176-12"><a href="dailynestsurv.html#cb176-12" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb176-13"><a href="dailynestsurv.html#cb176-13" tabindex="-1"></a>  <span class="dt">vector</span>[<span class="dv">3</span>] b;                          <span class="co">// coef of linear pred for S</span></span>
+<span id="cb176-14"><a href="dailynestsurv.html#cb176-14" tabindex="-1"></a>}</span>
+<span id="cb176-15"><a href="dailynestsurv.html#cb176-15" tabindex="-1"></a></span>
+<span id="cb176-16"><a href="dailynestsurv.html#cb176-16" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb176-17"><a href="dailynestsurv.html#cb176-17" tabindex="-1"></a>  <span class="dt">real</span> S[Nnests, maxage<span class="dv">-1</span>];             <span class="co">// survival probability</span></span>
+<span id="cb176-18"><a href="dailynestsurv.html#cb176-18" tabindex="-1"></a>                </span>
+<span id="cb176-19"><a href="dailynestsurv.html#cb176-19" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span>:Nnests){  </span>
+<span id="cb176-20"><a href="dailynestsurv.html#cb176-20" tabindex="-1"></a>    <span class="cf">for</span>(t <span class="cf">in</span> first[i]:(lastcheck[i]-<span class="dv">1</span>)){ </span>
+<span id="cb176-21"><a href="dailynestsurv.html#cb176-21" tabindex="-1"></a>      S[i,t] = inv_logit(b[<span class="dv">1</span>] + b[<span class="dv">2</span>]*cover[i] + b[<span class="dv">3</span>]*age[t]); </span>
+<span id="cb176-22"><a href="dailynestsurv.html#cb176-22" tabindex="-1"></a>    }</span>
+<span id="cb176-23"><a href="dailynestsurv.html#cb176-23" tabindex="-1"></a>  }</span>
+<span id="cb176-24"><a href="dailynestsurv.html#cb176-24" tabindex="-1"></a></span>
+<span id="cb176-25"><a href="dailynestsurv.html#cb176-25" tabindex="-1"></a>  <span class="co">// priors</span></span>
+<span id="cb176-26"><a href="dailynestsurv.html#cb176-26" tabindex="-1"></a>  b[<span class="dv">1</span>]~normal(<span class="dv">0</span>,<span class="fl">1.5</span>);</span>
+<span id="cb176-27"><a href="dailynestsurv.html#cb176-27" tabindex="-1"></a>  b[<span class="dv">2</span>]~normal(<span class="dv">0</span>,<span class="dv">3</span>);</span>
+<span id="cb176-28"><a href="dailynestsurv.html#cb176-28" tabindex="-1"></a>  b[<span class="dv">3</span>]~normal(<span class="dv">0</span>,<span class="dv">3</span>);  </span>
+<span id="cb176-29"><a href="dailynestsurv.html#cb176-29" tabindex="-1"></a></span>
+<span id="cb176-30"><a href="dailynestsurv.html#cb176-30" tabindex="-1"></a>  <span class="co">// likelihood</span></span>
+<span id="cb176-31"><a href="dailynestsurv.html#cb176-31" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:Nnests) {</span>
+<span id="cb176-32"><a href="dailynestsurv.html#cb176-32" tabindex="-1"></a>    <span class="cf">for</span>(t <span class="cf">in</span> (first[i]+<span class="dv">1</span>):lastlive[i]){</span>
+<span id="cb176-33"><a href="dailynestsurv.html#cb176-33" tabindex="-1"></a>      <span class="dv">1</span>~bernoulli(S[i,t<span class="dv">-1</span>]);</span>
+<span id="cb176-34"><a href="dailynestsurv.html#cb176-34" tabindex="-1"></a>    }</span>
+<span id="cb176-35"><a href="dailynestsurv.html#cb176-35" tabindex="-1"></a>    <span class="cf">if</span>(gap[i]==<span class="dv">1</span>){</span>
+<span id="cb176-36"><a href="dailynestsurv.html#cb176-36" tabindex="-1"></a>      <span class="kw">target +=</span> log(<span class="dv">1</span>-S[i,lastlive[i]]);  <span class="co">// </span></span>
+<span id="cb176-37"><a href="dailynestsurv.html#cb176-37" tabindex="-1"></a>    }</span>
+<span id="cb176-38"><a href="dailynestsurv.html#cb176-38" tabindex="-1"></a>    <span class="cf">if</span>(gap[i]==<span class="dv">2</span>){</span>
+<span id="cb176-39"><a href="dailynestsurv.html#cb176-39" tabindex="-1"></a>      <span class="kw">target +=</span> log((<span class="dv">1</span>-S[i,lastlive[i]]) + S[i,lastlive[i]]*(<span class="dv">1</span>-S[i,lastlive[i]+<span class="dv">1</span>]));  <span class="co">// </span></span>
+<span id="cb176-40"><a href="dailynestsurv.html#cb176-40" tabindex="-1"></a>    }</span>
+<span id="cb176-41"><a href="dailynestsurv.html#cb176-41" tabindex="-1"></a>    <span class="cf">if</span>(gap[i]==<span class="dv">3</span>){</span>
+<span id="cb176-42"><a href="dailynestsurv.html#cb176-42" tabindex="-1"></a>      <span class="kw">target +=</span> log((<span class="dv">1</span>-S[i,lastlive[i]]) + S[i,lastlive[i]]*(<span class="dv">1</span>-S[i,lastlive[i]+<span class="dv">1</span>]) +</span>
+<span id="cb176-43"><a href="dailynestsurv.html#cb176-43" tabindex="-1"></a>                    prod(S[i,lastlive[i]:(lastlive[i]+<span class="dv">1</span>)])*(<span class="dv">1</span>-S[i,lastlive[i]+<span class="dv">2</span>]));  <span class="co">// </span></span>
+<span id="cb176-44"><a href="dailynestsurv.html#cb176-44" tabindex="-1"></a>    }</span>
+<span id="cb176-45"><a href="dailynestsurv.html#cb176-45" tabindex="-1"></a>    <span class="cf">if</span>(gap[i]==<span class="dv">4</span>){</span>
+<span id="cb176-46"><a href="dailynestsurv.html#cb176-46" tabindex="-1"></a>      <span class="kw">target +=</span> log((<span class="dv">1</span>-S[i,lastlive[i]]) + S[i,lastlive[i]]*(<span class="dv">1</span>-S[i,lastlive[i]+<span class="dv">1</span>]) +</span>
+<span id="cb176-47"><a href="dailynestsurv.html#cb176-47" tabindex="-1"></a>                    prod(S[i,lastlive[i]:(lastlive[i]+<span class="dv">1</span>)])*(<span class="dv">1</span>-S[i,lastlive[i]+<span class="dv">2</span>]) +</span>
+<span id="cb176-48"><a href="dailynestsurv.html#cb176-48" tabindex="-1"></a>                    prod(S[i,lastlive[i]:(lastlive[i]+<span class="dv">2</span>)])*(<span class="dv">1</span>-S[i,lastlive[i]+<span class="dv">3</span>]));  <span class="co">// </span></span>
+<span id="cb176-49"><a href="dailynestsurv.html#cb176-49" tabindex="-1"></a>    }</span>
+<span id="cb176-50"><a href="dailynestsurv.html#cb176-50" tabindex="-1"></a></span>
+<span id="cb176-51"><a href="dailynestsurv.html#cb176-51" tabindex="-1"></a>  }</span>
+<span id="cb176-52"><a href="dailynestsurv.html#cb176-52" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="dailynestsurv.html#cb177-1" tabindex="-1"></a><span class="co"># Run STAN</span></span>
+<span id="cb177-2"><a href="dailynestsurv.html#cb177-2" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">stan</span>(<span class="at">file =</span> <span class="st">&quot;stanmodels/daily_nest_survival_irreg.stan&quot;</span>, <span class="at">data=</span>datax1, </span>
+<span id="cb177-3"><a href="dailynestsurv.html#cb177-3" tabindex="-1"></a>            <span class="at">chains=</span><span class="dv">5</span>, <span class="at">iter=</span><span class="dv">2500</span>, <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.9</span>), <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div id="further-reading-5" class="section level2 unnumbered hasAnchor">
 <h2>Further reading<a href="dailynestsurv.html#further-reading-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>

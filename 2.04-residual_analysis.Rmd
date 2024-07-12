@@ -34,7 +34,7 @@ The influence of one observation on the parameter estimates is measured by the C
 
 The diagnostic plots (Fig. \@ref(fig:diagplotdg)) of the residuals of the model fitted to the data of the species *Dactylis glomerata* look quite acceptable. 1. The average residual value is around zero along the range of fitted values, 2. the points are alined diagonally in the QQ-plot, 3. the variance does not noticably change along the fitted values, and 4. no observation has a large Cook's distance. 
 
-```{r diagplotdg}
+```{r diagplotdg, fig.cap="Standard diagnostic residual plots of a linear regression for the biomass data of D. glomerata."}
 
 data(ellenberg)
 mod <- lm(Yi.g~Water, data=ellenberg[ellenberg$Species=="Dg",])
@@ -44,7 +44,7 @@ plot(mod)
 
 However, when the same model is fitted to data of *Alopecurus pratensis*, the model assumptions may not be met well (Fig. \@ref(fig:diagplotap)). The average of the residuals decreases with increasing fitted values (panel 1). A few observations, in particular observation 133, do not fit to a normal distribution (panel 2). The residual variance increases with increasing fitted values (panel 3). Observation 133 has a too high Cook's distance. 
 
-```{r diagplotap}
+```{r diagplotap, fig.cap="Standard diagnostic residual plots of a linear regression for the biomass data of A. pratensis."}
 
 mod <- lm(Yi.g~Water, data=ellenberg[ellenberg$Species=="Ap",])
 par(mfrow=c(2,2))
@@ -54,7 +54,7 @@ plot(mod)
 
 An increasing variance with increasing fitted values is a widespread case. The logarithm or square-root transformation of the response variable often is a quick and simple solution. Also, in this case, the log transformation improved the diagnostic plots (Fig. \@ref(fig:diagplotaplog)).
 
-```{r diagplotaplog}
+```{r diagplotaplog, fig.cap="Standard diagnostic residual plots of a linear regression for the logarithm of the biomass data of A. pratensis."}
 
 mod <- lm(log(Yi.g)~Water, data=ellenberg[ellenberg$Species=="Ap",])
 par(mfrow=c(2,2))

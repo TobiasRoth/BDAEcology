@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2023-12-20" />
+<meta name="date" content="2024-07-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -56,7 +56,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -128,6 +128,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -1055,7 +1056,7 @@ for juveniles males: <span class="math inline">\(\hat{y} = \beta_0 + \beta_1 + \
 ##         4.33041         -0.23700         -0.01791          0.01894</code></pre>
 <div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="lm.html#cb105-1" tabindex="-1"></a><span class="fu">summary</span>(mod)<span class="sc">$</span>sigma</span></code></pre></div>
 <pre><code>## [1] 0.9001547</code></pre>
-<p>These four parameters define two regression lines, one for each species (Figure <a href="lm.html#fig:fgbiom">11.10</a> Left). For Ap, it is <span class="math inline">\(\hat{y_i} = \beta_0 + \beta_2water_i\)</span>, and for Dg it is <span class="math inline">\(\hat{y_i} = (\beta_0 + \beta_1) + (\beta_2 + \beta_3)water_i\)</span>. Thus, <span class="math inline">\(\beta_1\)</span> is the difference in the intercept between the species and <span class="math inline">\(\beta_3\)</span> is the difference in the slope.</p>
+<p>These four parameters define two regression lines, one for each species (Figure <a href="lm.html#fig:fgbiom">11.10</a> Left). For Ap, it is <span class="math inline">\(\hat{y_i} = \beta_0  + \beta_2water_i\)</span>, and for Dg it is <span class="math inline">\(\hat{y_i} = (\beta_0 + \beta_1) + (\beta_2 + \beta_3)water_i\)</span>. Thus, <span class="math inline">\(\beta_1\)</span> is the difference in the intercept between the species and <span class="math inline">\(\beta_3\)</span> is the difference in the slope.</p>
 <div class="figure"><span style="display:block;" id="fig:fgbiom"></span>
 <img src="2.03-lm_files/figure-html/fgbiom-1.png" alt="Aboveground biomass (g, log-transformed) in relation to distance to ground water and species (two grass species). Fitted values from a model including an interaction species x water (left) and a model without interaction (right) are added. The dotted line indicates water=0." width="672" />
 <p class="caption">
@@ -1150,10 +1151,10 @@ Now, let’s bring the levels into their natural order and define the factor as 
 ## [3,]  0.2236068 -0.5 -0.6708204
 ## [4,]  0.6708204  0.5  0.2236068</code></pre>
 <p>When using polynomial contrasts, R will construct three (= number of levels minus one) variables that are called ‘.L’, ‘.Q’, and ‘.C’ for linear, quadratic and cubic effects. The contrast matrix defines which numeric value will be inserted in each of the three corresponding columns in the model matrix for each observation, for example, an observation with ‘support’ in the factor ‘nesting_aid’ will get the values -0.224, -0.5 and 0.671 in the columns L, Q and C of the model matrix. These contrasts define yet another way to get 4 different group means:<br />
-<span class="math inline">\(m1 = \beta_0 – 0.671* \beta_1 + 0.5*\beta_2 - 0.224* \beta_3\)</span><br />
-<span class="math inline">\(m2 = \beta_0 – 0.224* \beta_1 - 0.5*\beta_2 + 0.671* \beta_3\)</span><br />
-<span class="math inline">\(m3 = \beta_0 + 0.224* \beta_1 - 0.5*\beta_2 - 0.671* \beta_3\)</span><br />
-<span class="math inline">\(m4 = \beta_0 + 0.671* \beta_1 + 0.5*\beta_2 + 0.224* \beta_3\)</span></p>
+<span class="math inline">\(m1 =  \beta_0 – 0.671* \beta_1 + 0.5*\beta_2 - 0.224* \beta_3\)</span><br />
+<span class="math inline">\(m2 =  \beta_0 – 0.224* \beta_1 - 0.5*\beta_2 + 0.671* \beta_3\)</span><br />
+<span class="math inline">\(m3 =  \beta_0 + 0.224* \beta_1 - 0.5*\beta_2 - 0.671* \beta_3\)</span><br />
+<span class="math inline">\(m4 =  \beta_0 + 0.671* \beta_1 + 0.5*\beta_2 + 0.224* \beta_3\)</span></p>
 <p>The group means are the same, independent of whether a factor is defined as ordered or not. The ordering also has no effect on the variance that is explained by the factor ‘nesting_aid’ or the overall model fit. Only the model coefficients and their interpretation depend on whether a factor is defined as ordered or not. When we define a factor as ordered, the coefficients can be interpreted as linear, quadratic, cubic, or higher order polynomial effects. The number of the polynomials will always be the number of factor levels minus one (unless the intercept is omitted from the model in which case it is the number of factor levels). Linear, quadratic, and further polynomial effects normally are more interesting for ordered factors than single differences from a reference level because linear and polynomial trends tell us something about consistent changes in the outcome along the ordered factor levels. Therefore, an ordered factor with k levels is treated like a covariate consisting of the centered level numbers (-1.5, -0.5, 0.5, 1.5 in our case with four levels) and k-1 orthogonal polynomials of this covariate are included in the model. Thus, if we have an ordered factor A with three levels, <code>y~A</code> is equivalent to <code>y~x+I(x^2)</code>, with x=-1 for the lowest, x=0 for the middle and x=1 for the highest level.
 Note that it is also possible to define own contrasts if we are interested in specific differences or trends. However, it is not trivial to find meaningful and orthogonal (= uncorrelated) contrasts.</p>
 </div>
