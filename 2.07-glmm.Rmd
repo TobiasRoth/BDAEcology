@@ -2,7 +2,6 @@
 # Generalized linear mixed models {#glmm}
 
 ## Introduction
-THIS CHAPTER IS UNDER CONSTRUCTION!!!   
 <!-- Steffis draft version, started 17.11.2021, fk worked on it 15.11.2022, svf revised it 22.11.2022-->
 
 In chapter \@ref(lmer) on linear mixed effect models we have introduced how to analyze metric outcome variables for which a normal error distribution can be assumed (potentially after transformation), when the data have a hierarchical structure and, as a consequence, observations are not independent.

@@ -9,7 +9,7 @@ Probability distributions are grouped into discrete and continuous distributions
 
 ## Discrete distributions
 
-### Bernoulli distribution
+### Bernoulli distribution {#bernoulli-dist}
 
 Bernoulli distributed data take on the exact values 0 or 1. The value 1 occurs with probability $p$.    
 
@@ -20,7 +20,7 @@ The expected value is $E(x) = p$ and the variance is $Var(x) = p(1-p)$.
 
 The flipping experiment of a fair coin produces Bernoulli distributed data with $p=0.5$ if head is taken as one and tail is taken as zero. The Bernoulli distribution is usually used as a data model for binary data such as whether a nest box is used or not, whether a seed germinated or not, whether a species occurs or not in a plot etc. 
 
-### Binomial distribution
+### Binomial distribution {#binomial-dist}
 
 The binomial distribution describes the number of ones among a predefined number of Bernoulli trials. For example, the number of heads among 20 coin flips, the number of used nest boxes among the 50 nest boxes of the study area, or the number of seed that germinated among the 10 seeds in the pot. Binomially distributed data are counts with an upper limit ($n$).
 
@@ -28,6 +28,22 @@ $x \sim binomial(p,n)$
 
 The probability function is $p(x) = {n\choose x} p^x(1-p)^{(n-x)}$.
 The expected value is $E(x) = np$ and the variance is $Var(x) = np(1-p)$.
+
+
+```{r, echo=FALSE, fig.cap="Two examples of a binomial distribution. size: number of trials (the argument in the corresponding R function, for example in rbinom, is called size). p: success probability."}
+randombinom <- rbinom(100000, size=10, prob=0.3)
+histrandombin <- hist(randombinom, breaks=seq(-0.5, size+0.5,by=1), plot=FALSE)
+par(mfrow=c(1,2), oma=c(0, 2, 0,0))
+plot(histrandombin$mids, histrandombin$density, type="h",  lwd=5,col="blue", las=1, xlim=c(0, size), cex.lab=1.2, cex.axis=1,
+  xlab="size=10, p=0.3", lend="butt", ylab="")
+
+randombinom <- rbinom(100000, size=100, prob=0.2)
+histrandombin <- hist(randombinom, breaks=seq(-0.5, 100+0.5,by=1), plot=FALSE)
+plot(histrandombin$mids, histrandombin$density, type="h", lwd=2, col="blue", las=1, xlim=c(0, 100), cex.lab=1.2, cex.axis=1,
+  xlab="size=100, p=0.2", lend="butt", ylab="")
+mtext("Density", 2,outer=TRUE, cex=1.4)
+
+```
 
 
 ### Poisson distribution
