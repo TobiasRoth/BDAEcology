@@ -46,16 +46,45 @@ mtext("Density", 2,outer=TRUE, cex=1.4)
 ```
 
 
-### Poisson distribution
+### Poisson distribution {#poisson}
 
-The Poisson distribution describes the distribution of counts without upper boundary, i.e., when we know how many times something happened but we do not know how many times it did not happen. A typical Poisson distributed variable is the number of raindrops in equally-sized grid cells on the floor, if we can assume that every rain drop falls down completely independent of the other raindrops and at a completely random point. 
+The Poisson distribution describes the distribution of counts without upper boundary, i.e., when we know how many times something happened but we do not know how many times it did not happen. A typical Poisson distributed variable is the number of raindrops in equally-sized grid cells on the floor, if we can assume that every rain drop falls down completely independent of the other raindrops and at a completely random point (Figure \@ref(fig:pois)). 
 
 $x \sim Poisson(\lambda)$  
 
 The probability function is $p(x) = \frac{1}{x!}\lambda^xexp(-\lambda)$. It is implemented in the R-function `dpois`.
 The expected values is $E(x) = \lambda$ and the variance is $Var(x) = \lambda$.
 
+```{r pois, fig.cap="A natural process that produces Poisson distributed data is the number of raindrops falling (at random) into equally sized cells of a grid. Left: spatial distribution of raindrops, right: corresponding distribution of the number of raindrops per cell."}
+set.seed(1338)
+n <- 500         # simulate 500 raindrops
+x <- runif(n)    # they fall at some random point (x,y) in space
+y <- runif(n)
+
+par(mfrow=c(1,2))
+
+par(mar=c(1,1,1,1))
+plot(c(0,1), c(0,1), type="n", xaxs="i", yaxs="i", xlab="", ylab="", axes=F)
+box()
+points(x,y, pch=16)
+
+# add a grid
+grid(10, 10, col=1)
+
+# number of points per grid-cell
+xcell <- cut(x, breaks=seq(0,1, by=0.1))
+ycell <- cut(y, breaks=seq(0,1, by=0.1))
+counts <- as.numeric(table(xcell, ycell))
+
+par(mar=c(4,4,1,1))
+hist(counts, col="blue", cex.lab=1.4, las=1, cex.axis=1.2, main="")
+```
+
 An important property of the Poisson distribution is that it has only one parameter $\lambda$. As a consequence, it does not allow for any combination of means and variances. In fact, they are assumed to be the same. In the real world, most count data do not behave like rain drops, that means variances of count data are in most real world examples not equal to the mean as assumed by the Poisson distribution. Therefore, when using the Poisson distribution as a data model, it is important to check for overdispersion.
+
+The property that in a Poisson distribution the mean equals the variance can be used to quickly assess whether the spatial distribution of observations, for example, nest locations, is clustered, random, or equally spaced. Animal locations could be clustered due to coloniality, social, or other attraction. More equally spaced location may be due to territoriality. 
+Let $x$ be the number of observations per grid cell; if $var(x)/mean(x)>>1$ the observations are clustered, whereas if $var(x)/mean(x)<<1$, the observations are more equally spaced than expected by chance. Clustering will lead to overdispersion in the counts whereas more equally spaced locations will lead
+to underdispersion.
 
 Further, note that not all variables measured as an integer number are count data! For example, the number of days an animal spends in a specific area before moving away looks like a count. However, it is a continuous measurement. The duration an animal spends in a specific areas could also be measured in hours or minutes. The Poisson model assumes that the counts are all events that happened. However, an emigration of an animal is just one event, independent of how long it stayed.  
 

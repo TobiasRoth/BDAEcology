@@ -42,3 +42,14 @@ To fit this model in Stan, we first write the Stan model code and save it in a s
 
 Here is a handy package:
 https://cran.r-project.org/web/packages/GLMMadaptive/vignettes/ZeroInflated_and_TwoPart_Models.html
+
+## Further packages and readings$
+
+If the model does not contain any random factor, the R functions from the package `pscl` can be used to fit zeroinflated binomial or Poisson models [@Zeileis.2008].
+Zero-inflation typically occurs in count data. However, it can also occur in
+continuous measurements. For example, the amount of rain per day measured
+in mm is very often zero, and, when it is not zero, it is a number following a
+specific (possibly normal) continuous distribution. Such data may be analyzed
+using tobit models (Tobin, 1958). Several R packages provide tobit models,
+such as censReg (Henningsen, 2013), AER (Kleiber & Zeileis, 2008), and
+MCMCpack (Martin et al., 2011).
