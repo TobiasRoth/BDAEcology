@@ -1,5 +1,5 @@
 
-# Prior distributions {#priors}
+# Prior distributions and prior sensitivity analyses{#priors}
 
 ## Introduction
 

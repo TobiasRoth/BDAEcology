@@ -1,12 +1,41 @@
 
 # Posterior predictive model checking {#modelchecking}
 
-THIS CHAPTER IS UNDER CONSTRUCTION!!! 
+<!--Draft of Fraenzi 29.9.2024-->
 
-## Introduction
+Only if the model describes the data-generating process sufficiently accurately can we draw relevant conclusions from the model. It is therefore essential to assess model fit: our goal is to describe how well the model fits the data with respect to different aspects of the model. In this book, we present three ways to assess how well a model reproduces the data-generating process: (1) [residual analysis](#residualanalysis), 
+(2) posterior predictive model checking (this chapter)
+and (3) [prior sensitivity analysis](#priors).
 
-## Summary
-xxx
+Posterior predictive model checking is the comparison of replicated data generated under the model with the observed data. The aim of posterior predictive model checking is similar to the aim of a residual analysis, that is, to look at what data structures the model does not explain. However, the possibilities of residual analyses are limited, particularly in the case of non-normal data distributions. For example, in a logistic regression, positive residuals are always associated with $y_i = 1$ and negative residuals with $y_i = 0$. As a consequence, temporal and spatial patterns in the residuals will always look similar to these patterns in the observations and it is difficult to judge whether the model captures these processes adequately. In such cases, simulating data from the posterior predictive distribution of a model and comparing these data with the observations (i.e., predictive model checking) gives a clearer insight into the performance of a model.
+
+We follow the notation of @Gelman2014 in that we use “replicated
+data”, $y^{rep}$ for a set of $n$ new observations drawn from the posterior predictive distribution for the specific predictor variables $x$ of the $n$ observations in our data set. When we simulate new observations for new values of the predictor variables, for example, to show the prediction interval in an effect plot, we use $y^{new}$.
+
+The first step in posterior predictive model checking is to simulate a replicated data set for each set of simulated values of the joint posterior distribution of the model parameters. Thus, we produce, for example, 2000 replicated data sets. These replicated data sets are then compared graphically, or more formally by test statistics, with the observed data. The Bayesian p-value offers a way for formalized testing. It is defined as the probability that the replicated data from the model are more extreme than the observed data, as measured by a test statistic. In case of a perfect fit, we expect that the test statistic from the observed data is well in the middle of the ones from the replicated data. In other words, around 50% of the test statistics from the replicated data are higher than the one from the observed data, resulting in a Bayesian p-value close to 0.5. Bayesian p-values close to 0 or close to 1, on the contrary, indicate that the aspect of the model measured by the specific test statistic is not well represented by the model. 
+
+Test statistics have to be chosen such that they describe important data structures that are not directly measured as a model parameter. Because model parameters are chosen so that they fit the data well, it is not surprising to find p-values close to 0.5 when using model parameters as test statistics. For example, extreme values or quantiles of $y$ are often better suited than the mean as test statistics, because they are less redundant with the model parameter that is fitted to the data. Similarly, the number of switches from 0 to 1 in binary data is suited to check for autocorrelation whereas the proportion of 1s among all the data may not give so much insight into the model fit. Other test statistics could be a measure for asymmetry, such as the relative difference between the 10 and 90% quantiles, or the proportion of zero values in a Poisson model.
+
+We like predictive model checking because it allows us to look at different, specific aspects of the model. It helps us to judge which conclusions from the model are reliable and to identify the limitation of a model. Predictive model checking also helps to understand the process that has generated the data.
+
+We use an analysis of the whitethroat breeding density in wildflower fields of different ages for illustration. The aim of this analysis was to identify an optimal age of wildflower fields that serves as good habitat for the whitethroat. 
+
+Because the Stan developers have written highly convenient user friendly functions to do posterior predictive model checks, we fit the model with Stan using the function `stan_glmer` from the package `rstanarm`. 
 
 
+```{r}
+data("wildflowerfields")
+dat <- wildflowerfields
+dat$size.ha <- dat$size/100 # change unit to ha
+dat$size.z <- scale(dat$size) # z-transform size
+dat$year.z <- scale(dat$year)
+age.poly <- poly(dat$age, 3) # create orthogonal polynomials 
+dat$age.l <- age.poly[,1]    # to ease convergence of the model fit
+dat$age.q <- age.poly[,2]
+dat$age.c <- age.poly[,3]
 
+library(rstanarm)
+mod <- stan_glmer(bp ~ year.z + age.l + age.q + age.c + size.z +
+(1|field) + offset(log(size.ha)), family=poisson, data=dat)
+
+```
