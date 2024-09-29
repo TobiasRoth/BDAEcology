@@ -55,6 +55,7 @@ fig:overdisp
 fig:fittree1
 fig:simpois
 fig:diagpois
+fig:wildfl
 fig:assessmodelassumptions
 fig:checkconvergencemodelbrm
 fig:ppbinomial
@@ -171,6 +172,7 @@ background-4
 fitting-a-poisson-model-in-r
 assessing-model-assumptions
 visualising-results
+modeling-rates-and-densities-poisson-model-with-an-offset
 glmm
 introduction-4
 binomial-mixed-model

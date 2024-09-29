@@ -333,6 +333,7 @@ div.csl-indent {
 <li class="chapter" data-level="14.4.2" data-path="glm.html"><a href="glm.html#fitting-a-poisson-model-in-r"><i class="fa fa-check"></i><b>14.4.2</b> Fitting a Poisson model in R</a></li>
 <li class="chapter" data-level="14.4.3" data-path="glm.html"><a href="glm.html#assessing-model-assumptions"><i class="fa fa-check"></i><b>14.4.3</b> Assessing model assumptions</a></li>
 <li class="chapter" data-level="14.4.4" data-path="glm.html"><a href="glm.html#visualising-results"><i class="fa fa-check"></i><b>14.4.4</b> Visualising results</a></li>
+<li class="chapter" data-level="14.4.5" data-path="glm.html"><a href="glm.html#modeling-rates-and-densities-poisson-model-with-an-offset"><i class="fa fa-check"></i><b>14.4.5</b> Modeling rates and densities: Poisson model with an offset</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="glmm.html"><a href="glmm.html"><i class="fa fa-check"></i><b>15</b> Generalized linear mixed models</a>
@@ -440,117 +441,117 @@ div.csl-indent {
 </blockquote>
 <div id="introduction-7" class="section level2 hasAnchor" number="19.1">
 <h2><span class="header-section-number">19.1</span> Introduction<a href="ridge_regression.html#introduction-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="ridge_regression.html#cb187-1" tabindex="-1"></a><span class="co"># Settings </span></span>
-<span id="cb187-2"><a href="ridge_regression.html#cb187-2" tabindex="-1"></a><span class="fu">library</span>(R2OpenBUGS)</span>
-<span id="cb187-3"><a href="ridge_regression.html#cb187-3" tabindex="-1"></a>bugslocation <span class="ot">&lt;-</span> <span class="st">&quot;C:/Program Files/OpenBUGS323/OpenBugs.exe&quot;</span>      <span class="co"># location of OpenBUGS</span></span>
-<span id="cb187-4"><a href="ridge_regression.html#cb187-4" tabindex="-1"></a>bugsworkingdir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">getwd</span>(), <span class="st">&quot;BUGS&quot;</span>)                     <span class="co"># Bugs working directory</span></span>
-<span id="cb187-5"><a href="ridge_regression.html#cb187-5" tabindex="-1"></a></span>
-<span id="cb187-6"><a href="ridge_regression.html#cb187-6" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
-<span id="cb187-7"><a href="ridge_regression.html#cb187-7" tabindex="-1"></a><span class="co"># Simulate fake data </span></span>
-<span id="cb187-8"><a href="ridge_regression.html#cb187-8" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
-<span id="cb187-9"><a href="ridge_regression.html#cb187-9" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb187-10"><a href="ridge_regression.html#cb187-10" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span>                                      <span class="co"># sample size</span></span>
-<span id="cb187-11"><a href="ridge_regression.html#cb187-11" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="fl">1.2</span></span>
-<span id="cb187-12"><a href="ridge_regression.html#cb187-12" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">2</span>)</span>
-<span id="cb187-13"><a href="ridge_regression.html#cb187-13" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,</span>
-<span id="cb187-14"><a href="ridge_regression.html#cb187-14" tabindex="-1"></a>                  <span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,</span>
-<span id="cb187-15"><a href="ridge_regression.html#cb187-15" tabindex="-1"></a>                  <span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">2</span>,</span>
-<span id="cb187-16"><a href="ridge_regression.html#cb187-16" tabindex="-1"></a>                  <span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">10</span>,<span class="dv">3</span>,</span>
-<span id="cb187-17"><a href="ridge_regression.html#cb187-17" tabindex="-1"></a>                  <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">15</span>),<span class="dv">5</span>,<span class="dv">5</span>)</span>
-<span id="cb187-18"><a href="ridge_regression.html#cb187-18" tabindex="-1"></a>Sigma</span>
-<span id="cb187-19"><a href="ridge_regression.html#cb187-19" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="at">n =</span> n, <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), Sigma)</span>
-<span id="cb187-20"><a href="ridge_regression.html#cb187-20" tabindex="-1"></a></span>
-<span id="cb187-21"><a href="ridge_regression.html#cb187-21" tabindex="-1"></a>simresid <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="at">sd=</span><span class="dv">3</span>)            <span class="co"># residuals</span></span>
-<span id="cb187-22"><a href="ridge_regression.html#cb187-22" tabindex="-1"></a></span>
-<span id="cb187-23"><a href="ridge_regression.html#cb187-23" tabindex="-1"></a>x.z <span class="ot">&lt;-</span> x</span>
-<span id="cb187-24"><a href="ridge_regression.html#cb187-24" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(x)) x.z[,i] <span class="ot">&lt;-</span> (x[,i]<span class="sc">-</span><span class="fu">mean</span>(x[,i]))<span class="sc">/</span><span class="fu">sd</span>(x[,i]) </span>
-<span id="cb187-25"><a href="ridge_regression.html#cb187-25" tabindex="-1"></a></span>
-<span id="cb187-26"><a href="ridge_regression.html#cb187-26" tabindex="-1"></a>y <span class="ot">&lt;-</span> b0 <span class="sc">+</span> x.z<span class="sc">%*%</span>b <span class="sc">+</span> simresid                    <span class="co"># calculate y, i.e. the data</span></span>
-<span id="cb187-27"><a href="ridge_regression.html#cb187-27" tabindex="-1"></a></span>
-<span id="cb187-28"><a href="ridge_regression.html#cb187-28" tabindex="-1"></a></span>
-<span id="cb187-29"><a href="ridge_regression.html#cb187-29" tabindex="-1"></a></span>
-<span id="cb187-30"><a href="ridge_regression.html#cb187-30" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
-<span id="cb187-31"><a href="ridge_regression.html#cb187-31" tabindex="-1"></a><span class="co"># Function to generate initial values </span></span>
-<span id="cb187-32"><a href="ridge_regression.html#cb187-32" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
-<span id="cb187-33"><a href="ridge_regression.html#cb187-33" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb187-34"><a href="ridge_regression.html#cb187-34" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">b0=</span><span class="fu">runif</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>),</span>
-<span id="cb187-35"><a href="ridge_regression.html#cb187-35" tabindex="-1"></a>       <span class="at">b=</span><span class="fu">runif</span>(<span class="dv">5</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>),</span>
-<span id="cb187-36"><a href="ridge_regression.html#cb187-36" tabindex="-1"></a>       <span class="at">sigma=</span><span class="fu">runif</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">2</span>))</span>
-<span id="cb187-37"><a href="ridge_regression.html#cb187-37" tabindex="-1"></a>}</span>
-<span id="cb187-38"><a href="ridge_regression.html#cb187-38" tabindex="-1"></a></span>
-<span id="cb187-39"><a href="ridge_regression.html#cb187-39" tabindex="-1"></a></span>
-<span id="cb187-40"><a href="ridge_regression.html#cb187-40" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
-<span id="cb187-41"><a href="ridge_regression.html#cb187-41" tabindex="-1"></a><span class="co"># Run OpenBUGS</span></span>
-<span id="cb187-42"><a href="ridge_regression.html#cb187-42" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
-<span id="cb187-43"><a href="ridge_regression.html#cb187-43" tabindex="-1"></a>parameters <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;b0&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;sigma&quot;</span>)</span>
-<span id="cb187-44"><a href="ridge_regression.html#cb187-44" tabindex="-1"></a></span>
-<span id="cb187-45"><a href="ridge_regression.html#cb187-45" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">10000</span>)</span>
-<span id="cb187-46"><a href="ridge_regression.html#cb187-46" tabindex="-1"></a>bs <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span><span class="fu">length</span>(lambda), <span class="at">nrow=</span><span class="fu">length</span>(b))</span>
-<span id="cb187-47"><a href="ridge_regression.html#cb187-47" tabindex="-1"></a>bse <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span><span class="fu">length</span>(lambda), <span class="at">nrow=</span><span class="fu">length</span>(b))</span>
-<span id="cb187-48"><a href="ridge_regression.html#cb187-48" tabindex="-1"></a></span>
-<span id="cb187-49"><a href="ridge_regression.html#cb187-49" tabindex="-1"></a><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(lambda)){</span>
-<span id="cb187-50"><a href="ridge_regression.html#cb187-50" tabindex="-1"></a>datax <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">y=</span><span class="fu">as.numeric</span>(y), <span class="at">x=</span>x, <span class="at">n=</span>n, <span class="at">mb=</span><span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="at">lambda=</span>lambda[j])</span>
-<span id="cb187-51"><a href="ridge_regression.html#cb187-51" tabindex="-1"></a></span>
-<span id="cb187-52"><a href="ridge_regression.html#cb187-52" tabindex="-1"></a></span>
-<span id="cb187-53"><a href="ridge_regression.html#cb187-53" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">bugs</span>(datax, inits, parameters, <span class="at">model.file=</span><span class="st">&quot;ridge_regression.txt&quot;</span>,</span>
-<span id="cb187-54"><a href="ridge_regression.html#cb187-54" tabindex="-1"></a>            <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.chains=</span><span class="dv">2</span>, <span class="at">n.burnin=</span><span class="dv">5000</span>, <span class="at">n.iter=</span><span class="dv">10000</span>,</span>
-<span id="cb187-55"><a href="ridge_regression.html#cb187-55" tabindex="-1"></a>            <span class="at">debug=</span><span class="cn">FALSE</span>, <span class="at">OpenBUGS.pgm =</span> bugslocation, </span>
-<span id="cb187-56"><a href="ridge_regression.html#cb187-56" tabindex="-1"></a>            <span class="at">working.directory=</span>bugsworkingdir)</span>
-<span id="cb187-57"><a href="ridge_regression.html#cb187-57" tabindex="-1"></a></span>
-<span id="cb187-58"><a href="ridge_regression.html#cb187-58" tabindex="-1"></a>bs[,j] <span class="ot">&lt;-</span> fit<span class="sc">$</span>mean<span class="sc">$</span>b</span>
-<span id="cb187-59"><a href="ridge_regression.html#cb187-59" tabindex="-1"></a>bse[,j] <span class="ot">&lt;-</span> fit<span class="sc">$</span>sd<span class="sc">$</span>b</span>
-<span id="cb187-60"><a href="ridge_regression.html#cb187-60" tabindex="-1"></a></span>
-<span id="cb187-61"><a href="ridge_regression.html#cb187-61" tabindex="-1"></a>}</span>
-<span id="cb187-62"><a href="ridge_regression.html#cb187-62" tabindex="-1"></a></span>
-<span id="cb187-63"><a href="ridge_regression.html#cb187-63" tabindex="-1"></a><span class="fu">range</span>(bs)</span>
-<span id="cb187-64"><a href="ridge_regression.html#cb187-64" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(lambda), <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">1</span>, <span class="at">length=</span><span class="fu">length</span>(lambda)), <span class="at">type=</span><span class="st">&quot;n&quot;</span>)</span>
-<span id="cb187-65"><a href="ridge_regression.html#cb187-65" tabindex="-1"></a>colkey <span class="ot">&lt;-</span> <span class="fu">rainbow</span>(<span class="fu">length</span>(b))</span>
-<span id="cb187-66"><a href="ridge_regression.html#cb187-66" tabindex="-1"></a><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(bs)){</span>
-<span id="cb187-67"><a href="ridge_regression.html#cb187-67" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(lambda), bs[j,], <span class="at">col=</span>colkey[j], <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb187-68"><a href="ridge_regression.html#cb187-68" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(lambda), bs[j,]<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>bse[j,], <span class="at">col=</span>colkey[j], <span class="at">lty=</span><span class="dv">3</span>)</span>
-<span id="cb187-69"><a href="ridge_regression.html#cb187-69" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(lambda), bs[j,]<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>bse[j,], <span class="at">col=</span>colkey[j], <span class="at">lty=</span><span class="dv">3</span>)</span>
-<span id="cb187-70"><a href="ridge_regression.html#cb187-70" tabindex="-1"></a>}</span>
-<span id="cb187-71"><a href="ridge_regression.html#cb187-71" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span>
-<span id="cb187-72"><a href="ridge_regression.html#cb187-72" tabindex="-1"></a><span class="fu">round</span>(fit<span class="sc">$</span>summary,<span class="dv">2</span>)</span>
-<span id="cb187-73"><a href="ridge_regression.html#cb187-73" tabindex="-1"></a></span>
-<span id="cb187-74"><a href="ridge_regression.html#cb187-74" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
-<span id="cb187-75"><a href="ridge_regression.html#cb187-75" tabindex="-1"></a><span class="co"># Run WinBUGS</span></span>
-<span id="cb187-76"><a href="ridge_regression.html#cb187-76" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
-<span id="cb187-77"><a href="ridge_regression.html#cb187-77" tabindex="-1"></a><span class="fu">library</span>(R2WinBUGS)</span>
-<span id="cb187-78"><a href="ridge_regression.html#cb187-78" tabindex="-1"></a>bugsdir <span class="ot">&lt;-</span> <span class="st">&quot;C:/Users/fk/WinBUGS14&quot;</span>         <span class="co"># </span></span>
-<span id="cb187-79"><a href="ridge_regression.html#cb187-79" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">bugs</span>(datax, <span class="at">inits=</span> inits, parameters,</span>
-<span id="cb187-80"><a href="ridge_regression.html#cb187-80" tabindex="-1"></a>            <span class="at">model.file=</span><span class="st">&quot;normlinreg.txt&quot;</span>, <span class="at">n.chains=</span><span class="dv">2</span>, <span class="at">n.iter=</span><span class="dv">1000</span>, </span>
-<span id="cb187-81"><a href="ridge_regression.html#cb187-81" tabindex="-1"></a>            <span class="at">n.burnin=</span><span class="dv">500</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">debug=</span><span class="cn">TRUE</span>,</span>
-<span id="cb187-82"><a href="ridge_regression.html#cb187-82" tabindex="-1"></a>            <span class="at">bugs.directory=</span>bugsdir, <span class="at">program=</span><span class="st">&quot;WinBUGS&quot;</span>, <span class="at">working.directory=</span>bugsworkingdir)</span>
-<span id="cb187-83"><a href="ridge_regression.html#cb187-83" tabindex="-1"></a></span>
-<span id="cb187-84"><a href="ridge_regression.html#cb187-84" tabindex="-1"></a></span>
-<span id="cb187-85"><a href="ridge_regression.html#cb187-85" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
-<span id="cb187-86"><a href="ridge_regression.html#cb187-86" tabindex="-1"></a><span class="co"># Test convergence and make inference</span></span>
-<span id="cb187-87"><a href="ridge_regression.html#cb187-87" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
-<span id="cb187-88"><a href="ridge_regression.html#cb187-88" tabindex="-1"></a><span class="fu">library</span>(blmeco)</span>
-<span id="cb187-89"><a href="ridge_regression.html#cb187-89" tabindex="-1"></a></span>
-<span id="cb187-90"><a href="ridge_regression.html#cb187-90" tabindex="-1"></a><span class="co"># Make Figure 12.2</span></span>
-<span id="cb187-91"><a href="ridge_regression.html#cb187-91" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))                            </span>
-<span id="cb187-92"><a href="ridge_regression.html#cb187-92" tabindex="-1"></a><span class="fu">historyplot</span>(fit, <span class="st">&quot;beta0&quot;</span>)</span>
-<span id="cb187-93"><a href="ridge_regression.html#cb187-93" tabindex="-1"></a><span class="fu">historyplot</span>(fit, <span class="st">&quot;beta1&quot;</span>)</span>
-<span id="cb187-94"><a href="ridge_regression.html#cb187-94" tabindex="-1"></a><span class="fu">historyplot</span>(fit, <span class="st">&quot;sigmaRes&quot;</span>)</span>
-<span id="cb187-95"><a href="ridge_regression.html#cb187-95" tabindex="-1"></a></span>
-<span id="cb187-96"><a href="ridge_regression.html#cb187-96" tabindex="-1"></a><span class="co"># Parameter estimates</span></span>
-<span id="cb187-97"><a href="ridge_regression.html#cb187-97" tabindex="-1"></a><span class="fu">print</span>(fit<span class="sc">$</span>summary, <span class="dv">3</span>)</span>
-<span id="cb187-98"><a href="ridge_regression.html#cb187-98" tabindex="-1"></a></span>
-<span id="cb187-99"><a href="ridge_regression.html#cb187-99" tabindex="-1"></a><span class="co"># Make predictions for covariate values between 10 and 30</span></span>
-<span id="cb187-100"><a href="ridge_regression.html#cb187-100" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">30</span>, <span class="at">length=</span><span class="dv">100</span>))</span>
-<span id="cb187-101"><a href="ridge_regression.html#cb187-101" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>x, <span class="at">data=</span>newdat)</span>
-<span id="cb187-102"><a href="ridge_regression.html#cb187-102" tabindex="-1"></a>predmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>fit<span class="sc">$</span>n.sim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
-<span id="cb187-103"><a href="ridge_regression.html#cb187-103" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>fit<span class="sc">$</span>n.sim) predmat[,i] <span class="ot">&lt;-</span> Xmat<span class="sc">%*%</span><span class="fu">c</span>(fit<span class="sc">$</span>sims.list<span class="sc">$</span>beta0[i], fit<span class="sc">$</span>sims.list<span class="sc">$</span>beta1[i])</span>
-<span id="cb187-104"><a href="ridge_regression.html#cb187-104" tabindex="-1"></a>newdat<span class="sc">$</span>lower.bugs <span class="ot">&lt;-</span> <span class="fu">apply</span>(predmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.025</span>)</span>
-<span id="cb187-105"><a href="ridge_regression.html#cb187-105" tabindex="-1"></a>newdat<span class="sc">$</span>upper.bugs <span class="ot">&lt;-</span> <span class="fu">apply</span>(predmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.975</span>)</span>
-<span id="cb187-106"><a href="ridge_regression.html#cb187-106" tabindex="-1"></a></span>
-<span id="cb187-107"><a href="ridge_regression.html#cb187-107" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">~</span>x,  <span class="at">pch=</span><span class="dv">16</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.4</span>, <span class="at">cex.axis=</span><span class="fl">1.2</span>, <span class="at">type=</span><span class="st">&quot;n&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb187-108"><a href="ridge_regression.html#cb187-108" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(newdat<span class="sc">$</span>x, <span class="fu">rev</span>(newdat<span class="sc">$</span>x)), <span class="fu">c</span>(newdat<span class="sc">$</span>lower.bugs, <span class="fu">rev</span>(newdat<span class="sc">$</span>upper.bugs)), <span class="at">col=</span><span class="fu">grey</span>(<span class="fl">0.7</span>), <span class="at">border=</span><span class="cn">NA</span>)</span>
-<span id="cb187-109"><a href="ridge_regression.html#cb187-109" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">c</span>(fit<span class="sc">$</span>mean<span class="sc">$</span>beta0, fit<span class="sc">$</span>mean<span class="sc">$</span>beta1), <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb187-110"><a href="ridge_regression.html#cb187-110" tabindex="-1"></a><span class="fu">box</span>()</span>
-<span id="cb187-111"><a href="ridge_regression.html#cb187-111" tabindex="-1"></a><span class="fu">points</span>(x,y)</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="ridge_regression.html#cb192-1" tabindex="-1"></a><span class="co"># Settings </span></span>
+<span id="cb192-2"><a href="ridge_regression.html#cb192-2" tabindex="-1"></a><span class="fu">library</span>(R2OpenBUGS)</span>
+<span id="cb192-3"><a href="ridge_regression.html#cb192-3" tabindex="-1"></a>bugslocation <span class="ot">&lt;-</span> <span class="st">&quot;C:/Program Files/OpenBUGS323/OpenBugs.exe&quot;</span>      <span class="co"># location of OpenBUGS</span></span>
+<span id="cb192-4"><a href="ridge_regression.html#cb192-4" tabindex="-1"></a>bugsworkingdir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">getwd</span>(), <span class="st">&quot;BUGS&quot;</span>)                     <span class="co"># Bugs working directory</span></span>
+<span id="cb192-5"><a href="ridge_regression.html#cb192-5" tabindex="-1"></a></span>
+<span id="cb192-6"><a href="ridge_regression.html#cb192-6" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
+<span id="cb192-7"><a href="ridge_regression.html#cb192-7" tabindex="-1"></a><span class="co"># Simulate fake data </span></span>
+<span id="cb192-8"><a href="ridge_regression.html#cb192-8" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
+<span id="cb192-9"><a href="ridge_regression.html#cb192-9" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb192-10"><a href="ridge_regression.html#cb192-10" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span>                                      <span class="co"># sample size</span></span>
+<span id="cb192-11"><a href="ridge_regression.html#cb192-11" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="fl">1.2</span></span>
+<span id="cb192-12"><a href="ridge_regression.html#cb192-12" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">2</span>)</span>
+<span id="cb192-13"><a href="ridge_regression.html#cb192-13" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,</span>
+<span id="cb192-14"><a href="ridge_regression.html#cb192-14" tabindex="-1"></a>                  <span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,</span>
+<span id="cb192-15"><a href="ridge_regression.html#cb192-15" tabindex="-1"></a>                  <span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">2</span>,</span>
+<span id="cb192-16"><a href="ridge_regression.html#cb192-16" tabindex="-1"></a>                  <span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">10</span>,<span class="dv">3</span>,</span>
+<span id="cb192-17"><a href="ridge_regression.html#cb192-17" tabindex="-1"></a>                  <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">15</span>),<span class="dv">5</span>,<span class="dv">5</span>)</span>
+<span id="cb192-18"><a href="ridge_regression.html#cb192-18" tabindex="-1"></a>Sigma</span>
+<span id="cb192-19"><a href="ridge_regression.html#cb192-19" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="at">n =</span> n, <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), Sigma)</span>
+<span id="cb192-20"><a href="ridge_regression.html#cb192-20" tabindex="-1"></a></span>
+<span id="cb192-21"><a href="ridge_regression.html#cb192-21" tabindex="-1"></a>simresid <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="at">sd=</span><span class="dv">3</span>)            <span class="co"># residuals</span></span>
+<span id="cb192-22"><a href="ridge_regression.html#cb192-22" tabindex="-1"></a></span>
+<span id="cb192-23"><a href="ridge_regression.html#cb192-23" tabindex="-1"></a>x.z <span class="ot">&lt;-</span> x</span>
+<span id="cb192-24"><a href="ridge_regression.html#cb192-24" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(x)) x.z[,i] <span class="ot">&lt;-</span> (x[,i]<span class="sc">-</span><span class="fu">mean</span>(x[,i]))<span class="sc">/</span><span class="fu">sd</span>(x[,i]) </span>
+<span id="cb192-25"><a href="ridge_regression.html#cb192-25" tabindex="-1"></a></span>
+<span id="cb192-26"><a href="ridge_regression.html#cb192-26" tabindex="-1"></a>y <span class="ot">&lt;-</span> b0 <span class="sc">+</span> x.z<span class="sc">%*%</span>b <span class="sc">+</span> simresid                    <span class="co"># calculate y, i.e. the data</span></span>
+<span id="cb192-27"><a href="ridge_regression.html#cb192-27" tabindex="-1"></a></span>
+<span id="cb192-28"><a href="ridge_regression.html#cb192-28" tabindex="-1"></a></span>
+<span id="cb192-29"><a href="ridge_regression.html#cb192-29" tabindex="-1"></a></span>
+<span id="cb192-30"><a href="ridge_regression.html#cb192-30" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
+<span id="cb192-31"><a href="ridge_regression.html#cb192-31" tabindex="-1"></a><span class="co"># Function to generate initial values </span></span>
+<span id="cb192-32"><a href="ridge_regression.html#cb192-32" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
+<span id="cb192-33"><a href="ridge_regression.html#cb192-33" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb192-34"><a href="ridge_regression.html#cb192-34" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">b0=</span><span class="fu">runif</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>),</span>
+<span id="cb192-35"><a href="ridge_regression.html#cb192-35" tabindex="-1"></a>       <span class="at">b=</span><span class="fu">runif</span>(<span class="dv">5</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>),</span>
+<span id="cb192-36"><a href="ridge_regression.html#cb192-36" tabindex="-1"></a>       <span class="at">sigma=</span><span class="fu">runif</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">2</span>))</span>
+<span id="cb192-37"><a href="ridge_regression.html#cb192-37" tabindex="-1"></a>}</span>
+<span id="cb192-38"><a href="ridge_regression.html#cb192-38" tabindex="-1"></a></span>
+<span id="cb192-39"><a href="ridge_regression.html#cb192-39" tabindex="-1"></a></span>
+<span id="cb192-40"><a href="ridge_regression.html#cb192-40" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
+<span id="cb192-41"><a href="ridge_regression.html#cb192-41" tabindex="-1"></a><span class="co"># Run OpenBUGS</span></span>
+<span id="cb192-42"><a href="ridge_regression.html#cb192-42" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
+<span id="cb192-43"><a href="ridge_regression.html#cb192-43" tabindex="-1"></a>parameters <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;b0&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;sigma&quot;</span>)</span>
+<span id="cb192-44"><a href="ridge_regression.html#cb192-44" tabindex="-1"></a></span>
+<span id="cb192-45"><a href="ridge_regression.html#cb192-45" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">10000</span>)</span>
+<span id="cb192-46"><a href="ridge_regression.html#cb192-46" tabindex="-1"></a>bs <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span><span class="fu">length</span>(lambda), <span class="at">nrow=</span><span class="fu">length</span>(b))</span>
+<span id="cb192-47"><a href="ridge_regression.html#cb192-47" tabindex="-1"></a>bse <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span><span class="fu">length</span>(lambda), <span class="at">nrow=</span><span class="fu">length</span>(b))</span>
+<span id="cb192-48"><a href="ridge_regression.html#cb192-48" tabindex="-1"></a></span>
+<span id="cb192-49"><a href="ridge_regression.html#cb192-49" tabindex="-1"></a><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(lambda)){</span>
+<span id="cb192-50"><a href="ridge_regression.html#cb192-50" tabindex="-1"></a>datax <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">y=</span><span class="fu">as.numeric</span>(y), <span class="at">x=</span>x, <span class="at">n=</span>n, <span class="at">mb=</span><span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="at">lambda=</span>lambda[j])</span>
+<span id="cb192-51"><a href="ridge_regression.html#cb192-51" tabindex="-1"></a></span>
+<span id="cb192-52"><a href="ridge_regression.html#cb192-52" tabindex="-1"></a></span>
+<span id="cb192-53"><a href="ridge_regression.html#cb192-53" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">bugs</span>(datax, inits, parameters, <span class="at">model.file=</span><span class="st">&quot;ridge_regression.txt&quot;</span>,</span>
+<span id="cb192-54"><a href="ridge_regression.html#cb192-54" tabindex="-1"></a>            <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.chains=</span><span class="dv">2</span>, <span class="at">n.burnin=</span><span class="dv">5000</span>, <span class="at">n.iter=</span><span class="dv">10000</span>,</span>
+<span id="cb192-55"><a href="ridge_regression.html#cb192-55" tabindex="-1"></a>            <span class="at">debug=</span><span class="cn">FALSE</span>, <span class="at">OpenBUGS.pgm =</span> bugslocation, </span>
+<span id="cb192-56"><a href="ridge_regression.html#cb192-56" tabindex="-1"></a>            <span class="at">working.directory=</span>bugsworkingdir)</span>
+<span id="cb192-57"><a href="ridge_regression.html#cb192-57" tabindex="-1"></a></span>
+<span id="cb192-58"><a href="ridge_regression.html#cb192-58" tabindex="-1"></a>bs[,j] <span class="ot">&lt;-</span> fit<span class="sc">$</span>mean<span class="sc">$</span>b</span>
+<span id="cb192-59"><a href="ridge_regression.html#cb192-59" tabindex="-1"></a>bse[,j] <span class="ot">&lt;-</span> fit<span class="sc">$</span>sd<span class="sc">$</span>b</span>
+<span id="cb192-60"><a href="ridge_regression.html#cb192-60" tabindex="-1"></a></span>
+<span id="cb192-61"><a href="ridge_regression.html#cb192-61" tabindex="-1"></a>}</span>
+<span id="cb192-62"><a href="ridge_regression.html#cb192-62" tabindex="-1"></a></span>
+<span id="cb192-63"><a href="ridge_regression.html#cb192-63" tabindex="-1"></a><span class="fu">range</span>(bs)</span>
+<span id="cb192-64"><a href="ridge_regression.html#cb192-64" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(lambda), <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">1</span>, <span class="at">length=</span><span class="fu">length</span>(lambda)), <span class="at">type=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb192-65"><a href="ridge_regression.html#cb192-65" tabindex="-1"></a>colkey <span class="ot">&lt;-</span> <span class="fu">rainbow</span>(<span class="fu">length</span>(b))</span>
+<span id="cb192-66"><a href="ridge_regression.html#cb192-66" tabindex="-1"></a><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(bs)){</span>
+<span id="cb192-67"><a href="ridge_regression.html#cb192-67" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(lambda), bs[j,], <span class="at">col=</span>colkey[j], <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb192-68"><a href="ridge_regression.html#cb192-68" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(lambda), bs[j,]<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>bse[j,], <span class="at">col=</span>colkey[j], <span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb192-69"><a href="ridge_regression.html#cb192-69" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(lambda), bs[j,]<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>bse[j,], <span class="at">col=</span>colkey[j], <span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb192-70"><a href="ridge_regression.html#cb192-70" tabindex="-1"></a>}</span>
+<span id="cb192-71"><a href="ridge_regression.html#cb192-71" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span>
+<span id="cb192-72"><a href="ridge_regression.html#cb192-72" tabindex="-1"></a><span class="fu">round</span>(fit<span class="sc">$</span>summary,<span class="dv">2</span>)</span>
+<span id="cb192-73"><a href="ridge_regression.html#cb192-73" tabindex="-1"></a></span>
+<span id="cb192-74"><a href="ridge_regression.html#cb192-74" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
+<span id="cb192-75"><a href="ridge_regression.html#cb192-75" tabindex="-1"></a><span class="co"># Run WinBUGS</span></span>
+<span id="cb192-76"><a href="ridge_regression.html#cb192-76" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
+<span id="cb192-77"><a href="ridge_regression.html#cb192-77" tabindex="-1"></a><span class="fu">library</span>(R2WinBUGS)</span>
+<span id="cb192-78"><a href="ridge_regression.html#cb192-78" tabindex="-1"></a>bugsdir <span class="ot">&lt;-</span> <span class="st">&quot;C:/Users/fk/WinBUGS14&quot;</span>         <span class="co"># </span></span>
+<span id="cb192-79"><a href="ridge_regression.html#cb192-79" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">bugs</span>(datax, <span class="at">inits=</span> inits, parameters,</span>
+<span id="cb192-80"><a href="ridge_regression.html#cb192-80" tabindex="-1"></a>            <span class="at">model.file=</span><span class="st">&quot;normlinreg.txt&quot;</span>, <span class="at">n.chains=</span><span class="dv">2</span>, <span class="at">n.iter=</span><span class="dv">1000</span>, </span>
+<span id="cb192-81"><a href="ridge_regression.html#cb192-81" tabindex="-1"></a>            <span class="at">n.burnin=</span><span class="dv">500</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">debug=</span><span class="cn">TRUE</span>,</span>
+<span id="cb192-82"><a href="ridge_regression.html#cb192-82" tabindex="-1"></a>            <span class="at">bugs.directory=</span>bugsdir, <span class="at">program=</span><span class="st">&quot;WinBUGS&quot;</span>, <span class="at">working.directory=</span>bugsworkingdir)</span>
+<span id="cb192-83"><a href="ridge_regression.html#cb192-83" tabindex="-1"></a></span>
+<span id="cb192-84"><a href="ridge_regression.html#cb192-84" tabindex="-1"></a></span>
+<span id="cb192-85"><a href="ridge_regression.html#cb192-85" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
+<span id="cb192-86"><a href="ridge_regression.html#cb192-86" tabindex="-1"></a><span class="co"># Test convergence and make inference</span></span>
+<span id="cb192-87"><a href="ridge_regression.html#cb192-87" tabindex="-1"></a><span class="co">#-------------------------------------------------------------------------------</span></span>
+<span id="cb192-88"><a href="ridge_regression.html#cb192-88" tabindex="-1"></a><span class="fu">library</span>(blmeco)</span>
+<span id="cb192-89"><a href="ridge_regression.html#cb192-89" tabindex="-1"></a></span>
+<span id="cb192-90"><a href="ridge_regression.html#cb192-90" tabindex="-1"></a><span class="co"># Make Figure 12.2</span></span>
+<span id="cb192-91"><a href="ridge_regression.html#cb192-91" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))                            </span>
+<span id="cb192-92"><a href="ridge_regression.html#cb192-92" tabindex="-1"></a><span class="fu">historyplot</span>(fit, <span class="st">&quot;beta0&quot;</span>)</span>
+<span id="cb192-93"><a href="ridge_regression.html#cb192-93" tabindex="-1"></a><span class="fu">historyplot</span>(fit, <span class="st">&quot;beta1&quot;</span>)</span>
+<span id="cb192-94"><a href="ridge_regression.html#cb192-94" tabindex="-1"></a><span class="fu">historyplot</span>(fit, <span class="st">&quot;sigmaRes&quot;</span>)</span>
+<span id="cb192-95"><a href="ridge_regression.html#cb192-95" tabindex="-1"></a></span>
+<span id="cb192-96"><a href="ridge_regression.html#cb192-96" tabindex="-1"></a><span class="co"># Parameter estimates</span></span>
+<span id="cb192-97"><a href="ridge_regression.html#cb192-97" tabindex="-1"></a><span class="fu">print</span>(fit<span class="sc">$</span>summary, <span class="dv">3</span>)</span>
+<span id="cb192-98"><a href="ridge_regression.html#cb192-98" tabindex="-1"></a></span>
+<span id="cb192-99"><a href="ridge_regression.html#cb192-99" tabindex="-1"></a><span class="co"># Make predictions for covariate values between 10 and 30</span></span>
+<span id="cb192-100"><a href="ridge_regression.html#cb192-100" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">30</span>, <span class="at">length=</span><span class="dv">100</span>))</span>
+<span id="cb192-101"><a href="ridge_regression.html#cb192-101" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>x, <span class="at">data=</span>newdat)</span>
+<span id="cb192-102"><a href="ridge_regression.html#cb192-102" tabindex="-1"></a>predmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>fit<span class="sc">$</span>n.sim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
+<span id="cb192-103"><a href="ridge_regression.html#cb192-103" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>fit<span class="sc">$</span>n.sim) predmat[,i] <span class="ot">&lt;-</span> Xmat<span class="sc">%*%</span><span class="fu">c</span>(fit<span class="sc">$</span>sims.list<span class="sc">$</span>beta0[i], fit<span class="sc">$</span>sims.list<span class="sc">$</span>beta1[i])</span>
+<span id="cb192-104"><a href="ridge_regression.html#cb192-104" tabindex="-1"></a>newdat<span class="sc">$</span>lower.bugs <span class="ot">&lt;-</span> <span class="fu">apply</span>(predmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.025</span>)</span>
+<span id="cb192-105"><a href="ridge_regression.html#cb192-105" tabindex="-1"></a>newdat<span class="sc">$</span>upper.bugs <span class="ot">&lt;-</span> <span class="fu">apply</span>(predmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.975</span>)</span>
+<span id="cb192-106"><a href="ridge_regression.html#cb192-106" tabindex="-1"></a></span>
+<span id="cb192-107"><a href="ridge_regression.html#cb192-107" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">~</span>x,  <span class="at">pch=</span><span class="dv">16</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.4</span>, <span class="at">cex.axis=</span><span class="fl">1.2</span>, <span class="at">type=</span><span class="st">&quot;n&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb192-108"><a href="ridge_regression.html#cb192-108" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(newdat<span class="sc">$</span>x, <span class="fu">rev</span>(newdat<span class="sc">$</span>x)), <span class="fu">c</span>(newdat<span class="sc">$</span>lower.bugs, <span class="fu">rev</span>(newdat<span class="sc">$</span>upper.bugs)), <span class="at">col=</span><span class="fu">grey</span>(<span class="fl">0.7</span>), <span class="at">border=</span><span class="cn">NA</span>)</span>
+<span id="cb192-109"><a href="ridge_regression.html#cb192-109" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">c</span>(fit<span class="sc">$</span>mean<span class="sc">$</span>beta0, fit<span class="sc">$</span>mean<span class="sc">$</span>beta1), <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb192-110"><a href="ridge_regression.html#cb192-110" tabindex="-1"></a><span class="fu">box</span>()</span>
+<span id="cb192-111"><a href="ridge_regression.html#cb192-111" tabindex="-1"></a><span class="fu">points</span>(x,y)</span></code></pre></div>
 
 </div>
 </div>
