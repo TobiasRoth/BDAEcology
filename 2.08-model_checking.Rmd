@@ -23,7 +23,7 @@ We use an analysis of the whitethroat breeding density in wildflower fields of d
 Because the Stan developers have written highly convenient user friendly functions to do posterior predictive model checks, we fit the model with Stan using the function `stan_glmer` from the package `rstanarm`. 
 
 
-```{r}
+```{r, message=FALSE, results="hide"}
 data("wildflowerfields")
 dat <- wildflowerfields
 dat$size.ha <- dat$size/100 # change unit to ha
@@ -39,3 +39,85 @@ mod <- stan_glmer(bp ~ year.z + age.l + age.q + age.c + size.z +
 (1|field) + offset(log(size.ha)), family=poisson, data=dat)
 
 ```
+
+The R-package `shinystan` [@StanDevelopmentTeam.2017b] provides an easy way to do model checking. Therefore, there is no excuse to not do posterior predictive model checking. The R-code `launch_shinystan(mod)` opens a html-file that contains all kind of diagnostics of a model. Besides many statistics and diagnostic plots to assess how well the MCMC worked we also find a menu "PPcheck". There, we can click through many of the plots that we, below, produce in R.
+
+The function `posterior_predict` simulates many (exactly as many as there are draws from the posterior distributions of the model parameters, thus 4000 if the default number of iteration has been used in Stan) different data sets from a model fit. Specifically, for each single set of parameter values of the joint posterior distribution it simulates one replicated data set. We can look at histograms of the data and the replicated  (Figure \@ref(fig:histpp)). The real data (bp) look similar to the replicated data.  
+
+```{r histpp, fig.cap="Histograms of 8 out of 4000 replicated data sets and of the observed data (dat$bp). The arguments breaks and ylim have been used in the function hist to produce the same scale of the x- and y-axis in all plots. This makes comparison among the plots easier."}
+set.seed(2352) # to make sure that the ylim and breaks of the histograms below can be used
+yrep <- posterior_predict(mod)
+par(mfrow=c(3,3), mar=c(2,1,2,1))
+for(i in 1:8) hist(yrep[i,], col="blue", 
+                   breaks=seq(-0.5, 18.5, by=1), ylim=c(0,85))
+hist(dat$bp, col="blue", 
+     breaks=seq(-0.5, 18.5, by=1), ylim=c(0,85))
+```
+
+Let's look at specific aspects of the data. The proportion of zero counts could be a sensitive test statistic for this data set. First, we define a function “propzero” that extracts the proportion of zero counts from a vector of count data. Then we apply this function to the observed data and to each of the 4000 replicated data sets. At last, we extract the 1 and 99% quantile of the proportion of zero values of the replicated data.
+
+```{r}
+propzeros <- function(x) sum(x==0)/length(x)
+propzeros(dat$bp) # prop. zero values in observed data
+
+pzeroyrep <- apply(yrep, 2, propzeros) # prop. zero values in yrep
+quantile(pzeroyrep, prob=c(0.01, 0.99))
+```
+
+The observed data contain `r round(propzeros(dat$bp), 2)*100`% zero values, which is well within the 98%-range of what the model predicted (`r round(quantile(pzeroyrep, prob=c(0.01)), 2)*100` - `r round(quantile(pzeroyrep, prob=c(0.99)), 2)*100`%). the Bayesian p-value is `r round(mean(pzeroyrep>=propzeros(dat$bp)),2)`.
+
+```{r}
+mean(pzeroyrep>=propzeros(dat$bp))
+```
+
+What about the upper tail of the data? Let’s look at the 90% quantile.
+
+```{r}
+quantile(dat$bp, prob=0.9) # for observed data
+
+q90yrep <- apply(yrep, 2, quantile, prob=0.9) # for simulated data
+table(q90yrep)
+```
+
+Also, the 90% quantile of the data is within what the model predicts. 
+
+We also can look at the spatial distribution of the data and the replicated data. The variables X and Y are the coordinates of the wildflower fields. We can use them to draw transparent gray dots sized according to the number of breeding pairs.
+
+```{r spatpp, fig.cap="Spatial distribution of the whitethroat breeding pair counts and of 8 randomly chosen replicated data sets with data simulated based on the model. the smallest dot correspond to a count of 0, the largest to a count of 20 breeding pairs. The panel in the upper left corner shows the data, the other panels are replicated data from the model."}
+par(mfrow=c(3,3), mar=c(1,1,1,1))
+plot(dat$X, dat$Y, pch=16, cex=dat$bp+0.2, col=rgb(0,0,0,0.5), axes=FALSE)
+box()
+r <- sample(1:nrow(yrep), 1) # draw 8 replicated data sets at random
+for(i in r:(r+7)){
+plot(dat$X, dat$Y, pch=16, cex=yrep[i,]+0.2,
+col=rgb(0,0,0,0.5), axes=FALSE)
+box()
+}
+```
+
+The spatial distribution of the replicated data sets seems to be similar to the observed one at first look (Figure \@ref(fig:spatpp)). With a second look, we may detect in the middle of the study area the model may predict slightly larger numbers than observed. This pattern may motivate us to find the reason for the imperfect fit if the main interest is whitethroat density estimates. Are there important elements in the landscape that influence whitethroat densities and that we have not yet taken into account in the model? However, our main interest is finding the optimal age of wildflower fields for the whitethroat. Therefore, we look at the mean age of the 10% of the fields with the highest breeding densities.
+To do so, we first define a function that extracts the mean field age of the 10% largest whitethroat density values, and then we apply this function to the observed data and to the 4000 replicated data sets.
+
+```{r}
+magehighest <- function(x) {
+q90 <- quantile(x/dat$size.ha, prob=0.90)
+index <- (x/dat$size.ha)>=q90
+mage <- mean(dat$age[index])
+return(mage)
+}
+
+magehighest(dat$bp)
+
+mageyrep <- apply(yrep, 1, magehighest)
+quantile(mageyrep, prob=c(0.01, 0.5,0.99))
+```
+
+The mean age of the 10% of the fields with the highest whitethroat densities is `r magehighest(dat$bp)` years in the observed data set. In the replicated data set it is between `r round(quantile(mageyrep, prob=0.01),2)` and `r round(quantile(mageyrep, prob=0.99),2)` years. The Bayesian p-value is `r round(mean(mageyrep>=magehighest(dat$bp)),2)`. Thus, in around `r round(mean(mageyrep>=magehighest(dat$bp)),2)*100`% of the replicated data sets the mean age of the 10% fields with the highest whitethroat densities was higher than the observed one (Figure \@ref(fig:agepp)).
+
+```{r agepp, fig.cap="Histogram of the average age of the 10% wildflower fields with the highest breeding densities in the replicated data sets. The orange line indicates the average age for the 10% fields with the highest observed whithethroat densities."}
+
+hist(mageyrep)
+abline(v=magehighest(dat$bp), col="orange", lwd=2)
+```
+
+In a publication, we could summarize the results of the posterior predictive model checking in a table or give the plots in an appendix. Here, we conclude that the model fits in the most important aspects well. However, the model may predict too high whitethroat densities in the central part of the study area. 
