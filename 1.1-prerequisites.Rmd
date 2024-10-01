@@ -62,7 +62,7 @@ The variance is used to compare the degree of scatter among different groups. Ho
       
 - standard deviation $\hat{\sigma} = s = \sqrt{s^2}$  (R Function `sd`) 
 
-The standard deviation is approximately the average deviation of an observation from the sample mean. In the case of a [normal distribution][normdist], about two thirds (68%) of the data are expected within one standard deviation around the mean.
+The standard deviation is approximately the average deviation of an observation from the sample mean. In the case of a [normal distribution](#normdist), about two thirds (68%) of the data are expected within one standard deviation around the mean.
 
 The variance and standard deviation each describe the scatter with a single value. Thus, we have to assume that the observations are scattered symmetrically around their mean in order to get a picture of the distribution of the measurements. When the measurements are spread asymmetrically (skewed distribution), then it may be more precise to describe the scatter with more than one value. Such statistics could be quantiles from the lower and upper tail of the data. 
 

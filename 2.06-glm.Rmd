@@ -313,13 +313,10 @@ We normally check whether zero-inflation may be an issue by [posterior predictiv
 
 ### Visualising the results
 
-For the moment, we use the binomial GLM to analyze the tree sprout data. This model suffers from overdispersion and thus, the uncertainty intervals will be too small. We will provide a more appropriate analyses in a later chapter. 
+For the moment, we use the quasibinomial GLM to analyze the tree sprout data.  
 We simulate 2000 values from the joint posterior distribution of the model parameters.
 
 ```{r}
-mod <- glm(cbind(succ,fail) ~  treatment, data=resprouts,
-family=binomial)
-
 nsim <- 2000
 bsim <- sim(mod, n.sim=nsim) # simulate from the posterior distr.
 ```
@@ -327,7 +324,7 @@ bsim <- sim(mod, n.sim=nsim) # simulate from the posterior distr.
 For each set of simulated model parameters, we derive the linear predictor by multiplying the model matrix with the corresponding set of model parameters.
 Then, the inverse logit function ($logit^{-1}(x) = \frac{e^x}{(1+ e^x)}$; R function `plogis`) is used to obtain the fitted value for each fire lag treatment. Lastly, we extract, for each treatment level, the 2.5% and 97.5% quantile of the posterior distribution of the fitted values and plot it together with the estimates (the fitted values) per treatment and the raw data.
 
-```{r fittree1, fig.cap="Proportion of surviving trees (circles) for three fire lag treatments with estimated mean proportion of survivors using an inappropriate binomial model. Because of overdispersion, the 95% compatibility intervals are way too small. Gray dots = fitted values. Vertical bars = 95% compatibility intervals. "}
+```{r fittree1, fig.cap="Proportion of surviving trees (circles) for three fire lag treatments with estimated mean proportion of survivors using a quasi-binomial model. Gray dots = fitted values. Vertical bars = 95% compatibility intervals. "}
 newdat <- data.frame(treatment=factor(c("4m","9m","12m"),levels=c("4m","9m","12m")))
 Xmat <- model.matrix(~treatment, newdat)
 fitmat <- matrix(nrow=nrow(newdat), ncol=nsim)
