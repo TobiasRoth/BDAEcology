@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 The Bayesian paradigm | Bayesian Data Analysis in Ecology with R and Stan</title>
+  <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9 The Bayesian paradigm | Bayesian Data Analysis in Ecology with R and Stan" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.jpg" />
+  <meta property="og:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
+  <meta name="github-repo" content="TobiasRoth/BDAEcology" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9 The Bayesian paradigm | Bayesian Data Analysis in Ecology with R and Stan" />
+  
+  <meta name="twitter:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
+  <meta name="twitter:image" content="images/cover.jpg" />
+
+<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
+
+
+<meta name="date" content="2023-01-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="PART-II.html"/>
+<link rel="next" href="priors.html"/>
+<script src="libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="settings/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html#preface" id="toc-preface">Preface</a>
+<ul>
+<li><a href="index.html#why-this-book" id="toc-why-this-book">Why this book?</a></li>
+<li><a href="index.html#about-this-book" id="toc-about-this-book">About this book</a></li>
+<li><a href="index.html#how-to-contribute" id="toc-how-to-contribute">How to contribute?</a></li>
+<li><a href="index.html#acknowledgments" id="toc-acknowledgments">Acknowledgments</a></li>
+</ul></li>
+<li><a href="#part-basic-statistics-for-ecologists" id="toc-part-basic-statistics-for-ecologists">(PART) BASIC STATISTICS FOR ECOLOGISTS</a></li>
+<li><a href="PART-I.html#PART-I" id="toc-PART-I"><span class="toc-section-number">1</span> Introduction to PART I</a>
+<ul>
+<li><a href="PART-I.html#further-reading" id="toc-further-reading"><span class="toc-section-number">1.1</span> Further reading</a></li>
+</ul></li>
+<li><a href="basics.html#basics" id="toc-basics"><span class="toc-section-number">2</span> Prerequisits: Basic statistical terms</a>
+<ul>
+<li><a href="basics.html#variables-and-observations" id="toc-variables-and-observations"><span class="toc-section-number">2.1</span> Variables and observations</a></li>
+<li><a href="basics.html#displaying-and-summarizing-variables" id="toc-displaying-and-summarizing-variables"><span class="toc-section-number">2.2</span> Displaying and summarizing variables</a>
+<ul>
+<li><a href="basics.html#correlations" id="toc-correlations"><span class="toc-section-number">2.2.1</span> Correlations</a></li>
+<li><a href="basics.html#principal-components-analyses-pca" id="toc-principal-components-analyses-pca"><span class="toc-section-number">2.2.2</span> Principal components analyses PCA</a></li>
+</ul></li>
+<li><a href="basics.html#inferential-statistics" id="toc-inferential-statistics"><span class="toc-section-number">2.3</span> Inferential statistics</a>
+<ul>
+<li><a href="basics.html#uncertainty" id="toc-uncertainty"><span class="toc-section-number">2.3.1</span> Uncertainty</a></li>
+<li><a href="basics.html#standard-error" id="toc-standard-error"><span class="toc-section-number">2.3.2</span> Standard error</a></li>
+</ul></li>
+<li><a href="basics.html#bayes-theorem-and-the-common-aim-of-frequentist-and-bayesian-methods" id="toc-bayes-theorem-and-the-common-aim-of-frequentist-and-bayesian-methods"><span class="toc-section-number">2.4</span> Bayes theorem and the common aim of frequentist and Bayesian methods</a>
+<ul>
+<li><a href="basics.html#bayes-theorem-for-discrete-events" id="toc-bayes-theorem-for-discrete-events"><span class="toc-section-number">2.4.1</span> Bayes theorem for discrete events</a></li>
+<li><a href="basics.html#bayes-theorem-for-continuous-parameters" id="toc-bayes-theorem-for-continuous-parameters"><span class="toc-section-number">2.4.2</span> Bayes theorem for continuous parameters</a></li>
+<li><a href="basics.html#estimating-a-mean-assuming-that-the-variance-is-known" id="toc-estimating-a-mean-assuming-that-the-variance-is-known"><span class="toc-section-number">2.4.3</span> Estimating a mean assuming that the variance is known</a></li>
+<li><a href="basics.html#estimating-the-mean-and-the-variance" id="toc-estimating-the-mean-and-the-variance"><span class="toc-section-number">2.4.4</span> Estimating the mean and the variance</a></li>
+</ul></li>
+<li><a href="basics.html#classical-frequentist-tests-and-alternatives" id="toc-classical-frequentist-tests-and-alternatives"><span class="toc-section-number">2.5</span> Classical frequentist tests and alternatives</a>
+<ul>
+<li><a href="basics.html#nullhypothesis-testing" id="toc-nullhypothesis-testing"><span class="toc-section-number">2.5.1</span> Nullhypothesis testing</a></li>
+<li><a href="basics.html#comparison-of-a-sample-with-a-fixed-values-one-sample-t-test" id="toc-comparison-of-a-sample-with-a-fixed-values-one-sample-t-test"><span class="toc-section-number">2.5.2</span> Comparison of a sample with a fixed values (one-sample t-test)</a></li>
+<li><a href="basics.html#comparison-of-the-locations-between-two-groups-two-sample-t-test" id="toc-comparison-of-the-locations-between-two-groups-two-sample-t-test"><span class="toc-section-number">2.5.3</span> Comparison of the locations between two groups (two-sample t-test)</a></li>
+</ul></li>
+<li><a href="basics.html#summary" id="toc-summary"><span class="toc-section-number">2.6</span> Summary</a></li>
+</ul></li>
+<li><a href="analyses-steps.html#analyses_steps" id="toc-analyses_steps"><span class="toc-section-number">3</span> Data analysis step by step</a>
+<ul>
+<li><a href="analyses-steps.html#step1" id="toc-step1"><span class="toc-section-number">3.1</span> Plausibility of Data</a></li>
+<li><a href="analyses-steps.html#step2" id="toc-step2"><span class="toc-section-number">3.2</span> Relationships</a></li>
+<li><a href="analyses-steps.html#step3" id="toc-step3"><span class="toc-section-number">3.3</span> Data Distribution</a></li>
+<li><a href="analyses-steps.html#step4" id="toc-step4"><span class="toc-section-number">3.4</span> Preparation of Explanatory Variables</a></li>
+<li><a href="analyses-steps.html#step5" id="toc-step5"><span class="toc-section-number">3.5</span> Data Structure</a></li>
+<li><a href="analyses-steps.html#step6" id="toc-step6"><span class="toc-section-number">3.6</span> Define Prior Distributions</a></li>
+<li><a href="analyses-steps.html#step7" id="toc-step7"><span class="toc-section-number">3.7</span> Fit the Model</a></li>
+<li><a href="analyses-steps.html#step8" id="toc-step8"><span class="toc-section-number">3.8</span> Check Model</a></li>
+<li><a href="analyses-steps.html#step9" id="toc-step9"><span class="toc-section-number">3.9</span> Model Uncertainty</a></li>
+<li><a href="analyses-steps.html#step10" id="toc-step10"><span class="toc-section-number">3.10</span> Draw Conclusions</a></li>
+<li><a href="analyses-steps.html#further-reading-1" id="toc-further-reading-1">Further reading</a></li>
+</ul></li>
+<li><a href="distributions.html#distributions" id="toc-distributions"><span class="toc-section-number">4</span> Probability distributions</a>
+<ul>
+<li><a href="distributions.html#introduction" id="toc-introduction"><span class="toc-section-number">4.1</span> Introduction</a></li>
+<li><a href="distributions.html#discrete-distributions" id="toc-discrete-distributions"><span class="toc-section-number">4.2</span> Discrete distributions</a>
+<ul>
+<li><a href="distributions.html#bernoulli-distribution" id="toc-bernoulli-distribution"><span class="toc-section-number">4.2.1</span> Bernoulli distribution</a></li>
+<li><a href="distributions.html#binomial-distribution" id="toc-binomial-distribution"><span class="toc-section-number">4.2.2</span> Binomial distribution</a></li>
+<li><a href="distributions.html#poisson-distribution" id="toc-poisson-distribution"><span class="toc-section-number">4.2.3</span> Poisson distribution</a></li>
+<li><a href="distributions.html#negative-binomial-distribution" id="toc-negative-binomial-distribution"><span class="toc-section-number">4.2.4</span> Negative-binomial distribution</a></li>
+</ul></li>
+<li><a href="distributions.html#continuous-distributions" id="toc-continuous-distributions"><span class="toc-section-number">4.3</span> Continuous distributions</a>
+<ul>
+<li><a href="distributions.html#beta-distribution" id="toc-beta-distribution"><span class="toc-section-number">4.3.1</span> Beta distribution</a></li>
+<li><a href="distributions.html#normal-distribution" id="toc-normal-distribution"><span class="toc-section-number">4.3.2</span> Normal distribution</a></li>
+<li><a href="distributions.html#gamma-distribution" id="toc-gamma-distribution"><span class="toc-section-number">4.3.3</span> Gamma distribution</a></li>
+<li><a href="distributions.html#cauchydistri" id="toc-cauchydistri"><span class="toc-section-number">4.3.4</span> Cauchy distribution</a></li>
+<li><a href="distributions.html#t-distribution" id="toc-t-distribution"><span class="toc-section-number">4.3.5</span> t-distribution</a></li>
+<li><a href="distributions.html#f-distribution" id="toc-f-distribution"><span class="toc-section-number">4.3.6</span> F-distribution</a></li>
+</ul></li>
+</ul></li>
+<li><a href="rfunctions.html#rfunctions" id="toc-rfunctions"><span class="toc-section-number">5</span> Important R-functions</a>
+<ul>
+<li><a href="rfunctions.html#data-preparation" id="toc-data-preparation"><span class="toc-section-number">5.1</span> Data preparation</a></li>
+<li><a href="rfunctions.html#figures" id="toc-figures"><span class="toc-section-number">5.2</span> Figures</a></li>
+<li><a href="rfunctions.html#summary-1" id="toc-summary-1"><span class="toc-section-number">5.3</span> Summary</a></li>
+</ul></li>
+<li><a href="reproducibleresearch.html#reproducibleresearch" id="toc-reproducibleresearch"><span class="toc-section-number">6</span> Reproducible research</a>
+<ul>
+<li><a href="reproducibleresearch.html#summary-2" id="toc-summary-2"><span class="toc-section-number">6.1</span> Summary</a></li>
+<li><a href="reproducibleresearch.html#further-reading-2" id="toc-further-reading-2"><span class="toc-section-number">6.2</span> Further reading</a></li>
+</ul></li>
+<li><a href="furthertopics.html#furthertopics" id="toc-furthertopics"><span class="toc-section-number">7</span> Further topics</a>
+<ul>
+<li><a href="furthertopics.html#bioacoustic-analyse" id="toc-bioacoustic-analyse"><span class="toc-section-number">7.1</span> Bioacoustic analyse</a></li>
+<li><a href="furthertopics.html#python" id="toc-python"><span class="toc-section-number">7.2</span> Python</a></li>
+</ul></li>
+<li><a href="#part-bayesian-data-analysis" id="toc-part-bayesian-data-analysis">(PART) BAYESIAN DATA ANALYSIS</a></li>
+<li><a href="PART-II.html#PART-II" id="toc-PART-II"><span class="toc-section-number">8</span> Introduction to PART II</a>
+<ul>
+<li><a href="PART-II.html#further-reading-3" id="toc-further-reading-3">Further reading</a></li>
+</ul></li>
+<li><a href="bayesian-paradigm.html#bayesian_paradigm" id="toc-bayesian_paradigm"><span class="toc-section-number">9</span> The Bayesian paradigm</a>
+<ul>
+<li><a href="bayesian-paradigm.html#introduction-1" id="toc-introduction-1"><span class="toc-section-number">9.1</span> Introduction</a></li>
+<li><a href="bayesian-paradigm.html#summary-3" id="toc-summary-3"><span class="toc-section-number">9.2</span> Summary</a></li>
+</ul></li>
+<li><a href="priors.html#priors" id="toc-priors"><span class="toc-section-number">10</span> Prior distributions</a>
+<ul>
+<li><a href="priors.html#introduction-2" id="toc-introduction-2"><span class="toc-section-number">10.1</span> Introduction</a></li>
+<li><a href="priors.html#choosepriors" id="toc-choosepriors"><span class="toc-section-number">10.2</span> How to choose a prior</a></li>
+<li><a href="priors.html#prior-sensitivity" id="toc-prior-sensitivity"><span class="toc-section-number">10.3</span> Prior sensitivity</a></li>
+</ul></li>
+<li><a href="lm.html#lm" id="toc-lm"><span class="toc-section-number">11</span> Normal Linear Models</a>
+<ul>
+<li><a href="lm.html#linear-regression" id="toc-linear-regression"><span class="toc-section-number">11.1</span> Linear regression</a>
+<ul>
+<li><a href="lm.html#background" id="toc-background"><span class="toc-section-number">11.1.1</span> Background</a></li>
+<li><a href="lm.html#fitting-a-linear-regression-in-r" id="toc-fitting-a-linear-regression-in-r"><span class="toc-section-number">11.1.2</span> Fitting a Linear Regression in R</a></li>
+<li><a href="lm.html#drawing-conclusions" id="toc-drawing-conclusions"><span class="toc-section-number">11.1.3</span> Drawing Conclusions</a></li>
+<li><a href="lm.html#frequentist-results" id="toc-frequentist-results"><span class="toc-section-number">11.1.4</span> Frequentist Results</a></li>
+</ul></li>
+<li><a href="lm.html#regression-variants-anova-ancova-and-multiple-regression" id="toc-regression-variants-anova-ancova-and-multiple-regression"><span class="toc-section-number">11.2</span> Regression Variants: ANOVA, ANCOVA, and Multiple Regression</a>
+<ul>
+<li><a href="lm.html#one-way-anova" id="toc-one-way-anova"><span class="toc-section-number">11.2.1</span> One-Way ANOVA</a></li>
+<li><a href="lm.html#other-variants-of-normal-linear-models-two-way-anova-analysis-of-covariance-and-multiple-regression" id="toc-other-variants-of-normal-linear-models-two-way-anova-analysis-of-covariance-and-multiple-regression"><span class="toc-section-number">11.2.2</span> Other variants of normal linear models: Two-way anova, analysis of covariance and multiple regression</a></li>
+</ul></li>
+<li><a href="lm.html#partial-coefficients-and-some-comments-on-collinearity" id="toc-partial-coefficients-and-some-comments-on-collinearity"><span class="toc-section-number">11.3</span> Partial coefficients and some comments on collinearity</a></li>
+<li><a href="lm.html#orderedfactors" id="toc-orderedfactors"><span class="toc-section-number">11.4</span> Ordered Factors and Contrasts</a></li>
+<li><a href="lm.html#quadratic-and-higher-polynomial-terms" id="toc-quadratic-and-higher-polynomial-terms"><span class="toc-section-number">11.5</span> Quadratic and Higher Polynomial Terms</a></li>
+</ul></li>
+<li><a href="residualanalysis.html#residualanalysis" id="toc-residualanalysis"><span class="toc-section-number">12</span> Assessing Model Assumptions</a>
+<ul>
+<li><a href="residualanalysis.html#model-assumptions" id="toc-model-assumptions"><span class="toc-section-number">12.1</span> Model Assumptions</a></li>
+<li><a href="residualanalysis.html#independent-and-identically-distributed" id="toc-independent-and-identically-distributed"><span class="toc-section-number">12.2</span> Independent and Identically Distributed</a></li>
+<li><a href="residualanalysis.html#qqplot" id="toc-qqplot"><span class="toc-section-number">12.3</span> The QQ-Plot</a></li>
+<li><a href="residualanalysis.html#tempautocorrelation" id="toc-tempautocorrelation"><span class="toc-section-number">12.4</span> Temporal Autocorrelation</a></li>
+<li><a href="residualanalysis.html#spatialautocorrelation" id="toc-spatialautocorrelation"><span class="toc-section-number">12.5</span> Spatial Autocorrelation</a></li>
+<li><a href="residualanalysis.html#Heteroscedasticity" id="toc-Heteroscedasticity"><span class="toc-section-number">12.6</span> Heteroscedasticity</a></li>
+</ul></li>
+<li><a href="lmer.html#lmer" id="toc-lmer"><span class="toc-section-number">13</span> Linear Mixed Effect Models</a>
+<ul>
+<li><a href="lmer.html#background-1" id="toc-background-1"><span class="toc-section-number">13.1</span> Background</a>
+<ul>
+<li><a href="lmer.html#why-mixed-effects-models" id="toc-why-mixed-effects-models"><span class="toc-section-number">13.1.1</span> Why Mixed Effects Models?</a></li>
+<li><a href="lmer.html#random-factors-and-partial-pooling" id="toc-random-factors-and-partial-pooling"><span class="toc-section-number">13.1.2</span> Random Factors and Partial Pooling</a></li>
+</ul></li>
+</ul></li>
+<li><a href="glm.html#glm" id="toc-glm"><span class="toc-section-number">14</span> Generalized linear models</a>
+<ul>
+<li><a href="glm.html#introduction-3" id="toc-introduction-3"><span class="toc-section-number">14.1</span> Introduction</a></li>
+<li><a href="glm.html#summary-4" id="toc-summary-4"><span class="toc-section-number">14.2</span> Summary</a></li>
+</ul></li>
+<li><a href="glmm.html#glmm" id="toc-glmm"><span class="toc-section-number">15</span> Generalized linear mixed models</a>
+<ul>
+<li><a href="glmm.html#introduction-4" id="toc-introduction-4"><span class="toc-section-number">15.1</span> Introduction</a>
+<ul>
+<li><a href="glmm.html#binomial-mixed-model" id="toc-binomial-mixed-model"><span class="toc-section-number">15.1.1</span> Binomial Mixed Model</a></li>
+</ul></li>
+<li><a href="glmm.html#summary-5" id="toc-summary-5"><span class="toc-section-number">15.2</span> Summary</a></li>
+</ul></li>
+<li><a href="modelchecking.html#modelchecking" id="toc-modelchecking"><span class="toc-section-number">16</span> Posterior predictive model checking</a>
+<ul>
+<li><a href="modelchecking.html#introduction-5" id="toc-introduction-5"><span class="toc-section-number">16.1</span> Introduction</a></li>
+<li><a href="modelchecking.html#summary-6" id="toc-summary-6"><span class="toc-section-number">16.2</span> Summary</a></li>
+</ul></li>
+<li><a href="model-comparison.html#model_comparison" id="toc-model_comparison"><span class="toc-section-number">17</span> Model comparison and multimodel inference</a>
+<ul>
+<li><a href="model-comparison.html#introduction-6" id="toc-introduction-6"><span class="toc-section-number">17.1</span> Introduction</a></li>
+<li><a href="model-comparison.html#summary-7" id="toc-summary-7"><span class="toc-section-number">17.2</span> Summary</a></li>
+</ul></li>
+<li><a href="stan.html#stan" id="toc-stan"><span class="toc-section-number">18</span> MCMC using Stan</a>
+<ul>
+<li><a href="stan.html#background-3" id="toc-background-3"><span class="toc-section-number">18.1</span> Background</a></li>
+<li><a href="stan.html#install-rstan" id="toc-install-rstan"><span class="toc-section-number">18.2</span> Install <code>rstan</code></a></li>
+<li><a href="stan.html#firststanmod" id="toc-firststanmod"><span class="toc-section-number">18.3</span> Writing a Stan model</a></li>
+<li><a href="stan.html#run-stan-from-r" id="toc-run-stan-from-r"><span class="toc-section-number">18.4</span> Run Stan from R</a></li>
+<li><a href="stan.html#further-reading-4" id="toc-further-reading-4">Further reading</a></li>
+</ul></li>
+<li><a href="ridge-regression.html#ridge_regression" id="toc-ridge_regression"><span class="toc-section-number">19</span> Ridge Regression</a>
+<ul>
+<li><a href="ridge-regression.html#introduction-7" id="toc-introduction-7"><span class="toc-section-number">19.1</span> Introduction</a></li>
+</ul></li>
+<li><a href="SEM.html#SEM" id="toc-SEM"><span class="toc-section-number">20</span> Structural equation models</a>
+<ul>
+<li><a href="SEM.html#introduction-8" id="toc-introduction-8"><span class="toc-section-number">20.1</span> Introduction</a></li>
+</ul></li>
+<li><a href="spatial-glmm.html#spatial_glmm" id="toc-spatial_glmm"><span class="toc-section-number">21</span> Modeling spatial data using GLMM</a>
+<ul>
+<li><a href="spatial-glmm.html#introduction-9" id="toc-introduction-9"><span class="toc-section-number">21.1</span> Introduction</a></li>
+<li><a href="spatial-glmm.html#summary-8" id="toc-summary-8"><span class="toc-section-number">21.2</span> Summary</a></li>
+</ul></li>
+<li><a href="#part-ecological-models" id="toc-part-ecological-models">(PART) ECOLOGICAL MODELS</a></li>
+<li><a href="PART-III.html#PART-III" id="toc-PART-III"><span class="toc-section-number">22</span> Introduction to PART III</a>
+<ul>
+<li><a href="PART-III.html#model-notations" id="toc-model-notations"><span class="toc-section-number">22.1</span> Model notations</a></li>
+</ul></li>
+<li><a href="zeroinflated-poisson-lmm.html#zeroinflated-poisson-lmm" id="toc-zeroinflated-poisson-lmm"><span class="toc-section-number">23</span> Zero-inflated Poisson Mixed Model</a>
+<ul>
+<li><a href="zeroinflated-poisson-lmm.html#introduction-10" id="toc-introduction-10"><span class="toc-section-number">23.1</span> Introduction</a></li>
+<li><a href="zeroinflated-poisson-lmm.html#example-data" id="toc-example-data"><span class="toc-section-number">23.2</span> Example data</a></li>
+<li><a href="zeroinflated-poisson-lmm.html#model" id="toc-model"><span class="toc-section-number">23.3</span> Model</a></li>
+</ul></li>
+<li><a href="dailynestsurv.html#dailynestsurv" id="toc-dailynestsurv"><span class="toc-section-number">24</span> Daily nest survival</a>
+<ul>
+<li><a href="dailynestsurv.html#background-4" id="toc-background-4"><span class="toc-section-number">24.1</span> Background</a></li>
+<li><a href="dailynestsurv.html#models-for-estimating-daily-nest-survival" id="toc-models-for-estimating-daily-nest-survival"><span class="toc-section-number">24.2</span> Models for estimating daily nest survival</a></li>
+<li><a href="dailynestsurv.html#known-fate-model" id="toc-known-fate-model"><span class="toc-section-number">24.3</span> Known fate model</a></li>
+<li><a href="dailynestsurv.html#dailynestsurvstan" id="toc-dailynestsurvstan"><span class="toc-section-number">24.4</span> The Stan model</a></li>
+<li><a href="dailynestsurv.html#prepare-data-and-run-stan" id="toc-prepare-data-and-run-stan"><span class="toc-section-number">24.5</span> Prepare data and run Stan</a></li>
+<li><a href="dailynestsurv.html#check-convergence" id="toc-check-convergence"><span class="toc-section-number">24.6</span> Check convergence</a></li>
+<li><a href="dailynestsurv.html#look-at-results" id="toc-look-at-results"><span class="toc-section-number">24.7</span> Look at results</a></li>
+<li><a href="dailynestsurv.html#known-fate-model-for-irregular-nest-controls" id="toc-known-fate-model-for-irregular-nest-controls"><span class="toc-section-number">24.8</span> Known fate model for irregular nest controls</a></li>
+<li><a href="dailynestsurv.html#further-reading-5" id="toc-further-reading-5">Further reading</a></li>
+</ul></li>
+<li><a href="cjs-with-mix.html#cjs_with_mix" id="toc-cjs_with_mix"><span class="toc-section-number">25</span> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</a>
+<ul>
+<li><a href="cjs-with-mix.html#introduction-11" id="toc-introduction-11"><span class="toc-section-number">25.1</span> Introduction</a></li>
+<li><a href="cjs-with-mix.html#data-description" id="toc-data-description"><span class="toc-section-number">25.2</span> Data description</a></li>
+<li><a href="cjs-with-mix.html#model-description" id="toc-model-description"><span class="toc-section-number">25.3</span> Model description</a></li>
+<li><a href="cjs-with-mix.html#the-stan-code" id="toc-the-stan-code"><span class="toc-section-number">25.4</span> The Stan code</a></li>
+<li><a href="cjs-with-mix.html#call-stan-from-r-check-convergence-and-look-at-results" id="toc-call-stan-from-r-check-convergence-and-look-at-results"><span class="toc-section-number">25.5</span> Call Stan from R, check convergence and look at results</a></li>
+</ul></li>
+<li><a href="#part-appendices" id="toc-part-appendices">(PART) APPENDICES</a></li>
+<li><a href="referenzen.html#referenzen" id="toc-referenzen">Referenzen</a></li>
+<li class="divider"></li>
+</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian Data Analysis in Ecology with R and Stan</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bayesian_paradigm" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> The Bayesian paradigm</h1>
+<p>THIS CHAPTER IS UNDER CONSTRUCTION!!!</p>
+<div id="introduction-1" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Introduction</h2>
+</div>
+<div id="summary-3" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Summary</h2>
+<p>xxx</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="PART-II.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="priors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/2.01-bayesian_paradigm.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
