@@ -118,9 +118,8 @@ f-distribution
 rfunctions
 data-preparation
 figures
-summary-1
 reproducibleresearch
-summary-2
+summary-1
 further-reading-2
 furthertopics
 bioacoustic-analyse
@@ -149,7 +148,7 @@ linear-model-with-one-categorical-predictor-one-way-anova
 other-variants-of-normal-linear-models-two-way-anova-analysis-of-covariance-and-multiple-regression
 linear-model-with-two-categorical-predictors-two-way-anova
 a-linear-model-with-a-categorical-and-a-numeric-predictor-ancova
-partial-coefficients-and-some-comments-on-collinearity
+collinearity
 orderedfactors
 quadratic-and-higher-polynomial-terms
 residualanalysis
@@ -195,7 +194,7 @@ using-the-brm-function
 checking-model-convergence-for-the-brm-fit
 checking-model-fit-by-posterior-predictive-model-checking
 drawing-conclusions-1
-summary-3
+summary-2
 modelchecking
 model_comparison
 when-and-why-we-compare-models-and-why-model-selection-is-difficult
@@ -220,7 +219,7 @@ SEM
 introduction-5
 spatial_glmm
 introduction-6
-summary-4
+summary-3
 PART-III
 model-notations
 zeroinflated-poisson-lmm

@@ -1,9 +1,14 @@
 # Important R-functions {#rfunctions}
 
-THIS CHAPTER IS UNDER CONSTRUCTION!!! 
-
 ## Data preparation
+
+We think the following R-functions are useful for checking whether data contains typo or other mistakes:  
+
+`hist`, `table`, `plot`, `boxplot`, `scatter.smooth`
+
 
 ## Figures
 
-## Summary
+
+
+
