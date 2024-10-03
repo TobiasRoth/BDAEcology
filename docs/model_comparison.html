@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2024-10-02" />
+<meta name="date" content="2024-10-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -526,11 +526,11 @@ predictors that are really necessary.</p>
 <div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="model_comparison.html#cb223-1" tabindex="-1"></a>loo1 <span class="ot">&lt;-</span> <span class="fu">loo.cv</span>(mod1, <span class="at">bias.corr=</span><span class="cn">TRUE</span>) <span class="co"># increase nsim for more precise results</span></span>
 <span id="cb223-2"><a href="model_comparison.html#cb223-2" tabindex="-1"></a>loo2 <span class="ot">&lt;-</span> <span class="fu">loo.cv</span>(mod2, <span class="at">bias.corr=</span><span class="cn">TRUE</span>)</span>
 <span id="cb223-3"><a href="model_comparison.html#cb223-3" tabindex="-1"></a>loo1<span class="sc">$</span>bias.corrected.LOO.CV; loo2<span class="sc">$</span>bias.corrected.LOO.CV</span></code></pre></div>
-<pre><code>## [1] -402.4619</code></pre>
-<pre><code>## [1] -404.467</code></pre>
+<pre><code>## [1] -403.0535</code></pre>
+<pre><code>## [1] -405.0093</code></pre>
 <div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="model_comparison.html#cb226-1" tabindex="-1"></a>loo1<span class="sc">$</span>est.peff; loo2<span class="sc">$</span>est.peff</span></code></pre></div>
-<pre><code>## [1] 4.611909</code></pre>
-<pre><code>## [1] 3.105838</code></pre>
+<pre><code>## [1] 4.95661</code></pre>
+<pre><code>## [1] 3.703758</code></pre>
 <p>The output gives the leave-one-out cross-validation estimate of predictive fit. The bias-corrected leave-one-out cross-validation, which is recommended for small sample sizes. We also get an estimate for the number of effective parameters (est.peff), which is the difference between the non-cross-validated predictive fit and the cross-validated predictive fit (LOO.CV). It measures “overfit”, that is, how much the model fits better to the data used for model fitting compared to new data. The model without ph seems to have
 the higher out-of data predictive fit.</p>
 <p>Cross-validation in a Bayesian framework is extremely computing time intensive, because <span class="math inline">\(n\)</span> models have to be fitted, and for each model the posterior distribution of the parameter estimates needs to be simulated. Frequentist cross-validation requires less computing time, because no posterior distributions have to be simulated. And, for normal linear models, a leave-one-out cross-validation can be computed using matrix algebra without having to refit any model (e.g., see <span class="citation">Wood (<a href="referenzen.html#ref-Wood.2017">2017</a>)</span>). This may be a fast alternative.</p>
@@ -552,20 +552,20 @@ As <span class="math inline">\(AIC_c\)</span> approximates <span class="math inl
 where <span class="math inline">\(\theta_{post}\)</span> is the joint posterior distribution of the model parameters and <span class="math inline">\(p_{WAIC}\)</span> an estimate of the number of effective parameters. <span class="math inline">\(p_{WAIC}\)</span> can be calculated in two different ways, therefore, two different <span class="math inline">\(WAIC\)</span> values exist <span class="citation">(<a href="referenzen.html#ref-Gelman2014">A. Gelman et al. 2014b</a>)</span>. Both are implemented in the function <code>WAIC</code> (from the package <code>blmeco</code>) but the WAIC2 more strongly resembles the cross-validation and is, therefore, recommended.</p>
 <div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="model_comparison.html#cb229-1" tabindex="-1"></a><span class="fu">WAIC</span>(mod1, <span class="at">nsim=</span><span class="dv">1000</span>)</span></code></pre></div>
 <pre><code>## $lppd
-## [1] -397.9724
+## [1] -398.0251
 ## 
 ## $pwaic1
-## [1] 4.244922
+## [1] 4.160465
 ## 
 ## $pwaic2
-## [1] 4.667219
+## [1] 4.536234
 ## 
 ## $WAIC1
-## [1] 804.4346
+## [1] 804.3711
 ## 
 ## $WAIC2
-## [1] 805.2792</code></pre>
-<p>The <code>lppd</code> is the log pointwise posterior predictive density (a measure of fit; the better the model fits the data the larger it is). <code>pwaic1</code> and <code>pwaic2</code> are the two estimates for the effective number of parameters, a measure for the increase in model fit that is solely due to the number of parameters, and that is used to estimate WAIC1 and WAIC2. The WAIC2 values for the second model in our frog example was 809.8. Thus the conclusion is similar as with the cross-validation.<br />
+## [1] 805.1226</code></pre>
+<p>The <code>lppd</code> is the log pointwise posterior predictive density (a measure of fit; the better the model fits the data the larger it is). <code>pwaic1</code> and <code>pwaic2</code> are the two estimates for the effective number of parameters, a measure for the increase in model fit that is solely due to the number of parameters, and that is used to estimate WAIC1 and WAIC2. The WAIC2 values for the second model in our frog example was 808.9. Thus the conclusion is similar as with the cross-validation.<br />
 A technical warning: To compare models, the models must have been fitted using the same data set. R omits observations with missing values when fitting a linear model! Thus, if a predictor variable contains missing values, R fits the model to data excluding the missing cases. We only see this in a small note in the summary output, which is easily overlooked. When excluding the predictor variable with missing values from the model, R fits the model to a larger data set. As a result, the two models cannot be compared because they have been fitted to different data. Therefore, we have to make sure that all models we compare have been fitted to the same data set. Such a line of code may prevent unjustified comparisons:</p>
 <div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="model_comparison.html#cb231-1" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> dat[<span class="fu">complete.cases</span>(dat),]</span></code></pre></div>
 <p>where “dat” contains the outcome variable and all predictors (but no other variables with NAs, or too many cases might be deleted).<br />
@@ -627,7 +627,7 @@ The function <code>bms</code> fits all possible models and calculates posterior 
 ## ph         0.1290152  0.006211641 0.023388692             1   1
 ## 
 ## Mean no. regressors               Draws             Burnins                Time 
-##            &quot;2.1290&quot;                 &quot;8&quot;                 &quot;0&quot;   &quot;0.01147389 secs&quot; 
+##            &quot;2.1290&quot;                 &quot;8&quot;                 &quot;0&quot;  &quot;0.005513906 secs&quot; 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 &quot;8&quot;                 &quot;8&quot;               &quot;100&quot;               &quot;100&quot; 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -635,7 +635,7 @@ The function <code>bms</code> fits all possible models and calculates posterior 
 ##     Shrinkage-Stats 
 ##         &quot;Av=0.9924&quot; 
 ## 
-## Time difference of 0.01147389 secs</code></pre>
+## Time difference of 0.005513906 secs</code></pre>
 <p><img src="2.09-model_comparison_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>The variables in the output are ordered according to their PIP. The (according to the inclusion probabilities) most important variables come first. The second column gives the posterior means of the parameters averaged over the models. It corresponds to a weighted mean of the estimates from the models with the model probabilities as weights. By default, the posterior mean is calculated over all models using the value 0 for models excluding the variable (unconditional posterior mean).</p>
 <p>By setting the argument <code>condi.coef = TRUE</code>, only the models including a variable are used to calculate the posterior mean. The column Post SD is the posterior standard deviation of the parameter estimates. The next column gives the posterior probability that the parameter value is positive conditional on the inclusion of this parameter. Thus, we can infer from the output that water depth and temperature are important predictors (inclusion probabilities close to 1), and that water depth has a negative and temperature a positive effect on the size of the frog population in a pond.</p>

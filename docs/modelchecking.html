@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2024-10-02" />
+<meta name="date" content="2024-10-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -495,7 +495,7 @@ Figure 16.1: Histograms of 8 out of 4000 replicated data sets and of the observe
 <div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="modelchecking.html#cb208-1" tabindex="-1"></a>pzeroyrep <span class="ot">&lt;-</span> <span class="fu">apply</span>(yrep, <span class="dv">2</span>, propzeros) <span class="co"># prop. zero values in yrep</span></span>
 <span id="cb208-2"><a href="modelchecking.html#cb208-2" tabindex="-1"></a><span class="fu">quantile</span>(pzeroyrep, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>))</span></code></pre></div>
 <pre><code>##        1%       99% 
-## 0.0341625 0.9585625</code></pre>
+## 0.0338750 0.9577875</code></pre>
 <p>The observed data contain 47% zero values, which is well within the 98%-range of what the model predicted (3 - 96%). the Bayesian p-value is 0.6.</p>
 <div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="modelchecking.html#cb210-1" tabindex="-1"></a><span class="fu">mean</span>(pzeroyrep<span class="sc">&gt;=</span><span class="fu">propzeros</span>(dat<span class="sc">$</span>bp))</span></code></pre></div>
 <pre><code>## [1] 0.6029412</code></pre>
@@ -506,12 +506,8 @@ Figure 16.1: Histograms of 8 out of 4000 replicated data sets and of the observe
 <div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="modelchecking.html#cb214-1" tabindex="-1"></a>q90yrep <span class="ot">&lt;-</span> <span class="fu">apply</span>(yrep, <span class="dv">2</span>, quantile, <span class="at">prob=</span><span class="fl">0.9</span>) <span class="co"># for simulated data</span></span>
 <span id="cb214-2"><a href="modelchecking.html#cb214-2" tabindex="-1"></a><span class="fu">table</span>(q90yrep)</span></code></pre></div>
 <pre><code>## q90yrep
-##                  0 0.0999999999999091                  1   1.09999999999991 
-##                  8                  1                 38                  1 
-##                  2                  3   3.09999999999991                  4 
-##                 47                 22                  1                  7 
-##                  5                  6                  7                  8 
-##                  7                  1                  2                  1</code></pre>
+##  0  1  2  3  4  5  6  7  8 
+##  9 39 47 23  7  7  1  1  2</code></pre>
 <p>Also, the 90% quantile of the data is within what the model predicts.</p>
 <p>We also can look at the spatial distribution of the data and the replicated data. The variables X and Y are the coordinates of the wildflower fields. We can use them to draw transparent gray dots sized according to the number of breeding pairs.</p>
 <div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="modelchecking.html#cb216-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
@@ -543,8 +539,8 @@ To do so, we first define a function that extracts the mean field age of the 10%
 <div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="modelchecking.html#cb219-1" tabindex="-1"></a>mageyrep <span class="ot">&lt;-</span> <span class="fu">apply</span>(yrep, <span class="dv">1</span>, magehighest)</span>
 <span id="cb219-2"><a href="modelchecking.html#cb219-2" tabindex="-1"></a><span class="fu">quantile</span>(mageyrep, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.5</span>,<span class="fl">0.99</span>))</span></code></pre></div>
 <pre><code>##       1%      50%      99% 
-## 3.733333 4.714286 5.857143</code></pre>
-<p>The mean age of the 10% of the fields with the highest whitethroat densities is 4.4 years in the observed data set. In the replicated data set it is between 3.73 and 5.86 years. The Bayesian p-value is 0.79. Thus, in around 79% of the replicated data sets the mean age of the 10% fields with the highest whitethroat densities was higher than the observed one (Figure <a href="modelchecking.html#fig:agepp">16.3</a>).</p>
+## 3.714286 4.714286 5.857143</code></pre>
+<p>The mean age of the 10% of the fields with the highest whitethroat densities is 4.4 years in the observed data set. In the replicated data set it is between 3.71 and 5.86 years. The Bayesian p-value is 0.78. Thus, in around 78% of the replicated data sets the mean age of the 10% fields with the highest whitethroat densities was higher than the observed one (Figure <a href="modelchecking.html#fig:agepp">16.3</a>).</p>
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="modelchecking.html#cb221-1" tabindex="-1"></a><span class="fu">hist</span>(mageyrep)</span>
 <span id="cb221-2"><a href="modelchecking.html#cb221-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">magehighest</span>(dat<span class="sc">$</span>bp), <span class="at">col=</span><span class="st">&quot;orange&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:agepp"></span>

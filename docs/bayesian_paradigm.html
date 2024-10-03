@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2024-10-02" />
+<meta name="date" content="2024-10-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -560,7 +560,7 @@ Based on simulated values from the joint posterior distribution of the model par
 <p>Then, we average the posterior density values over all simulations (this corresponds to the integral in the previous formula). Finally, we calculate the sum of the logarithm of the averaged density values.</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="bayesian_paradigm.html#cb55-1" tabindex="-1"></a>mpyi <span class="ot">&lt;-</span> <span class="fu">apply</span>(pyi, <span class="dv">1</span>, mean)</span>
 <span id="cb55-2"><a href="bayesian_paradigm.html#cb55-2" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">log</span>(mpyi))</span></code></pre></div>
-<pre><code>## [1] 0.219347</code></pre>
+<pre><code>## [1] 0.2292774</code></pre>
 <p>The log posterior density can be used as a measure of model fit. We will come back to this measurement when we discuss cross-validation as a method for <a href="model_comparison.html#model_comparison">model comparison</a>.</p>
 </div>
 <div id="further-reading-4" class="section level2 hasAnchor" number="9.5">

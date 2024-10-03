@@ -34,13 +34,13 @@ Chapter \@ref(distributions) gives an overview of the distributions that are mos
 ## Preparation of Explanatory Variables  {#step4}
 1. Look at the distribution (histogram) of every explanatory variable: Linear models do not assume that the explanatory variables have any specific distribution. Thus there is no need to check for a normal distribution! However, very skewed distributions result in unequal weighting of the observations in the model. In extreme cases, the slope of a regression line is defined by one or a few observations only. We also need to check whether the variance is large enough, and to think about the shape of the expected effect. The following four questions may help with this step:  
 
-1) Is the variance (of the explanatory variable) big enough so that an effect of the variable can be measured?  
+a) Is the variance (of the explanatory variable) big enough so that an effect of the variable can be measured?  
 
-2) Is the distribution skewed? If an explanatory variable is highly skewed, it may make sense to transform the variable (e.g., log, square-root).  
+b) Is the distribution skewed? If an explanatory variable is highly skewed, it may make sense to transform the variable (e.g., log, square-root).  
 
-3) Does it show a bimodal distribution? Consider making the variable binary.  
+c) Does it show a bimodal distribution? Consider making the variable binary.  
 
-4) Is it expected that a change of 1 at lower values for x has the same biological effect as a change of 1 at higher values of x? If not, a trans- formation (e.g., log) could linearize the relationship between x and y.  
+d) Is it expected that a change of 1 at lower values for x has the same biological effect as a change of 1 at higher values of x? If not, a trans- formation (e.g., log) could linearize the relationship between x and y.  
 
 2. Centering: Centering ($x.c = x-mean(x)$) is a transformation that produces a variable with a mean of 0. Centering is optional. We have two reasons to center a predictor variable. First, it helps the model fitting algorithm to better converge because it reduces correlations among model parameters. Second, with centered predictors, the intercept and main effects in the linear model are better interpretable (they are measured at the center of the data instead of at the covariate value of 0 which may be far off).
 
