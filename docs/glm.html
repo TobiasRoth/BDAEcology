@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2024-10-03" />
+<meta name="date" content="2024-10-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -677,9 +677,9 @@ Are all parameters well informed by the data? Some parameters may not be identif
 <span id="cb156-3"><a href="glm.html#cb156-3" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim) <span class="co"># sim from package arm</span></span>
 <span id="cb156-4"><a href="glm.html#cb156-4" tabindex="-1"></a><span class="fu">apply</span>(bsim<span class="sc">@</span>coef, <span class="dv">2</span>, quantile, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <pre><code>##       (Intercept) elevation I(elevation^2) I(elevation^3)      I(elevation^4)
-## 50%     -24.35918 0.3977717  -0.0022022476 0.000004887591 -0.0000000038161329
-## 2.5%    -35.56637 0.1940137  -0.0035018945 0.000001371972 -0.0000000071693891
-## 97.5%   -13.22663 0.6028287  -0.0009058518 0.000008366231 -0.0000000004404918</code></pre>
+## 50%     -24.21535 0.3943488   -0.002177504 0.000004811113 -0.0000000037517934
+## 2.5%    -35.55604 0.1966927   -0.003531475 0.000001335458 -0.0000000071301469
+## 97.5%   -13.48508 0.6009148   -0.000879556 0.000008448345 -0.0000000004264715</code></pre>
 <p>To interpret this polynomial function, an effect plot is helpful. To that end, and as we have done before, we calculate fitted values over the range of the covariate, together with compatibility intervals.</p>
 <div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="glm.html#cb158-1" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">elevation =</span> <span class="fu">seq</span>(<span class="dv">80</span>,<span class="dv">600</span>,<span class="at">by=</span><span class="dv">1</span>))</span>
 <span id="cb158-2"><a href="glm.html#cb158-2" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>elevation<span class="sc">+</span><span class="fu">I</span>(elevation<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">I</span>(elevation<span class="sc">^</span><span class="dv">3</span>)<span class="sc">+</span></span>
