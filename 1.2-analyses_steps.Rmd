@@ -48,9 +48,12 @@ d) Is it expected that a change of 1 at lower values for x has the same biologic
 
 4. Collinearity: Look at the correlation among the explanatory variables (pairs plot or correlation matrix). If the explanatory variables are correlated, go back to step 2 and add this relationship. Further, read our thoughts about [collinearity](#collinearity).
 
-5. Are interactions and polynomial terms needed in the model? If not already
-done in step 2, think about the relationship between each explanatory variable and the dependent variable. Is it linear or do polynomial terms have to be included in the model? If the relationship cannot be described appropriately by polynomial terms, think of a nonlinear model or a generalized additive model (GAM). May the effect of one explanatory variable depend on the value of
+5. Are [polynomial terms](#polynomials) needed in the model? If not already
+done in step 2, think about the relationship between each explanatory variable and the dependent variable. Is it linear or do polynomial terms have to be included in the model? If the relationship cannot be described appropriately by polynomial terms, think of a nonlinear model or a generalized additive model (GAM).  
+
+6. Interactions: May the effect of one explanatory variable depend on the value of
 another explanatory variable (interaction)?
+
 
 ## Data Structure  {#step5}
 After having taken into account all of the (fixed effect) terms from step 4: are the observations independent or grouped/structured? What random factors are needed in the model? Are the data obviously temporally or spatially correlated? Or, are other correlation structures present, such as phylogenetic relationships? 

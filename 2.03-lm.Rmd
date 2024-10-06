@@ -942,7 +942,7 @@ The group means are the same, independent of whether a factor is defined as orde
 Note that it is also possible to define own contrasts if we are interested in specific differences or trends. However, it is not trivial to find meaningful and orthogonal (= uncorrelated) contrasts.
 
 
-## Quadratic and Higher Polynomial Terms
+## Quadratic and Higher Polynomial Terms {#polynomials}
 
 The straight regression line for the biomass of grass species Ap *Alopecurus pratensis* dependent on the distance to the ground water does not fit well (Figure \@ref(fig:fgbiom)). The residuals at low and high values of water tend to be positive and intermediate water levels are associated with negative residuals. This points out a possible violation of the model assumptions.
 The problem is that the relationship between distance to water and biomass of species Ap is not linear. In real life, we often find non-linear relationships, but if the shape of the relationship is quadratic (plus, potentially, a few more polynomials) we can still use ‘linear modeling’ (the term 'linear' refers to the linear function used to describe the relationship between the outcome and the predictor variables: $f(x) = \beta_0 + \beta_1x + \beta_2x^2$ is a linear function compared to, e.g., $f(x) = \beta^x$, which is not a linear function). We simply add the quadratic term of the predictor variable, that is, water in our example, as a further predictor in the linear predictor:
