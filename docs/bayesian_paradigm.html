@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 The Bayesian paradigm and likelihood in a frequentist and Bayesian framework | Bayesian Data Analysis in Ecology with R and Stan</title>
+  <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9 The Bayesian paradigm and likelihood in a frequentist and Bayesian framework | Bayesian Data Analysis in Ecology with R and Stan" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/images/cover.jpg" />
+  <meta property="og:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
+  <meta name="github-repo" content="TobiasRoth/BDAEcology" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9 The Bayesian paradigm and likelihood in a frequentist and Bayesian framework | Bayesian Data Analysis in Ecology with R and Stan" />
+  
+  <meta name="twitter:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
+  <meta name="twitter:image" content="/images/cover.jpg" />
+
+<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
+
+
+<meta name="date" content="2024-10-12" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="PART-II.html"/>
+<link rel="next" href="priors.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="settings/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-this-book"><i class="fa fa-check"></i>Why this book?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="part"><span><b>I BASIC STATISTICS FOR ECOLOGISTS</b></span></li>
+<li class="chapter" data-level="1" data-path="PART-I.html"><a href="PART-I.html"><i class="fa fa-check"></i><b>1</b> Introduction to PART I</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="PART-I.html"><a href="PART-I.html#further-reading"><i class="fa fa-check"></i><b>1.1</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Basics of statistics</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#variables-and-observations"><i class="fa fa-check"></i><b>2.1</b> Variables and observations</a></li>
+<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-data"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing data</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="basics.html"><a href="basics.html#histogram"><i class="fa fa-check"></i><b>2.2.1</b> Histogram</a></li>
+<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#location-and-scatter"><i class="fa fa-check"></i><b>2.2.2</b> Location and scatter</a></li>
+<li class="chapter" data-level="2.2.3" data-path="basics.html"><a href="basics.html#correlations"><i class="fa fa-check"></i><b>2.2.3</b> Correlations</a></li>
+<li class="chapter" data-level="2.2.4" data-path="basics.html"><a href="basics.html#principal-components-analyses-pca"><i class="fa fa-check"></i><b>2.2.4</b> Principal components analyses PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="basics.html"><a href="basics.html#inferential-statistics"><i class="fa fa-check"></i><b>2.3</b> Inferential statistics</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="basics.html"><a href="basics.html#uncertainty"><i class="fa fa-check"></i><b>2.3.1</b> Uncertainty</a></li>
+<li class="chapter" data-level="2.3.2" data-path="basics.html"><a href="basics.html#standard-error"><i class="fa fa-check"></i><b>2.3.2</b> Standard error</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="basics.html"><a href="basics.html#bayes-theorem-and-the-common-aim-of-frequentist-and-bayesian-methods"><i class="fa fa-check"></i><b>2.4</b> Bayes theorem and the common aim of frequentist and Bayesian methods</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="basics.html"><a href="basics.html#bayes-theorem-for-discrete-events"><i class="fa fa-check"></i><b>2.4.1</b> Bayes theorem for discrete events</a></li>
+<li class="chapter" data-level="2.4.2" data-path="basics.html"><a href="basics.html#bayes-theorem-for-continuous-parameters"><i class="fa fa-check"></i><b>2.4.2</b> Bayes theorem for continuous parameters</a></li>
+<li class="chapter" data-level="2.4.3" data-path="basics.html"><a href="basics.html#estimating-a-mean-assuming-that-the-variance-is-known"><i class="fa fa-check"></i><b>2.4.3</b> Estimating a mean assuming that the variance is known</a></li>
+<li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#estimating-the-mean-and-the-variance"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#classical-frequentist-tests-and-alternatives"><i class="fa fa-check"></i><b>2.5</b> Classical frequentist tests and alternatives</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#nullhypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Nullhypothesis testing</a></li>
+<li class="chapter" data-level="2.5.2" data-path="basics.html"><a href="basics.html#comparison-of-a-sample-with-a-fixed-value-one-sample-t-test"><i class="fa fa-check"></i><b>2.5.2</b> Comparison of a sample with a fixed value (one-sample t-test)</a></li>
+<li class="chapter" data-level="2.5.3" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups-two-sample-t-test"><i class="fa fa-check"></i><b>2.5.3</b> Comparison of the locations between two groups (two-sample t-test)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.6</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="analyses_steps.html"><a href="analyses_steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="analyses_steps.html"><a href="analyses_steps.html#step1"><i class="fa fa-check"></i><b>3.1</b> Plausibility of Data</a></li>
+<li class="chapter" data-level="3.2" data-path="analyses_steps.html"><a href="analyses_steps.html#step2"><i class="fa fa-check"></i><b>3.2</b> Relationships</a></li>
+<li class="chapter" data-level="3.3" data-path="analyses_steps.html"><a href="analyses_steps.html#step3"><i class="fa fa-check"></i><b>3.3</b> Data Distribution</a></li>
+<li class="chapter" data-level="3.4" data-path="analyses_steps.html"><a href="analyses_steps.html#step4"><i class="fa fa-check"></i><b>3.4</b> Preparation of Explanatory Variables</a></li>
+<li class="chapter" data-level="3.5" data-path="analyses_steps.html"><a href="analyses_steps.html#step5"><i class="fa fa-check"></i><b>3.5</b> Data Structure</a></li>
+<li class="chapter" data-level="3.6" data-path="analyses_steps.html"><a href="analyses_steps.html#step6"><i class="fa fa-check"></i><b>3.6</b> Define Prior Distributions</a></li>
+<li class="chapter" data-level="3.7" data-path="analyses_steps.html"><a href="analyses_steps.html#step7"><i class="fa fa-check"></i><b>3.7</b> Fit the Model</a></li>
+<li class="chapter" data-level="3.8" data-path="analyses_steps.html"><a href="analyses_steps.html#step8"><i class="fa fa-check"></i><b>3.8</b> Check Model</a></li>
+<li class="chapter" data-level="3.9" data-path="analyses_steps.html"><a href="analyses_steps.html#step9"><i class="fa fa-check"></i><b>3.9</b> Model Uncertainty</a></li>
+<li class="chapter" data-level="3.10" data-path="analyses_steps.html"><a href="analyses_steps.html#step10"><i class="fa fa-check"></i><b>3.10</b> Draw Conclusions</a></li>
+<li class="chapter" data-level="" data-path="analyses_steps.html"><a href="analyses_steps.html#further-reading-1"><i class="fa fa-check"></i>Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>4</b> Probability distributions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="distributions.html"><a href="distributions.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="distributions.html"><a href="distributions.html#discrete-distributions"><i class="fa fa-check"></i><b>4.2</b> Discrete distributions</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="distributions.html"><a href="distributions.html#bernoulli-dist"><i class="fa fa-check"></i><b>4.2.1</b> Bernoulli distribution</a></li>
+<li class="chapter" data-level="4.2.2" data-path="distributions.html"><a href="distributions.html#binomial-dist"><i class="fa fa-check"></i><b>4.2.2</b> Binomial distribution</a></li>
+<li class="chapter" data-level="4.2.3" data-path="distributions.html"><a href="distributions.html#poisson"><i class="fa fa-check"></i><b>4.2.3</b> Poisson distribution</a></li>
+<li class="chapter" data-level="4.2.4" data-path="distributions.html"><a href="distributions.html#negative-binomial-distribution"><i class="fa fa-check"></i><b>4.2.4</b> Negative-binomial distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="distributions.html"><a href="distributions.html#continuous-distributions"><i class="fa fa-check"></i><b>4.3</b> Continuous distributions</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="distributions.html"><a href="distributions.html#beta-distribution"><i class="fa fa-check"></i><b>4.3.1</b> Beta distribution</a></li>
+<li class="chapter" data-level="4.3.2" data-path="distributions.html"><a href="distributions.html#normdist"><i class="fa fa-check"></i><b>4.3.2</b> Normal distribution</a></li>
+<li class="chapter" data-level="4.3.3" data-path="distributions.html"><a href="distributions.html#gamma-distribution"><i class="fa fa-check"></i><b>4.3.3</b> Gamma distribution</a></li>
+<li class="chapter" data-level="4.3.4" data-path="distributions.html"><a href="distributions.html#cauchydistri"><i class="fa fa-check"></i><b>4.3.4</b> Cauchy distribution</a></li>
+<li class="chapter" data-level="4.3.5" data-path="distributions.html"><a href="distributions.html#t-distribution"><i class="fa fa-check"></i><b>4.3.5</b> t-distribution</a></li>
+<li class="chapter" data-level="4.3.6" data-path="distributions.html"><a href="distributions.html#f-distribution"><i class="fa fa-check"></i><b>4.3.6</b> F-distribution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="rfunctions.html"><a href="rfunctions.html"><i class="fa fa-check"></i><b>5</b> Important R-functions</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="rfunctions.html"><a href="rfunctions.html#data-preparation"><i class="fa fa-check"></i><b>5.1</b> Data preparation</a></li>
+<li class="chapter" data-level="5.2" data-path="rfunctions.html"><a href="rfunctions.html#figures"><i class="fa fa-check"></i><b>5.2</b> Figures</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="reproducibleresearch.html"><a href="reproducibleresearch.html"><i class="fa fa-check"></i><b>6</b> Reproducible research</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="reproducibleresearch.html"><a href="reproducibleresearch.html#summary-1"><i class="fa fa-check"></i><b>6.1</b> Summary</a></li>
+<li class="chapter" data-level="6.2" data-path="reproducibleresearch.html"><a href="reproducibleresearch.html#further-reading-2"><i class="fa fa-check"></i><b>6.2</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="furthertopics.html"><a href="furthertopics.html"><i class="fa fa-check"></i><b>7</b> Further topics</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="furthertopics.html"><a href="furthertopics.html#bioacoustic-analyse"><i class="fa fa-check"></i><b>7.1</b> Bioacoustic analyse</a></li>
+<li class="chapter" data-level="7.2" data-path="furthertopics.html"><a href="furthertopics.html#python"><i class="fa fa-check"></i><b>7.2</b> Python</a></li>
+</ul></li>
+<li class="part"><span><b>II BAYESIAN DATA ANALYSIS</b></span></li>
+<li class="chapter" data-level="8" data-path="PART-II.html"><a href="PART-II.html"><i class="fa fa-check"></i><b>8</b> Introduction to PART II</a>
+<ul>
+<li class="chapter" data-level="" data-path="PART-II.html"><a href="PART-II.html#further-reading-3"><i class="fa fa-check"></i>Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="bayesian_paradigm.html"><a href="bayesian_paradigm.html"><i class="fa fa-check"></i><b>9</b> The Bayesian paradigm and likelihood in a frequentist and Bayesian framework</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="bayesian_paradigm.html"><a href="bayesian_paradigm.html#short-historical-overview"><i class="fa fa-check"></i><b>9.1</b> Short historical overview</a></li>
+<li class="chapter" data-level="9.2" data-path="bayesian_paradigm.html"><a href="bayesian_paradigm.html#the-bayesian-way"><i class="fa fa-check"></i><b>9.2</b> The Bayesian way</a></li>
+<li class="chapter" data-level="9.3" data-path="bayesian_paradigm.html"><a href="bayesian_paradigm.html#likelihood"><i class="fa fa-check"></i><b>9.3</b> Likelihood</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="bayesian_paradigm.html"><a href="bayesian_paradigm.html#theory"><i class="fa fa-check"></i><b>9.3.1</b> Theory</a></li>
+<li class="chapter" data-level="9.3.2" data-path="bayesian_paradigm.html"><a href="bayesian_paradigm.html#the-maximum-likelihood-method"><i class="fa fa-check"></i><b>9.3.2</b> The maximum likelihood method</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="bayesian_paradigm.html"><a href="bayesian_paradigm.html#the-log-pointwise-predictive-density"><i class="fa fa-check"></i><b>9.4</b> The log pointwise predictive density</a></li>
+<li class="chapter" data-level="9.5" data-path="bayesian_paradigm.html"><a href="bayesian_paradigm.html#further-reading-4"><i class="fa fa-check"></i><b>9.5</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i><b>10</b> Prior distributions and prior sensitivity analyses</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="priors.html"><a href="priors.html#introduction-1"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="priors.html"><a href="priors.html#choosepriors"><i class="fa fa-check"></i><b>10.2</b> How to choose a prior</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="priors.html"><a href="priors.html#priors-for-variance-parameters"><i class="fa fa-check"></i><b>10.2.1</b> Priors for variance parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="priors.html"><a href="priors.html#prior-sensitivity"><i class="fa fa-check"></i><b>10.3</b> Prior sensitivity</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>11</b> Normal Linear Models</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="lm.html"><a href="lm.html#linear-regression"><i class="fa fa-check"></i><b>11.1</b> Linear regression</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="lm.html"><a href="lm.html#background"><i class="fa fa-check"></i><b>11.1.1</b> Background</a></li>
+<li class="chapter" data-level="11.1.2" data-path="lm.html"><a href="lm.html#fitting-a-linear-regression-in-r"><i class="fa fa-check"></i><b>11.1.2</b> Fitting a Linear Regression in R</a></li>
+<li class="chapter" data-level="11.1.3" data-path="lm.html"><a href="lm.html#drawing-conclusions"><i class="fa fa-check"></i><b>11.1.3</b> Drawing Conclusions</a></li>
+<li class="chapter" data-level="11.1.4" data-path="lm.html"><a href="lm.html#interpretation-of-the-r-summary-output"><i class="fa fa-check"></i><b>11.1.4</b> Interpretation of the R summary output</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="lm.html"><a href="lm.html#linear-model-with-one-categorical-predictor-one-way-anova"><i class="fa fa-check"></i><b>11.2</b> Linear model with one categorical predictor (one-way ANOVA)</a></li>
+<li class="chapter" data-level="11.3" data-path="lm.html"><a href="lm.html#other-variants-of-normal-linear-models-two-way-anova-analysis-of-covariance-and-multiple-regression"><i class="fa fa-check"></i><b>11.3</b> Other variants of normal linear models: Two-way anova, analysis of covariance and multiple regression</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="lm.html"><a href="lm.html#linear-model-with-two-categorical-predictors-two-way-anova"><i class="fa fa-check"></i><b>11.3.1</b> Linear model with two categorical predictors (two-way ANOVA)</a></li>
+<li class="chapter" data-level="11.3.2" data-path="lm.html"><a href="lm.html#a-linear-model-with-a-categorical-and-a-numeric-predictor-ancova"><i class="fa fa-check"></i><b>11.3.2</b> A linear model with a categorical and a numeric predictor (ANCOVA)</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="lm.html"><a href="lm.html#collinearity"><i class="fa fa-check"></i><b>11.4</b> Partial coefficients and some comments on collinearity</a></li>
+<li class="chapter" data-level="11.5" data-path="lm.html"><a href="lm.html#orderedfactors"><i class="fa fa-check"></i><b>11.5</b> Ordered Factors and Contrasts</a></li>
+<li class="chapter" data-level="11.6" data-path="lm.html"><a href="lm.html#polynomials"><i class="fa fa-check"></i><b>11.6</b> Quadratic and Higher Polynomial Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="residualanalysis.html"><a href="residualanalysis.html"><i class="fa fa-check"></i><b>12</b> Assessing Model Assumptions</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="residualanalysis.html"><a href="residualanalysis.html#model-assumptions"><i class="fa fa-check"></i><b>12.1</b> Model Assumptions</a></li>
+<li class="chapter" data-level="12.2" data-path="residualanalysis.html"><a href="residualanalysis.html#independent-and-identically-distributed"><i class="fa fa-check"></i><b>12.2</b> Independent and Identically Distributed</a></li>
+<li class="chapter" data-level="12.3" data-path="residualanalysis.html"><a href="residualanalysis.html#qqplot"><i class="fa fa-check"></i><b>12.3</b> The QQ-Plot</a></li>
+<li class="chapter" data-level="12.4" data-path="residualanalysis.html"><a href="residualanalysis.html#tempautocorrelation"><i class="fa fa-check"></i><b>12.4</b> Temporal Autocorrelation</a></li>
+<li class="chapter" data-level="12.5" data-path="residualanalysis.html"><a href="residualanalysis.html#spatialautocorrelation"><i class="fa fa-check"></i><b>12.5</b> Spatial Autocorrelation</a></li>
+<li class="chapter" data-level="12.6" data-path="residualanalysis.html"><a href="residualanalysis.html#Heteroscedasticity"><i class="fa fa-check"></i><b>12.6</b> Heteroscedasticity</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="lmer.html"><a href="lmer.html"><i class="fa fa-check"></i><b>13</b> Linear Mixed Effect Models</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="lmer.html"><a href="lmer.html#background-1"><i class="fa fa-check"></i><b>13.1</b> Background</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="lmer.html"><a href="lmer.html#why-mixed-effects-models"><i class="fa fa-check"></i><b>13.1.1</b> Why Mixed Effects Models?</a></li>
+<li class="chapter" data-level="13.1.2" data-path="lmer.html"><a href="lmer.html#random-factors-and-partial-pooling"><i class="fa fa-check"></i><b>13.1.2</b> Random Factors and Partial Pooling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="lmer.html"><a href="lmer.html#fitting-a-normal-linear-mixed-model-in-r"><i class="fa fa-check"></i><b>13.2</b> Fitting a normal linear mixed model in R</a></li>
+<li class="chapter" data-level="13.3" data-path="lmer.html"><a href="lmer.html#restricted-maximum-likelihood-estimation-reml"><i class="fa fa-check"></i><b>13.3</b> Restricted maximum likelihood estimation (REML)</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>14</b> Generalized linear models</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="glm.html"><a href="glm.html#introduction-2"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="glm.html"><a href="glm.html#bernoulli-model"><i class="fa fa-check"></i><b>14.2</b> Bernoulli model</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="glm.html"><a href="glm.html#background-2"><i class="fa fa-check"></i><b>14.2.1</b> Background</a></li>
+<li class="chapter" data-level="14.2.2" data-path="glm.html"><a href="glm.html#fitting-a-bernoulli-model-in-r"><i class="fa fa-check"></i><b>14.2.2</b> Fitting a Bernoulli model in R</a></li>
+<li class="chapter" data-level="14.2.3" data-path="glm.html"><a href="glm.html#assessing-model-assumptions-in-a-bernoulli-model"><i class="fa fa-check"></i><b>14.2.3</b> Assessing model assumptions in a Bernoulli model</a></li>
+<li class="chapter" data-level="14.2.4" data-path="glm.html"><a href="glm.html#visualising-the-results"><i class="fa fa-check"></i><b>14.2.4</b> Visualising the results</a></li>
+<li class="chapter" data-level="14.2.5" data-path="glm.html"><a href="glm.html#some-remarks"><i class="fa fa-check"></i><b>14.2.5</b> Some remarks</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="glm.html"><a href="glm.html#binomial-model"><i class="fa fa-check"></i><b>14.3</b> Binomial model</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="glm.html"><a href="glm.html#background-3"><i class="fa fa-check"></i><b>14.3.1</b> Background</a></li>
+<li class="chapter" data-level="14.3.2" data-path="glm.html"><a href="glm.html#fitting-a-binomial-model-in-r"><i class="fa fa-check"></i><b>14.3.2</b> Fitting a binomial model in R</a></li>
+<li class="chapter" data-level="14.3.3" data-path="glm.html"><a href="glm.html#assessing-assumptions-in-a-binomial-model"><i class="fa fa-check"></i><b>14.3.3</b> Assessing assumptions in a binomial model</a></li>
+<li class="chapter" data-level="14.3.4" data-path="glm.html"><a href="glm.html#visualising-the-results-1"><i class="fa fa-check"></i><b>14.3.4</b> Visualising the results</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="glm.html"><a href="glm.html#poisson-model"><i class="fa fa-check"></i><b>14.4</b> Poisson model</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="glm.html"><a href="glm.html#background-4"><i class="fa fa-check"></i><b>14.4.1</b> Background</a></li>
+<li class="chapter" data-level="14.4.2" data-path="glm.html"><a href="glm.html#fitting-a-poisson-model-in-r"><i class="fa fa-check"></i><b>14.4.2</b> Fitting a Poisson model in R</a></li>
+<li class="chapter" data-level="14.4.3" data-path="glm.html"><a href="glm.html#assessing-model-assumptions"><i class="fa fa-check"></i><b>14.4.3</b> Assessing model assumptions</a></li>
+<li class="chapter" data-level="14.4.4" data-path="glm.html"><a href="glm.html#visualising-results"><i class="fa fa-check"></i><b>14.4.4</b> Visualising results</a></li>
+<li class="chapter" data-level="14.4.5" data-path="glm.html"><a href="glm.html#modeling-rates-and-densities-poisson-model-with-an-offset"><i class="fa fa-check"></i><b>14.4.5</b> Modeling rates and densities: Poisson model with an offset</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="glmm.html"><a href="glmm.html"><i class="fa fa-check"></i><b>15</b> Generalized linear mixed models</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="glmm.html"><a href="glmm.html#introduction-3"><i class="fa fa-check"></i><b>15.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="glmm.html"><a href="glmm.html#binomial-mixed-model"><i class="fa fa-check"></i><b>15.1.1</b> Binomial Mixed Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="glmm.html"><a href="glmm.html#summary-2"><i class="fa fa-check"></i><b>15.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="modelchecking.html"><a href="modelchecking.html"><i class="fa fa-check"></i><b>16</b> Posterior predictive model checking</a></li>
+<li class="chapter" data-level="17" data-path="model_comparison.html"><a href="model_comparison.html"><i class="fa fa-check"></i><b>17</b> Model comparison and multimodel inference</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="model_comparison.html"><a href="model_comparison.html#when-and-why-we-compare-models-and-why-model-selection-is-difficult"><i class="fa fa-check"></i><b>17.1</b> When and why we compare models and why model selection is difficult</a></li>
+<li class="chapter" data-level="17.2" data-path="model_comparison.html"><a href="model_comparison.html#methods-for-model-commparison"><i class="fa fa-check"></i><b>17.2</b> Methods for model commparison</a>
+<ul>
+<li class="chapter" data-level="17.2.1" data-path="model_comparison.html"><a href="model_comparison.html#cross-validation"><i class="fa fa-check"></i><b>17.2.1</b> Cross-validation</a></li>
+<li class="chapter" data-level="17.2.2" data-path="model_comparison.html"><a href="model_comparison.html#information-criteria-akaike-information-citerion-and-widely-applicable-information-criterion"><i class="fa fa-check"></i><b>17.2.2</b> Information Criteria: Akaike information citerion and widely applicable information criterion</a></li>
+<li class="chapter" data-level="17.2.3" data-path="model_comparison.html"><a href="model_comparison.html#other-information-criteria"><i class="fa fa-check"></i><b>17.2.3</b> Other information criteria</a></li>
+<li class="chapter" data-level="17.2.4" data-path="model_comparison.html"><a href="model_comparison.html#bayes-factors-and-posterior-model-probabilities"><i class="fa fa-check"></i><b>17.2.4</b> Bayes factors and posterior model probabilities</a></li>
+<li class="chapter" data-level="17.2.5" data-path="model_comparison.html"><a href="model_comparison.html#model-based-methods-to-obtain-posterior-model-probabilities-and-inclusion-probabilities"><i class="fa fa-check"></i><b>17.2.5</b> Model-based methods to obtain posterior model probabilities and inclusion probabilities</a></li>
+<li class="chapter" data-level="17.2.6" data-path="model_comparison.html"><a href="model_comparison.html#least-absolute-shrinkage-and-selection-operator-lasso-and-ridge-regression"><i class="fa fa-check"></i><b>17.2.6</b> Least absolute shrinkage and selection operator (LASSO) and ridge regression</a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="model_comparison.html"><a href="model_comparison.html#multimodel-inference"><i class="fa fa-check"></i><b>17.3</b> Multimodel inference</a></li>
+<li class="chapter" data-level="17.4" data-path="model_comparison.html"><a href="model_comparison.html#which-method-to-choose-and-which-strategy-to-follow"><i class="fa fa-check"></i><b>17.4</b> Which method to choose and which strategy to follow?</a></li>
+<li class="chapter" data-level="17.5" data-path="model_comparison.html"><a href="model_comparison.html#further-reading-5"><i class="fa fa-check"></i><b>17.5</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>18</b> MCMC using Stan</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="stan.html"><a href="stan.html#background-6"><i class="fa fa-check"></i><b>18.1</b> Background</a></li>
+<li class="chapter" data-level="18.2" data-path="stan.html"><a href="stan.html#install-rstan"><i class="fa fa-check"></i><b>18.2</b> Install <code>rstan</code></a></li>
+<li class="chapter" data-level="18.3" data-path="stan.html"><a href="stan.html#firststanmod"><i class="fa fa-check"></i><b>18.3</b> Writing a Stan model</a></li>
+<li class="chapter" data-level="18.4" data-path="stan.html"><a href="stan.html#run-stan-from-r"><i class="fa fa-check"></i><b>18.4</b> Run Stan from R</a></li>
+<li class="chapter" data-level="" data-path="stan.html"><a href="stan.html#further-reading-6"><i class="fa fa-check"></i>Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="ridge_regression.html"><a href="ridge_regression.html"><i class="fa fa-check"></i><b>19</b> Ridge Regression</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ridge_regression.html"><a href="ridge_regression.html#introduction-4"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="SEM.html"><a href="SEM.html"><i class="fa fa-check"></i><b>20</b> Structural equation models</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="SEM.html"><a href="SEM.html#introduction-5"><i class="fa fa-check"></i><b>20.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="spatial_glmm.html"><a href="spatial_glmm.html"><i class="fa fa-check"></i><b>21</b> Modeling spatial data using GLMM</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="spatial_glmm.html"><a href="spatial_glmm.html#introduction-6"><i class="fa fa-check"></i><b>21.1</b> Introduction</a></li>
+<li class="chapter" data-level="21.2" data-path="spatial_glmm.html"><a href="spatial_glmm.html#summary-3"><i class="fa fa-check"></i><b>21.2</b> Summary</a></li>
+</ul></li>
+<li class="part"><span><b>III ECOLOGICAL MODELS</b></span></li>
+<li class="chapter" data-level="22" data-path="PART-III.html"><a href="PART-III.html"><i class="fa fa-check"></i><b>22</b> Introduction to PART III</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="PART-III.html"><a href="PART-III.html#model-notations"><i class="fa fa-check"></i><b>22.1</b> Model notations</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html"><i class="fa fa-check"></i><b>23</b> Zero-inflated Poisson Mixed Model</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#introduction-7"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
+<li class="chapter" data-level="23.2" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#example-data"><i class="fa fa-check"></i><b>23.2</b> Example data</a></li>
+<li class="chapter" data-level="23.3" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#model"><i class="fa fa-check"></i><b>23.3</b> Model</a></li>
+<li class="chapter" data-level="23.4" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#further-packages-and-readings"><i class="fa fa-check"></i><b>23.4</b> Further packages and readings$</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="dailynestsurv.html"><a href="dailynestsurv.html"><i class="fa fa-check"></i><b>24</b> Daily nest survival</a>
+<ul>
+<li class="chapter" data-level="24.1" data-path="dailynestsurv.html"><a href="dailynestsurv.html#background-7"><i class="fa fa-check"></i><b>24.1</b> Background</a></li>
+<li class="chapter" data-level="24.2" data-path="dailynestsurv.html"><a href="dailynestsurv.html#models-for-estimating-daily-nest-survival"><i class="fa fa-check"></i><b>24.2</b> Models for estimating daily nest survival</a></li>
+<li class="chapter" data-level="24.3" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model"><i class="fa fa-check"></i><b>24.3</b> Known fate model</a></li>
+<li class="chapter" data-level="24.4" data-path="dailynestsurv.html"><a href="dailynestsurv.html#dailynestsurvstan"><i class="fa fa-check"></i><b>24.4</b> The Stan model</a></li>
+<li class="chapter" data-level="24.5" data-path="dailynestsurv.html"><a href="dailynestsurv.html#prepare-data-and-run-stan"><i class="fa fa-check"></i><b>24.5</b> Prepare data and run Stan</a></li>
+<li class="chapter" data-level="24.6" data-path="dailynestsurv.html"><a href="dailynestsurv.html#check-convergence"><i class="fa fa-check"></i><b>24.6</b> Check convergence</a></li>
+<li class="chapter" data-level="24.7" data-path="dailynestsurv.html"><a href="dailynestsurv.html#look-at-results"><i class="fa fa-check"></i><b>24.7</b> Look at results</a></li>
+<li class="chapter" data-level="24.8" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model-for-irregular-nest-controls"><i class="fa fa-check"></i><b>24.8</b> Known fate model for irregular nest controls</a></li>
+<li class="chapter" data-level="" data-path="dailynestsurv.html"><a href="dailynestsurv.html#further-reading-7"><i class="fa fa-check"></i>Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html"><i class="fa fa-check"></i><b>25</b> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</a>
+<ul>
+<li class="chapter" data-level="25.1" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#introduction-8"><i class="fa fa-check"></i><b>25.1</b> Introduction</a></li>
+<li class="chapter" data-level="25.2" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#data-description"><i class="fa fa-check"></i><b>25.2</b> Data description</a></li>
+<li class="chapter" data-level="25.3" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#model-description"><i class="fa fa-check"></i><b>25.3</b> Model description</a></li>
+<li class="chapter" data-level="25.4" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#the-stan-code"><i class="fa fa-check"></i><b>25.4</b> The Stan code</a></li>
+<li class="chapter" data-level="25.5" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#call-stan-from-r-check-convergence-and-look-at-results"><i class="fa fa-check"></i><b>25.5</b> Call Stan from R, check convergence and look at results</a></li>
+</ul></li>
+<li class="chapter" data-level="26" data-path="samplesize.html"><a href="samplesize.html"><i class="fa fa-check"></i><b>26</b> What sample size?</a>
+<ul>
+<li class="chapter" data-level="26.1" data-path="samplesize.html"><a href="samplesize.html#introduction-9"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
+</ul></li>
+<li class="part"><span><b>IV APPENDICES</b></span></li>
+<li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
+<li class="divider"></li>
+</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian Data Analysis in Ecology with R and Stan</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bayesian_paradigm" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> The Bayesian paradigm and likelihood in a frequentist and Bayesian framework<a href="bayesian_paradigm.html#bayesian_paradigm" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<!-- fk: first draft 1.10.2024-->
+<div id="short-historical-overview" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Short historical overview<a href="bayesian_paradigm.html#short-historical-overview" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Reverend Thomas Bayes (1701 or 1702 - 1761) developed the Bayes theorem. Based on this theorem, he described how to obtain the probability of a hypothesis given an observation, that is, data. However, he was so worried whether it would be acceptable to apply his theory to real-world examples that he did not dare to publish it. His methods were only published posthumously <span class="citation">(<a href="referenzen.html#ref-Bayes.1763">Bayes 1763</a>)</span>. Without the help of computers, Bayes’ methods were applicable to just simple problems.<br />
+Much later, the concept of null hypothesis testing was introduced by
+Ronald A. Fisher (1890 - 1962) in his book Statistical Methods for Research Workers <span class="citation">(<a href="referenzen.html#ref-Fisher.1925">Fisher 1925</a>)</span> and many other publications. Egon Pearson (1895 - 1980) and others developed the frequentist statistical methods, which are based on the probability of the data given a null hypothesis. These methods are solvable for many simple and some moderately complex examples.<br />
+The rapidly improving capacity of computers in recent years now enables us to use Bayesian methods also for more (and even very) complex problems using simulation techniques <span class="citation">Gilks, Richardson, and Spiegelhalter (<a href="referenzen.html#ref-Gilks.1996">1996</a>)</span>.</p>
+</div>
+<div id="the-bayesian-way" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> The Bayesian way<a href="bayesian_paradigm.html#the-bayesian-way" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Bayesian methods use Bayes’ theorem to update prior knowledge about a parameter with information coming from the data to obtain posterior knowledge. The prior and posterior knowledge are mathematically described by a probability distribution (prior and posterior distributions of the parameter). Bayes’ theorem for discrete events says that the probability of event <span class="math inline">\(A\)</span> given event <span class="math inline">\(B\)</span> has occurred, <span class="math inline">\(P(A|B)\)</span>, equals the probability of event <span class="math inline">\(A\)</span>, <span class="math inline">\(P(A)\)</span>, times the probability of event <span class="math inline">\(B\)</span> conditional on <span class="math inline">\(A\)</span>, <span class="math inline">\(P(B|A)\)</span>, divided by the
+probability of event <span class="math inline">\(B\)</span>, <span class="math inline">\(P(B)\)</span>:
+<span class="math display">\[ P(A|B) = \frac{P(A)P(B|A)}{P(B)}\]</span>
+When using Bayes’ theorem for drawing inference from data, we are interested in the probability distribution of one or several parameters, <span class="math inline">\(\theta\)</span> (called “theta”), after having looked at the data <span class="math inline">\(y\)</span>, that is, the posterior distribution, <span class="math inline">\(p(\theta|y)\)</span>. To this end, Bayes’ theorem is reformulated for continuous parameters using probability distributions rather than probabilities for discrete
+events:
+<span class="math display">\[ p(\theta|y) = \frac{P(\theta)p(y|\theta)}{p(y)}\]</span>
+The <em>posterior distribution</em>, <span class="math inline">\(p(\theta|y)\)</span>, describes what we know about the parameter (or about the set of parameters), <span class="math inline">\(\theta\)</span>, after having looked at the data and given the prior knowledge and the model. The <em>prior distribution</em> of <span class="math inline">\(\theta\)</span>, <span class="math inline">\(p(\theta)\)</span>, describes what we know about <span class="math inline">\(\theta\)</span> before having looked at the data. This is often
+very little but it can include information from earlier studies. The probability of the data conditional on <span class="math inline">\(\theta\)</span>, <span class="math inline">\(p(y|\theta)\)</span>, is called <em>likelihood</em>.</p>
+<p>The word <em>likelihood</em> is used in Bayesian statistics with a slightly different meaning than it is used in frequentist statistics. The frequentist likelihood, <span class="math inline">\(L(\theta|y)\)</span>, is a relative measure for the probability of the observed data given specific parameter values. The likelihood is a number often close to zero. In contrast, Bayesians use likelihood for the density distribution of the data conditional on the parameters of a model. Thus, in Bayesian statistics the likelihood is a distribution (i.e., the area under the curve is 1) whereas in frequentist statistics it is a scalar.</p>
+<p>The prior probability of the data, <span class="math inline">\(p(y)\)</span>, equals the integral of <span class="math inline">\(p(y|\theta)p(\theta)\)</span> over all possible values of <span class="math inline">\(\theta\)</span>; thus <span class="math inline">\(p(y)\)</span> is a constant.</p>
+<p>The integral can be solved numerically only for a few simple cases. For this reason, Bayesian statistics were not widely applied before the computer age. Nowadays, a variety of different simulation algorithms exist that allow sampling from distributions that are only known to proportionality (e.g., <span class="citation">Gilks, Richardson, and Spiegelhalter (<a href="referenzen.html#ref-Gilks.1996">1996</a>)</span>). Dropping the term <span class="math inline">\(p(y)\)</span> in the Bayes theorem leads to a term that is proportional to the posterior distribution: <span class="math inline">\(p(\theta|y)\propto p(\theta)p(y|\theta)\)</span>. Simulation algorithms such as Markov chain Monte Carlo simulation (MCMC) can, therefore, sample from the posterior distribution without having to know <span class="math inline">\(p(y)\)</span>. A large enough sample of the posterior distribution can then be used to draw inference about the parameters of interest.</p>
+</div>
+<div id="likelihood" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Likelihood<a href="bayesian_paradigm.html#likelihood" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="theory" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> Theory<a href="bayesian_paradigm.html#theory" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In Bayesian statistics the likelihood is the probability
+distribution of the data given the model <span class="math inline">\(p(y|\theta)\)</span>, also called the predictive density. In contrast, frequentists use the likelihood as a relative measure of the probability of the data given a specific model (i.e., a model with specified parameter values). Often, we see the notation <span class="math inline">\(L(\theta|y) = p(y|\theta)\)</span> for thelikelihood of a model. Let’s look at an example. According to values that we found on the internet, black-tailed prairie dogs <em>Cynomys ludovicianus</em> weigh on average 1 kg with a standard deviation of 0.2 kg.</p>
+<p>Using these values, we construct a model for the weight of prairie dogs <span class="math inline">\(y_i \sim normal(\mu, \sigma)\)</span> with <span class="math inline">\(\mu\)</span> = 1 kg and <span class="math inline">\(\sigma\)</span> = 0.2 kg. We then go to the prairie and catch three prairie dogs. Their weights are 0.8, 1.2, and 1.1 kg. What is the likelihood of our model given this data? The likelihood is the product of the density function (the <a href="distributions.html#normdist">Gaussian function</a> with <span class="math inline">\(\mu\)</span> = 1 and <span class="math inline">\(\sigma\)</span> = 0.2) defined by the model and evaluated for each data point (Figure <a href="bayesian_paradigm.html#fig:gaussdistpd">9.1</a>).</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="bayesian_paradigm.html#cb42-1" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">0.8</span>, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>)<span class="sc">*</span><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">1.2</span>, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>)<span class="sc">*</span></span>
+<span id="cb42-2"><a href="bayesian_paradigm.html#cb42-2" tabindex="-1"></a><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">1.1</span>, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>)</span>
+<span id="cb42-3"><a href="bayesian_paradigm.html#cb42-3" tabindex="-1"></a>l</span></code></pre></div>
+<pre><code>## [1] 2.576671</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="bayesian_paradigm.html#cb44-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">2</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
+<span id="cb44-2"><a href="bayesian_paradigm.html#cb44-2" tabindex="-1"></a>dx <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>)</span>
+<span id="cb44-3"><a href="bayesian_paradigm.html#cb44-3" tabindex="-1"></a><span class="fu">plot</span>(x, dx, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab=</span><span class="st">&quot;Weight [kg]&quot;</span>)</span>
+<span id="cb44-4"><a href="bayesian_paradigm.html#cb44-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">1.1</span>, <span class="fl">1.2</span>)</span>
+<span id="cb44-5"><a href="bayesian_paradigm.html#cb44-5" tabindex="-1"></a><span class="fu">segments</span>(y, <span class="fu">dnorm</span>(y, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>), y, <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(y)))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:gaussdistpd"></span>
+<img src="2.01-bayesian_paradigm_files/figure-html/gaussdistpd-1.png" alt="Density function of a Gaussian (=normal) distribution with mean 1 kg and standard deviation 0.2 kg. The vertical lines indicate the three observations in the data. The curve has been produced using the function dnorm." width="672" />
+<p class="caption">
+Figure 9.1: Density function of a Gaussian (=normal) distribution with mean 1 kg and standard deviation 0.2 kg. The vertical lines indicate the three observations in the data. The curve has been produced using the function dnorm.
+</p>
+</div>
+<p>The likelihood (2.6) does not tell us much. But, another web page says that prairie dogs weigh on average 1.2 kg with a standard deviation of 0.4 kg. The likelihood for this alternative model is:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="bayesian_paradigm.html#cb45-1" tabindex="-1"></a>l2 <span class="ot">&lt;-</span><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">0.8</span>, <span class="at">mean=</span><span class="fl">1.2</span>, <span class="at">sd=</span><span class="fl">0.4</span>)<span class="sc">*</span><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">1.2</span>, <span class="at">mean=</span><span class="fl">1.2</span>, <span class="at">sd=</span><span class="fl">0.4</span>)<span class="sc">*</span></span>
+<span id="cb45-2"><a href="bayesian_paradigm.html#cb45-2" tabindex="-1"></a><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">1.1</span>, <span class="at">mean=</span><span class="fl">1.2</span>, <span class="at">sd=</span><span class="fl">0.4</span>)</span>
+<span id="cb45-3"><a href="bayesian_paradigm.html#cb45-3" tabindex="-1"></a>l2</span></code></pre></div>
+<pre><code>## [1] 0.5832185</code></pre>
+<p>Thus, the probability of observing the three weights (0.8, 1.2, and 1.1 kg) is four times larger given the first model than given the second model.<br />
+The normal density function is a function of <span class="math inline">\(y\)</span> with fixed parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span>. When we fix the data to value <span class="math inline">\(y\)</span> (i.e., we have a data file with <span class="math inline">\(n = 1\)</span>) and vary the parameter, we get the likelihood function given the data and we assume the normal distribution as our data model. When the data contain more than one observation, the likelihood function becomes a product of the normal density function for each observation.
+<span class="math display">\[ L(\mu, \sigma|y) = \prod_{i=1}^n p(y_i|\mu,\sigma) \]</span>
+We can insert the three observations into this function.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="bayesian_paradigm.html#cb47-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">1.2</span>, <span class="fl">1.1</span>)</span>
+<span id="cb47-2"><a href="bayesian_paradigm.html#cb47-2" tabindex="-1"></a>lf <span class="ot">&lt;-</span> <span class="cf">function</span>(mu, sigma) <span class="fu">prod</span>(<span class="fu">dnorm</span>(y, <span class="at">mean=</span>mu, <span class="at">sd=</span>sigma))</span></code></pre></div>
+<p>Applying the likelihood function to the model from the first web page, we get the following likelihood.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="bayesian_paradigm.html#cb48-1" tabindex="-1"></a><span class="fu">lf</span>(<span class="dv">1</span>, <span class="fl">0.2</span>)</span></code></pre></div>
+<pre><code>## [1] 2.576671</code></pre>
+</div>
+<div id="the-maximum-likelihood-method" class="section level3 hasAnchor" number="9.3.2">
+<h3><span class="header-section-number">9.3.2</span> The maximum likelihood method<a href="bayesian_paradigm.html#the-maximum-likelihood-method" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A common method of obtaining parameter estimates is the maximum likelihood method (ML). Specifically, we search for the parameter combination from the likelihood function for which the likelihood is maximized. Also in Bayesian statistics, ML is used to optimize algorithms that produce posterior distributions (e.g., in the function <code>sim</code>).</p>
+<p>To obtain ML estimates for the mean and standard deviation of the prairie dog weights, we calculate the likelihood function for many possible combinations of means and standard deviations and look for the pair of parameter values that is associated with the largest likelihood value.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="bayesian_paradigm.html#cb50-1" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.6</span>, <span class="fl">1.4</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
+<span id="cb50-2"><a href="bayesian_paradigm.html#cb50-2" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.6</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
+<span id="cb50-3"><a href="bayesian_paradigm.html#cb50-3" tabindex="-1"></a>lik <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">length</span>(mu), <span class="at">ncol=</span><span class="fu">length</span>(sigma))</span>
+<span id="cb50-4"><a href="bayesian_paradigm.html#cb50-4" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(mu)){</span>
+<span id="cb50-5"><a href="bayesian_paradigm.html#cb50-5" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sigma)){</span>
+<span id="cb50-6"><a href="bayesian_paradigm.html#cb50-6" tabindex="-1"></a>    lik[i,j] <span class="ot">&lt;-</span> <span class="fu">lf</span>(mu[i], sigma[j])</span>
+<span id="cb50-7"><a href="bayesian_paradigm.html#cb50-7" tabindex="-1"></a>  }</span>
+<span id="cb50-8"><a href="bayesian_paradigm.html#cb50-8" tabindex="-1"></a>}</span>
+<span id="cb50-9"><a href="bayesian_paradigm.html#cb50-9" tabindex="-1"></a><span class="fu">contour</span>(mu, sigma, lik, <span class="at">nlevels=</span><span class="dv">20</span>, <span class="at">xlab=</span><span class="fu">expression</span>(mu),</span>
+<span id="cb50-10"><a href="bayesian_paradigm.html#cb50-10" tabindex="-1"></a><span class="at">ylab=</span><span class="fu">expression</span>(sigma), <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.4</span>) </span>
+<span id="cb50-11"><a href="bayesian_paradigm.html#cb50-11" tabindex="-1"></a></span>
+<span id="cb50-12"><a href="bayesian_paradigm.html#cb50-12" tabindex="-1"></a><span class="co"># find the ML estimates</span></span>
+<span id="cb50-13"><a href="bayesian_paradigm.html#cb50-13" tabindex="-1"></a>neglf <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="sc">-</span><span class="fu">prod</span>(<span class="fu">dnorm</span>(y, x[<span class="dv">1</span>], x[<span class="dv">2</span>]))</span>
+<span id="cb50-14"><a href="bayesian_paradigm.html#cb50-14" tabindex="-1"></a>MLest <span class="ot">&lt;-</span> <span class="fu">optim</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>), neglf) <span class="co"># the vector with numbers are the initial values</span></span>
+<span id="cb50-15"><a href="bayesian_paradigm.html#cb50-15" tabindex="-1"></a></span>
+<span id="cb50-16"><a href="bayesian_paradigm.html#cb50-16" tabindex="-1"></a></span>
+<span id="cb50-17"><a href="bayesian_paradigm.html#cb50-17" tabindex="-1"></a><span class="fu">points</span>(MLest<span class="sc">$</span>par[<span class="dv">1</span>],MLest<span class="sc">$</span>par[<span class="dv">2</span>], <span class="at">pch=</span><span class="dv">13</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ml"></span>
+<img src="2.01-bayesian_paradigm_files/figure-html/ml-1.png" alt="Likelihood function for y=0.8, 1.2, 1.1 and the data model y~normal(mu, sigma). The cross indicates the highest likelihood value." width="672" />
+<p class="caption">
+Figure 9.2: Likelihood function for y=0.8, 1.2, 1.1 and the data model y~normal(mu, sigma). The cross indicates the highest likelihood value.
+</p>
+</div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="bayesian_paradigm.html#cb51-1" tabindex="-1"></a>MLest<span class="sc">$</span>par</span></code></pre></div>
+<pre><code>## [1] 1.0333330 0.1699668</code></pre>
+<p>We can get the <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> values that produce the largest likelihood by the function <code>optim</code>. This function finds the parameter values associated with the lowest value of a user defined function. Therefore, we define a function that calculates the negative likelihood.</p>
+<p>The combination of mean = 1.03 and standard deviation = 0.17 is associated with the highest likelihood value (the “mountain top” in Figure <a href="bayesian_paradigm.html#fig:ml">9.2</a>). In
+the case of models with more than two parameters, the likelihood function cannot be visualized easily. Often, some parameters are fixed to one value, for example, their ML estimate, to show how the likelihood function changes in relation to one or two other parameters.</p>
+<p>Likelihoods are often numbers very close to zero, especially when sample size is large. Then, likelihood values drop below the computing ability of computers (underflow). Therefore, the logarithm of the likelihood is often used. In addition, many standard optimizers are, in fact, minimizers such that the negative log-likelihood is used to find the ML estimates.</p>
+<p>The ratio between the likelihoods of two different models - for example, $L(= 1, = 0.2|y)/L(= 1.2, = 0.4)|y) = 2.58/0.58 = 4.42 - is called the
+likelihood ratio, and the difference in the logarithm of the likelihoods is called the log-likelihood ratio. It means, as just stated, that the probability of the data is 4.42 times higher given model 1 than given model 2 (note that with “model” we mean here a parameterized model - i.e., with specific values for the parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span>). From this, we may conclude that there is more support in the data for model 1 than for model 2.</p>
+<p>The likelihood function can be used to obtain confidence intervals for the ML estimates. If the “mountain” in Figure <a href="bayesian_paradigm.html#fig:ml">9.2</a> is very steep, the uncertainty about the ML estimate is low and the confidence intervals are small, whereas when the mountain has shallow slopes, the intervals will be larger. Such confidence intervals are called profile likelihood confidence intervals (e.g., <span class="citation">Venzon and Moolgavkar (<a href="referenzen.html#ref-Venzon.1988">1988</a>)</span>).</p>
+</div>
+</div>
+<div id="the-log-pointwise-predictive-density" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> The log pointwise predictive density<a href="bayesian_paradigm.html#the-log-pointwise-predictive-density" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Up to now, we have discussed likelihood in a frequentist framework because it is so important in statistics. Let’s now turn to the Bayesian framework. When Bayesians use the word likelihood, they mean the probability distribution of the data given the model, <span class="math inline">\(p(y|\theta)\)</span>. However, the log pointwise predictive density (lppd) could be seen as a Bayesian analog to the “frequentist” log-likelihood. The lppd is the log of the posterior density integrated over the posterior distribution of the model parameters and summed over all observations in the data:</p>
+<p><span class="math display">\[ lppd = \sum_{i=1}^{n}log\int p(y_i|\theta)p(\theta|y)d\theta \]</span>
+Based on simulated values from the joint posterior distribution of the model parameters, the log pointwise predictive density can be calculated in R as follows.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="bayesian_paradigm.html#cb53-1" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
+<span id="cb53-2"><a href="bayesian_paradigm.html#cb53-2" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span><span class="dv">1</span>) <span class="co"># fit model by LS method</span></span>
+<span id="cb53-3"><a href="bayesian_paradigm.html#cb53-3" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb53-4"><a href="bayesian_paradigm.html#cb53-4" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim) <span class="co"># simulate from posterior dist. of parameters</span></span></code></pre></div>
+<p>We prepare a matrix “pyi” to be filled up with the posterior densities for every observation <span class="math inline">\(y_i\)</span> and for each of the simulated sets of model parameters.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="bayesian_paradigm.html#cb54-1" tabindex="-1"></a>pyi <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">length</span>(y), <span class="at">ncol=</span>nsim)</span>
+<span id="cb54-2"><a href="bayesian_paradigm.html#cb54-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) pyi[,i] <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(y, <span class="at">mean=</span>bsim<span class="sc">@</span>coef[i,<span class="dv">1</span>], <span class="at">sd=</span>bsim<span class="sc">@</span>sigma[i])</span></code></pre></div>
+<p>Then, we average the posterior density values over all simulations (this corresponds to the integral in the previous formula). Finally, we calculate the sum of the logarithm of the averaged density values.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="bayesian_paradigm.html#cb55-1" tabindex="-1"></a>mpyi <span class="ot">&lt;-</span> <span class="fu">apply</span>(pyi, <span class="dv">1</span>, mean)</span>
+<span id="cb55-2"><a href="bayesian_paradigm.html#cb55-2" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">log</span>(mpyi))</span></code></pre></div>
+<pre><code>## [1] 0.2197509</code></pre>
+<p>The log posterior density can be used as a measure of model fit. We will come back to this measurement when we discuss cross-validation as a method for <a href="model_comparison.html#model_comparison">model comparison</a>.</p>
+</div>
+<div id="further-reading-4" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> Further reading<a href="bayesian_paradigm.html#further-reading-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><span class="citation">Link and Barker (<a href="referenzen.html#ref-Link.2010">2010</a>)</span> provide a very understandable chapter on the likelihood.</p>
+<p>Also, <span class="citation">K. P. Burnham and White (<a href="referenzen.html#ref-Burnham.2002">2002</a>)</span> give a thorough introduction to the likelihood and how it is used in the multimodel inference framework. An introduction to likelihood for mathematicians, but also quite helpful for biologists, is contained in <span class="citation">Dekking et al. (<a href="referenzen.html#ref-Dekking.2005">2005</a>)</span>.</p>
+<p><span class="citation">Davidson and Solomon (<a href="referenzen.html#ref-Davidson.1974">1974</a>)</span> discuss the relationship between LS and ML methods.</p>
+<p>The difference between the ML- and LS-estimates of the variance is explained in <span class="citation">J. Andrew Royle and Dorazio (<a href="referenzen.html#ref-Royle.2008b">2008</a>)</span>.</p>
+<p><span class="citation">A. Gelman et al. (<a href="referenzen.html#ref-Gelman2014">2014b</a>)</span> introduce the log predictive density and explain how it is computed (p. 167).</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="PART-II.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="priors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/2.01-bayesian_paradigm.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
