@@ -10,3 +10,13 @@ Bioacoustic analyses are nicely covered in a blog by [Marcelo Araya-Salas](https
 Like R, python is a high-level programming language that is used by many ecologists. The [reticulate](https://rstudio.github.io/reticulate/index.html) package provides a comprehensive set of tools for interoperability between Python and R. 
 
 
+
+$\begin{aligned}
+  & median = 
+  \begin{cases}
+  x_{(n+1)/2} & \quad \text{if } n \text{ is odd}\\
+  \frac{1}{2}(x_{n/2} + x_{n/2+1}) & \quad \text{if } n \text{ is even}
+  \end{cases}
+\end{aligned}$
+
+

@@ -51,3 +51,14 @@ h1.title {
   width:auto;
   font-size: 8px;
 }
+
+.greenbox {
+  padding: 1em;
+  background: lightgreen;
+  color: black;
+  border: 2px solid "green";
+  border-radius: 0px;
+}
+.center {
+  text-align: center;
+}

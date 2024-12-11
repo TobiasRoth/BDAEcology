@@ -1,53 +1,80 @@
 
 # Basics of statistics {#basics} 
-This chapter introduces some important terms useful for doing data analyses.
-It also introduces the essentials of the classical frequentist tests such as t-test. Even though we will not use nullhypotheses tests later [@Amrhein.2019], we introduce them here because we need to understand the scientific literature. For each classical test, we provide a suggestion how to present the statistical results without using null hypothesis tests. We further discuss some differences between the Bayesian and frequentist statistics. 
+This chapter introduces some important terms useful for doing data analyses. We introduce the Bayesian approach of data analyses. We also introduce the essentials of the classical frequentist tests (e.g. t-tests), which can be seen as an alternative to the Bayesian approach. Even though we will not use null hypotheses tests later [@Amrhein.2019], we introduce them here because we need to understand the scientific literature. For each classical test treated, we provide a suggestion how to present the statistical results without using null hypothesis tests. We further discuss some differences between the Bayesian and frequentist approach. 
 
 ## Variables and observations  
 
-Empirical research involves data collection. Data are collected by recording measurements of variables for observational units. An observational unit may be, for example, an individual, a plot, a time interval or a combination of those. The collection of all units ideally build a random sample of the entire population of units in that we are interested. The measurements (or observations) of the random sample are stored in a data table (sometimes also called data set, but a data set may include several data tables. A collection of data tables belonging to the same study or system is normally bundled and stored in a data base). A data table is a collection of variables (columns). Data tables normally are handled as objects of class `data.frame` in R. All measurements on a row in a data table belong to the same observational unit. The variables can be of different scales (Table \@ref(tab:scalemeasurement)). 
+Empirical research involves data collection. Data are collected by recording measurements of variables for observational units. An observational unit may be, for example, an individual, a plot, a time interval or a combination of those. The collection of all units ideally is a random sample of the entire population of units we are interested in. The measurements (or observations) of the random sample are stored in a data table (sometimes also called data set, but a data set may include several data tables. A collection of data tables belonging to the same study or system is normally bundled and stored in a data base <!-- as Louis I would delet this paranthesis -->). A data table is a collection of variables (columns). Data tables normally are handled as objects of class `data.frame` in R. All measurements on a row in a data table belong to the same observational unit. The variables can be of different scales (Table \@ref(tab:scalemeasurement)). 
 
+<br>
 
 Table: (\#tab:scalemeasurement) Scales of measurements
 
 Scale   | Examples          | Properties        | Coding in R | 
 :-------|:------------------|:------------------|:--------------------|
 Nominal | Sex, genotype, habitat  | Identity (values have a unique meaning) | `factor()` |
-Ordinal | Elevational zones | Identity and magnitude (values have an ordered relationship) | `ordered()` |
-Numeric | Discrete: counts;  continuous: body weight, wing length | Identity, magnitude, and intervals or ratios | `intgeger()` `numeric()` |
+Ordinal | Elevational zones | Identity and order (values have an ordered relationship) | `ordered()` |
+Numeric | Discrete: counts;  continuous: body weight, wing length | Identity, order, and interval | `intgeger()` `numeric()` |
+<br>
 
+Nominal and ordinal variables may also be called "categorical" variables.
 
-The aim of many studies is to describe how a variable of interest ($y$) is related to one or more predictor variables ($x$).  How these variables are named differs between authors. The y-variable is called "outcome variable", "response" or "dependent variable". The x-variables are called "predictors", "explanatory variables" or "independent variables". The choose of the terms for x and y is a matter of taste. We avoid the terms "dependent" and "independent" variables because often we do not know whether the variable $y$ is in fact depending on the $x$ variables and also, often the x-variables are not independent of each other. In this book, we try to use "outcome" and "predictor" variables because these terms sound most neutral to us in that they refer to how the statistical model is constructed rather than to a real life relationship. 
+The aim of many studies is to describe how a variable of interest ($y$; e.g. the time to build a nest) is related to one or more predictor variables ($x$; e.g. the sex of the bird, its age class, and the number of individuals in the colony - representing a nominal, ordinal and numeric predictor). Depending on the author, the y-variable is called "outcome variable", "response" or "dependent variable". The x-variables are called "predictors", "explanatory variables" or "independent variables". We avoid the terms "dependent" and "independent" variables because often we do not know whether the variable $y$ is in fact depending on the $x$ variables, and often the x-variables are not independent of each other. In this book, we try to use "outcome" and "predictor" variables because these terms sound most neutral to us in that they refer to how the statistical model is constructed rather than to an assumed real relationship.
+
+"Predictors" are often called a "covariable" if they are numeric (e.g. the colony size), and "factor" if they are nominal or ordinal (e.g. sex and age class). The characteristic of a factor is that it has defined values, called levels (in our example, the factor "sex" has the levels "female" and "male", the factor "age class" has the levels "juvenile", "immature" and "adult").
 
 
 ## Displaying and summarizing data
 
 ### Histogram
 
-While nominal and ordinal variables are summarized by giving the absolute number or the proportion of observations for each category, numeric variables normally are summarized by a location and a scatter statistics, such as the mean and the standard deviation or the median and some quantiles. The distribution of a numeric variable is graphically displayed in a histogram (Fig. \@ref(fig:histogram)).
+While nominal and ordinal variables can be summarized by giving the absolute number or the proportion of observations for each level (e.g number of females and number of males), numeric variables normally are summarized by a location and a scatter statistic, such as the mean and the standard deviation, or the median and some quantiles (see below). Hence, the location tells us around what value our observations lay and it is sometimes called the "measure of central tendency". The distribution of a numeric variable is graphically displayed in a histogram (Fig. \@ref(fig:histogram)).
 
-
-```{r histogram, echo=FALSE, fig.cap='Histogram of the length of ell of statistics course participants.'}
+```{r histogram, echo=FALSE, fig.width=4, fig.height=3,fig.cap='Histogram of the length of the forearm of statistics course participants.'}
 load("RData/datacourse.RData")
 
-hist(dat$ell, las=1, xlab="Lenght of ell [cm]", ylab="Number of students", main=NA,
+par(mar=c(4,4,1,1))
+hist(dat$ell, las=1, xlab="Lenght of forearm [cm]", ylab="Number of students", main=NA,
      col="tomato")
 box()
 
 ```
 
-To draw a histogram, the variable is displayed on the x-axis and the $x_i$-values are assigned to classes. The edges of the classes are called ‘breaks’. They can be set with the argument `breaks=` within the function `hist`. The values given in the `breaks=` argument must at least span the values of the variable. If the argument `breaks=` is not specified, R searches for breaks-values that make the histogram look smooth. The number of observations falling in each class is given on the y-axis. The y-axis can be re-scaled so that the area of the histogram equals 1 by setting the argument `density=TRUE`. In that case, the values on the y-axis correspond to the density values of a probability distribution (Chapter \@ref(distributions)).
+<br>
+
+:::: {.greenbox data-latex=""}
+::: {.center data-latex=""}
+Draw a histogram
+:::
+To draw a histogram, the variable is displayed on the x-axis and the observed values are assigned to classes. We use the function `hist`. Remember to call the helpfile, if you forgot how a function works and what arguments it has; for that, type `?hist` in the R console. There, we see that the edges of the classes can be set with the argument `breaks=`. The values given in the `breaks=` argument must at least span the values of the variable. If the argument `breaks=` is not specified, R searches for break-values that make the histogram look smooth. The number of observations falling in each class is given on the y-axis. The y-axis can be re-scaled so that the area of the histogram equals 1 by setting the argument `density=TRUE`. In that case, the values on the y-axis correspond to the density values of a probability distribution (chapter \@ref(distributions)). You can also save the result of the hist-function into an object, e.g. `t.hist <- hist(dat$ell)`, possibly with the argument `plot=F` (F for FALSE). Using `t.hist`, you may then fully customize your histogram (e.g. overlay two histograms with slightly shifted columns).
+::::  
+
 
 ### Location and scatter
 
-Location statistics are mean, median or mode. A common mean is the   
+Typical location statistics are mean, median or mode.
 
-- arithmetic mean: $\hat{\mu} = \bar{x} = \frac{i=1}{n} x_i \sum_{1}^{n}$ (R function `mean`),  
-where $n$ is the sample size. The parameter $\mu$ is the (unknown) true mean of the entire population of which the $1,...,n$ measurements are a random sample of. $\bar{x}$ is called the sample mean and used as an estimate for $\mu$. The $^$ above any parameter indicates that the parameter value is obtained from a sample and, therefore, it may be different from the true value. 
+There are different types of means, e.g.:
 
-The median is the 50% quantile. We find 50% of the measurements below and 50% above the median. If $x_1,..., x_n$ are the ordered measurements of a variable, then the median is:  
+- Arithmetic mean: $\hat{\mu} = \bar{x} = \frac{1}{n} \sum_{1}^{n}x_i$
 
-- median $= x_{(n+1)/2}$ for uneven $n$, and median $= \frac{1}{2}(x_{n/2} + x_{n/2+1})$ for even $n$ (R function `median`).
+(R function `mean`),  where $n$ is the sample size. The parameter $\mu$ is the (unknown) true mean of the entire population of which the $n$ measurements $x_i$ are a random sample of. $\bar{x}$ is called the sample mean and it is used as an estimate for $\mu$. The $^$ (the "hat") above any parameter indicates that the parameter value is obtained from a sample and, therefore, it may be different from the true value; it is an estimate of the true value.
+
+- Geometric mean: $\hat{\mu}_{geom} = \bar{x}_{geom} = \sqrt{\prod_{1}^{n}x_i}$
+
+(no R function in the base package, but you may use: `exp(mean(log(x)))`)
+
+The median is the 50% quantile: 50% of the measurements are below (and, hence 50% above) the median. If $x_1,..., x_n$ are the ordered measurements of a variable, then the median is:  
+
+- $\begin{aligned}
+  & median = 
+  \begin{cases}
+  x_{(n+1)/2} & \quad \text{if } n \text{ is odd}\\
+  \frac{1}{2}(x_{n/2} + x_{n/2+1}) & \quad \text{if } n \text{ is even}
+  \end{cases}
+\end{aligned}$
+
+(R function `median`)
 
 The mode is the value that is occurring with highest frequency or that has the highest density.
 
