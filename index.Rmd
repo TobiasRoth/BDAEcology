@@ -29,7 +29,7 @@ While we show the R-code behind most of the analyses, we sometimes choose not to
 This e-book is open so that everybody with a [GitHub](https://github.com) account can make comments and suggestions for improvement. Readers can contribute in two ways. One way is to add an [issue](https://github.com/TobiasRoth/BDAEcology/issues). The second way is to contribute content directly through the edit button at the top of the page (i.e. a symbol showing a pencil in a square). That button is linked to the R Markdown source file of each page. You can correct typos or add new text and then submit a [GitHub pull request](https://help.github.com/articles/about-pull-requests/). We try to respond to you as quickly as possible. We are looking forward to your contribution!
 
 ## Acknowledgments {-}
-We thank the amazing community of people behind the open source [R project](https://cran.r-project.org/). Among the packages we use most are arm [@Gelman.2022], rstanarm [@Goodrich2023], rstan [mc-stan.org](https://mc-stan.org) and brms [@Burkner.2017], and [bookdown](https://bookdown.org/yihui/bookdown/) to write this book. 
+We thank the amazing community of people behind the open source [R project](https://cran.r-project.org/). Among the packages we use most are arm [@Gelman.2022], rstanarm [@Goodrich.2023], rstan [mc-stan.org](https://mc-stan.org) and brms [@Burkner.2017], and [bookdown](https://bookdown.org/yihui/bookdown/) to write this book. 
 We thank our students, collaborators and collegues who introduced us to new techniques and software, reported updates and gave feedback on earlier versions of the book. Among many others, we thank Carole Niffenegger, Martin Küblbeck, Ruben Garcia, [... to be continued]
 
 
