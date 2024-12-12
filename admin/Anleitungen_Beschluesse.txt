@@ -1,8 +1,0 @@
-
-
-# Datenfiles werden, wenn möglich, im Package blmeco abgelegt
-
-# Grafiken: ggplot für Standardplots, base für spezielle Plots
-
-# Referenzen: Aus References_fk.bib (aus Citavi fk) verwenden. Neue Referenzen in References_neu.bib 
-
