@@ -4,7 +4,7 @@ This chapter introduces some important terms useful for doing data analyses. We 
 
 ## Variables and observations  
 
-Empirical research involves data collection. Data are collected by recording measurements of variables for observational units. An observational unit may be, for example, an individual, a plot, a time interval or a combination of those. The collection of all units ideally is a random sample of the entire population of units we are interested in. The measurements (or observations) of the random sample are stored in a data table (sometimes also called data set, but a data set may include several data tables. A collection of data tables belonging to the same study or system is normally bundled and stored in a data base <!-- as Louis I would delet this paranthesis -->). A data table is a collection of variables (columns). Data tables normally are handled as objects of class `data.frame` in R. All measurements on a row in a data table belong to the same observational unit. The variables can be of different scales (Table \@ref(tab:scalemeasurement)). 
+Empirical research involves data collection. Data are collected by recording measurements of variables for observational units. An observational unit may be, for example, an individual, a plot, a time interval or a combination of those. The collection of all units ideally is a random sample of the entire population of units we are interested in. The measurements (or observations) of the random sample are stored in a data table. A data table is a collection of variables (columns). Data tables normally are handled as objects of class `data.frame` in R. All measurements on a row in a data table belong to the same observational unit. The variables can be of different scales (Table \@ref(tab:scalemeasurement)). 
 
 <br>
 
@@ -67,7 +67,7 @@ There are different types of means, e.g.:
 The median is the 50% quantile: 50% of the measurements are below (and, hence 50% above) the median. If $x_1,..., x_n$ are the ordered measurements of a variable, then the median is:  
 
 - $\begin{aligned}
-  & median = 
+  & Median = 
   \begin{cases}
   x_{(n+1)/2} & \quad \text{if } n \text{ is odd}\\
   \frac{1}{2}(x_{n/2} + x_{n/2+1}) & \quad \text{if } n \text{ is even}
@@ -78,27 +78,32 @@ The median is the 50% quantile: 50% of the measurements are below (and, hence 50
 
 The mode is the value that is occurring with highest frequency or that has the highest density.
 
-Scatter also is called spread, scale or variance. Variance parameters describe how far away from the location parameter single observations can be found, or how the measurements are scattered around their mean. The variance is defined as the average squared difference between the observations and the mean:  
+Scatter is also called spread, scale or variance. It describes how far away from the location parameter single observations can be found, or how the measurements are scattered around their mean. The variance is defined as the average squared difference between the observations and the mean:  
 
-- variance $\hat{\sigma^2} = s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2$    
-The term $(n-1)$ is called the degrees of freedom. It is used in the denominator of the variance formula instead of $n$ to prevent underestimating the variance. Because $\bar{x}$ is in average closer to $x_i$ than the unknown true mean $\mu$ would be, the variance would be underestimated if $n$ is used in the denominator. 
+- Variance $\hat{\sigma^2} = s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2$
+
+(R function `var`). The term $(n-1)$ is called the degrees of freedom. It is used in the denominator of the variance formula instead of $n$ to prevent underestimating the (true) variance - remember that the $x_i$ are a sample of the population we are interested in, and $\hat{\sigma^2}$ is used as an estimate of the true variance $\sigma^2$ of this population. Because $\bar{x}$ is in average closer to $x_i$ than the unknown true mean $\mu$ would be, the variance would be underestimated if $n$ is used in the denominator. 
 
 <!-- <font size="1"> The maximum likelihood estimate of the variance corresponds to the variance formula using $n$ instead of $n-1$ in the denominator, see, e.g., @Royle.2008b.</font> -->
 
 The variance is used to compare the degree of scatter among different groups. However, its values are difficult to interpret because of the squared unit. Therefore, the square root of the variance, the standard deviation is normally reported:
       
-- standard deviation $\hat{\sigma} = s = \sqrt{s^2}$  (R Function `sd`) 
+- Standard deviation $\hat{\sigma} = s = \sqrt{s^2}$
 
-The standard deviation is approximately the average deviation of an observation from the sample mean. In the case of a [normal distribution](#normdist), about two thirds (68%) of the data are expected within one standard deviation around the mean.
+(R Function `sd`). The standard deviation is approximately the average deviation of an observation from the sample mean. In the case of a [normal distribution](#normdist), about two thirds (68%) of the data are within one standard deviation around the mean, and 95% within two standard deviations (more precisely within 1.96 SD).
 
-The variance and standard deviation each describe the scatter with a single value. Thus, we have to assume that the observations are scattered symmetrically around their mean in order to get a picture of the distribution of the measurements. When the measurements are spread asymmetrically (skewed distribution), then it may be more precise to describe the scatter with more than one value. Such statistics could be quantiles from the lower and upper tail of the data. 
+Sometimes, the inverse of the variance is used, called precision:
 
-Quantiles inform us about both location and spread of a distribution. The $p$th-quantile is the value with the property that a proportion $p$ of all values are less than or equal to the value of the quantile. The median is the 50% quantile. The 25% quantile and the 75% quantile are also called the lower and upper quartiles, respectively. The range between the 25% and the 75% quartiles is called the interquartile range. This range includes 50% of the distribution and is also used as a measure of scatter. The R function `quantile` extracts sample quantiles. The median, the quartiles, and the interquartile range can be graphically displayed using box and-whisker plots (boxplots in short, R function `boxplot`). The horizontal fat bars are the medians (Fig. \@ref(fig:boxplot)). The boxes mark the interquartile range. The whiskers reach out to the last observation within 1.5 times the interquartile range from the quartile. Circles mark observations beyond 1.5 times the interquartile range from the quartile.
+- Precision $\hat{p} = \frac{1}{\sigma^2}$
 
-```{r boxplot, fig.cap="Boxplot of the length of ell of statistics course participants who are or ar not owner of a car."}
-par(mar=c(5,4,1,1))
-boxplot(ell~car, data=dat, las=1, ylab="Lenght of ell [cm]",
-col="tomato", xaxt="n")
+The variance and standard deviation each describe the scatter with a single value. Thus, we have to assume that the observations are scattered symmetrically around their mean in order to get a picture of the distribution of the measurements. When the measurements are spread asymmetrically (skewed distribution), then it may be more useful to describe the scatter with more than one value. Such statistics can be quantiles from the lower and upper tail of the data. 
+
+Quantiles inform us about both location and spread of a distribution. The $p$th-quantile is the value with the property that the proportion $p$ of all values are less than or equal to the value of the quantile. The median is the 50% quantile. The 25% quantile and the 75% quantiles are also called the lower and upper quartiles, respectively. The range between the 25% and the 75% quartiles is called the interquartile range. This range includes 50% of the (central part of the) distribution and is also a measure of scatter. The R function `quantile` extracts sample quantiles. The median, the quartiles, and the interquartile range can be graphically displayed using box-and-whisker plots (boxplots in short, R function `boxplot`). The horizontal fat bar is the median (Fig. \@ref(fig:boxplot)). The box marks the interquartile range. The whiskers reach out to the last observation within 1.5 times the interquartile range from the quartile. Circles mark observations beyond the whiskers.
+
+```{r boxplot, echo=F, fig.width=4, fig.height=3,  fig.cap="Boxplot of the length of forearm of statistics course participants who own car or not."}
+par(mar=c(4,4,1,1))
+boxplot(ell~car, data=dat, las=1, ylab="Lenght of forearm [cm]",
+col="tomato", xaxt="n", xlab="")
 axis(1, at=c(1,2), labels=c("Not owing a car", "Car owner"))
 n <- table(dat$car)
 axis(1, at=c(1,2), labels=paste("n=", n, sep=""), mgp=c(3,2, 0))
@@ -106,32 +111,94 @@ axis(1, at=c(1,2), labels=paste("n=", n, sep=""), mgp=c(3,2, 0))
 
 The boxplot is an appealing tool for comparing location, variance and distribution of measurements among groups.
 
+A value that is far away from the distribution - such that it seems not to belong to the distribution - is called an outlier. It is not always clear whether an observation at the edge of a distribution should be considered an outlier or not, and how to deal with it. A first step is to check whether it could be due to a data entry error. Then, analyses may be done without and with the outlier(s) to see whether that has an effect on our conclusions. If you omit outliers, you must report and justify this. Note that median and interquartile range are less affected by outliers than mean and standard deviation.
+
+To summarize: For symmetric distributions, mean and standard deviation (SD) area meaningful statistics to describe the distribution (Fig. \@ref(fig:locationScatter), left). Mean and median are identical. The more skewed a distribution is, the more different are mean and median. Mean $\pm$1 SD becomes flawed as it suggests symmetry that does not exist, and its end may even go beyond the distribution (e.g. below the minimum in Fig. \@ref(fig:locationScatter), right). For skewed distributions, median and interquartile range are more informative.
+
+```{r locationScatter, echo=F, fig.width=8, fig.height=3.5,  fig.cap="A symmetric and a skewed distribution with the corresponding mean (dot, with $\\pm$1 SD) and median (triangle, with interquartile range)."}
+par(mfrow=c(1,2),mar=c(1,1,3,1))
+set.seed(8)
+d.sym <- rnorm(500)
+d.asym <- rgamma(500,0.5)
+hist(d.sym, las=1, ylab="", col="tomato", xaxt="n", xlab="", main="", yaxt="n")
+t.y <- par("usr")[4] + diff(par("usr")[c(3,4)])*c(0.03,0.08)  # find y-position for mean and median
+segments(mean(d.sym)-sd(d.sym),t.y[1],mean(d.sym)+sd(d.sym),t.y[1], xpd=NA, lwd=2)   # xpd=NA allows plotting in the margins
+points(mean(d.sym),t.y[1],pch=16,xpd=NA)
+segments(quantile(d.sym,0.25),t.y[2],quantile(d.sym,0.75),t.y[2], xpd=NA, lwd=2)
+points(median(d.sym),t.y[2],pch=17,xpd=NA)
+
+hist(d.asym, las=1, ylab="", col="gold", xaxt="n", xlab="", main="", yaxt="n")
+t.y <- par("usr")[4] + diff(par("usr")[c(3,4)])*c(0.03,0.08)  # find y-position for mean and median
+segments(mean(d.asym)-sd(d.asym),t.y[1],mean(d.asym)+sd(d.asym),t.y[1], xpd=NA, lwd=2)   # xpd=NA allows plotting in the margins
+points(mean(d.asym),t.y[1],pch=16,xpd=NA)
+segments(quantile(d.asym,0.25),t.y[2],quantile(d.asym,0.75),t.y[2], xpd=NA, lwd=2)
+points(median(d.asym),t.y[2],pch=17,xpd=NA)
+
+```
+
+
 ### Correlations
 
 A correlation measures the strength with which characteristics of two variables are associated with each other (co-occur). If both variables are numeric, we can visualize the correlation using a scatterplot.
 
-```{r scatterplot, fig.cap="Scatterplot of the length of ell and the comfort temperature of statistics course participants."}  
-par(mar=c(5,4,1,1))
-plot(temp~ell, data=dat, las=1, xlab="Lenght of ell [cm]",
-ylab="Comfort temperature [°C]",
-pch=16)
+```{r scatterplot, echo=F, fig.width=4, fig.height=3, fig.cap="Scatterplot of the length of forewarm and the comfort temperature of statistics course participants."}  
+par(mar=c(4,4,1,1))
+plot(temp~ell, data=dat, las=1, xlab="Lenght of forearm [cm]",
+ylab="Comfort temperature [°C]", pch=16)
 ```
   
 The covariance between variable $x$ and $y$ is defined as:
   
-- covariance $q = \frac{1}{n-1}\sum_{i=1}^{n}((x_i-\bar{x})*(y_i-\bar{y}))$  (R function `cov`)
+- Covariance $q = \frac{1}{n-1}\sum_{i=1}^{n}((x_i-\bar{x})*(y_i-\bar{y}))$
 
-As for the variance, also the units of the covariance are sqared and therefore covariance values are difficult to interpret. A standardized covariance is the Pearson correlation coefficient:
+(R function `cov`), with $\bar{x}$ and $\bar{y}$ being the means of $x$ and $y$. As for the variance, the units of the covariance are sqared and, therefore, covariance values are difficult to interpret. A standardized covariance is the Pearson correlation coefficient:
 
-  
-- Pearson correlation coefficient: $r=\frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2\sum_{i=1}^{n}(y_i-\bar{y})^2}}$ (R function `cor`)
+  - Pearson correlation coefficient: $r=\frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2\sum_{i=1}^{n}(y_i-\bar{y})^2}}$
 
-Means, variances, standard deviations, covariances and correlations are sensible for outliers. Single observations containing extreme values normally have a overproportional influence on these statistics. When outliers are present in the data, we may prefer a more robust correlation measure such as the Spearman correlation or Kendall’s tau. Both are based on the ranks of the measurements instead of the measurements themselves. 
+(R function `cor`)
+
+Mean, variance, standard deviation, covariance and correlation are sensitive to outliers. Single observations with extreme values normally have a disproportionately high influence on these statistics. When outliers are present in the data, we may prefer a more robust correlation measure such as the Spearman correlation or Kendall’s tau. Both are based on the ranks of the measurements instead of the measurements themselves. The rank is simply the rank of each observation when these are sorted. The function `rank` ranks values, with different methods to deal with ties (see the helpfile using `?rank`).
+
+- Spearman correlation coefficient: correlation between rank(x) and rank(y), i.e. $r_s=\frac{\sum_{i=1}^{n}(R_{x_i}-\bar{R_x})(R_{y_i}-\bar{R_y})}{\sqrt{\sum_{i=1}^{n}(R_{x_i}-\bar{R_x})^2\sum_{i=1}^{n}(R_{y_i}-\bar{R_y})^2}}$
+
+(R function `cor(x,y, method="spearman")`), with $R_x$ being the rank of observation $x$ among all $x$ observations, and $\bar{R_x}$ the mean of the ranks of $x$.
+
+- Kendall's tau: $\tau = 1-\frac{4I}{(n(n-1))}$, where $I$ = number of $(i,k)$ for which $(x_i < x_k)$ & $(y_i > y_k)$ or vice versa, and $(i,k)$ has all pairs of observations with $k>i$.
+
+(R function `cor(x,y, method="kendall")`). $I$ counts the number of observation pairs that are "disconcordant", i.e. where the ranking of the measurements of the two data points is not the same for the both variables. The more such discordant pairs, the less the correlation.
+
+Figure \@ref(fig:correlations) illustrates that the correlation $q$ is larger with more data points (B vs. A) and steeper relationships (C vs. D). Pearson correlation $r$, Spearman correlation $r_s$ and Kendall's $\tau$ are always 1 when dots are in line (A-D), or -1 when the line descends (D), in which case $q$ is negative, too. The outlier in E has a strong effect on $r$, but much less on $r_s$ and $\tau$. F shows a more real world example. $q$ can have any value from $-\infty$ to $\infty$, while $r$, $r_s$ and $\tau$ are bound between -1 and 1. If the dots are completely horizontal (not shown), $q$ is 0 and the other three measures of correlation are $NA$, i.e. not defined.
 
 
-- Spearman correlation coefficient: correlation between rank(x) and rank(y) (R function `cor(x,y, method="spearman")`)  
+```{r correlations, echo=F, fig.width=8, fig.height=5, fig.cap="Covariance, Pearson correlation, Spearman correlation, and Kendall's tau for different patterns of x-y-data."}  
+cplot <- function(x,y) {
+  plot(t.x, t.y, xlab="", ylab="", xaxt="n", yaxt="n", pch=16, xlim=c(0,10),ylim=c(0,10))
+  legend("topleft", bty="n", legend=c(paste("q =",round(cov(t.x,t.y),3)),
+                                      paste("r =",round(cor(t.x,t.y),3)),
+                                      paste("r_s =",round(cor(t.x,t.y,method="spearman"),3)),
+                                      paste("tau =",round(cor(t.x,t.y,method="kendall"),3))))
+}
 
-- Kendall's tau: $\tau = 1-\frac{4I}{(n(n-1))}$, where $I$ = number of pairs $(i,k)$ for which $(x_i < x_k)$ & $(y_i > y_k)$ or viceversa. (R function `cor(x,y, method="kendall")`) 
+par(mfrow=c(2,3),mar=c(1,1,1,1))
+t.x <- 2:6; t.y <- 2:6
+cplot(t.x); legend("topright",legend="A",bty="n", text.font=2)
+t.x <- 1:8; t.y <- 1:8
+cplot(t.x); legend("topright",legend="B",bty="n", text.font=2)
+t.x <- 2:6; t.y <- t.x/2
+cplot(t.x); legend("topright",legend="C",bty="n", text.font=2)
+t.x <- 2:6; t.y <- 5-t.x/2
+cplot(t.x); legend("topright",legend="D",bty="n", text.font=2)
+t.x <- 2:8; t.y <- c(c(1.4,1.2,1.3,1.0,1.33,1.22),10)
+cplot(t.x); legend("topright",legend="E",bty="n", text.font=2)
+set.seed(8)
+t.x <- runif(20,2,10); t.y <- rnorm(length(t.x),0.5*t.x,0.5)
+cplot(t.x); legend("topright",legend="F",bty="n", text.font=2)
+# t.x <- 2:6; t.y <- rep(1,length(t.x))
+# cplot(t.x)   # not plotted, but q = 0 and the other 3 are NA
+```
+
+
+For nominal variables, covariance and the above presented correlations cannot be calculated and would not be meaningful. But nominal variables may also be correlated or not - generally, we talk of "balanced" data if they are uncorrelated and "unbalanced" data otherwise. Measures of two nominal variables can be aggregated in a crosstabulation, e.g. the number of birds observed per combination of sex (male or female) and age (juvenile, immature or adult). In this table, there are 6 cells, and if there is the same number of males and females for each age class (and, thereby, also the same number per age class for both sexes), the data is balanced, i.e. sex and age are uncorrelated. The more the 6 numbers deviate from this, the more unbalanced the data is regarding sex and age. The $\chi^2$-value is a measure of this balancedness, with a value of 0 for perfect balanced data, and increasingly larger values for less balanced data (also dependent on the size of the crosstabulation).
 
 
 ### Principal components analyses PCA

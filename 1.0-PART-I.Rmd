@@ -7,10 +7,10 @@ knitr::include_graphics('images/part_I.jpg', dpi = 150)
 
 ------
 
-In this first part, we present some foundations of statistics and data analysis, and R-specific issues that we regularly encounter during data analyses. This is also a commented collection of R-code that we documented for our own work. We hope this might be useful also for other readers.
+In this first part, we present some fundamental material of statistics and data analysis, and R-specific issues that we regularly encounter during data analyses. This is also a commented collection of R-code that we documented for our own work. We hope this might be useful also for other readers.
 
 
 ## Further reading
-- [An Introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf) is an introductionn and manual for basic R usage.
+- [An Introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf) is an introduction and manual for basic R usage.
 - [R for Data Science](https://r4ds.hadley.nz/spreadsheets): Introduces the tidyverse framework, explains how to get data into R, get it into the most useful structure, transform it, visualise it and model it.
 
