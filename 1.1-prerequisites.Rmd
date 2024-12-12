@@ -270,31 +270,28 @@ As stated, PCA can be used to generate a lower-dimensional representation of mul
 
 > There is never a "yes-or-no" answer,  
 > there will always be uncertainty  
-Amrhein (2017)[https://peerj.com/preprints/26857]
+[Amrhein (2017)](https://peerj.com/preprints/26857)
 
-The decision whether an effect is important or not cannot not be done based on data alone. For making a decision we should, beside the data, carefully consider the consequences of each decision, the aims we would like to achieve, and the risk, i.e. how bad it is to make the wrong decision. Structured decision making or decision analyses provide methods to combine consequences of decisions, objectives of different stakeholders and risk attitudes of decision makers to make optimal decisions [@Hemming2022, Runge2020]. In most data analyses, particularly in basic research and when working on case studies, we normally do not consider consequences of decisions. However, the results will be more useful when presented in a way that other scientists can use them for a meta-analysis, or stakeholders and politicians can use them for making better decisions. Useful results always include information on the size of a parameter of interest, e.g. an effect of a drug or an average survival, together with an uncertainty measure.   
+The decision whether an effect is important or not cannot be based on data alone. For making a decision, we should, beside the data, carefully consider the consequences of each decision, the aims we would like to achieve, and the risk, i.e. how bad it is to make the wrong decision. Structured decision making or decision analyses provide methods to combine consequences of decisions, objectives of different stakeholders, and risk attitudes of decision makers to make optimal decisions [@Hemming.2022, @Runge.2020]. In most data analyses, particularly in basic research and when working on case studies, we normally do not consider consequences of decisions. However, the results will be more useful when presented in a way that other scientists can use them for a meta-analysis (including structured decision making), or stakeholders and politicians can use them for making better decisions. Results useful for this must include information on the size of a parameter of interest, such as the effect of a drug or an average survival, together with an uncertainty measure.
 
-Therefore, statistics is describing patterns of the process that presumably has generated the data and quantifying the uncertainty of the described patterns that is due to the fact that the data is just a random sample from the larger population we would like to know the patterns of. 
+Therefore, inferential statistics aims to describe the process that presumably has generated the data, and it quantifies the uncertainty of the described process that is due to the fact that the data is just a random sample from the larger population we would like to know the process of. In other words: Using regression modelling, we find patterns in our data, and if we make good models and careful ecological reasoning, we can make an educated guess about the underlying process.
 
 Quantification of uncertainty is only possible if:  
 1. the mechanisms that generated the data are known  
 2. the observations are a random sample from the population of interest  
 
-Most studies aim at understanding the mechanisms that generated the data, thus they are most likely not known beforehand. To overcome that problem, we construct models, e.g. statistical models, that are (strong) abstractions of the data generating process. And we report the model assumptions. All uncertainty measures are conditional on the model we used to analyze the data, i.e., they are only reliable, if the model describes the data generating process realistically. Because most statistical models do not describe the data generating process well, the true uncertainty almost always is much higher than the one we report.  
-In order to obtain a random sample from the population under study, a good study design is a prerequisite.
+Most studies aim at understanding the mechanisms that generated the data, thus they are generally not known beforehand. To overcome that problem, we construct models, e.g. statistical models, that are (strong) abstractions of the data generating process. And we report the model assumptions. All uncertainty measures are conditional on the model we used to analyze the data, i.e., they are only reliable if the model describes the data generating process realistically. Because statistical models essentially never describe the data generating process perfectly, the true uncertainty almost always is (much) higher than the one we report.  
 
-To illustrate how inference about a big population is drawn from a small sample, we here use simulated data. The advantage of using simulated data is that the mechanism that generated the data is known as well as the big population.  
+We can only make inference about the population under study if we have a random sample from this population. In order to obtain a random sample, a good study design is a prerequisite. To illustrate how inference about a big population is drawn from a small sample, we here use simulated data. The advantage of using simulated data is that the mechanism that generated the data is known, and we can play around with a big population.  
 
-Imagine there are 300000 PhD students on the world and we would like to know how many statistics courses they have taken in average before they started their PhD (Fig. \@ref(fig:histtruesample)). We use random number generators (`rpois` and `rgamma`) to simulate for each of the 300000 virtual students a number. We here use these 300000 numbers as the big population that in real life we almost never can sample in total. Normally, we know the number of courses students have taken just for a small sample of students. To simulate that situation we draw 12 numbers at random from the 300000 (R function `sample`). Then, we estimate the average number of statistics courses students take before they start a PhD from the sample of 12 students and we compare that mean to the true mean of the 300000 students. 
+Imagine there are 300 000 PhD students in the world and we would like to know how many statistics courses they have taken before they started their PhD on average (Fig. \@ref(fig:histtruesample)). We use random number generators (`rpois` and `rgamma`) to simulate a number of courses for each of the 300 000 virtual students. We use these 300$\,$000 as the big population that in real life we almost never can sample in total. Normally, we only have values for a small sample of students. To simulate that situation we draw 12 numbers at random from the 300 000 (R function `sample`). Then, we estimate the average number of pre-PhD courses from the sample of 12 students, and we compare that *sample mean* with the *true mean* of the 300 000 students. 
 
 ```{r}
 # simulate the virtual true population
 set.seed(235325)   # set seed for random number generator
 
-# simulate fake data of the whole population
-# using an overdispersed Poisson distribution,
-# i.e. a Poisson distribution of whicht the mean
-# has a gamma distribution
+# simulate fake data of the whole population using an overdispersed Poisson 
+# distribution, i.e. a Poisson distribution whose mean has a gamma distribution
 
 statscourses <- rpois(300000, rgamma(300000, 2, 3))  
 
@@ -304,14 +301,14 @@ y <- sample(statscourses, 12, replace=FALSE)
 ```
 
 
-```{r histtruesample, fig.cap='Histogram of the number of statistics courses of 300000 virtual PhD students have taken before their PhD started. The rugs on the x-axis indicate the random sample of 12 out of the 300000 students. The black vertical line indicates the mean of the 300000 students (true mean) and the blue line indicates the mean of the sample (sample mean).', echo=FALSE}
+```{r histtruesample, echo=F, fig.width=4.5, fig.height=3.5, fig.cap='Histogram of the number of statistics courses that 300000 virtual PhD students have taken before their PhD started. The rug (small ticks) on the x-axis shows the random sample of 12 drawn from the 300000 students. The black vertical line indicates the mean of the 300000 students (true mean) and the blue line indicates the mean of the sample (sample mean).', echo=FALSE}
 par(mar=c(4,5,1,1))
 # draw a histogram of the 300000 students
 hist(statscourses, breaks=seq(-0.5, 10.5, by=1), main=NA,
-     xlab="Number of statistics courses", ylab="Number of students") 
+     xlab="Number of statistics courses", ylab="Number of students", ylim=c(-5000,170000)) 
 box(bty="l")
 # add the sample 
-rug(jitter(y))                            
+rug(jitter(y), lwd=2)
 # add the mean of the sample
 abline(v=mean(y), col="blue", lwd=2)   
 # add the true mean of the population
