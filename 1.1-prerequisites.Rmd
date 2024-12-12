@@ -40,7 +40,6 @@ box()
 
 ```
 
-<br>
 
 :::: {.greenbox data-latex=""}
 ::: {.center data-latex=""}
@@ -115,7 +114,7 @@ A value that is far away from the distribution - such that it seems not to belon
 
 To summarize: For symmetric distributions, mean and standard deviation (SD) area meaningful statistics to describe the distribution (Fig. \@ref(fig:locationScatter), left). Mean and median are identical. The more skewed a distribution is, the more different are mean and median. Mean $\pm$1 SD becomes flawed as it suggests symmetry that does not exist, and its end may even go beyond the distribution (e.g. below the minimum in Fig. \@ref(fig:locationScatter), right). For skewed distributions, median and interquartile range are more informative.
 
-```{r locationScatter, echo=F, fig.width=8, fig.height=3.5,  fig.cap="A symmetric and a skewed distribution with the corresponding mean (dot, with $\\pm$1 SD) and median (triangle, with interquartile range)."}
+```{r locationScatter, echo=F, fig.width=8, fig.height=3.5,  fig.cap="A symmetric and a skewed distribution with the corresponding mean (dot, with $\\pm1$ SD) and median (triangle, with interquartile range)."}
 par(mfrow=c(1,2),mar=c(1,1,3,1))
 set.seed(8)
 d.sym <- rnorm(500)
@@ -170,29 +169,30 @@ Mean, variance, standard deviation, covariance and correlation are sensitive to 
 Figure \@ref(fig:correlations) illustrates that the correlation $q$ is larger with more data points (B vs. A) and steeper relationships (C vs. D). Pearson correlation $r$, Spearman correlation $r_s$ and Kendall's $\tau$ are always 1 when dots are in line (A-D), or -1 when the line descends (D), in which case $q$ is negative, too. The outlier in E has a strong effect on $r$, but much less on $r_s$ and $\tau$. F shows a more real world example. $q$ can have any value from $-\infty$ to $\infty$, while $r$, $r_s$ and $\tau$ are bound between -1 and 1. If the dots are completely horizontal (not shown), $q$ is 0 and the other three measures of correlation are $NA$, i.e. not defined.
 
 
-```{r correlations, echo=F, fig.width=8, fig.height=5, fig.cap="Covariance, Pearson correlation, Spearman correlation, and Kendall's tau for different patterns of x-y-data."}  
+```{r correlations, echo=F, fig.width=7, fig.height=4, fig.cap="Covariance, Pearson correlation, Spearman correlation, and Kendall's tau for different patterns of x-y-data."}  
 cplot <- function(x,y) {
   plot(t.x, t.y, xlab="", ylab="", xaxt="n", yaxt="n", pch=16, xlim=c(0,10),ylim=c(0,10))
   legend("topleft", bty="n", legend=c(paste("q =",round(cov(t.x,t.y),3)),
                                       paste("r =",round(cor(t.x,t.y),3)),
                                       paste("r_s =",round(cor(t.x,t.y,method="spearman"),3)),
-                                      paste("tau =",round(cor(t.x,t.y,method="kendall"),3))))
+                                      paste("tau =",round(cor(t.x,t.y,method="kendall"),3))),
+         cex=1.2)
 }
 
 par(mfrow=c(2,3),mar=c(1,1,1,1))
 t.x <- 2:6; t.y <- 2:6
-cplot(t.x); legend("topright",legend="A",bty="n", text.font=2)
+cplot(t.x); legend("topright",legend="A",bty="n", text.font=2, cex=1.2)
 t.x <- 1:8; t.y <- 1:8
-cplot(t.x); legend("topright",legend="B",bty="n", text.font=2)
+cplot(t.x); legend("topright",legend="B",bty="n", text.font=2, cex=1.2)
 t.x <- 2:6; t.y <- t.x/2
-cplot(t.x); legend("topright",legend="C",bty="n", text.font=2)
+cplot(t.x); legend("topright",legend="C",bty="n", text.font=2, cex=1.2)
 t.x <- 2:6; t.y <- 5-t.x/2
-cplot(t.x); legend("topright",legend="D",bty="n", text.font=2)
+cplot(t.x); legend("topright",legend="D",bty="n", text.font=2, cex=1.2)
 t.x <- 2:8; t.y <- c(c(1.4,1.2,1.3,1.0,1.33,1.22),10)
-cplot(t.x); legend("topright",legend="E",bty="n", text.font=2)
+cplot(t.x); legend("topright",legend="E",bty="n", text.font=2, cex=1.2)
 set.seed(8)
 t.x <- runif(20,2,10); t.y <- rnorm(length(t.x),0.5*t.x,0.5)
-cplot(t.x); legend("topright",legend="F",bty="n", text.font=2)
+cplot(t.x); legend("topright",legend="F",bty="n", text.font=2, cex=1.2)
 # t.x <- 2:6; t.y <- rep(1,length(t.x))
 # cplot(t.x)   # not plotted, but q = 0 and the other 3 are NA
 ```
@@ -203,24 +203,25 @@ For nominal variables, covariance and the above presented correlations cannot be
 
 ### Principal components analyses PCA
 
-The principal components analysis (PCA) is a multivariate correlation analysis. A multidimensional data set with $k$ variables can be seen as a cloud of points (observations) in a $k$-dimensional space. Imagine, we could move around in the space and look at the cloud from different locations. From some locations, the data looks highly correlated, whereas from others, we cannot see the correlation. That is what PCA is doing. It is rotating the coordinate system (defined by the original variables) of the data cloud so that the correlations are no longer visible. The axes of the new coordinates system are linear combinations of the original variables. They are called principal components. There are as many principal coordinates as there are original variables, i.e. $k$, $p_1, ..., p_k$. The principal components meet further requirements:
+The principal components analysis (PCA) is a multivariate correlation analysis. A multidimensional data set with $k$ variables can be seen as a cloud of points (observations) in a $k$-dimensional space. Imagine, we could move around in the space and look at the cloud from different locations. From some locations, the data looks highly correlated, whereas from others, we cannot see the correlation. That is what PCA is doing. It is rotating the coordinate system (defined by the original variables) of the data cloud so that the correlations are no longer visible. The axes of the new coordinates system are linear combinations of the original variables. They are called principal components. There are as many principal components as there are original variables, i.e. $k$, $p_1, ..., p_k$. The principal components meet further requirements:
 
 - the first component explains most variance
 - the second component explains most of the remaining variance and is perpendicular (= uncorrelated) to the first one
 - third component explains most of the remaining variance and is perpendicular to the first two
-- ...
+- and so on
 
 For example, in a two-dimensional data set $(x_1, x_2)$ the principal components become
 
-$pc_{1i} = b_{11}x_{1i} + b_{12}x_{2i}$
-$pc_{2i} = b_{21}x_{1i} + b_{22}x_{2i}$ with $b_{jk}$ being loadings of principal component $j$ and original variable $k$. Fig. \@ref(fig:principal) shows the two principal components for a two-dimensional data set. They can be calculated using matrix algebra: principal components are eigenvectors of the covariance or correlation matrix.
+$pc_{1i} = b_{11}x_{1i} + b_{12}x_{2i}$  
+$pc_{2i} = b_{21}x_{1i} + b_{22}x_{2i}$  
+with $b_{jk}$ being loadings of original variable $k$ on principal component $j$. Fig. \@ref(fig:principal) shows the two principal components PC1 and PC2 for a two-dimensional data set. They can be calculated using linear algebra: Principal components are eigenvectors of the covariance or correlation matrix. Note how the data spreads maximally along PC1.
 
-```{r principal, echo=FALSE, fig.cap='Principal components of a two dimensional data set based on the covariance matrix (green) and the correlation matrix (brown).'}
+```{r principal, echo=FALSE, fig.width=4, fig.height=3, fig.cap='Principal components of a two dimensional data set based on the covariance matrix (green) and the correlation matrix (brown).'}
 set.seed(2353)
 x1 <- rnorm(100, 5, 1)
 x2 <- rnorm(100, 0.8*x1, 1)
-par(mar=c(3,3,0.3,0.3))
-plot(x1-mean(x1),x2-mean(x2), asp=1, pch=16, col="blue")
+par(mar=c(4,4,0.3,0.3))
+plot(x1-mean(x1),x2-mean(x2), asp=1, pch=16, col="blue", xlab="x_1", ylab="x_2", cex=0.8)
 # PCA based on covariance matrix
 pc1 <- eigen(cov(cbind(x1,x2)))$vectors[,1]
 pc2 <- eigen(cov(cbind(x1,x2)))$vectors[,2]
@@ -232,36 +233,42 @@ pc1 <- eigen(cor(cbind(x1,x2)))$vectors[,1]
 pc2 <- eigen(cor(cbind(x1,x2)))$vectors[,2]
 abline(0, pc1[2]/pc1[1], col="brown", lwd=2)
 abline(0, pc2[2]/pc2[1], col="brown", lwd=2)
+
+# label PC1 and PC2:
+text(2.2,2.65,"PC1")
+text(-2.9,2.2,"PC2")
+
 ```
 
-The choice between correlation or covariance matrix is essential and important. The covariance matrix is an unstandardized correlation matrix. Therefore, the units, i.e., whether cm or m are used, influence the results of the PCA if it is based on the covariance matrix.  When the PCA is based on the covariance matrix, the results will change, when we change the units of one variable, e.g., from cm to m. Basing the PCA on the covariance matrix only makes sense, when the variances are comparable among the variables, i.e., if all variables are measured in the same unit and we would like to weight each variable according to its variance. If this is not the case, the PCA must be based on the correlation matrix.
+The choice between correlation or covariance matrix is important. The covariance matrix is an unstandardized correlation matrix and, therefore, the units, e.g. whether centimeters or meters are used, influence the result of the PCA. When the PCA is based on the covariance matrix, the result will change when we change the unit of a variable, e.g. from centimeters to meters. A PCA based on the covariance matrix only makes sense when the variances are comparable among the variables, i.e. when all variables are measured in the same unit, and when we want to weight each variable according to its variance. Usually, this is not the case and, therefore, the PCA must be based on the correlation matrix. Note that this is not the default setting in the most commonly used function `princomp` (use argument `cor=TRUE`) and `prcomp` (use argument `scale.=TRUE`)!
 
 ```{r}
 pca <- princomp(cbind(x1,x2)) # PCA based on covariance matrix
-
 pca <- princomp(cbind(x1,x2), cor=TRUE) # PCA based on correlation matrix
-
 loadings(pca)
-
 ```
 
-The loadings measure the correlation of each variable with the principal components. They inform about what aspects of the data each component is measuring. The signs of the loadings are arbitrary, thus we can multiplied them by -1 without changing the PCA. Sometimes this can be handy for describing the meaning of the principal component in a paper. For example, @Zbinden.2018 combined the number of hunting licenses, the duration of the hunting period and the number of black grouse cocks that were allowed to be hunted per hunter in a principal component in order to measure hunting pressure. All three variables had a negative loading in the first component, so that high values of the component meant low hunting pressure. Before the subsequent analyses, for which a measure of hunting pressure was of interest, the authors changed the signs of the loadings so that this component measured hunting pressure.  
+The loadings measure the correlation of each variable with the principal components. They inform about what aspects of the data each component is measuring. The signs of the loadings are arbitrary, thus we can multiplied them by -1 without changing the PCA. Sometimes this can be handy for describing the meaning of the principal component in a paper. For example, @Zbinden.2018 combined the number of hunting licenses, the duration of the hunting period, and the number of black grouse cocks that were allowed to be hunted per hunter in a principal component in order to measure hunting pressure. All three variables had a negative loading on the first component, so that high values of the component meant low hunting pressure. Before the subsequent analyses, for which a measure of hunting pressure was of interest, the authors changed the signs of the loadings so that the first principal component could be used as a measure of hunting pressure.
 
-The proportion of variance explained by each component is, beside the loadings, an important information. If the first few components explain the main part of the variance, it means that maybe not all $k$ variables are necessary to describe the data, or, in other words, the original $k$ variables contain a lot of redundant information.   
+This example also illustrates what PCA is often used for in ecology: You can reduce the number of predictors (for a model) by combining meaningful sets of predictors into fewer PCs. In the example, three predictors were combined into one predictor. This is often useful when you have many predictors, especially when these contain ecologically meaningful sets of predictors (in the example: hunting pressure variables; could also be weather variables, habitat variables etc) and, importantly, when they correlate. If there is not correlation, you don't gain anything by using PCs instead of the original variables. But if they correlate, the first PC (or the first few PCs) can represent a relevant proportion of the total variance.
+
+Hence, this proportion of variance explained by each PC is, beside the loadings, an important information. If the first few components explain the main part of the variance, it means that maybe not all $k$ variables are necessary to describe the data, or, in other words, the original $k$ variables contain a lot of redundant information. Then, you can use fewer than $k$ PCs without loosing (much) information.   
 
 ```{r}
 # extract the variance captured by each component
 summary(pca)
 ```
 
-<font size="1">Ridge regression is similar to doing a PCA within a linear model while components with low variance are shrinked to a higher degree than components with a high variance.</font>
+Ridge regression is similar to doing a PCA within a linear model while components with low variance are shrinked to a higher degree than components with a high variance [may be there will be a chapter on ridge regression some day].
+
+As stated, PCA can be used to generate a lower-dimensional representation of multi-dimensional data, aiming to represent as much of the original multi-dimensional variance as possible e.g. in two dimensions (PC1 vs. PC2). There is a number of other techniques, especially from community ecology, with a similar aim, e.g. correspondence analyses (CA), redundancy analyses (RDA), or non-metric multidimensional scaling (NMDS). All these methods, including PCA, are "ordination techniques". PCA simply turns the data cloud around without any distortion (only scaling), thereby showing as much of the euclidean distance as possible in the first PCs. Other techniques use other distance measures than euclidean. There may be additional variables that constrain the ordination (e.g. constrained = canonical CA). The R package vegan provides many of these ordination techniques and tutorials are available online. You may also start with wikipedia, e.g. on [multivariate statistics](https://en.wikipedia.org/wiki/Multivariate_statistics).
 
 
 ## Inferential statistics
 
 ### Uncertainty
 
-> there is never a "yes-or-no" answer  
+> There is never a "yes-or-no" answer,  
 > there will always be uncertainty  
 Amrhein (2017)[https://peerj.com/preprints/26857]
 
