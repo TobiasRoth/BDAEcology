@@ -1,7 +1,9 @@
 tab:scalemeasurement
 fig:histogram
 fig:boxplot
+fig:locationScatter
 fig:scatterplot
+fig:correlations
 fig:principal
 fig:histtruesample
 fig:CImean

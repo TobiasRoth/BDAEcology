@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>22 Introduction to PART III | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="22 Introduction to PART III | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
@@ -20,10 +20,10 @@
   <meta name="twitter:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="twitter:image" content="/images/cover.jpg" />
 
-<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
+<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2024-10-12" />
+<meta name="date" content="2024-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -66,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -164,7 +164,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-this-book"><i class="fa fa-check"></i>Why this book?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
 </ul></li>
 <li class="part"><span><b>I BASIC STATISTICS FOR ECOLOGISTS</b></span></li>
@@ -448,12 +448,12 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="PART-III" class="section level1 hasAnchor" number="22">
 <h1><span class="header-section-number">22</span> Introduction to PART III<a href="PART-III.html#PART-III" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><a href="" target="_blank"><img src="images/part_IIII.jpg" width="410" style="display: block; margin: auto;" /></a></p>
+<p><a href="" target="_blank"><img src="images/part_IIII.jpg" style="display: block; margin: auto;" /></a></p>
 <hr />
 <p>This part is a collection of more complicated ecological models to analyse data that may not be analysed with the traditional linear models that we covered in <a href="PART-I.html#PART-I">PART I</a> of this book.</p>
 <div id="model-notations" class="section level2 hasAnchor" number="22.1">
 <h2><span class="header-section-number">22.1</span> Model notations<a href="PART-III.html#model-notations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>It is unavoidable that different authors use different notations for the same thing, or that the same notation is used for different things. We try to use, whenever possible, notations that is commonly used at the <a href="www.isec2018.org/home">International Statistical Ecology Congress ISEC</a>. Resulting from an earlier ISEC, <span class="citation">Thomson et al. (<a href="referenzen.html#ref-Thomson2009">2009</a>)</span> give guidelines on what letter should be used for which parameter in order to achieve a standard notation at least among people working with classical mark-recapture models. However, the alphabet has fewer letters compared to the number of ecological parameters. Therefore, the same letter cannot stand for the same parameter across all papers, books and chapters. Here, we try to use the same letter for the same parameter within the same chapter.</p>
+<p>It is unavoidable that different authors use different notations for the same thing, or that the same notation is used for different things. We try to use, whenever possible, notations that is commonly used at the <a href="www.isec2018.org/home">International Statistical Ecology Congress ISEC</a>. Resulting from an earlier ISEC, <span class="citation">Thomson et al. (<a href="referenzen.html#ref-Thomson.2009">2009</a>)</span> give guidelines on what letter should be used for which parameter in order to achieve a standard notation at least among people working with classical mark-recapture models. However, the alphabet has fewer letters compared to the number of ecological parameters. Therefore, the same letter cannot stand for the same parameter across all papers, books and chapters. Here, we try to use the same letter for the same parameter within the same chapter.</p>
 
 </div>
 </div>

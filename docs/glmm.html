@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>15 Generalized linear mixed models | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="15 Generalized linear mixed models | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
@@ -20,10 +20,10 @@
   <meta name="twitter:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="twitter:image" content="/images/cover.jpg" />
 
-<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
+<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2024-10-12" />
+<meta name="date" content="2024-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -66,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -164,7 +164,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-this-book"><i class="fa fa-check"></i>Why this book?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
 </ul></li>
 <li class="part"><span><b>I BASIC STATISTICS FOR ECOLOGISTS</b></span></li>
@@ -462,7 +462,7 @@ Generalized linear mixed models (GLMM) combine the two complexities and are used
 https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html
 Items can be cited directly within the documentation using the syntax @key where key is the citation key in the first line of the entry, e.g., @R-base. To put citations in parentheses, use [@key]. To cite multiple entries, separate the keys by semicolons, e.g., [@key-1; @key-2; @key-3]. To suppress the mention of the author, add a minus sign before @, e.g., [-@R-base].
 -->
-<p>To illustrate the binomial mixed model we use a subset of a data set used by <span class="citation">Grüebler, Korner-Nievergelt, and Von Hirschheydt (<a href="referenzen.html#ref-Gruebler2010">2010</a>)</span> on barn swallow <em>Hirundo rustica</em> nestling survival (we selected a nonrandom sample to be able to fit a simple model; hence, the results do not add unbiased knowledge about the swallow biology!). For 63 swallow broods, we know the clutch size and the number of the nestlings that
+<p>To illustrate the binomial mixed model we use a subset of a data set used by <span class="citation">Grüebler, Korner-Nievergelt, and Von Hirschheydt (<a href="referenzen.html#ref-Gruebler.2010">2010</a>)</span> on barn swallow <em>Hirundo rustica</em> nestling survival (we selected a nonrandom sample to be able to fit a simple model; hence, the results do not add unbiased knowledge about the swallow biology!). For 63 swallow broods, we know the clutch size and the number of the nestlings that
 fledged. The broods came from 51 farms (larger unit), thus some of the farms had more than one brood. Note that each farm can harbor one or several broods, and the broods are nested within farms (as opposed to crossed, see chapter <a href="lmer.html#lmer">13</a>), i.e., each brood belongs to only one farm. There are three predictors measured at the level of the farm: colony size (the number of swallow broods on that farm), cow (whether there are cows on the farm or not), and dung heap (the number of dung heaps, piles of cow dung, within 500 m of the farm).
 The aim was to assess how swallows profit from insects that are attracted by livestock on the farm and by dung heaps. Broods from the same farm are not independent of each other because they belong to the same larger unit (farm), and thus share the characteristics of the farm (measured or unmeasured). Predictor variables were measured at the level of the farm, and are thus the same for all broods from a farm. In the model described and fitted below, we account for the non-independence of these clutches when building the model by including a random intercept per farm to model random variation between farms.
 <!-- we could also add a random slope model later on -->
@@ -478,15 +478,15 @@ b_g \sim normal\left(0, \sigma_g\right)
 <!-- You may refer to these equations using \@ref(eq:y_binom), etc., fk: das hat Rmarkdown nicht geschluckt, ich habe nun die $$ verwendet--></p>
 <!-- fk: can we hide/delete the selected farms in the code below?
 svf: komme nicht draus wo Du meinst.fk: ich habe die schon rausgestrichen, vorher waren alle Farm-Nummern in einem R-Code-Kommentar aufgelistet-->
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="glmm.html#cb179-1" tabindex="-1"></a><span class="co"># Data on Barn Swallow (Hirundo rustica) nestling survival on farms</span></span>
-<span id="cb179-2"><a href="glmm.html#cb179-2" tabindex="-1"></a><span class="co"># (a part of the data published in Grüebler et al. 2010, J Appl Ecol 47:1340-1347)</span></span>
-<span id="cb179-3"><a href="glmm.html#cb179-3" tabindex="-1"></a></span>
-<span id="cb179-4"><a href="glmm.html#cb179-4" tabindex="-1"></a></span>
-<span id="cb179-5"><a href="glmm.html#cb179-5" tabindex="-1"></a><span class="fu">library</span>(blmeco)</span>
-<span id="cb179-6"><a href="glmm.html#cb179-6" tabindex="-1"></a><span class="fu">data</span>(swallowfarms)</span>
-<span id="cb179-7"><a href="glmm.html#cb179-7" tabindex="-1"></a><span class="co">#?swallowfarms # to see the documentation of the data set</span></span>
-<span id="cb179-8"><a href="glmm.html#cb179-8" tabindex="-1"></a>dat <span class="ot">&lt;-</span> swallowfarms</span>
-<span id="cb179-9"><a href="glmm.html#cb179-9" tabindex="-1"></a><span class="fu">str</span>(dat)</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="glmm.html#cb177-1" tabindex="-1"></a><span class="co"># Data on Barn Swallow (Hirundo rustica) nestling survival on farms</span></span>
+<span id="cb177-2"><a href="glmm.html#cb177-2" tabindex="-1"></a><span class="co"># (a part of the data published in Grüebler et al. 2010, J Appl Ecol 47:1340-1347)</span></span>
+<span id="cb177-3"><a href="glmm.html#cb177-3" tabindex="-1"></a></span>
+<span id="cb177-4"><a href="glmm.html#cb177-4" tabindex="-1"></a></span>
+<span id="cb177-5"><a href="glmm.html#cb177-5" tabindex="-1"></a><span class="fu">library</span>(blmeco)</span>
+<span id="cb177-6"><a href="glmm.html#cb177-6" tabindex="-1"></a><span class="fu">data</span>(swallowfarms)</span>
+<span id="cb177-7"><a href="glmm.html#cb177-7" tabindex="-1"></a><span class="co">#?swallowfarms # to see the documentation of the data set</span></span>
+<span id="cb177-8"><a href="glmm.html#cb177-8" tabindex="-1"></a>dat <span class="ot">&lt;-</span> swallowfarms</span>
+<span id="cb177-9"><a href="glmm.html#cb177-9" tabindex="-1"></a><span class="fu">str</span>(dat)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    63 obs. of  6 variables:
 ##  $ farm   : int  1001 1002 1002 1002 1004 1008 1008 1008 1010 1016 ...
 ##  $ colsize: int  1 4 4 4 1 11 11 11 3 3 ...
@@ -494,25 +494,25 @@ svf: komme nicht draus wo Du meinst.fk: ich habe die schon rausgestrichen, vorhe
 ##  $ dung   : int  0 0 0 0 1 1 1 1 2 2 ...
 ##  $ clutch : int  8 9 8 7 13 7 9 16 10 8 ...
 ##  $ fledge : int  8 0 6 5 9 3 7 4 9 8 ...</code></pre>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="glmm.html#cb181-1" tabindex="-1"></a><span class="co"># check number of farms in the data set</span></span>
-<span id="cb181-2"><a href="glmm.html#cb181-2" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(dat<span class="sc">$</span>farm))</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="glmm.html#cb179-1" tabindex="-1"></a><span class="co"># check number of farms in the data set</span></span>
+<span id="cb179-2"><a href="glmm.html#cb179-2" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(dat<span class="sc">$</span>farm))</span></code></pre></div>
 <pre><code>## [1] 51</code></pre>
 </div>
 <div id="fitting-a-binomial-mixed-model-in-r" class="section level4 hasAnchor" number="15.1.1.2">
 <h4><span class="header-section-number">15.1.1.2</span> Fitting a Binomial Mixed Model in R<a href="glmm.html#fitting-a-binomial-mixed-model-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <div id="using-the-glmer-function" class="section level5 hasAnchor" number="15.1.1.2.1">
 <h5><span class="header-section-number">15.1.1.2.1</span> Using the glmer function<a href="glmm.html#using-the-glmer-function" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="glmm.html#cb183-1" tabindex="-1"></a>dat<span class="sc">$</span>colsize.z <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat<span class="sc">$</span>colsize) <span class="co"># z-transform values for better model convergence</span></span>
-<span id="cb183-2"><a href="glmm.html#cb183-2" tabindex="-1"></a>dat<span class="sc">$</span>dung.z    <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat<span class="sc">$</span>dung)</span>
-<span id="cb183-3"><a href="glmm.html#cb183-3" tabindex="-1"></a>dat<span class="sc">$</span>die <span class="ot">&lt;-</span> dat<span class="sc">$</span>clutch <span class="sc">-</span> dat<span class="sc">$</span>fledge</span>
-<span id="cb183-4"><a href="glmm.html#cb183-4" tabindex="-1"></a>dat<span class="sc">$</span>farm.f <span class="ot">&lt;-</span> <span class="fu">factor</span>(dat<span class="sc">$</span>farm)     <span class="co"># for clarity we define farm as a factor</span></span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="glmm.html#cb181-1" tabindex="-1"></a>dat<span class="sc">$</span>colsize.z <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat<span class="sc">$</span>colsize) <span class="co"># z-transform values for better model convergence</span></span>
+<span id="cb181-2"><a href="glmm.html#cb181-2" tabindex="-1"></a>dat<span class="sc">$</span>dung.z    <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat<span class="sc">$</span>dung)</span>
+<span id="cb181-3"><a href="glmm.html#cb181-3" tabindex="-1"></a>dat<span class="sc">$</span>die <span class="ot">&lt;-</span> dat<span class="sc">$</span>clutch <span class="sc">-</span> dat<span class="sc">$</span>fledge</span>
+<span id="cb181-4"><a href="glmm.html#cb181-4" tabindex="-1"></a>dat<span class="sc">$</span>farm.f <span class="ot">&lt;-</span> <span class="fu">factor</span>(dat<span class="sc">$</span>farm)     <span class="co"># for clarity we define farm as a factor</span></span></code></pre></div>
 <p>The <code>glmer</code> function uses the standard way to formulate a statistical model in R, with the outcome on the left, followed by the <code>~</code> symbol, meaning “explained by”, followed by the predictors, which are separated by <code>+</code>. The notation for the random factor with only a random intercept was introduced in chapter <a href="lmer.html#lmer">13</a> and is <code>(1|farm.f)</code> here.</p>
 <p>Remember that for fitting a binomial model we have to provide the number of successful events (number of fledglings that survived) and the number of failures (those that died) within a two-column matrix that we create using the function <code>cbind</code>.</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="glmm.html#cb184-1" tabindex="-1"></a><span class="co"># fit GLMM using glmer function from lme4 package</span></span>
-<span id="cb184-2"><a href="glmm.html#cb184-2" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb184-3"><a href="glmm.html#cb184-3" tabindex="-1"></a>mod.glmer <span class="ot">&lt;-</span> <span class="fu">glmer</span>(<span class="fu">cbind</span>(fledge,die) <span class="sc">~</span> colsize.z <span class="sc">+</span> cow <span class="sc">+</span> dung.z <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>farm.f) , </span>
-<span id="cb184-4"><a href="glmm.html#cb184-4" tabindex="-1"></a>                   <span class="at">data=</span>dat, </span>
-<span id="cb184-5"><a href="glmm.html#cb184-5" tabindex="-1"></a>                   <span class="at">family=</span>binomial)</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="glmm.html#cb182-1" tabindex="-1"></a><span class="co"># fit GLMM using glmer function from lme4 package</span></span>
+<span id="cb182-2"><a href="glmm.html#cb182-2" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb182-3"><a href="glmm.html#cb182-3" tabindex="-1"></a>mod.glmer <span class="ot">&lt;-</span> <span class="fu">glmer</span>(<span class="fu">cbind</span>(fledge,die) <span class="sc">~</span> colsize.z <span class="sc">+</span> cow <span class="sc">+</span> dung.z <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>farm.f) , </span>
+<span id="cb182-4"><a href="glmm.html#cb182-4" tabindex="-1"></a>                   <span class="at">data=</span>dat, </span>
+<span id="cb182-5"><a href="glmm.html#cb182-5" tabindex="-1"></a>                   <span class="at">family=</span>binomial)</span></code></pre></div>
 </div>
 <div id="assessing-model-assumptions-for-the-glmer-fit" class="section level5 hasAnchor" number="15.1.1.2.2">
 <h5><span class="header-section-number">15.1.1.2.2</span> Assessing Model Assumptions for the glmer fit<a href="glmm.html#assessing-model-assumptions-for-the-glmer-fit" class="anchor-section" aria-label="Anchor link to header"></a></h5>
@@ -521,40 +521,40 @@ svf: komme nicht draus wo Du meinst.fk: ich habe die schon rausgestrichen, vorhe
 <!--fk: maybe checking the mean of the random effects is no longer needed in recent R versions?  we may check that and if it is no longer needed, delete here-->
 <p>The mean of the random effects is close to zero as it should. We check that because sometimes the <code>glmer</code> function fails to correctly separate the farm-specific intercepts from the overall intercept. A non-zero mean of random effects does not mean a lack of fit, but a failure of the model fitting algorithm. In such a case, we recommend using a different fitting algorithm, e.g. <code>brm</code> (see below) or <code>stan_glmer</code> from the <code>rstanarm</code> package.</p>
 <p>A slight overdispersion (approximated dispersion parameter &gt;1) seems to be present, but nothing to worry about.</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="glmm.html#cb185-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">1</span>))    </span>
-<span id="cb185-2"><a href="glmm.html#cb185-2" tabindex="-1"></a><span class="co"># check normal distribution of residuals</span></span>
-<span id="cb185-3"><a href="glmm.html#cb185-3" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">resid</span>(mod.glmer), <span class="at">main=</span><span class="st">&quot;qq-plot residuals&quot;</span>)</span>
-<span id="cb185-4"><a href="glmm.html#cb185-4" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">resid</span>(mod.glmer))</span>
-<span id="cb185-5"><a href="glmm.html#cb185-5" tabindex="-1"></a></span>
-<span id="cb185-6"><a href="glmm.html#cb185-6" tabindex="-1"></a><span class="co"># check normal distribution of random intercepts</span></span>
-<span id="cb185-7"><a href="glmm.html#cb185-7" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">ranef</span>(mod.glmer)<span class="sc">$</span>farm.f[,<span class="dv">1</span>], <span class="at">main=</span><span class="st">&quot;qq-plot, farm&quot;</span>)</span>
-<span id="cb185-8"><a href="glmm.html#cb185-8" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">ranef</span>(mod.glmer)<span class="sc">$</span>farm.f[,<span class="dv">1</span>])</span>
-<span id="cb185-9"><a href="glmm.html#cb185-9" tabindex="-1"></a></span>
-<span id="cb185-10"><a href="glmm.html#cb185-10" tabindex="-1"></a><span class="co"># residuals vs fitted values to check homoscedasticity</span></span>
-<span id="cb185-11"><a href="glmm.html#cb185-11" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(mod.glmer), <span class="fu">resid</span>(mod.glmer)) </span>
-<span id="cb185-12"><a href="glmm.html#cb185-12" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span>
-<span id="cb185-13"><a href="glmm.html#cb185-13" tabindex="-1"></a></span>
-<span id="cb185-14"><a href="glmm.html#cb185-14" tabindex="-1"></a><span class="co"># plot data vs. predicted values</span></span>
-<span id="cb185-15"><a href="glmm.html#cb185-15" tabindex="-1"></a>dat<span class="sc">$</span>fitted <span class="ot">&lt;-</span> <span class="fu">fitted</span>(mod.glmer)</span>
-<span id="cb185-16"><a href="glmm.html#cb185-16" tabindex="-1"></a><span class="fu">plot</span>(dat<span class="sc">$</span>fitted,dat<span class="sc">$</span>fledge<span class="sc">/</span>dat<span class="sc">$</span>clutch)</span>
-<span id="cb185-17"><a href="glmm.html#cb185-17" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="glmm.html#cb183-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">1</span>))    </span>
+<span id="cb183-2"><a href="glmm.html#cb183-2" tabindex="-1"></a><span class="co"># check normal distribution of residuals</span></span>
+<span id="cb183-3"><a href="glmm.html#cb183-3" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">resid</span>(mod.glmer), <span class="at">main=</span><span class="st">&quot;qq-plot residuals&quot;</span>)</span>
+<span id="cb183-4"><a href="glmm.html#cb183-4" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">resid</span>(mod.glmer))</span>
+<span id="cb183-5"><a href="glmm.html#cb183-5" tabindex="-1"></a></span>
+<span id="cb183-6"><a href="glmm.html#cb183-6" tabindex="-1"></a><span class="co"># check normal distribution of random intercepts</span></span>
+<span id="cb183-7"><a href="glmm.html#cb183-7" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">ranef</span>(mod.glmer)<span class="sc">$</span>farm.f[,<span class="dv">1</span>], <span class="at">main=</span><span class="st">&quot;qq-plot, farm&quot;</span>)</span>
+<span id="cb183-8"><a href="glmm.html#cb183-8" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">ranef</span>(mod.glmer)<span class="sc">$</span>farm.f[,<span class="dv">1</span>])</span>
+<span id="cb183-9"><a href="glmm.html#cb183-9" tabindex="-1"></a></span>
+<span id="cb183-10"><a href="glmm.html#cb183-10" tabindex="-1"></a><span class="co"># residuals vs fitted values to check homoscedasticity</span></span>
+<span id="cb183-11"><a href="glmm.html#cb183-11" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(mod.glmer), <span class="fu">resid</span>(mod.glmer)) </span>
+<span id="cb183-12"><a href="glmm.html#cb183-12" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span>
+<span id="cb183-13"><a href="glmm.html#cb183-13" tabindex="-1"></a></span>
+<span id="cb183-14"><a href="glmm.html#cb183-14" tabindex="-1"></a><span class="co"># plot data vs. predicted values</span></span>
+<span id="cb183-15"><a href="glmm.html#cb183-15" tabindex="-1"></a>dat<span class="sc">$</span>fitted <span class="ot">&lt;-</span> <span class="fu">fitted</span>(mod.glmer)</span>
+<span id="cb183-16"><a href="glmm.html#cb183-16" tabindex="-1"></a><span class="fu">plot</span>(dat<span class="sc">$</span>fitted,dat<span class="sc">$</span>fledge<span class="sc">/</span>dat<span class="sc">$</span>clutch)</span>
+<span id="cb183-17"><a href="glmm.html#cb183-17" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:assessmodelassumptions"></span>
 <img src="2.07-glmm_files/figure-html/assessmodelassumptions-1.png" alt="Diagnostic plots to assess model assumptions for mod.glmer. Uppper left: quantile-quantile plot of the residuals vs. theoretical quantiles of the normal distribution. Upper rihgt: quantile-quantile plot of the random effects &quot;farm&quot;. Lower left: residuals vs. fitted values. Lower right: observed vs. fitted values." width="576" />
 <p class="caption">
 Figure 15.1: Diagnostic plots to assess model assumptions for mod.glmer. Uppper left: quantile-quantile plot of the residuals vs. theoretical quantiles of the normal distribution. Upper rihgt: quantile-quantile plot of the random effects “farm”. Lower left: residuals vs. fitted values. Lower right: observed vs. fitted values.
 </p>
 </div>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="glmm.html#cb186-1" tabindex="-1"></a><span class="co"># check distribution of random effects</span></span>
-<span id="cb186-2"><a href="glmm.html#cb186-2" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">ranef</span>(mod.glmer)<span class="sc">$</span>farm.f[,<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="glmm.html#cb184-1" tabindex="-1"></a><span class="co"># check distribution of random effects</span></span>
+<span id="cb184-2"><a href="glmm.html#cb184-2" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">ranef</span>(mod.glmer)<span class="sc">$</span>farm.f[,<span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] -0.001690303</code></pre>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="glmm.html#cb188-1" tabindex="-1"></a><span class="co"># check for overdispersion</span></span>
-<span id="cb188-2"><a href="glmm.html#cb188-2" tabindex="-1"></a><span class="fu">dispersion_glmer</span>(mod.glmer)</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="glmm.html#cb186-1" tabindex="-1"></a><span class="co"># check for overdispersion</span></span>
+<span id="cb186-2"><a href="glmm.html#cb186-2" tabindex="-1"></a><span class="fu">dispersion_glmer</span>(mod.glmer)</span></code></pre></div>
 <pre><code>## [1] 1.192931</code></pre>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="glmm.html#cb190-1" tabindex="-1"></a><span class="fu">detach</span>(package<span class="sc">:</span>lme4)</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="glmm.html#cb188-1" tabindex="-1"></a><span class="fu">detach</span>(package<span class="sc">:</span>lme4)</span></code></pre></div>
 </div>
 <div id="using-the-brm-function" class="section level5 hasAnchor" number="15.1.1.2.3">
 <h5><span class="header-section-number">15.1.1.2.3</span> Using the brm function<a href="glmm.html#using-the-brm-function" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<p>Now we fit the same model using the function <code>brm</code> from the R package <code>brms</code>. This function allows fitting Bayesian generalized (non-)linear multivariate multilevel models using Stan <span class="citation">(<a href="referenzen.html#ref-Betancourt2013_b">Betancourt 2013</a>)</span> for full Bayesian inference. We shortly introduce the fitting algorithm used by Stan, Hamiltonian Monte Carlo, in chapter <a href="stan.html#stan">18</a>. When using the function <code>brm</code> there is no need to install <code>rstan</code> or write the model in Stan-language. A wide range of distributions and link functions are supported, and the function offers many things more. Here we use it to fit the model as specified by the formula object above.
+<p>Now we fit the same model using the function <code>brm</code> from the R package <code>brms</code>. This function allows fitting Bayesian generalized (non-)linear multivariate multilevel models using Stan <span class="citation">(<a href="referenzen.html#ref-Betancourt.2013b">Betancourt 2013</a>)</span> for full Bayesian inference. We shortly introduce the fitting algorithm used by Stan, Hamiltonian Monte Carlo, in chapter <a href="stan.html#stan">18</a>. When using the function <code>brm</code> there is no need to install <code>rstan</code> or write the model in Stan-language. A wide range of distributions and link functions are supported, and the function offers many things more. Here we use it to fit the model as specified by the formula object above.
 Note that brm requires that a binomial outcome is specified in the format <code>successes|trials()</code>, which is the number of fledged nestlings out of the total clutch size in our case. In contrast, the <code>glmer</code> function required to specify the number of nestlings that fledged and died (which together sum up to clutch size), in the format <code>cbind(successes, failures)</code>.
 The family is also called <code>binomial</code> in <code>brm</code>, but would be <code>bernoulli</code> for a binary outcome, whereas <code>glmer</code> would use binomial in both situations (Bernoulli distribution is a special case of the binomial). However, it is slightly confusing that (at the time of writing this chapter) the documentation for <code>brmsfamily</code> did not mention the binomial family under Usage, where it probably went missing, but it is mentioned under Arguments for the argument family.
 Prior distributions are an integral part of a Bayesian model, therefore we need to specify prior distributions. We can see what default prior distributions <code>brm</code> is using by applying the <code>get_prior</code> function to the model formula. The default prior for the effect sizes is a flat prior which gives a density of 1 for any value between minus and plus infinity. Because this is not a proper probability distribution it is also called an improper distribution. The intercept gets a t-distribution with mean of 0, standard deviation of 2.5 and 3 degrees of freedoms. Transforming this t-distribution to the proportion scale (using the inverse-logit function) becomes something similar to a uniform distribution between 0 and 1 that can be seen as non-informative for a probability. For the among-farm standard deviation, it uses the same t-distribution as for the intercept. However, because variance parameters such as standard deviations only can take on positive numbers, it will use only the positive half of the t-distribution (this is not seen in the output of <code>get_prior</code>). When we have no prior information on any parameter, or if we would like to base the results solely on the information in the data, we specify weakly informative prior distributions that do not noticeably affect the results but they will facilitate the fitting algorithm. This is true for the priors of the intercept and among-farm standard deviation. However, for the effect sizes, we prefer specifying more narrow distributions (see chapter <a href="priors.html#priors">10</a>). To do so, we use the function <code>prior</code>.<br />
@@ -562,12 +562,12 @@ Prior distributions are an integral part of a Bayesian model, therefore we need 
 <p>To apply MCMC sampling we need some more arguments: <code>warmup</code> specifies the number of iterations during which we allow the algorithm to be adapted to our specific model and to converge to the posterior distribution. These iterations should be discarded (similar to the burn-in period when using, e.g., Gibbs sampling); <code>iter</code> specifies the total number of iterations (including those discarded); <code>chains</code> specifies the number of chains; <code>init</code> specifies the starting values of the iterations. By default (<code>init=NULL</code>) or by setting <code>init="random"</code> the initial values are randomly chosen which is recommended because then different initial values are chosen for each chain which helps to identify non-convergence. However, sometimes random initial values cause the Markov chains to behave badly.
 <!-- Question to fk: you write default is random, but default is init=NULL. I adapted the sentence above. But Iis NULL and random for the inits exactly the same? why are there two options then? fk: in R version 4.0 the default is "random" and in R version 4.2. the default is NULL. looks like they changed most of the defaults to be specified with NULL, but what NULL means is what was the default before.... Maybe this will change in future again -->
 Then you can either use the maximum likelihood estimates of the parameters as starting values, or simply ask the algorithm to start with zeros. <code>thin</code> specifies the thinning of the chain, i.e., whether all iterations should be kept (thin=1) or for example every 4th only (thin=4); <code>cores</code> specifies the number of cores used for the algorithm; <code>seed</code> specifies the random seed, allowing for replication of results.</p>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="glmm.html#cb191-1" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
-<span id="cb191-2"><a href="glmm.html#cb191-2" tabindex="-1"></a></span>
-<span id="cb191-3"><a href="glmm.html#cb191-3" tabindex="-1"></a><span class="co"># check which parameters need a prior</span></span>
-<span id="cb191-4"><a href="glmm.html#cb191-4" tabindex="-1"></a><span class="fu">get_prior</span>(fledge<span class="sc">|</span><span class="fu">trials</span>(clutch) <span class="sc">~</span> colsize.z <span class="sc">+</span> cow <span class="sc">+</span> dung.z <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>farm.f), </span>
-<span id="cb191-5"><a href="glmm.html#cb191-5" tabindex="-1"></a>          <span class="at">data=</span>dat, </span>
-<span id="cb191-6"><a href="glmm.html#cb191-6" tabindex="-1"></a>          <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="glmm.html#cb189-1" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb189-2"><a href="glmm.html#cb189-2" tabindex="-1"></a></span>
+<span id="cb189-3"><a href="glmm.html#cb189-3" tabindex="-1"></a><span class="co"># check which parameters need a prior</span></span>
+<span id="cb189-4"><a href="glmm.html#cb189-4" tabindex="-1"></a><span class="fu">get_prior</span>(fledge<span class="sc">|</span><span class="fu">trials</span>(clutch) <span class="sc">~</span> colsize.z <span class="sc">+</span> cow <span class="sc">+</span> dung.z <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>farm.f), </span>
+<span id="cb189-5"><a href="glmm.html#cb189-5" tabindex="-1"></a>          <span class="at">data=</span>dat, </span>
+<span id="cb189-6"><a href="glmm.html#cb189-6" tabindex="-1"></a>          <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>))</span></code></pre></div>
 <pre><code>##                 prior     class      coef  group resp dpar nlpar lb ub
 ##                (flat)         b                                       
 ##                (flat)         b colsize.z                             
@@ -586,28 +586,28 @@ Then you can either use the maximum likelihood estimates of the parameters as st
 ##       default
 ##  (vectorized)
 ##  (vectorized)</code></pre>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="glmm.html#cb193-1" tabindex="-1"></a><span class="co"># specify own priors</span></span>
-<span id="cb193-2"><a href="glmm.html#cb193-2" tabindex="-1"></a>myprior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">5</span>), <span class="at">class=</span><span class="st">&quot;b&quot;</span>)</span>
-<span id="cb193-3"><a href="glmm.html#cb193-3" tabindex="-1"></a>             </span>
-<span id="cb193-4"><a href="glmm.html#cb193-4" tabindex="-1"></a></span>
-<span id="cb193-5"><a href="glmm.html#cb193-5" tabindex="-1"></a>mod.brm <span class="ot">&lt;-</span> <span class="fu">brm</span>(fledge<span class="sc">|</span><span class="fu">trials</span>(clutch) <span class="sc">~</span> colsize.z <span class="sc">+</span> cow <span class="sc">+</span> dung.z <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>farm.f) , </span>
-<span id="cb193-6"><a href="glmm.html#cb193-6" tabindex="-1"></a>               <span class="at">data=</span>dat, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>),</span>
-<span id="cb193-7"><a href="glmm.html#cb193-7" tabindex="-1"></a>               <span class="at">prior=</span>myprior,</span>
-<span id="cb193-8"><a href="glmm.html#cb193-8" tabindex="-1"></a>               <span class="at">warmup =</span> <span class="dv">500</span>, </span>
-<span id="cb193-9"><a href="glmm.html#cb193-9" tabindex="-1"></a>               <span class="at">iter =</span> <span class="dv">2000</span>, </span>
-<span id="cb193-10"><a href="glmm.html#cb193-10" tabindex="-1"></a>               <span class="at">chains =</span> <span class="dv">2</span>,</span>
-<span id="cb193-11"><a href="glmm.html#cb193-11" tabindex="-1"></a>               <span class="at">init =</span> <span class="st">&quot;random&quot;</span>, </span>
-<span id="cb193-12"><a href="glmm.html#cb193-12" tabindex="-1"></a>               <span class="at">cores =</span> <span class="dv">2</span>,</span>
-<span id="cb193-13"><a href="glmm.html#cb193-13" tabindex="-1"></a>               <span class="at">seed =</span> <span class="dv">123</span>)</span>
-<span id="cb193-14"><a href="glmm.html#cb193-14" tabindex="-1"></a><span class="co"># note: thin=1 is default and we did not change this here.</span></span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="glmm.html#cb191-1" tabindex="-1"></a><span class="co"># specify own priors</span></span>
+<span id="cb191-2"><a href="glmm.html#cb191-2" tabindex="-1"></a>myprior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">5</span>), <span class="at">class=</span><span class="st">&quot;b&quot;</span>)</span>
+<span id="cb191-3"><a href="glmm.html#cb191-3" tabindex="-1"></a>             </span>
+<span id="cb191-4"><a href="glmm.html#cb191-4" tabindex="-1"></a></span>
+<span id="cb191-5"><a href="glmm.html#cb191-5" tabindex="-1"></a>mod.brm <span class="ot">&lt;-</span> <span class="fu">brm</span>(fledge<span class="sc">|</span><span class="fu">trials</span>(clutch) <span class="sc">~</span> colsize.z <span class="sc">+</span> cow <span class="sc">+</span> dung.z <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>farm.f) , </span>
+<span id="cb191-6"><a href="glmm.html#cb191-6" tabindex="-1"></a>               <span class="at">data=</span>dat, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>),</span>
+<span id="cb191-7"><a href="glmm.html#cb191-7" tabindex="-1"></a>               <span class="at">prior=</span>myprior,</span>
+<span id="cb191-8"><a href="glmm.html#cb191-8" tabindex="-1"></a>               <span class="at">warmup =</span> <span class="dv">500</span>, </span>
+<span id="cb191-9"><a href="glmm.html#cb191-9" tabindex="-1"></a>               <span class="at">iter =</span> <span class="dv">2000</span>, </span>
+<span id="cb191-10"><a href="glmm.html#cb191-10" tabindex="-1"></a>               <span class="at">chains =</span> <span class="dv">2</span>,</span>
+<span id="cb191-11"><a href="glmm.html#cb191-11" tabindex="-1"></a>               <span class="at">init =</span> <span class="st">&quot;random&quot;</span>, </span>
+<span id="cb191-12"><a href="glmm.html#cb191-12" tabindex="-1"></a>               <span class="at">cores =</span> <span class="dv">2</span>,</span>
+<span id="cb191-13"><a href="glmm.html#cb191-13" tabindex="-1"></a>               <span class="at">seed =</span> <span class="dv">123</span>)</span>
+<span id="cb191-14"><a href="glmm.html#cb191-14" tabindex="-1"></a><span class="co"># note: thin=1 is default and we did not change this here.</span></span></code></pre></div>
 <!-- Question to fk: I pasted this part of the code to this separate chunk. Do we need it and should I explain it?
 and why did you exclude the random intercept? Or did I do this by mistake?, fk: only in this code we see that the prior for the variance parameter is restricted to positive values. I would not show the code, otherwise we have to explain the Stan code. It is a good idea to have it in a junk that is not shown.-->
 </div>
 <div id="checking-model-convergence-for-the-brm-fit" class="section level5 hasAnchor" number="15.1.1.2.4">
 <h5><span class="header-section-number">15.1.1.2.4</span> Checking model convergence for the brm fit<a href="glmm.html#checking-model-convergence-for-the-brm-fit" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <p>We first check whether we find warnings in the R console about problems of the fitting algorithm. Warnings should be taken seriously. Often, we find help in the Stan online documentation (or when typing <code>launch_shinystan(mod.brm)</code> into the R-console) what to change when calling the <code>brm</code> function to get a fit that is running smoothly. Once, we get rid of all warnings, we need to check how well the Markov chains mixed. We can either do that by scanning through the many diagnostic plots given by <code>launch_shinystan(mod)</code> or create the most important plots ourselves such as the traceplot (Figure <a href="glmm.html#fig:checkconvergencemodelbrm">15.2</a>).</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="glmm.html#cb194-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb194-2"><a href="glmm.html#cb194-2" tabindex="-1"></a><span class="fu">mcmc_plot</span>(mod.brm, <span class="at">type =</span> <span class="st">&quot;trace&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="glmm.html#cb192-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb192-2"><a href="glmm.html#cb192-2" tabindex="-1"></a><span class="fu">mcmc_plot</span>(mod.brm, <span class="at">type =</span> <span class="st">&quot;trace&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:checkconvergencemodelbrm"></span>
 <img src="2.07-glmm_files/figure-html/checkconvergencemodelbrm-1.png" alt="Traceplot of the Markov chains. After convergence, both Markov chains should sample from the same stationary distribution. Indications of non-convergence would be, if the two chains diverge or vary around different means." width="672" />
 <p class="caption">
@@ -620,19 +620,19 @@ Figure 15.2: Traceplot of the Markov chains. After convergence, both Markov chai
 <h5><span class="header-section-number">15.1.1.2.5</span> Checking model fit by posterior predictive model checking<a href="glmm.html#checking-model-fit-by-posterior-predictive-model-checking" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <p>To assess how well the model fits to the data we do posterior predictive model checking (Chapter <a href="modelchecking.html#modelchecking">16</a>). For binomial as well as for Poisson models comparing the standard deviation of the data with those of replicated data from the model is particularly important. If the standard deviation of the real data would be much higher compared to the ones of the replicated data from the model, overdispersion would be an issue. However, here, the model is able to capture the variance in the data correctly (Figure <a href="glmm.html#fig:ppbinomial">15.3</a>).
 The fitted vs observed plot also shows a good fit.</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="glmm.html#cb195-1" tabindex="-1"></a>yrep <span class="ot">&lt;-</span> <span class="fu">posterior_predict</span>(mod.brm)</span>
-<span id="cb195-2"><a href="glmm.html#cb195-2" tabindex="-1"></a>sdyrep <span class="ot">&lt;-</span> <span class="fu">apply</span>(yrep, <span class="dv">1</span>, sd)</span>
-<span id="cb195-3"><a href="glmm.html#cb195-3" tabindex="-1"></a></span>
-<span id="cb195-4"><a href="glmm.html#cb195-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb195-5"><a href="glmm.html#cb195-5" tabindex="-1"></a><span class="fu">hist</span>(yrep, <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">main=</span><span class="cn">NA</span>, <span class="at">xlab=</span><span class="st">&quot;Number of fledglings&quot;</span>)</span>
-<span id="cb195-6"><a href="glmm.html#cb195-6" tabindex="-1"></a><span class="fu">hist</span>(dat<span class="sc">$</span>fledge, <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">col=</span><span class="fu">rgb</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="fl">0.3</span>), <span class="at">freq=</span><span class="cn">FALSE</span>)</span>
-<span id="cb195-7"><a href="glmm.html#cb195-7" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">10</span>, <span class="fl">0.15</span>, <span class="at">fill=</span><span class="fu">c</span>(<span class="st">&quot;grey&quot;</span>,<span class="fu">rgb</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="fl">0.3</span>)), <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;yrep&quot;</span>, <span class="st">&quot;y&quot;</span>))</span>
-<span id="cb195-8"><a href="glmm.html#cb195-8" tabindex="-1"></a></span>
-<span id="cb195-9"><a href="glmm.html#cb195-9" tabindex="-1"></a><span class="fu">hist</span>(sdyrep)</span>
-<span id="cb195-10"><a href="glmm.html#cb195-10" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">sd</span>(dat<span class="sc">$</span>fledge), <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb195-11"><a href="glmm.html#cb195-11" tabindex="-1"></a></span>
-<span id="cb195-12"><a href="glmm.html#cb195-12" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(mod.brm)[,<span class="dv">1</span>], dat<span class="sc">$</span>fledge, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">cex=</span><span class="fl">0.6</span>)</span>
-<span id="cb195-13"><a href="glmm.html#cb195-13" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="glmm.html#cb193-1" tabindex="-1"></a>yrep <span class="ot">&lt;-</span> <span class="fu">posterior_predict</span>(mod.brm)</span>
+<span id="cb193-2"><a href="glmm.html#cb193-2" tabindex="-1"></a>sdyrep <span class="ot">&lt;-</span> <span class="fu">apply</span>(yrep, <span class="dv">1</span>, sd)</span>
+<span id="cb193-3"><a href="glmm.html#cb193-3" tabindex="-1"></a></span>
+<span id="cb193-4"><a href="glmm.html#cb193-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb193-5"><a href="glmm.html#cb193-5" tabindex="-1"></a><span class="fu">hist</span>(yrep, <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">main=</span><span class="cn">NA</span>, <span class="at">xlab=</span><span class="st">&quot;Number of fledglings&quot;</span>)</span>
+<span id="cb193-6"><a href="glmm.html#cb193-6" tabindex="-1"></a><span class="fu">hist</span>(dat<span class="sc">$</span>fledge, <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">col=</span><span class="fu">rgb</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="fl">0.3</span>), <span class="at">freq=</span><span class="cn">FALSE</span>)</span>
+<span id="cb193-7"><a href="glmm.html#cb193-7" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">10</span>, <span class="fl">0.15</span>, <span class="at">fill=</span><span class="fu">c</span>(<span class="st">&quot;grey&quot;</span>,<span class="fu">rgb</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="fl">0.3</span>)), <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;yrep&quot;</span>, <span class="st">&quot;y&quot;</span>))</span>
+<span id="cb193-8"><a href="glmm.html#cb193-8" tabindex="-1"></a></span>
+<span id="cb193-9"><a href="glmm.html#cb193-9" tabindex="-1"></a><span class="fu">hist</span>(sdyrep)</span>
+<span id="cb193-10"><a href="glmm.html#cb193-10" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">sd</span>(dat<span class="sc">$</span>fledge), <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb193-11"><a href="glmm.html#cb193-11" tabindex="-1"></a></span>
+<span id="cb193-12"><a href="glmm.html#cb193-12" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(mod.brm)[,<span class="dv">1</span>], dat<span class="sc">$</span>fledge, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">cex=</span><span class="fl">0.6</span>)</span>
+<span id="cb193-13"><a href="glmm.html#cb193-13" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:ppbinomial"></span>
 <img src="2.07-glmm_files/figure-html/ppbinomial-1.png" alt="Posterior predictive model checking: Histogram of the number of fledglings simulated from the model together with a histogram of the real data, and a histogram of the standard deviations of replicated data from the model together with the standard deviation of the data (vertical line in red). The third plot gives the fitted vs. observed values." width="672" />
 <p class="caption">
@@ -651,8 +651,8 @@ The function <code>confint</code> shows the 95% confidence intervals for the ran
 <p>In the <code>summary</code> output from <code>mod.brm</code> we see the model formula and some information on the Markov chains after the warm-up. In the group-level effects (between group standard deviations) and population-level effects (effect sizes, model coefficients) tables some summary statistics of the posterior distribution of each parameter are given. The “Estimate” is the mean of the posterior distribution, the “Est.Error” is the standard deviation of the posterior distribution (which is the standard error of the parameter estimate). Then we see the lower and upper limit of the 95% credible interval. Also, some statistics for measuring how well the Markov chains converged are given: the “Rhat” and the effective sample size (ESS). The bulk ESS tells us how many independent samples we have to describe the posterior distribution, and the tail ESS tells us on how many samples the limits of the 95% credible interval is based on.</p>
 <p>Because we used the logit link function, the coefficients are actually on the logit scale and are a bit difficult to interpret. What we can say is that positive coefficients indicate an increase and negative coefficients indicate a decrease in the proportion of nestlings fledged. For continuous predictors, as colsize.z and dung.z, this coefficient refers to the change in the logit of the outcome with a change of one in the predictor (e.g., for colsize.z an increase of one corresponds to an increase of a standard deviation of colsize). For categorical predictors, the coefficients represent a difference between one category and another (reference category is the one not shown in the table).
 To visualize the coefficients we could draw effect plots.</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="glmm.html#cb196-1" tabindex="-1"></a><span class="co"># glmer</span></span>
-<span id="cb196-2"><a href="glmm.html#cb196-2" tabindex="-1"></a><span class="fu">summary</span>(mod.glmer)</span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="glmm.html#cb194-1" tabindex="-1"></a><span class="co"># glmer</span></span>
+<span id="cb194-2"><a href="glmm.html#cb194-2" tabindex="-1"></a><span class="fu">summary</span>(mod.glmer)</span></code></pre></div>
 <pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
 ##   Approximation) [glmerMod]
 ##  Family: binomial  ( logit )
@@ -685,15 +685,15 @@ To visualize the coefficients we could draw effect plots.</p>
 ## colsize.z  0.129              
 ## cow       -0.828 -0.075       
 ## dung.z     0.033  0.139 -0.091</code></pre>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="glmm.html#cb198-1" tabindex="-1"></a>confint<span class="fl">.95</span> <span class="ot">&lt;-</span> <span class="fu">confint</span>(mod.glmer); confint<span class="fl">.95</span></span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="glmm.html#cb196-1" tabindex="-1"></a>confint<span class="fl">.95</span> <span class="ot">&lt;-</span> <span class="fu">confint</span>(mod.glmer); confint<span class="fl">.95</span></span></code></pre></div>
 <pre><code>##                   2.5 %    97.5 %
 ## .sig01       0.16809483 0.7385238
 ## (Intercept) -0.48398346 0.2863200
 ## colsize.z   -0.18428769 0.2950063
 ## cow         -0.05360035 0.8588134
 ## dung.z      -0.36296714 0.0733620</code></pre>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="glmm.html#cb200-1" tabindex="-1"></a><span class="co"># brm</span></span>
-<span id="cb200-2"><a href="glmm.html#cb200-2" tabindex="-1"></a><span class="fu">summary</span>(mod.brm)</span></code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="glmm.html#cb198-1" tabindex="-1"></a><span class="co"># brm</span></span>
+<span id="cb198-2"><a href="glmm.html#cb198-2" tabindex="-1"></a><span class="fu">summary</span>(mod.brm)</span></code></pre></div>
 <pre><code>##  Family: binomial 
 ##   Links: mu = logit 
 ## Formula: fledge | trials(clutch) ~ colsize.z + cow + dung.z + (1 | farm.f) 
@@ -704,25 +704,25 @@ To visualize the coefficients we could draw effect plots.</p>
 ## Group-Level Effects: 
 ## ~farm.f (Number of levels: 51) 
 ##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(Intercept)     0.55      0.16     0.26     0.86 1.00      910     1284
+## sd(Intercept)     0.55      0.15     0.26     0.88 1.00      858     1513
 ## 
 ## Population-Level Effects: 
 ##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept    -0.10      0.21    -0.52     0.32 1.00     2863     2165
-## colsize.z     0.05      0.14    -0.21     0.34 1.00     2266     1794
-## cow           0.41      0.25    -0.06     0.90 1.00     3069     2117
-## dung.z       -0.15      0.12    -0.38     0.09 1.00     3254     2241
+## Intercept    -0.09      0.22    -0.52     0.34 1.00     3151     2341
+## colsize.z     0.05      0.13    -0.21     0.30 1.00     2951     2043
+## cow           0.40      0.25    -0.09     0.89 1.00     3269     2245
+## dung.z       -0.15      0.12    -0.39     0.08 1.00     2882     2257
 ## 
 ## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 ## and Tail_ESS are effective sample size measures, and Rhat is the potential
 ## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
-<p>From the results we conclude that in farms without cows (when cow=0) and for average colony sizes (when colsize.z=0) and average number of dung heaps (when dung.z=0) the average nestling survival of Barn swallows is the inverse-logit function of the Intercept, thus, <code>plogis(</code>-0.1<code>)</code> = 0.47 with a 95% uncertainty interval of 0.37 - 0.58. We further see that colony size and number of dung heaps are less important than whether cows are present or not. Their estimated partial effect is small and their uncertainty interval includes only values close to zero. However, whether cows are present or not may be important for the survival of nestlings. The average nestling survival in farms with cows is <code>plogis(</code>-0.1<code>+</code>0.41<code>)</code> = 0.58. For getting the uncertainty interval of this survival estimate, we need to do the calculation for every simulation from the posterior distribution of both parameters.</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="glmm.html#cb202-1" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">posterior_samples</span>(mod.brm)</span>
-<span id="cb202-2"><a href="glmm.html#cb202-2" tabindex="-1"></a><span class="co"># survival of nestlings on farms with cows:</span></span>
-<span id="cb202-3"><a href="glmm.html#cb202-3" tabindex="-1"></a>survivalest <span class="ot">&lt;-</span> <span class="fu">plogis</span>(bsim<span class="sc">$</span>b_Intercept <span class="sc">+</span> bsim<span class="sc">$</span>b_cow)</span>
-<span id="cb202-4"><a href="glmm.html#cb202-4" tabindex="-1"></a><span class="fu">quantile</span>(survivalest, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="co"># 95% uncertainty interval</span></span></code></pre></div>
+<p>From the results we conclude that in farms without cows (when cow=0) and for average colony sizes (when colsize.z=0) and average number of dung heaps (when dung.z=0) the average nestling survival of Barn swallows is the inverse-logit function of the Intercept, thus, <code>plogis(</code>-0.09<code>)</code> = 0.48 with a 95% uncertainty interval of 0.37 - 0.58. We further see that colony size and number of dung heaps are less important than whether cows are present or not. Their estimated partial effect is small and their uncertainty interval includes only values close to zero. However, whether cows are present or not may be important for the survival of nestlings. The average nestling survival in farms with cows is <code>plogis(</code>-0.09<code>+</code>0.4<code>)</code> = 0.58. For getting the uncertainty interval of this survival estimate, we need to do the calculation for every simulation from the posterior distribution of both parameters.</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="glmm.html#cb200-1" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">posterior_samples</span>(mod.brm)</span>
+<span id="cb200-2"><a href="glmm.html#cb200-2" tabindex="-1"></a><span class="co"># survival of nestlings on farms with cows:</span></span>
+<span id="cb200-3"><a href="glmm.html#cb200-3" tabindex="-1"></a>survivalest <span class="ot">&lt;-</span> <span class="fu">plogis</span>(bsim<span class="sc">$</span>b_Intercept <span class="sc">+</span> bsim<span class="sc">$</span>b_cow)</span>
+<span id="cb200-4"><a href="glmm.html#cb200-4" tabindex="-1"></a><span class="fu">quantile</span>(survivalest, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="co"># 95% uncertainty interval</span></span></code></pre></div>
 <pre><code>##      2.5%     97.5% 
-## 0.5126716 0.6412675</code></pre>
+## 0.5078202 0.6400263</code></pre>
 <p>In medical research, it is standard to report the fixed-effects coefficients from GLMM with binomial or Bernoulli error as odds ratios by taking the exponent (R function <code>exp</code> for <span class="math inline">\(e^{()}\)</span>) of the coefficient on the logit-scale. For example, the coefficient for cow from <code>mod.glmer</code>, 0.39 (95% CI from -0.05 to -0.05), represents an odds ratio of exp(
 0.39)=1.48 (95% CI from 0.95 to 0.95). This means that the odds for fledging (vs. not fledging) from a clutch from a farm with livestock present is about 1.5 times larger than the odds for fledging if no livestock is present (relative effect).</p>
 </div>

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>20 Structural equation models | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="20 Structural equation models | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
@@ -20,10 +20,10 @@
   <meta name="twitter:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="twitter:image" content="/images/cover.jpg" />
 
-<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
+<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2024-10-12" />
+<meta name="date" content="2024-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -66,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -164,7 +164,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-this-book"><i class="fa fa-check"></i>Why this book?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
 </ul></li>
 <li class="part"><span><b>I BASIC STATISTICS FOR ECOLOGISTS</b></span></li>
@@ -454,88 +454,88 @@ div.csl-indent {
 </blockquote>
 <div id="introduction-5" class="section level2 hasAnchor" number="20.1">
 <h2><span class="header-section-number">20.1</span> Introduction<a href="SEM.html#introduction-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="SEM.html#cb242-1" tabindex="-1"></a><span class="sc">------------------------------------------------------------------------------------------------------</span></span>
-<span id="cb242-2"><a href="SEM.html#cb242-2" tabindex="-1"></a><span class="co"># General settings</span></span>
-<span id="cb242-3"><a href="SEM.html#cb242-3" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------------------------------</span></span>
-<span id="cb242-4"><a href="SEM.html#cb242-4" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb242-5"><a href="SEM.html#cb242-5" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
-<span id="cb242-6"><a href="SEM.html#cb242-6" tabindex="-1"></a><span class="fu">library</span>(MCMCpack)</span>
-<span id="cb242-7"><a href="SEM.html#cb242-7" tabindex="-1"></a></span>
-<span id="cb242-8"><a href="SEM.html#cb242-8" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------------------------------</span></span>
-<span id="cb242-9"><a href="SEM.html#cb242-9" tabindex="-1"></a><span class="co"># Simulation</span></span>
-<span id="cb242-10"><a href="SEM.html#cb242-10" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------------------------------</span></span>
-<span id="cb242-11"><a href="SEM.html#cb242-11" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb242-12"><a href="SEM.html#cb242-12" tabindex="-1"></a>heffM <span class="ot">&lt;-</span> <span class="fl">0.6</span>                                <span class="co"># effect of H on M</span></span>
-<span id="cb242-13"><a href="SEM.html#cb242-13" tabindex="-1"></a>heffCS <span class="ot">&lt;-</span> <span class="fl">0.0</span>                              <span class="co"># effect of H on Clutch size</span></span>
-<span id="cb242-14"><a href="SEM.html#cb242-14" tabindex="-1"></a>meffCS <span class="ot">&lt;-</span> <span class="fl">0.6</span>                               <span class="co"># effect of M on Clutch size</span></span>
-<span id="cb242-15"><a href="SEM.html#cb242-15" tabindex="-1"></a></span>
-<span id="cb242-16"><a href="SEM.html#cb242-16" tabindex="-1"></a>SigmaM <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.04</span>,<span class="fl">0.04</span>,<span class="fl">0.1</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb242-17"><a href="SEM.html#cb242-17" tabindex="-1"></a>meffm1 <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
-<span id="cb242-18"><a href="SEM.html#cb242-18" tabindex="-1"></a>meffm2 <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
-<span id="cb242-19"><a href="SEM.html#cb242-19" tabindex="-1"></a></span>
-<span id="cb242-20"><a href="SEM.html#cb242-20" tabindex="-1"></a>SigmaH <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.04</span>,<span class="fl">0.04</span>,<span class="fl">0.1</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb242-21"><a href="SEM.html#cb242-21" tabindex="-1"></a>meffh1 <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
-<span id="cb242-22"><a href="SEM.html#cb242-22" tabindex="-1"></a>meffh2 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.7</span></span>
-<span id="cb242-23"><a href="SEM.html#cb242-23" tabindex="-1"></a></span>
-<span id="cb242-24"><a href="SEM.html#cb242-24" tabindex="-1"></a><span class="co"># Latente Variablen</span></span>
-<span id="cb242-25"><a href="SEM.html#cb242-25" tabindex="-1"></a>H <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb242-26"><a href="SEM.html#cb242-26" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, heffM <span class="sc">*</span> H, <span class="fl">0.1</span>)</span>
-<span id="cb242-27"><a href="SEM.html#cb242-27" tabindex="-1"></a></span>
-<span id="cb242-28"><a href="SEM.html#cb242-28" tabindex="-1"></a><span class="co"># Clutch size</span></span>
-<span id="cb242-29"><a href="SEM.html#cb242-29" tabindex="-1"></a>CS <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, heffCS <span class="sc">*</span> H <span class="sc">+</span> meffCS <span class="sc">*</span> M, <span class="fl">0.1</span>)</span>
-<span id="cb242-30"><a href="SEM.html#cb242-30" tabindex="-1"></a></span>
-<span id="cb242-31"><a href="SEM.html#cb242-31" tabindex="-1"></a><span class="co"># Indicators</span></span>
-<span id="cb242-32"><a href="SEM.html#cb242-32" tabindex="-1"></a>eM <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meffm1 <span class="sc">*</span> M, meffm2 <span class="sc">*</span> M)</span>
-<span id="cb242-33"><a href="SEM.html#cb242-33" tabindex="-1"></a>datM <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> n)</span>
-<span id="cb242-34"><a href="SEM.html#cb242-34" tabindex="-1"></a>eH <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meffh1 <span class="sc">*</span> H, meffh2 <span class="sc">*</span> H)</span>
-<span id="cb242-35"><a href="SEM.html#cb242-35" tabindex="-1"></a>datH <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> n)</span>
-<span id="cb242-36"><a href="SEM.html#cb242-36" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
-<span id="cb242-37"><a href="SEM.html#cb242-37" tabindex="-1"></a>  datM[i,] <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="dv">1</span>, eM[i,], SigmaM)</span>
-<span id="cb242-38"><a href="SEM.html#cb242-38" tabindex="-1"></a>  datH[i,] <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="dv">1</span>, eH[i,], SigmaH)</span>
-<span id="cb242-39"><a href="SEM.html#cb242-39" tabindex="-1"></a>}</span>
-<span id="cb242-40"><a href="SEM.html#cb242-40" tabindex="-1"></a></span>
-<span id="cb242-41"><a href="SEM.html#cb242-41" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------</span></span>
-<span id="cb242-42"><a href="SEM.html#cb242-42" tabindex="-1"></a><span class="co"># JAGS Model  </span></span>
-<span id="cb242-43"><a href="SEM.html#cb242-43" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------</span></span>
-<span id="cb242-44"><a href="SEM.html#cb242-44" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">datM =</span> datM, <span class="at">datH =</span> datH, <span class="at">n =</span> n, <span class="at">CS =</span> CS, <span class="co">#H = H, M = M,  </span></span>
-<span id="cb242-45"><a href="SEM.html#cb242-45" tabindex="-1"></a>            <span class="at">S3 =</span>  <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">1</span>)</span>
-<span id="cb242-46"><a href="SEM.html#cb242-46" tabindex="-1"></a></span>
-<span id="cb242-47"><a href="SEM.html#cb242-47" tabindex="-1"></a><span class="co"># Function to create initial values</span></span>
-<span id="cb242-48"><a href="SEM.html#cb242-48" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb242-49"><a href="SEM.html#cb242-49" tabindex="-1"></a>  <span class="fu">list</span>(</span>
-<span id="cb242-50"><a href="SEM.html#cb242-50" tabindex="-1"></a>    <span class="at">meffh =</span> <span class="fu">runif</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
-<span id="cb242-51"><a href="SEM.html#cb242-51" tabindex="-1"></a>    <span class="at">meffm =</span> <span class="fu">runif</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
-<span id="cb242-52"><a href="SEM.html#cb242-52" tabindex="-1"></a>    <span class="at">heffM =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
-<span id="cb242-53"><a href="SEM.html#cb242-53" tabindex="-1"></a>    <span class="at">heffCS =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
-<span id="cb242-54"><a href="SEM.html#cb242-54" tabindex="-1"></a>    <span class="at">meffCS =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
-<span id="cb242-55"><a href="SEM.html#cb242-55" tabindex="-1"></a>    <span class="at">tauCS =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
-<span id="cb242-56"><a href="SEM.html#cb242-56" tabindex="-1"></a>    <span class="at">tauMH =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
-<span id="cb242-57"><a href="SEM.html#cb242-57" tabindex="-1"></a>    <span class="at">tauH =</span> <span class="fu">rwish</span>(<span class="dv">3</span>,<span class="fu">matrix</span>(<span class="fu">c</span>(.<span class="dv">02</span>,<span class="dv">0</span>,<span class="dv">0</span>,.<span class="dv">04</span>),<span class="at">nrow=</span><span class="dv">2</span>)),</span>
-<span id="cb242-58"><a href="SEM.html#cb242-58" tabindex="-1"></a>    <span class="at">tauM =</span> <span class="fu">rwish</span>(<span class="dv">3</span>,<span class="fu">matrix</span>(<span class="fu">c</span>(.<span class="dv">02</span>,<span class="dv">0</span>,<span class="dv">0</span>,.<span class="dv">04</span>),<span class="at">nrow=</span><span class="dv">2</span>))</span>
-<span id="cb242-59"><a href="SEM.html#cb242-59" tabindex="-1"></a><span class="co">#    M = as.numeric(rep(0, n))</span></span>
-<span id="cb242-60"><a href="SEM.html#cb242-60" tabindex="-1"></a>  )</span>
-<span id="cb242-61"><a href="SEM.html#cb242-61" tabindex="-1"></a>}</span>
-<span id="cb242-62"><a href="SEM.html#cb242-62" tabindex="-1"></a></span>
-<span id="cb242-63"><a href="SEM.html#cb242-63" tabindex="-1"></a>t.n.thin <span class="ot">&lt;-</span>      <span class="dv">50</span></span>
-<span id="cb242-64"><a href="SEM.html#cb242-64" tabindex="-1"></a>t.n.chains <span class="ot">&lt;-</span>     <span class="dv">2</span></span>
-<span id="cb242-65"><a href="SEM.html#cb242-65" tabindex="-1"></a>t.n.burnin <span class="ot">&lt;-</span> <span class="dv">20000</span></span>
-<span id="cb242-66"><a href="SEM.html#cb242-66" tabindex="-1"></a>t.n.iter <span class="ot">&lt;-</span>   <span class="dv">50000</span></span>
-<span id="cb242-67"><a href="SEM.html#cb242-67" tabindex="-1"></a></span>
-<span id="cb242-68"><a href="SEM.html#cb242-68" tabindex="-1"></a><span class="co"># Run JAGS</span></span>
-<span id="cb242-69"><a href="SEM.html#cb242-69" tabindex="-1"></a>jagres <span class="ot">&lt;-</span> <span class="fu">jags.model</span>(<span class="st">&#39;JAGS/BUGSmod1.R&#39;</span>,<span class="at">data =</span> dat, <span class="at">n.chains =</span> t.n.chains, <span class="at">inits =</span> inits, <span class="at">n.adapt =</span> t.n.burnin)</span>
-<span id="cb242-70"><a href="SEM.html#cb242-70" tabindex="-1"></a></span>
-<span id="cb242-71"><a href="SEM.html#cb242-71" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;meffh&quot;</span>, <span class="st">&quot;meffm&quot;</span>, <span class="st">&quot;heffM&quot;</span>, <span class="st">&quot;heffCS&quot;</span>, <span class="st">&quot;meffCS&quot;</span>)</span>
-<span id="cb242-72"><a href="SEM.html#cb242-72" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">coda.samples</span>(jagres, params, <span class="at">n.iter=</span>t.n.iter, <span class="at">thin=</span>t.n.thin)</span>
-<span id="cb242-73"><a href="SEM.html#cb242-73" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">data.frame</span>(<span class="fu">summary</span>(mod)<span class="sc">$</span>quantiles[, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span>)]), <span class="dv">3</span>)</span>
-<span id="cb242-74"><a href="SEM.html#cb242-74" tabindex="-1"></a>res<span class="sc">$</span>TRUEVALUE <span class="ot">&lt;-</span> <span class="fu">c</span>(heffCS, heffM, meffCS, meffh1, meffh2, meffm1, meffm2)</span>
-<span id="cb242-75"><a href="SEM.html#cb242-75" tabindex="-1"></a>res</span>
-<span id="cb242-76"><a href="SEM.html#cb242-76" tabindex="-1"></a></span>
-<span id="cb242-77"><a href="SEM.html#cb242-77" tabindex="-1"></a><span class="co"># Traceplots</span></span>
-<span id="cb242-78"><a href="SEM.html#cb242-78" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">rbind</span>(mod[[<span class="dv">1</span>]], mod[[<span class="dv">2</span>]]))</span>
-<span id="cb242-79"><a href="SEM.html#cb242-79" tabindex="-1"></a><span class="fu">names</span>(post) <span class="ot">&lt;-</span> <span class="fu">dimnames</span>(mod[[<span class="dv">1</span>]])[[<span class="dv">2</span>]]</span>
-<span id="cb242-80"><a href="SEM.html#cb242-80" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))</span>
-<span id="cb242-81"><a href="SEM.html#cb242-81" tabindex="-1"></a>param <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;meffh[1]&quot;</span>, <span class="st">&quot;meffh[2]&quot;</span>, <span class="st">&quot;meffm[1]&quot;</span>, <span class="st">&quot;meffm[2]&quot;</span>, <span class="st">&quot;heffM&quot;</span>, <span class="st">&quot;heffCS&quot;</span>, <span class="st">&quot;meffCS&quot;</span>)</span>
-<span id="cb242-82"><a href="SEM.html#cb242-82" tabindex="-1"></a><span class="fu">traceplot</span>(mod[, <span class="fu">match</span>(param, <span class="fu">names</span>(post))])</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="SEM.html#cb240-1" tabindex="-1"></a><span class="sc">------------------------------------------------------------------------------------------------------</span></span>
+<span id="cb240-2"><a href="SEM.html#cb240-2" tabindex="-1"></a><span class="co"># General settings</span></span>
+<span id="cb240-3"><a href="SEM.html#cb240-3" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------------------------------</span></span>
+<span id="cb240-4"><a href="SEM.html#cb240-4" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb240-5"><a href="SEM.html#cb240-5" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb240-6"><a href="SEM.html#cb240-6" tabindex="-1"></a><span class="fu">library</span>(MCMCpack)</span>
+<span id="cb240-7"><a href="SEM.html#cb240-7" tabindex="-1"></a></span>
+<span id="cb240-8"><a href="SEM.html#cb240-8" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------------------------------</span></span>
+<span id="cb240-9"><a href="SEM.html#cb240-9" tabindex="-1"></a><span class="co"># Simulation</span></span>
+<span id="cb240-10"><a href="SEM.html#cb240-10" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------------------------------</span></span>
+<span id="cb240-11"><a href="SEM.html#cb240-11" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb240-12"><a href="SEM.html#cb240-12" tabindex="-1"></a>heffM <span class="ot">&lt;-</span> <span class="fl">0.6</span>                                <span class="co"># effect of H on M</span></span>
+<span id="cb240-13"><a href="SEM.html#cb240-13" tabindex="-1"></a>heffCS <span class="ot">&lt;-</span> <span class="fl">0.0</span>                              <span class="co"># effect of H on Clutch size</span></span>
+<span id="cb240-14"><a href="SEM.html#cb240-14" tabindex="-1"></a>meffCS <span class="ot">&lt;-</span> <span class="fl">0.6</span>                               <span class="co"># effect of M on Clutch size</span></span>
+<span id="cb240-15"><a href="SEM.html#cb240-15" tabindex="-1"></a></span>
+<span id="cb240-16"><a href="SEM.html#cb240-16" tabindex="-1"></a>SigmaM <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.04</span>,<span class="fl">0.04</span>,<span class="fl">0.1</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb240-17"><a href="SEM.html#cb240-17" tabindex="-1"></a>meffm1 <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
+<span id="cb240-18"><a href="SEM.html#cb240-18" tabindex="-1"></a>meffm2 <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
+<span id="cb240-19"><a href="SEM.html#cb240-19" tabindex="-1"></a></span>
+<span id="cb240-20"><a href="SEM.html#cb240-20" tabindex="-1"></a>SigmaH <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.04</span>,<span class="fl">0.04</span>,<span class="fl">0.1</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb240-21"><a href="SEM.html#cb240-21" tabindex="-1"></a>meffh1 <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
+<span id="cb240-22"><a href="SEM.html#cb240-22" tabindex="-1"></a>meffh2 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.7</span></span>
+<span id="cb240-23"><a href="SEM.html#cb240-23" tabindex="-1"></a></span>
+<span id="cb240-24"><a href="SEM.html#cb240-24" tabindex="-1"></a><span class="co"># Latente Variablen</span></span>
+<span id="cb240-25"><a href="SEM.html#cb240-25" tabindex="-1"></a>H <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb240-26"><a href="SEM.html#cb240-26" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, heffM <span class="sc">*</span> H, <span class="fl">0.1</span>)</span>
+<span id="cb240-27"><a href="SEM.html#cb240-27" tabindex="-1"></a></span>
+<span id="cb240-28"><a href="SEM.html#cb240-28" tabindex="-1"></a><span class="co"># Clutch size</span></span>
+<span id="cb240-29"><a href="SEM.html#cb240-29" tabindex="-1"></a>CS <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, heffCS <span class="sc">*</span> H <span class="sc">+</span> meffCS <span class="sc">*</span> M, <span class="fl">0.1</span>)</span>
+<span id="cb240-30"><a href="SEM.html#cb240-30" tabindex="-1"></a></span>
+<span id="cb240-31"><a href="SEM.html#cb240-31" tabindex="-1"></a><span class="co"># Indicators</span></span>
+<span id="cb240-32"><a href="SEM.html#cb240-32" tabindex="-1"></a>eM <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meffm1 <span class="sc">*</span> M, meffm2 <span class="sc">*</span> M)</span>
+<span id="cb240-33"><a href="SEM.html#cb240-33" tabindex="-1"></a>datM <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> n)</span>
+<span id="cb240-34"><a href="SEM.html#cb240-34" tabindex="-1"></a>eH <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meffh1 <span class="sc">*</span> H, meffh2 <span class="sc">*</span> H)</span>
+<span id="cb240-35"><a href="SEM.html#cb240-35" tabindex="-1"></a>datH <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> n)</span>
+<span id="cb240-36"><a href="SEM.html#cb240-36" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb240-37"><a href="SEM.html#cb240-37" tabindex="-1"></a>  datM[i,] <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="dv">1</span>, eM[i,], SigmaM)</span>
+<span id="cb240-38"><a href="SEM.html#cb240-38" tabindex="-1"></a>  datH[i,] <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="dv">1</span>, eH[i,], SigmaH)</span>
+<span id="cb240-39"><a href="SEM.html#cb240-39" tabindex="-1"></a>}</span>
+<span id="cb240-40"><a href="SEM.html#cb240-40" tabindex="-1"></a></span>
+<span id="cb240-41"><a href="SEM.html#cb240-41" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------</span></span>
+<span id="cb240-42"><a href="SEM.html#cb240-42" tabindex="-1"></a><span class="co"># JAGS Model  </span></span>
+<span id="cb240-43"><a href="SEM.html#cb240-43" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------</span></span>
+<span id="cb240-44"><a href="SEM.html#cb240-44" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">datM =</span> datM, <span class="at">datH =</span> datH, <span class="at">n =</span> n, <span class="at">CS =</span> CS, <span class="co">#H = H, M = M,  </span></span>
+<span id="cb240-45"><a href="SEM.html#cb240-45" tabindex="-1"></a>            <span class="at">S3 =</span>  <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">1</span>)</span>
+<span id="cb240-46"><a href="SEM.html#cb240-46" tabindex="-1"></a></span>
+<span id="cb240-47"><a href="SEM.html#cb240-47" tabindex="-1"></a><span class="co"># Function to create initial values</span></span>
+<span id="cb240-48"><a href="SEM.html#cb240-48" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb240-49"><a href="SEM.html#cb240-49" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb240-50"><a href="SEM.html#cb240-50" tabindex="-1"></a>    <span class="at">meffh =</span> <span class="fu">runif</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
+<span id="cb240-51"><a href="SEM.html#cb240-51" tabindex="-1"></a>    <span class="at">meffm =</span> <span class="fu">runif</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
+<span id="cb240-52"><a href="SEM.html#cb240-52" tabindex="-1"></a>    <span class="at">heffM =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
+<span id="cb240-53"><a href="SEM.html#cb240-53" tabindex="-1"></a>    <span class="at">heffCS =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
+<span id="cb240-54"><a href="SEM.html#cb240-54" tabindex="-1"></a>    <span class="at">meffCS =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
+<span id="cb240-55"><a href="SEM.html#cb240-55" tabindex="-1"></a>    <span class="at">tauCS =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
+<span id="cb240-56"><a href="SEM.html#cb240-56" tabindex="-1"></a>    <span class="at">tauMH =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
+<span id="cb240-57"><a href="SEM.html#cb240-57" tabindex="-1"></a>    <span class="at">tauH =</span> <span class="fu">rwish</span>(<span class="dv">3</span>,<span class="fu">matrix</span>(<span class="fu">c</span>(.<span class="dv">02</span>,<span class="dv">0</span>,<span class="dv">0</span>,.<span class="dv">04</span>),<span class="at">nrow=</span><span class="dv">2</span>)),</span>
+<span id="cb240-58"><a href="SEM.html#cb240-58" tabindex="-1"></a>    <span class="at">tauM =</span> <span class="fu">rwish</span>(<span class="dv">3</span>,<span class="fu">matrix</span>(<span class="fu">c</span>(.<span class="dv">02</span>,<span class="dv">0</span>,<span class="dv">0</span>,.<span class="dv">04</span>),<span class="at">nrow=</span><span class="dv">2</span>))</span>
+<span id="cb240-59"><a href="SEM.html#cb240-59" tabindex="-1"></a><span class="co">#    M = as.numeric(rep(0, n))</span></span>
+<span id="cb240-60"><a href="SEM.html#cb240-60" tabindex="-1"></a>  )</span>
+<span id="cb240-61"><a href="SEM.html#cb240-61" tabindex="-1"></a>}</span>
+<span id="cb240-62"><a href="SEM.html#cb240-62" tabindex="-1"></a></span>
+<span id="cb240-63"><a href="SEM.html#cb240-63" tabindex="-1"></a>t.n.thin <span class="ot">&lt;-</span>      <span class="dv">50</span></span>
+<span id="cb240-64"><a href="SEM.html#cb240-64" tabindex="-1"></a>t.n.chains <span class="ot">&lt;-</span>     <span class="dv">2</span></span>
+<span id="cb240-65"><a href="SEM.html#cb240-65" tabindex="-1"></a>t.n.burnin <span class="ot">&lt;-</span> <span class="dv">20000</span></span>
+<span id="cb240-66"><a href="SEM.html#cb240-66" tabindex="-1"></a>t.n.iter <span class="ot">&lt;-</span>   <span class="dv">50000</span></span>
+<span id="cb240-67"><a href="SEM.html#cb240-67" tabindex="-1"></a></span>
+<span id="cb240-68"><a href="SEM.html#cb240-68" tabindex="-1"></a><span class="co"># Run JAGS</span></span>
+<span id="cb240-69"><a href="SEM.html#cb240-69" tabindex="-1"></a>jagres <span class="ot">&lt;-</span> <span class="fu">jags.model</span>(<span class="st">&#39;JAGS/BUGSmod1.R&#39;</span>,<span class="at">data =</span> dat, <span class="at">n.chains =</span> t.n.chains, <span class="at">inits =</span> inits, <span class="at">n.adapt =</span> t.n.burnin)</span>
+<span id="cb240-70"><a href="SEM.html#cb240-70" tabindex="-1"></a></span>
+<span id="cb240-71"><a href="SEM.html#cb240-71" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;meffh&quot;</span>, <span class="st">&quot;meffm&quot;</span>, <span class="st">&quot;heffM&quot;</span>, <span class="st">&quot;heffCS&quot;</span>, <span class="st">&quot;meffCS&quot;</span>)</span>
+<span id="cb240-72"><a href="SEM.html#cb240-72" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">coda.samples</span>(jagres, params, <span class="at">n.iter=</span>t.n.iter, <span class="at">thin=</span>t.n.thin)</span>
+<span id="cb240-73"><a href="SEM.html#cb240-73" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">data.frame</span>(<span class="fu">summary</span>(mod)<span class="sc">$</span>quantiles[, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span>)]), <span class="dv">3</span>)</span>
+<span id="cb240-74"><a href="SEM.html#cb240-74" tabindex="-1"></a>res<span class="sc">$</span>TRUEVALUE <span class="ot">&lt;-</span> <span class="fu">c</span>(heffCS, heffM, meffCS, meffh1, meffh2, meffm1, meffm2)</span>
+<span id="cb240-75"><a href="SEM.html#cb240-75" tabindex="-1"></a>res</span>
+<span id="cb240-76"><a href="SEM.html#cb240-76" tabindex="-1"></a></span>
+<span id="cb240-77"><a href="SEM.html#cb240-77" tabindex="-1"></a><span class="co"># Traceplots</span></span>
+<span id="cb240-78"><a href="SEM.html#cb240-78" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">rbind</span>(mod[[<span class="dv">1</span>]], mod[[<span class="dv">2</span>]]))</span>
+<span id="cb240-79"><a href="SEM.html#cb240-79" tabindex="-1"></a><span class="fu">names</span>(post) <span class="ot">&lt;-</span> <span class="fu">dimnames</span>(mod[[<span class="dv">1</span>]])[[<span class="dv">2</span>]]</span>
+<span id="cb240-80"><a href="SEM.html#cb240-80" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))</span>
+<span id="cb240-81"><a href="SEM.html#cb240-81" tabindex="-1"></a>param <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;meffh[1]&quot;</span>, <span class="st">&quot;meffh[2]&quot;</span>, <span class="st">&quot;meffm[1]&quot;</span>, <span class="st">&quot;meffm[2]&quot;</span>, <span class="st">&quot;heffM&quot;</span>, <span class="st">&quot;heffCS&quot;</span>, <span class="st">&quot;meffCS&quot;</span>)</span>
+<span id="cb240-82"><a href="SEM.html#cb240-82" tabindex="-1"></a><span class="fu">traceplot</span>(mod[, <span class="fu">match</span>(param, <span class="fu">names</span>(post))])</span></code></pre></div>
 
 </div>
 </div>

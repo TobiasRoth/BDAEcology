@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>12 Assessing Model Assumptions | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="12 Assessing Model Assumptions | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
@@ -20,10 +20,10 @@
   <meta name="twitter:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="twitter:image" content="/images/cover.jpg" />
 
-<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
+<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2024-10-12" />
+<meta name="date" content="2024-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -66,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -164,7 +164,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-this-book"><i class="fa fa-check"></i>Why this book?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
 </ul></li>
 <li class="part"><span><b>I BASIC STATISTICS FOR ECOLOGISTS</b></span></li>
@@ -477,10 +477,10 @@ The third panel shows the square root of the absolute values of the standardized
 The fourth panel shows the residuals against the leverage. An observation with a measurement of a predictor variable far from the others has a large leverage. When all predictors are factors, observations with a rare combination of factor levels have higher leverages than observations with a common combination of factor levels. Such observations have the potential to have a large influence on the regression line. A high leverage does not necessarily mean that this observation has a big influence on the model. If that observation fits well to the pattern of all other data points, the observation does not have an unduly large influence on the model estimates, despite its large leverage. However, if it does not fit into the picture, this observation has a strong influence on the parameter estimates.
 The influence of one observation on the parameter estimates is measured by the Cook’s distance. Observations with large Cook’s distances lie beyond the red dashed lines in the fourth of the residual plots (the 0.5 and 1 iso lines for Cook’s distances are given as dashed lines). Observations with a Cook’s distance larger than 1 are usually considered to be overly influential and should be checked.</p>
 <p>The diagnostic plots (Fig. <a href="residualanalysis.html#fig:diagplotdg">12.1</a>) of the residuals of the model fitted to the data of the species <em>Dactylis glomerata</em> look quite acceptable. 1. The average residual value is around zero along the range of fitted values, 2. the points are alined diagonally in the QQ-plot, 3. the variance does not noticably change along the fitted values, and 4. no observation has a large Cook’s distance.</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="residualanalysis.html#cb141-1" tabindex="-1"></a><span class="fu">data</span>(ellenberg)</span>
-<span id="cb141-2"><a href="residualanalysis.html#cb141-2" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yi.g<span class="sc">~</span>Water, <span class="at">data=</span>ellenberg[ellenberg<span class="sc">$</span>Species<span class="sc">==</span><span class="st">&quot;Dg&quot;</span>,])</span>
-<span id="cb141-3"><a href="residualanalysis.html#cb141-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb141-4"><a href="residualanalysis.html#cb141-4" tabindex="-1"></a><span class="fu">plot</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="residualanalysis.html#cb139-1" tabindex="-1"></a><span class="fu">data</span>(ellenberg)</span>
+<span id="cb139-2"><a href="residualanalysis.html#cb139-2" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yi.g<span class="sc">~</span>Water, <span class="at">data=</span>ellenberg[ellenberg<span class="sc">$</span>Species<span class="sc">==</span><span class="st">&quot;Dg&quot;</span>,])</span>
+<span id="cb139-3"><a href="residualanalysis.html#cb139-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb139-4"><a href="residualanalysis.html#cb139-4" tabindex="-1"></a><span class="fu">plot</span>(mod)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:diagplotdg"></span>
 <img src="2.04-residual_analysis_files/figure-html/diagplotdg-1.png" alt="Standard diagnostic residual plots of a linear regression for the biomass data of D. glomerata." width="672" />
 <p class="caption">
@@ -488,9 +488,9 @@ Figure 12.1: Standard diagnostic residual plots of a linear regression for the b
 </p>
 </div>
 <p>However, when the same model is fitted to data of <em>Alopecurus pratensis</em>, the model assumptions may not be met well (Fig. <a href="residualanalysis.html#fig:diagplotap">12.2</a>). The average of the residuals decreases with increasing fitted values (panel 1). A few observations, in particular observation 133, do not fit to a normal distribution (panel 2). The residual variance increases with increasing fitted values (panel 3). Observation 133 has a too high Cook’s distance.</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="residualanalysis.html#cb142-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yi.g<span class="sc">~</span>Water, <span class="at">data=</span>ellenberg[ellenberg<span class="sc">$</span>Species<span class="sc">==</span><span class="st">&quot;Ap&quot;</span>,])</span>
-<span id="cb142-2"><a href="residualanalysis.html#cb142-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb142-3"><a href="residualanalysis.html#cb142-3" tabindex="-1"></a><span class="fu">plot</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="residualanalysis.html#cb140-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yi.g<span class="sc">~</span>Water, <span class="at">data=</span>ellenberg[ellenberg<span class="sc">$</span>Species<span class="sc">==</span><span class="st">&quot;Ap&quot;</span>,])</span>
+<span id="cb140-2"><a href="residualanalysis.html#cb140-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb140-3"><a href="residualanalysis.html#cb140-3" tabindex="-1"></a><span class="fu">plot</span>(mod)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:diagplotap"></span>
 <img src="2.04-residual_analysis_files/figure-html/diagplotap-1.png" alt="Standard diagnostic residual plots of a linear regression for the biomass data of A. pratensis." width="672" />
 <p class="caption">
@@ -498,9 +498,9 @@ Figure 12.2: Standard diagnostic residual plots of a linear regression for the b
 </p>
 </div>
 <p>An increasing variance with increasing fitted values is a widespread case. The logarithm or square-root transformation of the response variable often is a quick and simple solution. Also, in this case, the log transformation improved the diagnostic plots (Fig. <a href="residualanalysis.html#fig:diagplotaplog">12.3</a>).</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="residualanalysis.html#cb143-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Yi.g)<span class="sc">~</span>Water, <span class="at">data=</span>ellenberg[ellenberg<span class="sc">$</span>Species<span class="sc">==</span><span class="st">&quot;Ap&quot;</span>,])</span>
-<span id="cb143-2"><a href="residualanalysis.html#cb143-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb143-3"><a href="residualanalysis.html#cb143-3" tabindex="-1"></a><span class="fu">plot</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="residualanalysis.html#cb141-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Yi.g)<span class="sc">~</span>Water, <span class="at">data=</span>ellenberg[ellenberg<span class="sc">$</span>Species<span class="sc">==</span><span class="st">&quot;Ap&quot;</span>,])</span>
+<span id="cb141-2"><a href="residualanalysis.html#cb141-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb141-3"><a href="residualanalysis.html#cb141-3" tabindex="-1"></a><span class="fu">plot</span>(mod)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:diagplotaplog"></span>
 <img src="2.04-residual_analysis_files/figure-html/diagplotaplog-1.png" alt="Standard diagnostic residual plots of a linear regression for the logarithm of the biomass data of A. pratensis." width="672" />
 <p class="caption">

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>18 MCMC using Stan | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="18 MCMC using Stan | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
@@ -20,10 +20,10 @@
   <meta name="twitter:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="twitter:image" content="/images/cover.jpg" />
 
-<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
+<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2024-10-12" />
+<meta name="date" content="2024-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -66,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -164,7 +164,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-this-book"><i class="fa fa-check"></i>Why this book?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
 </ul></li>
 <li class="part"><span><b>I BASIC STATISTICS FOR ECOLOGISTS</b></span></li>
@@ -454,30 +454,30 @@ div.csl-indent {
 </div>
 <div id="install-rstan" class="section level2 hasAnchor" number="18.2">
 <h2><span class="header-section-number">18.2</span> Install <code>rstan</code><a href="stan.html#install-rstan" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In this book we use the program <a href="http://mc-stan.org">Stan</a> to draw random samples from the joint posterior distribution of the model parameters given a model, the data, prior distributions, and initial values. To do so, it uses the “no-U-turn sampler,” which is a type of Hamiltonian Monte Carlo simulation <span class="citation">(<a href="referenzen.html#ref-Hoffman2014">Hoffman and Gelman 2014</a>; <a href="referenzen.html#ref-Betancourt2013_b">Betancourt 2013</a>)</span>, and optimization-based point estimation. These algorithms are more efficient than the ones implemented in BUGS programs and they can handle larger data sets. Stan works particularly well for hierar- chical models <span class="citation">(<a href="referenzen.html#ref-Betancourt2013">Betancourt and Girolami 2013</a>)</span>. Stan runs on Windows, Mac, and Linux and can be used via the R interface <code>rstan</code>. Stan is automatically installed when the R package <code>rstan</code> is installed. For <a href="https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started">installing rstan</a>, it is advised to follow closely the system-specific instructions.</p>
+<p>In this book we use the program <a href="http://mc-stan.org">Stan</a> to draw random samples from the joint posterior distribution of the model parameters given a model, the data, prior distributions, and initial values. To do so, it uses the “no-U-turn sampler,” which is a type of Hamiltonian Monte Carlo simulation <span class="citation">(<a href="referenzen.html#ref-Hoffman.2014">Hoffman and Gelman 2014</a>; <a href="referenzen.html#ref-Betancourt.2013b">Betancourt 2013</a>)</span>, and optimization-based point estimation. These algorithms are more efficient than the ones implemented in BUGS programs and they can handle larger data sets. Stan works particularly well for hierarchical models <span class="citation">(<a href="referenzen.html#ref-Betancourt.2013">Betancourt and Girolami 2013</a>)</span>. Stan runs on Windows, Mac, and Linux and can be used via the R interface <code>rstan</code>. Stan is automatically installed when the R package <code>rstan</code> is installed. For <a href="https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started">installing rstan</a>, it is advised to follow closely the system-specific instructions.</p>
 </div>
 <div id="firststanmod" class="section level2 hasAnchor" number="18.3">
 <h2><span class="header-section-number">18.3</span> Writing a Stan model<a href="stan.html#firststanmod" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The statistical model is written in the Stan language and saved in a text file. The Stan language is rather strict, forcing the user to write unambiguous models. Stan is very well documented and the <a href="http://mc-stan.org/users/documentation/index.html">Stan Documentation</a> contains a comprehensive Language Manual, a Wiki documentation and various tutorials.</p>
 <p>We here provide a normal regression with one predictor variable as a worked example. The entire Stan model is as following (saved as <code>linreg.stan</code>)</p>
-<div class="sourceCode" id="cb238"><pre class="sourceCode stan"><code class="sourceCode stan"><span id="cb238-1"><a href="stan.html#cb238-1" tabindex="-1"></a><span class="kw">data</span> {</span>
-<span id="cb238-2"><a href="stan.html#cb238-2" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; n;</span>
-<span id="cb238-3"><a href="stan.html#cb238-3" tabindex="-1"></a>  <span class="dt">vector</span>[n] y;</span>
-<span id="cb238-4"><a href="stan.html#cb238-4" tabindex="-1"></a>  <span class="dt">vector</span>[n] x;</span>
-<span id="cb238-5"><a href="stan.html#cb238-5" tabindex="-1"></a>}</span>
-<span id="cb238-6"><a href="stan.html#cb238-6" tabindex="-1"></a></span>
-<span id="cb238-7"><a href="stan.html#cb238-7" tabindex="-1"></a><span class="kw">parameters</span> {</span>
-<span id="cb238-8"><a href="stan.html#cb238-8" tabindex="-1"></a>  <span class="dt">vector</span>[<span class="dv">2</span>] beta;</span>
-<span id="cb238-9"><a href="stan.html#cb238-9" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; sigma;</span>
-<span id="cb238-10"><a href="stan.html#cb238-10" tabindex="-1"></a>}</span>
-<span id="cb238-11"><a href="stan.html#cb238-11" tabindex="-1"></a></span>
-<span id="cb238-12"><a href="stan.html#cb238-12" tabindex="-1"></a><span class="kw">model</span> {</span>
-<span id="cb238-13"><a href="stan.html#cb238-13" tabindex="-1"></a>  <span class="co">//priors</span></span>
-<span id="cb238-14"><a href="stan.html#cb238-14" tabindex="-1"></a>  beta ~ normal(<span class="dv">0</span>,<span class="dv">5</span>);</span>
-<span id="cb238-15"><a href="stan.html#cb238-15" tabindex="-1"></a>  sigma ~ cauchy(<span class="dv">0</span>,<span class="dv">5</span>);</span>
-<span id="cb238-16"><a href="stan.html#cb238-16" tabindex="-1"></a>  <span class="co">// likelihood</span></span>
-<span id="cb238-17"><a href="stan.html#cb238-17" tabindex="-1"></a>  y ~ normal(beta[<span class="dv">1</span>] + beta[<span class="dv">2</span>] * x, sigma);</span>
-<span id="cb238-18"><a href="stan.html#cb238-18" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode stan"><code class="sourceCode stan"><span id="cb236-1"><a href="stan.html#cb236-1" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb236-2"><a href="stan.html#cb236-2" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; n;</span>
+<span id="cb236-3"><a href="stan.html#cb236-3" tabindex="-1"></a>  <span class="dt">vector</span>[n] y;</span>
+<span id="cb236-4"><a href="stan.html#cb236-4" tabindex="-1"></a>  <span class="dt">vector</span>[n] x;</span>
+<span id="cb236-5"><a href="stan.html#cb236-5" tabindex="-1"></a>}</span>
+<span id="cb236-6"><a href="stan.html#cb236-6" tabindex="-1"></a></span>
+<span id="cb236-7"><a href="stan.html#cb236-7" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb236-8"><a href="stan.html#cb236-8" tabindex="-1"></a>  <span class="dt">vector</span>[<span class="dv">2</span>] beta;</span>
+<span id="cb236-9"><a href="stan.html#cb236-9" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; sigma;</span>
+<span id="cb236-10"><a href="stan.html#cb236-10" tabindex="-1"></a>}</span>
+<span id="cb236-11"><a href="stan.html#cb236-11" tabindex="-1"></a></span>
+<span id="cb236-12"><a href="stan.html#cb236-12" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb236-13"><a href="stan.html#cb236-13" tabindex="-1"></a>  <span class="co">//priors</span></span>
+<span id="cb236-14"><a href="stan.html#cb236-14" tabindex="-1"></a>  beta ~ normal(<span class="dv">0</span>,<span class="dv">5</span>);</span>
+<span id="cb236-15"><a href="stan.html#cb236-15" tabindex="-1"></a>  sigma ~ cauchy(<span class="dv">0</span>,<span class="dv">5</span>);</span>
+<span id="cb236-16"><a href="stan.html#cb236-16" tabindex="-1"></a>  <span class="co">// likelihood</span></span>
+<span id="cb236-17"><a href="stan.html#cb236-17" tabindex="-1"></a>  y ~ normal(beta[<span class="dv">1</span>] + beta[<span class="dv">2</span>] * x, sigma);</span>
+<span id="cb236-18"><a href="stan.html#cb236-18" tabindex="-1"></a>}</span></code></pre></div>
 <p>A Stan model consists of different named blocks. These blocks are (from first to last): data, transformed data, parameters, trans- formed parameters, model, and generated quantities. The blocks must appear in this order. The model block is mandatory; all other blocks are optional.</p>
 <p>In the <em>data</em> block, the type, dimension, and name of every variable has to be declared. Optionally, the range of possible values can be specified. For example, <code>vector[N] y;</code> means that y is a vector (type real) of length N, and <code>int&lt;lower=0&gt; N;</code> means that N is an integer with nonnegative values (the bounds, here 0, are included). Note that the restriction to a possible range of values is not strictly necessary but this will help specifying the correct model and it will improve speed. We also see that each line needs to be closed by a column sign. In the parameters block, all model parameters have to be defined. The coefficients of the linear predictor constitute a vector of length 2, <code>vector[2] beta;</code>. Alternatively, <code>real beta[2];</code> could be used. The sigma parameter is a one-number parameter that has to be positive, therefore <code>real&lt;lower=0&gt; sigma;</code>.</p>
 <p>The <em>model</em> block contains the model specification. Stan functions can handle vectors and we do not have to loop over all observations as typical for BUGS . Here, we use a <a href="distributions.html#cauchydistri">Cauchy distribution</a> as a prior distribution for sigma. This distribution can have negative values, but because we defined the lower limit of sigma to be 0 in the parameters block, the prior distribution actually used in the model is a truncated Cauchy distribution (truncated at zero). In Chapter <a href="priors.html#choosepriors">10.2</a> we explain how to choose prior distributions.</p>
@@ -487,29 +487,29 @@ div.csl-indent {
 <h2><span class="header-section-number">18.4</span> Run Stan from R<a href="stan.html#run-stan-from-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We fit the model to simulated data. Stan needs a vector containing the names of the data objects. In our case, <code>x</code>, <code>y,</code> and <code>N</code> are objects that exist in the R console.</p>
 <p>The function <code>stan()</code> starts Stan and returns an object containing MCMCs for every model parameter. We have to specify the name of the file that contains the model specification, the data, the number of chains, and the number of iterations per chain we would like to have. The first half of the iterations of each chain is declared as the warm-up. During the warm-up, Stan is not simulating a Markov chain, because in every step the algorithm is adapted. After the warm-up the algorithm is fixed and Stan simulates Markov chains.</p>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="stan.html#cb239-1" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
-<span id="cb239-2"><a href="stan.html#cb239-2" tabindex="-1"></a></span>
-<span id="cb239-3"><a href="stan.html#cb239-3" tabindex="-1"></a><span class="co"># Simulate fake data </span></span>
-<span id="cb239-4"><a href="stan.html#cb239-4" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span>                                      <span class="co"># sample size</span></span>
-<span id="cb239-5"><a href="stan.html#cb239-5" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">5</span>                                   <span class="co"># standard deviation of the residuals</span></span>
-<span id="cb239-6"><a href="stan.html#cb239-6" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">2</span>                                      <span class="co"># intercept</span></span>
-<span id="cb239-7"><a href="stan.html#cb239-7" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fl">0.7</span>                                    <span class="co"># slope</span></span>
-<span id="cb239-8"><a href="stan.html#cb239-8" tabindex="-1"></a></span>
-<span id="cb239-9"><a href="stan.html#cb239-9" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">10</span>, <span class="dv">30</span>)                        <span class="co"># random numbers of the covariate</span></span>
-<span id="cb239-10"><a href="stan.html#cb239-10" tabindex="-1"></a>simresid <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="at">sd=</span>sigma)            <span class="co"># residuals</span></span>
-<span id="cb239-11"><a href="stan.html#cb239-11" tabindex="-1"></a></span>
-<span id="cb239-12"><a href="stan.html#cb239-12" tabindex="-1"></a>y <span class="ot">&lt;-</span> b0 <span class="sc">+</span> b1<span class="sc">*</span>x <span class="sc">+</span> simresid                    <span class="co"># calculate y, i.e. the data</span></span>
-<span id="cb239-13"><a href="stan.html#cb239-13" tabindex="-1"></a></span>
-<span id="cb239-14"><a href="stan.html#cb239-14" tabindex="-1"></a><span class="co"># Bundle data into a list </span></span>
-<span id="cb239-15"><a href="stan.html#cb239-15" tabindex="-1"></a>datax <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">n=</span><span class="fu">length</span>(y), <span class="at">y=</span>y, <span class="at">x=</span>x)</span>
-<span id="cb239-16"><a href="stan.html#cb239-16" tabindex="-1"></a></span>
-<span id="cb239-17"><a href="stan.html#cb239-17" tabindex="-1"></a><span class="co"># Run STAN</span></span>
-<span id="cb239-18"><a href="stan.html#cb239-18" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">stan</span>(<span class="at">file =</span> <span class="st">&quot;stanmodels/linreg.stan&quot;</span>, <span class="at">data=</span>datax, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="stan.html#cb237-1" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
+<span id="cb237-2"><a href="stan.html#cb237-2" tabindex="-1"></a></span>
+<span id="cb237-3"><a href="stan.html#cb237-3" tabindex="-1"></a><span class="co"># Simulate fake data </span></span>
+<span id="cb237-4"><a href="stan.html#cb237-4" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span>                                      <span class="co"># sample size</span></span>
+<span id="cb237-5"><a href="stan.html#cb237-5" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">5</span>                                   <span class="co"># standard deviation of the residuals</span></span>
+<span id="cb237-6"><a href="stan.html#cb237-6" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">2</span>                                      <span class="co"># intercept</span></span>
+<span id="cb237-7"><a href="stan.html#cb237-7" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fl">0.7</span>                                    <span class="co"># slope</span></span>
+<span id="cb237-8"><a href="stan.html#cb237-8" tabindex="-1"></a></span>
+<span id="cb237-9"><a href="stan.html#cb237-9" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">10</span>, <span class="dv">30</span>)                        <span class="co"># random numbers of the covariate</span></span>
+<span id="cb237-10"><a href="stan.html#cb237-10" tabindex="-1"></a>simresid <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="at">sd=</span>sigma)            <span class="co"># residuals</span></span>
+<span id="cb237-11"><a href="stan.html#cb237-11" tabindex="-1"></a></span>
+<span id="cb237-12"><a href="stan.html#cb237-12" tabindex="-1"></a>y <span class="ot">&lt;-</span> b0 <span class="sc">+</span> b1<span class="sc">*</span>x <span class="sc">+</span> simresid                    <span class="co"># calculate y, i.e. the data</span></span>
+<span id="cb237-13"><a href="stan.html#cb237-13" tabindex="-1"></a></span>
+<span id="cb237-14"><a href="stan.html#cb237-14" tabindex="-1"></a><span class="co"># Bundle data into a list </span></span>
+<span id="cb237-15"><a href="stan.html#cb237-15" tabindex="-1"></a>datax <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">n=</span><span class="fu">length</span>(y), <span class="at">y=</span>y, <span class="at">x=</span>x)</span>
+<span id="cb237-16"><a href="stan.html#cb237-16" tabindex="-1"></a></span>
+<span id="cb237-17"><a href="stan.html#cb237-17" tabindex="-1"></a><span class="co"># Run STAN</span></span>
+<span id="cb237-18"><a href="stan.html#cb237-18" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">stan</span>(<span class="at">file =</span> <span class="st">&quot;stanmodels/linreg.stan&quot;</span>, <span class="at">data=</span>datax, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## 
 ## SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 1).
 ## Chain 1: 
-## Chain 1: Gradient evaluation took 2.5e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.25 seconds.
+## Chain 1: Gradient evaluation took 4.9e-05 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.49 seconds.
 ## Chain 1: Adjust your expectations accordingly!
 ## Chain 1: 
 ## Chain 1: 
@@ -526,15 +526,15 @@ div.csl-indent {
 ## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 1: 
-## Chain 1:  Elapsed Time: 0.055 seconds (Warm-up)
-## Chain 1:                0.043 seconds (Sampling)
-## Chain 1:                0.098 seconds (Total)
+## Chain 1:  Elapsed Time: 0.122 seconds (Warm-up)
+## Chain 1:                0.116 seconds (Sampling)
+## Chain 1:                0.238 seconds (Total)
 ## Chain 1: 
 ## 
 ## SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 2).
 ## Chain 2: 
-## Chain 2: Gradient evaluation took 5e-06 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
+## Chain 2: Gradient evaluation took 1e-05 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
 ## Chain 2: Adjust your expectations accordingly!
 ## Chain 2: 
 ## Chain 2: 
@@ -551,15 +551,15 @@ div.csl-indent {
 ## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 2: 
-## Chain 2:  Elapsed Time: 0.049 seconds (Warm-up)
-## Chain 2:                0.043 seconds (Sampling)
-## Chain 2:                0.092 seconds (Total)
+## Chain 2:  Elapsed Time: 0.128 seconds (Warm-up)
+## Chain 2:                0.108 seconds (Sampling)
+## Chain 2:                0.236 seconds (Total)
 ## Chain 2: 
 ## 
 ## SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 3).
 ## Chain 3: 
-## Chain 3: Gradient evaluation took 5e-06 seconds
-## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
+## Chain 3: Gradient evaluation took 1e-05 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
 ## Chain 3: Adjust your expectations accordingly!
 ## Chain 3: 
 ## Chain 3: 
@@ -576,15 +576,15 @@ div.csl-indent {
 ## Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 3: 
-## Chain 3:  Elapsed Time: 0.049 seconds (Warm-up)
-## Chain 3:                0.048 seconds (Sampling)
-## Chain 3:                0.097 seconds (Total)
+## Chain 3:  Elapsed Time: 0.135 seconds (Warm-up)
+## Chain 3:                0.104 seconds (Sampling)
+## Chain 3:                0.239 seconds (Total)
 ## Chain 3: 
 ## 
 ## SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 4).
 ## Chain 4: 
-## Chain 4: Gradient evaluation took 6e-06 seconds
-## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
+## Chain 4: Gradient evaluation took 1e-05 seconds
+## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
 ## Chain 4: Adjust your expectations accordingly!
 ## Chain 4: 
 ## Chain 4: 
@@ -601,9 +601,9 @@ div.csl-indent {
 ## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 4: 
-## Chain 4:  Elapsed Time: 0.051 seconds (Warm-up)
-## Chain 4:                0.046 seconds (Sampling)
-## Chain 4:                0.097 seconds (Total)
+## Chain 4:  Elapsed Time: 0.133 seconds (Warm-up)
+## Chain 4:                0.097 seconds (Sampling)
+## Chain 4:                0.23 seconds (Total)
 ## Chain 4:</code></pre>
 </div>
 <div id="further-reading-6" class="section level2 unnumbered hasAnchor">

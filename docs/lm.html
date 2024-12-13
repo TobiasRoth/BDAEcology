@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>11 Normal Linear Models | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="11 Normal Linear Models | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
@@ -20,10 +20,10 @@
   <meta name="twitter:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="twitter:image" content="/images/cover.jpg" />
 
-<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
+<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2024-10-12" />
+<meta name="date" content="2024-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -66,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -164,7 +164,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-this-book"><i class="fa fa-check"></i>Why this book?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
 </ul></li>
 <li class="part"><span><b>I BASIC STATISTICS FOR ECOLOGISTS</b></span></li>
@@ -448,7 +448,7 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="lm" class="section level1 hasAnchor" number="11">
 <h1><span class="header-section-number">11</span> Normal Linear Models<a href="lm.html#lm" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><a href="" target="_blank"><img src="images/snowfinch3.jpg" width="1658" style="display: block; margin: auto;" /></a></p>
+<p><a href="" target="_blank"><img src="images/snowfinch3.jpg" style="display: block; margin: auto;" /></a></p>
 <hr />
 <div id="linear-regression" class="section level2 hasAnchor" number="11.1">
 <h2><span class="header-section-number">11.1</span> Linear regression<a href="lm.html#linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -471,22 +471,22 @@ div.csl-indent {
 \end{align}\]</span></p>
 <p>We prefer the notation in Equation <a href="lm.html#eq:lm">(11.1)</a> because, in this formula, the stochastic part (second row) is nicely separated from the deterministic part (first row) of the model, whereas, in the second notation <a href="lm.html#eq:lmalternativ">(11.2)</a> the ﬁrst row contains both stochastic and deterministic parts.</p>
 <p>For illustration, we here simulate a data set and below ﬁt a linear regression to these simulated data. The advantage of simulating data is that the following analyses can be reproduced without having to read data into R. Further, for simulating data, we need to translate the algebraic model formula into R language which helps us understanding the model structure.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="lm.html#cb57-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34</span>)            <span class="co"># set a seed for the random number generator</span></span>
-<span id="cb57-2"><a href="lm.html#cb57-2" tabindex="-1"></a><span class="co"># define the data structure</span></span>
-<span id="cb57-3"><a href="lm.html#cb57-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span>                 <span class="co"># sample size</span></span>
-<span id="cb57-4"><a href="lm.html#cb57-4" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">10</span>, <span class="dv">30</span>)   <span class="co"># sample values of the predictor variable</span></span>
-<span id="cb57-5"><a href="lm.html#cb57-5" tabindex="-1"></a></span>
-<span id="cb57-6"><a href="lm.html#cb57-6" tabindex="-1"></a><span class="co"># define values for each model parameter</span></span>
-<span id="cb57-7"><a href="lm.html#cb57-7" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">5</span>              <span class="co"># standard deviation of the residuals</span></span>
-<span id="cb57-8"><a href="lm.html#cb57-8" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">2</span>                 <span class="co"># intercept</span></span>
-<span id="cb57-9"><a href="lm.html#cb57-9" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fl">0.7</span>               <span class="co"># slope</span></span>
-<span id="cb57-10"><a href="lm.html#cb57-10" tabindex="-1"></a></span>
-<span id="cb57-11"><a href="lm.html#cb57-11" tabindex="-1"></a><span class="co"># simulate y-values from the model</span></span>
-<span id="cb57-12"><a href="lm.html#cb57-12" tabindex="-1"></a>mu <span class="ot">&lt;-</span> b0 <span class="sc">+</span> b1 <span class="sc">*</span> x       <span class="co"># define the regression line (deterministic part)</span></span>
-<span id="cb57-13"><a href="lm.html#cb57-13" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, mu, <span class="at">sd =</span> sigma) <span class="co"># simulate y-values</span></span>
-<span id="cb57-14"><a href="lm.html#cb57-14" tabindex="-1"></a></span>
-<span id="cb57-15"><a href="lm.html#cb57-15" tabindex="-1"></a><span class="co"># save data in a data.frame</span></span>
-<span id="cb57-16"><a href="lm.html#cb57-16" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="lm.html#cb55-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34</span>)            <span class="co"># set a seed for the random number generator</span></span>
+<span id="cb55-2"><a href="lm.html#cb55-2" tabindex="-1"></a><span class="co"># define the data structure</span></span>
+<span id="cb55-3"><a href="lm.html#cb55-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span>                 <span class="co"># sample size</span></span>
+<span id="cb55-4"><a href="lm.html#cb55-4" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">10</span>, <span class="dv">30</span>)   <span class="co"># sample values of the predictor variable</span></span>
+<span id="cb55-5"><a href="lm.html#cb55-5" tabindex="-1"></a></span>
+<span id="cb55-6"><a href="lm.html#cb55-6" tabindex="-1"></a><span class="co"># define values for each model parameter</span></span>
+<span id="cb55-7"><a href="lm.html#cb55-7" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">5</span>              <span class="co"># standard deviation of the residuals</span></span>
+<span id="cb55-8"><a href="lm.html#cb55-8" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">2</span>                 <span class="co"># intercept</span></span>
+<span id="cb55-9"><a href="lm.html#cb55-9" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fl">0.7</span>               <span class="co"># slope</span></span>
+<span id="cb55-10"><a href="lm.html#cb55-10" tabindex="-1"></a></span>
+<span id="cb55-11"><a href="lm.html#cb55-11" tabindex="-1"></a><span class="co"># simulate y-values from the model</span></span>
+<span id="cb55-12"><a href="lm.html#cb55-12" tabindex="-1"></a>mu <span class="ot">&lt;-</span> b0 <span class="sc">+</span> b1 <span class="sc">*</span> x       <span class="co"># define the regression line (deterministic part)</span></span>
+<span id="cb55-13"><a href="lm.html#cb55-13" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, mu, <span class="at">sd =</span> sigma) <span class="co"># simulate y-values</span></span>
+<span id="cb55-14"><a href="lm.html#cb55-14" tabindex="-1"></a></span>
+<span id="cb55-15"><a href="lm.html#cb55-15" tabindex="-1"></a><span class="co"># save data in a data.frame</span></span>
+<span id="cb55-16"><a href="lm.html#cb55-16" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:illlm"></span>
 <img src="2.03-lm_files/figure-html/illlm-1.png" alt="Illustration of a linear regression. The blue line represents the deterministic part of the model, i.e., here regression line. The stochastic part is represented by a probability distribution, here the normal distribution. The normal distribution changes its mean but not the variance along the x-axis, and it describes how the data are distributed. The blue line and the orange distribution together are a statistical model, i.e., an abstract representation of the data which is given in black." width="672" />
 <p class="caption">
@@ -540,11 +540,11 @@ Figure 11.1: Illustration of a linear regression. The blue line represents the d
 <h3><span class="header-section-number">11.1.2</span> Fitting a Linear Regression in R<a href="lm.html#fitting-a-linear-regression-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In Equation <a href="lm.html#eq:lm">(11.1)</a>, the fitted values <span class="math inline">\(\mu_i\)</span> are directly deﬁned by the model coefﬁcients, <span class="math inline">\(\beta_{0}\)</span> and <span class="math inline">\(\beta_{1}\)</span> . Therefore, when we can estimate <span class="math inline">\(\beta_{0}\)</span>, <span class="math inline">\(\beta_{1}\)</span> , and <span class="math inline">\(\sigma^2\)</span>, the model is fully deﬁned. The last parameter <span class="math inline">\(\sigma^2\)</span> describes how the observations scatter around the regression line and relies on the assumption that the residuals are normally distributed. The estimates for the model parameters of a linear regression are obtained by searching for the best ﬁtting regression line. To do so, we search for the regression line that minimizes the sum of the squared residuals. This model ﬁtting method is called the least-squares method, abbreviated as LS. It has a very simple solution using matrix algebra <span class="citation">(see e.g., <a href="referenzen.html#ref-Aitkin.2009">Aitkin et al. 2009</a>)</span>.</p>
 <p>The least-squares estimates for the model parameters of a linear regression are obtained in R using the function <code>lm</code>.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="lm.html#cb58-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span>  <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> dat)</span>
-<span id="cb58-2"><a href="lm.html#cb58-2" tabindex="-1"></a><span class="fu">coef</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="lm.html#cb56-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span>  <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> dat)</span>
+<span id="cb56-2"><a href="lm.html#cb56-2" tabindex="-1"></a><span class="fu">coef</span>(mod)</span></code></pre></div>
 <pre><code>## (Intercept)           x 
 ##   2.0049517   0.6880415</code></pre>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="lm.html#cb60-1" tabindex="-1"></a><span class="fu">summary</span>(mod)<span class="sc">$</span>sigma</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="lm.html#cb58-1" tabindex="-1"></a><span class="fu">summary</span>(mod)<span class="sc">$</span>sigma</span></code></pre></div>
 <pre><code>## [1] 5.04918</code></pre>
 <p>The object “mod” produced by <code>lm</code> contains the estimates for the intercept, <span class="math inline">\(\beta_0\)</span> , and the slope, <span class="math inline">\(\beta_1\)</span>. The residual standard deviation <span class="math inline">\(\sigma^2\)</span> is extracted using the function <code>summary</code>. We can show the result of the linear regression as a line in a scatter plot with the covariate (<code>x</code>) on the x-axis and the observations (<code>y</code>) on the y-axis (Fig. <a href="lm.html#fig:figlm">11.2</a>).</p>
 <div class="figure"><span style="display:block;" id="fig:figlm"></span>
@@ -561,7 +561,7 @@ Figure 11.2: Linear regression. Black dots = observations, blue solid line = reg
 <font size="1">
 <div style="border: 2px solid grey;">
 <p>What does <code>sim</code> do?<br />
-It simulates parameter values from the joint posterior distribution of a model assuming flat prior distributions. For a normal linear regression, it ﬁrst draws a random value, <span class="math inline">\(\sigma^*\)</span> from the marginal posterior distribution of <span class="math inline">\(\sigma\)</span>, and then draws random values from the conditional posterior distribution for <span class="math inline">\(\boldsymbol{\beta}\)</span> given <span class="math inline">\(\sigma^*\)</span> <span class="citation">(<a href="referenzen.html#ref-Gelman.2014">A. Gelman et al. 2014a</a>)</span>.</p>
+It simulates parameter values from the joint posterior distribution of a model assuming flat prior distributions. For a normal linear regression, it ﬁrst draws a random value, <span class="math inline">\(\sigma^*\)</span> from the marginal posterior distribution of <span class="math inline">\(\sigma\)</span>, and then draws random values from the conditional posterior distribution for <span class="math inline">\(\boldsymbol{\beta}\)</span> given <span class="math inline">\(\sigma^*\)</span> <span class="citation">(<a href="referenzen.html#ref-Gelman.2014">A. Gelman et al. 2014</a>)</span>.</p>
 <p>The conditional posterior distribution of the parameter vector <span class="math inline">\(\boldsymbol{\beta}\)</span>, <span class="math inline">\(p(\boldsymbol{\beta}|\sigma^*,\boldsymbol{y,X})\)</span> can be analytically derived. With ﬂat prior distributions, it is a uni- or multivariate normal distribution <span class="math inline">\(p(\boldsymbol{\beta}|\sigma^*,\boldsymbol{y,X})=normal(\boldsymbol{\hat{\beta}},V_\beta,(\sigma^*)^2)\)</span> with:</p>
 <p><span class="math display" id="eq:sim">\[\begin{align}
   \boldsymbol{\hat{\beta}=(\boldsymbol{X^TX})^{-1}X^Ty}
@@ -573,9 +573,9 @@ It simulates parameter values from the joint posterior distribution of a model a
 </div>
 <p></font></p>
 <p>Using the function <code>sim</code> from the package, we can draw values from the joint posterior distribution of the model parameters and describe the marginal posterior distribution of each model parameter using these simulated values.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="lm.html#cb62-1" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
-<span id="cb62-2"><a href="lm.html#cb62-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb62-3"><a href="lm.html#cb62-3" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim =</span> nsim)</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="lm.html#cb60-1" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
+<span id="cb60-2"><a href="lm.html#cb60-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb60-3"><a href="lm.html#cb60-3" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim =</span> nsim)</span></code></pre></div>
 <p>The function <code>sim</code> simulates (in our example) 1000 values from the joint posterior distribution of the three model parameters <span class="math inline">\(\beta_0\)</span> , <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\sigma\)</span>. These simulated values are shown in Figure <a href="lm.html#fig:simfirstexample">11.3</a>.</p>
 <div class="figure"><span style="display:block;" id="fig:simfirstexample"></span>
 <img src="2.03-lm_files/figure-html/simfirstexample-1.png" alt="Joint (scatterplots) and marginal (histograms) posterior distribution of the model parameters. The six scatterplots show, using different axes, the three-dimensional cloud of 1000 simulations from the joint posterior distribution of the three parameters." width="768" />
@@ -585,29 +585,29 @@ Figure 11.3: Joint (scatterplots) and marginal (histograms) posterior distributi
 </div>
 <p>The posterior distribution describes, given the data and the model, which values relative to each other are more likely to correspond to the parameter value we aim at measuring. It expresses the uncertainty of the parameter estimate. It shows what we know about the model parameter after having looked at the data and given the model is realistic.</p>
 <p>The 2.5% and 97.5% quantiles of the marginal posterior distributions can be used as 95% uncertainty intervals of the model parameters. The function <code>coef</code> extracts the simulated values for the beta coefﬁcients, returning a matrix with <em>nsim</em> rows and the number of columns corresponding to the number of parameters. In our example, the ﬁrst column contains the simulated values from the posterior distribution of the intercept and the second column contains values from the posterior distribution of the slope. The “2” in the second argument of the apply-function (see Chapter <a href="#rmisc"><strong>??</strong></a>) indicates that the <code>quantile</code> function is applied columnwise.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="lm.html#cb63-1" tabindex="-1"></a><span class="fu">apply</span>(<span class="at">X =</span> <span class="fu">coef</span>(bsim), <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN =</span> quantile, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb63-2"><a href="lm.html#cb63-2" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="lm.html#cb61-1" tabindex="-1"></a><span class="fu">apply</span>(<span class="at">X =</span> <span class="fu">coef</span>(bsim), <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN =</span> quantile, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="lm.html#cb61-2" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>##       (Intercept)    x
 ## 2.5%        -2.95 0.44
 ## 97.5%        7.17 0.92</code></pre>
 <p>We also can calculate an uncertainty interval of the estimated residual standard deviation, <span class="math inline">\(\hat{\sigma}\)</span>.</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="lm.html#cb65-1" tabindex="-1"></a><span class="fu">quantile</span>(bsim<span class="sc">@</span>sigma, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb65-2"><a href="lm.html#cb65-2" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="lm.html#cb63-1" tabindex="-1"></a><span class="fu">quantile</span>(bsim<span class="sc">@</span>sigma, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-2"><a href="lm.html#cb63-2" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">1</span>)</span></code></pre></div>
 <pre><code>##  2.5% 97.5% 
 ##   4.2   6.3</code></pre>
 <p>We can further get a posterior probability for speciﬁc hypotheses, such as “The slope parameter is larger than 1” or “The slope parameter is larger than 0.5”. These probabilities are the proportion of simulated values from the posterior distribution that are larger than 1 and 0.5, respectively.</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="lm.html#cb67-1" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">coef</span>(bsim)[,<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">/</span> nsim     <span class="co"># alternatively: mean(coef(bsim)[,2]&gt;1)</span></span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="lm.html#cb65-1" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">coef</span>(bsim)[,<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">/</span> nsim     <span class="co"># alternatively: mean(coef(bsim)[,2]&gt;1)</span></span></code></pre></div>
 <pre><code>## [1] 0.008</code></pre>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="lm.html#cb69-1" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">coef</span>(bsim)[,<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="fl">0.5</span>) <span class="sc">/</span> nsim</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="lm.html#cb67-1" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">coef</span>(bsim)[,<span class="dv">2</span>] <span class="sc">&gt;</span> <span class="fl">0.5</span>) <span class="sc">/</span> nsim</span></code></pre></div>
 <pre><code>## [1] 0.936</code></pre>
 <p>From this, there is very little evidence in the data that the slope is larger than 1, but we are quite conﬁdent that the slope is larger than 0.5 (assuming that our model is realistic).</p>
 <p>We often want to show the effect of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span> graphically, with information about the uncertainty of the parameter estimates included in the graph. To draw such effect plots, we use the simulated values from the posterior distribution of the model parameters. From the deterministic part of the model, we know the regression line <span class="math inline">\(\mu = \beta_0 + \beta_1 x_i\)</span>. The simulation from the joint posterior distribution of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> gives 1000 pairs of intercepts and slopes that describe 1000 different regression lines. We can draw these regression lines in an x-y plot (scatter plot) to show the uncertainty in the regression line estimation (Fig. <a href="lm.html#fig:figlmer1">11.4</a>, left). Note, that in this case it is not advisable to use <code>ggplot</code> because we draw many lines in one plot, which makes <code>ggplot</code> rather slow.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="lm.html#cb71-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
-<span id="cb71-2"><a href="lm.html#cb71-2" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">las =</span> <span class="dv">1</span>, </span>
-<span id="cb71-3"><a href="lm.html#cb71-3" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Outcome (y)&quot;</span>)</span>
-<span id="cb71-4"><a href="lm.html#cb71-4" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
-<span id="cb71-5"><a href="lm.html#cb71-5" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="fu">coef</span>(bsim)[i,<span class="dv">1</span>], <span class="fu">coef</span>(bsim)[i,<span class="dv">2</span>], <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.05</span>))</span>
-<span id="cb71-6"><a href="lm.html#cb71-6" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="lm.html#cb69-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb69-2"><a href="lm.html#cb69-2" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">las =</span> <span class="dv">1</span>, </span>
+<span id="cb69-3"><a href="lm.html#cb69-3" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Outcome (y)&quot;</span>)</span>
+<span id="cb69-4"><a href="lm.html#cb69-4" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
+<span id="cb69-5"><a href="lm.html#cb69-5" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="fu">coef</span>(bsim)[i,<span class="dv">1</span>], <span class="fu">coef</span>(bsim)[i,<span class="dv">2</span>], <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.05</span>))</span>
+<span id="cb69-6"><a href="lm.html#cb69-6" tabindex="-1"></a>}</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:figlmer1"></span>
 <img src="2.03-lm_files/figure-html/figlmer1-1.png" alt="Regression with 1000 lines based on draws form the joint posterior distribution for the intercept and slope parameters to visualize the uncertainty of the estimated regression line." width="672" />
 <p class="caption">
@@ -615,23 +615,23 @@ Figure 11.4: Regression with 1000 lines based on draws form the joint posterior 
 </p>
 </div>
 <p>A more convenient way to show uncertainty is to draw the 95% uncertainty interval, CrI, of the regression line. To this end, we ﬁrst deﬁne new x-values for which we would like to have the ﬁtted values (about 100 points across the range of x will produce smooth-looking lines when connected by line segments). We save these new x-values within the new tibble <code>newdat</code>. Then, we create a new model matrix that contains these new x-values (<code>newmodmat</code>) using the function <code>model.matrix</code>. We then calculate the 1000 ﬁtted values for each element of the new x (one value for each of the 1000 simulated regressions, Fig. <a href="lm.html#fig:figlmer1">11.4</a>), using matrix multiplication (%*%). We save these values in the matrix “ﬁtmat”. Finally, we extract the 2.5% and 97.5% quantiles for each x-value from ﬁtmat, and draw the lines for the lower and upper limits of the credible interval (Fig. <a href="lm.html#fig:figlmer2">11.5</a>).</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="lm.html#cb72-1" tabindex="-1"></a><span class="co"># Calculate 95% credible interval</span></span>
-<span id="cb72-2"><a href="lm.html#cb72-2" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">30</span>, <span class="at">by =</span> <span class="fl">0.1</span>))</span>
-<span id="cb72-3"><a href="lm.html#cb72-3" tabindex="-1"></a>newmodmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>( <span class="sc">~</span> x, <span class="at">data =</span> newdat)</span>
-<span id="cb72-4"><a href="lm.html#cb72-4" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol =</span> nsim, <span class="at">nrow =</span> <span class="fu">nrow</span>(newdat))</span>
-<span id="cb72-5"><a href="lm.html#cb72-5" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {fitmat[,i] <span class="ot">&lt;-</span> newmodmat <span class="sc">%*%</span> <span class="fu">coef</span>(bsim)[i,]}</span>
-<span id="cb72-6"><a href="lm.html#cb72-6" tabindex="-1"></a>newdat<span class="sc">$</span>CrI_lo <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">probs =</span> <span class="fl">0.025</span>)</span>
-<span id="cb72-7"><a href="lm.html#cb72-7" tabindex="-1"></a>newdat<span class="sc">$</span>CrI_up <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">probs =</span> <span class="fl">0.975</span>)</span>
-<span id="cb72-8"><a href="lm.html#cb72-8" tabindex="-1"></a></span>
-<span id="cb72-9"><a href="lm.html#cb72-9" tabindex="-1"></a><span class="co"># Make plot</span></span>
-<span id="cb72-10"><a href="lm.html#cb72-10" tabindex="-1"></a>regplot <span class="ot">&lt;-</span> </span>
-<span id="cb72-11"><a href="lm.html#cb72-11" tabindex="-1"></a>  <span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb72-12"><a href="lm.html#cb72-12" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb72-13"><a href="lm.html#cb72-13" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb72-14"><a href="lm.html#cb72-14" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> newdat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> CrI_lo), <span class="at">lty =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb72-15"><a href="lm.html#cb72-15" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> newdat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> CrI_up), <span class="at">lty =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb72-16"><a href="lm.html#cb72-16" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Predictor (x)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Outcome (y)&quot;</span>)</span>
-<span id="cb72-17"><a href="lm.html#cb72-17" tabindex="-1"></a>regplot</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="lm.html#cb70-1" tabindex="-1"></a><span class="co"># Calculate 95% credible interval</span></span>
+<span id="cb70-2"><a href="lm.html#cb70-2" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">30</span>, <span class="at">by =</span> <span class="fl">0.1</span>))</span>
+<span id="cb70-3"><a href="lm.html#cb70-3" tabindex="-1"></a>newmodmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>( <span class="sc">~</span> x, <span class="at">data =</span> newdat)</span>
+<span id="cb70-4"><a href="lm.html#cb70-4" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol =</span> nsim, <span class="at">nrow =</span> <span class="fu">nrow</span>(newdat))</span>
+<span id="cb70-5"><a href="lm.html#cb70-5" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {fitmat[,i] <span class="ot">&lt;-</span> newmodmat <span class="sc">%*%</span> <span class="fu">coef</span>(bsim)[i,]}</span>
+<span id="cb70-6"><a href="lm.html#cb70-6" tabindex="-1"></a>newdat<span class="sc">$</span>CrI_lo <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">probs =</span> <span class="fl">0.025</span>)</span>
+<span id="cb70-7"><a href="lm.html#cb70-7" tabindex="-1"></a>newdat<span class="sc">$</span>CrI_up <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">probs =</span> <span class="fl">0.975</span>)</span>
+<span id="cb70-8"><a href="lm.html#cb70-8" tabindex="-1"></a></span>
+<span id="cb70-9"><a href="lm.html#cb70-9" tabindex="-1"></a><span class="co"># Make plot</span></span>
+<span id="cb70-10"><a href="lm.html#cb70-10" tabindex="-1"></a>regplot <span class="ot">&lt;-</span> </span>
+<span id="cb70-11"><a href="lm.html#cb70-11" tabindex="-1"></a>  <span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb70-12"><a href="lm.html#cb70-12" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb70-13"><a href="lm.html#cb70-13" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb70-14"><a href="lm.html#cb70-14" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> newdat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> CrI_lo), <span class="at">lty =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb70-15"><a href="lm.html#cb70-15" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> newdat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> CrI_up), <span class="at">lty =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb70-16"><a href="lm.html#cb70-16" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Predictor (x)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Outcome (y)&quot;</span>)</span>
+<span id="cb70-17"><a href="lm.html#cb70-17" tabindex="-1"></a>regplot</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:figlmer2"></span>
 <img src="2.03-lm_files/figure-html/figlmer2-1.png" alt="Regression with 95% credible interval of the posterior distribution of the ﬁtted values." width="672" />
 <p class="caption">
@@ -640,30 +640,30 @@ Figure 11.5: Regression with 95% credible interval of the posterior distribution
 </div>
 <p>The interpretation of the 95% uncertainty interval is straightforward: We are 95% sure that the true regression line is within the credible interval (given the data and the model). As with all statistical results, this interpretation is only valid in the model world (if the world would look like the model). The larger the sample size, the narrower the interval, because each additional data point increases information about the true regression line.</p>
 <p>The uncertainty interval measures statistical uncertainty of the regression line, but it does not describe how new observations would scatter around the regression line. If we want to describe where future observations will be, we have to report the posterior predictive distribution. We can get a sample of random draws from the posterior predictive distribution <span class="math inline">\(\hat{y}|\boldsymbol{\beta},\sigma^2,\boldsymbol{X}\sim normal( \boldsymbol{X \beta, \sigma^2})\)</span> using the simulated joint posterior distributions of the model parameters, thus taking the uncertainty of the parameter estimates into account. We draw a new <span class="math inline">\(\hat{y}\)</span>-value from <span class="math inline">\(normal( \boldsymbol{X \beta, \sigma^2})\)</span> for each simulated set of model parameters. Then, we can visualize the 2.5% and 97.5% quantiles of this distribution for each new x-value.</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="lm.html#cb73-1" tabindex="-1"></a><span class="co"># increase number of simulation to produce smooth lines of the posterior</span></span>
-<span id="cb73-2"><a href="lm.html#cb73-2" tabindex="-1"></a><span class="co"># predictive distribution</span></span>
-<span id="cb73-3"><a href="lm.html#cb73-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34</span>)</span>
-<span id="cb73-4"><a href="lm.html#cb73-4" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">50000</span></span>
-<span id="cb73-5"><a href="lm.html#cb73-5" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim)</span>
-<span id="cb73-6"><a href="lm.html#cb73-6" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nsim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
-<span id="cb73-7"><a href="lm.html#cb73-7" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) fitmat[,i] <span class="ot">&lt;-</span> newmodmat<span class="sc">%*%</span><span class="fu">coef</span>(bsim)[i,]</span>
-<span id="cb73-8"><a href="lm.html#cb73-8" tabindex="-1"></a></span>
-<span id="cb73-9"><a href="lm.html#cb73-9" tabindex="-1"></a><span class="co"># prepare matrix for simulated new data</span></span>
-<span id="cb73-10"><a href="lm.html#cb73-10" tabindex="-1"></a>newy <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nsim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat)) </span>
-<span id="cb73-11"><a href="lm.html#cb73-11" tabindex="-1"></a></span>
-<span id="cb73-12"><a href="lm.html#cb73-12" tabindex="-1"></a><span class="co"># for each simulated ﬁtted value, simulate one new y-value</span></span>
-<span id="cb73-13"><a href="lm.html#cb73-13" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
-<span id="cb73-14"><a href="lm.html#cb73-14" tabindex="-1"></a>  newy[,i] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(newdat), <span class="at">mean =</span> fitmat[,i], <span class="at">sd =</span> bsim<span class="sc">@</span>sigma[i])</span>
-<span id="cb73-15"><a href="lm.html#cb73-15" tabindex="-1"></a>}</span>
-<span id="cb73-16"><a href="lm.html#cb73-16" tabindex="-1"></a></span>
-<span id="cb73-17"><a href="lm.html#cb73-17" tabindex="-1"></a><span class="co"># Calculate 2.5% and 97.5% quantiles</span></span>
-<span id="cb73-18"><a href="lm.html#cb73-18" tabindex="-1"></a>newdat<span class="sc">$</span>pred_lo <span class="ot">&lt;-</span> <span class="fu">apply</span>(newy, <span class="dv">1</span>, quantile, <span class="at">probs =</span> <span class="fl">0.025</span>)</span>
-<span id="cb73-19"><a href="lm.html#cb73-19" tabindex="-1"></a>newdat<span class="sc">$</span>pred_up <span class="ot">&lt;-</span> <span class="fu">apply</span>(newy, <span class="dv">1</span>, quantile, <span class="at">probs =</span> <span class="fl">0.975</span>)</span>
-<span id="cb73-20"><a href="lm.html#cb73-20" tabindex="-1"></a></span>
-<span id="cb73-21"><a href="lm.html#cb73-21" tabindex="-1"></a><span class="co"># Add the posterior predictive distribution to plot</span></span>
-<span id="cb73-22"><a href="lm.html#cb73-22" tabindex="-1"></a>regplot <span class="sc">+</span></span>
-<span id="cb73-23"><a href="lm.html#cb73-23" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> newdat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> pred_lo), <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb73-24"><a href="lm.html#cb73-24" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> newdat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> pred_up), <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="lm.html#cb71-1" tabindex="-1"></a><span class="co"># increase number of simulation to produce smooth lines of the posterior</span></span>
+<span id="cb71-2"><a href="lm.html#cb71-2" tabindex="-1"></a><span class="co"># predictive distribution</span></span>
+<span id="cb71-3"><a href="lm.html#cb71-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34</span>)</span>
+<span id="cb71-4"><a href="lm.html#cb71-4" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">50000</span></span>
+<span id="cb71-5"><a href="lm.html#cb71-5" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim)</span>
+<span id="cb71-6"><a href="lm.html#cb71-6" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nsim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
+<span id="cb71-7"><a href="lm.html#cb71-7" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) fitmat[,i] <span class="ot">&lt;-</span> newmodmat<span class="sc">%*%</span><span class="fu">coef</span>(bsim)[i,]</span>
+<span id="cb71-8"><a href="lm.html#cb71-8" tabindex="-1"></a></span>
+<span id="cb71-9"><a href="lm.html#cb71-9" tabindex="-1"></a><span class="co"># prepare matrix for simulated new data</span></span>
+<span id="cb71-10"><a href="lm.html#cb71-10" tabindex="-1"></a>newy <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nsim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat)) </span>
+<span id="cb71-11"><a href="lm.html#cb71-11" tabindex="-1"></a></span>
+<span id="cb71-12"><a href="lm.html#cb71-12" tabindex="-1"></a><span class="co"># for each simulated ﬁtted value, simulate one new y-value</span></span>
+<span id="cb71-13"><a href="lm.html#cb71-13" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
+<span id="cb71-14"><a href="lm.html#cb71-14" tabindex="-1"></a>  newy[,i] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(newdat), <span class="at">mean =</span> fitmat[,i], <span class="at">sd =</span> bsim<span class="sc">@</span>sigma[i])</span>
+<span id="cb71-15"><a href="lm.html#cb71-15" tabindex="-1"></a>}</span>
+<span id="cb71-16"><a href="lm.html#cb71-16" tabindex="-1"></a></span>
+<span id="cb71-17"><a href="lm.html#cb71-17" tabindex="-1"></a><span class="co"># Calculate 2.5% and 97.5% quantiles</span></span>
+<span id="cb71-18"><a href="lm.html#cb71-18" tabindex="-1"></a>newdat<span class="sc">$</span>pred_lo <span class="ot">&lt;-</span> <span class="fu">apply</span>(newy, <span class="dv">1</span>, quantile, <span class="at">probs =</span> <span class="fl">0.025</span>)</span>
+<span id="cb71-19"><a href="lm.html#cb71-19" tabindex="-1"></a>newdat<span class="sc">$</span>pred_up <span class="ot">&lt;-</span> <span class="fu">apply</span>(newy, <span class="dv">1</span>, quantile, <span class="at">probs =</span> <span class="fl">0.975</span>)</span>
+<span id="cb71-20"><a href="lm.html#cb71-20" tabindex="-1"></a></span>
+<span id="cb71-21"><a href="lm.html#cb71-21" tabindex="-1"></a><span class="co"># Add the posterior predictive distribution to plot</span></span>
+<span id="cb71-22"><a href="lm.html#cb71-22" tabindex="-1"></a>regplot <span class="sc">+</span></span>
+<span id="cb71-23"><a href="lm.html#cb71-23" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> newdat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> pred_lo), <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb71-24"><a href="lm.html#cb71-24" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> newdat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> pred_up), <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:figlmer3"></span>
 <img src="2.03-lm_files/figure-html/figlmer3-1.png" alt="Regression line with 95% uncertainty interval (dotted lines) and the 95% interval of the simulated predictive distribution (broken lines). Note that we increased the number of simulations to 50,000 to produce smooth lines." width="672" />
 <p class="caption">
@@ -672,7 +672,7 @@ Figure 11.6: Regression line with 95% uncertainty interval (dotted lines) and th
 </div>
 <p>Of future observations, 95% are expected to be within the interval deﬁned by the broken lines in Fig. <a href="lm.html#fig:figlmer3">11.6</a>. Increasing sample size will not give a narrower predictive distribution because the predictive distribution primarily depends on the residual variance <span class="math inline">\(\sigma^2\)</span> which is a property of the data that is independent of sample size.</p>
 <p>The way we produced Fig. <a href="lm.html#fig:figlmer3">11.6</a> is somewhat tedious compared to how easy we could have obtained the same ﬁgure using frequentist methods: <code>predict(mod, newdata = newdat, interval = "prediction")</code> would have produced the y-values for the lower and upper lines in Fig. <a href="lm.html#fig:figlmer3">11.6</a> in one R-code line. However, once we have a simulated sample of the posterior predictive distribution, we have much more information than is contained in the frequentist prediction interval. For example, we could give an estimate for the proportion of observations greater than 20, given <span class="math inline">\(x = 25\)</span>.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="lm.html#cb74-1" tabindex="-1"></a><span class="fu">sum</span>(newy[newdat<span class="sc">$</span>x <span class="sc">==</span> <span class="dv">25</span>, ] <span class="sc">&gt;</span> <span class="dv">20</span>) <span class="sc">/</span> nsim</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="lm.html#cb72-1" tabindex="-1"></a><span class="fu">sum</span>(newy[newdat<span class="sc">$</span>x <span class="sc">==</span> <span class="dv">25</span>, ] <span class="sc">&gt;</span> <span class="dv">20</span>) <span class="sc">/</span> nsim</span></code></pre></div>
 <pre><code>## [1] 0.44504</code></pre>
 <p>Thus, we expect 44% of future observations with <span class="math inline">\(x = 25\)</span> to be higher than 20. We can extract similar information for any relevant threshold value.</p>
 <p>Another reason to learn the more complicated R code we presented here, compared to the frequentist methods, is that, for more complicated models such as mixed models, the frequentist methods to obtain conﬁdence intervals of ﬁtted values are much more complicated than the Bayesian method just presented. The latter can be used with only slight adaptations for mixed models and also for generalized linear mixed models.</p>
@@ -680,7 +680,7 @@ Figure 11.6: Regression line with 95% uncertainty interval (dotted lines) and th
 <div id="interpretation-of-the-r-summary-output" class="section level3 hasAnchor" number="11.1.4">
 <h3><span class="header-section-number">11.1.4</span> Interpretation of the R summary output<a href="lm.html#interpretation-of-the-r-summary-output" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The solution for <span class="math inline">\(\boldsymbol{\beta}\)</span> is the Equation <a href="lm.html#eq:lmmatrix">(11.3)</a>. Most statistical software, including R, return an estimated frequentist standard error for each <span class="math inline">\(\beta_k\)</span>. We extract these standard errors together with the estimates for the model parameters using the <code>summary</code> function.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="lm.html#cb76-1" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="lm.html#cb74-1" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x, data = dat)
@@ -709,29 +709,29 @@ is a measure of variance that cannot be explained by the model, thus <span class
 <h2><span class="header-section-number">11.2</span> Linear model with one categorical predictor (one-way ANOVA)<a href="lm.html#linear-model-with-one-categorical-predictor-one-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The aim of analysis of variance (ANOVA) is to compare means of an outcome variable <span class="math inline">\(y\)</span> between different groups. To do so in the frequentist’s framework, variances between and within the groups are compared using F-tests (hence the name “analysis of variance”). When doing an ANOVA in a Bayesian way, inference is based on the posterior distributions of the group means and the differences between the group means.</p>
 <p>One-way ANOVA means that we only have one predictor variable, specifically a categorical predictor variable (in R defined as a “factor”). We illustrate the one-way ANOVA based on an example of simulated data (Fig. <a href="lm.html#fig:figanova">11.7</a>). We have measured weights of 30 virtual individuals for each of 3 groups. Possible research questions could be: How big are the differences between the group means? Are individuals from group 2 heavier than the ones from group 1? Which group mean is higher than 7.5 g?</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="lm.html#cb78-1" tabindex="-1"></a><span class="co"># settings for the simulation</span></span>
-<span id="cb78-2"><a href="lm.html#cb78-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">626436</span>)</span>
-<span id="cb78-3"><a href="lm.html#cb78-3" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">12</span>        <span class="co"># mean of group 1 (reference group)</span></span>
-<span id="cb78-4"><a href="lm.html#cb78-4" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">2</span>      <span class="co"># residual standard deviation</span></span>
-<span id="cb78-5"><a href="lm.html#cb78-5" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="dv">3</span>         <span class="co"># difference between group 1 and group 2</span></span>
-<span id="cb78-6"><a href="lm.html#cb78-6" tabindex="-1"></a>b2 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">5</span>        <span class="co"># difference between group 1 and group 3</span></span>
-<span id="cb78-7"><a href="lm.html#cb78-7" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">90</span>         <span class="co"># sample size</span></span>
-<span id="cb78-8"><a href="lm.html#cb78-8" tabindex="-1"></a></span>
-<span id="cb78-9"><a href="lm.html#cb78-9" tabindex="-1"></a><span class="co"># generate data</span></span>
-<span id="cb78-10"><a href="lm.html#cb78-10" tabindex="-1"></a>group <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;group 1&quot;</span>,<span class="st">&quot;group 2&quot;</span>, <span class="st">&quot;group 3&quot;</span>), <span class="at">each=</span><span class="dv">30</span>))</span>
-<span id="cb78-11"><a href="lm.html#cb78-11" tabindex="-1"></a>simresid <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>sigma)  <span class="co"># simulate residuals</span></span>
-<span id="cb78-12"><a href="lm.html#cb78-12" tabindex="-1"></a>y <span class="ot">&lt;-</span> b0 <span class="sc">+</span> </span>
-<span id="cb78-13"><a href="lm.html#cb78-13" tabindex="-1"></a>  <span class="fu">as.numeric</span>(group<span class="sc">==</span><span class="st">&quot;group 2&quot;</span>) <span class="sc">*</span> b1 <span class="sc">+</span> </span>
-<span id="cb78-14"><a href="lm.html#cb78-14" tabindex="-1"></a>  <span class="fu">as.numeric</span>(group<span class="sc">==</span><span class="st">&quot;group 3&quot;</span>) <span class="sc">*</span> b2 <span class="sc">+</span> </span>
-<span id="cb78-15"><a href="lm.html#cb78-15" tabindex="-1"></a>  simresid</span>
-<span id="cb78-16"><a href="lm.html#cb78-16" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(y, group)</span>
-<span id="cb78-17"><a href="lm.html#cb78-17" tabindex="-1"></a></span>
-<span id="cb78-18"><a href="lm.html#cb78-18" tabindex="-1"></a><span class="co"># make figure</span></span>
-<span id="cb78-19"><a href="lm.html#cb78-19" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
-<span id="cb78-20"><a href="lm.html#cb78-20" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb78-21"><a href="lm.html#cb78-21" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>) <span class="sc">+</span></span>
-<span id="cb78-22"><a href="lm.html#cb78-22" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Weight (g)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
-<span id="cb78-23"><a href="lm.html#cb78-23" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="cn">NA</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="lm.html#cb76-1" tabindex="-1"></a><span class="co"># settings for the simulation</span></span>
+<span id="cb76-2"><a href="lm.html#cb76-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">626436</span>)</span>
+<span id="cb76-3"><a href="lm.html#cb76-3" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">12</span>        <span class="co"># mean of group 1 (reference group)</span></span>
+<span id="cb76-4"><a href="lm.html#cb76-4" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">2</span>      <span class="co"># residual standard deviation</span></span>
+<span id="cb76-5"><a href="lm.html#cb76-5" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="dv">3</span>         <span class="co"># difference between group 1 and group 2</span></span>
+<span id="cb76-6"><a href="lm.html#cb76-6" tabindex="-1"></a>b2 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">5</span>        <span class="co"># difference between group 1 and group 3</span></span>
+<span id="cb76-7"><a href="lm.html#cb76-7" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">90</span>         <span class="co"># sample size</span></span>
+<span id="cb76-8"><a href="lm.html#cb76-8" tabindex="-1"></a></span>
+<span id="cb76-9"><a href="lm.html#cb76-9" tabindex="-1"></a><span class="co"># generate data</span></span>
+<span id="cb76-10"><a href="lm.html#cb76-10" tabindex="-1"></a>group <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;group 1&quot;</span>,<span class="st">&quot;group 2&quot;</span>, <span class="st">&quot;group 3&quot;</span>), <span class="at">each=</span><span class="dv">30</span>))</span>
+<span id="cb76-11"><a href="lm.html#cb76-11" tabindex="-1"></a>simresid <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>sigma)  <span class="co"># simulate residuals</span></span>
+<span id="cb76-12"><a href="lm.html#cb76-12" tabindex="-1"></a>y <span class="ot">&lt;-</span> b0 <span class="sc">+</span> </span>
+<span id="cb76-13"><a href="lm.html#cb76-13" tabindex="-1"></a>  <span class="fu">as.numeric</span>(group<span class="sc">==</span><span class="st">&quot;group 2&quot;</span>) <span class="sc">*</span> b1 <span class="sc">+</span> </span>
+<span id="cb76-14"><a href="lm.html#cb76-14" tabindex="-1"></a>  <span class="fu">as.numeric</span>(group<span class="sc">==</span><span class="st">&quot;group 3&quot;</span>) <span class="sc">*</span> b2 <span class="sc">+</span> </span>
+<span id="cb76-15"><a href="lm.html#cb76-15" tabindex="-1"></a>  simresid</span>
+<span id="cb76-16"><a href="lm.html#cb76-16" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(y, group)</span>
+<span id="cb76-17"><a href="lm.html#cb76-17" tabindex="-1"></a></span>
+<span id="cb76-18"><a href="lm.html#cb76-18" tabindex="-1"></a><span class="co"># make figure</span></span>
+<span id="cb76-19"><a href="lm.html#cb76-19" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb76-20"><a href="lm.html#cb76-20" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb76-21"><a href="lm.html#cb76-21" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>) <span class="sc">+</span></span>
+<span id="cb76-22"><a href="lm.html#cb76-22" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Weight (g)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb76-23"><a href="lm.html#cb76-23" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="cn">NA</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:figanova"></span>
 <img src="2.03-lm_files/figure-html/figanova-1.png" alt="Weights (g) of the 30 individuals in each group. The dark horizontal line is the median, the box contains 50% of the observations (i.e., the interquartile range), the whiskers mark the range of all observations that are less than 1.5 times the interquartile range away from the edge of the box." width="672" />
 <p class="caption">
@@ -788,11 +788,11 @@ Figure 11.7: Weights (g) of the 30 individuals in each group. The dark horizonta
   \end{pmatrix}
 \end{align}\]</span></p>
 <p>To obtain the parameter estimates for model parameterized according to Equation <a href="lm.html#eq:anovamw">(11.6)</a> we ﬁt the model in R:</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="lm.html#cb79-1" tabindex="-1"></a><span class="co"># fit the model</span></span>
-<span id="cb79-2"><a href="lm.html#cb79-2" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>group, <span class="at">data=</span>dat)  </span>
-<span id="cb79-3"><a href="lm.html#cb79-3" tabindex="-1"></a></span>
-<span id="cb79-4"><a href="lm.html#cb79-4" tabindex="-1"></a><span class="co"># parameter estimates </span></span>
-<span id="cb79-5"><a href="lm.html#cb79-5" tabindex="-1"></a>mod</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="lm.html#cb77-1" tabindex="-1"></a><span class="co"># fit the model</span></span>
+<span id="cb77-2"><a href="lm.html#cb77-2" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>group, <span class="at">data=</span>dat)  </span>
+<span id="cb77-3"><a href="lm.html#cb77-3" tabindex="-1"></a></span>
+<span id="cb77-4"><a href="lm.html#cb77-4" tabindex="-1"></a><span class="co"># parameter estimates </span></span>
+<span id="cb77-5"><a href="lm.html#cb77-5" tabindex="-1"></a>mod</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ group, data = dat)
@@ -800,45 +800,45 @@ Figure 11.7: Weights (g) of the 30 individuals in each group. The dark horizonta
 ## Coefficients:
 ##  (Intercept)  groupgroup 2  groupgroup 3  
 ##       12.367         2.215        -5.430</code></pre>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="lm.html#cb81-1" tabindex="-1"></a><span class="fu">summary</span>(mod)<span class="sc">$</span>sigma</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="lm.html#cb79-1" tabindex="-1"></a><span class="fu">summary</span>(mod)<span class="sc">$</span>sigma</span></code></pre></div>
 <pre><code>## [1] 1.684949</code></pre>
 <p>The “Intercept” is <span class="math inline">\(\beta_0\)</span>. The other coefﬁcients are named with the factor name (“group”) and the factor level (either “group 2” or “group 3”). These are <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_2\)</span> , respectively. Before drawing conclusions from an R output we need to examine whether the model assumptions are met, that is, we need to do a residual analysis as described in Chapter <a href="residualanalysis.html#residualanalysis">12</a>.</p>
 <p>Different questions can be answered using the above ANOVA: What are the group means? What is the difference in the means between group 1 and group 2? What is the difference between the means of the heaviest and lightest group? In a Bayesian framework we can directly assess how strongly the data support the hypothesis that the mean of the group 2 is larger than the mean of group 1. We ﬁrst simulate from the posterior distribution of the model parameters.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="lm.html#cb83-1" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
-<span id="cb83-2"><a href="lm.html#cb83-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb83-3"><a href="lm.html#cb83-3" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="lm.html#cb81-1" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
+<span id="cb81-2"><a href="lm.html#cb81-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb81-3"><a href="lm.html#cb81-3" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim)</span></code></pre></div>
 <p>Then we obtain the posterior distributions for the group means according to the parameterization of the model formula (Equation <a href="lm.html#eq:anovamw">(11.6)</a>).</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="lm.html#cb84-1" tabindex="-1"></a>m.g1 <span class="ot">&lt;-</span> <span class="fu">coef</span>(bsim)[,<span class="dv">1</span>]  </span>
-<span id="cb84-2"><a href="lm.html#cb84-2" tabindex="-1"></a>m.g2 <span class="ot">&lt;-</span> <span class="fu">coef</span>(bsim)[,<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(bsim)[,<span class="dv">2</span>] </span>
-<span id="cb84-3"><a href="lm.html#cb84-3" tabindex="-1"></a>m.g3 <span class="ot">&lt;-</span> <span class="fu">coef</span>(bsim)[,<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(bsim)[,<span class="dv">3</span>] </span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="lm.html#cb82-1" tabindex="-1"></a>m.g1 <span class="ot">&lt;-</span> <span class="fu">coef</span>(bsim)[,<span class="dv">1</span>]  </span>
+<span id="cb82-2"><a href="lm.html#cb82-2" tabindex="-1"></a>m.g2 <span class="ot">&lt;-</span> <span class="fu">coef</span>(bsim)[,<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(bsim)[,<span class="dv">2</span>] </span>
+<span id="cb82-3"><a href="lm.html#cb82-3" tabindex="-1"></a>m.g3 <span class="ot">&lt;-</span> <span class="fu">coef</span>(bsim)[,<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(bsim)[,<span class="dv">3</span>] </span></code></pre></div>
 <p>The histograms of the simulated values from the posterior distributions of the three means are given in Fig. <a href="lm.html#fig:figanovares">11.8</a>. The three means are well separated and, based on our data, we are conﬁdent that the group means differ. From these simulated posterior distributions we obtain the means and use the 2.5% and 97.5% quantiles as limits of the 95% uncertainty intervals (Fig. <a href="lm.html#fig:figanovares">11.8</a>, right).</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="lm.html#cb85-1" tabindex="-1"></a><span class="co"># save simulated values from posterior distribution in  tibble</span></span>
-<span id="cb85-2"><a href="lm.html#cb85-2" tabindex="-1"></a>post <span class="ot">&lt;-</span> </span>
-<span id="cb85-3"><a href="lm.html#cb85-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="st">`</span><span class="at">group 1</span><span class="st">`</span> <span class="ot">=</span> m.g1, <span class="st">`</span><span class="at">group 2</span><span class="st">`</span> <span class="ot">=</span> m.g2, <span class="st">`</span><span class="at">group 3</span><span class="st">`</span> <span class="ot">=</span> m.g3) <span class="sc">%&gt;%</span> </span>
-<span id="cb85-4"><a href="lm.html#cb85-4" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="st">&quot;groups&quot;</span>, <span class="st">&quot;Group means&quot;</span>) </span>
-<span id="cb85-5"><a href="lm.html#cb85-5" tabindex="-1"></a></span>
-<span id="cb85-6"><a href="lm.html#cb85-6" tabindex="-1"></a><span class="co"># histograms per group</span></span>
-<span id="cb85-7"><a href="lm.html#cb85-7" tabindex="-1"></a>leftplot <span class="ot">&lt;-</span> </span>
-<span id="cb85-8"><a href="lm.html#cb85-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(post, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Group means</span><span class="st">`</span>, <span class="at">fill =</span> groups)) <span class="sc">+</span></span>
-<span id="cb85-9"><a href="lm.html#cb85-9" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span>..density..), <span class="at">binwidth =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
-<span id="cb85-10"><a href="lm.html#cb85-10" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="sc">+</span></span>
-<span id="cb85-11"><a href="lm.html#cb85-11" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span>
-<span id="cb85-12"><a href="lm.html#cb85-12" tabindex="-1"></a></span>
-<span id="cb85-13"><a href="lm.html#cb85-13" tabindex="-1"></a><span class="co"># plot mean and 95%-CrI</span></span>
-<span id="cb85-14"><a href="lm.html#cb85-14" tabindex="-1"></a>rightplot <span class="ot">&lt;-</span> </span>
-<span id="cb85-15"><a href="lm.html#cb85-15" tabindex="-1"></a>  post <span class="sc">%&gt;%</span> </span>
-<span id="cb85-16"><a href="lm.html#cb85-16" tabindex="-1"></a>  <span class="fu">group_by</span>(groups) <span class="sc">%&gt;%</span> </span>
-<span id="cb85-17"><a href="lm.html#cb85-17" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
-<span id="cb85-18"><a href="lm.html#cb85-18" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">Group means</span><span class="st">`</span>),</span>
-<span id="cb85-19"><a href="lm.html#cb85-19" tabindex="-1"></a>    <span class="at">CrI_lo =</span> <span class="fu">quantile</span>(<span class="st">`</span><span class="at">Group means</span><span class="st">`</span>, <span class="at">probs =</span> <span class="fl">0.025</span>),</span>
-<span id="cb85-20"><a href="lm.html#cb85-20" tabindex="-1"></a>    <span class="at">CrI_up =</span> <span class="fu">quantile</span>(<span class="st">`</span><span class="at">Group means</span><span class="st">`</span>, <span class="at">probs =</span> <span class="fl">0.975</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb85-21"><a href="lm.html#cb85-21" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> groups, <span class="at">y =</span> mean)) <span class="sc">+</span></span>
-<span id="cb85-22"><a href="lm.html#cb85-22" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb85-23"><a href="lm.html#cb85-23" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> CrI_lo, <span class="at">ymax =</span> CrI_up), <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb85-24"><a href="lm.html#cb85-24" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb85-25"><a href="lm.html#cb85-25" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Weight (g)&quot;</span>, <span class="at">x =</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb85-26"><a href="lm.html#cb85-26" tabindex="-1"></a></span>
-<span id="cb85-27"><a href="lm.html#cb85-27" tabindex="-1"></a><span class="fu">multiplot</span>(leftplot, rightplot, <span class="at">cols =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="lm.html#cb83-1" tabindex="-1"></a><span class="co"># save simulated values from posterior distribution in  tibble</span></span>
+<span id="cb83-2"><a href="lm.html#cb83-2" tabindex="-1"></a>post <span class="ot">&lt;-</span> </span>
+<span id="cb83-3"><a href="lm.html#cb83-3" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="st">`</span><span class="at">group 1</span><span class="st">`</span> <span class="ot">=</span> m.g1, <span class="st">`</span><span class="at">group 2</span><span class="st">`</span> <span class="ot">=</span> m.g2, <span class="st">`</span><span class="at">group 3</span><span class="st">`</span> <span class="ot">=</span> m.g3) <span class="sc">%&gt;%</span> </span>
+<span id="cb83-4"><a href="lm.html#cb83-4" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="st">&quot;groups&quot;</span>, <span class="st">&quot;Group means&quot;</span>) </span>
+<span id="cb83-5"><a href="lm.html#cb83-5" tabindex="-1"></a></span>
+<span id="cb83-6"><a href="lm.html#cb83-6" tabindex="-1"></a><span class="co"># histograms per group</span></span>
+<span id="cb83-7"><a href="lm.html#cb83-7" tabindex="-1"></a>leftplot <span class="ot">&lt;-</span> </span>
+<span id="cb83-8"><a href="lm.html#cb83-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(post, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Group means</span><span class="st">`</span>, <span class="at">fill =</span> groups)) <span class="sc">+</span></span>
+<span id="cb83-9"><a href="lm.html#cb83-9" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span>..density..), <span class="at">binwidth =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb83-10"><a href="lm.html#cb83-10" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="sc">+</span></span>
+<span id="cb83-11"><a href="lm.html#cb83-11" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb83-12"><a href="lm.html#cb83-12" tabindex="-1"></a></span>
+<span id="cb83-13"><a href="lm.html#cb83-13" tabindex="-1"></a><span class="co"># plot mean and 95%-CrI</span></span>
+<span id="cb83-14"><a href="lm.html#cb83-14" tabindex="-1"></a>rightplot <span class="ot">&lt;-</span> </span>
+<span id="cb83-15"><a href="lm.html#cb83-15" tabindex="-1"></a>  post <span class="sc">%&gt;%</span> </span>
+<span id="cb83-16"><a href="lm.html#cb83-16" tabindex="-1"></a>  <span class="fu">group_by</span>(groups) <span class="sc">%&gt;%</span> </span>
+<span id="cb83-17"><a href="lm.html#cb83-17" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb83-18"><a href="lm.html#cb83-18" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">Group means</span><span class="st">`</span>),</span>
+<span id="cb83-19"><a href="lm.html#cb83-19" tabindex="-1"></a>    <span class="at">CrI_lo =</span> <span class="fu">quantile</span>(<span class="st">`</span><span class="at">Group means</span><span class="st">`</span>, <span class="at">probs =</span> <span class="fl">0.025</span>),</span>
+<span id="cb83-20"><a href="lm.html#cb83-20" tabindex="-1"></a>    <span class="at">CrI_up =</span> <span class="fu">quantile</span>(<span class="st">`</span><span class="at">Group means</span><span class="st">`</span>, <span class="at">probs =</span> <span class="fl">0.975</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb83-21"><a href="lm.html#cb83-21" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> groups, <span class="at">y =</span> mean)) <span class="sc">+</span></span>
+<span id="cb83-22"><a href="lm.html#cb83-22" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb83-23"><a href="lm.html#cb83-23" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> CrI_lo, <span class="at">ymax =</span> CrI_up), <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb83-24"><a href="lm.html#cb83-24" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb83-25"><a href="lm.html#cb83-25" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Weight (g)&quot;</span>, <span class="at">x =</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb83-26"><a href="lm.html#cb83-26" tabindex="-1"></a></span>
+<span id="cb83-27"><a href="lm.html#cb83-27" tabindex="-1"></a><span class="fu">multiplot</span>(leftplot, rightplot, <span class="at">cols =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:figanovares"></span>
 <img src="2.03-lm_files/figure-html/figanovares-1.png" alt="Distribution of the simulated values from the posterior distributions of the group means (left); group means with 95% uncertainty intervals obtained from the simulated distributions (right)." width="672" />
 <p class="caption">
@@ -846,15 +846,15 @@ Figure 11.8: Distribution of the simulated values from the posterior distributio
 </p>
 </div>
 <p>To obtain the posterior distribution of the difference between the means of group 1 and group 2, we simply calculate this difference for each draw from the joint posterior distribution of the group means.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="lm.html#cb86-1" tabindex="-1"></a>d.g1<span class="fl">.2</span> <span class="ot">&lt;-</span> m.g1 <span class="sc">-</span> m.g2</span>
-<span id="cb86-2"><a href="lm.html#cb86-2" tabindex="-1"></a><span class="fu">mean</span>(d.g1<span class="fl">.2</span>)</span></code></pre></div>
-<pre><code>## [1] -2.209551</code></pre>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="lm.html#cb88-1" tabindex="-1"></a><span class="fu">quantile</span>(d.g1<span class="fl">.2</span>, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="lm.html#cb84-1" tabindex="-1"></a>d.g1<span class="fl">.2</span> <span class="ot">&lt;-</span> m.g1 <span class="sc">-</span> m.g2</span>
+<span id="cb84-2"><a href="lm.html#cb84-2" tabindex="-1"></a><span class="fu">mean</span>(d.g1<span class="fl">.2</span>)</span></code></pre></div>
+<pre><code>## [1] -2.209873</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="lm.html#cb86-1" tabindex="-1"></a><span class="fu">quantile</span>(d.g1<span class="fl">.2</span>, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <pre><code>##      2.5%     97.5% 
-## -3.128721 -1.342693</code></pre>
-<p>The estimated difference is -2.2095511. In the small model world, we are 95% sure that the difference between the means of group 1 and 2 is between -3.1287208 and -1.3426929.</p>
+## -3.128721 -1.348759</code></pre>
+<p>The estimated difference is -2.2098732. In the small model world, we are 95% sure that the difference between the means of group 1 and 2 is between -3.1287208 and -1.3487594.</p>
 <p>How strongly do the data support the hypothesis that the mean of group 2 is larger than the mean of group 1? To answer this question we calculate the proportion of the draws from the joint posterior distribution for which the mean of group 2 is larger than the mean of group 1.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="lm.html#cb90-1" tabindex="-1"></a><span class="fu">sum</span>(m.g2 <span class="sc">&gt;</span> m.g1) <span class="sc">/</span> nsim </span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="lm.html#cb88-1" tabindex="-1"></a><span class="fu">sum</span>(m.g2 <span class="sc">&gt;</span> m.g1) <span class="sc">/</span> nsim </span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>This means that in all of the 1000 simulations from the joint posterior distribution, the mean of group 2 was larger than the mean of group 1. Therefore, there is a very high probability (i.e., it is close to 1; because probabilities are never exactly 1, we write &gt;0.999) that the mean of group 2 is larger than the mean of group 1.</p>
 </div>
@@ -865,14 +865,14 @@ While it is easy to add additional predictors in the R formula of the model, it 
 <div id="linear-model-with-two-categorical-predictors-two-way-anova" class="section level3 hasAnchor" number="11.3.1">
 <h3><span class="header-section-number">11.3.1</span> Linear model with two categorical predictors (two-way ANOVA)<a href="lm.html#linear-model-with-two-categorical-predictors-two-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In the first example, we ask how large are the differences in wing length between age and sex classes of the Coal tit <em>Periparus ater</em>. Wing lengths were measured on 19 coal tit museum skins with known sex and age class.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="lm.html#cb92-1" tabindex="-1"></a><span class="fu">data</span>(periparusater)</span>
-<span id="cb92-2"><a href="lm.html#cb92-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(periparusater) <span class="co"># give the data a short handy name</span></span>
-<span id="cb92-3"><a href="lm.html#cb92-3" tabindex="-1"></a>dat<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">recode_factor</span>(dat<span class="sc">$</span>age, <span class="st">&quot;4&quot;</span><span class="ot">=</span><span class="st">&quot;adult&quot;</span>, <span class="st">&quot;3&quot;</span><span class="ot">=</span><span class="st">&quot;juvenile&quot;</span>) <span class="co"># replace EURING code</span></span>
-<span id="cb92-4"><a href="lm.html#cb92-4" tabindex="-1"></a>dat<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">recode_factor</span>(dat<span class="sc">$</span>sex, <span class="st">&quot;2&quot;</span><span class="ot">=</span><span class="st">&quot;female&quot;</span>, <span class="st">&quot;1&quot;</span><span class="ot">=</span><span class="st">&quot;male&quot;</span>)    <span class="co"># replace EURING code</span></span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="lm.html#cb90-1" tabindex="-1"></a><span class="fu">data</span>(periparusater)</span>
+<span id="cb90-2"><a href="lm.html#cb90-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(periparusater) <span class="co"># give the data a short handy name</span></span>
+<span id="cb90-3"><a href="lm.html#cb90-3" tabindex="-1"></a>dat<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">recode_factor</span>(dat<span class="sc">$</span>age, <span class="st">&quot;4&quot;</span><span class="ot">=</span><span class="st">&quot;adult&quot;</span>, <span class="st">&quot;3&quot;</span><span class="ot">=</span><span class="st">&quot;juvenile&quot;</span>) <span class="co"># replace EURING code</span></span>
+<span id="cb90-4"><a href="lm.html#cb90-4" tabindex="-1"></a>dat<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">recode_factor</span>(dat<span class="sc">$</span>sex, <span class="st">&quot;2&quot;</span><span class="ot">=</span><span class="st">&quot;female&quot;</span>, <span class="st">&quot;1&quot;</span><span class="ot">=</span><span class="st">&quot;male&quot;</span>)    <span class="co"># replace EURING code</span></span></code></pre></div>
 <p>To describe differences in wing length between the age classes or between the sexes a normal linear model with two categorical predictors is fitted to the data. The two predictors are specified on the right side of the model formula separated by the “+” sign, which means that the model is an additive combination of the two effects (as opposed to an interaction, see following).</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="lm.html#cb93-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(wing <span class="sc">~</span> sex <span class="sc">+</span> age, <span class="at">data=</span>dat)</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="lm.html#cb91-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(wing <span class="sc">~</span> sex <span class="sc">+</span> age, <span class="at">data=</span>dat)</span></code></pre></div>
 <p>After having seen that the residual distribution does not appear to violate the model assumptions (as assessed with diagnostic residual plots, see Chapter <a href="residualanalysis.html#residualanalysis">12</a>), we can draw inferences. We first have a look at the model parameter estimates:</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="lm.html#cb94-1" tabindex="-1"></a>mod</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="lm.html#cb92-1" tabindex="-1"></a>mod</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = wing ~ sex + age, data = dat)
@@ -880,16 +880,16 @@ While it is easy to add additional predictors in the R formula of the model, it 
 ## Coefficients:
 ## (Intercept)      sexmale  agejuvenile  
 ##     61.3784       3.3423      -0.8829</code></pre>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="lm.html#cb96-1" tabindex="-1"></a><span class="fu">summary</span>(mod)<span class="sc">$</span>sigma</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="lm.html#cb94-1" tabindex="-1"></a><span class="fu">summary</span>(mod)<span class="sc">$</span>sigma</span></code></pre></div>
 <pre><code>## [1] 2.134682</code></pre>
 <p>R has taken the first level of the factors age and sex (as defined in the data.frame dat) as the reference levels. The intercept is the expected wing length for individuals having the reference level in age and sex, thus adult female. The other two parameters provide estimates of what is to be added to the intercept to get the expected wing length for the other levels. The parameter <code>sexmale</code> is the average difference between females and males. We can conclude that in males have in average a 3.3 mm longer wing than females. Similarly, the parameter <code>agejuvenile</code> measures the differences between the age classes and we can conclude that, in average, juveniles have a 0.9 shorter wing than adults. When we insert the parameter estimates into the model formula, we get the receipt to calculate expected values for each age and sex combination:</p>
 <p><span class="math inline">\(\hat{y_i} = \hat{\beta_0} + \hat{\beta_1}I(sex=male) + \hat{\beta_2}I(age=juvenile)\)</span> which yields<br />
 <span class="math inline">\(\hat{y_i}\)</span> = 61.4 <span class="math inline">\(+\)</span> 3.3 <span class="math inline">\(I(sex=male) +\)</span> -0.9 <span class="math inline">\(I(age=juvenile)\)</span>.</p>
 <p>Alternatively, we could use matrix notation. We construct a new data set that contains one virtual individual for each age and sex class.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="lm.html#cb98-1" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="fu">expand.grid</span>(<span class="at">sex=</span><span class="fu">factor</span>(<span class="fu">levels</span>(dat<span class="sc">$</span>sex)),</span>
-<span id="cb98-2"><a href="lm.html#cb98-2" tabindex="-1"></a>                      <span class="at">age=</span><span class="fu">factor</span>(<span class="fu">levels</span>(dat<span class="sc">$</span>age))))</span>
-<span id="cb98-3"><a href="lm.html#cb98-3" tabindex="-1"></a><span class="co"># expand.grid creates a data frame with all combination of values given</span></span>
-<span id="cb98-4"><a href="lm.html#cb98-4" tabindex="-1"></a>newdat</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="lm.html#cb96-1" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="fu">expand.grid</span>(<span class="at">sex=</span><span class="fu">factor</span>(<span class="fu">levels</span>(dat<span class="sc">$</span>sex)),</span>
+<span id="cb96-2"><a href="lm.html#cb96-2" tabindex="-1"></a>                      <span class="at">age=</span><span class="fu">factor</span>(<span class="fu">levels</span>(dat<span class="sc">$</span>age))))</span>
+<span id="cb96-3"><a href="lm.html#cb96-3" tabindex="-1"></a><span class="co"># expand.grid creates a data frame with all combination of values given</span></span>
+<span id="cb96-4"><a href="lm.html#cb96-4" tabindex="-1"></a>newdat</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 2
 ##   sex    age     
 ##   &lt;fct&gt;  &lt;fct&gt;   
@@ -897,10 +897,10 @@ While it is easy to add additional predictors in the R formula of the model, it 
 ## 2 male   adult   
 ## 3 female juvenile
 ## 4 male   juvenile</code></pre>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="lm.html#cb100-1" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod, <span class="at">newdata=</span>newdat)  <span class="co"># fast way of getting fitted values</span></span>
-<span id="cb100-2"><a href="lm.html#cb100-2" tabindex="-1"></a><span class="co"># or</span></span>
-<span id="cb100-3"><a href="lm.html#cb100-3" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>sex<span class="sc">+</span>age, <span class="at">data=</span>newdat) <span class="co"># creates a model matrix</span></span>
-<span id="cb100-4"><a href="lm.html#cb100-4" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> Xmat <span class="sc">%*%</span> <span class="fu">coef</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="lm.html#cb98-1" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod, <span class="at">newdata=</span>newdat)  <span class="co"># fast way of getting fitted values</span></span>
+<span id="cb98-2"><a href="lm.html#cb98-2" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb98-3"><a href="lm.html#cb98-3" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>sex<span class="sc">+</span>age, <span class="at">data=</span>newdat) <span class="co"># creates a model matrix</span></span>
+<span id="cb98-4"><a href="lm.html#cb98-4" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> Xmat <span class="sc">%*%</span> <span class="fu">coef</span>(mod)</span></code></pre></div>
 <p>For this new data set the model matrix contains four rows (one for each combination of age class and sex) and three columns. The first column contains only ones because the values of this column are multiplied by the intercept (<span class="math inline">\(\beta_0\)</span>) in the matrix multiplication. The second column contains an indicator variable for males (so only the rows corresponding to males contain a one) and the third column has ones for juveniles.</p>
 <p><span class="math display" id="eq:lmmatrix">\[\begin{align}
 \hat{y} =
@@ -929,28 +929,28 @@ While it is easy to add additional predictors in the R formula of the model, it 
 <p>The result of the matrix multiplication is a vector containing the expected wing length for adult and juvenile females and adult and juvenile males.</p>
 <p>When creating the model matrix with <code>model.matrix</code> care has to be taken that the columns in the model matrix match the parameters in the vector of model coefficients. To achieve that, it is required that the model formula is identical to the model formula of the model (same order of terms!), and that the factors in newdat are identical in their levels and their order as in the data the model was fitted to.</p>
 <p>To describe the uncertainty of the fitted values, we use 2000 sets of parameter values of the joint posterior distribution to obtain 2000 values for each of the four fitted values. These are stored in the object “fitmat”. In the end, we extract for every fitted value, i.e., for every row in fitmat, the 2.5% and 97.5% quantiles as the lower and upper limits of the 95% uncertainty interval.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="lm.html#cb101-1" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
-<span id="cb101-2"><a href="lm.html#cb101-2" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim)</span>
-<span id="cb101-3"><a href="lm.html#cb101-3" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nsim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
-<span id="cb101-4"><a href="lm.html#cb101-4" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) fitmat[,i] <span class="ot">&lt;-</span> Xmat <span class="sc">%*%</span> <span class="fu">coef</span>(bsim)[i,] </span>
-<span id="cb101-5"><a href="lm.html#cb101-5" tabindex="-1"></a>newdat<span class="sc">$</span>lwr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">probs=</span><span class="fl">0.025</span>)</span>
-<span id="cb101-6"><a href="lm.html#cb101-6" tabindex="-1"></a>newdat<span class="sc">$</span>upr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">probs=</span><span class="fl">0.975</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="lm.html#cb102-1" tabindex="-1"></a>dat<span class="sc">$</span>sexage <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">paste</span>(dat<span class="sc">$</span>sex, dat<span class="sc">$</span>age))</span>
-<span id="cb102-2"><a href="lm.html#cb102-2" tabindex="-1"></a>newdat<span class="sc">$</span>sexage <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">paste</span>(newdat<span class="sc">$</span>sex, newdat<span class="sc">$</span>age))</span>
-<span id="cb102-3"><a href="lm.html#cb102-3" tabindex="-1"></a>dat<span class="sc">$</span>pch <span class="ot">&lt;-</span> <span class="dv">21</span></span>
-<span id="cb102-4"><a href="lm.html#cb102-4" tabindex="-1"></a>dat<span class="sc">$</span>pch[dat<span class="sc">$</span>sex<span class="sc">==</span><span class="st">&quot;male&quot;</span>] <span class="ot">&lt;-</span> <span class="dv">22</span></span>
-<span id="cb102-5"><a href="lm.html#cb102-5" tabindex="-1"></a>dat<span class="sc">$</span>col<span class="ot">=</span><span class="st">&quot;blue&quot;</span></span>
-<span id="cb102-6"><a href="lm.html#cb102-6" tabindex="-1"></a>dat<span class="sc">$</span>col[dat<span class="sc">$</span>age<span class="sc">==</span><span class="st">&quot;adult&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;orange&quot;</span></span>
-<span id="cb102-7"><a href="lm.html#cb102-7" tabindex="-1"></a></span>
-<span id="cb102-8"><a href="lm.html#cb102-8" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="fl">0.5</span>,<span class="fl">0.5</span>))</span>
-<span id="cb102-9"><a href="lm.html#cb102-9" tabindex="-1"></a><span class="fu">plot</span>(wing<span class="sc">~</span><span class="fu">jitter</span>(<span class="fu">as.numeric</span>(sexage), <span class="at">amount=</span><span class="fl">0.05</span>), <span class="at">data=</span>dat, <span class="at">las=</span><span class="dv">1</span>, </span>
-<span id="cb102-10"><a href="lm.html#cb102-10" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Wing length (mm)&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Sex and age&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">pch=</span>dat<span class="sc">$</span>pch, </span>
-<span id="cb102-11"><a href="lm.html#cb102-11" tabindex="-1"></a>     <span class="at">bg=</span>dat<span class="sc">$</span>col, <span class="at">cex.lab=</span><span class="fl">1.2</span>, <span class="at">cex=</span><span class="dv">1</span>, <span class="at">cex.axis=</span><span class="dv">1</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">4.5</span>))</span>
-<span id="cb102-12"><a href="lm.html#cb102-12" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">labels=</span><span class="fu">levels</span>(dat<span class="sc">$</span>sexage), <span class="at">cex.axis=</span><span class="dv">1</span>)</span>
-<span id="cb102-13"><a href="lm.html#cb102-13" tabindex="-1"></a></span>
-<span id="cb102-14"><a href="lm.html#cb102-14" tabindex="-1"></a><span class="fu">segments</span>(<span class="fu">as.numeric</span>(newdat<span class="sc">$</span>sexage), newdat<span class="sc">$</span>lwr, <span class="fu">as.numeric</span>(newdat<span class="sc">$</span>sexage), newdat<span class="sc">$</span>upr, <span class="at">lwd=</span><span class="dv">2</span>,</span>
-<span id="cb102-15"><a href="lm.html#cb102-15" tabindex="-1"></a>         <span class="at">lend=</span><span class="st">&quot;butt&quot;</span>)</span>
-<span id="cb102-16"><a href="lm.html#cb102-16" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">as.numeric</span>(newdat<span class="sc">$</span>sexage), newdat<span class="sc">$</span>fit, <span class="at">pch=</span><span class="dv">17</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="lm.html#cb99-1" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb99-2"><a href="lm.html#cb99-2" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim)</span>
+<span id="cb99-3"><a href="lm.html#cb99-3" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nsim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
+<span id="cb99-4"><a href="lm.html#cb99-4" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) fitmat[,i] <span class="ot">&lt;-</span> Xmat <span class="sc">%*%</span> <span class="fu">coef</span>(bsim)[i,] </span>
+<span id="cb99-5"><a href="lm.html#cb99-5" tabindex="-1"></a>newdat<span class="sc">$</span>lwr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">probs=</span><span class="fl">0.025</span>)</span>
+<span id="cb99-6"><a href="lm.html#cb99-6" tabindex="-1"></a>newdat<span class="sc">$</span>upr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">probs=</span><span class="fl">0.975</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="lm.html#cb100-1" tabindex="-1"></a>dat<span class="sc">$</span>sexage <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">paste</span>(dat<span class="sc">$</span>sex, dat<span class="sc">$</span>age))</span>
+<span id="cb100-2"><a href="lm.html#cb100-2" tabindex="-1"></a>newdat<span class="sc">$</span>sexage <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">paste</span>(newdat<span class="sc">$</span>sex, newdat<span class="sc">$</span>age))</span>
+<span id="cb100-3"><a href="lm.html#cb100-3" tabindex="-1"></a>dat<span class="sc">$</span>pch <span class="ot">&lt;-</span> <span class="dv">21</span></span>
+<span id="cb100-4"><a href="lm.html#cb100-4" tabindex="-1"></a>dat<span class="sc">$</span>pch[dat<span class="sc">$</span>sex<span class="sc">==</span><span class="st">&quot;male&quot;</span>] <span class="ot">&lt;-</span> <span class="dv">22</span></span>
+<span id="cb100-5"><a href="lm.html#cb100-5" tabindex="-1"></a>dat<span class="sc">$</span>col<span class="ot">=</span><span class="st">&quot;blue&quot;</span></span>
+<span id="cb100-6"><a href="lm.html#cb100-6" tabindex="-1"></a>dat<span class="sc">$</span>col[dat<span class="sc">$</span>age<span class="sc">==</span><span class="st">&quot;adult&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;orange&quot;</span></span>
+<span id="cb100-7"><a href="lm.html#cb100-7" tabindex="-1"></a></span>
+<span id="cb100-8"><a href="lm.html#cb100-8" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="fl">0.5</span>,<span class="fl">0.5</span>))</span>
+<span id="cb100-9"><a href="lm.html#cb100-9" tabindex="-1"></a><span class="fu">plot</span>(wing<span class="sc">~</span><span class="fu">jitter</span>(<span class="fu">as.numeric</span>(sexage), <span class="at">amount=</span><span class="fl">0.05</span>), <span class="at">data=</span>dat, <span class="at">las=</span><span class="dv">1</span>, </span>
+<span id="cb100-10"><a href="lm.html#cb100-10" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Wing length (mm)&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Sex and age&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">pch=</span>dat<span class="sc">$</span>pch, </span>
+<span id="cb100-11"><a href="lm.html#cb100-11" tabindex="-1"></a>     <span class="at">bg=</span>dat<span class="sc">$</span>col, <span class="at">cex.lab=</span><span class="fl">1.2</span>, <span class="at">cex=</span><span class="dv">1</span>, <span class="at">cex.axis=</span><span class="dv">1</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">4.5</span>))</span>
+<span id="cb100-12"><a href="lm.html#cb100-12" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">labels=</span><span class="fu">levels</span>(dat<span class="sc">$</span>sexage), <span class="at">cex.axis=</span><span class="dv">1</span>)</span>
+<span id="cb100-13"><a href="lm.html#cb100-13" tabindex="-1"></a></span>
+<span id="cb100-14"><a href="lm.html#cb100-14" tabindex="-1"></a><span class="fu">segments</span>(<span class="fu">as.numeric</span>(newdat<span class="sc">$</span>sexage), newdat<span class="sc">$</span>lwr, <span class="fu">as.numeric</span>(newdat<span class="sc">$</span>sexage), newdat<span class="sc">$</span>upr, <span class="at">lwd=</span><span class="dv">2</span>,</span>
+<span id="cb100-15"><a href="lm.html#cb100-15" tabindex="-1"></a>         <span class="at">lend=</span><span class="st">&quot;butt&quot;</span>)</span>
+<span id="cb100-16"><a href="lm.html#cb100-16" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">as.numeric</span>(newdat<span class="sc">$</span>sexage), newdat<span class="sc">$</span>fit, <span class="at">pch=</span><span class="dv">17</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:fgwingpa"></span>
 <img src="2.03-lm_files/figure-html/fgwingpa-1.png" alt="Wing length measurements on 19 museumm skins of coal tits per age class and sex. Fitted values are from the additive model (black triangles) and from the model including an interaction (black dots). Vertical bars = 95% uncertainty intervals." width="672" />
 <p class="caption">
@@ -958,11 +958,11 @@ Figure 11.9: Wing length measurements on 19 museumm skins of coal tits per age c
 </p>
 </div>
 <p>We can see that the fitted values are not equal to the arithmetic means of the groups; this is especially clear for juvenile males. The fitted values are constrained because only three parameters were used to estimate four means. In other words, this model assumes that the age difference is equal in both sexes and, vice versa, that the difference between the sexes does not change with age. If the effect of sex changes with age, we would include an <em>interaction</em> between sex and age in the model. Including an interaction adds a fourth parameter enabling us to estimate the group means exactly. In R, an interaction is indicated with the <code>:</code> sign.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="lm.html#cb103-1" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(wing <span class="sc">~</span> sex <span class="sc">+</span> age <span class="sc">+</span> sex<span class="sc">:</span>age, <span class="at">data=</span>dat)</span>
-<span id="cb103-2"><a href="lm.html#cb103-2" tabindex="-1"></a></span>
-<span id="cb103-3"><a href="lm.html#cb103-3" tabindex="-1"></a><span class="co"># alternative formulations of the same model:</span></span>
-<span id="cb103-4"><a href="lm.html#cb103-4" tabindex="-1"></a><span class="co"># mod2 &lt;- lm(wing ~ sex * age, data=dat)</span></span>
-<span id="cb103-5"><a href="lm.html#cb103-5" tabindex="-1"></a><span class="co"># mod2 &lt;- lm(wing ~ (sex + age)^2, data=dat)</span></span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="lm.html#cb101-1" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(wing <span class="sc">~</span> sex <span class="sc">+</span> age <span class="sc">+</span> sex<span class="sc">:</span>age, <span class="at">data=</span>dat)</span>
+<span id="cb101-2"><a href="lm.html#cb101-2" tabindex="-1"></a></span>
+<span id="cb101-3"><a href="lm.html#cb101-3" tabindex="-1"></a><span class="co"># alternative formulations of the same model:</span></span>
+<span id="cb101-4"><a href="lm.html#cb101-4" tabindex="-1"></a><span class="co"># mod2 &lt;- lm(wing ~ sex * age, data=dat)</span></span>
+<span id="cb101-5"><a href="lm.html#cb101-5" tabindex="-1"></a><span class="co"># mod2 &lt;- lm(wing ~ (sex + age)^2, data=dat)</span></span></code></pre></div>
 <p>The formula for this model is <span class="math inline">\(\hat{y_i} = \hat{\beta_0} + \hat{\beta_1}I(sex=male) + \hat{\beta_2}I(age=juvenile) + \hat{\beta_3}I(age=juvenile)I(sex=male)\)</span>. From this formula we get the following expected values for the sexes and age classes:</p>
 <p>for adult females: <span class="math inline">\(\hat{y} = \beta_0\)</span><br />
 for adult males: <span class="math inline">\(\hat{y} = \beta_0 + \beta_1\)</span><br />
@@ -970,29 +970,29 @@ for juveniles females: <span class="math inline">\(\hat{y} = \beta_0 + \beta_2\)
 for juveniles males: <span class="math inline">\(\hat{y} = \beta_0 + \beta_1 + \beta_2 + \beta_3\)</span></p>
 <p>The interaction parameter measures how much different between age classes is the difference between the sexes.</p>
 <p>To obtain the fitted values the R-code above can be recycled with two adaptations. First, the model name needs to be changed to “mod2”. Second, importantly, the model matrix needs to be adapted to the new model formula.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="lm.html#cb104-1" tabindex="-1"></a>newdat<span class="sc">$</span>fit2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod2, <span class="at">newdata=</span>newdat)</span>
-<span id="cb104-2"><a href="lm.html#cb104-2" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod2, <span class="at">n.sim=</span>nsim)</span>
-<span id="cb104-3"><a href="lm.html#cb104-3" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> sex <span class="sc">+</span> age <span class="sc">+</span> sex<span class="sc">:</span>age, <span class="at">data=</span>newdat)</span>
-<span id="cb104-4"><a href="lm.html#cb104-4" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nsim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
-<span id="cb104-5"><a href="lm.html#cb104-5" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) fitmat[,i] <span class="ot">&lt;-</span> Xmat <span class="sc">%*%</span> <span class="fu">coef</span>(bsim)[i,] </span>
-<span id="cb104-6"><a href="lm.html#cb104-6" tabindex="-1"></a>newdat<span class="sc">$</span>lwr2 <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">probs=</span><span class="fl">0.025</span>)</span>
-<span id="cb104-7"><a href="lm.html#cb104-7" tabindex="-1"></a>newdat<span class="sc">$</span>upr2 <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">probs=</span><span class="fl">0.975</span>)</span>
-<span id="cb104-8"><a href="lm.html#cb104-8" tabindex="-1"></a><span class="fu">print</span>(newdat[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>)], <span class="at">digits=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="lm.html#cb102-1" tabindex="-1"></a>newdat<span class="sc">$</span>fit2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod2, <span class="at">newdata=</span>newdat)</span>
+<span id="cb102-2"><a href="lm.html#cb102-2" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod2, <span class="at">n.sim=</span>nsim)</span>
+<span id="cb102-3"><a href="lm.html#cb102-3" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> sex <span class="sc">+</span> age <span class="sc">+</span> sex<span class="sc">:</span>age, <span class="at">data=</span>newdat)</span>
+<span id="cb102-4"><a href="lm.html#cb102-4" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nsim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
+<span id="cb102-5"><a href="lm.html#cb102-5" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) fitmat[,i] <span class="ot">&lt;-</span> Xmat <span class="sc">%*%</span> <span class="fu">coef</span>(bsim)[i,] </span>
+<span id="cb102-6"><a href="lm.html#cb102-6" tabindex="-1"></a>newdat<span class="sc">$</span>lwr2 <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">probs=</span><span class="fl">0.025</span>)</span>
+<span id="cb102-7"><a href="lm.html#cb102-7" tabindex="-1"></a>newdat<span class="sc">$</span>upr2 <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">probs=</span><span class="fl">0.975</span>)</span>
+<span id="cb102-8"><a href="lm.html#cb102-8" tabindex="-1"></a><span class="fu">print</span>(newdat[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>)], <span class="at">digits=</span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 8
 ##   sex    age      fit[,1]   lwr   upr  fit2  lwr2  upr2
 ##   &lt;fct&gt;  &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 female adult       61.4  59.3  63.3  61.1  58.8  63.5
+## 1 female adult       61.4  59.3  63.3  61.1  58.8  63.6
 ## 2 male   adult       64.7  63.3  66.2  64.8  63.3  66.4
-## 3 female juvenile    60.5  58.4  62.6  60.8  58.2  63.4
-## 4 male   juvenile    63.8  61.7  66.0  63.5  60.7  66.2</code></pre>
+## 3 female juvenile    60.5  58.4  62.6  60.8  58.2  63.5
+## 4 male   juvenile    63.8  61.8  65.9  63.5  60.8  66.2</code></pre>
 <p>These fitted values are now exactly equal to the arithmetic means of each groups.</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="lm.html#cb106-1" tabindex="-1"></a><span class="fu">tapply</span>(dat<span class="sc">$</span>wing, <span class="fu">list</span>(dat<span class="sc">$</span>age, dat<span class="sc">$</span>sex), mean) <span class="co"># arithmetic mean per group</span></span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="lm.html#cb104-1" tabindex="-1"></a><span class="fu">tapply</span>(dat<span class="sc">$</span>wing, <span class="fu">list</span>(dat<span class="sc">$</span>age, dat<span class="sc">$</span>sex), mean) <span class="co"># arithmetic mean per group</span></span></code></pre></div>
 <pre><code>##            female     male
 ## adult    61.12500 64.83333
 ## juvenile 60.83333 63.50000</code></pre>
 <p>We can also see that the uncertainty of the fitted values is larger for the model with an interaction than for the additive model. This is because, in the model including the interaction, an additional parameter has to be estimated based on the same amount of data. Therefore, the information available per parameter is smaller than in the additive model. In the additive model, some information is pooled between the groups by making the assumption that the difference between the sexes does not depend on age.</p>
 <p>The degree to which a difference in wing length is ‘important’ depends on the context of the study. Here, for example, we could consider effects of wing length on flight energetics and maneuverability or methodological aspects like measurement error. Mean between-observer difference in wing length measurement is around 0.3 mm <span class="citation">(<a href="referenzen.html#ref-Jenni.1989">Jenni and Winkler 1989</a>)</span>. Therefore, we may consider that the interaction is important because its point estimate is larger than 0.3 mm.</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="lm.html#cb108-1" tabindex="-1"></a>mod2</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="lm.html#cb106-1" tabindex="-1"></a>mod2</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = wing ~ sex + age + sex:age, data = dat)
@@ -1002,7 +1002,7 @@ for juveniles males: <span class="math inline">\(\hat{y} = \beta_0 + \beta_1 + \
 ##             61.1250               3.7083              -0.2917  
 ## sexmale:agejuvenile  
 ##             -1.0417</code></pre>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="lm.html#cb110-1" tabindex="-1"></a><span class="fu">summary</span>(mod2)<span class="sc">$</span>sigma</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="lm.html#cb108-1" tabindex="-1"></a><span class="fu">summary</span>(mod2)<span class="sc">$</span>sigma</span></code></pre></div>
 <pre><code>## [1] 2.18867</code></pre>
 <p>Further, we think a difference of 1 mm in wing length may be relevant compared to the among-individual variation of which the standard deviation is around 2 mm. Therefore, we report the parameter estimates of the model including the interaction together with their uncertainty intervals.</p>
 <table>
@@ -1020,13 +1020,13 @@ for juveniles males: <span class="math inline">\(\hat{y} = \beta_0 + \beta_1 + \
 <td align="left">(Intercept)</td>
 <td align="right">61.12</td>
 <td align="right">58.85</td>
-<td align="right">63.53</td>
+<td align="right">63.56</td>
 </tr>
 <tr class="even">
 <td align="left">sexmale</td>
 <td align="right">3.71</td>
-<td align="right">0.93</td>
-<td align="right">6.59</td>
+<td align="right">0.87</td>
+<td align="right">6.55</td>
 </tr>
 <tr class="odd">
 <td align="left">agejuvenile</td>
@@ -1037,8 +1037,8 @@ for juveniles males: <span class="math inline">\(\hat{y} = \beta_0 + \beta_1 + \
 <tr class="even">
 <td align="left">sexmale:agejuvenile</td>
 <td align="right">-1.04</td>
-<td align="right">-5.96</td>
-<td align="right">3.90</td>
+<td align="right">-5.99</td>
+<td align="right">3.83</td>
 </tr>
 </tbody>
 </table>
@@ -1046,25 +1046,25 @@ for juveniles males: <span class="math inline">\(\hat{y} = \beta_0 + \beta_1 + \
 </div>
 <div id="a-linear-model-with-a-categorical-and-a-numeric-predictor-ancova" class="section level3 hasAnchor" number="11.3.2">
 <h3><span class="header-section-number">11.3.2</span> A linear model with a categorical and a numeric predictor (ANCOVA)<a href="lm.html#a-linear-model-with-a-categorical-and-a-numeric-predictor-ancova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>An analysis of covariance, ANCOVA, is a normal linear model that contains at least one factor and one continuous variable as predictor variables. The continuous variable is also called a covariate, hence the name analysis of covariance. An ANCOVA can be used, for example, when we are interested in how the biomass of grass depends on the distance from the surface of the soil to the ground water in two different species (<em>Alopecurus pratensis</em>, <em>Dactylis glomerata</em>). The two species were grown by <span class="citation">Ellenberg (<a href="referenzen.html#ref-Ellenberg1953">1953</a>)</span> in tanks that showed a gradient in distance from the soil surface to the ground water. The distance from the soil surface to the ground water is used as a covariate (‘water’). We further assume that the species react differently to the water conditions. Therefore, we include an interaction between species and water. The model formula is then
+<p>An analysis of covariance, ANCOVA, is a normal linear model that contains at least one factor and one continuous variable as predictor variables. The continuous variable is also called a covariate, hence the name analysis of covariance. An ANCOVA can be used, for example, when we are interested in how the biomass of grass depends on the distance from the surface of the soil to the ground water in two different species (<em>Alopecurus pratensis</em>, <em>Dactylis glomerata</em>). The two species were grown by <span class="citation">Ellenberg (<a href="referenzen.html#ref-Ellenberg.1953">1953</a>)</span> in tanks that showed a gradient in distance from the soil surface to the ground water. The distance from the soil surface to the ground water is used as a covariate (‘water’). We further assume that the species react differently to the water conditions. Therefore, we include an interaction between species and water. The model formula is then
 <span class="math inline">\(\hat{y_i} = \beta_0 + \beta_1I(species=Dg) + \beta_2water_i + \beta_3I(species=Dg)water_i\)</span><br />
 <span class="math inline">\(y_i \sim normal(\hat{y_i}, \sigma^2)\)</span></p>
 <p>To fit the model, it is important to first check whether the factor is indeed defined as a factor and the continuous variable contains numbers (i.e., numeric or integer values) in the data frame.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="lm.html#cb112-1" tabindex="-1"></a><span class="fu">data</span>(ellenberg)</span>
-<span id="cb112-2"><a href="lm.html#cb112-2" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">is.element</span>(ellenberg<span class="sc">$</span>Species, <span class="fu">c</span>(<span class="st">&quot;Ap&quot;</span>, <span class="st">&quot;Dg&quot;</span>)) <span class="sc">&amp;</span> <span class="fu">complete.cases</span>(ellenberg<span class="sc">$</span>Yi.g)</span>
-<span id="cb112-3"><a href="lm.html#cb112-3" tabindex="-1"></a>dat <span class="ot">&lt;-</span> ellenberg[index,<span class="fu">c</span>(<span class="st">&quot;Water&quot;</span>, <span class="st">&quot;Species&quot;</span>, <span class="st">&quot;Yi.g&quot;</span>)] <span class="co"># select two species</span></span>
-<span id="cb112-4"><a href="lm.html#cb112-4" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(dat)</span>
-<span id="cb112-5"><a href="lm.html#cb112-5" tabindex="-1"></a><span class="fu">str</span>(dat)</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="lm.html#cb110-1" tabindex="-1"></a><span class="fu">data</span>(ellenberg)</span>
+<span id="cb110-2"><a href="lm.html#cb110-2" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">is.element</span>(ellenberg<span class="sc">$</span>Species, <span class="fu">c</span>(<span class="st">&quot;Ap&quot;</span>, <span class="st">&quot;Dg&quot;</span>)) <span class="sc">&amp;</span> <span class="fu">complete.cases</span>(ellenberg<span class="sc">$</span>Yi.g)</span>
+<span id="cb110-3"><a href="lm.html#cb110-3" tabindex="-1"></a>dat <span class="ot">&lt;-</span> ellenberg[index,<span class="fu">c</span>(<span class="st">&quot;Water&quot;</span>, <span class="st">&quot;Species&quot;</span>, <span class="st">&quot;Yi.g&quot;</span>)] <span class="co"># select two species</span></span>
+<span id="cb110-4"><a href="lm.html#cb110-4" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(dat)</span>
+<span id="cb110-5"><a href="lm.html#cb110-5" tabindex="-1"></a><span class="fu">str</span>(dat)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    84 obs. of  3 variables:
 ##  $ Water  : int  5 20 35 50 65 80 95 110 125 140 ...
 ##  $ Species: Factor w/ 2 levels &quot;Ap&quot;,&quot;Dg&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ Yi.g   : num  34.8 28 44.5 24.8 37.5 ...</code></pre>
 <p>Species is a factor with two levels and Water is an integer variable, so we are fine and we can fit the model</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="lm.html#cb114-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Yi.g) <span class="sc">~</span> Species <span class="sc">+</span> Water <span class="sc">+</span> Species<span class="sc">:</span>Water, <span class="at">data=</span>dat)</span>
-<span id="cb114-2"><a href="lm.html#cb114-2" tabindex="-1"></a><span class="co"># plot(mod)  # 4 standard residual plots</span></span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="lm.html#cb112-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Yi.g) <span class="sc">~</span> Species <span class="sc">+</span> Water <span class="sc">+</span> Species<span class="sc">:</span>Water, <span class="at">data=</span>dat)</span>
+<span id="cb112-2"><a href="lm.html#cb112-2" tabindex="-1"></a><span class="co"># plot(mod)  # 4 standard residual plots</span></span></code></pre></div>
 <p>We log-transform the biomass to make the residuals closer to normally distributed. So, the normal distribution assumption is met well. However, a slight banana shaped relationship exists between the residuals and the fitted values indicating a slight non-linear relationship between biomass and water. Further, residuals showed substantial autocorrelation because the grass biomass was measured in different tanks. Measurements from the same tank were more similar than measurements from different tanks after correcting for the distance to water. Thus, the analysis we have done here suffers from pseudoreplication. We will re-analyze the example data in a more appropriate way in Chapter <a href="lmer.html#lmer">13</a>.</p>
 <p>Let’s have a look at the model matrix (first and last six rows only).</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="lm.html#cb115-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">model.matrix</span>(mod))  <span class="co"># print the first 6 rows of the matrix</span></span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="lm.html#cb113-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">model.matrix</span>(mod))  <span class="co"># print the first 6 rows of the matrix</span></span></code></pre></div>
 <pre><code>##    (Intercept) SpeciesDg Water SpeciesDg:Water
 ## 24           1         0     5               0
 ## 25           1         0    20               0
@@ -1072,7 +1072,7 @@ for juveniles males: <span class="math inline">\(\hat{y} = \beta_0 + \beta_1 + \
 ## 27           1         0    50               0
 ## 28           1         0    65               0
 ## 29           1         0    80               0</code></pre>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="lm.html#cb117-1" tabindex="-1"></a><span class="fu">tail</span>(<span class="fu">model.matrix</span>(mod))  <span class="co"># print the last 6 rows of the matrix</span></span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="lm.html#cb115-1" tabindex="-1"></a><span class="fu">tail</span>(<span class="fu">model.matrix</span>(mod))  <span class="co"># print the last 6 rows of the matrix</span></span></code></pre></div>
 <pre><code>##     (Intercept) SpeciesDg Water SpeciesDg:Water
 ## 193           1         1    65              65
 ## 194           1         1    80              80
@@ -1082,7 +1082,7 @@ for juveniles males: <span class="math inline">\(\hat{y} = \beta_0 + \beta_1 + \
 ## 198           1         1   140             140</code></pre>
 <p>The first column of the model matrix contains only 1s. These are multiplied by the intercept in the matrix multiplication that yields the fitted values. The second column contains the indicator variable for species <em>Dactylis glomerata</em> (Dg). Species <em>Alopecurus pratensis</em> (Ap) is the reference level. The third column contains the values for the covariate. The last column contains the product of the indicator for species Dg and water. This column specifies the interaction between species and water.</p>
 <p>The parameters are the intercept, the difference between the species, a slope for water and the interaction parameter.</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="lm.html#cb119-1" tabindex="-1"></a>mod</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="lm.html#cb117-1" tabindex="-1"></a>mod</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = log(Yi.g) ~ Species + Water + Species:Water, data = dat)
@@ -1090,7 +1090,7 @@ for juveniles males: <span class="math inline">\(\hat{y} = \beta_0 + \beta_1 + \
 ## Coefficients:
 ##     (Intercept)        SpeciesDg            Water  SpeciesDg:Water  
 ##         4.33041         -0.23700         -0.01791          0.01894</code></pre>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="lm.html#cb121-1" tabindex="-1"></a><span class="fu">summary</span>(mod)<span class="sc">$</span>sigma</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="lm.html#cb119-1" tabindex="-1"></a><span class="fu">summary</span>(mod)<span class="sc">$</span>sigma</span></code></pre></div>
 <pre><code>## [1] 0.9001547</code></pre>
 <p>These four parameters define two regression lines, one for each species (Figure <a href="lm.html#fig:fgbiom">11.10</a> Left). For Ap, it is <span class="math inline">\(\hat{y_i} = \beta_0  + \beta_2water_i\)</span>, and for Dg it is <span class="math inline">\(\hat{y_i} = (\beta_0 + \beta_1) + (\beta_2 + \beta_3)water_i\)</span>. Thus, <span class="math inline">\(\beta_1\)</span> is the difference in the intercept between the species and <span class="math inline">\(\beta_3\)</span> is the difference in the slope.</p>
 <div class="figure"><span style="display:block;" id="fig:fgbiom"></span>
@@ -1107,18 +1107,18 @@ Figure 11.10: Aboveground biomass (g, log-transformed) in relation to distance t
 <h2><span class="header-section-number">11.4</span> Partial coefficients and some comments on collinearity<a href="lm.html#collinearity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Many biologists think that it is forbidden to include correlated predictor variables in a model. They use variance inflating factors (VIF) to omit some of the variables. However, omitting important variables from the model just because a correlation coefficient exceeds a threshold value can have undesirable effects. Here, we explain why and we present the usefulness and limits of partial coefficients (also called partial correlation or partial effects). We start with an example illustrating the usefulness of partial coefficients and then, give some guidelines on how to deal with collinearity.</p>
 <p>As an example, we look at hatching dates of Snowfinches and how these dates relate to the date when snow melt started (first date in the season when a minimum of 5% ground is snow free). A thorough analyses of the data is presented by <span class="citation">Schano et al. (<a href="referenzen.html#ref-Schano.2021">2021</a>)</span>. An important question is how well can Snowfinches adjust their hatching dates to the snow conditions. For Snowfinches, it is important to raise their nestlings during snow melt. Their nestlings grow faster when they are reared during the snow melt compared to after snow has completely melted, because their parents find nutrient rich insect larvae in the edges of melting snow patches.</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="lm.html#cb123-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;RData/snowfinch_hatching_date.rda&quot;</span>)</span>
-<span id="cb123-2"><a href="lm.html#cb123-2" tabindex="-1"></a></span>
-<span id="cb123-3"><a href="lm.html#cb123-3" tabindex="-1"></a><span class="co"># Pearson&#39;s correlation coefficient</span></span>
-<span id="cb123-4"><a href="lm.html#cb123-4" tabindex="-1"></a><span class="fu">cor</span>(datsf<span class="sc">$</span>elevation, datsf<span class="sc">$</span>meltstart, <span class="at">use =</span> <span class="st">&quot;pairwise.complete&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="lm.html#cb121-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;RData/snowfinch_hatching_date.rda&quot;</span>)</span>
+<span id="cb121-2"><a href="lm.html#cb121-2" tabindex="-1"></a></span>
+<span id="cb121-3"><a href="lm.html#cb121-3" tabindex="-1"></a><span class="co"># Pearson&#39;s correlation coefficient</span></span>
+<span id="cb121-4"><a href="lm.html#cb121-4" tabindex="-1"></a><span class="fu">cor</span>(datsf<span class="sc">$</span>elevation, datsf<span class="sc">$</span>meltstart, <span class="at">use =</span> <span class="st">&quot;pairwise.complete&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] 0.3274635</code></pre>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="lm.html#cb125-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(meltstart<span class="sc">~</span>elevation, <span class="at">data=</span>datsf)</span>
-<span id="cb125-2"><a href="lm.html#cb125-2" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span><span class="fu">coef</span>(mod)[<span class="dv">2</span>] <span class="co"># change in meltstart with 100m change in elevation</span></span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="lm.html#cb123-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(meltstart<span class="sc">~</span>elevation, <span class="at">data=</span>datsf)</span>
+<span id="cb123-2"><a href="lm.html#cb123-2" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span><span class="fu">coef</span>(mod)[<span class="dv">2</span>] <span class="co"># change in meltstart with 100m change in elevation</span></span></code></pre></div>
 <pre><code>## elevation 
 ##   2.97768</code></pre>
 <p>Hatching dates of Snowfinch broods were inferred from citizen science data from the Alps, where snow melt starts later at higher elevations compared to lower elevations. Thus, the start of snow melt is correlated with elevation (Pearson’s correlation coefficient 0.33). In average, snow starts melting 3 days later with every 100m increase in elevation.</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="lm.html#cb127-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(hatchday.mean<span class="sc">~</span>meltstart, <span class="at">data=</span>datsf)</span>
-<span id="cb127-2"><a href="lm.html#cb127-2" tabindex="-1"></a>mod1</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="lm.html#cb125-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(hatchday.mean<span class="sc">~</span>meltstart, <span class="at">data=</span>datsf)</span>
+<span id="cb125-2"><a href="lm.html#cb125-2" tabindex="-1"></a>mod1</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = hatchday.mean ~ meltstart, data = datsf)
@@ -1127,9 +1127,9 @@ Figure 11.10: Aboveground biomass (g, log-transformed) in relation to distance t
 ## (Intercept)    meltstart  
 ##   167.99457      0.06325</code></pre>
 <p>From a a normal linear regression of hatching date on the snow melt date, we obtain an estimate of 0.06 days delay in hatching date with one day later snow melt. This effect sizes describes the relationship in the data that were collected along an elevational gradient. Along the elevational gradient there are many factors that change such as average temperature, air pressure or sun radiation. All these factors may have an influence on the birds decision to start breeding. Consequentily, from the raw correlation between hatching dates and start of snow melt we cannot conclude how Snowfinches react to changes in the start of snow melt because the correlation seen in the data may be caused by other factors changing with elevation (such a correlation is called “pseudocorrelation”). However, we are interested in the correlation between hatching date and date of snow melt independent of other factors changing with elevation. In other words, we would like to measure how much in average hatching date delays when snow melt starts one day later while all other factors are kept constant. This is called the partial effect of snow melt date. Therefore, we include elevation as a covariate in the model.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="lm.html#cb129-1" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
-<span id="cb129-2"><a href="lm.html#cb129-2" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(hatchday.mean<span class="sc">~</span>elevation <span class="sc">+</span> meltstart, <span class="at">data=</span>datsf)</span>
-<span id="cb129-3"><a href="lm.html#cb129-3" tabindex="-1"></a>mod</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="lm.html#cb127-1" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
+<span id="cb127-2"><a href="lm.html#cb127-2" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(hatchday.mean<span class="sc">~</span>elevation <span class="sc">+</span> meltstart, <span class="at">data=</span>datsf)</span>
+<span id="cb127-3"><a href="lm.html#cb127-3" tabindex="-1"></a>mod</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = hatchday.mean ~ elevation + meltstart, data = datsf)
@@ -1156,19 +1156,19 @@ To summarize, the decision of what to do with correlated predictors primarily re
 </li>
 <li>path analyses, e.g. <span class="citation">Shipley (<a href="referenzen.html#ref-Shipley.2009">2009</a>)</span><br />
 </li>
-<li>structural equation models <span class="citation">(<a href="referenzen.html#ref-Hoyle2012">Hoyle 2012</a>)</span></li>
+<li>structural equation models <span class="citation">(<a href="referenzen.html#ref-Hoyle.2012">Hoyle 2012</a>)</span></li>
 </ul>
-<p><a href="" target="_blank"><img src="images/ruchen.jpg" width="1452" style="display: block; margin: auto;" /></a></p>
+<p><a href="" target="_blank"><img src="images/ruchen.jpg" style="display: block; margin: auto;" /></a></p>
 </div>
 <div id="orderedfactors" class="section level2 hasAnchor" number="11.5">
 <h2><span class="header-section-number">11.5</span> Ordered Factors and Contrasts<a href="lm.html#orderedfactors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this chapter, we have seen that the model matrix is an <span class="math inline">\(n \times k\)</span> matrix (with <span class="math inline">\(n\)</span> = sample size and <span class="math inline">\(k\)</span> = number of model coefficients) that is multiplied by the vector of the <span class="math inline">\(k\)</span> model coefficients to obtain the fitted values of a normal linear model. The first column of the model matrix normally contains only ones. This column is multiplied by the intercept. The other columns contain the observed values of the predictor variables if these are numeric variables, or indicator variables (= dummy variables) for factor levels if the predictors are categorical variables (= factors). For categorical variables the model matrix can be constructed in a number of ways. How it is constructed determines how the model coefficients can be interpreted. For example, coefficients could represent differences between means of specific factor levels to the mean of the reference level. That is what we have introduced above. However, they could also represent a linear, quadratic or cubic effect of an ordered factor. Here, we show how this works.</p>
 <p>An ordered factor is a categorical variable with levels that have a natural order, for example, ‘low’, ‘medium’ and ‘high’. How do we tell R that a factor is ordered? The swallow data contain a factor ‘nesting_aid’ that contains the type aid provided in a barn for the nesting swallows. The natural order of the levels is none &lt; support (e.g., a wooden stick in the wall that helps support a nest built by the swallow) &lt; artificial_nest &lt; both (support and artificial nest). However, when we read in the data R orders these levels alphabetically rather than according to the logical order.</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="lm.html#cb131-1" tabindex="-1"></a><span class="fu">data</span>(swallows)</span>
-<span id="cb131-2"><a href="lm.html#cb131-2" tabindex="-1"></a><span class="fu">levels</span>(swallows<span class="sc">$</span>nesting_aid) </span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="lm.html#cb129-1" tabindex="-1"></a><span class="fu">data</span>(swallows)</span>
+<span id="cb129-2"><a href="lm.html#cb129-2" tabindex="-1"></a><span class="fu">levels</span>(swallows<span class="sc">$</span>nesting_aid) </span></code></pre></div>
 <pre><code>## [1] &quot;artif_nest&quot; &quot;both&quot;       &quot;none&quot;       &quot;support&quot;</code></pre>
 <p>And with the function contrasts we see how R will construct the model matrix.</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="lm.html#cb133-1" tabindex="-1"></a><span class="fu">contrasts</span>(swallows<span class="sc">$</span>nesting_aid)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="lm.html#cb131-1" tabindex="-1"></a><span class="fu">contrasts</span>(swallows<span class="sc">$</span>nesting_aid)</span></code></pre></div>
 <pre><code>##            both none support
 ## artif_nest    0    0       0
 ## both          1    0       0
@@ -1176,11 +1176,11 @@ To summarize, the decision of what to do with correlated predictors primarily re
 ## support       0    0       1</code></pre>
 <p>R will construct three dummy variables and call them ‘both’, ‘none’, and ‘support’. The variable ‘both’ will have an entry of one when the observation is ‘both’ and zero otherwise. Similarly, the other two dummy variables are indicator variables of the other two levels and ‘artif_nest’ is the reference level. The model coefficients can then be interpreted as the difference between ‘artif_nest’ and each of the other levels. The instruction how to transform a factor into columns of a model matrix is called the contrasts.
 Now, let’s bring the levels into their natural order and define the factor as an ordered factor.</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="lm.html#cb135-1" tabindex="-1"></a>swallows<span class="sc">$</span>nesting_aid <span class="ot">&lt;-</span> <span class="fu">factor</span>(swallows<span class="sc">$</span>nesting_aid, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;support&quot;</span>, <span class="st">&quot;artif_nest&quot;</span>, <span class="st">&quot;both&quot;</span>), <span class="at">ordered=</span><span class="cn">TRUE</span>)</span>
-<span id="cb135-2"><a href="lm.html#cb135-2" tabindex="-1"></a><span class="fu">levels</span>(swallows<span class="sc">$</span>nesting_aid)</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="lm.html#cb133-1" tabindex="-1"></a>swallows<span class="sc">$</span>nesting_aid <span class="ot">&lt;-</span> <span class="fu">factor</span>(swallows<span class="sc">$</span>nesting_aid, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;support&quot;</span>, <span class="st">&quot;artif_nest&quot;</span>, <span class="st">&quot;both&quot;</span>), <span class="at">ordered=</span><span class="cn">TRUE</span>)</span>
+<span id="cb133-2"><a href="lm.html#cb133-2" tabindex="-1"></a><span class="fu">levels</span>(swallows<span class="sc">$</span>nesting_aid)</span></code></pre></div>
 <pre><code>## [1] &quot;none&quot;       &quot;support&quot;    &quot;artif_nest&quot; &quot;both&quot;</code></pre>
 <p>The levels are now in the natural order. R will, from now on, use this order for analyses, tables, and plots, and because we defined the factor to be an ordered factor, R will use polynomial contrasts:</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="lm.html#cb137-1" tabindex="-1"></a><span class="fu">contrasts</span>(swallows<span class="sc">$</span>nesting_aid)</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="lm.html#cb135-1" tabindex="-1"></a><span class="fu">contrasts</span>(swallows<span class="sc">$</span>nesting_aid)</span></code></pre></div>
 <pre><code>##              .L   .Q         .C
 ## [1,] -0.6708204  0.5 -0.2236068
 ## [2,] -0.2236068 -0.5  0.6708204
@@ -1203,15 +1203,15 @@ A quadratic term can be fitted in R using the function <code>I()</code> which te
 The cubic term would be added by <code>+I(Water^3)</code>.
 As with interactions, a polynomial term changes the interpretation of lower level polynomials. Therefore, we normally include all polynomials up to a specific degree. Furthermore, polynomials are normally correlated (if no special transformation is used, see below) which could cause problems when fitting the model such as non-convergence. To avoid collinearity among polynomials, so called orthogonal polynomials can be used. These are polynomials that are uncorrelated. To that end, we can use the function <code>poly</code> which creates as many orthogonal polynomials of the variable as we want:
 <code>poly(dat$Water, 2)</code> creates two columns, the first one can be used to model the linear effect of water, the second one to model the quadratic term of water:</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="lm.html#cb139-1" tabindex="-1"></a>t.poly <span class="ot">&lt;-</span> <span class="fu">poly</span>(dat<span class="sc">$</span>Water, <span class="dv">2</span>)</span>
-<span id="cb139-2"><a href="lm.html#cb139-2" tabindex="-1"></a>dat<span class="sc">$</span>Water.l <span class="ot">&lt;-</span> t.poly[,<span class="dv">1</span>]   <span class="co"># linear term for water</span></span>
-<span id="cb139-3"><a href="lm.html#cb139-3" tabindex="-1"></a>dat<span class="sc">$</span>Water.q <span class="ot">&lt;-</span> t.poly[,<span class="dv">2</span>]   <span class="co"># quadratic term for water</span></span>
-<span id="cb139-4"><a href="lm.html#cb139-4" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Yi.g) <span class="sc">~</span> Water.l <span class="sc">+</span> Water.q, <span class="at">data=</span>dat)</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="lm.html#cb137-1" tabindex="-1"></a>t.poly <span class="ot">&lt;-</span> <span class="fu">poly</span>(dat<span class="sc">$</span>Water, <span class="dv">2</span>)</span>
+<span id="cb137-2"><a href="lm.html#cb137-2" tabindex="-1"></a>dat<span class="sc">$</span>Water.l <span class="ot">&lt;-</span> t.poly[,<span class="dv">1</span>]   <span class="co"># linear term for water</span></span>
+<span id="cb137-3"><a href="lm.html#cb137-3" tabindex="-1"></a>dat<span class="sc">$</span>Water.q <span class="ot">&lt;-</span> t.poly[,<span class="dv">2</span>]   <span class="co"># quadratic term for water</span></span>
+<span id="cb137-4"><a href="lm.html#cb137-4" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Yi.g) <span class="sc">~</span> Water.l <span class="sc">+</span> Water.q, <span class="at">data=</span>dat)</span></code></pre></div>
 <p>When orthogonal polynomials are used, the estimated linear and quadratic effects can be interpreted as purely linear and purely quadratic influences of the predictor on the outcome. The function poly applies a specific transformation to the original variables. To reproduce the transformation (e.g. for getting the corresponding orthogonal polynomials for new data used to draw an effect plot), the function predict can be used with the poly-object created based on the original data.</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="lm.html#cb140-1" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Water =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">130</span>)) </span>
-<span id="cb140-2"><a href="lm.html#cb140-2" tabindex="-1"></a><span class="co"># transformation analogous to the one used to fit the model:</span></span>
-<span id="cb140-3"><a href="lm.html#cb140-3" tabindex="-1"></a>newdat<span class="sc">$</span>Water.l <span class="ot">&lt;-</span> <span class="fu">predict</span>(t.poly, newdat<span class="sc">$</span>Water)[,<span class="dv">1</span>]</span>
-<span id="cb140-4"><a href="lm.html#cb140-4" tabindex="-1"></a>newdat<span class="sc">$</span>Water.q <span class="ot">&lt;-</span> <span class="fu">predict</span>(t.poly, newdat<span class="sc">$</span>Water)[,<span class="dv">2</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="lm.html#cb138-1" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Water =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">130</span>)) </span>
+<span id="cb138-2"><a href="lm.html#cb138-2" tabindex="-1"></a><span class="co"># transformation analogous to the one used to fit the model:</span></span>
+<span id="cb138-3"><a href="lm.html#cb138-3" tabindex="-1"></a>newdat<span class="sc">$</span>Water.l <span class="ot">&lt;-</span> <span class="fu">predict</span>(t.poly, newdat<span class="sc">$</span>Water)[,<span class="dv">1</span>]</span>
+<span id="cb138-4"><a href="lm.html#cb138-4" tabindex="-1"></a>newdat<span class="sc">$</span>Water.q <span class="ot">&lt;-</span> <span class="fu">predict</span>(t.poly, newdat<span class="sc">$</span>Water)[,<span class="dv">2</span>]</span></code></pre></div>
 <p>These transformed variables can then be used to calculate fitted values that correspond to the water values specified in the new data.</p>
 
 </div>

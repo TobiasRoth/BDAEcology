@@ -10,6 +10,9 @@ p.caption {
 p code {
   white-space: inherit;
 }
+.codeInBox{
+  font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
+}
 pre {
   word-break: normal;
   word-wrap: normal;
@@ -50,4 +53,15 @@ h1.title {
 .table{
   width:auto;
   font-size: 8px;
+}
+
+.greenbox {
+  padding: 1em;
+  background: lightgreen;
+  color: black;
+  border: 2px solid "green";
+  border-radius: 0px;
+}
+.center {
+  text-align: center;
 }

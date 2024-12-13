@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 Data analysis step by step | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3 Data analysis step by step | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
@@ -20,10 +20,10 @@
   <meta name="twitter:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="twitter:image" content="/images/cover.jpg" />
 
-<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Pius Korner-Nievergelt" />
+<meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2024-10-12" />
+<meta name="date" content="2024-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -66,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -164,7 +164,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-this-book"><i class="fa fa-check"></i>Why this book?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
 </ul></li>
 <li class="part"><span><b>I BASIC STATISTICS FOR ECOLOGISTS</b></span></li>
@@ -496,7 +496,7 @@ div.csl-indent {
 </ol>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Centering: Centering (<span class="math inline">\(x.c = x-mean(x)\)</span>) is a transformation that produces a variable with a mean of 0. Centering is optional. We have two reasons to center a predictor variable. First, it helps the model fitting algorithm to better converge because it reduces correlations among model parameters. Second, with centered predictors, the intercept and main effects in the linear model are better interpretable (they are measured at the center of the data instead of at the covariate value of 0 which may be far off).</p></li>
-<li><p>Scaling: Scaling (<span class="math inline">\(x.s = x/c\)</span>, where <span class="math inline">\(c\)</span> is a constant) is a transformation that changes the unit of the variable. Also scaling is optional. We have three reasons to scale an predictor variable. First, to make the effect sizes better understandable. For example, a population change from one year to the next may be very small and hard to interpret. When we give the change for a 10-year period, its ecological meaning is better understandable. Second, to make the estimate of the effect sizes comparable between variables, we may use <span class="math inline">\(x.s = x/sd(x)\)</span>. The resulting variable has a unit of one standard deviation. A standard deviation may be comparable between variables that oritinally are measured in different units (meters, seconds etc). <span class="citation">A. Gelman and Hill (<a href="referenzen.html#ref-Gelman2007">2007</a>)</span> (p. 55 f) propose to scale the variables by two times the standard deviation (<span class="math inline">\(x.s = x/(2*sd(x))\)</span>) to make effect sizes comparable between numeric and binary variables. Third, scaling can be important for model convergence, especially when polynomials are included. Also, consider the use of orthogonal polynomials, see Chapter 4.2.9 in <span class="citation">Korner-Nievergelt et al. (<a href="referenzen.html#ref-KornerNievergelt2015">2015</a>)</span>.</p></li>
+<li><p>Scaling: Scaling (<span class="math inline">\(x.s = x/c\)</span>, where <span class="math inline">\(c\)</span> is a constant) is a transformation that changes the unit of the variable. Also scaling is optional. We have three reasons to scale an predictor variable. First, to make the effect sizes better understandable. For example, a population change from one year to the next may be very small and hard to interpret. When we give the change for a 10-year period, its ecological meaning is better understandable. Second, to make the estimate of the effect sizes comparable between variables, we may use <span class="math inline">\(x.s = x/sd(x)\)</span>. The resulting variable has a unit of one standard deviation. A standard deviation may be comparable between variables that oritinally are measured in different units (meters, seconds etc). <span class="citation">Andrew Gelman and Hill (<a href="referenzen.html#ref-Gelman.2007">2007</a>)</span> (p. 55 f) propose to scale the variables by two times the standard deviation (<span class="math inline">\(x.s = x/(2*sd(x))\)</span>) to make effect sizes comparable between numeric and binary variables. Third, scaling can be important for model convergence, especially when polynomials are included. Also, consider the use of orthogonal polynomials, see Chapter 4.2.9 in <span class="citation">Korner-Nievergelt et al. (<a href="referenzen.html#ref-KornerNievergelt.2015">2015</a>)</span>.</p></li>
 <li><p>Collinearity: Look at the correlation among the explanatory variables (pairs plot or correlation matrix). If the explanatory variables are correlated, go back to step 2 and add this relationship. Further, read our thoughts about <a href="lm.html#collinearity">collinearity</a>.</p></li>
 <li><p>Are <a href="lm.html#polynomials">polynomial terms</a> needed in the model? If not already
 done in step 2, think about the relationship between each explanatory variable and the dependent variable. Is it linear or do polynomial terms have to be included in the model? If the relationship cannot be described appropriately by polynomial terms, think of a nonlinear model or a generalized additive model (GAM).</p></li>
@@ -520,7 +520,7 @@ Our strategy is to start with a rather simple model that may not account for all
 <div id="step8" class="section level2 hasAnchor" number="3.8">
 <h2><span class="header-section-number">3.8</span> Check Model<a href="analyses_steps.html#step8" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We assess model fit by graphical <a href="residualanalysis.html#residualanalysis">analyses of the residuals</a> and by <a href="modelchecking.html#modelchecking">predictive model checking</a>.</p>
-<p>For non-Gaussian models it is often easier to assess model fit using <a href="modelchecking.html#modelchecking">posterior predictive checks</a> rather than residual analyses. Posterior predictive checks usually show clearly in which aspect the model failed so we can go back to step 2 of the analysis. Recognizing in what aspect a model does not fit the data based on residual plots improves with experience. Therefore, we list in Chapter 16 of <span class="citation">Korner-Nievergelt et al. (<a href="referenzen.html#ref-KornerNievergelt2015">2015</a>)</span> some patterns that can appear in residual plots together with what these patterns possibly indicate. We also indicate what could be done in the specific cases.</p>
+<p>For non-Gaussian models it is often easier to assess model fit using <a href="modelchecking.html#modelchecking">posterior predictive checks</a> rather than residual analyses. Posterior predictive checks usually show clearly in which aspect the model failed so we can go back to step 2 of the analysis. Recognizing in what aspect a model does not fit the data based on residual plots improves with experience. Therefore, we list in Chapter 16 of <span class="citation">Korner-Nievergelt et al. (<a href="referenzen.html#ref-KornerNievergelt.2015">2015</a>)</span> some patterns that can appear in residual plots together with what these patterns possibly indicate. We also indicate what could be done in the specific cases.</p>
 </div>
 <div id="step9" class="section level2 hasAnchor" number="3.9">
 <h2><span class="header-section-number">3.9</span> Model Uncertainty<a href="analyses_steps.html#step9" class="anchor-section" aria-label="Anchor link to header"></a></h2>
