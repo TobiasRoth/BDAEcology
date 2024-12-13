@@ -101,7 +101,7 @@ Quantiles inform us about both location and spread of a distribution. The $p$th-
 ```{r boxplot, echo=F, fig.width=4, fig.height=3,  fig.cap="Boxplot of the length of forearm of statistics course participants who own car or not."}
 par(mar=c(4,4,1,1))
 boxplot(ell~car, data=dat, las=1, ylab="Lenght of forearm [cm]",
-col="tomato", xaxt="n", xlab="")
+col="tomato", xaxt="n", xlab="", boxwex=0.2)
 axis(1, at=c(1,2), labels=c("Not owing a car", "Car owner"))
 n <- table(dat$car)
 axis(1, at=c(1,2), labels=paste("n=", n, sep=""), mgp=c(3,2, 0))
@@ -113,7 +113,7 @@ A value that is far away from the distribution - such that it seems not to belon
 
 To summarize: For symmetric distributions, mean and standard deviation (SD) area meaningful statistics to describe the distribution (Fig. \@ref(fig:locationScatter), left). Mean and median are identical. The more skewed a distribution is, the more different are mean and median. Mean $\pm$1 SD becomes flawed as it suggests symmetry that does not exist, and its end may even go beyond the distribution (e.g. below the minimum in Fig. \@ref(fig:locationScatter), right). For skewed distributions, median and interquartile range are more informative.
 
-```{r locationScatter, echo=F, fig.width=8, fig.height=3.5,  fig.cap="A symmetric and a skewed distribution with the corresponding mean (dot, with $\\pm1$ SD) and median (triangle, with interquartile range)."}
+```{r locationScatter, echo=F, fig.width=6, fig.height=3,  fig.cap="A symmetric and a skewed distribution with the corresponding mean (dot, with $\\pm1$ SD) and median (triangle, with interquartile range)."}
 par(mfrow=c(1,2),mar=c(1,1,3,1))
 set.seed(8)
 d.sym <- rnorm(500)
@@ -283,7 +283,7 @@ Most studies aim at understanding the mechanisms that generated the data, thus t
 
 We can only make inference about the population under study if we have a random sample from this population. In order to obtain a random sample, a good study design is a prerequisite. To illustrate how inference about a big population is drawn from a small sample, we here use simulated data. The advantage of using simulated data is that the mechanism that generated the data is known, and we can play around with a big population.  
 
-Imagine there are 300 000 PhD students in the world and we would like to know how many statistics courses they have taken before they started their PhD on average (Fig. \@ref(fig:histtruesample)). We use random number generators (`rpois` and `rgamma`) to simulate a number of courses for each of the 300 000 virtual students. We use these 300$\,$000 as the big population that in real life we almost never can sample in total. Normally, we only have values for a small sample of students. To simulate that situation we draw 12 numbers at random from the 300 000 (R function `sample`). Then, we estimate the average number of pre-PhD courses from the sample of 12 students, and we compare that *sample mean* with the *true mean* of the 300 000 students. 
+Imagine there are 300&nbsp;000 PhD students in the world and we would like to know how many statistics&nbsp;courses they have taken before they started their PhD on average (Fig. \@ref(fig:histtruesample)). We use random number generators (`rpois` and `rgamma`) to simulate a number of courses for each of the 300&nbsp;000 virtual students. We use these 300&nbsp;000 as the big population that in real life we almost never can sample in total. Normally, we only have values for a small sample of students. To simulate that situation we draw 12 numbers at random from the 300&nbsp;000 (R function `sample`). Then, we estimate the average number of pre-PhD courses from the sample of 12 students, and we compare that *sample mean* with the *true mean* of the 300&nbsp;000 students. 
 
 ```{r}
 # simulate the virtual true population
@@ -317,17 +317,18 @@ text(4, 120000, "True mean", adj=c(0,1))
 ```
 
 
-We observe the sample mean, what do we know about the population mean? There are two different approaches to answer this question. 1) We could ask us, how much the sample mean would scatter, if we repeat the study many times? This approach is called the frequentist' statistics. 2) We could ask us for any possible value, what is the probability that it is the true population mean? To do so, we use probability theory and that is called the Bayesian statistics.  
+We observe the sample mean - but from that, what do we know about the population mean? There are two different approaches to answer this question. 1) We could ask us, how much the sample mean would scatter, if we repeated the study many times? This approach is the basis of frequentist statistics. 2) We could ask us for any possible value, what is the probability that it is the true population mean? To do so, we use probability theory and that is the basis of Bayesian statistics.  
 
-Both approaches use (essentially similar) models. Only the mathematical techniques to calculate uncertainty measures differ between the two approaches. In cases when beside the data no other information is used to construct the model, then the results are approximately identical (at least for large enough sample sizes).  
+Both approaches use (essentially similar) models. Only the mathematical techniques to calculate uncertainty measures differ between the two approaches. When no information other than the data is used to construct the model, the results are practically identical (at least for large enough sample sizes).  
 
-A frequentist 95% confidence interval (blue horizontal segment in Fig. \@ref(fig:CImean)) is constructed such that, if you were to (hypothetically) repeat the experiment or sampling many many times, 95% of the intervals constructed would contain the true value of the parameter (here the mean number of courses). From the Bayesian posterior distribution (pink in Fig. \@ref(fig:CImean)) we could construct a 95% interval (e.g., by using the 2.5% and 97.5% quantiles). This interval has traditionally been called credible interval. It can be interpreted that we are 95% sure that the true mean is inside that interval. 
+A frequentist 95% confidence interval CI (blue horizontal segment in Fig. \@ref(fig:CImean)) is constructed such that, if you were to (hypothetically) repeat the sampling many times, 95% of these many intervals constructed would contain the true value of the parameter (here the mean number of courses). From the Bayesian approach, we get a so-called posterior distribution (pink in Fig. \@ref(fig:CImean)), from which we can construct a 95% interval (e.g. using the 2.5% and 97.5% quantiles). This interval has traditionally been called 95% credible interval CrI. It can be interpreted that we are 95% sure that the true mean is inside that interval. 
 
-Both, confidence interval and posterior distribution, correspond to the statistical uncertainty of the sample mean, i.e., they measure how far away the sample mean could be from the true mean. In this virtual example, we know the true mean is `r round(mean(statscourses),2)`, thus somewhere at the lower part of the 95% CI or in the lower quantiles of the posterior distribution. In real life, we do not know the true mean. The grey histogram in Fig. \@ref(fig:CImean) shows how means of many different virtual samples of 12 students scatter around the true mean. The 95% interval of these virtual means corresponds to the 95% CI, and the variance of these virtual means correspond to the variance of the posterior distribution. This virtual example shows that posterior distribution and 95% CI correctly measure the statistical uncertainty (variance, width of the interval), however we never know exactly how far the sample mean is from the true mean.  
+Both, confidence interval and posterior distribution, represent to the statistical uncertainty of the sample mean, i.e., they measure how far away the sample mean could be from the true mean. In this virtual example, we know the true mean is `r round(mean(statscourses),2)`, thus in the lower part of the 95% CI or in the lower quantiles of the posterior distribution (hence, in the lower part of the 95% CrI). The grey histogram in Fig. \@ref(fig:CImean) shows how the means of many different virtual samples of 12 students scatter around the true mean. The 95% interval of these virtual means corresponds to the 95% CI, and the variance of these virtual means correspond to the variance of the posterior distribution. This virtual example shows that posterior distribution and 95% CI correctly measure the statistical uncertainty (variance, width of the interval), however we never know exactly how far the sample mean is from the true mean.  In real life, we do not know the true mean. 
 
 
-```{r CImean, fig.cap='Histogram of means of repeated samples from the true populations. The scatter of these means visualize the true uncertainty of the mean in this example. The blue vertical line indicates the mean of the original sample. The blue segment shows the 95% confidence interval (obtained by fequensist methods) and the violet line shows the posterior distribution of the mean (obtained by Bayesian methods).',echo=FALSE, message=FALSE}
+```{r CImean, fig.width=6, fig.height=3, fig.cap='Histogram (in gray) of the means of repeated samples from the true population. The scatter of these means visualizes the true uncertainty of the mean in this example. The blue vertical line indicates the mean of one sample. The blue segment shows its 95% confidence interval (obtained by fequensist methods). The violet line shows the posterior distribution of the mean (obtained by Bayesian methods).',echo=FALSE, message=FALSE}
 library(arm)
+set.seed(123)
 nsim <- 10000
 # frequentist theoretical uncertainty of mean
 # we draw many new samples from the true population
@@ -356,38 +357,33 @@ text(1.2, 1.5, "Posterior distribution of the mean", col="violet", adj=c(0,1), c
 ```
 
 
-Uncertainty intervals only are reliable if the model is a realistic abstraction of the data generating process (or if the model assumptions are realistic).
+Uncertainty intervals are indispensable for inference from statistical analyses. An estimate without an uncertainty interval, called a point estimate, is quite useless. E.g. a point estimate of 10 has a very different meaning if its 95% uncertainty interval spans from -120 to 130 compared to when it spans from 9.6 to 10.4. Therefore, in most cases we provide the point estimate together with its uncertainty interval. But note that this does not yet guarantee correct inference: uncertainty intervals, as point estimates, are only reliable if the model is a realistic abstraction of the data generating process (i.e. if the model assumptions are realistic).
 
-Because both terms, confidence and credible interval, suggest that the interval indicates confidence or credibility but the intervals actually show uncertainty, it has been suggested to rename the interval into compatibility or uncertainty interval [@Gelman.2019].  
+Both terms, confidence and credible interval, suggest that the interval indicates *confidence* or *credibility*, but the intervals actually show *uncertainty*. Therefore, it has been suggested to rename the interval into *uncertainty* interval, or *compatibility* interval as it indicates the range of values of the parameter (e.g. the mean) that is compatible with the data [@Gelman.2019].  
 
 
 ### Standard error  
 
-The standard error SE is, beside the uncertainty interval, an alternative possibility to measure uncertainty. It measures an average deviation of the sample mean from the (unknown) true population mean. The frequentist method for obtaining the SE is based on the central limit theorem. According to the central limit theorem the sum of independent, not necessarily normally distributed random numbers are normally distributed when sample size is large enough (Chapter \@ref(distributions)). Because the mean is a sum (divided by a constant, the sample size) it can be assumed that the distribution of many means of samples is normal. The standard deviation SD of the many means is called the standard error SE. It can be mathematically shown that the standard error SE equals the standard deviation SD of the sample divided by the square root of the sample size:  
+The standard error SE is, beside the uncertainty interval, an alternative possibility to measure uncertainty. It measures an average deviation of the sample mean from the (unknown) true population mean. The frequentist method for obtaining the SE is based on the central limit theorem. According to the central limit theorem, the sum of independent, not necessarily normally distributed random numbers are normally distributed when sample size is large enough (Chapter \@ref(distributions)). Because the mean is a sum (divided by a constant, the sample size) it can be assumed that the distribution of the means of many samples is normal. The standard deviation SD of the many means is called the standard error SE. It can be mathematically shown that the standard error SE equals the standard deviation SD of the sample divided by the square root of the sample size:  
  
-- frequentist SE = SD/sqrt(n) =  $\frac{\hat{\sigma}}{\sqrt{n}}$
+- Frequentist SE = SD/sqrt(n) =  $\frac{\hat{\sigma}}{\sqrt{n}}$
 
-- Bayesian SE: Using Bayesian methods, the SE is the SD of the posterior distribution. 
+- Bayesian SE = the SD of the posterior distribution
 
-It is very important to keep the difference between SE and SD in mind! SD measures the scatter of the data, whereas SE measures the statistical uncertainty of the mean (or of another estimated parameter, Fig. \@ref(fig:sesd)). SD is a descriptive statistics describing a characteristics of the data, whereas SE is an inferential statistics showing us how far away the sample mean possibly is from the true mean. When sample size increases, SE becomes smaller, whereas SD does not change (given the added observations are drawn at random from the same big population as the ones already in the sample).
+It is very important to keep the difference between SE and SD in mind! SD measures the scatter of the data, whereas SE measures the statistical uncertainty of the mean (or of another estimated parameter, Fig. \@ref(fig:sesd)). SD is a descriptive statistic, describing a characteristic of the data. The SE, on the other hand, is an inferential statistic; it is a measure of how far the sample mean may be away from the true mean (in Bayesian reasoning, the true mean is expected to be within $\pm$ 1 SE of the sample mean with a probability of about 67%, and within $\pm$ 2 SE with 95%). As sample size increases, the SE becomes smaller, whereas SD does not change (on average). The SE becomes smaller because the uncertainty about our sample mean is reduced with increasing sample size. The SD of the sample, however, is an estimate of the SD in the big population, so whether we have a small or large sample, its SD remains the same on average.
 
 
-```{r sesd, fig.cap='Illustration of the difference between SD and SE. The SD measures the scatter in the data (sample, tickmarks on the x-axis). The SD is an estimate for the scatter in the big population (grey histogram, normally not known). The SE measures the uncertainty of the sample mean (in blue). The SE measures approximately how far, in average the sample mean (blue) is from the true mean (brown).',echo=FALSE, message=FALSE}
+```{r sesd, fig.width=5, fig.height=3, fig.cap='Illustration of the difference between SD and SE. The SD measures the scatter in the data (sample, tickmarks on the x-axis). The SD is an estimate for the scatter in the big population (grey histogram, normally not known). The SE measures the uncertainty of the sample mean (in blue). The SE measures approximately how far, in average the sample mean (blue) is from the true mean (brown).',echo=FALSE, message=FALSE}
 par(mar=c(4,4,0.1,6), mgp=c(2,0.5,0), tck=-0.01, cex.lab=0.8, cex.axis=0.7)
-hist(statscourses, breaks=seq(-0.5, 10.5, by=1), main=NA, freq=FALSE, ylim=c(0, 0.8),
-     las=1)     # draw histogram of the population
+hist(statscourses, breaks=seq(-0.5, 10.5, by=1), main=NA, freq=FALSE, ylim=c(-0.02, 0.6),
+     las=1, xlab="Stats courses")     # draw histogram of the population
 rug(jitter(y), col="black", lwd=2)                                       # add the sample
-#hist(my, add=TRUE, col=rgb(0,0,0,0.5), freq=FALSE)
 abline(v= coef(mod), lwd=2, col="blue")
-#abline(v= coef(mod), lwd=2, lty=2, col="green")
 segments(coef(mod)-sd(y), 0, coef(mod)+sd(y), 
          lwd=5, col="green", lend="butt")
-segments(coef(mod)-summary(mod)$coef[2], 0, coef(mod)+summary(mod)$coef[2], 
+segments(coef(mod)-summary(mod)$coef[2], 0.02, coef(mod)+summary(mod)$coef[2], 
          lwd=5, col="blue", lend="butt")
 abline(v=mean(statscourses), col="brown")
-#segments(mean(statscourses)-sd(statscourses), 1.5, mean(statscourses)+sd(statscourses), 1.5)
-#segments(mean(statscourses)-sd(my), 1.49, mean(statscourses)+sd(my), 1.49, lwd=3)
-#text(2, 1.5, "True mean with SD and SE", adj=c(0,1), cex=0.9, xpd=NA)
 text(2, 0.2, "Estimated SD around the mean", adj=c(0,1), col="green", cex=0.9, xpd=NA)
 text(2, 0.3, "Estimated mean with SE", adj=c(0,1), col="blue", cex=0.9, xpd=NA)
 box()
