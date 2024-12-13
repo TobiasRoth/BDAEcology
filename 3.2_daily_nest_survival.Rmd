@@ -4,7 +4,7 @@
 
 ## Background
 
-Analyses of nest survival is important for understanding the mechanisms of population dynamics. The life-span of a nest could be used as a measure of nest survival. However, this measure very often is biased towards nests that survived longer because these nests are detected by the ornithologists with higher probability [@Mayfield1975]. In order not to overestimate nest survival, daily nest survival conditional on survival to the previous day can be estimated. 
+Analyses of nest survival is important for understanding the mechanisms of population dynamics. The life-span of a nest could be used as a measure of nest survival. However, this measure very often is biased towards nests that survived longer because these nests are detected by the ornithologists with higher probability [@Mayfield.1975]. In order not to overestimate nest survival, daily nest survival conditional on survival to the previous day can be estimated. 
 
 
 ## Models for estimating daily nest survival
@@ -28,7 +28,7 @@ Known fate model  | 1, 2  | Stan code below |
 Known fate model  | 3, 4 | Stan code below |  
 Logistic exposure model | 1,2,3,4 | `glm`, `glmer`using a link function that depends on exposure time |
 
-@Shaffer2004 explains how to adapt the link function in a Bernoulli model to account for having found the nests at different nest ages (exposure time). Ben Bolker explains how to implement the logistic exposure model in R [here](https://rpubs.com/bbolker/logregexp).
+@Shaffer.2004 explains how to adapt the link function in a Bernoulli model to account for having found the nests at different nest ages (exposure time). Ben Bolker explains how to implement the logistic exposure model in R [here](https://rpubs.com/bbolker/logregexp).
 
 
 ## Known fate model
@@ -88,7 +88,7 @@ model {
 ## Prepare data and run Stan
 
 
-Data is from @Grendelmeier2018. 
+Data is from @Grendelmeier.2018. 
 
 
 ```{r, echo=TRUE}

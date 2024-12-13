@@ -156,4 +156,4 @@ Also, @Burnham.2002 give a thorough introduction to the likelihood and how it is
 
 The difference between the ML- and LS-estimates of the variance is explained in @Royle.2008b.
 
-@Gelman2014 introduce the log predictive density and explain how it is computed (p. 167).
+@Gelman.2014 introduce the log predictive density and explain how it is computed (p. 167).

@@ -474,7 +474,7 @@ y <- c(47.5, 43, 43, 44, 48.5, 37.5, 41.5, 45.5)
 n <- length(y)
 ```
 
-Because there are two parameters, we need to specify a two-dimensional prior distribution. We looked up in @Gelman2014 that the conjugate prior distribution in our case is an Normal-Inverse-Chisquare distribution: 
+Because there are two parameters, we need to specify a two-dimensional prior distribution. We looked up in @Gelman.2014 that the conjugate prior distribution in our case is an Normal-Inverse-Chisquare distribution: 
     
 $p(\theta, \sigma) = N-Inv-\chi^2(\mu_0, \sigma_0^2/\kappa_0; v_0, \sigma_0^2)$ 
 

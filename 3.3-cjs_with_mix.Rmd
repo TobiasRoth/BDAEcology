@@ -3,7 +3,7 @@
 ## Introduction
 
 In some species the identification of the sex is not possible for all individuals without sampling DNA. For example, morphological dimorphism is absent or so weak that parts of the individuals cannot be assigned to one of the sexes. Particularly in ornithological long-term capture recapture data sets that typically are obtained by voluntary bird ringers who do normaly not have the possibilities to analyse DNA, often the sex identification is missing in parts of the individuals. For estimating survival, it would nevertheless be valuable to include data of all individuals, use the information on sex-specific effects on survival wherever possible but account for the fact that of parts of the individuals the sex is not known. We here explain how a Cormack-Jolly-Seber model can be integrated with a mixture model in oder to allow for a combined analyses of individuals with and without sex identified. 
-An introduction to the Cormack-Jolly-Seber model we gave in Chapter 14.5 of the book @KornerNievergelt2015. We here expand this model by a mixture structure that allows including individuals with a missing categorical predictor variable, such as sex.
+An introduction to the Cormack-Jolly-Seber model we gave in Chapter 14.5 of the book @KornerNievergelt.2015. We here expand this model by a mixture structure that allows including individuals with a missing categorical predictor variable, such as sex.
 
 
 ## Data description
@@ -78,7 +78,7 @@ $$z_{it} \sim Bernoulli(z_{it-1}\phi_{it})$$
 We use the term apparent survival in order to indicate that the parameter $\phi$ is a product of site fidelity and survival. Thus, individuals that permanently emigrated from the study area cannot be distinguished from dead individuals.
 In both models, the parameters $\phi$ and $p$ were modelled as sex-specific. However, for parts of the individuals, sex could not be identified, i.e. sex was missing. Ignoring these missing values would most likely lead to a bias because they were not missing at random. The probability that sex can be identified is increasing with age and most likely differs between sexes. Therefore, we included a mixture model for the sex:
 $$Sex_i \sim Categorical(q_i)$$
-where $q_i$ is a vector of length 2, containing the probability of being a male and a female, respectively. In this way, the sex of the non-identified individuals was assumed to be male or female with probability $q[1]$ and $q[2]=1-q[1]$, respectively. This model corresponds to the finite mixture model introduced by @Pledger2003 in order to account for unknown classes of birds (heterogeneity).  However, in our case, for parts of the individuals the class (sex) was known.
+where $q_i$ is a vector of length 2, containing the probability of being a male and a female, respectively. In this way, the sex of the non-identified individuals was assumed to be male or female with probability $q[1]$ and $q[2]=1-q[1]$, respectively. This model corresponds to the finite mixture model introduced by @Pledger.2003 in order to account for unknown classes of birds (heterogeneity).  However, in our case, for parts of the individuals the class (sex) was known.
 
 In the example model, we constrain apparent survival to be linearly dependent on a covariate x with different slopes for males, females and juveniles using the logit link function. 
 $$logit(\phi_{it}) = a0_{sex-age-class[it]} + a1_{sex-age-class[it]}x_i$$

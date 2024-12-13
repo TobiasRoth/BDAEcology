@@ -678,7 +678,7 @@ From these parameters we obtain the estimated differences in wing length between
 
 ### A linear model with a categorical and a numeric predictor (ANCOVA)
 
-An analysis of covariance, ANCOVA, is a normal linear model that contains at least one factor and one continuous variable as predictor variables. The continuous variable is also called a covariate, hence the name analysis of covariance. An ANCOVA can be used, for example, when we are interested in how the biomass of grass depends on the distance from the surface of the soil to the ground water in two different species (*Alopecurus pratensis*, *Dactylis glomerata*). The two species were grown by @Ellenberg1953 in tanks that showed a gradient in distance from the soil surface to the ground water. The distance from the soil surface to the ground water is used as a covariate (‘water’). We further assume that the species react differently to the water conditions. Therefore, we include an interaction between species and water. The model formula is then
+An analysis of covariance, ANCOVA, is a normal linear model that contains at least one factor and one continuous variable as predictor variables. The continuous variable is also called a covariate, hence the name analysis of covariance. An ANCOVA can be used, for example, when we are interested in how the biomass of grass depends on the distance from the surface of the soil to the ground water in two different species (*Alopecurus pratensis*, *Dactylis glomerata*). The two species were grown by @Ellenberg.1953 in tanks that showed a gradient in distance from the soil surface to the ground water. The distance from the soil surface to the ground water is used as a covariate (‘water’). We further assume that the species react differently to the water conditions. Therefore, we include an interaction between species and water. The model formula is then
 $\hat{y_i} = \beta_0 + \beta_1I(species=Dg) + \beta_2water_i + \beta_3I(species=Dg)water_i$  
 $y_i \sim normal(\hat{y_i}, \sigma^2)$
  
@@ -895,7 +895,7 @@ The correlations per se can be interesting. Further readings on how to visualize
 
 - principal component analysis [@Manly.1994]  
 - path analyses, e.g. @Shipley.2009  
-- structural equation models [@Hoyle2012]
+- structural equation models [@Hoyle.2012]
 
 ```{r fig.align='center', echo=FALSE, fig.link=''}
 knitr::include_graphics('images/ruchen.jpg', dpi = 150)
