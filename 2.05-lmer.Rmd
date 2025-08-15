@@ -269,7 +269,7 @@ newdat$upper <- apply(fitmat, 1, quantile, prob=0.975)
 newdat$fit <- Xmat %*% fixef(mod)
 ```
 
-The fitted values given in Figure \@ref(fig:cordaysplot), together with their uncertainty measures (compatibility intervals), take into account that we had repeated measures for each individual.
+The fitted values given in Figure \@ref(fig:cortdaysplot), together with their uncertainty measures (compatibility intervals), take into account that we had repeated measures for each individual.
 
 ```{r cortdaysplot, echo=FALSE, fig.cap="Predicted total corticosterone values with 95% CI of placebo-implanted nestlings (closed symbol) and corticosterone-implanted nestlings (open symbol) in relation to days after implantation. Blue dots are raw data of placebo-implanted nestlings, and orange dots are raw data of corticosterone-implanted nestlings."}
 
@@ -311,9 +311,9 @@ The data for the growth rate study are in the wingbowl data set. In total, we ha
 In the model, we include “age” (as a continuous covariate), “implant” (as a fixed effect), and their interaction in the fixed part; and “ring” (= id of individual) is included as a random effect. We model both the intercept and the slope for the covariate “age” dependent on “ring.” We use this notation with $b_{Ring}$ being an individual-specific deviation from the population mean parameter value, but we add a second numerical subscript, $b_{1,Ring}$, to indicate the random intercept and $b_{2,Ring}$ for the random slope. The two random parameters are assumed to follow a multivariate normal distribution (MVNorm); that is, they are both normally distributed and are assumed to be correlated and this correlation is estimated. Hence, the formula for the random intercept and random slope model is:
 
 \begin{align} 
-  y_i &=\beta_0 + b_{1,Ring_i} + (\beta_1 + b_{2,Ring_i}) age_i + \beta_2 I(Implant=P) + \\
+  &y_i =\beta_0 + b_{1,Ring_i} + (\beta_1 + b_{2,Ring_i}) age_i + \beta_2 I(Implant=P) + \\
   &\beta_3 age_i I(Implant=P) \\
-  y_i &\sim normal(\mu_i, \sigma^2) \\
+  &y_i \sim normal(\mu_i, \sigma^2) \\
   &\boldsymbol{b}_{1:2,Ring} \sim MVnormal(\boldsymbol{0,\Sigma})
 \end{align}
 
