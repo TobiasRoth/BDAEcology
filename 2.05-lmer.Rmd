@@ -202,8 +202,8 @@ head(ranef(mod)$Ring) # print the first 6 Ring effects
 ```
 
 ## Restricted maximum likelihood estimation (REML)
-<!-- we have not yet explained the ML-method. in the old book, chapter 5. we need to find a place for ML-method-->
-For a mixed model the restricted maximum likelihood method is used by default instead of the maximum likelihood (ML) method. The reason is that the ML-method underestimates the variance parameters because this method assumes that the fixed parameters are known without uncertainty when estimating the variance parameters. However, the estimates of the fixed effects have uncertainty. The REML method uses a mathematical trick to make the estimates for the variance parameters independent of the estimates for the fixed effects. We recommend reading the very understandable description of the REML method in @Zuur.2009. For our purposes, the relevant difference between the two methods is that the ML-estimates are unbiased for the fixed effects but biased for the random effects, whereas the REML-estimates are biased for the fixed effects and unbiased for the random effects. However, when sample size is large compared to the number of model parameters, the differences between the ML- and REML-estimates become negligible. As a guideline, use REML if the interest is in the random effects (variance parameters), and ML if the interest is in the fixed effects. The estimation method can be chosen by setting the argument ‘REML’ to ‘FALSE’ (default is ‘TRUE’).
+<!-- we have not yet explained the ML-method. in the old book, chapter 5. we need to find a place for ML-method ___ pko15.8.25: inserted link to 9.3-->
+For a mixed model the restricted maximum likelihood method is used by default instead of the maximum likelihood (ML) method (see chapter \@ref(likelihood)). The reason is that the ML-method underestimates the variance parameters because this method assumes that the fixed parameters are known without uncertainty when estimating the variance parameters. However, the estimates of the fixed effects have uncertainty. The REML method uses a mathematical trick to make the estimates for the variance parameters independent of the estimates for the fixed effects. We recommend reading the very understandable description of the REML method in @Zuur.2009. For our purposes, the relevant difference between the two methods is that the ML-estimates are unbiased for the fixed effects but biased for the random effects, whereas the REML-estimates are biased for the fixed effects and unbiased for the random effects. However, when sample size is large compared to the number of model parameters, the differences between the ML- and REML-estimates become negligible. As a guideline, use REML if the interest is in the random effects (variance parameters), and ML if the interest is in the fixed effects. The estimation method can be chosen by setting the argument ‘REML’ to ‘FALSE’ (default is ‘TRUE’).
 
 ```{r}
 mod <- lmer(log(totCort) ~ Implant + days + Implant:days + (1|Ring), 
@@ -240,3 +240,65 @@ We do not see a serious deviation in the distribution of the random effects from
 ## Drawing conclusions
 We use the function `sim` to draw 2000 random values from the joint posterior distribution of the model parameters; that is, we draw 2000 values for each parameter while taking the correlation between the parameters into account.
 
+```{r}
+nsim <- 2000
+bsim <- sim(mod, n.sim=nsim)
+str(bsim)
+```
+
+The object produced by the `sim` function when applied to a mer object (= object produced by the functions `lmer` or `glmer`) contains three slots (remember that slots are addressed using the `@` sign in R). The slot “fixef” is a matrix with as many columns as there are parameters in the fixed part of the model. The number of rows corresponds to the number of simulations (we have saved this number in the object “nsim”). The slot “ranef” is a list that contains one element for each random factor. In the previous example, there is only one random factor (“Ring”). Therefore, the list contains only one element.
+Each element of the ranef slot is a three-dimensional array where the first dimension represents the number of simulations (2000 in our case), the second dimension is the number of groups (factor levels; here this is the number of individuals), and the third dimension corresponds to the number of parameters that are grouped by the specific factor. In the previous example, we have included only a random intercept in the model. Therefore, this dimension has a length of one. In the following we will fit models with more parameters per random effect.
+From the simulated values (i.e. draws from the joint posterior distribution), the 2.5% and 97.5% quantiles can be used for the 95% credible interval:
+
+```{r}
+round(apply(bsim@fixef, 2,quantile, prob=c(0.025,0.5,0.975)),3)
+```
+
+Some effort is needed to interpret models with interactions (independent of whether it is a mixed model or not). We see that in the corticosterone-treated nestlings, the logarithm of the corticosterone measure increases from before implantation to day 2 by 1.7 (95% compatiblity interval CI: 1.4-1.9), which is quite substantial. To get this increase for the placebo-treated individuals, we have to add the interaction parameter, thus the increase in placebo nestlings is 1.7-1.7 = 0. The interaction parameter, -1.7 (95% CI: -2.1 to -1.4), measures the difference between placebo and corticosterone nestlings in their response to the treatment; it is, therefore, an important result.
+To better see what really happens, we often plot the fitted values with its CI and the observations in one plot. To this end, we first prepare a new data frame that contains a row for each factor level (“Implant” and “days”). Then, the fitted value for each of the factor-level combinations is calculated 2000 times (once for each set of model parameters from the simulated posterior distribution) to obtain 2000 simulated values from the posterior distribution of the fitted values. The 2.5% and 97.5% quantiles of these fitted values are used as lower and upper bounds of the 95% compatibility interval.
+
+```{r}
+newdat <- expand.grid(Implant=factor(c("C","P"),levels=levels(dat$Implant)),
+                      days=factor(c(1,3,21),levels=levels(dat$days)))
+Xmat <- model.matrix(~ ImplantDdaysDImplant:days, data=newdat)
+fitmat <- matrix(ncol=nsim, nrow=nrow(newdat))
+for(i in 1:nsim) fitmat[,i] <- Xmat %*% bsim@fixef[i,] # fitted values
+newdat$lower <- apply(fitmat, 1, quantile, prob=0.025)
+newdat$upper <- apply(fitmat, 1, quantile, prob=0.975)
+newdat$fit <- Xmat %*% fixef(mod)
+```
+
+The fitted values given in Figure 7.4, together with their uncertainty measures (compatibility intervals), take into account that we had repeated measures for each individual.
+
+```{r cortdaysplot, echo=FALSE, fig.cap="Predicted total corticosterone values with 95% CI of placebo-implanted nestlings (closed symbol) and corticosterone-implanted nestlings (open symbol) in relation to days after implantation. Blue dots are raw data of placebo-implanted nestlings, and orange dots are raw data of corticosterone-implanted nestlings.}
+
+par(mfrow=c(1,1), mar=c(2,2,1,1), omi= c(0.5,0.5,0,0))     # "mar" sets the margins (lower, left, upper, right) around the plot
+
+indexP <- newdat$Implant=='P'
+indexC <- newdat$Implant=='C'
+a <- 1
+dat$daysNum <- ifelse(dat$days=='before', 0, as.character(dat$days)) # nummeric day variable
+dat$daysNum <- as.numeric(dat$daysNum) # nummeric day variable
+
+plot(seq(-2,22,1), seq(-0.1,4.8,length=25), yaxt="n", xaxt="n", type="n", xlab="", ylab="", las=2, cex.lab=a,
+     main="", cex.main=a, font.main=1)
+points(jitter(dat$daysNum[dat$Implant=='P']-0.4), log(dat$totCort[dat$Implant=='P']), lwd=2 ,pch=16, col="blue",   cex=0.5)          # Placebo raw data
+points(jitter(dat$daysNum[dat$Implant=='C']+0.2), log(dat$totCort[dat$Implant=='C']), lwd=2 ,pch=16, col="orange", cex=0.5, lty=2)   # Cort raw data
+
+segments(c(0,2,20)-c(0.4,0.4,0.4), newdat$lower[indexP], c(0,2,20)-c(0.4,0.4,0.4), newdat$upper[indexP], lty=1, lwd=2, col="black" ) # CrI 
+points(c(0,2,20)-c(0.4,0.4,0.4), newdat$fit[indexP], lwd=2 ,pch=16, col="black", cex=1.2)     # Placebo 
+
+segments(c(0,2,20)+c(0.2,0.2,0.2), newdat$upper[indexC], c(0,2,20)+c(0.2,0.2,0.2), newdat$lower[indexC],lty=1, lwd=2, col="black" )  # CrI 
+points(c(0,2,20)+c(0.2,0.2,0.2), newdat$fit[indexC], lwd=1 ,lty=1, pch=21, bg="white", col="black", cex=1.2) # CORT 
+
+axis(side=2, labels=F,at=seq(0,4.8,0.4),line=0,tcl=-0.3,las=1)
+axis(side=2, labels=seq(0,4.8,0.4),at=seq(0,4.8,0.4),line=0,tcl=-0.3,las=1, mgp=c(3,0.5,0),cex.axis=a)    
+axis(side=1, labels=c(NA, 2,20),at=c(0, 2,20),line=0,tcl=-0.3,las=1)
+axis(side=1, labels=c("before"),at=c(-0.5),line=0,tcl=0,las=1)
+
+mtext(side=2,line=3,adj=0.5,cex=a,font=2,"Total corticosterone [log, ng/ml]",las=0,outer=FALSE)
+mtext(side=1,line=3,adj=0.5,cex=a,font=2,"Days after implantation",outer=FALSE)
+
+points(c(10,10),c(4.5,4.8),pch=21,bg=c("black","white"))
+text(c(11,11),c(4.5,4.8),c("placebo", "corticosterone"),adj=c(0,0.5))
+```
