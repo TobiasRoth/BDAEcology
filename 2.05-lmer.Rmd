@@ -14,6 +14,7 @@ knitr::include_graphics('images/himmelsherold.jpg', dpi = 150)
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(arm)
+library(blmeco)
 ```
 
 
@@ -259,8 +260,8 @@ To better see what really happens, we often plot the fitted values with its CI a
 
 ```{r}
 newdat <- expand.grid(Implant=factor(c("C","P"),levels=levels(dat$Implant)),
-                      days=factor(c(1,3,21),levels=levels(dat$days)))
-Xmat <- model.matrix(~ ImplantDdaysDImplant:days, data=newdat)
+                      days=factor(c("before",2,20),levels=levels(dat$days)))
+Xmat <- model.matrix(~ Implant + days + Implant:days, data=newdat)
 fitmat <- matrix(ncol=nsim, nrow=nrow(newdat))
 for(i in 1:nsim) fitmat[,i] <- Xmat %*% bsim@fixef[i,] # fitted values
 newdat$lower <- apply(fitmat, 1, quantile, prob=0.025)
