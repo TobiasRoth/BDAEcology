@@ -269,7 +269,7 @@ newdat$upper <- apply(fitmat, 1, quantile, prob=0.975)
 newdat$fit <- Xmat %*% fixef(mod)
 ```
 
-The fitted values given in Figure 7.4, together with their uncertainty measures (compatibility intervals), take into account that we had repeated measures for each individual.
+The fitted values given in Figure \@ref(fig:cordaysplot), together with their uncertainty measures (compatibility intervals), take into account that we had repeated measures for each individual.
 
 ```{r cortdaysplot, echo=FALSE, fig.cap="Predicted total corticosterone values with 95% CI of placebo-implanted nestlings (closed symbol) and corticosterone-implanted nestlings (open symbol) in relation to days after implantation. Blue dots are raw data of placebo-implanted nestlings, and orange dots are raw data of corticosterone-implanted nestlings."}
 
@@ -303,3 +303,21 @@ mtext(side=1,line=3,adj=0.5,cex=a,font=2,"Days after implantation",outer=FALSE)
 points(c(10,10),c(4.5,4.8),pch=21,bg=c("black","white"))
 text(c(11,11),c(4.5,4.8),c("placebo", "corticosterone"),adj=c(0,0.5))
 ```
+## Random intercept and slope
+In the preceding model, only the intercept $\beta_0$ was modeled per individual (the model allowed for between-individual variance in $\beta_0$). But a random effect does not need to be restricted to the intercept. Any parameter can be modeled, if the data allow. For example, in the previous model we cannot include an individual-specific difference between corticosterone and placebo treatment because each individual obtained only one treatment. Therefore, the data do not contain information about between-individual differences in the treatment effect, and it does not make sense to include such a structure in the model.
+In another study on barn owls, we were interested in the effect of corticosterone on growth rate. Here, we measured wing length (as a proxy for size) at different ages of individuals that had been treated either with corticosterone or with a placebo implant. We used the slope of the regression line for wing length on age as a growth rate measure, and we were interested in the difference in this slope between corticosterone- and placebo-implanted individuals.
+We expected that growth rate differed between individuals due to between-individual differences in body condition and also because the age at which the implant was implanted differed between the individuals because barn owl nestlings hatch asynchronously (the implantation was done on the same day for all the nestlings in a nest). Therefore, we modeled the slope of the regression line for each individual. Otherwise, our confidence in the (population) slope parameter would be too high (the compatibility intervals would be too narrow). This is because individual-specific slopes in the data produce a kind of pseudoreplication when equal slopes between individuals are assumed in the model (@Schielzeth.200).
+The data for the growth rate study are in the wingbowl data set. In total, we have 209 measurements of 86 individuals (variable “Ring”) from 24 broods.
+In the model, we include “age” (as a continuous covariate), “implant” (as a fixed effect), and their interaction in the fixed part; and “ring” (= id of individual) is included as a random effect. We model both the intercept and the slope for the covariate “age” dependent on “ring.” We use this notation with $b_{Ring}$ being an individual-specific deviation from the population mean parameter value, but we add a second numerical subscript, $b_{1,Ring}$, to indicate the random intercept and $b_{2,Ring}$ for the random slope. The two random parameters are assumed to follow a multivariate normal distribution (MVNorm); that is, they are both normally distributed and are assumed to be correlated and this correlation is estimated. Hence, the formula for the random intercept and random slope model is:
+
+\begin{align} 
+  y_i &=\beta_0 + b_{1,Ring_i} + (\beta_1 + b_{2,Ring_i}) age_i + \beta_2 I(Implant=P) + \\
+  \beta_3 age_i I(Implant=P) \\
+  y_i &\sim normal(\mu_i, \sigma^2) \\
+  \boldsymbol{b}~{1:2,Ring} \sim MVnormal(\boldsymbol{0,\Sigma})
+\end{align}
+
+The vector $\boldsymbol{b}_{Ring}$ contains the two parameters $b_{1,Ring}$ and $b_{2,Ring}$. The matrix $\boldsymbol{\Sigma}$ contains the variances of and the covariances between the intercept and the slope. The notation `(Age|Ring)` means that both the intercept and the Age-effect are grouped by Ring. We find it advisable to center and scale covariates, especially for mixed models with some complexity because non-centered covariates lead to a stronger correlation between the estimated parameters, which may cause nonconvergence of the fitting algorithm. Hence, we center and scale the variable “Age”:
+
+
+
