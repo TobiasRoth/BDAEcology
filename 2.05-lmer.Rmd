@@ -271,7 +271,7 @@ newdat$fit <- Xmat %*% fixef(mod)
 
 The fitted values given in Figure 7.4, together with their uncertainty measures (compatibility intervals), take into account that we had repeated measures for each individual.
 
-```{r cortdaysplot, echo=FALSE, fig.cap="Predicted total corticosterone values with 95% CI of placebo-implanted nestlings (closed symbol) and corticosterone-implanted nestlings (open symbol) in relation to days after implantation. Blue dots are raw data of placebo-implanted nestlings, and orange dots are raw data of corticosterone-implanted nestlings.}
+```{r cortdaysplot, echo=FALSE, fig.cap="Predicted total corticosterone values with 95% CI of placebo-implanted nestlings (closed symbol) and corticosterone-implanted nestlings (open symbol) in relation to days after implantation. Blue dots are raw data of placebo-implanted nestlings, and orange dots are raw data of corticosterone-implanted nestlings."}
 
 par(mfrow=c(1,1), mar=c(2,2,1,1), omi= c(0.5,0.5,0,0))     # "mar" sets the margins (lower, left, upper, right) around the plot
 
