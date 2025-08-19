@@ -40,7 +40,7 @@ mod <- stan_glmer(bp ~ year.z + age.l + age.q + age.c + size.z +
 
 ```
 
-The R-package `shinystan` [@Gabry.2002] provides an easy way to do model checking. Therefore, there is no excuse to not do posterior predictive model checking. The R-code `launch_shinystan(mod)` opens a html-file that contains all kind of diagnostics of a model. Besides many statistics and diagnostic plots to assess how well the MCMC worked we also find a menu "PPcheck". There, we can click through many of the plots that we, below, produce in R.
+The R-package `shinystan` [@Gabry.2022] provides an easy way to do model checking. Therefore, there is no excuse to not do posterior predictive model checking. The R-code `launch_shinystan(mod)` opens a html-file that contains all kind of diagnostics of a model. Besides many statistics and diagnostic plots to assess how well the MCMC worked we also find a menu "PPcheck". There, we can click through many of the plots that we, below, produce in R.
 
 The function `posterior_predict` simulates many (exactly as many as there are draws from the posterior distributions of the model parameters, thus 4000 if the default number of iteration has been used in Stan) different data sets from a model fit. Specifically, for each single set of parameter values of the joint posterior distribution it simulates one replicated data set. We can look at histograms of the data and the replicated  (Figure \@ref(fig:histpp)). The real data (bp) look similar to the replicated data.  
 
