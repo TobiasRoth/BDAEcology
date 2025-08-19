@@ -26,7 +26,7 @@ Further, predictor variables can be measured on different hierarchical levels. F
 
 Mixed models are further used to analyze variance components. For example, when the nestlings were cross-fostered so that they were not raised by their genetic parents, we would like to estimate the proportions of the variance (in a measurement, e.g., wing length) that can be assigned to genetic versus to environmental differences.  
 
-The three problems - grouped data, repeated measure and interest in variances - are solved by adding further variance parameters to the model. As a result, the linear predictor of such models contains predictors with fixed parameters and predictors with non-fixed  parameters. The former are called "fixed effects", the latter "random effects". "Fixed effects" can be a slope (for a continuous predictor), or a defined set of levels for a factor (often called a "fixed factor"). The non-mixed models presented in chapter \@ref(lm) (and later in chapter \@ref(glm)) only have such "fixed effects". A mixed model, on the other hand, contains fixed and random effects. Typically, a grouping variable as described above is treated as a "random factor". "Random factor" is a somewhat misleading name as it is not the factor that is random. Rather, the levels of the factor are seen as a random sample from a bigger population of levels (e.g. nests), and  we assume that the level-specific parameter value comes from a distribution, usually the normal distribution. Thus, a random effect in a model can be seen as a model (for a parameter) that is nested within the model for the data.
+The three problems - grouped data, repeated measure and interest in variances - are solved by adding further variance parameters to the model. As a result, the linear predictor of such models contains predictors with fixed parameters and predictors with non-fixed  parameters. The former are called "fixed effects", the latter "random effects". "Fixed effects" can be a slope (for a continuous predictor), or a defined set of levels for a factor (often called a "fixed factor"). The non-mixed models presented in Chapter \@ref(lm) (and later in Chapter \@ref(glm)) only have such "fixed effects". A mixed model, on the other hand, contains fixed and random effects. Typically, a grouping variable as described above is treated as a "random factor". "Random factor" is a somewhat misleading name as it is not the factor that is random. Rather, the levels of the factor are seen as a random sample from a bigger population of levels (e.g. nests), and  we assume that the level-specific parameter value comes from a distribution, usually the normal distribution. Thus, a random effect in a model can be seen as a model (for a parameter) that is nested within the model for the data.
 
 Predictors that are defined as fixed effects are either numeric or, if they are categorical, they have a finite (“fixed”) number of levels, defined by the research question. For example, the factor “treatment” in the Barn owl study below has exactly two levels: "placebo" and "corticosterone", and nothing more. In contrast, random effects have a theoretically infinite number of levels of which we have measured a random sample. For example, we have measured 10 nests, but there are many more nests in the world that we have not measured. Normally, fixed effects have a low number of levels whereas random effects have a large number of levels (at least 3!). For fixed effects we are interested in the specific differences between levels (e.g., between males and females, placebo and corticosterone, etc), whereas for random effects we are mainly interested in the between-level (between-group, e.g., between-nest) variance rather than in differences between specific levels (e.g., nest A versus nest B).
 Typical fixed effects are: treatment, sex, age classes, or season. Typical random effects are: nest, individual, field, school, or study plot. It depends sometimes on the aim of the study whether a factor should be treated as fixed or random. When we would like to compare the average size of a corn cob between specific regions, then we include region as a fixed factor. However, when we would like to know how the size of a corn cob is related to the irrigation system and we have several measurements within each of a sample of regions, then we treat region as a random factor.
@@ -135,7 +135,7 @@ To summarize, mixed models are used to appropriately estimate among-group varian
 
 ## Fitting a normal linear mixed model in R
 
-To introduce the linear mixed model, we use repeated hormone measures at nestling barn owls *Tyto alba*. The cortbowl data set contains stress hormone data (corticosterone, variable ‘totCort’) of nestling barn owls which were either treated with a corticosterone implant, or with a placebo-implant as the control group. The aim of the study was to quantify the corticosterone increase due to the corticosterone implant [@Almasi.2009]. In each brood, one or two nestlings were implanted with a corticosterone implant and one or two nestlings with a placebo implant (variable ‘Implant’). Blood samples were taken just before implantation, and at days 2 and 20 after implantation. 
+To introduce the linear mixed model, we use repeated hormone measures at nestling barn owls *Tyto alba*. The cortbowl data set contains stress hormone data (corticosterone, variable "totCort") of nestling barn owls which were either treated with a corticosterone implant, or with a placebo-implant as the control group. The aim of the study was to quantify the corticosterone increase due to the corticosterone implant [@Almasi.2009]. In each brood, one or two nestlings were implanted with a corticosterone implant and one or two nestlings with a placebo implant (variable ‘Implant’). Blood samples were taken just before implantation, and at days 2 and 20 after implantation. 
 
 ```{r }
 data(cortbowl)
@@ -166,13 +166,13 @@ for(treat in levels(dat$Implant)){
 mtext("Total corticosterone [ng/ml]", side=2, outer=TRUE, line=3, cex=1.2)
 ```
 
-We fit a normal linear model with ‘Ring’ as a random factor, and ‘Implant’, ‘days’ and the interaction of ‘Implant’ $\times$ ‘days’ as fixed effects. Note that both ‘Implant’ and ‘days’ are defined as factors, thus R creates indicator variables for all levels except the reference level. Later, we will also include ‘Brood’ as a grouping level; for now, we ignore this level and start with a simpler (less perfect) model for illustrative purposes.
+We fit a normal linear model with "Ring" as a random factor, and "Implant", "days" and the interaction of "Implant" $\times$ "days" as fixed effects. Note that both "Implant" and "days" are defined as factors, thus R creates indicator variables for all levels except the reference level. Later, we will also include "Brood" as a grouping level; for now, we ignore this level and start with a simpler (less perfect) model for illustrative purposes.
 
 \[
 \begin{aligned}
 &\hat{y_i} = \beta_0 + b_{Ring_i} + \beta_1 I(days=2) + \beta_2 I(days=20) + \beta_3 I(Implant=P) \\
-&\quad + \beta_4 I(days=2) I(Implant=P) + \beta_5 I(days=20) I(Implant=P)
-&b_{Ring} \sim normal(0, \sigma_b)
+&\quad + \beta_4 I(days=2) I(Implant=P) + \beta_5 I(days=20) I(Implant=P) \\
+&b_{Ring} \sim normal(0, \sigma_b) \\
 &y_i \sim normal(\hat{y_i}, \sigma)
 \end{aligned}
 \]
@@ -191,7 +191,7 @@ mod
 ```
 
 
-The output of the lmer-object tells us that the model was fitted using the REML-method, which is the restricted maximum likelihood method. The ‘REML criterion’ is the statistic describing the model fit for a model fitted by REML. The comes the more interesting part: the parameter estimates. These are grouped into a random effects and fixed effects section. The random effects section gives the estimates for the among-individual standard deviation of the intercept ($\sigma_{Ring} =$ `r round(sqrt(as.numeric(VarCorr(mod)[1])),2)`) and the residual standard deviation ($\sigma =$ `r round(summary(mod)$sigma,2)`). The fixed effects section gives the estimates for the intercept ($\beta_0 =$ `r round(fixef(mod)[1],2)`), which is the mean logarithm of corticosterone for an ‘average’ individual that received a corticosterone implant at the day of implantation. The other model coefficients are defined as follows: The difference in the logarithm of corticosterone between placebo- and corticosterone-treated individuals before implantation ($\beta_1 =$ `r round(fixef(mod)[2],2)`), the difference between day 2 and before implantation for the corticosterone-treated individuals ($\beta_2 =$ `r round(fixef(mod)[3],2)`), the difference between day 20 and before implantation for the corticosterone-treated individuals ($\beta_3 =$ `r round(fixef(mod)[4],2)`), and the interaction parameters which tell us how the differences between day 2 and before implantation ($\beta_4 =$ `r round(fixef(mod)[5],2)`), and day 20 and before implantation ($\beta_5 =$ `r round(fixef(mod)[6],2)`), differ for the placebo-treated individuals compared to the corticosterone treated individuals. Of course, these interpretations of the fixed effects are the same as in non-mixed models.
+The output of the lmer-object tells us that the model was fitted using the REML-method, which is the restricted maximum likelihood method. The "REML criterion" is the statistic describing the model fit for a model fitted by REML. The comes the more interesting part: the parameter estimates. These are grouped into a random effects and fixed effects section. The random effects section gives the estimates for the among-individual standard deviation of the intercept ($\sigma_{Ring} =$ `r round(sqrt(as.numeric(VarCorr(mod)[1])),2)`) and the residual standard deviation ($\sigma =$ `r round(summary(mod)$sigma,2)`). The fixed effects section gives the estimates for the intercept ($\beta_0 =$ `r round(fixef(mod)[1],2)`), which is the mean logarithm of corticosterone for an ‘average’ individual that received a corticosterone implant at the day of implantation. The other model coefficients are defined as follows: The difference in the logarithm of corticosterone between placebo- and corticosterone-treated individuals before implantation ($\beta_1 =$ `r round(fixef(mod)[2],2)`), the difference between day 2 and before implantation for the corticosterone-treated individuals ($\beta_2 =$ `r round(fixef(mod)[3],2)`), the difference between day 20 and before implantation for the corticosterone-treated individuals ($\beta_3 =$ `r round(fixef(mod)[4],2)`), and the interaction parameters which tell us how the differences between day 2 and before implantation ($\beta_4 =$ `r round(fixef(mod)[5],2)`), and day 20 and before implantation ($\beta_5 =$ `r round(fixef(mod)[6],2)`), differ for the placebo-treated individuals compared to the corticosterone treated individuals. Of course, these interpretations of the fixed effects are the same as in non-mixed models.
 
 Neither the model output shown above nor the summary function (not shown) give any information about the proportion of variance explained by the model such as an $R^2$. The reason is that it is not straightforward to obtain a measure of model fit in a mixed model, and different definitions of $R^2$ exist [@Nakagawa.2013]. 
 
@@ -203,8 +203,8 @@ head(ranef(mod)$Ring) # print the first 6 Ring effects
 ```
 
 ## Restricted maximum likelihood estimation (REML)
-<!-- we have not yet explained the ML-method. in the old book, chapter 5. we need to find a place for ML-method ___ pko15.8.25: inserted link to 9.3-->
-For a mixed model the restricted maximum likelihood method is used by default instead of the maximum likelihood (ML) method (see chapter \@ref(likelihood)). The reason is that the ML-method underestimates the variance parameters because this method assumes that the fixed parameters are known without uncertainty when estimating the variance parameters. However, the estimates of the fixed effects have uncertainty. The REML method uses a mathematical trick to make the estimates for the variance parameters independent of the estimates for the fixed effects. We recommend reading the very understandable description of the REML method in @Zuur.2009. For our purposes, the relevant difference between the two methods is that the ML-estimates are unbiased for the fixed effects but biased for the random effects, whereas the REML-estimates are biased for the fixed effects and unbiased for the random effects. However, when sample size is large compared to the number of model parameters, the differences between the ML- and REML-estimates become negligible. As a guideline, use REML if the interest is in the random effects (variance parameters), and ML if the interest is in the fixed effects. The estimation method can be chosen by setting the argument ‘REML’ to ‘FALSE’ (default is ‘TRUE’).
+<!-- we have not yet explained the ML-method. in the old book, Chapter 5. we need to find a place for ML-method ___ pko15.8.25: inserted link to 9.3-->
+For a mixed model the restricted maximum likelihood method is used by default instead of the maximum likelihood (ML) method (see Chapter \@ref(likelihood)). The reason is that the ML-method underestimates the variance parameters because this method assumes that the fixed parameters are known without uncertainty when estimating the variance parameters. However, the estimates of the fixed effects have uncertainty. The REML method uses a mathematical trick to make the estimates for the variance parameters independent of the estimates for the fixed effects. We recommend reading the very understandable description of the REML method in @Zuur.2009. For our purposes, the relevant difference between the two methods is that the ML-estimates are unbiased for the fixed effects but biased for the random effects, whereas the REML-estimates are biased for the fixed effects and unbiased for the random effects. However, when sample size is large compared to the number of model parameters, the differences between the ML- and REML-estimates become negligible. As a guideline, use REML if the interest is in the random effects (variance parameters), and ML if the interest is in the fixed effects. The estimation method can be chosen by setting the argument ‘REML’ to ‘FALSE’ (default is ‘TRUE’).
 
 ```{r}
 mod <- lmer(log(totCort) ~ Implant + days + Implant:days + (1|Ring), 
@@ -214,13 +214,13 @@ mod <- lmer(log(totCort) ~ Implant + days + Implant:days + (1|Ring),
 When we fit the model by `stan_lmer` from the rstanarm-package or `brm` from the brms-package, i.e., using the Bayes theorem instead of ML or REML, we do not have to care about this choice (of course!). The result from a Bayesian analyses is unbiased for all parameters (at least from a mathematical point of view - also parameters from a Bayesian model can be biased if the model violates assumptions or is confounded). 
 
 ## Assessing model assumptions
-As with a simple linear model, the assumptions are carefully checked before inference is drawn from a mixed model. The assumptions are, as explained in chapter \@ref(residualanalysis), that the residuals are independent and identically distributed (iid). In principle, the same methods described in chapter \@ref(residualanalysis) are used to assess violation of model assumptions in mixed models. However, the function `plot` does not produce the standard diagnostic residual plots from an `lmer` object. Therefore, these plots have to be coded by hand.
+As with a simple linear model, the assumptions are carefully checked before inference is drawn from a mixed model. The assumptions are, as explained in Chapter \@ref(residualanalysis), that the residuals are independent and identically distributed (iid). In principle, the same methods described in Chapter \@ref(residualanalysis) are used to assess violation of model assumptions in mixed models. However, the function `plot` does not produce the standard diagnostic residual plots from an `lmer` object. Therefore, these plots have to be coded by hand.
 
 In the first plot of Figure \@ref(fig:mermodplot) we see that the residuals scatter around zero with a few exceptions in the lower left part of the panel. A positive correlation between the residuals and the fitted values (not present in the example data) would not bother us statistically in the case of a mixed model, but it indicates strong shrinkage and may have biological meaning.
 
 The few small measurements that do not fit well to the model are also recognizable in the QQ plot of the residuals (a banana-like deviation from the straight line at the left edge of the data) and when plotting the square root of the absolute values of the residuals against the fitted values (second and third plots in Figure \@ref(fig:mermodplot)). Because the number of such cases is low and all other observations seem to fulfill the model assumptions well, we accept the slight lack of fit. But we are aware of the fact that model predictions for small corticosterone levels are unreliable.
 
-In addition to the checks presented in chapter \@ref(residualanalysis), the assumption that the random effects, that is the values of $b_{Ring}$, are normally distributed, needs to be checked. We do this using a QQ plot (fourth plot in Figure \@ref(fig:mermodplot)). Note that we need to extract the $b_{Ring}$ using "[,1]" because the ranef object is two-dimensional.
+In addition to the checks presented in Chapter \@ref(residualanalysis), the assumption that the random effects, that is the values of $b_{Ring}$, are normally distributed, needs to be checked. We do this using a QQ plot (fourth plot in Figure \@ref(fig:mermodplot)). Note that we need to extract the $b_{Ring}$ using "[,1]" because the ranef object is two-dimensional.
 
 
 ```{r mermodplot, fig.asp=1, fig.cap="Diagnostic residual and random effect plots to assess model assumptions of the corticosterone model. Upper left: residuals versus fitted values. Upper right: Normal QQ plot of the residuals. Lower left: square-root of the absolute values of the residuals versus fitted values. Lower right: Normal QQ plot of the random effects."}
@@ -313,12 +313,218 @@ In the model, we include “age” (as a continuous covariate), “implant” (a
 \[
 \begin{aligned} 
   &\hat{y_i} =\beta_0 + b_{1,Ring_i} + (\beta_1 + b_{2,Ring_i}) age_i + \beta_2 I(Implant=P)+\beta_3 age_i I(Implant=P) \\
-  &y_i \sim normal(\hat{y_i}, \hat{\sigma^2}) \\
+  &y_i \sim normal(\hat{y_i}, \sigma^2) \\
   &\boldsymbol{b}_{1:2,Ring} \sim MVnormal(\boldsymbol{0,\Sigma})
 \end{aligned}
 \]
 
 The vector $\boldsymbol{b}_{1:2,Ring}$ contains the two parameters $b_{1,Ring}$ and $b_{2,Ring}$. The matrix $\boldsymbol{\Sigma}$ contains the variances of and the covariances between the intercept and the slope. The notation `(Age|Ring)` means that both the intercept and the Age-effect are grouped by Ring. We find it advisable to center and scale covariates, especially for mixed models with some complexity because non-centered covariates lead to a stronger correlation between the estimated parameters, which may cause nonconvergence of the fitting algorithm. Hence, we center and scale the variable “Age”:
 
+```{r}
+data(wingbowl)
+dat <- wingbowl
+dat$Age.z <- scale(dat$Age)
+mod <- lmer(Wing ~ Age.z + Implant + Age.z:Implant + (Age.z|Ring),
+            data=dat, REML=FALSE)
+mod
+```
+
+The estimate of the between-nestling standard deviation for the intercept is 6.4 and for the age-effect (slope), this value is 1.9. We see that there is a negative correlation between the intercept and the slope (-0.12). This is not unusual, and it would be even stronger with noncentered predictors: this means we can find different regression lines that fit the data similarly well when we increase the intercept and simultaneously decrease the slope.
+We can use the diagnostic residual plots as described in Chapter \@ref(residualanalysis), and the R code of the previous section, to produce a QQ plot of the random effects. Because two parameters were modeled per individual, we have to produce two different QQ plots to assess whether the random effects are normally distributed. The different parameters for each random effect are extracted from the `ranef` object using the squared brackets because the random effects are given as a matrix containing one row per individual and one column per parameter (here: intercept and age-effect).
+
+```{r, results='hide'}
+qqnorm(ranef(mod)$Ring[,1]) # intercept
+qqline(ranef(mod)$Ring[,1])
+qqnorm(ranef(mod)$Ring[,2]) # slope
+qqline(ranef(mod)$Ring[,2]) # plots not shown
+```
+
+The diagnostic residual plots did not indicate strong violation of the model assumptions; therefore, we can start drawing inferences from the model. Our question was how strongly does corticosterone affect growth rate? From the model output we see that individuals with a placebo implant grow 2.2&nbsp;mm more per standard deviation of age, that is, `2.2/sd(dat$Age)`&nbsp;= 0.4&nbsp;mm per day compared to the individuals with a corticosterone implant. We can get the 95% CI of the parameter estimates using `sim`.
+
+```{r}
+nsim <- 2000
+bsim <- sim(mod, n.sim=nsim)
+apply(bsim@fixef, 2, quantile, prob=c(0.025, 0.975))
+```
+
+The CI for the interaction effect of 0.4&nbsp;mm, on the original Age-scale, is:
+
+```{r}
+quantile(bsim@fixef[,"Age.z:ImplantP"]/sd(dat$Age), prob=c(0.025,0.975))
+```
+
+Thus, given the data and the model, we are 95% sure that the wings of placebo nestlings grow between 0.16&nbsp;mm and 0.66&nbsp;mm faster per day than the wings of corticosterone nestlings. To be better able to assess the biological relevance of this effect, we may want to plot the two regression lines (averaged over the individuals) as well as the individual-specific regression lines (\@ref(fig:wingagecourtplot)). To do so, we calculate the fitted values for each age and implant combination 2000 times, each with a different set of model parameters from their posterior distribution.
+
+```{r}
+newdat <- expand.grid(Age=seq(23, 45, length=100),
+                      Implant=levels(dat$Implant))
+newdat$Age.z <- (newdat$Age - mean(dat$Age))/sd(dat$Age)
+Xmat <- model.matrix(~Age.z + Implant + Age.z:Implant, data=newdat)
+fitmat <- matrix(ncol=nsim, nrow=nrow(newdat))
+for(i in 1:nsim) fitmat[,i] <- Xmat %*% bsim@fixef[i,]
+newdat$lower <- apply(fitmat, 1, quantile, prob=0.025)
+newdat$upper <- apply(fitmat, 1, quantile, prob=0.975)
+```
+
+We do not extract the mean of the posterior distribution of the fitted values because we use the ML estimates for drawing the mean regression lines. These estimates are not subject to simulation error. Note that we use Age.z on the x-axis, but we label the x-axis with back-transformed values so that we are able to use the `abline` function to draw the regression lines directly from the model parameters.
+
+To draw the individual-specific regression lines, we add the individual-specific deviations from the intercept and the slope, respectively, to the population intercept and slope.We do this in a separate plot so as not to overload the figure.
+
+```{r wingagecourtplot, fig.cap="*Left*: Population regression lines (bold lines) with 95% compatibility intervals (semitransparent color) for the corticosterone (orange) and placebo (blue) treated barn owl nestlings. *Right*: Individual-specific regression lines. Circles are the raw data."}
+
+par(mfrow=c(1,2), mar=c(5,1,1,0.1), oma=c(0,4,0,0))
+plot(dat$Age.z, dat$Wing, pch=1, cex=0.8, las=1,xlab="Age (days)",
+     col=c("orange", "blue")[as.numeric(dat$Implant)],ylab=NA, xaxt="n")
+at.x_orig <- seq(25,45,by=5) # values on the x-axis, original scale
+at.x <- (at.x_orig-mean(dat$Age))/sd(dat$Age) # transformed scale
+axis(1, at=at.x, labels=at.x_orig) # original values at transformed
+mtext("Wing length (mm)", side=2, outer=TRUE, line=2, cex=1.2, adj=0.6)
+abline(fixef(mod)[1], fixef(mod)[2], col="orange", lwd=2) # for C
+abline(fixef(mod)[1]+fixef(mod)[3], fixef(mod)[2]+fixef(mod)[4], col="blue", lwd=2) # for P
+# add transparent polygons to visualize the 95% CI
+for(i in 1:2){
+  index <- newdat$Implant==levels(newdat$Implant)[i]
+  polygon(c(newdat$Age.z[index], rev(newdat$Age.z[index])),
+          c(newdat$lower[index], rev(newdat$upper[index])),
+          border=NA, col=c(rgb(1,0.65,0,0.5), rgb(0,0,1,0.5))[i])
+}
+legend(x=-1.5,y=100, c("corticosterone", "placebo"),pch=c(1,1),col=c("orange","blue"),
+       bty="n",lwd=2,cex=1, pt.cex=1.2)
+
+# individual-specific regression lines in a separate plot:
+plot(dat$Age.z, dat$Wing, pch=1, cex=0.8, las=1, col=c("orange", "blue")[as.numeric(dat$Implant)],
+     xlab="Age (days)", ylab=NA, yaxt="n", xaxt="n")
+at.x_orig <- seq(25,45,by=5)
+at.x <- (at.x_orig - mean(dat$Age))/sd(dat$Age)
+axis(1, at=at.x, labels=at.x_orig)
+indtreat <- tapply(dat$Implant, dat$Ring, function(x) as.character(x[1]))
+for(i in 1:86){
+  if(indtreat[i]=="C") 
+    abline(fixef(mod)[1]+ranef(mod)$Ring[i,1],
+           fixef(mod)[2]+ranef(mod)$Ring[i,2],col="orange") 
+  else
+    abline(fixef(mod)[1]+fixef(mod)[3]+ranef(mod)$Ring[i,1],
+           fixef(mod)[2]+fixef(mod)[4]+ranef(mod)$Ring[i,2],col="blue")
+}
+
+```
+
+We see a discernible effect of corticosterone on growth rate such that the wing length of corticosterone-treated nestlings is, on average, around 1&nbsp;cm smaller than in placebo-treated individuals at the end of the nestling phase.
+
+## Nested and crossed random effects
+
+Random factors can be nested or crossed. Each level of a factor that is nested within another factor occurs only in one level of the other factor (Figure \@ref(fig:nestedrandomplot), left). For example, the factor "nestling" is nested in the factor "nest" because the same nestling cannot be in two nests. In contrast, when two factors are crossed, all possible combinations of the factor levels occur in the data set (Figure \@ref(fig:nestedrandomplot), right). For example, the factors "month" and "year" are crossed, because all months occur in every year.
+
+```{r nestedrandomplot, fig.align='center', echo=FALSE, fig.link='', fig.cap="Nested and crossed structures of two factors. In the left panel, each level of the factor \"individual\" only occurs in one level of the factor \"nest\". These are called nested effects. In the right panel, each level of the factor \"species\" occurs in all levels of the factor \"field\". Therefore, these factors are called crossed."}
+knitr::include_graphics('images/nested_crossed.jpg', dpi = 150)
+```
+
+It is important to specify factors as nested and crossed random factors, because a falsely specified structure leads to indecipherable results. If unique level names are used (in contrast to starting with the number 1 in each group), the nested structure is defined in the data and there is no need to explicitly specify the nested design in the `lmer` (or `glmer`, see Chapter \@ref(glmm)) function; if nestlings (or other levels nested in another factor) are not labeled uniquely (i.e., different nestlings from different nests have the same name), the nesting structure has to be specified in the model formula. The following is an example of a nested random effect and one of a crossed random effect.
+
+In the two barn owl example data sets described earlier, the individuals were actually not independent because they were grouped in nests. Thus, we should have included nest as another random factor in the two models. Because each individual only appears in one nest, these two random factors are nested. There are two possible ways to specify nested random effects in the function `lmer`. The first is to add the factor nest ("Brood") as a second random effect in the model formula. This only fits nested random effects if the nested structure is clear from the names of the factor levels, because the nested structure is not explicitly defined in the model formula; all nestlings must have a unique name, thereby, it becomes clear that each nestling belongs to only one nest (is nested within nest).
+
+```{r}
+data(cortbowl)
+dat <- cortbowl
+mod <- lmer(log(totCort) ~ Implant + days + Implant:days
+            + (1|Brood) + (1|Ring), data=dat, REML=FALSE)
+mod
+```
+
+The second possibility is to define explicitly the nested structure in the model formula using the "F1/F2" notation ("F2 is nested in F1").
+
+```{r}
+mod <- lmer(log(totCort) ~ Implant + days + Implant:days
+            + (1|Brood/Ring), data=dat, REML=FALSE)
+summary(mod)$varcor
+```
+
+These two models are the same, hence not all model output is repeated. The only difference is in the name of the individual random factor: it is called "Ring" in the first version, whereas in the second version it is called "Ring:Brood", meaning "Ring nested in Brood".
+
+To specify crossed random effects, we can only use the first specification in the previous example. For example, in Ellenberg's data (Chapter \@ref(lm)), six different grass species were grown in four different situations: two tanks in each of two years, and the two tanks contained different soil. This four-level factor has been called "gradient" by @Hector.2012. Four species were grown in all four gradients and two species were grown in only two of the gradients. Above-ground biomass was measured for 11 different water conditions within each species-gradient combination.
+
+```{r}
+data(ellenberg)
+ellenberg$gradient <- paste(ellenberg$Year, ellenberg$Soil)
+table(ellenberg$Species, ellenberg$gradient)
+```
+
+We assume that the six grass species are a random sample from the family Poaceae (true grasses) and we may be interested in the general relationship between water condition (distance to ground water; using a linear and a quadratic term) and Poaceae biomass, as well as in species-specific reactions to water conditions. Therefore, we treat species as a random factor. We also include gradient as a random factor to correct for any between-gradient variance.
+
+```{r warning=FALSE}
+ellenberg$water.z <- as.numeric(scale(ellenberg$Water))
+mod <- lmer(log(Yi.g) ~ water.z + I(water.z^2)
+            + (water.z + I(water.z^2)|Species) + (1|gradient), data=ellenberg)
+```
+
+We did not find any suspicious pattern in the residuals and, therefore, plot the species-specific and the overall (for all Poaceae) relationship between water gradient and biomass in a figure. We see that the average biomass of Poaceae does not change with distance to ground water, but the different species react quite differently to the water condition (\@ref(fig:biomasswaterplot)).
+
+```{r biomasswaterplot, echo=F, fig.cap="Average biomass of Poaceae plants (black line with 95% compatibility interval in gray), and the species-specific biomasses (colored lines), in relation to water condition. Dot are the raw data, each color is a different species.", fig.width=5, fig.height=5}
+
+set.seed(0470)
+nsim <- 5000
+bsim <- sim(mod, n.sim=nsim)
+
+newdat <- expand.grid(Water=seq(-5,140, length=100), Species= levels(ellenberg$Species)) 
+newdat$water.z <- (newdat$Water - mean(ellenberg$Water))/sd(ellenberg$Water)
+Xmat <- model.matrix(~water.z + I(water.z^2), data=newdat)
+fitmat <- matrix(nrow=nrow(newdat), ncol=nsim)
+fitmatpop <- matrix(nrow=nrow(newdat), ncol=nsim)
+
+for(a in 1:6){
+  index <- newdat$Species==levels(ellenberg$Species)[a]
+  for(i in 1:nsim){
+    b <- bsim@fixef[i,] + bsim@ranef$Species[i,a,]
+    fitmat[index,i] <- Xmat[index,]%*%b
+    fitmatpop[index,i] <- Xmat[index,]%*%bsim@fixef[i,]
+  }
+}
+
+newdat$fit <- apply(fitmat, 1, mean)
+newdat$lower <- apply(fitmat, 1, quantile, prob=0.025)
+newdat$upper <- apply(fitmat, 1, quantile, prob=0.975)
+newdat$fitpop <- apply(fitmatpop, 1, mean)
+newdat$lowerpop <- apply(fitmatpop, 1, quantile, prob=0.025)
+newdat$upperpop <- apply(fitmatpop, 1, quantile, prob=0.975)
+colkey <- colorRampPalette(c("orange", "blue"))(6)
+
+par(mgp=c(2.5, 1, 0))
+plot(ellenberg$Water, log(ellenberg$Yi.g),
+     las=1, ylab=NA, type="n",
+     xlab="Average distance to ground water (cm)", cex.lab=1.2)
+mtext(expression(paste("Above-ground biomass ", (g/m^2),  " [log]")), 
+      side=2, line=2.5, cex=1.2)
+newdatpop <- newdat[1:100,]    
+polygon(c(newdatpop$Water, rev(newdatpop$Water)), c(newdatpop$lowerpop, rev(newdatpop$upperpop)),
+        border=NA, col=grey(0.6))
+for(a in 1:6){
+  index <- ellenberg$Species==levels(ellenberg$Species)[a]
+  points(ellenberg$Water[index], log(ellenberg$Yi.g[index]), col=colkey[a], lwd=2, 
+         pch=16, cex=0.6)
+}
+
+for(a in 1:6){
+  index <- newdat$Species==levels(ellenberg$Species)[a]
+  lines(newdat$Water[index], newdat$fit[index], col=colkey[a], lwd=2)
+}
+
+lines(newdatpop$Water, newdatpop$fitpop, lwd=3)
+legend(-30, 9.4, bty="n", lwd=2, col=colkey, legend=levels(ellenberg$Species), 
+       horiz=TRUE, xpd=NA, cex=0.9)
+```
+
+## Model selection in mixed models
+
+Random effects are inexpensive in terms of degrees of freedom, because only one parameter per random effect is used. Further, natural processes vary on many different levels and, therefore, including random effects in a model leads to more realistic models in most cases. However, sometimes the model-fitting algorithms do not converge when the model is overloaded with random structures. Therefore, before adding a random effect to a model, be sure that the data contain some information about the specific variance parameter.
+
+Sometimes, we would like to decide based on the data whether a random effect should be included in the model or not. This is model selection, and it is discussed in more detail in Chapter \@ref(model_comparison). However, when analyzing random factors, the following recommendations may be kept in mind: (1) As the random effects are estimated conditional on the fixed effects, model selection in the random part of the model should be done using a realistic fixed part of the model. This should include all possible predictors. (2) Random factors that are included because of the study design (e.g., subject of repeated measures, blocks) should, whenever possible, remain in the model. And (3) to get unbiased estimates for variance parameters (i.e., for the random effects) use REML.
 
 
+## Further reading
+The book by @Gelman.2007 is all about hierarchical models. @Pinheiro.2000 is the reference for fitting mixed models in R (and S). General guidelines to build a mixed model are given in @Verbeke.2000. @Zuur.2009 give a detailed example on model selection in mixed models.
+
+Sometimes, covariates have different effects within and between groups of measurements. @vandePol.2009 present a simple method to distinguish such different effects using mixed models.
+
+@McCulloch.2011 studied the effect of not normally distributed random effects in linear models and found that model predictions seem to be quite robust against the violation of the normal distribution assumption of random effects.
+
+The wingbowl data set has been analyzed in detail in @Almasi.2012 taking into account that the corticosterone implant affects blood corticosterone concentration for only three days. The Ellenberg data set has been analyzed in detail, including also the effects of soil type and year, in @Hector.2012.
