@@ -425,7 +425,7 @@ knitr::include_graphics('images/nested_crossed.jpg', dpi = 150)
 ```
 
 
-```{r nestedrandomplot2, fig.align='center', echo=FALSE, fig.cap="Nested and ."}
+```{r nestedrandomplot3, fig.align='center', echo=FALSE, fig.cap="Nested and ."}
 knitr::include_graphics('images/nested_crossed.jpg', dpi = 150)
 ```
 
