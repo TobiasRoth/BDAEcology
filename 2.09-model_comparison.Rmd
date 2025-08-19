@@ -202,9 +202,18 @@ A parsimonious model does not necessarily perform best in all situations. On one
 
 ## Further reading
 <!-- fk: further reading im alten Buch ist sehr nützlich, sollte hier noch eingefügt werden-->
-@Hooten.2015
+<!-- pk: hab ich gemacht; tredennick noch mit Text ergänzen?-->
+<!-- pk: das gibt es nicht mehr: More information on the computation of LASSO and ridge regression is found at http://staffhome.ecm.uwa.edu.au/~00043886/software/lasso.html.-->
 @Tredennick.2021
 
-
+@Kadane.2004 discuss various versions of the Bayes factor and many more possibilities for Bayesian model selection. We can highly recommend the up-to-date review of the commonly used model selection methods in Bayesian statistics by @Hooten.2015. They nicely explain the common framework of the information criteria, cross-validation, LASSO, and ridge regression, which is called regularization.
+@Wasserman.2000 reviews AIC, BIC, and Bayes factor in a Bayesian framework. He also reviews model averaging. @Gelman.1995 describe that BIC is not a Bayesian method, explain why Bayes factors are only defined when prior distributions are proper, and how Bayes factors are sensitive to prior distributions.
+More details on multimodel inference in a Bayesian framework are provided in @Link.2010. @Hoeting.1999 give a detailed description on how to do Bayesian model averaging.
+The classical reference for information theory is @Burnham.2002. @Anderson.2008 is a more digested version for practitioners, particularly ecologists. @Buckland.1997 present model averaging as a tool to draw inference while taking model selection uncertainty into account.
+@Claeskens.2008 give a mathematical introduction to a variety of different information criteria and model selection techniques. @Johnson.2004b review model selection in ecology and evolution and present advantages of model averaging. @Claeskens.2003 developed a focused information criteria, FIC, that aims at optimizing model selection in relation to one parameter of interest.
+@Grueber.2011 show how to do model averaging based on AIC weights for linear models including generalized linear mixed models. They also give R code in a worked example using the R package MuMIn (@Barton.2011). But note that the way @Grueber.2011 obtain the confidence intervals for the averaged fitted values is wrong, see corrigendum @Grueber.2011b.
+The package AICcmodavg (@Mazerolle.2014) provides R functions to do multimodel inference on a variety of different model types. Different strategies to select models among a large number of models are discussed by @Ripley.2004b.
+A generalization of the ordinary cross-validation is used to find the smoothing parameters in additive models (@Wood.2006).
+@Arnold.2009 shows that the AIC can decrease when unimportant (random) variables are added to a model (“pretending variable problem”). @Whittingham.2006 show that stepwise backward model selection leads to overestimated effect sizes.
 
 
