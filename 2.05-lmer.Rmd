@@ -170,12 +170,12 @@ We fit a normal linear model with ‘Ring’ as a random factor, and ‘Implant�
 
 \[
 \begin{aligned}
-\hat{y_i} &= \beta_0 + b_{\text{Ring}[i]} + \beta_1 I(\text{days}=2) + \beta_2 I(\text{days}=20) + \beta_3 I(\text{Implant}=P) \\
-&\quad + \beta_4 I(\text{days}=2) I(\text{Implant}=P) + \beta_5 I(\text{days}=20) I(\text{Implant}=P)
+&\hat{y_i} = \beta_0 + b_{Ring_i} + \beta_1 I(days=2) + \beta_2 I(days=20) + \beta_3 I(Implant=P) \\
+&\quad + \beta_4 I(days=2) I(Implant=P) + \beta_5 I(days=20) I(Implant=P)
+&b_{Ring} \sim normal(0, \sigma_b)
+&y_i \sim normal(\hat{y_i}, \sigma)
 \end{aligned}
 \]
-$b_{Ring} \sim normal(0, \sigma_b)$  
-$y_i \sim normal(\hat{y_i}, \sigma)$  
 
 Several different functions to fit a mixed model have been written in R: `lme`, `gls`, `gee` have been the first ones. Then `lmer` followed, and now, `stan_lmer` and `brm` allow to fit a large variety of hierarchical models. We here start with using `lmer` from the package lme4, because it is a kind of basic function also for `stan_lmer`and `brm`. Further, `sim` can only work with lmer-objects but none of the others. To work with lmer, we usually load the package arm which contains the function `sim` and also automatically loads lme4.
 
@@ -310,12 +310,13 @@ We expected that growth rate differed between individuals due to between-individ
 The data for the growth rate study are in the wingbowl data set. In total, we have 209 measurements of 86 individuals (variable “Ring”) from 24 broods.
 In the model, we include “age” (as a continuous covariate), “implant” (as a fixed effect), and their interaction in the fixed part; and “ring” (= id of individual) is included as a random effect. We model both the intercept and the slope for the covariate “age” dependent on “ring.” We use this notation with $b_{Ring}$ being an individual-specific deviation from the population mean parameter value, but we add a second numerical subscript, $b_{1,Ring}$, to indicate the random intercept and $b_{2,Ring}$ for the random slope. The two random parameters are assumed to follow a multivariate normal distribution (MVNorm); that is, they are both normally distributed and are assumed to be correlated and this correlation is estimated. Hence, the formula for the random intercept and random slope model is:
 
-\begin{align} 
-  &y_i =\beta_0 + b_{1,Ring_i} + (\beta_1 + b_{2,Ring_i}) age_i + \beta_2 I(Implant=P) + \\
-  &\beta_3 age_i I(Implant=P) \\
-  &y_i \sim normal(\mu_i, \sigma^2) \\
+\[
+\begin{aligned} 
+  &\hat{y_i} =\beta_0 + b_{1,Ring_i} + (\beta_1 + b_{2,Ring_i}) age_i + \beta_2 I(Implant=P)+\beta_3 age_i I(Implant=P) \\
+  &y_i \sim normal(\hat{y_i}, \hat{\sigma^2}) \\
   &\boldsymbol{b}_{1:2,Ring} \sim MVnormal(\boldsymbol{0,\Sigma})
-\end{align}
+\end{aligned}
+\]
 
 The vector $\boldsymbol{b}_{1:2,Ring}$ contains the two parameters $b_{1,Ring}$ and $b_{2,Ring}$. The matrix $\boldsymbol{\Sigma}$ contains the variances of and the covariances between the intercept and the slope. The notation `(Age|Ring)` means that both the intercept and the Age-effect are grouped by Ring. We find it advisable to center and scale covariates, especially for mixed models with some complexity because non-centered covariates lead to a stronger correlation between the estimated parameters, which may cause nonconvergence of the fitting algorithm. Hence, we center and scale the variable “Age”:
 
