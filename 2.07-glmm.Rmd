@@ -9,9 +9,9 @@ In chapter \@ref(glm) on generalized linear models we have introduced how to ana
 Generalized linear mixed models (GLMM) combine the two complexities and are used to analyze outcomes with a non-normal error distribution when the data have a hierarchical structure. In this chapter, we will show how to analyze such data. Remember, a hierarchical structure of the data means that the data are collected at different levels, for example smaller and larger spatial units, or include repeated measurements in time on a specific subject. Typically, the outcome variable is measured/observed at the lowest level but other variables may be measured at different levels. A first example is introduced in the next section.
 
 
-### Binomial Mixed Model
+## Binomial Mixed Model
 
-#### Background
+### Background
 
 ```{r, echo=FALSE}
 
@@ -62,9 +62,9 @@ length(unique(dat$farm))
 
 ```
 
-#### Fitting a Binomial Mixed Model in R
+### Fitting a Binomial Mixed Model in R
 
-##### Using the glmer function
+#### Using the glmer function
 
 ```{r, prepare_data}
 
@@ -89,7 +89,7 @@ mod.glmer <- glmer(cbind(fledge,die) ~ colsize.z + cow + dung.z + (1|farm.f) ,
 
 ```
 
-##### Assessing Model Assumptions for the glmer fit
+#### Assessing Model Assumptions for the glmer fit
 
 <!--fk: Reference to Figures and Tables. \@ref(type:name)-->
 
@@ -131,7 +131,7 @@ detach(package:lme4)
 
 ```
 
-##### Using the brm function
+#### Using the brm function
 
 Now we fit the same model using the function `brm` from the R package `brms`. This function allows fitting Bayesian generalized (non-)linear multivariate multilevel models using Stan [@Betancourt.2013b] for full Bayesian inference. We shortly introduce the fitting algorithm used by Stan, Hamiltonian Monte Carlo, in chapter \@ref(stan). When using the function `brm` there is no need to install `rstan` or write the model in Stan-language. A wide range of distributions and link functions are supported, and the function offers many things more. Here we use it to fit the model as specified by the formula object above. 
 Note that brm requires that a binomial outcome is specified in the format `successes|trials()`, which is the number of fledged nestlings out of the total clutch size in our case. In contrast, the `glmer` function required to specify the number of nestlings that fledged and died (which together sum up to clutch size), in the format `cbind(successes, failures)`.
@@ -180,7 +180,7 @@ make_stancode(fledge|trials(clutch) ~ colsize.z + cow + dung.z, #+ (1|farm.f)
 
 ```
 
-##### Checking model convergence for the brm fit
+#### Checking model convergence for the brm fit
 
 We first check whether we find warnings in the R console about problems of the fitting algorithm. Warnings should be taken seriously. Often, we find help in the Stan online documentation (or when typing `launch_shinystan(mod.brm)` into the R-console) what to change when calling the `brm` function to get a fit that is running smoothly. Once, we get rid of all warnings, we need to check how well the Markov chains mixed. We can either do that by scanning through the many diagnostic plots given by `launch_shinystan(mod)` or create the most important plots ourselves such as the traceplot (Figure \@ref(fig:checkconvergencemodelbrm)). 
 
@@ -195,7 +195,7 @@ mcmc_plot(mod.brm, type = "trace")
 <!--siehe Kapitel 5.3 hier: https://www.rensvandeschoot.com/tutorials/generalised-linear-models-with-brms/, fk: dieses Buch ist auch noch under construction. Ich würde glaubs nur zu fertigen Büchern einen Link anfügen.-->
 
 
-##### Checking model fit by posterior predictive model checking
+#### Checking model fit by posterior predictive model checking
 
 To assess how well the model fits to the data we do posterior predictive model checking (Chapter \@ref(modelchecking)). For binomial as well as for Poisson models comparing the standard deviation of the data with those of replicated data from the model is particularly important. If the standard deviation of the real data would be much higher compared to the ones of the replicated data from the model, overdispersion would be an issue. However, here, the model is able to capture the variance in the data correctly (Figure \@ref(fig:ppbinomial)). 
 The fitted vs observed plot also shows a good fit.
@@ -220,7 +220,7 @@ abline(0,1)
 
 After checking the diagnostic plots, the posterior predictive model checking and the general model fit, we assume that the model describes the data generating process reasonably well, so that we can proceed to drawing conclusions. 
 
-#### Drawing Conclusions
+### Drawing Conclusions
 
 The generic `summary` function gives us the results for the model object containing the fitted model, and works for both the model fitted with `glmer` and `brm`. Let's start having a look at the summary from `mod.glmer`. 
 The summary provides the fitting method, the model formula, statistics for the model fit including the Akaike information criterion (AIC), the Bayesian information criterion (BIC), the scaled residuals, the random effects variance and information about observations and groups, a table with coefficient estimates for the fixed effects (with standard errors and a z-test for the coefficient) and correlations between fixed effects. We recommend to always check if the number of observations and groups, i.e., 63 barn swallow nests from 51 farms here, is correct. This information shows if the `glmer` function has correctly recognized the hierarchical structure in the data. Here, this is correct. To assess the associations between the predictor variables and the outcome analyzed, we need to look at the column "Estimate" in the table of fixed effects. This column contains the estimated model coefficients, and the standard error for these estimates is given in the column "Std. Error", along with a z-test for the null hypothesis of a coefficient of zero.
@@ -258,6 +258,8 @@ quantile(survivalest, probs=c(0.025, 0.975)) # 95% uncertainty interval
 In medical research, it is standard to report the fixed-effects coefficients from GLMM with binomial or Bernoulli error as odds ratios by taking the exponent (R function `exp` for $e^{()}$) of the coefficient on the logit-scale. For example, the coefficient for cow from `mod.glmer`, `r sprintf("%.2f", fixef(mod.glmer)["cow"])` (95% CI from `r sprintf("%.2f", confint.95["cow", 1])` to `r sprintf("%.2f", confint.95["cow", 1])`), represents an odds ratio of exp(
 `r sprintf("%.2f", fixef(mod.glmer)["cow"])`)=`r sprintf("%.2f", exp(fixef(mod.glmer)["cow"]))` (95% CI from `r sprintf("%.2f", exp(confint.95["cow", 1]))` to `r sprintf("%.2f", exp(confint.95["cow", 1]))`). This means that the odds for fledging (vs. not fledging) from a clutch from a farm with livestock present is about 1.5 times larger than the odds for fledging if no livestock is present (relative effect). 
 
+
+## Poisson mixed model
 
 ## Summary
 
