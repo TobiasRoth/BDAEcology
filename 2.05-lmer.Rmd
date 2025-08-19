@@ -420,7 +420,7 @@ knitr::include_graphics('images/nested_crossed.jpg', dpi = 150)
 ```
 
 
-```{r nestedrandomplot, fig.align='center', echo=FALSE, fig.cap='Nested and crossed structures of two factors. In the left panel, each level of the factor "individual" only occurs in one level of the factor nest. These are called nested effects. In the right panel, each level of the factor species occurs in all levels of the factor field. Therefore, these factors are called crossed.'}
+```{r nestedrandomplot2, fig.align='center', echo=FALSE, fig.cap='Nested and crossed structures of two factors. In the left panel, each level of the factor "individual" only occurs in one level of the factor nest. These are called nested effects. In the right panel, each level of the factor species occurs in all levels of the factor field. Therefore, these factors are called crossed.'}
 knitr::include_graphics('images/nested_crossed.jpg', dpi = 150)
 ```
 
