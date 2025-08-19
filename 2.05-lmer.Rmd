@@ -415,6 +415,7 @@ We see a discernible effect of corticosterone on growth rate such that the wing 
 
 Random factors can be nested or crossed. Each level of a factor that is nested within another factor occurs only in one level of the other factor (Figure \@ref(fig:nestedrandomplot), left). For example, the factor "nestling" is nested in the factor "nest" because the same nestling cannot be in two nests. In contrast, when two factors are crossed, all possible combinations of the factor levels occur in the data set (Figure \@ref(fig:nestedrandomplot), right). For example, the factors "month" and "year" are crossed, because all months occur in every year.
 
+
 ```{r nestedrandomplot, fig.align='center', echo=FALSE, fig.cap="Nested and crossed structures of two factors. In the left panel, each level of the factor &quot;individual&quot; only occurs in one level of the factor &quot;nest&quot;. These are called nested effects. In the right panel, each level of the factor &quot;species&quot; occurs in all levels of the factor &quot;field&quot;. Therefore, these factors are called crossed."}
 knitr::include_graphics('images/nested_crossed.jpg', dpi = 150)
 ```
