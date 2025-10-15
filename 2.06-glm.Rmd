@@ -31,7 +31,7 @@ kable(tab, caption="Frequently used distributions for the glm function with thei
 
 ```
 
-Paul Buerkner has implemented many different distributions and link function in the package `brms`, [see here ](https://paulbuerkner.com/brms/reference/brmsfamily.html).
+Paul Buerkner has implemented many different distributions and link function in the package brms, [see here ](https://paulbuerkner.com/brms/reference/brmsfamily.html).
 
 
 
