@@ -89,7 +89,7 @@ mod.glmer <- glmer(cbind(fledge,die) ~ colsize.z + cow + dung.z + (1|farm.f) ,
 
 ```
 
-#### Assessing Model Assumptions for the glmer fit
+##### Assessing Model Assumptions for the glmer fit
 
 <!--fk: Reference to Figures and Tables. \@ref(type:name)-->
 
@@ -180,7 +180,7 @@ make_stancode(fledge|trials(clutch) ~ colsize.z + cow + dung.z, #+ (1|farm.f)
 
 ```
 
-#### Checking model convergence for the brm fit
+##### Checking model convergence for the brm fit
 
 We first check whether we find warnings in the R console about problems of the fitting algorithm. Warnings should be taken seriously. Often, we find help in the Stan online documentation (or when typing `launch_shinystan(mod.brm)` into the R-console) what to change when calling the `brm` function to get a fit that is running smoothly. Once, we get rid of all warnings, we need to check how well the Markov chains mixed. We can either do that by scanning through the many diagnostic plots given by `launch_shinystan(mod)` or create the most important plots ourselves such as the traceplot (Figure \@ref(fig:checkconvergencemodelbrm)). 
 
@@ -195,7 +195,7 @@ mcmc_plot(mod.brm, type = "trace")
 <!--siehe Kapitel 5.3 hier: https://www.rensvandeschoot.com/tutorials/generalised-linear-models-with-brms/, fk: dieses Buch ist auch noch under construction. Ich würde glaubs nur zu fertigen Büchern einen Link anfügen.-->
 
 
-#### Checking model fit by posterior predictive model checking
+##### Checking model fit by posterior predictive model checking
 
 To assess how well the model fits to the data we do posterior predictive model checking (Chapter \@ref(modelchecking)). For binomial as well as for Poisson models comparing the standard deviation of the data with those of replicated data from the model is particularly important. If the standard deviation of the real data would be much higher compared to the ones of the replicated data from the model, overdispersion would be an issue. However, here, the model is able to capture the variance in the data correctly (Figure \@ref(fig:ppbinomial)). 
 The fitted vs observed plot also shows a good fit.
