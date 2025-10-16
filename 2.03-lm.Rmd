@@ -185,21 +185,28 @@ When we have no prior information on any parameter, or if we would like to base 
 For the MCMC sampling done under the hood, we need some more arguments: `warmup` specifies the number of iterations during which we allow the algorithm to adapt to our specific model and to converge to the posterior distribution. These iterations should be discarded (similar to the burn-in period when using, e.g., Gibbs sampling); `iter` specifies the total number of iterations (including those discarded); `chains` specifies the number of chains; `init` specifies the starting values of the iterations. By default (`inits=NULL`; or by setting `inits="random"`) the initial values are randomly chosen, which is recommended because then different initial values are chosen for each chain which helps to identify non-convergence. However, sometimes random initial values cause the Markov chains to behave badly. Then you can either use the maximum likelihood estimates of the parameters as starting values, or simply ask the algorithm to start with zeros. `thin` specifies the thinning of the chain, i.e., whether all iterations should be kept (thin=1) or for example every 4th only (thin=4); `cores` specifies the number of computer cores used for the algorithm; `seed` specifies the random seed, allowing for replication of results.
 
 
-```{r}
+```{r results='asis'}
 library(brms)
 
 # check which parameters need a prior and what default prior is used by brm
 # get_prior(y ~ x, data = dat)
 
-library(DT)
+library(knitr)   # some extra code to make the output fit page width...
+priors <- get_prior(y ~ x, data = dat)
 
-DT::datatable(get_prior(y ~ x, data = dat),
-              options = list(scrollX = TRUE))
+# Create the scrollable div and output the table
+html_output <- paste0(
+  '<div style="overflow-x:auto; max-width:100%;">',
+  knitr::kable(priors, format = "html"),
+  '</div>'
+)
+cat(html_output)
 
 ```
 
 
-#### Using the brm function{#brm}
+
+#### Using the brm function
 
 
 
