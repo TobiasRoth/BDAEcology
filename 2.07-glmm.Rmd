@@ -9,7 +9,7 @@ In chapter \@ref(glm) on generalized linear models we have introduced how to ana
 Generalized linear mixed models (GLMM) combine the two complexities and are used to analyze outcomes with a non-normal error distribution when the data have a hierarchical structure. In this chapter, we will show how to analyze such data. Remember, a hierarchical structure of the data means that the data are collected at different levels, for example smaller and larger spatial units, or include repeated measurements in time on a specific subject. Typically, the outcome variable is measured/observed at the lowest level but other variables may be measured at different levels. A first example is introduced in the next section.
 
 
-## Binomial Mixed Model
+## Binomial mixed model
 
 ### Background
 
@@ -62,7 +62,7 @@ length(unique(dat$farm))
 
 ```
 
-### Fitting a Binomial Mixed Model in R
+### Fitting a binomial mixed model in R
 
 #### Using the glmer function
 
@@ -89,7 +89,7 @@ mod.glmer <- glmer(cbind(fledge,die) ~ colsize.z + cow + dung.z + (1|farm.f) ,
 
 ```
 
-##### Assessing Model Assumptions for the glmer fit
+##### Assessing model assumptions for the glmer fit
 
 <!--fk: Reference to Figures and Tables. \@ref(type:name)-->
 
@@ -170,7 +170,9 @@ mod.brm <- brm(fledge|trials(clutch) ~ colsize.z + cow + dung.z + (1|farm.f) ,
 
 ```
 <!-- Question to fk: I pasted this part of the code to this separate chunk. Do we need it and should I explain it?
-and why did you exclude the random intercept? Or did I do this by mistake?, fk: only in this code we see that the prior for the variance parameter is restricted to positive values. I would not show the code, otherwise we have to explain the Stan code. It is a good idea to have it in a junk that is not shown.-->
+and why did you exclude the random intercept? Or did I do this by mistake?, fk: only in this code we see that the prior for the variance parameter is restricted to positive values. I would not show the code, otherwise we have to explain the Stan code. It is a good idea to have it in a junk that is not shown.
+pko 17.10.25: I have introduced the make_stancode where brm is first introduced in the lm chapter, I think it can be deleted here...
+-->
 ```{r, echo=FALSE, eval=FALSE}
 
 make_stancode(fledge|trials(clutch) ~ colsize.z + cow + dung.z, #+ (1|farm.f)
@@ -178,6 +180,8 @@ make_stancode(fledge|trials(clutch) ~ colsize.z + cow + dung.z, #+ (1|farm.f)
 
 
 ```
+
+<!-- moved to chapter lm - but may be still do the mcmc_plot here?
 
 ##### Checking model convergence for the brm fit
 
@@ -189,7 +193,7 @@ par(mar=c(2,2,2,2))
 mcmc_plot(mod.brm, type = "trace")
 
 ```
-
+-->
 
 <!--siehe Kapitel 5.3 hier: https://www.rensvandeschoot.com/tutorials/generalised-linear-models-with-brms/, fk: dieses Buch ist auch noch under construction. Ich würde glaubs nur zu fertigen Büchern einen Link anfügen.-->
 
@@ -219,7 +223,7 @@ abline(0,1)
 
 After checking the diagnostic plots, the posterior predictive model checking and the general model fit, we assume that the model describes the data generating process reasonably well, so that we can proceed to drawing conclusions. 
 
-### Drawing Conclusions
+### Drawing conclusions
 
 The generic `summary` function gives us the results for the model object containing the fitted model, and works for both the model fitted with `glmer` and `brm`. Let's start having a look at the summary from `mod.glmer`. 
 The summary provides the fitting method, the model formula, statistics for the model fit including the Akaike information criterion (AIC), the Bayesian information criterion (BIC), the scaled residuals, the random effects variance and information about observations and groups, a table with coefficient estimates for the fixed effects (with standard errors and a z-test for the coefficient) and correlations between fixed effects. We recommend to always check if the number of observations and groups, i.e., 63 barn swallow nests from 51 farms here, is correct. This information shows if the `glmer` function has correctly recognized the hierarchical structure in the data. Here, this is correct. To assess the associations between the predictor variables and the outcome analyzed, we need to look at the column "Estimate" in the table of fixed effects. This column contains the estimated model coefficients, and the standard error for these estimates is given in the column "Std. Error", along with a z-test for the null hypothesis of a coefficient of zero.
