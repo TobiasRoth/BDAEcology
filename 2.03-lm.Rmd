@@ -295,9 +295,9 @@ rstanarm provides a few more data distributions that what can be handled with `s
 rstanarm should be easy to install in the regular way with `install.packages`. With brm, sometimes, it is a bit more difficult. We need the package rstan, and for that to work, we need to install Rtools (for Windows) or Xcode (for Mac). Search the web for instructions on these points. A trick that helped more than once when we had problems to run `brm` was:
 
 ```{r eval=FALSE}
-# after installing or updating brm, the got warnings regarding "make not found" and MCMC sampling did not start. The following may help (solution found here: https://discourse.mc-stan.org/t/error-when-running-brm-model/27951) 
+# after installing or updating brms, the got warnings regarding "make not found" and MCMC sampling did not start. The following may help (solution found here: https://discourse.mc-stan.org/t/error-when-running-brm-model/27951) 
 
-# after installing rtools, rstan and brm, run this in the console:
+# after installing rtools, rstan and brms, run this in the console:
 remove.packages(c("StanHeaders", "rstan"))
  # may give a warning if you don’t have StanHeaders, but that’s ok
 install.packages("StanHeaders", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
@@ -377,7 +377,7 @@ Compiling the model can take quite some time. If you want to compile without MCM
 load("RData/mod.brm.compiled.RData")
 mod.brm <- update(mod.brm.compiled, recompile = FALSE, seed=123, refresh=0)
     # refesh=0 prevents printing the MCMC progress; this makes sense here in the
-    # book, but in your application you may prefer to see the progressm
+    # book, but in your application you may prefer to see the progress
 
 ```
 
@@ -558,16 +558,16 @@ Above, we see the first six of 4000 draws from the joint posterior. We can get t
 ( t.ci <- apply(bsim.brm.fix,2,quantile,probs=c(0.025,0.975)) )
 ```
 
-From these, we can say that we estimate the slope of the regression line to be $`r round(t.fit["b_x"],2)`$ with 95% compatiblitiy interval $`r round(t.ci["2.5%","b_x"],2)`; `r round(t.ci["297.5%","b_x"],2)`$
+From these, we can say that we estimate the slope of the regression line to be $`r round(t.fit["b_x"],2)`$ with 95% compatibility interval $`r round(t.ci["2.5%","b_x"],2)`; `r round(t.ci["97.5%","b_x"],2)`$
 
-To make an effect plot from a model fitted with brm, wen can use the function `conditional_effects`. It makes an effectplot, but we are more flexible when we store the conditionl_effects-object and plot as we please.
+To make an effect plot from a model fitted with `brm`, wen can use the function `conditional_effects`. It makes an effect plot, but we are more flexible when we store the conditional_effects-object and plot as we please.
 
 ```{r}
 newdat.brm <- conditional_effects(mod.brm, effects="x", plot=F)$x
 head(newdat.brm)
 ```
 
-We specified in the arguments "effects" that we want to have the values for an effect plot for the predictor x. The function generates a list (one for each predictor we want an effect plot of - here only one), and we just want the list element for our x. This creates, in one row, the newdat we created using model matrix multiplication in the case of `sim`, and using the function `posterior_epred` using `brm`. Both these workflows would also work for brm (with the bsim.brm.fix we already created), but `conditional_effects` only works for brm.
+We specified in the arguments "effects" that we want to have the values for an effect plot for the predictor x. The function generates a list (one for each predictor we want an effect plot of - here only one), and we just want the list element for our x. This creates, in one row, the newdat we created using model matrix multiplication in the case of `sim`, and using the function `posterior_epred` using `brm`. Both these workflows would also work for `brm` (with the bsim.brm.fix we already created), but `conditional_effects` only works for brm.
 
 We then can make the effect plot using newdat.brm as we used newdat above.
 
