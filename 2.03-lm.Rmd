@@ -19,7 +19,7 @@ library(arm)
 
 Linear regression is the basis of a large part of applied statistical analysis. Analysis of variance (ANOVA) and analysis of covariance (ANCOVA) can be formulated as special cases of linear regression and are collectively named general linear models. Generalized linear models (Chapter \@ref(glm)) and mixed models (Chapters \@ref(lmer), \@ref(glmm)) (and many other models) are extensions of linear regression. 
 
-Typical questions that can be answered using linear regression are: How does $y$ change with changes in $x$? How is y predicted from $x$? An ordinary linear regression (i.e., one numeric  $x$  and a numeric $y$  variable) can be represented by a scatterplot of $y$ against $x$. We search for the line that ﬁts best through the points, and we can describe how the observations scatter around this regression line (Fig. \@ref(fig:illlm)). The model formula of a simple linear regression with one continuous predictor variable $x_i$ (the subscript $i$ denotes the $i=1,\dots,n$ data points) is:
+Typical questions that can be answered using linear regression are: How does $y$ change with changes in $x$? How is y predicted from $x$? An ordinary linear regression (i.e., one numeric  $x$  and a numeric $y$  variable) can be represented by a scatterplot of $y$ against $x$. We search for the line that fits best through the points, and we can describe how the observations scatter around this regression line (Fig. \@ref(fig:illlm)). The model formula of a simple linear regression with one continuous predictor variable $x_i$ (the subscript $i$ denotes the $i=1,\dots,n$ data points) is:
 
 \begin{align} 
   \mu_i &=\beta_0 + \beta_1 x_i \\
@@ -39,9 +39,9 @@ The differences between the observed y-values $y_i$ and the predicted values $\m
   (\#eq:lmalternativ)
 \end{align} 
 
-We prefer the notation in Equation \@ref(eq:lm) because, in this formula, the deterministic part (first row) is nicely separated from the stochastic part (second row) of the model, whereas, in the second notation \@ref(eq:lmalternativ) the ﬁrst row contains both stochastic and deterministic parts. Also, for a generalized linear model (Chapters \@ref(glm), \@ref(glmm)), only Equation \@ref(eq:lm) can be formulated.
+We prefer the notation in Equation \@ref(eq:lm) because, in this formula, the deterministic part (first row) is nicely separated from the stochastic part (second row) of the model, whereas, in the second notation \@ref(eq:lmalternativ) the first row contains both stochastic and deterministic parts. Also, for a generalized linear model (Chapters \@ref(glm), \@ref(glmm)), only Equation \@ref(eq:lm) can be formulated.
 
-For illustration, we simulate data and then ﬁt a linear regression to them. The advantage of simulating data is that the subsequent analyses can be reproduced without having to read data into R. Further, for simulating data, we need to translate the algebraic model formula into R language which helps us understand the model structure.
+For illustration, we simulate data and then fit a linear regression to them. The advantage of simulating data is that the subsequent analyses can be reproduced without having to read data into R. Further, for simulating data, we need to translate the algebraic model formula into R language which helps us understand the model structure.
 
 ```{r lmsimulation}
 set.seed(34)            # set a seed for the random number generator
@@ -96,7 +96,7 @@ $$\boldsymbol{X} =
       1     & x_n
   \end{pmatrix}$$
 
-times the vector of the model coefﬁcients
+times the vector of the model coefficients
 
 $$\boldsymbol{\beta} =
   \begin{pmatrix} 
@@ -105,7 +105,7 @@ $$\boldsymbol{\beta} =
   \end{pmatrix}$$
 
 
-where $x_1 , \dots, x_n$ are the observed values for the predictor variable $x$. The ﬁrst column of $\boldsymbol{X}$ contains only ones because the values in this column are multiplied with the intercept, $\beta_0$ . To the intercept, the product of each element of the second column of $\boldsymbol{X}$ with the second element of $\boldsymbol{\beta}$, $\beta_1$, is added to obtain the predicted value for each observation, $\boldsymbol{\mu}$:
+where $x_1 , \dots, x_n$ are the observed values for the predictor variable $x$. The first column of $\boldsymbol{X}$ contains only ones because the values in this column are multiplied with the intercept, $\beta_0$ . To the intercept, the product of each element of the second column of $\boldsymbol{X}$ with the second element of $\boldsymbol{\beta}$, $\beta_1$, is added to obtain the predicted value for each observation, $\boldsymbol{\mu}$:
 
 \begin{align} 
 \boldsymbol{X \beta}=
@@ -140,16 +140,18 @@ In R, we will use the function `model.matrix` to easily create the model matrix.
 
 #### Background
 
-In Equation \@ref(eq:lm), the fitted values $\mu_i$ are deﬁned by the model coefﬁcients, $\beta_{0}$ and $\beta_{1}$ . Therefore, when we can estimate $\beta_{0}$, $\beta_{1}$, and $\sigma^2$, the model is fully deﬁned. The third parameter, $\sigma^2$, describes how the observations scatter around the regression line and relies on the assumption that the data points are normally distributed around the fitted value, i.e. around the regression line. The estimates for the model parameters of a linear regression are obtained by searching the best ﬁtting regression line, which is generally defined as the line that minimizes the sum of the squared residuals. This model ﬁtting method is called the least-squares method, abbreviated as LS. It has a very simple solution using matrix algebra [see e.g., @Aitkin.2009], which is one reason why the least-squares regression line is generally used  (and not, e.g., a line that minimizes the absolute residuals).
+In Equation \@ref(eq:lm), the fitted values $\mu_i$ are defined by the model coefficients, $\beta_{0}$ and $\beta_{1}$ . Therefore, when we can estimate $\beta_{0}$, $\beta_{1}$, and $\sigma^2$, the model is fully defined. The third parameter, $\sigma^2$, describes how the observations scatter around the regression line and relies on the assumption that the data points are normally distributed around the fitted value, i.e. around the regression line. The estimates for the model parameters of a linear regression are obtained by searching the best fitting regression line, which is generally defined as the line that minimizes the sum of the squared residuals. This model fitting method is called the least-squares method, abbreviated as LS. It has a very simple solution using matrix algebra [see e.g., @Aitkin.2009], which is one reason why the least-squares regression line is generally used  (and not, e.g., a line that minimizes the absolute residuals).
 
-Least-squares is a fitting technique: a technique that finds the best fitting line, i.e. the intercept and slope of that line, plus the sigma, together with a standard error for each of them. It is not, per se, a classical frequentist method - the frequentist part only comes in when we postulate a null hypothesis, e.g. $beta_1 = 0$, and test whether we can falsify this null hypothesis. As explained in Chapter \@ref(basics), we don't use null hypothesis testing.
+Least-squares is a fitting technique: a technique that finds the best fitting line, i.e. the intercept and slope of that line, plus the sigma, together with a standard error for each of them. It is not, per se, a classical frequentist method - the frequentist part only comes in when we postulate a null hypothesis, e.g. $beta_1 = 0$, and test whether we can falsify this null hypothesis. As explained in Chapter \@ref(whyBayes), we prefer the Bayesian approach over frequentist null hypothesis testing.
 
-In the following, we present two approaches to fit the linear regression and draw inference:
+In the following, we present two approaches to fit the linear regression and make inferences from the model:
 
-- We use the LS approach (function `lm`) to fit the line. Then we use the function `sim` from package arm to draw values from the joint posterior distribution.
-- We use the functions from packages rstanarm and brms to directly draw from the joint posterior distribution (via the program Stan that is accessed via rstanarm / brms)
+- We use the LS approach (function `lm`) to fit the regression line. Then we use the function `sim` from package arm to draw values from the joint posterior distribution.
+- We use to program Stan via the packages rstanarm and brms to directly draw from the joint posterior distribution
 
-The second option is "fully Bayesian" in that it does not first fit the line with LS. Even though the two approaches (LS vs. fully Bayesian) are completely different, both yield the same solution (given flat priors for the Bayesian approach), i.e. the line that minimizes the squarred residuals. We now first fit the line using `lm` + `sim`, then using functions from rstanarm and brms. Then, we visualize the results for each approache.
+The second option is "fully Bayesian" in that it does not first fit the line with LS. Even though the two approaches (LS vs. fully Bayesian) are completely different, both yield the same solution (given flat priors for the Bayesian approach), i.e. the line that minimizes the squarred residuals.
+
+We now first fit the line using `lm` + `sim`, then using functions from rstanarm and brms. Then, we visualize the results for each approache.
 
 #### Fitting a linear regression using lm, then use sim
 
@@ -161,9 +163,9 @@ coef(mod)
 summary(mod)$sigma
 ```
 
-The object “mod” produced by `lm` contains the estimates for the intercept, $\beta_0$ , and the slope, $\beta_1$. The residual standard deviation $\sigma$ is extracted using the function `summary` (`sigma(mod)` works, too). We can show the result of the linear regression as a line in  a scatter plot with the covariate (x) on the x-axis and the outcome variable (y) on the y-axis (Fig. \@ref(fig:figlm)).
+The object “mod” produced by `lm` contains the estimates for the intercept $\beta_0$ and the slope $\beta_1$. The residual standard deviation $\sigma$ is extracted using the function `summary` (`sigma(mod)` works, too). We can show the result of the linear regression as a line in  a scatter plot with the covariate (x) on the x-axis and the outcome variable (y) on the y-axis (Fig. \@ref(fig:figlm)).
 
-```{r figlm, echo=FALSE, fig.cap="Linear regression. Black dots = observations, blue solid line = regression line, orange dotted lines = residuals. The ﬁtted values lie where the orange dotted lines touch the blue regression line.", fig.asp=.45}
+```{r figlm, echo=FALSE, fig.cap="Linear regression. Black dots = observations, blue solid line = regression line, orange dotted lines = residuals. The fitted values lie where the orange dotted lines touch the blue regression line.", fig.asp=.45}
 dat %>% 
   mutate(ypred = fitted(lm(y~x))) %>% 
   ggplot(aes(x = x, y = y)) +
@@ -175,15 +177,15 @@ dat %>%
 ```
 
 
-Using lm is not Bayesian. But we can easily go the Bayesian way thanks to the function `sim` from the package arm. It takes a model object fitted with `lm` (or `glm`, `lmer`, `glmer` and a few more) and returns draws from the joint posterior distribution (we can also say, `sim` "simulates" values from the posterior, but we prefer "to draw"). From the joint posterior distribution, we can get, for each parameter, the estimated value and its uncertainty, e.g. the 95% compatibility interval.
+Using `lm`, as said, is not Bayesian. But we can easily go the Bayesian way thanks to the function `sim` from the package arm. It takes a model object fitted with `lm` (or `glm`, `lmer`, `glmer` and a few more) and returns draws from the joint posterior distribution (we can also say, `sim` "simulates" values from the posterior, but we prefer "to draw"). From the joint posterior distribution, we can get, for each parameter, the estimated value and its uncertainty, e.g. the 95% compatibility interval.
 
-We can use the joint posterior distribution (often just called "the posterior") to draw effect plots that show the relationship of y on x including the uncertainty. An effect plot is essentially a "derived parameter" from the parameter estimates, because we use the estimates, i.e. intercept and slope in the case of a simple linear regression, and draw the regression line, including its uncertainty. We can also calculate other derived parameters from the posterior - whatever makes sense to understand the system under study. This is the great magic about the Bayesian approach: whatever derived parameter we want to look at, we simply calculate it for each of the e.g. 4000 draws from the posterior, and we propagated the uncertainty in the parameter estimates to our derived parameter (error propagation).
+We can use the joint posterior distribution (often just called "the posterior") to draw effect plots that show the relationship of y on x including the uncertainty. An effect plot is essentially a "derived parameter" from the parameter estimates, because we use the estimates, i.e. intercept and slope in the case of a simple linear regression, and draw the regression line, including its uncertainty. We can also calculate other derived parameters from the posterior - whatever makes sense to understand the system under study. This is the great magic about the Bayesian approach: whatever derived parameter we want to look at, we simply calculate it for each of the e.g. 4000 draws from the posterior, and, thereby, we propagate the uncertainty in the parameter estimates to our derived parameter (error propagation).
 
 
 <font size="2"> 
 <div style="border: 2px solid grey; padding: 10px">
 **What does `sim` do? **
-It draws parameter values from the joint posterior distribution of a model assuming flat prior distributions. For a normal linear regression, it ﬁrst draws a random value, $\sigma^*$ from the marginal posterior distribution of $\sigma$, and then draws random values from the conditional posterior distribution for $\boldsymbol{\beta}$ given $\sigma^*$  [@Gelman.2014].
+It draws parameter values from the joint posterior distribution of a model assuming flat prior distributions. For a normal linear regression, it first draws a random value, $\sigma^*$ from the marginal posterior distribution of $\sigma$, and then draws random values from the conditional posterior distribution for $\boldsymbol{\beta}$ given $\sigma^*$  [@Gelman.2014].
 
 The conditional posterior distribution of the parameter vector $\boldsymbol{\beta}$, $p(\boldsymbol{\beta}|\sigma^*,\boldsymbol{y,X})$ can be analytically derived. With ﬂat prior distributions, it is a uni- or multivariate normal distribution $p(\boldsymbol{\beta}|\sigma^*,\boldsymbol{y,X})=normal(\boldsymbol{\hat{\beta}},V_\beta,(\sigma^*)^2)$ with:
 
@@ -194,7 +196,7 @@ The conditional posterior distribution of the parameter vector $\boldsymbol{\bet
 
 and $V_\beta = (\boldsymbol{X^T X})^{-1}$. 
 
-The marginal posterior distribution of $\sigma^2$ is independent of speciﬁc values of $\boldsymbol{\beta}$. It is, for ﬂat prior distributions, an inverse chi-square distribution $p(\sigma^2|\boldsymbol{y,X})=Inv-\chi^2(n-k,\sigma^2)$, where $\sigma^2 = \frac{1}{n-k}(\boldsymbol{y}-\boldsymbol{X,\hat{\beta}})^T(\boldsymbol{y}-\boldsymbol{X,\hat{\beta}})$, and $k$ is the number of parameters. The marginal posterior distribution of $\boldsymbol{\beta}$ can be obtained by integrating the conditional posterior distribution $p(\boldsymbol{\beta}|\sigma,\boldsymbol{y,X})=normal(\boldsymbol{\hat{\beta}},V_\beta\sigma^2)$ over the distribution of $\sigma^2$ . This results in a uni- or multivariate $t$-distribution.  
+The marginal posterior distribution of $\sigma^2$ is independent of specific values of $\boldsymbol{\beta}$. It is, for ﬂat prior distributions, an inverse chi-square distribution $p(\sigma^2|\boldsymbol{y,X})=Inv-\chi^2(n-k,\sigma^2)$, where $\sigma^2 = \frac{1}{n-k}(\boldsymbol{y}-\boldsymbol{X,\hat{\beta}})^T(\boldsymbol{y}-\boldsymbol{X,\hat{\beta}})$, and $k$ is the number of parameters. The marginal posterior distribution of $\boldsymbol{\beta}$ can be obtained by integrating the conditional posterior distribution $p(\boldsymbol{\beta}|\sigma,\boldsymbol{y,X})=normal(\boldsymbol{\hat{\beta}},V_\beta\sigma^2)$ over the distribution of $\sigma^2$ . This results in a uni- or multivariate $t$-distribution.  
 
 Because `sim` draws values $\beta_0^*$ and $\beta_1^*$ always conditional on $\sigma^*$, a triplet of values ($\beta_0^*$, $\beta_1^*$, $\sigma^*$) is one draw from the joint posterior distribution. When we visualize the distribution of the drawn values for one parameter only, ignoring the values for the other, we display the marginal posterior distribution of that parameter. Thus, the distribution of all draws for the parameter $\beta_0$ is a $t$-distribution even though a normal distribution has been used to draw the values. The $t$-distribution is a consequence of using a different $\sigma^2$-value for every draw of $\beta_0$.
 </div>
@@ -203,7 +205,7 @@ Because `sim` draws values $\beta_0^*$ and $\beta_1^*$ always conditional on $\s
 
 ```{r}
 library(arm)
-nsim <- 1000
+nsim <- 1000  # in real analyses, we set nsim to 5000 or more; rstanarm and brms have a default of 4000
 bsim <- sim(mod, n.sim = nsim)
 ```
 
@@ -236,7 +238,7 @@ The posterior distribution describes, given the data and the model (assumptions)
 
 The posterior distribution has as many dimensions as there are parameters to estimate. To say something about one parameter, we look at the marginal posterior distribution of that parameter. This is simply the joint posterior distribution projected onto the axis of the parameter (histograms in Figure \@ref(fig:simfirstexample)). The 2.5% and 97.5% quantiles of the marginal posterior distribution can be used as 95% compatibility interval of the model parameter.
 
-The function `coef` extracts the drawn values for the beta coefﬁcients, returning a matrix with *nsim* rows and the number of columns corresponding to the number of parameters. In our example, the ﬁrst column contains the draws from the marginal posterior distribution of the intercept, and the second column contains draws for the slope. The "2" in the second argument of the `apply` function indicates that the `quantile` function is applied columnwise.
+The function `coef` extracts the drawn values for the beta coefficients (intercept and slope for a simple linear regression), returning a matrix with *nsim* rows and the number of columns corresponding to the number of parameters. In our example, the first column contains the draws from the marginal posterior distribution of the intercept, and the second column contains draws for the slope. The "2" in the second argument of the `apply` function indicates that the `quantile` function is applied columnwise.
 
 ```{r}
 apply(X = coef(bsim), MARGIN = 2, FUN = quantile, probs = c(0.025, 0.975)) %>% 
@@ -250,26 +252,26 @@ quantile(bsim@sigma, probs = c(0.025, 0.975)) %>%
   round(1)
 ```
 
-We can further get a posterior probability for speciﬁc hypotheses, such as “The slope parameter is larger than 1” or “The slope parameter is larger than 0.5”. These probabilities are the proportion of simulated values from the posterior distribution that are larger than 1 and 0.5, respectively.
+We can further get a posterior probability for specific hypotheses, such as “The slope parameter is larger than 1” or “The slope parameter is larger than 0.5”. These probabilities are the proportion of simulated values from the posterior distribution that are larger than 1 and 0.5, respectively.
 
 ```{r}
 sum(coef(bsim)[,2] > 1) / nsim     # alternatively: mean(coef(bsim)[,2]>1)
 sum(coef(bsim)[,2] > 0.5) / nsim
 ```
 
-From this, there is very little evidence in the data that the slope is larger than 1, but we are quite conﬁdent that the slope is larger than 0.5 (assuming that our model is realistic).
+From this, there is very little evidence in the data that the slope is larger than 1, but we are quite confident that the slope is larger than 0.5 (assuming that our model is realistic).
 
-But to really understand what our model tells us, we make effect plots. But first, we point out the importance of checking the model assumptions, then provide alternative ways of getting draws from the posterior using rstanarm and brms, and then make the effect plot to show the relationship between x and y.
+To really understand what our model tells us, we make effect plots. But first, we point out the importance of checking the model assumptions, then provide alternative ways of getting draws from the posterior using rstanarm and brms, and then make the effect plot to show the relationship between x and y.
 
 
 #### Checking model assumptions
 
-Conclusions drawn from a model depend on the model assumptions. When model assumptions are violated, estimates usually are biased and inappropriate conclusions can be drawn. We devote Chapter \@ref(residualanalysis) to the assessment of model assumptions, given its importance. Checking model assumptions is equally important independent of whether you use `sim` (on a model object from `lm`, `glm`, `lmer`, `glmer`) or the following two approaches to get draws from the joint posterior distribution: packages rstanarm and brms.
+Conclusions drawn from a model depend on the model assumptions. When model assumptions are violated, estimates usually are biased and inappropriate conclusions can be drawn. We devote Chapter \@ref(residualanalysis) to the assessment of model assumptions, given its importance. Checking model assumptions is equally important independent of whether you use `sim` (on a model object from `lm`, `glm`, `lmer`, `glmer`) or the following two approaches to get draws from the joint posterior distribution using packages rstanarm and brms.
 
 
 #### Introduction to rstanarm and brms{#brm}
 
-Above, we have used `sim` to get draws from the posterior. This works fine and fast, but we are limited in the model types we can use (no zero-inflated model, autocorrelation cannot be included, etc.), and there are no down-stream functions once we have the draws. If we cannot do the task with `sim`, we generally do it with the functions from rstanarm, which offer more flexibility. If it does not work with these, we use the package brms.
+Above, we have used `sim` to get draws from the posterior. This works fine and fast, but we are limited in the model types we can use (no zero-inflated model, autocorrelation cannot be included, etc.), and there are no downstream functions once we have the draws. If we cannot do the task with `sim`, we generally do it with the functions from rstanarm, which offer more flexibility. If it does not work with these, we use the package brms.
 
 
 <font size="2"> 
@@ -278,14 +280,12 @@ Above, we have used `sim` to get draws from the posterior. This works fine and f
 
 There are different options to fit a model in a Bayesian framework in R. The following list is not exhaustive, it only represents our currently preferred way of fitting models.
 
-In our book, we focus mainly on the first and third approach.
-
 - Function `sim` from package arm: This function takes a model object fitted with `lm`, `glm` or a function from the lme4 package or polr, and returns draws from the joint posterior distribution. This approach is computationally fastest and safest (fewer warnings, fewer issues with convergence).
-- Functions of the package rstanarm: As brms, this uses Stan under the hood and it is fully Bayesian, e.g. you may provide informative priors. It fits some more models than the first approach (e.g. negative binomial models), it is faster than brms and has less convergence problems. Downstream options are greater than with `sim` (e.g. posterior predictive model checking), but less than with `brm`.
-- Function `brm` from package brms. This approach takes a bit more time for fitting but offers many additional options such as treating autocorrelation, or calculating cross-validation scores from the fitted model object.
-- Stan: This is a fast an powerful MCMC sampler, but coding the model is more difficult.
-- Bugs (WinBugs, OpenBugs) and jags: These are MCMC samples intensively used in ecology e.g. for fitting (also very complex) models with latent variables, e.g. survival models, integrated population models, etc.
-- nimble: as Bugs, but may be faster for some models, with more flexibility e.g. to create custum MCMC samplers
+- Functions of the package rstanarm: Uses Stan under the hood and is fully Bayesian, e.g. you may provide informative priors. It fits some more models than the first approach (e.g. negative binomial models), it is faster than brms and has less convergence problems. There are great downstream options (e.g. posterior predictive model checking, cross-validation), but fewer than with `brm`.
+- Function `brm` from package brms: As rstanarm, uses Stan. This approach takes more time for fitting but offers many additional options such as treating autocorrelation (and much more!) and offeres additional downstream options (e.g. the function `conditional_effects` to make effect plots).
+- Stan: This is a powerful MCMC sampler, but coding the model in Stan itself is more difficult.
+- Bugs (WinBugs, OpenBugs) and jags: These are MCMC samplers intensively used in ecology e.g. for fitting (also very complex) models with latent variables, e.g. survival models, integrated population models, etc. Model coding may be learned using book like [@Kery.2010] and [@Kery.2012].
+- nimble: as Bugs, but may be faster for some models, with more flexibility e.g. to create custom MCMC samplers.
 
 For the models treated in this book, we extensively use the first three approaches, generally choosing the simplest possible (i.e. `sim` if possible, else rstanarm, else `brm`), for computation speed reasons. Using rstanarm or `brm` may be chosen for models feasible also with `sim` for the great downstream options (simple generation of effect plots - especially when such are needed for random slope models, posterior predictive model checking, or cross validation).
 
@@ -296,12 +296,14 @@ Below we fit the linear regression using a function from package rstanarm [@Good
 
 When using the functions from rstanarm (in our book mainly `stan_glm`, `stan_lmer`, `stan_glmer`) or brms (function `brm`) to fit a model, there is no need to write the model in Stan-language. You can use model coding familiar from functions such as `lm`, `glm`, `lmer` and `glmer`, and rstanarm / brms translate it to Stan code, sends it to be fitted in Stan (via the rstan package) and returns the draws from the joint posterior distribution.
 
-rstanarm provides a few more data distributions that what can be handled with `sim`, but for us, the main advantage of rstanarm are the down-stream functionalities such as posterior predictive model checking, cross-validation and functions helping to create effect plots. brm also provides all these down-stream functionalities (and even more), but the main plus is that it also offers a wide range of data distributions (many more than Gauss, Poisson, and binomial) as well as options to account for autocorrelation, use truncation, smoothing (GAM), etc.
+rstanarm provides a few more data distributions that what can be handled with `sim`, but for us, the main advantage of rstanarm are the downstream functionalities such as posterior predictive model checking, cross-validation and functions helping to create effect plots. brms also provides all these downstream functionalities (and even more), but the main plus is that it also offers a wide range of data distributions (many more than Gauss, Poisson, and binomial) as well as options to account for autocorrelation, use truncation, smoothing (GAM), etc. You should also check out the resources on the [brms github repository](https://github.com/paul-buerkner/brms).
 
-rstanarm should be easy to install in the regular way with `install.packages`. With brm, sometimes, it is a bit more difficult. We need the package rstan, and for that to work, we need to install Rtools (for Windows) or Xcode (for Mac). Search the web for instructions on these points. A trick that helped more than once when we had problems to run `brm` was:
+rstanarm should be easy to install in the regular way with `install.packages`. With brm, sometimes, it has been a bit more difficult. We first should install Rtools (for Windows) or Xcode (for Mac). Search the web for instructions to do that. Then, brms can be installed in the normal way within R using `install.packages`; rtools may be installed automatically, else install it using `install.packages`, too. A trick that helped more than once when we had problems to run `brm` was:
 
 ```{r eval=FALSE}
-# after installing or updating brms, the got warnings regarding "make not found" and MCMC sampling did not start. The following may help (solution found here: https://discourse.mc-stan.org/t/error-when-running-brm-model/27951) 
+# after installing or updating brms, the got warnings regarding "make not found" and MCMC
+# sampling did not start. The following may help (solution found here:
+# https://discourse.mc-stan.org/t/error-when-running-brm-model/27951) 
 
 # after installing rtools, rstan and brms, run this in the console:
 remove.packages(c("StanHeaders", "rstan"))
@@ -313,9 +315,7 @@ install.packages("rstan", repos = c("https://mc-stan.org/r-packages/", getOption
 
 An alternative to rtools may be to use `brm` together with the package [cmdstanr](https://mc-stan.org/cmdstanr/articles/cmdstanr.html#comparison-with-rstan), but we have only limited experience so far.
 
-Also check out the resources on the [brms github repository](https://github.com/paul-buerkner/brms).
-
-Prior distributions are an integral part of a Bayesian model. We can see what default prior distributions rstanarm and brm use by the function `prior_summary` applied to the fitted object. For `brm`, you can use `get_prior` to see the priors used even without fitting the model. We do that for our model, and we see that the default prior for the intercept and effect size of x is a flat prior. This is a distribution with a constant density for any value between minus and plus infinity. Because this is not a proper probability distribution, it is also called an improper distribution. The intercept gets a t-distribution with 3 degrees of freedom and its mean and standard deviation depend on the data. For the standard deviation, it uses the same t-distribution as for the intercept but with mean 0. However, because variance parameters such as standard deviations only can take on positive numbers, it will use only the positive half of the t-distribution. In the output from `get_prior` this is indicated by the zero in the column labelled "lb" for "lower bound".
+Prior distributions are an integral part of a Bayesian model. We can see what default prior distributions rstanarm and brm use by the function `prior_summary` applied to the fitted object. For `brm`, you can use `get_prior` to see the priors used even without fitting the model. We do that for our model, and we see that the default prior for the intercept and effect size of x is a flat prior (see below). This is a distribution with a constant density for any value between minus and plus infinity. Because this is not a proper probability distribution, it is also called an improper distribution. The intercept gets a t-distribution with 3 degrees of freedom and its mean and standard deviation depend on the data; in any case, it is a very wide distribution, hence there is essentially no prior influence on the posterior. For the standard deviation, it uses the same t-distribution as for the intercept but with mean 0. However, because variance parameters such as standard deviations only can take on positive numbers, it will use only the positive half of the t-distribution. In the output from `get_prior` this is indicated by the zero in the column labelled "lb" for "lower bound".
 
 
 ```{r}
@@ -330,28 +330,30 @@ priors[,c("prior","class","coef","lb","source")]  # only show columns with an en
 ```
 
 
-When we have no prior information on any parameter, or if we would like to base the results solely on the information in the data, we specify uninformative (flat) or weakly informative prior distributions that do not noticeably affect the results. When we have prior knowledge about a parameter, we can integrate this by specifying informative priors. Also, slightly informative priors can help model convergence, without affecting the posterior distribution too much (see Chapter \@ref(priors)). We can modify the priors used by `brm` using the function `prior`.
+When we have no prior information on any parameter, or if we would like to base the results solely on the information in the data, we specify uninformative (flat) or weakly informative prior distributions that do not noticeably affect the results. This is achieved by using the default priors as shown above. When we have prior knowledge about a parameter, we can integrate this by specifying informative priors. Also, slightly informative priors can help model convergence, without affecting the posterior distribution too much (see Chapter \@ref(priors)). We can modify the priors used by `brm` using the function `prior`.
 
 For the MCMC sampling done under the hood, we need some more arguments (all have defaults): `warmup` specifies the number of iterations during which we allow the algorithm to adapt to our specific model and to converge to the posterior distribution (similar to the burn-in period when using, e.g., Gibbs sampling). These iterations are discarded automatically. `iter` specifies the total number of iterations (including those discarded). `chains` specifies the number of chains. `init` specifies the starting values of the iterations. By default (`inits=NULL`; or by setting `inits="random"`) the initial values are randomly chosen, which is recommended because then different initial values are chosen for each chain which helps to identify non-convergence. However, sometimes, random initial values cause the Markov chains to behave badly. Then you can either use the maximum likelihood estimates of the parameters as starting values, or simply ask the algorithm to start with zeros. `thin` specifies the thinning of the chain, i.e., whether all iterations should be kept (thin=1) or for example every 4th only (thin=4). `cores` specifies the number of computer cores used for the algorithm. `seed` specifies the random seed, allowing for replication of results.
 
 
 #### Fitting a linear regression using rstanarm
 
-Functions from the package rstanarm may be almost as fast as using `sim`. The function we use for the simple linear regression is `stan_glm` - this is a bit tricky, because there is also a function `stan_lm`, but that does the linear regression somewhat differently (with regularizing priors) and requests additional arguments.
+Functions from the package rstanarm are often almost as fast as using `sim`. The function we use for the simple linear regression is `stan_glm` - this is a bit tricky, because there is also a function `stan_lm`, but that does the linear regression somewhat differently (with regularizing priors) and requests additional arguments. Table \@ref(tab:ModelsPackages) provides an overview over the most common data distributions and the corresponding functions from packages stats, lme4, rstanarm and brms.
 
-```{r}
 
-library(knitr)
-kable(data.frame(data_distribution = c("Gauss","Poisson/binomial","Gauss","Poisson/binomial"),
-                 random_factor = c("no","no","yes","yes"),
-                 stats_lme4 = c("lm","glm","lmer","glmer"),
-                 rstanarm = c("stan_glm","stan_glm","stan_lmer","stan_glmer"),
-                 brms = c("brm","brm","brm","brm")),
-      caption = "Options to fit models to data with a Gaussian (=normal) distribution, or to a Poisson or binomial distribution, without and with random factors. The corresponding functions are given for packages stats/lme4, rstanarm, and brms")
+<br>
 
-```
+Table: (\#tab:ModelsPackages) Options to fit models to data with a Gaussian (=normal) distribution, or to a Poisson or binomial distribution, without and with random factors. The corresponding functions are given for packages stats/lme4, rstanarm, and brms.
 
-The default family argument for stan_glm is "gaussian()", hence the following code fits a simple linear regression assuming the data is normally distributed around the fitted regression line.
+data distribution  | random factor  | stats/lme4 | rstanarm | brms | 
+:----------|:---|:-----|:-----|:----|
+Gauss | no | lm | stan_glm | brm |
+Poisson, binomial | no | glm | stan_glm | brm |
+Gauss | yes | lmer | stan_lmer | brm |
+Poisson, binomial | yes | glmer | stan_glmer | brm |
+
+<br>
+
+The default family argument for `stan_glm` is "gaussian()", hence the following code fits a simple linear regression assuming the data is normally distributed around the fitted regression line.
 
 ```{r, echo=TRUE, results='hide'}
 library(rstanarm)
@@ -361,16 +363,15 @@ mod.rstanarm <- stan_glm(y~x, data=dat)
 Remember: the regression line found in this fully Bayesian approach is the same as the line found by the least-squares approach using `lm` (this analogy holds as long as we use flat priors)!
 
 
-
 #### Fitting a linear regression using brm
 
-We fit the above linear regression using brm and default settings for priors and MCMC sampling. The default family is gaussian, i.e. we also don't need to specify this for a normal linear model such as a normal linear regression.
+We fit the above linear regression using `brm` and default settings for priors and MCMC sampling. The default family is gaussian, i.e. we also don't need to specify the family argument for a normal linear model such as a normal linear regression.
 
 ```{r fit_lm_brm, eval=FALSE}
 mod.brm <- brm(y~x, data=dat)
 ```
 
-For more complex models, fitting time can be quite long, e.g. if you have a large data set or if you want to account for spatial autocorrelation by fitting a Gaussian process using the argument `gp`. In that case, it is advisable to use more cores, e.g. `cores=4`.
+For more complex models, fitting time can be quite long, e.g. if you have a large data set or if you want to account for spatial autocorrelation by fitting a Gaussian process using the `+ gp()` notation in the model formula. In that case, it is advisable to use more cores, e.g. `cores=4`.
 
 Compiling the model can take quite some time. If you want to compile without MCMC sampling, e.g. to save the compiled model for later re-use without waiting for compilation again, you can (as suggested by Paul Bürkner [here](https://discourse.mc-stan.org/t/separating-compilation-sampling-with-brms-on-cluster/8905/2)) set `chains=0`, optionally save the compiled model, and use `update` with the argument `recompile=FALSE` to do the actual MCMC sampling. At this stage, you can adjust the MCMC sampling settings such as the number of cores, the number of iterations, thinning etc, or set a random seed.
 
@@ -387,15 +388,15 @@ mod.brm <- update(mod.brm.compiled, recompile = FALSE, seed=123, refresh=0)
 
 ```
 
-The MCMC sampling is not guaranteed to converge, and/or the returned samples may be autocorrelated to a degree that your effective number of draws from the joint posterior is nowhere near 4000, the number of draws returned by default from rstanarm-functions and `brm`. For simple models like a linear regression, there will not generally be a problem, but for more complex models, issues about the validity of the returned draws appear quite regularly. In Chapter \@(ref:stan) we show how to check MCMC convergence and we discuss the warnings that appear quite regularly when using `brm`.
+The MCMC sampling is not guaranteed to converge, and/or the returned samples may be autocorrelated to a degree that your effective number of draws from the joint posterior is nowhere near 4000, the number of draws returned by default from rstanarm-functions and `brm`. For simple models like a linear regression, there will not generally be a problem, but for more complex models, issues about the validity of the returned draws appear quite regularly. In Chapter \@ref(stan) we show how to check MCMC convergence and we discuss the warnings that appear quite regularly when using `brm`.
 
 
 ### Presenting the results
 
-In the results section of a scientific manuscript (or wherever you want to present the results of the linear regression), we have essentially two options to provide information about the regression we fitted:
+In the results section of a scientific manuscript (or wherever you want to present the results of the linear regression), we have essentially two options to provide information about the regression we fitted (once we are content with the model and model assumptions are checked):
 
-- We can provide the parameter estimates together with their uncertainty
-- We can make an effect plot showing how y relates to x, including the uncertainty
+- We can provide the parameter estimates together with their uncertainties.
+- We can make an effect plot showing how y relates to x, including the uncertainty.
 
 The first part is often presented in a table, or the values can be given in the text. The effect plot is, in our view, the best way to convey the results of your model.
 
@@ -403,37 +404,38 @@ Above, we have fitted the regression line in three ways: `lm` + `sim`, `stan_glm
 
 #### Presenting results: from sim
 
-Above, we have already looked at the point estimate and 95% compatibility interval of the parameters after fitting the model with `lm` and getting the draws from the poisterior using `sim`. In a text, we could say: According to our data and model, the estimated slope (with 95% compatibility interval) of y on x is $`r round(mean(coef(bsim)[,"x"]),2)` [`r round(quantile(coef(bsim)[,"x"],probs=0.025),2)`;`r round(quantile(coef(bsim)[,"x"], probs=0.975),2)`]$. 
+Above, we have already looked at the point estimate and 95% compatibility interval of the parameters after fitting the model with `lm` and getting the draws from the poisterior using `sim`. In a text, we could say: According to our data and model, the estimated slope (with 95% compatibility interval) of y on x is `r round(mean(coef(bsim)[,"x"]),2)` [`r round(quantile(coef(bsim)[,"x"],probs=0.025),2)`;`r round(quantile(coef(bsim)[,"x"], probs=0.975),2)`]. 
 
-But it is often more informative to show the effect of $x$ on $y$ graphically, with information about the uncertainty of the parameter estimates included in the graph. To make such effect plots, we use the draws from the posterior distribution of the model parameters. From the deterministic part of the model, we know the regression line $\mu = \beta_0 + \beta_1 x_i$. The draws from the joint posterior distribution of $\beta_0$ and $\beta_1$ are - as we used nsim of 1000 in the function `sim` - 1000 pairs of intercepts and slopes, which actually describe 1000 different regression lines. We can plot these regression lines in an x-y plot (scatter plot) to show the uncertainty in the regression line estimation (Fig. \@ref(fig:figlmer1)). Note, that in this case it is not advisable to use `ggplot` because we draw many lines in one plot, which makes `ggplot` rather slow.
+But it is often more informative to show the effect of $x$ on $y$ graphically, with information about the uncertainty of the parameter estimates included in the graph. To make such effect plots, we use the draws from the posterior distribution of the model parameters. From the deterministic part of the model, we know the regression line $\mu = \beta_0 + \beta_1 x_i$. The draws from the joint posterior distribution of $\beta_0$ and $\beta_1$ are - as we used nsim of 1000 in the function `sim` - 1000 pairs of intercepts and slopes, which actually describe 1000 different regression lines. We can plot these regression lines in an x-y plot (scatter plot) to show the uncertainty in the regression line estimation (Fig. \@ref(fig:figlmer1)). Note that, in this case, it is not advisable to use `ggplot` because we draw many lines in one plot, which makes `ggplot` rather slow.
 
 ```{r figlmer1, fig.cap = "1000 regression lines corresponding to 1000 draws from the joint posterior distribution for the intercept and slope parameters to visualize the uncertainty of the estimated regression line.", fig.asp=0.45}
 par(mar = c(4, 4, 0, 0))
 plot(x, y, pch = 16, las = 1, 
      xlab = "Outcome (y)")
 library(scales)   # for function alpha
+  # alpha() takes a named color, the second argument is transparency; it corresponds to
+  # rgb(173/255, 216/255, 230/255, 0.05)
 for(i in 1:nsim) {
   abline(coef(bsim)[i,1], coef(bsim)[i,2], col = alpha("lightblue",0.05))
 }
-# alpha() takes a named color, the second argument is transparency; it corresponds to
-# rgb(173/255, 216/255, 230/255, 0.05)
 
 ```
 
 A more convenient way to show uncertainty is to plot the 95% compatibility interval, CI, of the regression line. We present a workflow how this can be done using the object returned by `sim`. When we use rstanarm or brms, the approach can be simplified thanks to cool downstream functions (`posterior_epred` for rstanarm and brms, or even simpler `conditional_effects`, only for brms).
 
 The workflow is:
-1. Create a newdat that contains all the predictor values needed for the intended effect plot
-2. Create a model matrix from this newdat
-3. (Matrix-)Multiply the model matrix with the coefficients and store the result in fitmat
-4. From fitmat, we get point estimates and credibility intervals for each line in newdat
-5. Now, newdat contains all information needed to make the effect plot.
 
-Making this steps is not just an "exercise", but it also helps understanding the model (and it gives you flexiblity to do things somewhat different in special circumstances). It involves steps that may seem a bit confusing in the beginning, but really it's all only addition and multiplication. As said, `posterior_epred` simplifies the steps (it performs steps 2 and 3), as does `conditional_effects` (performs steps 1 to 4, and even 5, if you want); these will be discussed in the chapters below.
+1. Create an object "newdat" that contains all the predictor values needed for the intended effect plot
+2. Create a model matrix from "newdat"
+3. (Matrix-)Multiply the model matrix with the coefficients and store the result in "fitmat"
+4. From "fitmat", we get point estimates and credibility intervals for each line in "newdat"
+5. Now, "newdat" contains all information needed to make the effect plot
 
-Using `lm` + `sim`, we have to go through all 5 steps. So, we ﬁrst deﬁne new x-values for which we would like to have the ﬁtted values (100 points across the range of x will produce smooth-looking lines when connected by line segments). We save these new x-values within the new tibble `newdat`. Then, we create a new model matrix that contains these new x-values (`newmodmat`) using the function `model.matrix`. With this, we can easily calculate the 1000 ﬁtted values for each element of the new x (one value for each of the 1000 simulated regressions, Fig. \@ref(fig:figlmer1), e.g. at x=10, x=10.2, x=10.4, .. x=30), using matrix multiplication (%*%). We save these values in the matrix “ﬁtmat”. Finally, we extract the 2.5% and 97.5% quantiles for each x-value from ﬁtmat, and plot the lines for the lower and upper limits of the compatibility interval (Fig. \@ref(fig:figlmer2)).
+Making these steps is not just an "exercise", but it also helps understanding the model (and it gives you flexiblity to do things somewhat differently in special circumstances). It involves steps that may seem a bit confusing at first, but really it's all only addition and multiplication. As said, `posterior_epred` simplifies the steps (it performs steps 2 and 3), as does `conditional_effects` (performs steps 1 to 4, and even 5, if you want); these will be discussed in the chapters below.
 
-```{r figlmer2, fig.cap = "Regression with 95% compatibility interval of the posterior distribution of the ﬁtted values.", fig.asp=0.45}
+Using `lm` + `sim`, we have to go through all 5 steps. So, we first define new x-values for which we would like to have the fitted values; 100 points across the range of x will produce smooth-looking lines when connected by line segments. We save these 100 new x-values within the tibble `newdat`. Then, we create a model matrix that contains these new x-values (`newmodmat`) using the function `model.matrix`. With this, we can easily calculate the 1000 fitted values for each element of the new x (one value for each of the 1000 simulated regressions, Fig. \@ref(fig:figlmer1), e.g. at x=10, x=10.2, x=10.4, .. x=30), using matrix multiplication (`%*%`). We save these values in the matrix “fitmat”. Finally, we extract the 2.5% and 97.5% quantiles for each x-value from fitmat, and plot the lines for the lower and upper limits of the compatibility interval (Fig. \@ref(fig:figlmer2)).
+
+```{r figlmer2, fig.cap = "Regression with 95% compatibility interval of the posterior distribution of the fitted values.", fig.asp=0.45}
 # Calculate 95% compatibility interval
 newdat <- tibble(x = seq(min(dat$x), max(dat$x), length = 100))
 newmodmat <- model.matrix( ~ x, data = newdat)
@@ -453,10 +455,10 @@ regplot <-
 regplot
 ```
 
-The interpretation of the 95% compatibility interval is straightforward: We are 95% sure that the true regression line is within the compatibility interval (given the data and the model). As with all statistical results, this interpretation is only valid in the model world (if the world would look like the model). The larger the sample size, the narrower the interval, because each additional data point increases information about the true regression line.
+The interpretation of the 95% compatibility interval is straightforward: We are 95% sure that the true regression line is within the compatibility interval (given the data and the model). As with all statistical results, this interpretation is only valid in the model world (if the world would look like the model). 
 
 
-The compatibility interval measures statistical uncertainty of the regression line, but it does not describe how new observations would scatter around the regression line. If we want to describe where future observations will be, we have to report the posterior predictive distribution. We can get a sample of random draws from the posterior predictive distribution $\hat{y}|\boldsymbol{\beta},\sigma^2,\boldsymbol{X}\sim normal( \boldsymbol{X \beta, \sigma^2})$ using the draws from joint posterior distribution of the model parameters, thereby taking the uncertainty of the parameter estimates into account. We draw a new $\hat{y}$-value from $normal( \boldsymbol{X \beta, \sigma^2})$ for each simulated set of model parameters (the 1000 above), again at each of the 100 x-values in `newdat`. Then, we can visualize the 2.5% and 97.5% quantiles of this distribution for each new x-value.
+The compatibility interval measures statistical uncertainty of the regression line. Therefore, the larger the sample size, the narrower the interval, because each additional data point increases information about the true regression line. But the compatibility interval does not describe how new observations would scatter around the regression line. If we want to describe where future observations will be, we have to report the posterior predictive distribution. We can get a sample of random draws from the posterior predictive distribution $\hat{y}|\boldsymbol{\beta},\sigma^2,\boldsymbol{X}\sim normal( \boldsymbol{X \beta, \sigma^2})$ using the draws from joint posterior distribution of the model parameters, thereby taking the uncertainty of the parameter estimates into account. We draw a new $\hat{y}$-value from $normal( \boldsymbol{X \beta, \sigma^2})$ for each simulated set of model parameters (the 1000 above), again at each of the 100 x-values in `newdat`. Then, we can visualize the 2.5% and 97.5% quantiles of this distribution for each new x-value.
 
 ```{r figlmer3, cache = TRUE, fig.cap = "Regression line with 95% compatibility interval (dotted lines) and the 95% interval of the posterior predictive distribution (broken lines). Note that we increased the number of draws to produce smooth lines.", fig.asp=0.45}
 
@@ -471,7 +473,7 @@ for(i in 1:nsim) fitmat[,i] <- newmodmat%*%coef(bsim)[i,]
 # prepare matrix for simulated new data
 newy <- matrix(ncol=nsim, nrow=nrow(newdat)) 
 
-# for each simulated ﬁtted value, simulate one new y-value
+# for each simulated fitted value, simulate one new y-value
 for(i in 1:nsim) {
   newy[,i] <- rnorm(nrow(newdat), mean = fitmat[,i], sd = bsim@sigma[i])
 }
@@ -486,12 +488,18 @@ regplot +
   geom_line(data = newdat, aes(x = x, y = pred_up), lty = 2)
 ```
 
-Of future observations, 95% are expected to be within the interval deﬁned by the broken lines in Fig. \@ref(fig:figlmer3). Note that increasing the sample size (i.e. more black dots) will not give a narrower predictive distribution because the predictive distribution depends on the residual variance $\sigma^2$ which is a property of the data, just like the intercept and the slope, and these are, of course, independent of sample size. The crediblity interval, on the other hand, reflects the *uncertainty* of the regression line, which becomes less as we have more data.
+Of future observations, 95% are expected to be within the interval defined by the broken lines in Fig. \@ref(fig:figlmer3). Note that increasing the sample size (i.e. more black dots) will not give a narrower predictive distribution, because the predictive distribution depends on the residual variance $\sigma^2$, which is a property of the data, just like the intercept and the slope, and these are, of course, independent of sample size. The credibility interval, on the other hand, reflects the *uncertainty* of the regression line, which becomes less as we have more data.
 
-The way we produced Fig. \@ref(fig:figlmer3) is somewhat tedious compared to how easy we could have obtained the same ﬁgure using frequentist methods: `predict(mod, newdata = newdat, interval = "prediction")` would have produced the y-values for the lower and upper lines in Fig. \@ref(fig:figlmer3) in one R-code line. However, once we have a simulated sample of the posterior predictive distribution, we have much more information than is contained in the frequentist prediction interval. For example, we could give an estimate for the proportion of observations greater than 20, given $x = 25$.
+The way we produced Fig. \@ref(fig:figlmer3) is somewhat tedious compared to how easy we could have obtained the same figure using frequentist methods: `predict(mod, newdata = newdat, interval = "prediction")` would have produced the y-values for the lower and upper lines in Fig. \@ref(fig:figlmer3) in one R-code line. However, once we have draws from the posterior predictive distribution, we have much more information than is contained in the frequentist prediction interval. For example, we could give an estimate for the proportion of observations greater than 20, given $x = 25$.
 
 ```{r}
-sum(newy[newdat$x == 25, ] > 20) / nsim
+# when creating newdat$x, we did not makes sure that 25 is one of the 100 x-values. This could
+# be achieved by specifically adding the 25:
+# newdat <- tibble(x = sort(c(seq(min(dat$x), max(dat$x), length = 100),25)))
+## we did not do that above to not overload the new material. So, now, we simply search for the
+## x-value closest to 25 (which is so near 25 that the conclusion is valid)
+
+sum(newy[abs(newdat$x-25) == min(abs(newdat$x-25)), ] > 20) / nsim
 ```
 
 Thus, we expect 44% of future observations with $x = 25$ to be higher than 20. We can extract similar information for any relevant threshold value.
@@ -501,11 +509,11 @@ Thus, we expect 44% of future observations with $x = 25$ to be higher than 20. W
 
 When we use rstanarm to fit our linear regression, we directly get (by default 4000) draws from the (joint) posterior (distribution), i.e. this is comparable to using `lm` + `sim`.
 
-Above, we said that we can present results either with numbers (e.g. in a table) or we can make an effect plot. When we fit the model with stan_glm, we get numbers wenn we use `summary` on the model object. But by default, it does not return the 2.5% and 97.5% quantiles. We can easily get these using `as.matrix`.
+Above, we said that we can present results either with numbers (e.g. in a table) or we can make an effect plot. When we fit the model with stan_glm, the applying the print or summary function to the model object returns numbers -  but not the 2.5% and 97.5% quantiles. Yet, we can easily get these using `as.matrix`.
 
 ```{r}
 bsim.rstanarm <- as.matrix(mod.rstanarm)
-   # called bsim.rstanarm in analogy to the bsim we created above
+   # bsim.rstanarm: in analogy to the bsim we created above
 head(bsim.rstanarm,2)
 ```
 
@@ -586,9 +594,9 @@ The solution for $\boldsymbol{\beta}$ is the Equation \@ref(eq:lmmatrix). Most s
 summary(mod)
 ```
 
-The summary output ﬁrst gives a rough summary of the residual distribution. However, we will do more rigorous residual analyses in Chapter \@ref(residualanalysis). The estimates of the model coefﬁcients follow. The column "Estimate" contains the estimates for the intercept $\beta_0$ and the slope $\beta_1$ . The column "Std. Error" contains the estimated (frequentist) standard errors of the estimates. The last two columns contain the t-value and the p-value of the classical t-test for the null hypothesis that the coefﬁcient equals zero. The last part of the summary output gives the parameter $\sigma$ of the model, named "residual standard error" and the residual degrees of freedom.
+The summary output first gives a rough summary of the residual distribution. However, we will do more rigorous residual analyses in Chapter \@ref(residualanalysis). The estimates of the model coefficients follow. The column "Estimate" contains the estimates for the intercept $\beta_0$ and the slope $\beta_1$ . The column "Std. Error" contains the estimated (frequentist) standard errors of the estimates. The last two columns contain the t-value and the p-value of the classical t-test for the null hypothesis that the coefficient equals zero. The last part of the summary output gives the parameter $\sigma$ of the model, named "residual standard error" and the residual degrees of freedom.
 
-We think the name "residual standard error" for "sigma" is confusing, because $\sigma$ is not a measurement of uncertainty of a parameter estimate like the standard errors of the model coefﬁcients are. $\sigma$ is a model parameter that describes how the observations scatter around the ﬁtted values, that is, it is a standard deviation. It is independent of sample size, whereas the standard errors of the estimates for the model parameters will decrease with increasing sample size. Such a standard error of the estimate of $\sigma$, however, is not given in the summary output. Note that, by using Bayesian methods, we could easily obtain the standard error of the estimated $\sigma$ by calculating the standard deviation of the posterior distribution of $\sigma$. 
+We think the name "residual standard error" for "sigma" is confusing, because $\sigma$ is not a measurement of uncertainty of a parameter estimate like the standard errors of the model coefficients are. $\sigma$ is a model parameter that describes how the observations scatter around the fitted values, that is, it is a standard deviation. It is independent of sample size, whereas the standard errors of the estimates for the model parameters will decrease with increasing sample size. Such a standard error of the estimate of $\sigma$, however, is not given in the summary output. Note that, by using Bayesian methods, we could easily obtain the standard error of the estimated $\sigma$ by calculating the standard deviation of the posterior distribution of $\sigma$. 
 
 The $R^2$ and the adjusted $R^2$ measure the proportion of variance in the outcome variable $y$ that is explained by the predictors in the model. $R^2$ is calculated from the sum of squared residuals, $SSR = \sum_{i=1}^{n}(y_i - \hat{y})$, and the "total sum of squares", $SST = \sum_{i=1}^{n}(y_i - \bar{y})$, where $\bar{y})$ is the mean of $y$. $SST$ is a measure of total variance in $y$ and $SSR$
  is a measure of variance that cannot be explained by the model, thus $R^2 = 1- \frac{SSR}{SST}$ is a measure of variance that can be explained by the model. If $SSR$ is close to $SST$, $R^2$ is close to zero and the model cannot explain a lot of variance. The smaller $SSR$, the closer $R^2$ is to 1. This version of $R2$ approximates 1 if the number of model parameters approximates sample size even if none of the predictor variables correlates with the outcome. It is exactly 1 when the number of model parameters equals sample size, because $n$ measurements can be exactly described by $n$ parameters. The adjusted $R^2$, $R^2 = \frac{var(y)-\hat\sigma^2}{var(y)}$ takes sample size $n$ and the number of model parameters $k$ into account (see explanation to variance in Chapter \@ref(basics)). Therefore, the adjusted $R^2$ is recommended as a measurement of the proportion of explained variance.
@@ -625,7 +633,7 @@ dat %>%
   ylim(0, NA)
 ```
 
-An ANOVA is a linear regression with a categorical predictor variable instead of a continuous one. The categorical predictor variable with $k$ levels is (as a default in R) transformed to $k-1$ indicator variables. An indicator variable is a binary variable containing 0 and 1 where 1 indicates a speciﬁc level (a category of the predictor variable). Often, one indicator variable is constructed for every level except for the reference level. In our example, the categorical variable is "group" with the three levels "group 1", "group 2", and "group 3" ($k = 3$). Group 1 is taken as the reference level (default in R is the first in the alphabeth), and for each of the other two groups an indicator variable is constructed, $I(group_i = 2)$ and $I(group_i = 3)$. The function $I()$ gives out 1, if the expression is true and 0 otherwise. We can write the model as a formula:
+An ANOVA is a linear regression with a categorical predictor variable instead of a continuous one. The categorical predictor variable with $k$ levels is (as a default in R) transformed to $k-1$ indicator variables. An indicator variable is a binary variable containing 0 and 1 where 1 indicates a specific level (a category of the predictor variable). Often, one indicator variable is constructed for every level except for the reference level. In our example, the categorical variable is "group" with the three levels "group 1", "group 2", and "group 3" ($k = 3$). Group 1 is taken as the reference level (default in R is the first in the alphabeth), and for each of the other two groups an indicator variable is constructed, $I(group_i = 2)$ and $I(group_i = 3)$. The function $I()$ gives out 1, if the expression is true and 0 otherwise. We can write the model as a formula:
 
 \begin{align} 
   \mu_i &=\beta_0 + \beta_1 I(group_i=2) + \beta_1 I(group_i=3) \\
@@ -633,7 +641,7 @@ An ANOVA is a linear regression with a categorical predictor variable instead of
   (\#eq:anova)
 \end{align}
 
-where $y_i$ is the $i$-th observation (weight measurement for individual $i$ in our example), and $\beta_{0,1,2}$ are the model coefﬁcients. The residual variance is $\sigma^2$. The model coefﬁcients $\beta_{0,1,2}$ constitute the deterministic part of the model. From the model formula it follows that the group means, $m_g$, are:
+where $y_i$ is the $i$-th observation (weight measurement for individual $i$ in our example), and $\beta_{0,1,2}$ are the model coefficients. The residual variance is $\sigma^2$. The model coefficients $\beta_{0,1,2}$ constitute the deterministic part of the model. From the model formula it follows that the group means, $m_g$, are:
 
 \begin{align} 
   m_1 &=\beta_0 \\
@@ -659,9 +667,9 @@ In this case, the model formula would be:
   (\#eq:anovaalt)
 \end{align}
 
-The way the group means are calculated within a model is called the parameterization of the model. Different statistical software use different parameterizations. The parameterization used by R by default is the one shown in Equation \@ref(eq:anova). R automatically takes the ﬁrst level as the reference (the ﬁrst level is the ﬁrst one alphabetically unless the user deﬁnes a different order for the levels). The mean of the ﬁrst group (i.e., of the ﬁrst factor level) is the intercept, $b_0$ , of the model. The mean of another factor level is obtained by adding, to the intercept, the estimate of the corresponding parameter (which is the difference from the reference group mean). 
+The way the group means are calculated within a model is called the parameterization of the model. Different statistical software use different parameterizations. The parameterization used by R by default is the one shown in Equation \@ref(eq:anova). R automatically takes the first level as the reference (the first level is the first one alphabetically unless the user defines a different order for the levels). The mean of the first group (i.e., of the first factor level) is the intercept, $b_0$ , of the model. The mean of another factor level is obtained by adding, to the intercept, the estimate of the corresponding parameter (which is the difference from the reference group mean). 
 
-The parameterization of the model is deﬁned by the model matrix. In the case of a one-way ANOVA, there are as many columns in the model matrix as there are factor levels (i.e., groups); thus there are k factor levels and k model coefﬁcients. Recall from Equation \@ref(eq:lmmatrix) that for each observation, the entry in the $j$-th column of the model matrix is multiplied by the $j$-th element of the model coefﬁcients and the $k$ products are summed to obtain the ﬁtted values. For a data set with $n = 5$ observations of which the ﬁrst two are from group 1, the third from group 2, and the last two from group 3, the model matrix used for the parameterization described in Equation \@ref(eq:anovamw) and defined in R by the formula `~ group` is
+The parameterization of the model is defined by the model matrix. In the case of a one-way ANOVA, there are as many columns in the model matrix as there are factor levels (i.e., groups); thus there are k factor levels and k model coefficients. Recall from Equation \@ref(eq:lmmatrix) that for each observation, the entry in the $j$-th column of the model matrix is multiplied by the $j$-th element of the model coefficients and the $k$ products are summed to obtain the fitted values. For a data set with $n = 5$ observations of which the first two are from group 1, the third from group 2, and the last two from group 3, the model matrix used for the parameterization described in Equation \@ref(eq:anovamw) and defined in R by the formula `~ group` is
 
 \begin{align} 
 \boldsymbol{X}=
@@ -688,7 +696,7 @@ If parameterization of Equation \@ref(eq:anovamwalt) (corresponding R formula: `
 \end{align} 
 
 
-To obtain the parameter estimates for model parameterized according to Equation \@ref(eq:anovamw) we ﬁt the model in R:
+To obtain the parameter estimates for model parameterized according to Equation \@ref(eq:anovamw) we fit the model in R:
 
 ```{r}
 # fit the model
@@ -699,9 +707,9 @@ mod
 summary(mod)$sigma
 ```
 
-The "Intercept" is $\beta_0$. The other coefﬁcients are named with the factor name ("group") and the factor level (either "group 2" or "group 3"). These are $\beta_1$ and $\beta_2$ , respectively. Before drawing conclusions from an R output we need to examine whether the model assumptions are met, that is, we need to do a residual analysis as described in Chapter \@ref(residualanalysis).
+The "Intercept" is $\beta_0$. The other coefficients are named with the factor name ("group") and the factor level (either "group 2" or "group 3"). These are $\beta_1$ and $\beta_2$ , respectively. Before drawing conclusions from an R output we need to examine whether the model assumptions are met, that is, we need to do a residual analysis as described in Chapter \@ref(residualanalysis).
 
-Different questions can be answered using the above ANOVA: What are the group means? What is the difference in the means between group 1 and group 2? What is the difference between the means of the heaviest and lightest group? In a Bayesian framework we can directly assess how strongly the data support the hypothesis that the mean of the group 2 is larger than the mean of group 1. We ﬁrst simulate from the posterior distribution of the model parameters.
+Different questions can be answered using the above ANOVA: What are the group means? What is the difference in the means between group 1 and group 2? What is the difference between the means of the heaviest and lightest group? In a Bayesian framework we can directly assess how strongly the data support the hypothesis that the mean of the group 2 is larger than the mean of group 1. We first simulate from the posterior distribution of the model parameters.
 
 ```{r}
 library(arm)
@@ -717,7 +725,7 @@ m.g2 <- coef(bsim)[,1] + coef(bsim)[,2]
 m.g3 <- coef(bsim)[,1] + coef(bsim)[,3] 
 ```
 
-The histograms of the simulated values from the posterior distributions of the three means are given in Fig. \@ref(fig:figanovares). The three means are well separated and, based on our data, we are conﬁdent that the group means differ. From these simulated posterior distributions we obtain the means and use the 2.5% and 97.5% quantiles as limits of the 95% compatibility intervals (Fig. \@ref(fig:figanovares), right).
+The histograms of the simulated values from the posterior distributions of the three means are given in Fig. \@ref(fig:figanovares). The three means are well separated and, based on our data, we are confident that the group means differ. From these simulated posterior distributions we obtain the means and use the 2.5% and 97.5% quantiles as limits of the 95% compatibility intervals (Fig. \@ref(fig:figanovares), right).
 
 ```{r figanovares, fig.asp=0.45, fig.cap = "Distribution of the simulated values from the posterior distributions of the group means (left); group means with 95% compatibility intervals obtained from the simulated distributions (right)."}
 # save simulated values from posterior distribution in  tibble

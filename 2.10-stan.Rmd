@@ -5,31 +5,29 @@
 Markov chain Monte Carlo (MCMC) simulation techniques were developed in the mid-1950s by physicists (Metropolis et al., 1953). Later, statisticians discovered MCMC (Hastings, 1970; Geman & Geman, 1984; Tanner & Wong, 1987; Gelfand et al., 1990; Gelfand & Smith, 1990). MCMC methods make it possible to obtain posterior distributions for parameters and latent variables (unobserved variables) of complex models. In parallel, personal computer capacities increased in the 1990s and user-friendly software such as the different programs based on the programming language BUGS (Spiegelhalter et al., 2003) came out. These developments boosted the use of Bayesian data analyses, particularly in genetics and ecology.
 
 In this book we use the program [Stan](http://mc-stan.org) to draw random samples from the joint posterior distribution of the model parameters given a model, the data, prior distributions, and initial values. To do so, it uses the “no-U-turn sampler,” which is a type of Hamiltonian Monte Carlo simulation [@Hoffman.2014; @Betancourt.2013b], and optimization-based point estimation. These algorithms are more efficient than the ones implemented in BUGS programs and they can handle larger data sets. Stan works particularly well for hierarchical models [@Betancourt.2013]. Stan runs on Windows, Mac, and Linux and can be used via the R interfaces `rstanarm`, `brms` or `rstan`. Stan is automatically installed when one of these R-packages is installed. 
-According to our experience, `rstanarm` can be installed from CRAN as any R-package without problems. For installing `brms`, we recommend making sure that the versions of R, rtools and RStudio are compatible with the `brms` version that will be installed.   
-For [installing rstan](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started), it is advised to follow closely the system-specific instructions. 
-
+According to our experience, `rstanarm` can be installed from CRAN as any R-package without problems. For installing `brms`, we recommend making sure that the versions of R, RTools and RStudio are compatible with the `brms` version that will be installed (see also \@ref(brm)). For [installing rstan](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started), it is advised to follow closely the system-specific instructions. 
 
 
 ## Assessing convergence of the Markov chains and trouble shooting warnings of Stan
 
 The MCMC sampling is not guaranteed to converge, and/or the returned samples may be autocorrelated to a degree that your effective number of draws from the joint posterior is nowhere near 4000, the number of draws returned by default from `brm`. For simple models like a linear regression, there will not generally be a problem, but for more complex models, issues about the validity of the returned draws appear quite regularly.
 
-We first check whether we find warnings in the R console about problems of the fitting algorithm. Warnings should not simply be ignored. Often, we find help in the Stan online documentation (or when typing `launch_shinystan(mod.brm)` into the R-console) what to change when calling the `brm` function to get a fit that is running smoothly. Some points from our applied experience:
+We first check whether we find warnings in the R console about problems of the fitting algorithm. Warnings should not simply be ignored. Often, we find help in the Stan online documentation (or when typing `launch_shinystan(mod.brm)` into the R-console) what to change. Some points from our applied experience, especially regarding fitting models with `brm`:
 
 - When you get warnings, first of all make sure you help the algorithm as much as possible:
   - center and scale (to 1 SD) continuous predictors
   - use orthogonal polynomials
   - reduce model complexity
   - reduce sparse factor levels (aggregate with other levels or omit such observations)
-  - treat factors with many levels as random factors, or, if appropriate, as continuous predictors (if it levels are clearly ordered)
+  - treat factors with many levels as random factors, or, if appropriate, as continuous predictors (if levels are clearly ordered)
 
-- The most common warning is probably about "divergent transitions". Ideally, the problem is resolved by re-parametrizing the model, but that's probably often not possible. One suggestion is to increase the "adapt delta" using the argument `control = list(adapt_delta = 0.99)` in the `brm` function. This will increase the fitting time and can resolve the problem, but not always. In our experience, if ESS and R-hat (see below) are fine, getting rid of some or all divergent transitions by increasing adapt delta generally does not change parameter estimates much. While the math cracks say that divergent transition warnings should be taken seriously ([link](https://mc-stan.org/learn-stan/diagnostics-warnings.html#diagnosing-and-resolving-problems)), in our experience, the model may be ok even with some 100 divergent transitions, if R-hat and ESS are fine. But be cautious about this!
+- Probably the most common warning is about "divergent transitions". Ideally, the problem is resolved by re-parametrizing the model, but that's probably often not possible. One suggestion is to increase the "adapt delta" using the argument `control = list(adapt_delta = 0.99)` in the `brm` function. This will increase the fitting time and can resolve the problem, but not always. In our experience, if ESS and R-hat (see below) are fine, getting rid of some or all divergent transitions by increasing adapt delta generally does not change parameter estimates much. While the math cracks say that divergent transition warnings should be taken seriously ([link](https://mc-stan.org/learn-stan/diagnostics-warnings.html#diagnosing-and-resolving-problems)), in our experience, the model may be ok even with some 100 divergent transitions, *if* and only if R-hat and ESS are fine. But be cautious about this!
 
 - The warning about "exceeding maximum treedepth" is, according to the web source given above, less of a problem. It is about efficiency, not convergence. If R-hat and ESS are good, maximum treedepth warnings can probably be ignored.
 
-- Warnings about too high R-hat and/or too low ESS must be addressed in all cases. These warnings tell us that the model or parts of it have not converged and anything concluded from these draws may be complete nonsense. Often, the problem can be resolved by increasing the number of iterations, e.g. `iter=20000`. Since the warnings indicate that your MCMC draws are autocorrelated (thereby reducing the effective sample size ESS of your number of draws), you may thin the chains to prevent generating a lot of redundant numbers, e.g. `thin=5`. R-hat is a measure of independence of the draws and, hence, contains essentially the same information as the ESS: an R-hat of 1 means no autocorrelation and ESS will be close to the draws there are (i.e. 4000 by default), a larger R-hat means some degree of autocorrelation (it's good to have all R-hat <1.1). Generally, we get one R-hat value and two ESS values per estimated parameter.The two ESS values are "bulk ESS" and "tail ESS". The first tells us about how many effectively independent draws we have in the middle of the marginal posterior distribution of the parameter. This should be >200 or better >2000. The tail ESS is about the effective number of draws in the two tails of the posterior, which is relevant for the quality of the compatibility interval estimate as this is defined as the 2.5% to 97.5% quantile of the posterior, i.e. it depends on the quality of the draws in the tails of the posterior. Again, it should probably be >200 or better >2000. Note that, as said, R-hat and ESS are given per parameter. If all values are fine but one or few parameters of little interest (e.g. a random effect level you are not much interested in) show R-hat of >1.1 and rather small ESS, and increasing the iterations does not help, you may still be content with the model, but you would not draw great inferences from the random effect levels that converged poorly.
+- Warnings about too high R-hat and/or too low ESS must be addressed in all cases. These warnings tell us that the model or parts of it have not converged and anything concluded from these draws may be complete nonsense. Often, the problem can be resolved by increasing the number of iterations, e.g. `iter=20000`. ESS warnings indicate that your MCMC draws are autocorrelated (thereby reducing the effective sample size ESS of your number of draws). Hence, in addition to increasing the number draws, you may want to thin the chains to prevent generating a lot of redundant numbers, e.g. `thin=5`. R-hat is a measure of convergence of chains; a R-hat of 1 means perfect mixing of chains and, hence, convergence, larger values indicate non-convergence (it's good to have all R-hat <1.1, but larger values are accepted depending on the aim of the model). Generally, we get one R-hat value and two ESS values per estimated parameter.The two ESS values are "bulk ESS" and "tail ESS". The first tells us about how many effectively independent draws we have in the middle of the marginal posterior distribution of the parameter. This should be >200 or better >2000. The tail ESS is about the effective number of draws in the two tails of the posterior, which is relevant for the quality of the compatibility interval estimate because this is defined as the 2.5% to 97.5% quantile of the posterior (which obviously are in the tails of the posterior). Again, it should probably be >200 or better >2000. Note that, as said, R-hat and ESS are given per parameter. If all values are fine but one or few parameters of little interest (e.g. a random effect level you are not much interested in) show R-hat of >1.1 and rather small ESS, and increasing the iterations does not help, you may still be content with the model, but you would not make great conclusions from the random effect levels that converged poorly.
 
-R-hat and ESS are returned when you type the model object, or request the summary of it (see below), but for random levels they may not all appear. You can get all values using this code:
+R-hat and ESS are returned when you type the model object, or request the summary of it (see below), but for random levels, they may not all appear. You can get all values using this code:
 
 ```{r}
 library(brms)
@@ -39,7 +37,7 @@ library(posterior)
 load("RData/mod.brm.compiled.RData")
 mod.brm <- update(mod.brm.compiled, recompile = FALSE, seed=123, refresh=0)
 
-apply(as.matrix(mod.brm), 2, rhat);
+apply(as.matrix(mod.brm), 2, rhat)
 apply(as.matrix(mod.brm), 2, ess_bulk)
 apply(as.matrix(mod.brm), 2, ess_tail)
 
@@ -48,7 +46,7 @@ apply(as.matrix(mod.brm), 2, ess_tail)
 
 When we have no warnings, Markov chains likely have mixed well. Still, we should, at least for more complex models, check the mixing. We can either do that by scanning through the many diagnostic plots given by `launch_shinystan(mod.brm)`, or create the most important plots ourselves such as the traceplot (Figure \@ref(fig:checkconvergencemodelbrm)). 
 
-```{r checkconvergencemodelbrm, fig.cap="Traceplot of the Markov chains. After convergence, both Markov chains should sample from the same stationary distribution. Indications of non-convergence would be, if the two chains diverge or vary around different means."}
+```{r checkconvergencemodelbrm, fig.cap="Traceplot of the Markov chains. After convergence, the Markov chains should sample from the same stationary distribution. Indications of non-convergence would be if the chains diverge or vary around different means.", fig.height=2.5}
 
 par(mar=c(2,2,2,2))
 mcmc_plot(mod.brm, type = "trace")
@@ -124,7 +122,7 @@ y <- b0 + b1*x + simresid                    # calculate y, i.e. the data
 datax <- list(n=length(y), y=y, x=x)
 
 # Run STAN
-fit <- stan(file = "stanmodels/linreg.stan", data=datax, verbose = FALSE)
+fit <- stan(file = "stanmodels/linreg.stan", data=datax, verbose = FALSE, refresh=0)
 ```
 
 
