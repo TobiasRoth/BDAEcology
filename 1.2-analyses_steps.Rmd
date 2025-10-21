@@ -75,8 +75,8 @@ For non-Gaussian models it is often easier to assess model fit using [posterior 
 ## Model Uncertainty  {#step9}
 If, while working through steps 1 to 8, possibly repeatedly, we came up with one or more models that fit the data reasonably well, we [model comparison](#model_comparison) is needed or inference may be drawn from more than one model. If we have only one model, we proceed to \@ref(step10).
 
-## Draw Conclusions  {#step10}
-Simulate values from the joint posterior distribution of the model parameters (sim or Stan). Use these samples to present parameter uncertainty, to obtain posterior distributions for predictions, probabilities of specific hypotheses, and derived quantities.
+## Present model results  {#step10}
+Draw values from the joint posterior distribution of the model parameters, usnig `sim` or Stan via rstanarm-package or `brm`. Use these draws to present parameter uncertainty, to obtain posterior distributions for predictions, probabilities of specific hypotheses, and derived quantities, and show effect plots.
 
 ## Further reading {-}
 

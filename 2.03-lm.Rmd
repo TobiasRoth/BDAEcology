@@ -19,7 +19,7 @@ library(arm)
 
 Linear regression is the basis of a large part of applied statistical analysis. Analysis of variance (ANOVA) and analysis of covariance (ANCOVA) can be formulated as special cases of linear regression and are collectively named general linear models. Generalized linear models (Chapter \@ref(glm)) and mixed models (Chapters \@ref(lmer), \@ref(glmm)) (and many other models) are extensions of linear regression. 
 
-Typical questions that can be answered using linear regression are: How does $y$ change with changes in $x$? How is y predicted from $x$? An ordinary linear regression (i.e., one numeric  $x$  and one numeric $y$  variable) can be represented by a scatterplot of $y$ against $x$. We search for the line that ﬁts best through the points, and we can describe how the observations scatter around this regression line (see Fig. \@ref(fig:figlm) for an example). The model formula of a simple linear regression with one continuous predictor variable $x_i$ (the subscript $i$ denotes the $i=1,\dots,n$ data points) is:
+Typical questions that can be answered using linear regression are: How does $y$ change with changes in $x$? How is y predicted from $x$? An ordinary linear regression (i.e., one numeric  $x$  and a numeric $y$  variable) can be represented by a scatterplot of $y$ against $x$. We search for the line that ﬁts best through the points, and we can describe how the observations scatter around this regression line (Fig. \@ref(fig:illlm)). The model formula of a simple linear regression with one continuous predictor variable $x_i$ (the subscript $i$ denotes the $i=1,\dots,n$ data points) is:
 
 \begin{align} 
   \mu_i &=\beta_0 + \beta_1 x_i \\
@@ -27,11 +27,11 @@ Typical questions that can be answered using linear regression are: How does $y$
   (\#eq:lm)
 \end{align}
 
-While the first part of Equation \@ref(eq:lm) describes the regression line, the second part describes how the data points, i.e. the observations, are distributed around the regression line (Figure \@ref(fig:illlm)). In other words: the observation $y_i$ stems from a normal distribution with mean $\mu_i$ and variance $\sigma^2$. The mean of the normal distribution, $\mu_i$ , equals the sum of the intercept ($b_0$ ) and the product of the slope ($b_1$) and the continuous predictor value, $x_i$. $y_i$ is also often called the fitted value, or the estimate or estimated value.
+The first part of Equation \@ref(eq:lm) describes the regression line; it is called the linear predictor (it is always simply a linear combination - that's why all these models are called *linear models*). The second part describes how the data points, i.e. the observations, are distributed around the regression line (illustrated by normal distributions at two chosen x-values in Figure \@ref(fig:illlm)). In other words: with our model, we assume that the observation $y_i$ stems from a normal distribution with mean $\mu_i$ and variance $\sigma^2$. The mean of the normal distribution, $\mu_i$ , equals the sum of the intercept ($b_0$ ) and the product of the slope ($b_1$) and the continuous predictor value, $x_i$. $y_i$ is also often called the fitted value, the estimated value or simply the estimate.
 
 Equation \@ref(eq:lm) is called the data model, because it describes mathematically the process that has (or, better, that we think has) produced the data. This nomenclature also helps to distinguish data models from models for parameters such as prior or posterior distributions.
 
-The differences between observation $y_i$ and the predicted values $\mu_i$ are the residuals (i.e., $\epsilon_i=y_i-\mu_i$). Equivalently to Equation \@ref(eq:lm), the regression could thus be written as:
+The differences between the observed y-values $y_i$ and the predicted values $\mu_i$ are the residuals (i.e., $\epsilon_i=y_i-\mu_i$). Equivalently to Equation \@ref(eq:lm), the regression could thus be written as:
 
 \begin{align} 
   y_i &= \beta_0 + \beta_1 x_i + \epsilon_i\\
@@ -39,9 +39,9 @@ The differences between observation $y_i$ and the predicted values $\mu_i$ are t
   (\#eq:lmalternativ)
 \end{align} 
 
-We prefer the notation in Equation \@ref(eq:lm) because, in this formula, the stochastic part (second row) is nicely separated from the deterministic part (first row) of the model, whereas, in the second notation \@ref(eq:lmalternativ) the ﬁrst row contains both stochastic and deterministic parts. Also, for a generalized linear model, only Equation \@ref(eq:lm) can be formulated.
+We prefer the notation in Equation \@ref(eq:lm) because, in this formula, the deterministic part (first row) is nicely separated from the stochastic part (second row) of the model, whereas, in the second notation \@ref(eq:lmalternativ) the ﬁrst row contains both stochastic and deterministic parts. Also, for a generalized linear model (Chapters \@ref(glm), \@ref(glmm)), only Equation \@ref(eq:lm) can be formulated.
 
-For illustration, we here simulate a data set and below ﬁt a linear regression to them. The advantage of simulating data is that the following analyses can be reproduced without having to read data into R. Further, for simulating data, we need to translate the algebraic model formula into R language which helps us understand the model structure.
+For illustration, we simulate data and then ﬁt a linear regression to them. The advantage of simulating data is that the subsequent analyses can be reproduced without having to read data into R. Further, for simulating data, we need to translate the algebraic model formula into R language which helps us understand the model structure.
 
 ```{r lmsimulation}
 set.seed(34)            # set a seed for the random number generator
@@ -56,14 +56,14 @@ b1 <- 0.7               # slope
 
 # simulate y-values from the model
 mu <- b0 + b1 * x       # define the regression line (deterministic part)
-y <- rnorm(n, mu, sd = sigma) # simulate y-values
+y <- rnorm(n, mu, sd = sigma) # simulate y-values (stochastic part)
 
-# save data in a data.frame
+# save data in an object
 dat <- tibble(x = x, y = y)
 ```
 
 
-```{r illlm, fig.asp=0.45, fig.cap="Illustration of a linear regression. The blue line represents the deterministic part of the model, i.e., here the regression line. The stochastic part is represented by a probability distribution, here the normal distribution (orange). The normal distribution changes its mean but not the variance along the x-axis, and it describes how the data are distributed. The blue line and the orange distribution together are a statistical model, i.e., an abstract representation of the data which is given in black.", echo=FALSE}
+```{r illlm, fig.asp=0.45, fig.cap="Illustration of a linear regression. The blue line represents the deterministic part of the model, i.e. the regression line (= the fitted value). The stochastic part is represented by a probability distribution, here the normal distribution (orange). The normal distribution changes its mean but not the variance along the x-axis, and it describes how the data are distributed around the fitted value. The blue line and the orange distribution together are a statistical model, i.e., an abstract representation of the data which is given in black.", echo=FALSE}
 mod <- lm(y~x, data=dat)
 
 par(mar=c(3,4,0.5,0.5))
@@ -80,12 +80,14 @@ abline(v=xx)
 ```
 
 
-Using matrix notation, Equation \@ref(eq:lm) can also be written in one row:
+We can use matrix notation to write our model more concisely. We will use this matrix multiplication when we make effect plots. Essentially, the matrix - called the model matrix - contains the predictor values in columns, plus a first column of 1s for the intercept. The model matrix is multiplied with the vector of coefficients (in our linear regression: intercept and slope) to yield the fitted values.
+
+So, using matrix notation, Equation \@ref(eq:lm) can be written in one row:
 
 $$\boldsymbol{y} \sim 
   Norm(\boldsymbol{X} \boldsymbol{\beta}, \sigma^2\boldsymbol{I})$$
 
-where $\boldsymbol{ I}$ is the $n \times n$ identity matrix (it transforms the variance parameter to a  $n \times n$ matrix with its diagonal elements equal $\sigma^2$ ; $n$ is the sample size). The multiplication by $\boldsymbol{ I}$ is necessary because we use vector notation, $\boldsymbol{y}$ instead of $y_{i}$ . $\boldsymbol{y}$  is the vector of all observations (i.e. the y-values), whereas $y_{i}$ is a single observation, $i$. When using vector notation, we write the linear predictor of the model, $\beta_0 + \beta_1 x_i$ , as a multiplication of the model matrix
+where $\boldsymbol{ I}$ is the $n \times n$ identity matrix (it transforms the variance parameter to a  $n \times n$ matrix with its diagonal elements equal $\sigma^2$ ; $n$ is the sample size). The multiplication by $\boldsymbol{ I}$ is necessary because we use vector notation, $\boldsymbol{y}$ instead of $y_{i}$ . $\boldsymbol{y}$  is the vector of all y-values, whereas $y_{i}$ refers to a single observation, $i$. When using matrix notation, we write the linear predictor of the model, $\beta_0 + \beta_1 x_i$ , as a multiplication of the model matrix
 
 $$\boldsymbol{X} = 
   \begin{pmatrix} 
@@ -131,14 +133,18 @@ where $x_1 , \dots, x_n$ are the observed values for the predictor variable $x$.
 (\#eq:lmmatrix)
 \end{align} 
 
+In R, we will use the function `model.matrix` to easily create the model matrix. This can then be matrix-multiplied (symbol `%*%` in R) to get the fitted values.
+
 
 ### Fitting a Linear Regression in R
 
 #### Background
 
-In Equation \@ref(eq:lm), the fitted values $\mu_i$ are deﬁned by the model coefﬁcients, $\beta_{0}$ and $\beta_{1}$ . Therefore, when we can estimate $\beta_{0}$, $\beta_{1}$, and $\sigma^2$, the model is fully deﬁned. The third parameter, $\sigma^2$, describes how the observations scatter around the regression line and relies on the assumption that the data points are normally distributed around the fitted value, i.e. around the regression line (which, in the normal linear model, is equivalent to saying that the residuals are normally distributed). The estimates for the model parameters of a linear regression are obtained by searching the best ﬁtting regression line, which is generally defined as the line that minimizes the sum of the squared residuals. This model ﬁtting method is called the least-squares method, abbreviated as LS. It has a very simple solution using matrix algebra [see e.g., @Aitkin.2009], which is one reason why the least-squares regression line is generally used  (and not, e.g., a line that minimizes the absolute residuals).
+In Equation \@ref(eq:lm), the fitted values $\mu_i$ are deﬁned by the model coefﬁcients, $\beta_{0}$ and $\beta_{1}$ . Therefore, when we can estimate $\beta_{0}$, $\beta_{1}$, and $\sigma^2$, the model is fully deﬁned. The third parameter, $\sigma^2$, describes how the observations scatter around the regression line and relies on the assumption that the data points are normally distributed around the fitted value, i.e. around the regression line. The estimates for the model parameters of a linear regression are obtained by searching the best ﬁtting regression line, which is generally defined as the line that minimizes the sum of the squared residuals. This model ﬁtting method is called the least-squares method, abbreviated as LS. It has a very simple solution using matrix algebra [see e.g., @Aitkin.2009], which is one reason why the least-squares regression line is generally used  (and not, e.g., a line that minimizes the absolute residuals).
 
-Least-squares is a fitting technique: a technique that finds the best fitting line, i.e. the intercept and slope of that line, plus the sigma, together with a standard error for each of them. It is not, per se, a classical frequentist method - the frequentist part only comes in when we postulate a null hypothesis, e.g. $beta_1 = 0$, and test whether we can falsify this null hypothesis. As explained in Chapter \@(ref:basics), we don't use null hypothesis testing. In the following, we present two approaches to fit the linear regression and draw inference:
+Least-squares is a fitting technique: a technique that finds the best fitting line, i.e. the intercept and slope of that line, plus the sigma, together with a standard error for each of them. It is not, per se, a classical frequentist method - the frequentist part only comes in when we postulate a null hypothesis, e.g. $beta_1 = 0$, and test whether we can falsify this null hypothesis. As explained in Chapter \@ref(basics), we don't use null hypothesis testing.
+
+In the following, we present two approaches to fit the linear regression and draw inference:
 
 - We use the LS approach (function `lm`) to fit the line. Then we use the function `sim` from package arm to draw values from the joint posterior distribution.
 - We use the functions from packages rstanarm and brms to directly draw from the joint posterior distribution (via the program Stan that is accessed via rstanarm / brms)

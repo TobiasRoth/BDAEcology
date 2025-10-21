@@ -40,12 +40,15 @@ box()
 
 ```
 
-:::: {.greenbox data-latex=""}
-::: {.center data-latex=""}
-Draw a histogram
-:::
+<font size="2"> 
+<div style="border: 2px solid grey; padding: 10px">
+**Draw a histogram**
+
 To draw a histogram, the variable is displayed on the x-axis and the observed values are assigned to classes. We use the function <span class="codeInBox">hist</span>. Remember to call the helpfile, if you forgot how a function works and what arguments it has; for that, type <span class="codeInBox">?hist</span> in the R console. There, we see that the edges of the classes can be set with the argument <span class="codeInBox">breaks=</span>. The values given in the <span class="codeInBox">breaks=</span> argument must at least span the values of the variable. If the argument <span class="codeInBox">breaks=</span> is not specified, R searches for break-values that make the histogram look smooth. The number of observations falling in each class is given on the y-axis. The y-axis can be re-scaled so that the area of the histogram equals 1 by setting the argument <span class="codeInBox">density=TRUE</span>. In that case, the values on the y-axis correspond to the density values of a probability distribution (Chapter \@ref(distributions)). You can also save the result of the hist-function into an object, e.g. <span class="codeInBox">t.hist <- hist(dat$ell)</span>, possibly with the argument <span class="codeInBox">plot=F (F for FALSE)</span>. Using <span class="codeInBox">t.hist</span>, you may then fully customize your histogram (e.g. overlay two histograms with slightly shifted columns).
-::::  
+
+</div>
+</font>
+
 
 
 ### Location and scatter
