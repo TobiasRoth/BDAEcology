@@ -17,7 +17,7 @@ library(arm)
 
 ### Background
 
-Linear regression is the basis of a large part of applied statistical analysis. Analysis of variance (ANOVA) and analysis of covariance (ANCOVA) can be formulated as special cases of linear regression and are collectively named general linear models. Generalized linear models (\@ref(glm)) and mixed models (\@ref(lmer), \@ref(glmer)) (and many other models) are extensions of linear regression. 
+Linear regression is the basis of a large part of applied statistical analysis. Analysis of variance (ANOVA) and analysis of covariance (ANCOVA) can be formulated as special cases of linear regression and are collectively named general linear models. Generalized linear models (Chapter \@ref(glm)) and mixed models (Chapters \@ref(lmer), \@ref(glmm)) (and many other models) are extensions of linear regression. 
 
 Typical questions that can be answered using linear regression are: How does $y$ change with changes in $x$? How is y predicted from $x$? An ordinary linear regression (i.e., one numeric  $x$  and one numeric $y$  variable) can be represented by a scatterplot of $y$ against $x$. We search for the line that ﬁts best through the points, and we can describe how the observations scatter around this regression line (see Fig. \@ref(fig:figlm) for an example). The model formula of a simple linear regression with one continuous predictor variable $x_i$ (the subscript $i$ denotes the $i=1,\dots,n$ data points) is:
 
