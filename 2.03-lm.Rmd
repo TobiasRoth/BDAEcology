@@ -136,7 +136,7 @@ where $x_1 , \dots, x_n$ are the observed values for the predictor variable $x$.
 In R, we will use the function `model.matrix` to easily create the model matrix. This can then be matrix-multiplied (symbol `%*%` in R) to get the fitted values.
 
 
-### Fitting a Linear Regression in R
+### Fitting a linear regression in R
 
 #### Background
 
@@ -780,10 +780,11 @@ sum(m.g2 > m.g1) / nsim
 This means that in all of the `r nsim %>% as.integer` simulations from the joint posterior distribution, the mean of group 2 was larger than the mean of group 1. Therefore, there is a very high probability (i.e., it is close to 1; because probabilities are never exactly 1, we write >0.999) that the mean of group 2 is larger than the mean of group 1.
 
 
-## Other variants of normal linear models: Two-way anova, analysis of covariance and multiple regression
+## Other variants of normal linear models
 
-Up to now, we introduced normal linear models with one predictor only. We can add more predictors to the model and these can be numerical or categorical ones. Traditionally, models with 2 or 3 categorical predictors are called two-way or three-way ANOVA, respectively. Models with a mixture of categorical and numerical predictors are called ANCOVA. And, models containing only numerical predictors are called multiple regressions. Nowadays, we only use the term "normal linear model" as an umbrella term for all these types of models. 
-While it is easy to add additional predictors in the R formula of the model, it becomes more difficult to interpret the coefficients of such multi-dimensional models. Two important topics arise with multi-dimensional models, *interactions* and *partial effects*. We dedicate partial effects the full next chapter and introduce interactions in this chapter using two examples. The first, is a model including two categorical predictors and the second is a model with one categorical and one numeric predictor. 
+Up to now, we introduced normal linear models with one predictor only. We can add more predictors to the model and these can be numerical or categorical ones. Traditionally, models with 2 or 3 categorical predictors are called two-way or three-way ANOVA, respectively. Models with a mixture of categorical and numerical predictors are called ANCOVA. And models containing only numerical predictors are called multiple regressions. Nowadays, we only use the term "normal linear model" as an umbrella term for all these types of models. 
+
+While it is easy to add additional predictors in the R formula of the model, it becomes more difficult to interpret the coefficients of such multi-dimensional models. Two important topics arise with multi-dimensional models, *interactions* and *partial effects*. We introduce interactions in this chapter using two examples. The first, is a model including two categorical predictors and the second is a model with one categorical and one numeric predictor. Partial effects are treated thereafter.
 
 ### Linear model with two categorical predictors (two-way ANOVA)
 In the first example, we ask how large are the differences in wing length between age and sex classes of the Coal tit *Periparus ater*. Wing lengths were measured on 19 coal tit museum skins with known sex and age class.
@@ -1177,7 +1178,7 @@ knitr::include_graphics('images/ruchen.jpg', dpi = 150)
 ```
 
 
-## Ordered Factors and Contrasts {#orderedfactors}
+## Ordered factors and contrasts {#orderedfactors}
 
 In this chapter, we have seen that the model matrix is an $n \times k$ matrix (with $n$ = sample size and $k$ = number of model coefficients) that is multiplied by the vector of the $k$ model coefficients to obtain the fitted values of a normal linear model. The first column of the model matrix normally contains only ones. This column is multiplied by the intercept. The other columns contain the observed values of the predictor variables if these are numeric variables, or indicator variables (= dummy variables) for factor levels if the predictors are categorical variables (= factors). For categorical variables the model matrix can be constructed in a number of ways. How it is constructed determines how the model coefficients can be interpreted. For example, coefficients could represent differences between means of specific factor levels to the mean of the reference level. That is what we have introduced above. However, they could also represent a linear, quadratic or cubic effect of an ordered factor. Here, we show how this works.   
 
@@ -1217,7 +1218,7 @@ The group means are the same, independent of whether a factor is defined as orde
 Note that it is also possible to define own contrasts if we are interested in specific differences or trends. However, it is not trivial to find meaningful and orthogonal (= uncorrelated) contrasts.
 
 
-## Quadratic and Higher Polynomial Terms {#polynomials}
+## Quadratic and higher polynomial terms {#polynomials}
 
 The straight regression line for the biomass of grass species Ap *Alopecurus pratensis* dependent on the distance to the ground water does not fit well (Figure \@ref(fig:fgbiom)). The residuals at low and high values of water tend to be positive and intermediate water levels are associated with negative residuals. This points out a possible violation of the model assumptions.
 The problem is that the relationship between distance to water and biomass of species Ap is not linear. In real life, we often find non-linear relationships, but if the shape of the relationship is quadratic (plus, potentially, a few more polynomials) we can still use ‘linear modeling’ (the term 'linear' refers to the linear function used to describe the relationship between the outcome and the predictor variables: $f(x) = \beta_0 + \beta_1x + \beta_2x^2$ is a linear function compared to, e.g., $f(x) = \beta^x$, which is not a linear function). We simply add the quadratic term of the predictor variable, that is, water in our example, as a further predictor in the linear predictor:

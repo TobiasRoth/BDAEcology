@@ -221,9 +221,9 @@ abline(0,1)
 
 ```
 
-After checking the diagnostic plots, the posterior predictive model checking and the general model fit, we assume that the model describes the data generating process reasonably well, so that we can proceed to drawing conclusions. 
+After checking the diagnostic plots, the posterior predictive model checking and the general model fit, we assume that the model describes the data generating process reasonably well, so that we can proceed to make inferences from the model. 
 
-### Drawing conclusions
+### Presenting the results
 
 The generic `summary` function gives us the results for the model object containing the fitted model, and works for both the model fitted with `glmer` and `brm`. Let's start having a look at the summary from `mod.glmer`. 
 The summary provides the fitting method, the model formula, statistics for the model fit including the Akaike information criterion (AIC), the Bayesian information criterion (BIC), the scaled residuals, the random effects variance and information about observations and groups, a table with coefficient estimates for the fixed effects (with standard errors and a z-test for the coefficient) and correlations between fixed effects. We recommend to always check if the number of observations and groups, i.e., 63 barn swallow nests from 51 farms here, is correct. This information shows if the `glmer` function has correctly recognized the hierarchical structure in the data. Here, this is correct. To assess the associations between the predictor variables and the outcome analyzed, we need to look at the column "Estimate" in the table of fixed effects. This column contains the estimated model coefficients, and the standard error for these estimates is given in the column "Std. Error", along with a z-test for the null hypothesis of a coefficient of zero.
