@@ -218,9 +218,9 @@ The classical reference for information theory is @Burnham.2002. @Anderson.2008 
 
 @Grueber.2011 show how to do model averaging based on AIC weights for linear models including generalized linear mixed models. They also give R code in a worked example using the R package MuMIn (@Barton.2011). But note that the way @Grueber.2011 obtain the confidence intervals for the averaged fitted values is wrong, see corrigendum @Grueber.2011b.  
 
-The package AICcmodavg (@Mazerolle.2014) provides R functions to do multimodel inference on a variety of different model types. Different strategies to select models among a large number of models are discussed by @Ripley.2004b.  
+The package AICcmodavg [@Mazerolle.2014] provides R functions to do multimodel inference on a variety of different model types. Different strategies to select models among a large number of models are discussed by @Ripley.2004b.  
 
-A generalization of the ordinary cross-validation is used to find the smoothing parameters in additive models (@Wood.2006).  
+A generalization of the ordinary cross-validation is used to find the smoothing parameters in additive models [@Wood.2006].  
 
 @Arnold.2009 shows that the AIC can decrease when unimportant (random) variables are added to a model (“pretending variable problem”). @Whittingham.2006 show that stepwise backward model selection leads to overestimated effect sizes.  
 
