@@ -96,9 +96,11 @@ mod.glmer <- glmer(cbind(fledge,die) ~ colsize.z + cow + dung.z + (1|farm.f) ,
 The residuals of the model look fairly normal (top left panel of Figure \@ref(fig:assessmodelassumptions) with slightly wider tails. The random intercepts for the farms look perfectly normal as they should. The plot of the residuals vs. fitted values (bottom left panel) shows a slight increase in the residuals with increasing fitted values. Positive correlations between the residuals and the fitted values are common in mixed models due to the shrinkage effect (chapter \@ref(lmer)). Due to the same reason the fitted proportions slightly overestimate the observed proportions when these are large, but underestimate them when small (bottom right panel). What is looking like a lack of fit here can be seen as preventing an overestimation of the among farm variance based on the assumption that the farms in the data are a random sample of farms belonging to the same population.
 
 <!--fk: maybe checking the mean of the random effects is no longer needed in recent R versions?  we may check that and if it is no longer needed, delete here-->
-The mean of the random effects is close to zero as it should. We check that because sometimes the `glmer` function fails to correctly separate the farm-specific intercepts from the overall intercept. A non-zero mean of random effects does not mean a lack of fit, but a failure of the model fitting algorithm. In such a case, we recommend using a different fitting algorithm, e.g. `brm` (see below) or `stan_glmer` from the rstanarm package.
+The mean of the random effects is close to zero as it should. We check that because sometimes the `glmer` function fails to correctly separate the farm-specific intercepts from the overall intercept. A non-zero mean of random effects does not mean a lack of fit, but a failure of the model fitting algorithm. In such a case, we recommend using a different fitting algorithm, e.g. `stan_glmer` from the rstanarm package or `brm` from the brms package (see below).
 
 A slight overdispersion (approximated dispersion parameter >1) seems to be present, but nothing to worry about.
+
+Quite regularly, `glmer` returns a warning of non-convergence. In many such cases, it helps to simply set the argument `control=glmerControl("bobyqa")`. If it does not help, or if you get the message of a "boundary singular fit", `stan_glmer` may be your solution: see the following chapter with more information.
 
 
 ```{r assessmodelassumptions, fig.cap='Diagnostic plots to assess model assumptions for mod.glmer. Uppper left: quantile-quantile plot of the residuals vs. theoretical quantiles of the normal distribution. Upper rihgt: quantile-quantile plot of the random effects "farm". Lower left: residuals vs. fitted values. Lower right: observed vs. fitted values.', fig.height=7, fig.width=6}
@@ -128,6 +130,84 @@ mean(ranef(mod.glmer)$farm.f[,1])
 dispersion_glmer(mod.glmer)
 
 ```
+
+#### Using rstanarm
+
+A generalized linear mixed model can easily be fitted with the function `stan_glmer` from the package rstanarm. This can be particularly helpful, when `glmer` has some issues - situations we encounter more or less regularly are:
+
+- When `glmer` does not converge and setting the argument `control=glmerControl("bobyqa")` does not help, `stan_glmer` might be able to fit the model.
+- "boundary (singular) fit" warning from `glmer`: This usually means that a random factor variance cannot be estimated (it gets a value of 0, so do all levels of this random factor). This may signal that the variance is small and, hence, the random factor may not be so important. But we have also encountered situations where the variance was not negligible when fitting the same model with `stan_glmer`, so checking that out when you have "singular fit" is advisable.
+- `glmer` cannot fit a binomial model with a factor that has a level (or several) with only 0s or only 1s (or, in the binomial case, only 0s or only values equal to the number of trials, e.g. 7 of 7, 4 of 4 etc.). `stan_glmer`, being Bayesian, can fit a model to such data. A factor level consisting of 4 0s (and no 1s) will have an estimate near 0 and a rather wide uncertainty, a factor level consisting of 40 0s (and no 1s) will also have an estimate near 0 but with a much narrower uncertainty.
+
+In the following example we illustrate the second and third point using simulated data of a binary outcome variable (i.e. a binomial variable with number of trials = 1, also called a Bernoulli variable, and the model can be termed a logistic regression). There is one predictor: a factor called F1 with 5 levels. We also have a random factor called G.
+
+```{r}
+set.seed(9)
+library(rstanarm)
+ddat <- expand.grid(F1 = rep(LETTERS[1:5],c(4,4,4,4,40))) # ddat, because the object dat from above will be used again below
+ddat$G <- sample(letters[10:20],nrow(ddat),replace=T)   # just a dummy random factor to have for the glmer
+tpe <- model.matrix(~F1,data=ddat) %*% runif(5,-1,1)    # true point estimate, generated using the matrix
+   # model approach we also use when making effectplots from sim, explained most exhaustively in
+   # the chapter on the simple linear regression
+ddat$y <- rbinom(nrow(ddat),1,plogis(tpe))   # plogis is the inverse logit function
+
+ddat$y[ddat$F1=="A"] <- 0
+table(ddat$F1, ddat$y)  # note: factor level A has only 0s
+
+  # for the model fit, we don't estimate an intercept (by adding a "-1" in the formula), because we only
+  # have one factor predictor - in this way we get an estimate for the mean of each factor level,
+  # rather than an intercept (= estimate for baseline level) and 4 deviations from this for the other
+  # 4 levels; both approaches are the same model, just with different parametrisation (different
+  # "contrasts"), i.e. the coefficients have different meanings.
+mod <- glmer(y ~ -1 + F1 + (1|G), data=ddat, family=binomial)
+  # the model fits, only with the singular fit warning. But look at the standard errors:
+summary(mod)
+```
+
+Obviously something did not work! The problem is level A with only 0s. Also, the variance of the random factor G cannot be estimated, it "collapses" to 0 and throws the singluar fit warning.
+`stan_glmer` can fit this model. But let's set all values from level E to 0, too.
+
+```{r}
+ddat2 <- ddat
+ddat2$y[ddat2$F1=="E"] <- 0
+mod.rstanarm <- stan_glmer(y ~ -1 + F1 + (1|G), data=ddat2, family=binomial, refresh=0)
+summary(mod.rstanarm)[c(1:5,16),] %>% round(2)
+```
+
+The model fits without problem, all R-hat are good (remember: they should be near 1, ideally <1.1, \@ref(stan)), coefficient estimates make sense (they are on the logit scale, of course). Both estimates for A and E are strongly negative, i.e. inverse-logit of these are close to 0, and the uncertainty for A is a bit larger than for E, which makes sense since E has many more 0s than A. Also, the standard deviation for the random factor G can now be estimated - and check it out, it is not extremely small!
+
+The point estimates with 95% compatibility intervals for the 5 means are:
+
+```{r}
+ # we generate a newdat. We want to have each level of F1. And we want to be sure that the level
+ # order is the same as in ddat2 by setting the argument "levels" to levels(ddat2$F1). When the
+ # factor levels are ordered alpha-numerically (as in our case) this would not be needed, but if
+ # they have a custom order, forgetting to set the order in newdat equal to the orde in ddat2 will have
+ # catastrophic consequences (estimates and factor levels would be mixed up)
+newdat <- data.frame(F1 = factor(levels(ddat2$F1),levels=levels(ddat2$F1)))
+ # now we can use posterior_epred, with the argument re.form=NA to not estimate for random factors
+fitmat <- posterior_epred(mod.rstanarm, newdata=newdat, re.form=NA)
+
+newdat$fit <- apply(fitmat,2,mean)
+newdat$lwr <- apply(fitmat,2,quantile,probs=0.025)
+newdat$upr <- apply(fitmat,2,quantile,probs=0.975)
+```
+
+The effectplot can now easily be plotted (here a R base code, of course you can also ggplot it)
+
+```{r fig.cap="Raw data (points, jittered to reduce overlap) and estimated means with 95% compatiblity interval for data from 5 groups A-E and a binary outcome variable y (0/1). Groups A and E have only 0s."}
+set.seed(43)  # just for the jitter
+newdat$x <- 1:nlevels(newdat$F1)
+plot(jitter(as.numeric(ddat2$F1),amount=0.07)+0.3,jitter(ddat2$y,amount=0.05),pch=21,bg=as.numeric(ddat2$F1),
+     xlim=c(0.5,nlevels(ddat2$F1)+0.5), las=1, ylab="y (raw data) and probability", xlab="F1", xaxt="n")
+axis(1,1:5,levels(newdat$F1),tick=F)
+newdat$x <- 1:nlevels(newdat$F1)
+segments(newdat$x,newdat$lwr, newdat$x,newdat$upr, lwd=1)
+points(newdat$x, newdat$fit, pch=21, cex=1.3, bg=newdat$x)
+```
+
+The estimates for groups B-D are uncertain, due to the small sample size for each of them. The mean of groups A and E are estimated to be near 0, with much more certainty for E that it is really most likely very small. Estimates and compatibility intervals are bound between 0 and 1, which makes sense for a probability, and which is achieved by using a logit link function in the binomial model.
+
 
 #### Using the brm function
 
@@ -263,6 +343,7 @@ In medical research, it is standard to report the fixed-effects coefficients fro
 
 
 ## Poisson mixed model
+
 
 ## Summary
 
