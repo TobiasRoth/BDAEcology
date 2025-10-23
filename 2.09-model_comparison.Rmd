@@ -72,10 +72,9 @@ Cross-validation in a Bayesian framework is extremely computing time intensive, 
 
 ### Information criteria: Akaike information criterion and widely applicable information criterion
 
-The Akaike information criterion (AIC) and the widely applicable information criterion (WAIC) are asymptotically equivalent to cross-validation [@Stone.1977; @Gelman.2014]. AIC is minus two times the log likelihood (the “frequentist” likelihood<!-- fk: insert reference to chapter likelihood!!-->) plus two times the number of model parameters [@Akaike.1974]:
-<!-- fk: Das Hut-Zeichen sollte über alle 3 Zeichen theta, M und L, nicht nur über M!! -->
-$$AIC = -2log(L(\hat{\theta^{ML}}|y)) + 2K = -2log(p(y|\hat{\theta^{ML}})) $$
-where $\hat{\theta^{ML}}$ is the vector of maximum likelihood estimates of the model parameters and $K$ is the number of parameters.
+The Akaike information criterion (AIC) and the widely applicable information criterion (WAIC) are asymptotically equivalent to cross-validation [@Stone.1977; @Gelman.2014]. AIC is minus two times the log likelihood (the “frequentist” likelihood, Chapter \@ref(likelihood)) plus two times the number of model parameters [@Akaike.1974]:
+$$AIC = -2log(L(\widehat{\theta^{ML}}|y)) + 2K = -2log(p(y|\widehat{\theta^{ML}}))$$
+where $\widehat{\theta^{ML}}$ is the vector of maximum likelihood estimates of the model parameters and $K$ is the number of parameters.
 
 The first quantity measures the model fit. Because of the factor “-2”, the smaller the value, the better the model fits the data. The second quantity penalizes for overfit: for each parameter, a value of two is added. Generally, the smaller the AIC, the “better” is the predictive performance of the model.
 Philosophically, AIC is an estimate of the expected relative distance between the fitted model and the unknown true mechanism that actually generated the observed data [@Burnham.2002].

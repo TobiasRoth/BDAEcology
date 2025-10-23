@@ -11,12 +11,3 @@ Like R, python is a high-level programming language that is used by many ecologi
 
 
 
-$\begin{aligned}
-  & median = 
-  \begin{cases}
-  x_{(n+1)/2} & \quad \text{if } n \text{ is odd}\\
-  \frac{1}{2}(x_{n/2} + x_{n/2+1}) & \quad \text{if } n \text{ is even}
-  \end{cases}
-\end{aligned}$
-
-

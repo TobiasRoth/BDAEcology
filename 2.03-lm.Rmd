@@ -296,7 +296,7 @@ Below we fit the linear regression using a function from package rstanarm [@Good
 
 When using the functions from rstanarm (in our book mainly `stan_glm`, `stan_lmer`, `stan_glmer`) or brms (function `brm`) to fit a model, there is no need to write the model in Stan-language. You can use model coding familiar from functions such as `lm`, `glm`, `lmer` and `glmer`, and rstanarm / brms translate it to Stan code, sends it to be fitted in Stan (via the rstan package) and returns the draws from the joint posterior distribution.
 
-rstanarm provides a few more data distributions that what can be handled with `sim`, but for us, the main advantage of rstanarm are the downstream functionalities such as posterior predictive model checking, cross-validation and functions helping to create effectplots. brms also provides all these downstream functionalities (and even more), but the main plus is that it also offers a wide range of data distributions (many more than Gauss, Poisson, and binomial) as well as options to account for autocorrelation, use truncation, smoothing (GAM), etc. You should also check out the resources on the [brms github repository](https://github.com/paul-buerkner/brms).
+rstanarm provides a few more data distributions that what can be handled with `sim`, but for us, the main advantage of rstanarm are the downstream functionalities such as posterior predictive model checking, cross-validation and functions helping to create effectplots. brms also provides all these downstream functionalities (and even more), but the main plus is that it also offers a wide range of data distributions (many more than Gauss, Poisson, and binomial) as well as options to account for autocorrelation, use truncation, smoothing (GAM), etc. You should also check out the resources on the [brms github repository](https://github.com/paul-buerkner/brms) and the [book](http://paulbuerkner.com/software/brms-book/) ("work in progress") by the author of brms Paul Bürkner.
 
 rstanarm should be easy to install in the regular way with `install.packages`. With brm, sometimes, it has been a bit more difficult. We first should install Rtools (for Windows) or Xcode (for Mac). Search the web for instructions to do that. Then, brms can be installed in the normal way within R using `install.packages`; rtools may be installed automatically, else install it using `install.packages`, too. A trick that helped more than once when we had problems to run `brm` was:
 
@@ -786,7 +786,7 @@ Up to now, we introduced normal linear models with one predictor only. We can ad
 
 While it is easy to add additional predictors in the R formula of the model, it becomes more difficult to interpret the coefficients of such multi-dimensional models. Two important topics arise with multi-dimensional models, *interactions* and *partial effects*. We introduce interactions in this chapter using two examples. The first, is a model including two categorical predictors and the second is a model with one categorical and one numeric predictor. Partial effects are treated thereafter.
 
-### Linear model with two categorical predictors (two-way ANOVA)
+### Linear model with two categorical predictors (two-way ANOVA){#twowayanova}
 In the first example, we ask how large are the differences in wing length between age and sex classes of the Coal tit *Periparus ater*. Wing lengths were measured on 19 coal tit museum skins with known sex and age class.
 
 

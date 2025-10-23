@@ -1,0 +1,34 @@
+# Transformations {#rfunctions}
+
+
+
+Linear transformations
+
+Non-linear transformations
+
+
+
+Transformations can be done and stored as a new variable in the data object:
+
+
+Alternatively, transformations can be done directly in the model formula:
+
+
+Two transformations cannot be done in the model formula
+
+
+## First-aid transformations
+
+
+## Log-transformation with Stahel
+
+
+## Centering and scaling
+
+
+## Orthogonal polynomials
+
+
+## Transformations on the outcome variable
+
+

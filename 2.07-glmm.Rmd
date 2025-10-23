@@ -1,7 +1,14 @@
 
 # Generalized linear mixed models {#glmm}
 
-## Introduction
+```{r fig.align='center', echo=FALSE, fig.link=''}
+knitr::include_graphics('images/Cordulegaster_boltonii.jpg', dpi = 150)
+```
+
+------
+
+
+## Background
 <!-- Steffis draft version, started 17.11.2021, fk worked on it 15.11.2022, svf revised it 22.11.2022-->
 
 In chapter \@ref(lmer) on linear mixed effect models we have introduced how to analyze metric outcome variables for which a normal error distribution can be assumed (potentially after transformation), when the data have a hierarchical structure and, as a consequence, observations are not independent.
@@ -100,11 +107,9 @@ The mean of the random effects is close to zero as it should. We check that beca
 
 A slight overdispersion (approximated dispersion parameter >1) seems to be present, but nothing to worry about.
 
-Quite regularly, `glmer` returns a warning of non-convergence. In many such cases, it helps to simply set the argument `control=glmerControl("bobyqa")`. If it does not help, or if you get the message of a "boundary singular fit", `stan_glmer` may be your solution: see the following chapter with more information.
+(ref:amac) Diagnostic plots to assess model assumptions for "mod.glmer". Upper left: quantile-quantile plot of the residuals vs. theoretical quantiles of the normal distribution. Upper right: quantile-quantile plot of the random effects "farm". Lower left: residuals vs. fitted values. Lower right: observed vs. fitted values.
 
-
-```{r assessmodelassumptions, fig.cap='Diagnostic plots to assess model assumptions for mod.glmer. Uppper left: quantile-quantile plot of the residuals vs. theoretical quantiles of the normal distribution. Upper rihgt: quantile-quantile plot of the random effects "farm". Lower left: residuals vs. fitted values. Lower right: observed vs. fitted values.', fig.height=7, fig.width=6}
-
+```{r assessmodelassumptions, fig.cap='(ref:amac)', fig.height=5, fig.width=6}
 par(mfrow=c(2,2), mar=c(3,5,1,1))    
 # check normal distribution of residuals
 qqnorm(resid(mod.glmer), main="qq-plot residuals")
@@ -122,7 +127,10 @@ abline(h=0)
 dat$fitted <- fitted(mod.glmer)
 plot(dat$fitted,dat$fledge/dat$clutch)
 abline(0,1)
+```
 
+
+```{r}
 # check distribution of random effects
 mean(ranef(mod.glmer)$farm.f[,1])
 
@@ -130,6 +138,8 @@ mean(ranef(mod.glmer)$farm.f[,1])
 dispersion_glmer(mod.glmer)
 
 ```
+
+Quite regularly, `glmer` returns a warning of non-convergence. In many such cases, it helps to simply set the argument `control=glmerControl("bobyqa")`. If it does not help, or if you get the message of a "boundary singular fit", `stan_glmer` may be your solution: see the following chapter with more information.
 
 #### Using rstanarm
 
