@@ -1,34 +1,97 @@
 # Transformations {#rfunctions}
 
+Transformations of predictors (and sometimes also of the outcome variable) are very common. There is nothing "fishy" about transformations - not transforming a predictor is as much a decision as making e.g. a log-transformation. The aim is not to conjure some non-existing effects (or, in the frequentist world, to do "p-hacking"). If a predictor shows an effect after transformation, this means that the nature of the relationship simply *is* on this transformed scale; if a predictor has a multiplicative effect on the outcome variable, we will find a linear relationship between the outcome variable and the log-transformed predictor. Without transformation, the model would violate the assumption of "identically distributed" data around the regression line, only the transformation makes the model valid.
+
+When we use a transformation, we can still make effectplots (our favorite way to present the results) on the original scale. Or, we can use a transformed (e.g. log) scale; which one is better is not a statistical question, rather we should think about which way best conveys the biological (or other topical) meaning of our results.
+
+We can distinguish two different types of transformations which have fundamentally different motivations and consequences.
+
+**Linear transformations**
+Linear transformations have no effect on the model performance itself: the explained variance by the model remains the same, effectplots don't change. The motivation is not to achieve a better fit of the model to the data, but to a) facilitate model convergence and to b) improve the interpretability of model coefficients. The most commonly used linear transformation is centering and scaling (can be called the "z-transformation"), for details see below. More complex models (e.g. those fitted with `glmer`, but often also simpler models) may not converge if you don't apply a z-transformation to the linear predictors, especially when the predictor on the original scale has large values. For the same reason we usually use orthogonal polynomials (polynomials are not linear transformations, but orthogonal polynomials are linear compared to raw polynomials). b) Coefficients of z-transformed predictors and of orthogonal polynomials have a more natural interpretation - also discussed in the sub-chapters below.
+
+**Non-linear transformations**
+The most commonly used non-linear transformations include the logarithm (usually just called "log"), polynomials (of degree 2 and more), the square-root, the arcussinus-squre-root (arcsin-square-root) and the logit. They have an effect on the model fit and will affect the effectplot, e.g. when fitting a normal linear regression, the regression line will not be straight any more. The aim of these transformations is to improve model fit, i.e. to better capture the relationships that are in the data.
+
+Non-linear transformations allow the use of the linear modeling framework even if the true nature of a relationship is not linear - to the degree that it can be represented by one of the available transformations. If the relationship is "very non-linear", such as a complex phenology (activity of an organism over the year, with date as predictor), the effect of the predictor can be estimated using a smoother. In that case, we talk of a generalized additive model (GAM).
 
 
-Linear transformations
-
-Non-linear transformations
+Note that transformations generally only are done for continuous predictors (= a covariable). However, sometimes, we may use a factor as a covariable (an ordered factor with many levels), which can be seen as a type of transformation. This is discussed in a following chapter, together with the inverse: categorizing a covariable.
 
 
+## Some R-specific aspects
 
-Transformations can be done and stored as a new variable in the data object:
-
+A transformation on a predictor can be calculated and stored as a new variable in the data object:
+```{r}
+dat <- data.frame(a = runif(20,2,6),
+                  b = rnorm(20,2,100))                           # some simulated data
+dat$y <- rnorm(20,2-0.6*log(dat$a)-0.12*dat$b+0.003*dat$b^2,11)  # simulated outcome variable
+dat$a.l <- log(dat$a)    # the log of x is stored in the new variable $x.l
+dat$b.z <- scale(dat$b)  # the variable b is centerd and scaled to 1 SD by the function scale, and stored in $b.z
+```
 
 Alternatively, transformations can be done directly in the model formula:
+```{r}
+mod1 <- lm(y ~ log(a), data=dat)     # the effect of the log of a on b is estimated
+mod2 <- lm(y ~ b + I(b^2), data=dat) # using a linear and quadratic effect
+  # as dat$b has large values, better use scaled dat$b, i.e. dat$b.z:
+mod3 <- lm(y ~ b.z + I(b.z^2), data=dat)  # the I() makes that first the square is calculated, then these values are used
+  # or, even better, especially for complex models, use orthogonal polynomials by applying the function poly
+mod4 <- lm(y ~ poly(b,2), data=dat)   # the "2" asks for 2 polynomials, i.e. linear and quadratic
+```
 
+Models 2 to 4 are all the same model in the sense that they create the same effectplot.
 
-Two transformations cannot be done in the model formula
+Beware: It is often nice to z-transform the orthogonal polynomials (reasons given below). For that, we cannot use a double-function in the formula notation, rather the polynomials have to be created before the modelling, stored as a new variable, and only the z-transformation can be done in the formula (or outside, too, if you prefer). We get back to this in the polynomial chapter below.
 
+```{r}
+mod5 <- lm(y ~ scale(poly(b,2)), data=dat)  # produces a wrong model!
+```
 
 ## First-aid transformations
+
+
+
+
+## Identity transformation
 
 
 ## Log-transformation with Stahel
 
 
-## Centering and scaling
+## Centering and scaling (z-transformation)
 
 
-## Orthogonal polynomials
+## Raw and orthogonal polynomials
+
+
+## Square-root transformation
+
+
+## Arcsinus-square root transformation
+
+
+## Logit transformation
+
+
+## Categorizing and decategorizing
+
+
+## Cloglog, probit, inverse transformation
+
 
 
 ## Transformations on the outcome variable
 
+
+## Back-transformation
+
+```{r}
+m <- glm(c(1,1,1,0,0,0,1,1,1,0)~runif(10,3,7), family=binomial)
+family(m)$linkinv(3)
+plogis(3)
+
+m <- glm(c(1,1,1,0,0,0,1,1,1,0)~runif(10,3,7), family=binomial(probit))
+family(m)$linkinv(3)
+
+```
 
