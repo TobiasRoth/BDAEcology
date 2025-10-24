@@ -1044,7 +1044,7 @@ load("RData/snowfinch_hatching_date.rda")
 
 # Pearson's correlation coefficient
 cor(datsf$elevation, datsf$meltstart, use = "pairwise.complete")
-mod <- lm(meltstart~elevation, data=datsf)
+mod <- lm(meltstart ~ elevation, data=datsf)
 100*coef(mod)[2] # change in meltstart with 100m change in elevation
 
 ```
@@ -1063,7 +1063,7 @@ From a a normal linear regression of hatching date on the snow melt date, we obt
 
 ```{r sfex}
 library(arm)
-mod <- lm(hatchday.mean~elevation + meltstart, data=datsf)
+mod <- lm(hatchday.mean ~ elevation + meltstart, data=datsf)
 mod
 ```
 
@@ -1221,12 +1221,11 @@ Note that it is also possible to define own contrasts if we are interested in sp
 ## Quadratic and higher polynomial terms {#polynomials}
 
 The straight regression line for the biomass of grass species Ap *Alopecurus pratensis* dependent on the distance to the ground water does not fit well (Figure \@ref(fig:fgbiom)). The residuals at low and high values of water tend to be positive and intermediate water levels are associated with negative residuals. This points out a possible violation of the model assumptions.
-The problem is that the relationship between distance to water and biomass of species Ap is not linear. In real life, we often find non-linear relationships, but if the shape of the relationship is quadratic (plus, potentially, a few more polynomials) we can still use ‘linear modeling’ (the term 'linear' refers to the linear function used to describe the relationship between the outcome and the predictor variables: $f(x) = \beta_0 + \beta_1x + \beta_2x^2$ is a linear function compared to, e.g., $f(x) = \beta^x$, which is not a linear function). We simply add the quadratic term of the predictor variable, that is, water in our example, as a further predictor in the linear predictor:
+The problem is that the relationship between distance to water and biomass of species Ap is not linear. In real life, we often find non-linear relationships, but if the shape of the relationship is quadratic (plus, potentially, a few more polynomials) we can still use "linear modeling" (the term "linear" refers to the linear function used to describe the relationship between the outcome and the predictor variables: $f(x) = \beta_0 + \beta_1x + \beta_2x^2$ is a linear function compared to, e.g., $f(x) = \beta^x$, which is not a linear function). We simply add the quadratic term of the predictor variable, that is, water in our example, as a further predictor in the linear predictor:
 $\hat{y_i} = \beta_0+\beta_1water_i+\beta_2water_i^2$.
-A quadratic term can be fitted in R using the function `I()` which tells R that we want the squared values of distance to water. If we do not use `I()` the `^2` indicates a two-way interaction. The model specification is then `lm(log(Yi.g) ~ Water + I(Water^2), data=...)`. 
-The cubic term would be added by `+I(Water^3)`.
-As with interactions, a polynomial term changes the interpretation of lower level polynomials. Therefore, we normally include all polynomials up to a specific degree. Furthermore, polynomials are normally correlated (if no special transformation is used, see below) which could cause problems when fitting the model such as non-convergence. To avoid collinearity among polynomials, so called orthogonal polynomials can be used. These are polynomials that are uncorrelated. To that end, we can use the function `poly` which creates as many orthogonal polynomials of the variable as we want:
-`poly(dat$Water, 2)` creates two columns, the first one can be used to model the linear effect of water, the second one to model the quadratic term of water:
+A quadratic term can be fitted in the formula argument of `lm` using the function `I()`, which tells R that what is inside `I()` has to be calculated first. If we do not use `I()`, the `^2` indicates a two-way interaction. Hence, the model specification is `lm(log(Yi.g) ~ Water + I(Water^2), data=...)`. The cubic term would be added by `+I(Water^3)`.
+
+As with interactions, a polynomial term changes the interpretation of lower level polynomials. Therefore, we normally include all polynomials up to a specific degree. Furthermore, polynomials are normally correlated (if no special transformation is used, see below) which can cause problems when fitting the model (mostly non-convergence). To avoid colinearity among polynomials, so called orthogonal polynomials can be used. These are polynomials that are uncorrelated. To that end, we can use the function `poly` which creates as many orthogonal polynomials of the variable as we want: `poly(dat$Water, 2)` creates two columns, the first one can be used to model the linear effect of water, the second one to model the quadratic effect of water:
 
 ```{r}
 t.poly <- poly(dat$Water, 2)
@@ -1246,4 +1245,31 @@ newdat$Water.q <- predict(t.poly, newdat$Water)[,2]
 
 These transformed variables can then be used to calculate fitted values that correspond to the water values specified in the new data.
 
-  
+You can use `poly` also in the model formula, then no "t.poly" is needed and functions such as `posterior_epred` and `conditional_effects` handel the orthogonal polynomials internally. Hence here are the two options:
+
+```{r}
+mod <- lm(log(Yi.g) ~ Species + Water.l + Water.q + Species:Water.l + Species:Water.q, data=dat)
+mod <- lm(log(Yi.g) ~ Species + poly(Water,2) + Species:poly(Water,2), data=dat)
+```
+
+The poly-transformation generates rather small numbers (in our case, values are between `r min(t.poly) %>% round(3)` and `r max(t.poly) %>% round(3)`), hence their coefficient estimates are often conspicuously large (e.g. in the 100s). If you attach importance to having comparable coefficient estimates (as discussed in Chapter on transformations \@ref(ztransformation)), you can z-transform the orthogonal polynomials. But this cannot be done in the model formula, i.e. don't use `scale(poly(Water,2))` - it fits, but it is a different model that will not fit to your data. You can use `scale(Water.l)`, or you prepare everything in the data frame:
+
+```{r}
+dat$Water.l.z <- as.numeric(scale(dat$Water.l))  # the as.numeric is optional but for some rare downstream steps it is
+dat$Water.q.z <- as.numeric(scale(dat$Water.q))  #     needed, hence we (or some of us :-)) got used to do it by default
+mod <- lm(log(Yi.g) ~ Species + Water.l.z + Water.q.z + Species:Water.l + Species:Water.q, data=dat)
+```
+
+This is, to our knowlegde, the only way to use orthogonal polynomials that produce coefficient estimates that are comparable with those of other covariables. Creating the newdat is a bit tedious, but thanks to copy-paste it is doable (or create your custom function...)
+
+```{r}
+newdat <- data.frame(Water = seq(0,130)) 
+newdat$Water.l <- predict(t.poly, newdat$Water)[,1]   # (same as above)
+newdat$Water.q <- predict(t.poly, newdat$Water)[,2]   # (same as above)
+newdat$Water.l.z <- (newdat$Walter.l - mean(newdat$Water.l)) / newdat$Water.l
+newdat$Water.q.z <- (newdat$Walter.q - mean(newdat$Water.q)) / newdat$Water.q
+# now, as shown above, create the model matrix and matrix-multiply with the coefficients, or use posterior_epred()
+```
+
+Note: "newdat" now contains \$Water.l.z and \$Water.q.z for calculating the fitted values, but it also contains \$Water which you use for plotting. You get an effectplot on the original scale of \$Water, which is much easier to interpret than if you would plot it on the transformed scale.
+

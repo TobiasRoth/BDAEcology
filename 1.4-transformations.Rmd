@@ -1,4 +1,4 @@
-# Transformations {#rfunctions}
+# Transformations {#transformations}
 
 Transformations of predictors (and sometimes also of the outcome variable) are very common. There is nothing "fishy" about transformations - not transforming a predictor is as much a decision as making e.g. a log-transformation. The aim is not to conjure some non-existing effects. If a predictor shows an effect after transformation, this means that the nature of the relationship simply *is* on this transformed scale; if a predictor has a multiplicative effect on the outcome variable, we will find a linear relationship between the outcome variable and the log-transformed predictor. Without transformation, the model would violate the assumption of "identically distributed" data around the regression line, only the transformation makes the model valid.
 
@@ -58,7 +58,7 @@ J. W. Tukey termed the following three transformations the "first aid transforma
 
 Werner Stahel, a pivotal stats teacher for several of us, provides this information in his (german) book @Stahel.2000. In our experience, the log-transformation can often be helpful, especially for strongly right skewed positive variables. We don't often use the square-root transformation, but every now and then the arcsin-square-root transformation.
 
-## Log-transformation with Stahel
+## Log-transformation with Stahel{#logtransformation}
 
 Log-transformations are often used and often very helpful, especially, as stated above, for strongly right skewed positive variables. Without the transformation, the large values, far away from the bulk of data, may have an unduely strong effect on the regression line (leading to a large "Cook's distance", see \@ref(residualanalysis)).
 
@@ -66,7 +66,7 @@ When log-transforming a predictor, we model its multiplicative effect on the out
 
 The log-transformation is great, as long as there are no zeros (and, of course, it does not work with negative values at all), as the log of 0 is minus infinity. But in real life, we often have zeros, and then, many people just add 1 to the values before log-transformation. This can be ok, but it is not optimal when the (non-zero) values are small. For that reason, some suggest to add 0.5 times the smallest non-zero value. Rob J Hyndman also presents the Box-Cox transformation in a [blog](https://robjhyndman.com/hyndsight/transformations/), which apparently can be done using the R function `log1p`.
 
-We made good experience with a transformation suggested by our above mentioned stats teacher Werner Stahel in his book [@Stahel.2000]: log(x + c), and c is the squared 25% quantile of the non-zero values divided by the 75% quantile of the non-zero values. This performs well with zeros, but is also much better than adding 1 in many cases, e.g. when there are many very small values.
+We made good experience with a transformation suggested by our above mentioned stats teacher Werner Stahel in his book [@Stahel.2000, p. 30]: log(x + c), and c is the squared 25% quantile of the non-zero values divided by the 75% quantile of the non-zero values. This performs well with zeros, but is also much better than adding 1 in many cases, e.g. when there are many very small values.
 
 ```{r}
 set.seed(3)
@@ -96,24 +96,87 @@ hist(log1p(x2), nclass=30, main="Box-Cox", xlab="", ylab="", yaxt="n")
 ```
 
 
-## Centering and scaling (z-transformation)
+## Centering and scaling (z-transformation){#ztransformation}
 
+Centering ($x.c = x-mean(x)$) is a transformation that produces a variable with a mean of 0. Centering is optional, but we have two good reasons reasons to center a predictor variable. First, it helps the model fitting algorithm to better converge because it reduces correlations among model parameters. Second, with centered predictors, the intercept and main effects in the linear model are better interpretable (they are measured at the center of the data instead of at the covariate value of 0 which may be far off).
+
+Scaling: Scaling ($x.s = x/c$, where $c$ is a constant) is a transformation that changes the unit of the variable. Scaling is optional, too, but we have three good reasons to scale a covariable. First, to make the effect sizes better understandable. For example, a population change from one year to the next may be very small and hard to interpret. When we give the change for a 10-year period, its ecological meaning is better understandable. Second, to make the estimate of the effect sizes comparable between variables, we may use $x.s = x/sd(x)$. The resulting variable has a unit of one standard deviation. A standard deviation may be comparable between variables that originally are measured in different units (meters, seconds etc). @Gelman.2007 (p. 55 f) propose to scale the variables by two times the standard deviation ($x.s = x/(2*sd(x))$) to make effect sizes comparable between numeric and binary variables. Third, scaling can be important for model convergence, especially when polynomials are included. Also, consider the use of orthogonal polynomials, see below.
+
+Centering and scaling to one standard deviation is usually done by the function `scale`:
+```{r}
+dat$a.z <- scale(dat$a)  # using the arguments center and scale you can also only center or only scale
+# this is the same as:
+dat$a.z <- (dat$a - mean(dat$a)) / sd(dat$a)
+```
 
 
 ## Raw and orthogonal polynomials
 
+Using polynomials allows to model some degree of non-linearity. The more polynomials are added, the more flexible becomes the curve to track data that has a non-linear relationship. However, in many cases we only add one polynomial - the quadratic effect - to the linear effect, sometimes also the cubic effect (i.e. the linear term is the first polynomial, the quadratic term the second and the cubic term the third polynomial). If you need more polynomials, a generalized additive model may be your better choice (though not always).
+
+Raw polynomials are simply the original value squared, or raised to a higher power. It is very advisable in most cases to do that only on z-transformed values, as polynomials are quickly very large numbers, causing convergence problems. Also, polynomials are generally correlated, often strongly. This correlation is reduced if you use z-transformed values (at least for the correlation between linear and quadratic values), but there is (mostly) still a correlation there that may cause convergence problems in complex models. For this reason, we advise to use orthogonal polynomials using the function `poly`. Such polynomials are uncorrelated. Note: whether you use raw or orthogonal polynomials, the model performance is the same (the effecplot will look identical). But convergence is better with orthogonal polynomials, and also the interpretation of the coefficients: e.g. with two polynomials, the first coefficient captures the linear part of the relationship, the second the quadratic part.
+
+We illustrate the use of polynomials in an example in Chapter \@ref(polynomials). To summarize the points elaborated there:
+
+- Adding polynomials adds flexibility to the model
+- Quite often, we add the quadratic polynomial, sometimes the cubic, rarely higher-order polynomials
+- Raw polynomials should generally be done on z-transformed values
+- Orthogonal polynomials are uncorrelated and should be used in more complex models
+- Orthogonal polynomials created with `poly` have small values, hence z-transforming them, too, can be advisable to make coefficient estimated comparable with other covariates
+
+Quadratic polynomials are common in ecology because often, a relationship is not simply linear but has an optimum, e.g. of rainfall on growth - too little and too much rain are both not ideal for most plants. In such a case, the quadratic effect typically will be negative, because this means that the curve (= the regression line) has an optimum; a positive quadratic effect produces a curve that has a minimum. Of course, across the range of the predictor, we may only cover a part of the curve, hence a negative quadratic effect can also be a curve that increases and gradually levels off. This is typically seen for a species-area curve: as the size of a study plot increases, more species are found, but fewer and fewer new species can be added the more species are already in the pool of observed species. If we extrapolyte such a regression line beyond the maximal size of our study plots, the curve would start to decline, which is biological nonsense (in most cases!). Extrapolations of regression lines beyond the observed data are always delicate, but especially when polynomials are included.
+
+```{r fig.cap="Observed relationship between the size of the study area and the number of species found there (circles) with a linear-quadratic regression line (red) to describe this relationship. While this line is a reasonable model for the data at hand, it is nonsense to extrapolate the line beyond the available data (blue line).", fig.width=3.5, fig.height=3.5}
+dat <- data.frame(area = c(0.5,0.5,1,1,2,2.3,3,3.3,4,5,5.5),
+                  species = c(2,3,4,5,6,6,7,8,7,8,9))
+plot(dat$area, dat$species, las=1, xlab="Size of study area", ylab="Nr of species found",
+     ylim=c(0,10),xlim=c(0,10))
+mod <- lm(species ~ poly(area,2), data=dat)   # for species, a Poisson model would be a natural approach, but Gauss also works in our case
+t.area <- seq(min(dat$area),max(dat$area),l=100)  # span 100 values across which to draw the regression line
+lines(t.area, predict(mod, newdata = data.frame(area=t.area)), col="red")
+# further extrapolytion would not make biologically sense here:
+t.area <- seq(max(dat$area)+0.2,10,l=100)  # span 100 values across which to draw the regression line
+lines(t.area, predict(mod, newdata = data.frame(area=t.area)), col="blue")
+
+```
+
 
 ## Square-root transformation
 
+The square-root transformation is like a "mild" log-transformation and it has the advantage that zeros are not a problem. However, we rather rarely use it - it seems it often does not improve model fit much (or we don't try often enough). Anyways, keep it in our toolbox!
 
-## Arcsinus-square root transformation
+## Arcsinus-square-root transformation
+
+The arccin-square-root transformation has been suggested for proportions. If you have the number of germinated seeds among a total number of seeds in the pot, you would use a binomial model (Chapter \@glm and \@glmm). But sometimes, you may only have the proportion that germinated, not the number and not the total, and, therefore, a binomial model is not possible. Then, the arcsin-square-root transformation can be a good choice. It stretches the effect at the ends, such that a change from 1% to 2% corresponds to a larger change than a change from 50% to 51%, which makes sense biologically in many or most cases (the first is a doubling, the second only a minor change).
+
+The logit-transformation (see next chapter) has an analogous effect, but it cannot be applied to values of exactly 0 or 1, while arcsin-square-root does. The coefficient of a logit-transformed proportion has an interpretable meaning (albeit not a very easy one: see the discussion on odds ratios in Chapter \@ref(glm)), the coefficient of a arcsin-square-root transformation does not (except for the sign). But interpreting results works better looking at effectplots than coefficients anyways. So if you have 0s or 1s in the data, the arcsin-square-root is the better option than the logit; this is also true if you have values extremely close to 0 or 1, because the logit has a stronger effect on such values (as it goes towards minus/plus infinity at the extremes), potentially making these observations unduely influential; the arcsin-square-root transformation, on the other hand, does not go beyond 0 and (the meaningless valu of) 1.57:
+```{r}
+asin(sqrt(c(0,1)))
+```
+
+For values not at the extremes, arcsin-square-root and logit produce similar transformations.
 
 
 ## Logit transformation
 
+Above, we have already discussed the use of the logit-transformation for proportions, with the disadvantage that it does not work for the limit values of 0 and 1. Hence, it is actually not often used to transform predictors. However, it is used in (almost) all binomial models (to which Bernoulli models = logistic regressions belong, too) as the link function (see Chapter \@ref(glm)). For that reason, we here provide the formula: it is the log of the probability divided by one minus the probability:
 
+$$ logit(p) = log(\frac{p}{1-p}) $$
+
+The term inside the log is called the odds, hence the logit-transformation could also be called the log-odds-transformation.
+
+In the packages loaded by R by default, there is no `logit` function. Surely, there are packages that do it, but it is not often needed. The inverse function of logit, however, is needed regularly: When you predict using the linear predictor of a binomial model, you get the estimated value on the logit-scale; you can then apply the inverse logit function `plogis` to get the estimate on the familiar probability scale.
 
 ## Categorizing and decategorizing
+
+Sometimes, none of the above transformations help to achieve a reasonably linear relationship between a covariate and the outcome variable. Then, a sensible solution can be to categorize the covariate and use it in the model as a factor. This can be a good choice e.g. when the covariable has many zeros, some small values and few large values: this could be categorized as "0", ">0 to 1" and ">1". How many levels you can make depends on the amount of data you have (more data allows for more levels) and the aim the model (are you mostly interested in zero vs non-zero, or also in finer classes?). Note that with each additional level, the model needs one more parameter (or more, if the predictor is also in interaction with other predictors).
+
+In rather rare cases, it may also be reasonable to "decategorize" a factor, i.e. to use the factor levels as a covariate. This, of course, can only make sense for an ordered factor (i.e. the levels have a natural order). Also, going from one level to the next should have roughly the same effect on the outcome variable for all levels (if that is not the case, you would notice it in the residual analyses).
+
+In R, you can use the function `cut` to categorize a covariate. Applying `as.numeric` to a factor will return the ranks of the factor levels, hence that can be used to turn an (ordered) factor into a covariate.
+
+## Circular variables
+
 
 
 ## Cloglog, probit, inverse transformation
