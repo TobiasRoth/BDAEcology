@@ -66,7 +66,7 @@ When log-transforming a predictor, we model its multiplicative effect on the out
 
 The log-transformation is great, as long as there are no zeros (and, of course, it does not work with negative values at all), as the log of 0 is minus infinity. But in real life, we often have zeros, and then, many people just add 1 to the values before log-transformation. This can be ok, but it is not optimal when the (non-zero) values are small. For that reason, some suggest to add 0.5 times the smallest non-zero value. Rob J Hyndman also presents the Box-Cox transformation in a [blog](https://robjhyndman.com/hyndsight/transformations/), which apparently can be done using the R function `log1p`.
 
-We made good experience with a transformation suggested by our above mentioned stats teacher Werner Stahel in his book [@Stahel.2000, p. 30]: log(x + c), and c is the squared 25% quantile of the non-zero values divided by the 75% quantile of the non-zero values. This performs well with zeros, but is also much better than adding 1 in many cases, e.g. when there are many very small values.
+We made good experience with a transformation suggested by our above mentioned stats teacher Werner Stahel in his book (Stahel -@Stahel.2000, p. 30): log(x + c), and c is the squared 25% quantile of the non-zero values divided by the 75% quantile of the non-zero values. This performs well with zeros, but is also much better than adding 1 in many cases, e.g. when there are many very small values.
 
 ```{r}
 set.seed(3)
@@ -183,7 +183,7 @@ In R, you can use the function `cut` to categorize a covariate. Applying `as.num
 
 ## Identity transformation
 
-This simply means the transformation to itself, i.e. no transformation. We only list this here because, sometimes, we read about the "identity link" in the context of generalize linear models (Chapter \@glm), where a link function is used (e.g. log-link function for Poisson models). Normal linear models (\@lm) are a special case of generalize linear models, namely a Gauss (or "normal") model with an identity-link function.
+This simply means the transformation to itself, i.e. no transformation. We only list this here because, sometimes, we read about the "identity link" in the context of generalize linear models (Chapter \@ref(glm)), where a link function is used (e.g. log-link function for Poisson models). Normal linear models (\@ref(lm)) are a special case of generalize linear models, namely a Gauss (or "normal") model with an identity-link function.
 
 
 ## Transformations on the outcome variable
