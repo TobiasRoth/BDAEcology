@@ -778,6 +778,7 @@ Bayesian data analysis is applying the Bayes theorem for summarizing knowledge b
 Frequentist statistics is quantifying uncertainty by hypothetical repetitions. 
 
 The Bayesian approach to statisticla modelling offers the following advantages over the frequentist approach:
+
 - Unbiased parameter estimates in the context of mixed models
 - Specific hypotheses can be tested
 - Prior knowledge, if available, can be incorporated
