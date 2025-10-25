@@ -4,9 +4,25 @@
 
 Markov chain Monte Carlo (MCMC) simulation techniques were developed in the mid-1950s by physicists (Metropolis et al., 1953). Later, statisticians discovered MCMC (Hastings, 1970; Geman & Geman, 1984; Tanner & Wong, 1987; Gelfand et al., 1990; Gelfand & Smith, 1990). MCMC methods make it possible to obtain posterior distributions for parameters and latent variables (unobserved variables) of complex models. In parallel, personal computer capacities increased in the 1990s and user-friendly software such as the different programs based on the programming language BUGS (Spiegelhalter et al., 2003) came out. These developments boosted the use of Bayesian data analyses, particularly in genetics and ecology.
 
-In this book we use the program [Stan](http://mc-stan.org) to draw random samples from the joint posterior distribution of the model parameters given a model, the data, prior distributions, and initial values. To do so, it uses the “no-U-turn sampler,” which is a type of Hamiltonian Monte Carlo simulation [@Hoffman.2014; @Betancourt.2013b], and optimization-based point estimation. These algorithms are more efficient than the ones implemented in BUGS programs and they can handle larger data sets. Stan works particularly well for hierarchical models [@Betancourt.2013]. Stan runs on Windows, Mac, and Linux and can be used via the R interfaces `rstanarm`, `brms` or `rstan`. Stan is automatically installed when one of these R-packages is installed. 
-According to our experience, `rstanarm` can be installed from CRAN as any R-package without problems. For installing `brms`, we recommend making sure that the versions of R, RTools and RStudio are compatible with the `brms` version that will be installed (see also \@ref(brm)). For [installing rstan](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started), it is advised to follow closely the system-specific instructions. 
+In this book we use the program [Stan](http://mc-stan.org) to draw random samples from the joint posterior distribution of the model parameters given a model, the data, prior distributions, and initial values. To do so, it uses the “no-U-turn sampler,” which is a type of Hamiltonian Monte Carlo simulation [@Hoffman.2014; @Betancourt.2013b], and optimization-based point estimation. These algorithms are more efficient than the ones implemented in BUGS programs and they can handle larger data sets. Stan works particularly well for hierarchical models [@Betancourt.2013]. Stan runs on Windows, Mac, and Linux and can be used via the R interfaces (package) rstanarm, brms or rstan. Stan is automatically installed when one of these R-packages is installed.
 
+According to our experience, rstanarm can be installed from CRAN as any R-package without problems. With brm, sometimes, it has been a bit more difficult. You should use a recent version of R and RStudio (if you use that). It seems advisable to first install Rtools (for Windows) or Xcode (for Mac). Search the web for instructions to do that (RTools is a program, not an R package; it is installed directly on C:, by default). Then, brms can be installed in the normal way within R using `install.packages`. rstan should be installed automatically, else install it following online instructions [here](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started).
+
+A trick that helped more than once when we had problems to run `brm` was:
+
+```{r eval=FALSE}
+# after installing or updating brms, the got warnings regarding "make not found" and MCMC
+# sampling did not start. The following may help (solution found here:
+# https://discourse.mc-stan.org/t/error-when-running-brm-model/27951) 
+
+# after installing rtools, rstan and brms, run this in the console:
+remove.packages(c("StanHeaders", "rstan"))
+ # may give a warning if you don’t have StanHeaders, but that’s ok
+install.packages("StanHeaders", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
+install.packages("rstan", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
+```
+
+An alternative to rtools may be to use `brm` together with the package [cmdstanr](https://mc-stan.org/cmdstanr/articles/cmdstanr.html#comparison-with-rstan), but we have only limited experience so far.
 
 ## Assessing convergence of the Markov chains and trouble shooting warnings of Stan
 

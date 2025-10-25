@@ -269,7 +269,7 @@ To really understand what our model tells us, we make effectplots. But first, we
 Conclusions drawn from a model depend on the model assumptions. When model assumptions are violated, estimates usually are biased and inappropriate conclusions can be drawn. We devote Chapter \@ref(residualanalysis) to the assessment of model assumptions, given its importance. Checking model assumptions is equally important independent of whether you use `sim` (on a model object from `lm`, `glm`, `lmer`, `glmer`) or the following two approaches to get draws from the joint posterior distribution using packages rstanarm and brms.
 
 
-#### Introduction to rstanarm and brms{#brm}
+#### When we use rstanarm and brms{#brm}
 
 Above, we have used `sim` to get draws from the posterior. This works fine and fast, but we are limited in the model types we can use (no zero-inflated model, autocorrelation cannot be included, etc.), and there are no downstream functions once we have the draws. If we cannot do the task with `sim`, we generally do it with the functions from rstanarm, which offer more flexibility. If it does not work with these, we use the package brms.
 
@@ -294,26 +294,11 @@ For the models treated in this book, we extensively use the first three approach
 
 Below we fit the linear regression using a function from package rstanarm [@Goodrich.2023], and then the function `brm` from the package brms [@Burkner.2017]. These functions allow fitting Bayesian generalized (non-)linear multivariate multilevel models using Stan [@Betancourt.2013b] for full Bayesian inference. We shortly introduce the fitting algorithm used by Stan, Hamiltonian Monte Carlo, in chapter \@ref(stan).
 
+for installing rstanarm and brms, we provied some experience in Chapter \@ref(stan).
+
 When using the functions from rstanarm (in our book mainly `stan_glm`, `stan_lmer`, `stan_glmer`) or brms (function `brm`) to fit a model, there is no need to write the model in Stan-language. You can use model coding familiar from functions such as `lm`, `glm`, `lmer` and `glmer`, and rstanarm / brms translate it to Stan code, sends it to be fitted in Stan (via the rstan package) and returns the draws from the joint posterior distribution.
 
 rstanarm provides a few more data distributions that what can be handled with `sim`, but for us, the main advantage of rstanarm are the downstream functionalities such as posterior predictive model checking, cross-validation and functions helping to create effectplots. brms also provides all these downstream functionalities (and even more), but the main plus is that it also offers a wide range of data distributions (many more than Gauss, Poisson, and binomial) as well as options to account for autocorrelation, use truncation, smoothing (GAM), etc. You should also check out the resources on the [brms github repository](https://github.com/paul-buerkner/brms) and the [book](http://paulbuerkner.com/software/brms-book/) ("work in progress") by the author of brms Paul Bürkner.
-
-rstanarm should be easy to install in the regular way with `install.packages`. With brm, sometimes, it has been a bit more difficult. We first should install Rtools (for Windows) or Xcode (for Mac). Search the web for instructions to do that. Then, brms can be installed in the normal way within R using `install.packages`; rtools may be installed automatically, else install it using `install.packages`, too. A trick that helped more than once when we had problems to run `brm` was:
-
-```{r eval=FALSE}
-# after installing or updating brms, the got warnings regarding "make not found" and MCMC
-# sampling did not start. The following may help (solution found here:
-# https://discourse.mc-stan.org/t/error-when-running-brm-model/27951) 
-
-# after installing rtools, rstan and brms, run this in the console:
-remove.packages(c("StanHeaders", "rstan"))
- # may give a warning if you don’t have StanHeaders, but that’s ok
-install.packages("StanHeaders", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
-install.packages("rstan", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
-
-```
-
-An alternative to rtools may be to use `brm` together with the package [cmdstanr](https://mc-stan.org/cmdstanr/articles/cmdstanr.html#comparison-with-rstan), but we have only limited experience so far.
 
 Prior distributions are an integral part of a Bayesian model. We can see what default prior distributions rstanarm and brm use by the function `prior_summary` applied to the fitted object. For `brm`, you can use `get_prior` to see the priors used even without fitting the model. We do that for our model, and we see that the default prior for the intercept and effect size of x is a flat prior (see below). This is a distribution with a constant density for any value between minus and plus infinity. Because this is not a proper probability distribution, it is also called an improper distribution. The intercept gets a t-distribution with 3 degrees of freedom and its mean and standard deviation depend on the data; in any case, it is a very wide distribution, hence there is essentially no prior influence on the posterior. For the standard deviation, it uses the same t-distribution as for the intercept but with mean 0. However, because variance parameters such as standard deviations only can take on positive numbers, it will use only the positive half of the t-distribution. In the output from `get_prior` this is indicated by the zero in the column labelled "lb" for "lower bound".
 
