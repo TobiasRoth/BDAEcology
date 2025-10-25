@@ -110,13 +110,13 @@ dat$a.z <- scale(dat$a)  # using the arguments center and scale you can also onl
 dat$a.z <- (dat$a - mean(dat$a)) / sd(dat$a)
 ```
 
-## Raw and orthogonal polynomials
+## Raw and orthogonal polynomials{#transformationspolynomials}
 
 Using polynomials allows to model some degree of non-linearity. The more polynomials are added, the more flexible becomes the curve to track data that has a non-linear relationship. However, in many cases we only add one polynomial - the quadratic effect - to the linear effect, sometimes also the cubic effect (i.e. the linear term is the first polynomial, the quadratic term the second and the cubic term the third polynomial). If you need more polynomials, a generalized additive model may be your better choice (though not always).
 
 Raw polynomials are simply the original value squared, or raised to a higher power. It is very advisable in most cases to do that only on z-transformed values, as polynomials are quickly very large numbers, causing convergence problems. Also, polynomials are generally correlated, often strongly. This correlation is reduced if you use z-transformed values (at least for the correlation between linear and quadratic values), but there is (mostly) still a correlation there that may cause convergence problems in complex models. For this reason, we advise to use orthogonal polynomials using the function `poly`. Such polynomials are uncorrelated. Note: whether you use raw or orthogonal polynomials, the model performance is the same (the effecplot will look identical). But convergence is better with orthogonal polynomials, and also the interpretation of the coefficients: e.g. with two polynomials, the first coefficient captures the linear part of the relationship, the second the quadratic part.
 
-We illustrate the use of polynomials in an example in Chapter \@ref(polynomials). To summarize the points elaborated there:
+We illustrate the use of polynomials in an example in Chapter \@ref(lmpolynomials). To summarize the points elaborated there:
 
 - Adding polynomials adds flexibility to the model
 - Quite often, we add the quadratic polynomial, sometimes the cubic, rarely higher-order polynomials
@@ -175,7 +175,7 @@ In rather rare cases, it may also be reasonable to "decategorize" a factor, i.e.
 
 In R, you can use the function `cut` to categorize a covariate. Applying `as.numeric` to a factor will return the ranks of the factor levels, hence that can be used to turn an (ordered) factor into a covariate.
 
-## Sinus and cosinus transformation for circular variables
+## Sinus and cosinus transformation for circular variables{#transformationscircular}
 
 Variables like date (when spanning an entire year) or direction (in the sense of 0 to 360°, such as wind direction) are circular: the two ends (1 January and 31 December, 0° and 359°) are actually right next to each other. When you fit a simple linear regression to such data, e.g. the effect of wind direction on the number of migrants passing a study site, the two ends will not match (unless the line is horizontal), which makes no sense biologically. We can apply a sinus and cosinus transformation to match the two ends. The transformation has to be made on the radians, i.e. values from $0$ to $2\pi$, hence convert a julian day to $day/365*2*\pi$, direction to $direction/360*2*\pi$, etc.
 
