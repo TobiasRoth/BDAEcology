@@ -6,10 +6,12 @@ When we use a transformation, we can still make effectplots (our favorite way to
 
 We can distinguish two different types of transformations which have fundamentally different motivations and consequences.
 
-**Linear transformations**
+<u>Linear transformations</u>
+
 Linear transformations have no effect on the model performance itself: the variance explained by the model remains the same, effectplots don't change. The motivation is not to achieve a better fit of the model to the data, but to a) facilitate model convergence and to b) improve the interpretability of model coefficients. The most commonly used linear transformation is centering and scaling (which can be called the "z-transformation"), for details see below. Complex models (e.g. those fitted with `glmer`, but often also simpler models) may not converge if you don't apply a z-transformation to the linear predictors, especially when the predictor on the original scale has large values. For the same reason, when we want to include a polynomial term in the model, we usually use orthogonal rather than raw polynomials (polynomials are not linear transformations, but orthogonal polynomials are linear compared to raw polynomials). b) Coefficients of z-transformed predictors and of orthogonal polynomials have a more natural interpretation - discussed in the corresponding chapters below.
 
-**Non-linear transformations**
+<u>Non-linear transformations</u>
+
 The most commonly used non-linear transformations include the logarithm (usually just called log-transformation), polynomials (of degree 2 and more), the square-root, the arcussinus-squre-root (arcsin-square-root) and the logit. They have an effect on the model fit and will change the effectplot compared to using the untransformed predictor. E.g., when fitting a normal linear regression, the regression line will not be straight any more. The aim of these transformations is to improve model fit, i.e. to better capture the relationships that are in the data.
 
 Non-linear transformations allow the use of the linear modeling framework even if the true nature of a relationship is not linear - to the degree that it can be represented by one of the available transformations. If the relationship is "very non-linear", such as a complex phenology (activity of an organism over the year, with date as predictor), the effect of the predictor can be estimated using a smoother. In that case, we talk of a generalized additive model (GAM; actually, even GAM are linear models in their mathematical structure).
@@ -175,9 +177,43 @@ In R, you can use the function `cut` to categorize a covariate. Applying `as.num
 
 ## Sinus and cosinus transformation for circular variables
 
-Variables like date (when spanning an entire year) or direction (in the sense of 0 to 360°, such as wind direction) are circular: the two ends (1 January and 31 December, 0° and 359°) are actually right next to each other. When you fit a simple linear regression to such data, e.g. the effect of wind direction on the number of migrants passing a study site, the two ends will not match (unless the line is horizontal), which makes no sense biologically. We can apply a sinus
+Variables like date (when spanning an entire year) or direction (in the sense of 0 to 360°, such as wind direction) are circular: the two ends (1 January and 31 December, 0° and 359°) are actually right next to each other. When you fit a simple linear regression to such data, e.g. the effect of wind direction on the number of migrants passing a study site, the two ends will not match (unless the line is horizontal), which makes no sense biologically. We can apply a sinus and cosinus transformation to match the two ends. The transformation has to be made on the radians, i.e. values from $0$ to $2\pi$, hence convert a julian day to $day/365*2*\pi$, direction to $direction/360*2*\pi$, etc.
+
+```{r}
+set.seed(8)
+dat <- data.frame(wind = sort(sample(0:359,120, replace = T)),
+                  migration = as.numeric(mapply(function(x) rpois(10,x), x=c(15,10,5,2,2,6,9,15,20,32,25,20))))
+dat$wind.n <- cos(dat$wind/360*2*pi)   # northwind component: 1 for perfect north, -1 for perfect south wind
+dat$wind.e <- sin(dat$wind/360*2*pi)   # eastwind component: 1 for perfect east, -1 for perfect west wind
+mod <- lm(migration ~ wind.n + wind.e, data=dat)
+summary(mod)$coefficients[,c("Estimate","Std. Error")]
+```
+
+A positive effect of wind.n means that there is more migration the larger the northern component of the wind, a negative effect of wind.e means that there is less migration the larger the eastern component of the wind (and hence, more migration with more westerly winds).
+
+Result interpretation is easier from an effectplot:
+
+```{r fig.cap="Relationship between wind direction and migration activity (circles; virtual data). We fit a linear regression through the data using two circular wind variables (north and east components).", fig.width=4, fig.height=3}
+
+t.wind <- seq(0,365,l=100)   # prepare a sequence of wind-values for which to draw the regression line
+t.wind.n <- cos(t.wind/365*2*pi)  # same transformation as before
+t.wind.e <- sin(t.wind/365*2*pi)
+
+par(mar=c(4,4,1,1))
+plot(dat$wind, dat$migration, xlab="Winddirection\n(where wind comes from)",ylab="Migration activity",las=1, xaxt="n")
+  # make a meaningful x-axis:
+axis(1,at=seq(0,365,by=45),c("N","NE","E","SE","S","SW","W","NW","N"))
+lines(t.wind, predict(mod, newdata=data.frame(wind.n=t.wind.n, wind.e=t.wind.e)), col="red",lwd=2)
+
+```
+
+Note: the two ends of the line match.
 
 ## Cloglog, probit, inverse transformation
+
+These transformations are not used often in ecology. They can e.g. be used as link functions in a binomial model, but usually, the logit-link function is used.
+
+Note the risk for confusion of the term "inverse transformation": here, it means $f(x) = 1/x$, while in other contexts, it can mean "applying the inverse transformation of the transformation that had been done", e.g. using $exp()$ on a outcome variable that was log-transformed; if you use "back-transformation" in this context, there is no risk of confusion (but "apply the inverse link function" is often used in the context of binomial models, Chapter \@ref(glm)).
 
 ## Identity transformation
 
@@ -193,13 +229,48 @@ But remember to back-transform predictions, if you want to give them on the orig
 
 ## Back-transformation
 
+In many contexts we want to back-transform a transformed value to its original value. This is especially common in generalized linear (mixed) models, where the prediction from the linear predictor is on the link scale (log for Poisson and negative-binomial models, logit for binomial models; see Chapter \@ref(glm)). In suche cases, we apply the "inverse link function" (i.e. doing the back-transformation) to get the values on the original scale. Hence, predictions from a Poisson model are exp-transformed to get the estimates (or predicted value) of the outcome variable on its original scale (e.g. number of individuals); predictions from a binomial model are inverse-logit-transformed (function `plogis`) to get the estimate ot he original scale (i.e. a probability in the case of a binomial model). Note that depending on the R function you use, this back-transformation is done automatically, e.g. when using `predict` with argument `tpye=response`, or when using `posterior_epred` (applied to a model fitted with rstanarm or brms, Chapter \@ref(brm)).
+
+A technical note: you can get the inverse link-function to a model you fitted using the function `family`; it works with models fitted with `glm`, but may be others, too, depending on whether the package authors have implemented this. You apply the function `family` to the fitted model and extract the `$lininv` from that, which is the inverse link function:
+
 ```{r}
-m <- glm(c(1,1,1,0,0,0,1,1,1,0)~runif(10,3,7), family=binomial)
-family(m)$linkinv(3)
+m <- glm(c(1,1,1,0,0,0,1,1,1,0)~runif(10,3,7), family=binomial)  # default link function is logit
+family(m)$linkinv(3)   # inverse link of logit; is the same as plogis:
 plogis(3)
 
-m <- glm(c(1,1,1,0,0,0,1,1,1,0)~runif(10,3,7), family=binomial(probit))
-family(m)$linkinv(3)
+m <- glm(c(1,1,1,0,0,0,1,1,1,0)~runif(10,3,7), family=binomial(probit))  # alternative link function: probit
+family(m)$linkinv(3)   # inverse probit function
 
 ```
+
+## Applying the transformations to new data{#applythesametransformation}
+
+Often, we want to predict from a model. This means: we define values for all predictors in the model and the predict the outcome value for these predictor values. This is done when we are interested in a specific scenario of predictor values, and we do it extensively when creating effectplots that depict the relationship between the outcome variable and a predictor.
+
+When we want to predict for specific values of the predictors, we usually store these values in an object called "newdat", because the values are like new data (for which we want to estimate the value of the outcome variable). We can then use "newdat" to make the effectplot. Hence, in newdat, we need the predictor values on their original scale (so that the effectplot is easy to interpret). But we also need the predictors on the scale used in the model - for making the prediction. Our approach is to create the "newdat" using values on the original scale.
+
+For example, in the circual variables chapter above, we created 100 values from the minimum to the maximum of the observed wind values. We then predicted for each of these to be able to draw the effectplot. But to be able to predict, we also needed the new (100) wind values *on the scale used in the model*, i.e. the cosinus- and sinus-transformed values.
+
+Care has to be taken when applying the same transformation that was used on the original variable (e.g. called dat\$x) again on the variable in a new dataframe, e.g. on newdat\$x: When the transformation depends on a statistic of the original dat\$x, e.g. on $mean(dat\$x)$, we also have to use $mean(dat\$x)$ and not $mean(newdat\$x)$ for the transformation done on newdat\$x. Table \@ref(tab:transformationsR) shows which transformation to use on newdat\$x for a given transformation used on the original variable. Note the use of dat\$x (rather than newdat\$x) in the newdat-transformations for log with Stahel, center, scale, z, and orthogonal poly.
+
+<br>
+
+Table: (\#tab:transformationsR) Transformations more or less regularly used on covariates (sometimes also on the outcome variable), here, as an example, on dat\$x, and how the transformation must be done when creating a "newdat" with newdat\$x to then be used to predict from the model. "Stahel" stands for the constant proposed by W. Stahel (see chapter on log above). For the logit-transformation, only probabilities are possible (hence the dat\$p), for sinus and cosinus only radians (hence the dat\$r).
+
+transformation | transformation done on dat\$x | transformation done on newdat\$x |
+:---- | :------- | :------- |
+log | log(dat\$x) | log(newdat\$x) |
+log + 1 | log(dat\$x+1) | log(newdat\$x+1) |
+log with Stahel | log(dat\$x+stahelc(dat$x)) | log(newdat\$x+stahelc(dat\$x)) |
+center | dat\$x - mean(dat\$x) | newdat\$x - mean(dat\$x) |
+scale to 1 SD | dat\$x / sd(dat\$x) | newdat\$x / sd(dat\$x) |
+z | scale(dat\$x) |  (newdat\$x - mean(dat\$x)) / sd(dat\$x) |
+raw poly | dat\$x^2, dat\$x^3, etc | newdat\$x^2, newdat\$x^3, etc | 
+orthogonal poly (e.g. 2) | poly(dat\$x,2) | predict(poly(dat\$x,2), newdata=newdat\$x)
+square-root | sqrt(dat\$x) | sqrt(newdat\$x) |
+asin-square-root | asin(sqrt(dat\$x)) | asin(sqrt(newdat\$x)) |
+logit | log(dat\$p / (1-dat\$p)) | log(newdat\$p / (1-newdat\$p))
+sin | sin(dat\$r) | sin(newdat\$r) |
+cosin | cos(dat\$r) | cos(newdat\$r) |
+
 
