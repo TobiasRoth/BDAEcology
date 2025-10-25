@@ -66,7 +66,7 @@ When log-transforming a predictor, we model its multiplicative effect on the out
 
 The log-transformation is great, as long as there are no zeros (and, of course, it does not work with negative values at all), as the log of 0 is minus infinity. But in real life, we often have zeros, and then, many people just add 1 to the values before log-transformation. This can be ok, but it is not optimal when the (non-zero) values are small. For that reason, some suggest to add 0.5 times the smallest non-zero value. Rob J Hyndman also presents the Box-Cox transformation in a [blog](https://robjhyndman.com/hyndsight/transformations/), which apparently can be done using the R function `log1p`.
 
-We made good experience with a transformation suggested by our above mentioned stats teacher Werner Stahel in his book [@Stahel.2000] on p. 30: $log(x + c)$, and c is the squared 25% quantile of the non-zero values divided by the 75% quantile of the non-zero values. This performs well with zeros, but is overall much better than adding 1 in many cases (and probably never worse).
+We made good experience with a transformation suggested by our above mentioned stats teacher Werner Stahel in his book [@Stahel.2000, on p. 30]: $log(x + c)$, and c is the squared 25% quantile of the non-zero values divided by the 75% quantile of the non-zero values. This performs well with zeros, but is overall much better than adding 1 in many cases (and probably never worse).
 
 ```{r}
 set.seed(3)
@@ -107,7 +107,6 @@ dat$a.z <- scale(dat$a)  # using the arguments center and scale you can also onl
 # this is the same as:
 dat$a.z <- (dat$a - mean(dat$a)) / sd(dat$a)
 ```
-
 
 ## Raw and orthogonal polynomials
 
@@ -174,9 +173,9 @@ In rather rare cases, it may also be reasonable to "decategorize" a factor, i.e.
 
 In R, you can use the function `cut` to categorize a covariate. Applying `as.numeric` to a factor will return the ranks of the factor levels, hence that can be used to turn an (ordered) factor into a covariate.
 
-## Circular variables
+## Sinus and cosinus transformation for circular variables
 
-
+Variables like date (when spanning an entire year) or direction (in the sense of 0 to 360°, such as wind direction) are circular: the two ends (1 January and 31 December, 0° and 359°) are actually right next to each other. When you fit a simple linear regression to such data, e.g. the effect of wind direction on the number of migrants passing a study site, the two ends will not match (unless the line is horizontal), which makes no sense biologically. We can apply a sinus
 
 ## Cloglog, probit, inverse transformation
 
