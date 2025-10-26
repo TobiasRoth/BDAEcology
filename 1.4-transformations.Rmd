@@ -22,6 +22,7 @@ Note that transformations generally are only done for continuous predictors (= a
 ## Some R-specific aspects
 
 A transformation on a predictor can be calculated and stored as a new variable in the data object:
+
 ```{r}
 dat <- data.frame(a = runif(20,2,6),
                   b = rnorm(20,2,100))                           # some simulated data
@@ -33,6 +34,7 @@ dat$b.z <- scale(dat$b)  # the variable b is centerd and scaled to 1 SD by the f
 Then, the variable ("a.l", "b.z") can be used in the model just like any variable.
 
 Alternatively, transformations can be done directly in the model formula:
+
 ```{r}
 mod1 <- lm(y ~ log(a), data=dat)     # the effect of the log of a on b is estimated
 mod2 <- lm(y ~ b + I(b^2), data=dat) # using a linear and quadratic effect
