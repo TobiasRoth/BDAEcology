@@ -1157,6 +1157,7 @@ Note that transformations generally are only done for continuous predictors (= a
 
 A transformation on a predictor can be calculated and stored as a new variable in the data object:
 
+
 ```r
 dat <- data.frame(a = runif(20,2,6),
                   b = rnorm(20,2,100))                           # some simulated data
@@ -1168,6 +1169,7 @@ dat$b.z <- scale(dat$b)  # the variable b is centerd and scaled to 1 SD by the f
 Then, the variable ("a.l", "b.z") can be used in the model just like any variable.
 
 Alternatively, transformations can be done directly in the model formula:
+
 
 ```r
 mod1 <- lm(y ~ log(a), data=dat)     # the effect of the log of a on b is estimated
@@ -1205,7 +1207,7 @@ When log-transforming a predictor, we model its multiplicative effect on the out
 
 The log-transformation is great, as long as there are no zeros (and, of course, it does not work with negative values at all), as the log of 0 is minus infinity. But in real life, we often have zeros, and then, many people just add 1 to the values before log-transformation. This can be ok, but it is not optimal when the (non-zero) values are small. For that reason, some suggest to add 0.5 times the smallest non-zero value. Rob J Hyndman also presents the Box-Cox transformation in a [blog](https://robjhyndman.com/hyndsight/transformations/), which apparently can be done using the R function `log1p`.
 
-We made good experience with a transformation suggested by our above mentioned stats teacher Werner Stahel in his book [@Stahel.2000, on p. 30]: $log(x + c)$, and c is the squared 25% quantile of the non-zero values divided by the 75% quantile of the non-zero values. This performs well with zeros, but is overall much better than adding 1 in many cases (and probably never worse).
+We made good experience with a transformation suggested by our above mentioned stats teacher Werner Stahel in his book (@Stahel.2000, on p. 30): $log(x + c)$, and c is the squared 25% quantile of the non-zero values divided by the 75% quantile of the non-zero values. This performs well with zeros, but is overall much better than adding 1 in many cases (and probably never worse).
 
 
 ```r
@@ -1768,7 +1770,7 @@ sum(log(mpyi))
 ```
 
 ```
-## [1] 0.184406
+## [1] 0.2053927
 ```
 
 The log posterior density can be used as a measure of model fit. We will come back to this measurement when we discuss cross-validation as a method for [model comparison](#model_comparison).
@@ -3361,7 +3363,7 @@ Note: "newdat" now contains \$Water.l.z and \$Water.q.z for calculating the fitt
 
 ## Model assumptions
 
-Every statistical model makes assumptions. We try to build models that reﬂect the data-generating process as realistically as possible. However, a model never is the truth. Yet, all inferences drawn from a model, such as estimates of effect size or derived quantities with credible intervals, are based on the assumption that the model is true. However, if a model captures the datagenerating process poorly, for example, because it misses important structures (predictors, interactions, polynomials), inferences drawn from the model are probably biased and results become unreliable. In a (hypothetical) model that captures all important structures of the data generating process, the stochastic part, the difference between the observation and the fitted value (the residuals), should only show random variation. Analyzing residuals is a very important part of the data analysis process.
+Every statistical model makes assumptions. We try to build models that reﬂect the data-generating process as realistically as possible. However, a model never is the truth. Yet, all inferences drawn from a model, such as estimates of effect size or derived quantities with credible intervals, are based on the assumption that the model is true. However, if a model captures the data generating process poorly, for example, because it misses important structures (predictors, interactions, polynomials), inferences drawn from the model are probably biased and results become unreliable. In a (hypothetical) model that captures all important structures of the data generating process, the stochastic part, the difference between the observation and the fitted value (the residuals), should only show random variation. Analyzing residuals is a very important part of the data analysis process.
 
 Residual analysis can be very exciting, because the residuals show what remains unexplained by the present model. Residuals can sometimes show surprising patterns and, thereby, provide deeper insight into the system. However, at this step of the analysis it is important not to forget the original research questions that motivated the study. Because these questions have been asked without knowledge of the data, they protect against data dredging. Of course, residual analysis may raise interesting new questions. Nonetheless, these new questions have emerged from patterns in the data, which might just be random, not systematic, patterns. The search for a model with good fit should be guided by thinking about the process that generated the data, not by trial and error (i.e., do not try all possible variable combinations until the residuals look good; that is data dredging). All changes done to the model should be scientifically justified. Usually, model complexity increases, rather than decreases, during the analysis.
 
@@ -4159,9 +4161,9 @@ apply(bsim@coef, 2, quantile, prob=c(0.5, 0.025, 0.975))
 
 ```
 ##       (Intercept) elevation I(elevation^2) I(elevation^3)      I(elevation^4)
-## 50%     -24.47389 0.4005279  -0.0022193960 0.000004917195 -0.0000000038433349
-## 2.5%    -35.19468 0.1985689  -0.0034782638 0.000001373063 -0.0000000070955567
-## 97.5%   -13.44246 0.5977791  -0.0008979514 0.000008310888 -0.0000000004774171
+## 50%     -24.35526 0.3969427  -0.0021925154 0.000004860790 -0.0000000037937921
+## 2.5%    -35.25589 0.1985910  -0.0034728674 0.000001422901 -0.0000000071235123
+## 97.5%   -13.35951 0.5958750  -0.0009090719 0.000008304469 -0.0000000004428238
 ```
 
 To interpret this polynomial function, an effect plot is helpful. To that end, and as we have done before, we calculate fitted values over the range of the covariate, together with compatibility intervals.
@@ -5222,8 +5224,8 @@ quantile(pzeroyrep, prob=c(0.01, 0.99))
 ```
 
 ```
-##        1%       99% 
-## 0.0323000 0.9572625
+##       1%      99% 
+## 0.031625 0.956875
 ```
 
 The observed data contain 47% zero values, which is well within the 98%-range of what the model predicted (3 - 96%). the Bayesian p-value is 0.6.
@@ -5256,12 +5258,8 @@ table(q90yrep)
 
 ```
 ## q90yrep
-##                0                1                2 2.09999999999991 
-##                8               38               48                1 
-##                3                4                5                6 
-##               21                9                7                1 
-##                7                8 
-##                1                2
+##  0  1  2  3  4  5  6  7  8 
+##  8 39 48 23  7  7  1  1  2
 ```
 
 Also, the 90% quantile of the data is within what the model predicts. 
@@ -5312,10 +5310,10 @@ quantile(mageyrep, prob=c(0.01, 0.5,0.99))
 
 ```
 ##       1%      50%      99% 
-## 3.714286 4.714286 5.785714
+## 3.714286 4.733333 5.857143
 ```
 
-The mean age of the 10% of the fields with the highest whitethroat densities is 4.4 years in the observed data set. In the replicated data set it is between 3.71 and 5.79 years. The Bayesian p-value is 0.78. Thus, in around 78% of the replicated data sets the mean age of the 10% fields with the highest whitethroat densities was higher than the observed one (Figure \@ref(fig:agepp)).
+The mean age of the 10% of the fields with the highest whitethroat densities is 4.4 years in the observed data set. In the replicated data set it is between 3.71 and 5.86 years. The Bayesian p-value is 0.78. Thus, in around 78% of the replicated data sets the mean age of the 10% fields with the highest whitethroat densities was higher than the observed one (Figure \@ref(fig:agepp)).
 
 
 ```r
@@ -5397,11 +5395,11 @@ loo1$bias.corrected.LOO.CV; loo2$bias.corrected.LOO.CV
 ```
 
 ```
-## [1] -402.8805
+## [1] -402.8138
 ```
 
 ```
-## [1] -404.7529
+## [1] -404.7114
 ```
 
 ```r
@@ -5409,11 +5407,11 @@ loo1$est.peff; loo2$est.peff
 ```
 
 ```
-## [1] 4.772767
+## [1] 4.804627
 ```
 
 ```
-## [1] 3.477548
+## [1] 3.298244
 ```
 
 
@@ -5449,22 +5447,22 @@ WAIC(mod1, nsim=1000)
 
 ```
 ## $lppd
-## [1] -398.0177
+## [1] -397.9219
 ## 
 ## $pwaic1
-## [1] 4.176538
+## [1] 4.446523
 ## 
 ## $pwaic2
-## [1] 4.546816
+## [1] 4.885389
 ## 
 ## $WAIC1
-## [1] 804.3884
+## [1] 804.7368
 ## 
 ## $WAIC2
-## [1] 805.129
+## [1] 805.6145
 ```
 
-The `lppd` is the log pointwise posterior predictive density (a measure of fit; the better the model fits the data the larger it is). `pwaic1` and `pwaic2` are the two estimates for the effective number of parameters, a measure for the increase in model fit that is solely due to the number of parameters, and that is used to estimate WAIC1 and WAIC2. The WAIC2 values for the second model in our frog example was 809.1. Thus the conclusion is similar as with the cross-validation.  
+The `lppd` is the log pointwise posterior predictive density (a measure of fit; the better the model fits the data the larger it is). `pwaic1` and `pwaic2` are the two estimates for the effective number of parameters, a measure for the increase in model fit that is solely due to the number of parameters, and that is used to estimate WAIC1 and WAIC2. The WAIC2 values for the second model in our frog example was 808.8. Thus the conclusion is similar as with the cross-validation.  
 A technical warning: To compare models, the models must have been fitted using the same data set. R omits observations with missing values when fitting a linear model! Thus, if a predictor variable contains missing values, R fits the model to data excluding the missing cases. We only see this in a small note in the summary output, which is easily overlooked. When excluding the predictor variable with missing values from the model, R fits the model to a larger data set. As a result, the two models cannot be compared because they have been fitted to different data. Therefore, we have to make sure that all models we compare have been fitted to the same data set. Such a line of code may prevent unjustified comparisons:
 
 
@@ -5556,7 +5554,7 @@ bmsmod <- bms(X, mprior="uniform", g="UIP")
 ## ph         0.1290152  0.006211641 0.023388692             1   1
 ## 
 ## Mean no. regressors               Draws             Burnins                Time 
-##            "2.1290"                 "8"                 "0"  "0.005008936 secs" 
+##            "2.1290"                 "8"                 "0"  "0.004990816 secs" 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 "8"                 "8"               "100"               "100" 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -5564,7 +5562,7 @@ bmsmod <- bms(X, mprior="uniform", g="UIP")
 ##     Shrinkage-Stats 
 ##         "Av=0.9924" 
 ## 
-## Time difference of 0.005008936 secs
+## Time difference of 0.004990816 secs
 ```
 
 <img src="2.09-model_comparison_files/figure-html/unnamed-chunk-7-1.png" width="672" />
