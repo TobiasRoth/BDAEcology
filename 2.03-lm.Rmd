@@ -1251,8 +1251,8 @@ This is, to our knowlegde, the only way to use orthogonal polynomials that produ
 newdat <- data.frame(Water = seq(0,130)) 
 newdat$Water.l <- predict(t.poly, newdat$Water)[,1]   # (same as above)
 newdat$Water.q <- predict(t.poly, newdat$Water)[,2]   # (same as above)
-newdat$Water.l.z <- (newdat$Walter.l - mean(newdat$Water.l)) / newdat$Water.l
-newdat$Water.q.z <- (newdat$Walter.q - mean(newdat$Water.q)) / newdat$Water.q
+newdat$Water.l.z <- (newdat$Water.l - mean(newdat$Water.l)) / newdat$Water.l
+newdat$Water.q.z <- (newdat$Water.q - mean(newdat$Water.q)) / newdat$Water.q
 # now, as shown above, create the model matrix and matrix-multiply with the coefficients, or use posterior_epred()
 ```
 
