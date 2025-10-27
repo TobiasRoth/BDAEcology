@@ -350,7 +350,7 @@ The default family argument for `stan_glm` is "gaussian()", hence the following 
 
 ```{r, echo=TRUE, results='hide'}
 library(rstanarm)
-mod.rstanarm <- stan_glm(y~x, data=dat)
+mod.rstanarm <- stan_glm(y~x, data=dat, refresh=0)
 ```
 
 Remember: the regression line found in this fully Bayesian approach is the same as the line found by the least-squares approach using `lm` (this analogy holds as long as we use flat priors)!

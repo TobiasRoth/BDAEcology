@@ -278,7 +278,7 @@ Above, we fitted a linear mixed effects model using `lmer`. Here, we fit the sam
 # mod <-             lmer(log(totCort) ~ Implant + days + Implant:days + (1|Ring),
 #                         data=dat, REML=TRUE)
 mod.rstanarm <- stan_lmer(log(totCort) ~ Implant + days + Implant:days + (1|Ring), 
-                          data=dat)
+                          data=dat, refresh=0)
 ```
 
 `stan_lmer` is "fully Bayesian" (while `lmer` is not Bayesian, and `lmer` + `sim` returns Bayesian draws from the posterior not in a fully Bayesian way, i.e. it assumes flat priors and this cannot be changed). Therefore, it is possible to use custom priors if needed. By default, rstanarm uses weakly informative priors which helps model convergence. You can get the priors used applying the function `prior_summary` on the model object, i.e. "mod.rstanarm" in our example.
