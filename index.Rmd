@@ -5,7 +5,6 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [references/References_new.bib, references/References_fk.bib, references/References_svf.bib]
-csl: apa.csl
 link-citations: true
 github-repo: TobiasRoth/BDAEcology
 cover-image: images/cover.jpg
