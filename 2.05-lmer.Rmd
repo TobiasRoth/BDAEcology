@@ -8,15 +8,16 @@ knitr::include_graphics('images/himmelsherold.jpg', dpi = 150)
 
 ------
 
-
-## Background
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(arm)
+library(rstanarm)
+library(brms)
 library(blmeco)
 ```
 
+
+## Background
 
 ### Why mixed effects models?
 
@@ -186,7 +187,7 @@ The first part relates the fitted value of an observation ($\hat{y_i}$, i.e. the
 
 Several different functions to fit a mixed model have been written in R: `lme`, `gls`, `gee` have been the first ones. Then, `lmer` followed, and now, `stan_lmer` and `brm` allow to fit a large variety of hierarchical models (see also \@ref(brm)). We here start with using `lmer` from the package lme4, because it is kind of a basic function also for `stan_lmer` and `brm`. Further, `sim` can only work with lmer-objects but not the others. To work with `lmer`, we usually load the package arm which contains the function `sim` and also automatically loads the package lme4.
 
-### Fitting a normal linear mixed model using lmer
+### Fitting a normal linear mixed model using lmer, then use sim
 
 The function `lmer` is used similarly to the function `lm`. The only difference is that the random factors are added to the model formula within parentheses, e.g. `+ (1|Ring)`. The "1" stands for the intercept and the "|" means "grouped by". `+ (1|Ring)`, therefore, adds the random deviations for each individual (the $b_{Ring_i}$ in the model formula above) from the overall mean.
 
@@ -211,7 +212,29 @@ round(fixef(mod), 3)
 head(ranef(mod)$Ring) # print the first 6 Ring effects
 ```
 
-## Restricted maximum likelihood estimation (REML)
+
+As done with a normal linear model in Chapter \@ref(lm), we also use the function `sim` to draw (e.g.) 2000 random values from the joint posterior distribution of the model parameters; that is, we draw 2000 values for each parameter while taking the correlation between the parameters into account.
+
+```{r}
+nsim <- 2000
+bsim <- sim(mod, n.sim=nsim)
+str(bsim)
+```
+
+The object produced by the `sim` function when applied to a mer object (= object produced by the functions `lmer` or `glmer`) contains three slots (remember that slots are addressed using the `@` sign in R). The slot “fixef” is a matrix with as many columns as there are parameters in the fixed part of the model. The number of rows corresponds to the number of simulations (we have saved this number in the object “nsim”). The slot “ranef” is a list that contains one element for each random factor. In the our example, there is only one random factor (“Ring”). Therefore, the list contains only one element.
+
+Each element of the ranef slot is a three-dimensional array where the first dimension represents the number of simulations (2000 in our case), the second dimension is the number of groups (factor levels; here this is the number of individuals), and the third dimension corresponds to the number of parameters that are grouped by the specific factor. In the our example, we have included only a random intercept in the model. Therefore, this dimension has a length of one. Later, we will fit models with more parameters per random effect.
+
+From the draws (i.e. draws from the joint posterior distribution), the 2.5% and 97.5% quantiles can be used as a 95% compatibility interval:
+
+```{r}
+round(apply(bsim@fixef, 2,quantile, prob=c(0.025,0.5,0.975)),3)
+```
+
+We come back to the interpretation of these values in the chapter below on how to present the results from this lmer-model. First, we provide some extra information on REML, then we check some model assumptions. After that, we fit the same model using rstanarm and brms. Then, we suggest how the present the results for each of our three model fitting approaches: `lmer` + `sim`, rstanarm (function `stan_lmer`), and brms (function `brm`).
+
+
+#### Restricted maximum likelihood estimation (REML){#reml}
 <!-- we have not yet explained the ML-method. in the old book, Chapter 5. we need to find a place for ML-method ___ pko15.8.25: inserted link to 9.3-->
 For a mixed model the restricted maximum likelihood method is used by default instead of the maximum likelihood (ML) method (see Chapter \@ref(likelihood)). The reason is that the ML-method underestimates the variance parameters because this method assumes that the fixed parameters are known without uncertainty when estimating the variance parameters. However, the estimates of the fixed effects have uncertainty. The REML method uses a mathematical trick to make the estimates for the variance parameters independent of the estimates for the fixed effects. We recommend reading the very understandable description of the REML method in @Zuur.2009. For our purposes, the relevant difference between the two methods is that the ML-estimates are unbiased for the fixed effects but biased for the random effects, whereas the REML-estimates are biased for the fixed effects and unbiased for the random effects. However, when sample size is large compared to the number of model parameters, the differences between the ML- and REML-estimates become negligible. As a guideline, use REML if the interest is in the random effects (variance parameters), and ML if the interest is in the fixed effects. The estimation method can be chosen by setting the argument ‘REML’ to ‘FALSE’ (default is ‘TRUE’).
 
@@ -222,7 +245,7 @@ mod <- lmer(log(totCort) ~ Implant + days + Implant:days + (1|Ring),
 
 When we fit the model by `stan_lmer` from the rstanarm-package or `brm` from the brms-package, i.e., using the Bayes theorem instead of ML or REML, we do not have to care about this choice (of course!). The result from a Bayesian analyses is unbiased for all parameters (at least from a mathematical point of view - also parameters from a Bayesian model can be biased if the model violates assumptions or is confounded). 
 
-## Assessing model assumptions
+#### Assessing model assumptions for the lmer fit
 As with a simple linear model, the assumptions are carefully checked before inference is drawn from a mixed model. The assumptions are, as explained in Chapter \@ref(residualanalysis), that the residuals are independent and identically distributed (iid). In principle, the same methods described in Chapter \@ref(residualanalysis) are used to assess violation of model assumptions in mixed models. However, the function `plot` does not produce the standard diagnostic residual plots from an `lmer` object. Therefore, these plots have to be coded by hand.
 
 In the first plot of Figure \@ref(fig:mermodplot) we see that the residuals scatter around zero with a few exceptions in the lower left part of the panel. A positive correlation between the residuals and the fitted values (not present in the example data) would not bother us statistically in the case of a mixed model, but it indicates strong shrinkage and may have biological meaning.
@@ -246,6 +269,22 @@ qqline(ranef(mod)$Ring[,1]) # qq of random effects
 ```
 
 We do not see a serious deviation in the distribution of the random effects from the normal distribution.
+
+### Fitting a normal linear model using rstanarm
+Above, we fitted a linear mixed effects model using `lmer`. Here, we fit the same model using the package rstanarm. For that, we apply the function `stan_lmer`; the model formula remains unchanged, but we don't need to worry about the REML-argument (Chapter \@ref(reml)):
+
+```{r}
+# lmer-call from above for comparison:
+# mod <-             lmer(log(totCort) ~ Implant + days + Implant:days + (1|Ring),
+#                         data=dat, REML=TRUE)
+mod.rstanarm <- stan_lmer(log(totCort) ~ Implant + days + Implant:days + (1|Ring), 
+                          data=dat)
+```
+
+`stan_lmer` is "fully Bayesian" (while `lmer` is not Bayesian, and `lmer` + `sim` returns Bayesian draws from the posterior not in a fully Bayesian way, i.e. it assumes flat priors and this cannot be changed). Therefore, it is possible to use custom priors if needed. 
+
+By default, rstanarm creates 
+
 
 ## Presenting the results
 We use the function `sim` to draw 2000 random values from the joint posterior distribution of the model parameters; that is, we draw 2000 values for each parameter while taking the correlation between the parameters into account.

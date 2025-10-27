@@ -12,6 +12,14 @@ knitr::include_graphics('images/snowfinch3.jpg', dpi = 150)
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(arm)
+library(blmeco)
+library(rstanarm)
+library(brms)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(Rmisc)
+library(knitr)
 ```
 
 
