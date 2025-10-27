@@ -34,7 +34,7 @@ Predictors that are defined as fixed effects are either numeric or, if they are 
 Typical fixed effects are: treatment, sex, age classes, or season. Typical random effects are: nest, individual, field, school, or study plot. It depends sometimes on the aim of the study whether a factor should be treated as fixed or random. When we would like to compare the average size of a corn cob between specific regions, then we include region as a fixed factor. However, when we would like to know how the size of a corn cob is related to the irrigation system and we have several measurements within each of a sample of regions, then we treat region as a random factor.
 
 
-### Random factors and partial pooling
+### Random factors and partial pooling{#shrinkage}
 
 In a model with fixed factors, the differences of the group means to the mean of the reference group (the "baseline level") are estimated as individual model parameters. Hence, we have $k-1$ (independent) model parameters, where $k$ is the number of groups (or number of factor levels). In contrast, for a random factor, the between-group variance is estimated and the $k$ group-specific means are assumed to be normally distributed around the population mean (= overall mean). These $k$ means are thus not independent. We usually call the difference between the specific mean of a group $g$ and the mean across all groups $b_g$ (one value per group). They are assumed to be realizations of the same (in most cases normal) distribution with a mean of zero. They are like residuals. The variance of the $b_g$ values is the among-group variance. 
 
@@ -268,7 +268,7 @@ qqnorm(ranef(mod)$Ring[,1], main="normal QQ-plot, random effects")
 qqline(ranef(mod)$Ring[,1]) # qq of random effects
 ```
 
-We do not see a serious deviation in the distribution of the random effects from the normal distribution.
+We do not see a serious deviation in the distribution of the random effects from the normal distribution. Remember from the chapter on partial pooling and shrinkage (Chapter \@ref(shrinkage)) that a positive correlation between fitted values and residuals often shows up in mixed models - this is due to shrinkage and not a violation of model assumptions. In our example, we don't see such an effect, hence shrinkage does not seem to be very strong.
 
 ### Fitting a normal linear model using rstanarm
 Above, we fitted a linear mixed effects model using `lmer`. Here, we fit the same model using the package rstanarm. For that, we apply the function `stan_lmer`; the model formula remains unchanged, but we don't need to worry about the REML-argument (Chapter \@ref(reml)):
@@ -281,30 +281,65 @@ mod.rstanarm <- stan_lmer(log(totCort) ~ Implant + days + Implant:days + (1|Ring
                           data=dat)
 ```
 
-`stan_lmer` is "fully Bayesian" (while `lmer` is not Bayesian, and `lmer` + `sim` returns Bayesian draws from the posterior not in a fully Bayesian way, i.e. it assumes flat priors and this cannot be changed). Therefore, it is possible to use custom priors if needed. 
+`stan_lmer` is "fully Bayesian" (while `lmer` is not Bayesian, and `lmer` + `sim` returns Bayesian draws from the posterior not in a fully Bayesian way, i.e. it assumes flat priors and this cannot be changed). Therefore, it is possible to use custom priors if needed. By default, rstanarm uses weakly informative priors which helps model convergence. You can get the priors used applying the function `prior_summary` on the model object, i.e. "mod.rstanarm" in our example.
 
-By default, rstanarm creates 
+You can set additional arguments (that are not available / needed in `lmer`) such as weights and settings for the MCMC sampling (see Chapter \@ref(brm)).
+
+Checking model assumptions will be addressed together with the model fitted using `brm`, done next.
+
+### Fitting a normal linear model using brm
+
+As with rstanarm, fitting the linear mixed effects model with `brm` is straightforward. Because compiling the model takes a little time, we here save the compiled model (as we did with the analogous normal linear model), but this is optional.
+
+```{r}
+# mod.lmm.brm.compiled <- brm(log(totCort) ~ Implant + days + Implant:days + (1|Ring), 
+#                         data=dat, chains=0)
+# save(mod.lmm.brm.compiled,file="RData/mod.lmm.brm.compiled.RData")
+load("RData/mod.lmm.brm.compiled.RData")
+mod.brm <- update(mod.lmm.brm.compiled, recompile = FALSE, seed=123, refresh=0)
+```
+
+The priors used can be accessed using `prior_summary(mod.brm)`. If needed, you can change the priors using `set_prior`. You can adjust the MCMC settings by different arguments of `brm`, e.g. iter, warmup. In `brm`, you can also add other model components such as autocorrelation, weighting and more. If you get warnings, check Chapter \@ref(stan).
+
+#### Assessing model assumptions for the rstanarm and brm fit
+
+We can and should do similar model checking as we can do with an object from `lmer`, see the chapter above. We can use the function `fitted` and `resid` as above, but there is a difference for the brm-object: these functions don't only return a point estimate for the fitted value or the residual, but also, for each of them, a standard error and a 2.5% and 97.5% quantile (i.e. the 95% compatibility interval for each fitted value / for each residual). Hence, for the plots, we generally have to specify that we only want the point estimate, labelled "Estimate":
+
+```{r}
+t.res <- resid(mod.brm)[,"Estimate"] # because we need that several times, we store it in a temporary object
+scatter.smooth(fitted(mod.brm)[,"Estimate"], t.res); abline(h=0, lty=2)
+```
+
+Remember again: if there is a positive correlation in this plot, it is likely due to shrinkage (Chapter \@ref(shrinkage)) and not a violation of model assumptions.
+
+You can use "t.res" to make the other residual plots such as residuals vs. each predictor (checks whether the assumption of a linear relationship is reasonable), residual QQ plot, or, if needed, plots to check for temporal or spatial autocorrelation.
+
+For the residual plots suggested above (for the `lmer`-fitted model) regarding random term check out `str(ranef(mod.rstanarm))` and `str(ranef(mod.brm))`: from these you see that the random intercepts for the "Ring" random factor can be accessed using `ranef(mod.rstanarm)$Ring[,"(Intercept)"]` and `ranef(mod.brm)$Ring[,"Estimate",]`, respectively (the 2nd dimension for the brm-case has names "Estimate", "Est.Error", "Q2.5", "Q97.5" - for here, we only need the "Estimate").
+
+One of the best ways to check several model assumptions (linearity, data distribution) is posterior predictive model checking, which is explained in Chapter \@ref(modelchecking) in the context of a generalize linear mixed model. And the really great thing about using rstanarm or brm is that we can very easily do posterior predictive model checking. The principal is very simple: we use the model to generate new data (this means that we use the observed predictor values and generate new outcome variable values, one for each data row). If our model is a good model, the generated data (i.e. new log-totCourt values in our case) should look similar to the real data (i.e. the real log-totCourt values). We can also do that based on the object generated by `sim` (i.e. approach `lmer` + `sim`), but it takes more coding. With an rstanarm-object, this is the code:
+
+```{r}
+pp_check(mod.rstanarm)
+```
+
+We see in dark blue the distribution of the observed log-totCort values, and in lightblue the distribution from many model-generated log-totCort values (using the predictor values of the original data). We see an overall good concordance between the real data and the model-generated data. We see a little deviation at very small log-totCort values, where the real data has a slight local peak. We can check in the data why there are these small values. If they are not errors, and if we are absolutely interested in modelling this aspect of the data, our model is not a good model - it does not capture the small peak of small values. But, more likely, what happens there is not very important for our biological question, and we can be happy with the model.
+
+We look at other checks we can do based on data generated from the model, i.e. by posterior predictive model checking, in \@Chapter(postpredmodcheck).
 
 
 ## Presenting the results
-We use the function `sim` to draw 2000 random values from the joint posterior distribution of the model parameters; that is, we draw 2000 values for each parameter while taking the correlation between the parameters into account.
 
-```{r}
-nsim <- 2000
-bsim <- sim(mod, n.sim=nsim)
-str(bsim)
-```
+### Presenting the results: from sim
 
-The object produced by the `sim` function when applied to a mer object (= object produced by the functions `lmer` or `glmer`) contains three slots (remember that slots are addressed using the `@` sign in R). The slot “fixef” is a matrix with as many columns as there are parameters in the fixed part of the model. The number of rows corresponds to the number of simulations (we have saved this number in the object “nsim”). The slot “ranef” is a list that contains one element for each random factor. In the previous example, there is only one random factor (“Ring”). Therefore, the list contains only one element.
-Each element of the ranef slot is a three-dimensional array where the first dimension represents the number of simulations (2000 in our case), the second dimension is the number of groups (factor levels; here this is the number of individuals), and the third dimension corresponds to the number of parameters that are grouped by the specific factor. In the previous example, we have included only a random intercept in the model. Therefore, this dimension has a length of one. In the following we will fit models with more parameters per random effect.
-From the simulated values (i.e. draws from the joint posterior distribution), the 2.5% and 97.5% quantiles can be used for the 95% credible interval:
+Above, we have used the function `sim` to draw 2000 random values from the joint posterior distribution of the model parameters. We generated the point estimates and 95% compatibility intervals for each parameter using:
 
 ```{r}
 round(apply(bsim@fixef, 2,quantile, prob=c(0.025,0.5,0.975)),3)
 ```
 
 Some effort is needed to interpret models with interactions (independent of whether it is a mixed model or not). We see that in the corticosterone-treated nestlings, the logarithm of the corticosterone measure increases from before implantation to day 2 by 1.7 (95% compatiblity interval CI: 1.4-1.9), which is quite substantial. To get this increase for the placebo-treated individuals, we have to add the interaction parameter, thus the increase in placebo nestlings is 1.7-1.7 = 0. The interaction parameter, -1.7 (95% CI: -2.1 to -1.4), measures the difference between placebo and corticosterone nestlings in their response to the treatment; it is, therefore, an important result.
-To better see what really happens, we often plot the fitted values with its CI and the observations in one plot. To this end, we first prepare a new data frame that contains a row for each factor level (“Implant” and “days”). Then, the fitted value for each of the factor-level combinations is calculated 2000 times (once for each set of model parameters from the simulated posterior distribution) to obtain 2000 simulated values from the posterior distribution of the fitted values. The 2.5% and 97.5% quantiles of these fitted values are used as lower and upper bounds of the 95% compatibility interval.
+
+To better see what really happens, we plot the fitted values with its CI and (optionally but often with additional benefit) the observations in one plot. To this end, we first prepare a new data frame that contains a row for each factor level (“Implant” and “days”). Then, the fitted value for each of the factor-level combinations is calculated 2000 times (once for each set of model parameters from the simulated posterior distribution) to obtain 2000 simulated values from the posterior distribution of the fitted values. The 2.5% and 97.5% quantiles of these fitted values are used as lower and upper bounds of the 95% compatibility interval.
 
 ```{r}
 newdat <- expand.grid(Implant=factor(c("C","P"),levels=levels(dat$Implant)),
@@ -351,6 +386,38 @@ mtext(side=1,line=3,adj=0.5,cex=a,font=2,"Days after implantation",outer=FALSE)
 points(c(10,10),c(4.5,4.8),pch=21,bg=c("black","white"))
 text(c(11,11),c(4.5,4.8),c("placebo", "corticosterone"),adj=c(0,0.5))
 ```
+
+
+### Presenting the results: from rstanarm
+We present in more detail the advantages and differences of extracting the parameter estimates and their 95% compatibility intervals in the normal linear model chapter (\@ref(lm)). From the rstanarm model, we still need the "newdat" object created above, but we can then use `posterior_epred`, i.e. we don't have to do the model matrix multiplication done above.
+
+There is one additional thing we have do do in the case of a mixed model: `posterior_epred` predicts taking all random effects into account. For an effectplot, we typically want to show the population estimate, not a separate estimate for random levels. Hence, we have to set the argument `re.form=NA`. If you forget, there will be an error, because the newdat does not contain the random factor.
+
+```{r}
+  # newdat generated as above. Remember to ascertain that the factor level ordering in 
+  # newdat is the same as in dat - else you will mix up the estimates among factor levels,
+  # if levels are not alphanumeric!
+newdat.rstanarm <- expand.grid(Implant=factor(c("C","P"),levels=levels(dat$Implant)),
+                               days=factor(c("before",2,20),levels=levels(dat$days)))
+fitmat.rstanarm <- posterior_epred(mod.rstanarm, newdata=newdat, re.form=NA)
+```
+
+From this, you proceed as with the "fitmat" from above.
+
+### Presenting the results: from brms
+
+We can use the function `conditional_effects` to make effectplots from a brm-fitted model. There is no need to create "newdat" by hand, as done above. `contional_effects` also makes a plot, but generally it may be better to store the values in a "newdat" and use that to make your custom plot. Since we have an interaction in the model, it makes no sense to only plot for "Implant" or only for "days". Hence, we set `effects=c("Implant:days)` to get estimates (and 95% compatibility intevals) for all combinations of the two factors.
+
+And: other than with `posterior_epred`, the default of `conditional_effects` is to not consider random effects (the default for the argument, here called `re_formula`, is NA).
+
+```{r eval=FALSE}
+newdat.brm <- conditional_effects(mod.brm, effects=c("Implant:days"))
+```
+
+Now, again, use newdat.brm to make the plot as you please.
+
+`posterior_epred` makes generating effectplots easier, `conditional_effects` makes it very easy. For both functions, this is especially true when you want to predict for random factors, and very especially if you have random slopes (next chapter) - then is becomes brain gym if you want to do it using `lmer` + `sim` (or `glmer` + `sim`). We do some of that brain gym in the next chapter, but before it starts, we remember you that using rstanarm or brm makes simplifies this considerably.
+
 ## Random intercept and slope
 In the preceding model, only the intercept $\beta_0$ was modeled per individual (the model allowed for between-individual variance in $\beta_0$). But a random effect does not need to be restricted to the intercept. Any parameter can be modeled, if the data allow. For example, in the previous model we cannot include an individual-specific difference between corticosterone and placebo treatment because each individual obtained only one treatment. Therefore, the data do not contain information about between-individual differences in the treatment effect, and it does not make sense to include such a structure in the model.
 In another study on barn owls, we were interested in the effect of corticosterone on growth rate. Here, we measured wing length (as a proxy for size) at different ages of individuals that had been treated either with corticosterone or with a placebo implant. We used the slope of the regression line for wing length on age as a growth rate measure, and we were interested in the difference in this slope between corticosterone- and placebo-implanted individuals.
@@ -413,6 +480,8 @@ for(i in 1:nsim) fitmat[,i] <- Xmat %*% bsim@fixef[i,]
 newdat$lower <- apply(fitmat, 1, quantile, prob=0.025)
 newdat$upper <- apply(fitmat, 1, quantile, prob=0.975)
 ```
+
+Now follows, as warned above, some brain gym to get the effect plot including the random factor. As also stated above, it would be easier to include the random effect levels in "newdat" and then use `posterior_epred` or, with no need for a newdat, `conditional_effects`, but for these, you need to fit the model with rstanarm or brms (`conditional_effects` only works with a brms-object).
 
 We do not extract the mean of the posterior distribution of the fitted values because we use the ML estimates for drawing the mean regression lines. These estimates are not subject to simulation error. Note that we use Age.z on the x-axis, but we label the x-axis with back-transformed values so that we are able to use the `abline` function to draw the regression lines directly from the model parameters.
 

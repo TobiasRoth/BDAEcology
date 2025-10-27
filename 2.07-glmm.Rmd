@@ -245,10 +245,15 @@ get_prior(fledge|trials(clutch) ~ colsize.z + cow + dung.z + (1|farm.f),
 # specify own priors
 myprior <- prior(normal(0,5), class="b")
              
+# as before, we save the compiled model, just to speed up the rendering of the book - 
+# in analyses, you may or may not store the compiled model.
 
-mod.brm <- brm(fledge|trials(clutch) ~ colsize.z + cow + dung.z + (1|farm.f) , 
+mod.glmm.brm <- brm(fledge|trials(clutch) ~ colsize.z + cow + dung.z + (1|farm.f) , 
                data=dat, family=binomial(link="logit"),
-               prior=myprior,
+               prior=myprior, chains = 0)
+save(mod.glmm.brm, file="RData/mod.glmm.brm.RData")
+load("RData/mod.glmm.brm.RData")
+mod.brm <- update(mod.glmm.brm,
                warmup = 500, 
                iter = 2000, 
                chains = 2,
@@ -256,19 +261,14 @@ mod.brm <- brm(fledge|trials(clutch) ~ colsize.z + cow + dung.z + (1|farm.f) ,
                cores = 2,
                seed = 123)
 # note: thin=1 is default and we did not change this here.
-
-
 ```
 <!-- Question to fk: I pasted this part of the code to this separate chunk. Do we need it and should I explain it?
 and why did you exclude the random intercept? Or did I do this by mistake?, fk: only in this code we see that the prior for the variance parameter is restricted to positive values. I would not show the code, otherwise we have to explain the Stan code. It is a good idea to have it in a junk that is not shown.
 pko 17.10.25: I have introduced the make_stancode where brm is first introduced in the lm chapter, I think it can be deleted here...
 -->
 ```{r, echo=FALSE, eval=FALSE}
-
 make_stancode(fledge|trials(clutch) ~ colsize.z + cow + dung.z, #+ (1|farm.f)
               data=dat, family=binomial(link="logit"))
-
-
 ```
 
 <!-- moved to chapter lm - but may be still do the mcmc_plot here?
@@ -288,7 +288,7 @@ mcmc_plot(mod.brm, type = "trace")
 <!--siehe Kapitel 5.3 hier: https://www.rensvandeschoot.com/tutorials/generalised-linear-models-with-brms/, fk: dieses Buch ist auch noch under construction. Ich würde glaubs nur zu fertigen Büchern einen Link anfügen.-->
 
 
-##### Checking model fit by posterior predictive model checking
+##### Checking model fit by posterior predictive model checking{#postpredmodcheck}
 
 To assess how well the model fits to the data we do posterior predictive model checking (Chapter \@ref(modelchecking)). For binomial as well as for Poisson models comparing the standard deviation of the data with those of replicated data from the model is particularly important. If the standard deviation of the real data would be much higher compared to the ones of the replicated data from the model, overdispersion would be an issue. However, here, the model is able to capture the variance in the data correctly (Figure \@ref(fig:ppbinomial)). 
 The fitted vs observed plot also shows a good fit.
@@ -309,6 +309,17 @@ abline(v=sd(dat$fledge), col="red", lwd=2)
 plot(fitted(mod.brm)[,1], dat$fledge, pch=16, cex=0.6)
 abline(0,1)
 
+```
+
+Another classical question we can address using posterior predictive model checking is whether we have zero-inflation, i.e. whether the data has more zeros than the model predicts. In our example, there is only one Zero among 63 data rows, hence this is certainly not an issue. Nevertheless, we provide the code how this could be checked (analogous to checking the standard deviation done above).
+
+```{r eval=FALSE}
+Zeroyrep <- apply(yrep, 1, FUN=function(x)sum(x==0))   # count the nr of zeros in each replicate data
+hist(Zeroyrep, xlab="Nr of zeros", xlim=range(c(Zeroyrep,sum(dat$fledge==0))))
+abline(v=sum(dat$fledge==0), col="red", lwd=2)
+  # the red line should not be far outside the gray histogram; the xlim used in the histogram
+  # makes sure that the red line will be visible in the plot, because sometimes it can be far
+  # away from the histogram (which would show that the model is not great regarding Zeros)
 ```
 
 After checking the diagnostic plots, the posterior predictive model checking and the general model fit, we assume that the model describes the data generating process reasonably well, so that we can proceed to make inferences from the model. 
