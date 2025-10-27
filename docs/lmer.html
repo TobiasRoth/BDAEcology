@@ -4,26 +4,26 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>13 Linear Mixed Effect Models | Bayesian Data Analysis in Ecology with R and Stan</title>
-  <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <title>13 Linear mixed effect models | Bayesian Data Analysis in Ecology with R and Stan</title>
+  <meta name="description" content="This GitHub-book is a collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="13 Linear Mixed Effect Models | Bayesian Data Analysis in Ecology with R and Stan" />
+  <meta property="og:title" content="13 Linear mixed effect models | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/images/cover.jpg" />
-  <meta property="og:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
+  <meta property="og:description" content="This GitHub-book is a collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="github-repo" content="TobiasRoth/BDAEcology" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="13 Linear Mixed Effect Models | Bayesian Data Analysis in Ecology with R and Stan" />
+  <meta name="twitter:title" content="13 Linear mixed effect models | Bayesian Data Analysis in Ecology with R and Stan" />
   
-  <meta name="twitter:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
+  <meta name="twitter:description" content="This GitHub-book is a collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="twitter:image" content="/images/cover.jpg" />
 
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2024-12-13" />
+<meta name="date" content="2025-10-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -55,8 +55,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -66,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -200,20 +201,21 @@ div.csl-indent {
 <li class="chapter" data-level="2.5.2" data-path="basics.html"><a href="basics.html#comparison-of-a-sample-with-a-fixed-value-one-sample-t-test"><i class="fa fa-check"></i><b>2.5.2</b> Comparison of a sample with a fixed value (one-sample t-test)</a></li>
 <li class="chapter" data-level="2.5.3" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups-two-sample-t-test"><i class="fa fa-check"></i><b>2.5.3</b> Comparison of the locations between two groups (two-sample t-test)</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.6</b> Summary</a></li>
+<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#whyBayes"><i class="fa fa-check"></i><b>2.6</b> Comparing frequentist and Bayesian approach - an why we use Bayes</a></li>
+<li class="chapter" data-level="2.7" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.7</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="analyses_steps.html"><a href="analyses_steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="analyses_steps.html"><a href="analyses_steps.html#step1"><i class="fa fa-check"></i><b>3.1</b> Plausibility of Data</a></li>
+<li class="chapter" data-level="3.1" data-path="analyses_steps.html"><a href="analyses_steps.html#step1"><i class="fa fa-check"></i><b>3.1</b> Plausibility of data</a></li>
 <li class="chapter" data-level="3.2" data-path="analyses_steps.html"><a href="analyses_steps.html#step2"><i class="fa fa-check"></i><b>3.2</b> Relationships</a></li>
-<li class="chapter" data-level="3.3" data-path="analyses_steps.html"><a href="analyses_steps.html#step3"><i class="fa fa-check"></i><b>3.3</b> Data Distribution</a></li>
-<li class="chapter" data-level="3.4" data-path="analyses_steps.html"><a href="analyses_steps.html#step4"><i class="fa fa-check"></i><b>3.4</b> Preparation of Explanatory Variables</a></li>
-<li class="chapter" data-level="3.5" data-path="analyses_steps.html"><a href="analyses_steps.html#step5"><i class="fa fa-check"></i><b>3.5</b> Data Structure</a></li>
-<li class="chapter" data-level="3.6" data-path="analyses_steps.html"><a href="analyses_steps.html#step6"><i class="fa fa-check"></i><b>3.6</b> Define Prior Distributions</a></li>
-<li class="chapter" data-level="3.7" data-path="analyses_steps.html"><a href="analyses_steps.html#step7"><i class="fa fa-check"></i><b>3.7</b> Fit the Model</a></li>
-<li class="chapter" data-level="3.8" data-path="analyses_steps.html"><a href="analyses_steps.html#step8"><i class="fa fa-check"></i><b>3.8</b> Check Model</a></li>
-<li class="chapter" data-level="3.9" data-path="analyses_steps.html"><a href="analyses_steps.html#step9"><i class="fa fa-check"></i><b>3.9</b> Model Uncertainty</a></li>
-<li class="chapter" data-level="3.10" data-path="analyses_steps.html"><a href="analyses_steps.html#step10"><i class="fa fa-check"></i><b>3.10</b> Draw Conclusions</a></li>
+<li class="chapter" data-level="3.3" data-path="analyses_steps.html"><a href="analyses_steps.html#step3"><i class="fa fa-check"></i><b>3.3</b> Data distribution</a></li>
+<li class="chapter" data-level="3.4" data-path="analyses_steps.html"><a href="analyses_steps.html#step4"><i class="fa fa-check"></i><b>3.4</b> Preparation of explanatory variables</a></li>
+<li class="chapter" data-level="3.5" data-path="analyses_steps.html"><a href="analyses_steps.html#step5"><i class="fa fa-check"></i><b>3.5</b> Data structure</a></li>
+<li class="chapter" data-level="3.6" data-path="analyses_steps.html"><a href="analyses_steps.html#step6"><i class="fa fa-check"></i><b>3.6</b> Define prior distributions</a></li>
+<li class="chapter" data-level="3.7" data-path="analyses_steps.html"><a href="analyses_steps.html#step7"><i class="fa fa-check"></i><b>3.7</b> Fit the model</a></li>
+<li class="chapter" data-level="3.8" data-path="analyses_steps.html"><a href="analyses_steps.html#step8"><i class="fa fa-check"></i><b>3.8</b> Check model</a></li>
+<li class="chapter" data-level="3.9" data-path="analyses_steps.html"><a href="analyses_steps.html#step9"><i class="fa fa-check"></i><b>3.9</b> Model uncertainty</a></li>
+<li class="chapter" data-level="3.10" data-path="analyses_steps.html"><a href="analyses_steps.html#step10"><i class="fa fa-check"></i><b>3.10</b> Present model results</a></li>
 <li class="chapter" data-level="" data-path="analyses_steps.html"><a href="analyses_steps.html#further-reading-1"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>4</b> Probability distributions</a>
@@ -236,10 +238,23 @@ div.csl-indent {
 <li class="chapter" data-level="4.3.6" data-path="distributions.html"><a href="distributions.html#f-distribution"><i class="fa fa-check"></i><b>4.3.6</b> F-distribution</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="rfunctions.html"><a href="rfunctions.html"><i class="fa fa-check"></i><b>5</b> Important R-functions</a>
+<li class="chapter" data-level="5" data-path="transformations.html"><a href="transformations.html"><i class="fa fa-check"></i><b>5</b> Transformations</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="rfunctions.html"><a href="rfunctions.html#data-preparation"><i class="fa fa-check"></i><b>5.1</b> Data preparation</a></li>
-<li class="chapter" data-level="5.2" data-path="rfunctions.html"><a href="rfunctions.html#figures"><i class="fa fa-check"></i><b>5.2</b> Figures</a></li>
+<li class="chapter" data-level="5.1" data-path="transformations.html"><a href="transformations.html#some-r-specific-aspects"><i class="fa fa-check"></i><b>5.1</b> Some R-specific aspects</a></li>
+<li class="chapter" data-level="5.2" data-path="transformations.html"><a href="transformations.html#first-aid-transformations"><i class="fa fa-check"></i><b>5.2</b> First-aid transformations</a></li>
+<li class="chapter" data-level="5.3" data-path="transformations.html"><a href="transformations.html#logtransformation"><i class="fa fa-check"></i><b>5.3</b> Log-transformation with Stahel</a></li>
+<li class="chapter" data-level="5.4" data-path="transformations.html"><a href="transformations.html#ztransformation"><i class="fa fa-check"></i><b>5.4</b> Centering and scaling (z-transformation)</a></li>
+<li class="chapter" data-level="5.5" data-path="transformations.html"><a href="transformations.html#transformationspolynomials"><i class="fa fa-check"></i><b>5.5</b> Raw and orthogonal polynomials</a></li>
+<li class="chapter" data-level="5.6" data-path="transformations.html"><a href="transformations.html#square-root-transformation"><i class="fa fa-check"></i><b>5.6</b> Square-root transformation</a></li>
+<li class="chapter" data-level="5.7" data-path="transformations.html"><a href="transformations.html#arcsinus-square-root-transformation"><i class="fa fa-check"></i><b>5.7</b> Arcsinus-square-root transformation</a></li>
+<li class="chapter" data-level="5.8" data-path="transformations.html"><a href="transformations.html#logit-transformation"><i class="fa fa-check"></i><b>5.8</b> Logit transformation</a></li>
+<li class="chapter" data-level="5.9" data-path="transformations.html"><a href="transformations.html#categorizing-and-decategorizing"><i class="fa fa-check"></i><b>5.9</b> Categorizing and decategorizing</a></li>
+<li class="chapter" data-level="5.10" data-path="transformations.html"><a href="transformations.html#transformationscircular"><i class="fa fa-check"></i><b>5.10</b> Sinus and cosinus transformation for circular variables</a></li>
+<li class="chapter" data-level="5.11" data-path="transformations.html"><a href="transformations.html#cloglog-probit-inverse-transformation"><i class="fa fa-check"></i><b>5.11</b> Cloglog, probit, inverse transformation</a></li>
+<li class="chapter" data-level="5.12" data-path="transformations.html"><a href="transformations.html#identity-transformation"><i class="fa fa-check"></i><b>5.12</b> Identity transformation</a></li>
+<li class="chapter" data-level="5.13" data-path="transformations.html"><a href="transformations.html#transformations-on-the-outcome-variable"><i class="fa fa-check"></i><b>5.13</b> Transformations on the outcome variable</a></li>
+<li class="chapter" data-level="5.14" data-path="transformations.html"><a href="transformations.html#back-transformation"><i class="fa fa-check"></i><b>5.14</b> Back-transformation</a></li>
+<li class="chapter" data-level="5.15" data-path="transformations.html"><a href="transformations.html#applythesametransformation"><i class="fa fa-check"></i><b>5.15</b> Applying the transformations to new data</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="reproducibleresearch.html"><a href="reproducibleresearch.html"><i class="fa fa-check"></i><b>6</b> Reproducible research</a>
 <ul>
@@ -250,6 +265,10 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="7.1" data-path="furthertopics.html"><a href="furthertopics.html#bioacoustic-analyse"><i class="fa fa-check"></i><b>7.1</b> Bioacoustic analyse</a></li>
 <li class="chapter" data-level="7.2" data-path="furthertopics.html"><a href="furthertopics.html#python"><i class="fa fa-check"></i><b>7.2</b> Python</a></li>
+<li class="chapter" data-level="7.3" data-path="furthertopics.html"><a href="furthertopics.html#some-r"><i class="fa fa-check"></i><b>7.3</b> Some R</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="furthertopics.html"><a href="furthertopics.html#date-on-x-axis"><i class="fa fa-check"></i><b>7.3.1</b> Date on x-axis</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>II BAYESIAN DATA ANALYSIS</b></span></li>
 <li class="chapter" data-level="8" data-path="PART-II.html"><a href="PART-II.html"><i class="fa fa-check"></i><b>8</b> Introduction to PART II</a>
@@ -282,45 +301,55 @@ div.csl-indent {
 <li class="chapter" data-level="11.1" data-path="lm.html"><a href="lm.html#linear-regression"><i class="fa fa-check"></i><b>11.1</b> Linear regression</a>
 <ul>
 <li class="chapter" data-level="11.1.1" data-path="lm.html"><a href="lm.html#background"><i class="fa fa-check"></i><b>11.1.1</b> Background</a></li>
-<li class="chapter" data-level="11.1.2" data-path="lm.html"><a href="lm.html#fitting-a-linear-regression-in-r"><i class="fa fa-check"></i><b>11.1.2</b> Fitting a Linear Regression in R</a></li>
-<li class="chapter" data-level="11.1.3" data-path="lm.html"><a href="lm.html#drawing-conclusions"><i class="fa fa-check"></i><b>11.1.3</b> Drawing Conclusions</a></li>
+<li class="chapter" data-level="11.1.2" data-path="lm.html"><a href="lm.html#fitting-a-linear-regression-in-r"><i class="fa fa-check"></i><b>11.1.2</b> Fitting a linear regression in R</a></li>
+<li class="chapter" data-level="11.1.3" data-path="lm.html"><a href="lm.html#presenting-the-results"><i class="fa fa-check"></i><b>11.1.3</b> Presenting the results</a></li>
 <li class="chapter" data-level="11.1.4" data-path="lm.html"><a href="lm.html#interpretation-of-the-r-summary-output"><i class="fa fa-check"></i><b>11.1.4</b> Interpretation of the R summary output</a></li>
 </ul></li>
 <li class="chapter" data-level="11.2" data-path="lm.html"><a href="lm.html#linear-model-with-one-categorical-predictor-one-way-anova"><i class="fa fa-check"></i><b>11.2</b> Linear model with one categorical predictor (one-way ANOVA)</a></li>
-<li class="chapter" data-level="11.3" data-path="lm.html"><a href="lm.html#other-variants-of-normal-linear-models-two-way-anova-analysis-of-covariance-and-multiple-regression"><i class="fa fa-check"></i><b>11.3</b> Other variants of normal linear models: Two-way anova, analysis of covariance and multiple regression</a>
+<li class="chapter" data-level="11.3" data-path="lm.html"><a href="lm.html#other-variants-of-normal-linear-models"><i class="fa fa-check"></i><b>11.3</b> Other variants of normal linear models</a>
 <ul>
-<li class="chapter" data-level="11.3.1" data-path="lm.html"><a href="lm.html#linear-model-with-two-categorical-predictors-two-way-anova"><i class="fa fa-check"></i><b>11.3.1</b> Linear model with two categorical predictors (two-way ANOVA)</a></li>
+<li class="chapter" data-level="11.3.1" data-path="lm.html"><a href="lm.html#twowayanova"><i class="fa fa-check"></i><b>11.3.1</b> Linear model with two categorical predictors (two-way ANOVA)</a></li>
 <li class="chapter" data-level="11.3.2" data-path="lm.html"><a href="lm.html#a-linear-model-with-a-categorical-and-a-numeric-predictor-ancova"><i class="fa fa-check"></i><b>11.3.2</b> A linear model with a categorical and a numeric predictor (ANCOVA)</a></li>
 </ul></li>
 <li class="chapter" data-level="11.4" data-path="lm.html"><a href="lm.html#collinearity"><i class="fa fa-check"></i><b>11.4</b> Partial coefficients and some comments on collinearity</a></li>
-<li class="chapter" data-level="11.5" data-path="lm.html"><a href="lm.html#orderedfactors"><i class="fa fa-check"></i><b>11.5</b> Ordered Factors and Contrasts</a></li>
-<li class="chapter" data-level="11.6" data-path="lm.html"><a href="lm.html#polynomials"><i class="fa fa-check"></i><b>11.6</b> Quadratic and Higher Polynomial Terms</a></li>
+<li class="chapter" data-level="11.5" data-path="lm.html"><a href="lm.html#orderedfactors"><i class="fa fa-check"></i><b>11.5</b> Ordered factors and contrasts</a></li>
+<li class="chapter" data-level="11.6" data-path="lm.html"><a href="lm.html#lmpolynomials"><i class="fa fa-check"></i><b>11.6</b> Quadratic and higher polynomial terms</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="residualanalysis.html"><a href="residualanalysis.html"><i class="fa fa-check"></i><b>12</b> Assessing Model Assumptions</a>
+<li class="chapter" data-level="12" data-path="residualanalysis.html"><a href="residualanalysis.html"><i class="fa fa-check"></i><b>12</b> Assessing model assumptions</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="residualanalysis.html"><a href="residualanalysis.html#model-assumptions"><i class="fa fa-check"></i><b>12.1</b> Model Assumptions</a></li>
-<li class="chapter" data-level="12.2" data-path="residualanalysis.html"><a href="residualanalysis.html#independent-and-identically-distributed"><i class="fa fa-check"></i><b>12.2</b> Independent and Identically Distributed</a></li>
-<li class="chapter" data-level="12.3" data-path="residualanalysis.html"><a href="residualanalysis.html#qqplot"><i class="fa fa-check"></i><b>12.3</b> The QQ-Plot</a></li>
-<li class="chapter" data-level="12.4" data-path="residualanalysis.html"><a href="residualanalysis.html#tempautocorrelation"><i class="fa fa-check"></i><b>12.4</b> Temporal Autocorrelation</a></li>
-<li class="chapter" data-level="12.5" data-path="residualanalysis.html"><a href="residualanalysis.html#spatialautocorrelation"><i class="fa fa-check"></i><b>12.5</b> Spatial Autocorrelation</a></li>
+<li class="chapter" data-level="12.1" data-path="residualanalysis.html"><a href="residualanalysis.html#model-assumptions"><i class="fa fa-check"></i><b>12.1</b> Model assumptions</a></li>
+<li class="chapter" data-level="12.2" data-path="residualanalysis.html"><a href="residualanalysis.html#independent-and-identically-distributed"><i class="fa fa-check"></i><b>12.2</b> Independent and identically distributed</a></li>
+<li class="chapter" data-level="12.3" data-path="residualanalysis.html"><a href="residualanalysis.html#qqplot"><i class="fa fa-check"></i><b>12.3</b> The QQ-plot</a></li>
+<li class="chapter" data-level="12.4" data-path="residualanalysis.html"><a href="residualanalysis.html#tempautocorrelation"><i class="fa fa-check"></i><b>12.4</b> Temporal autocorrelation</a></li>
+<li class="chapter" data-level="12.5" data-path="residualanalysis.html"><a href="residualanalysis.html#spatialautocorrelation"><i class="fa fa-check"></i><b>12.5</b> Spatial autocorrelation</a></li>
 <li class="chapter" data-level="12.6" data-path="residualanalysis.html"><a href="residualanalysis.html#Heteroscedasticity"><i class="fa fa-check"></i><b>12.6</b> Heteroscedasticity</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="lmer.html"><a href="lmer.html"><i class="fa fa-check"></i><b>13</b> Linear Mixed Effect Models</a>
+<li class="chapter" data-level="13" data-path="lmer.html"><a href="lmer.html"><i class="fa fa-check"></i><b>13</b> Linear mixed effect models</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="lmer.html"><a href="lmer.html#background-1"><i class="fa fa-check"></i><b>13.1</b> Background</a>
+<li class="chapter" data-level="13.1" data-path="lmer.html"><a href="lmer.html#background-2"><i class="fa fa-check"></i><b>13.1</b> Background</a>
 <ul>
-<li class="chapter" data-level="13.1.1" data-path="lmer.html"><a href="lmer.html#why-mixed-effects-models"><i class="fa fa-check"></i><b>13.1.1</b> Why Mixed Effects Models?</a></li>
-<li class="chapter" data-level="13.1.2" data-path="lmer.html"><a href="lmer.html#random-factors-and-partial-pooling"><i class="fa fa-check"></i><b>13.1.2</b> Random Factors and Partial Pooling</a></li>
+<li class="chapter" data-level="13.1.1" data-path="lmer.html"><a href="lmer.html#why-mixed-effects-models"><i class="fa fa-check"></i><b>13.1.1</b> Why mixed effects models?</a></li>
+<li class="chapter" data-level="13.1.2" data-path="lmer.html"><a href="lmer.html#random-factors-and-partial-pooling"><i class="fa fa-check"></i><b>13.1.2</b> Random factors and partial pooling</a></li>
 </ul></li>
-<li class="chapter" data-level="13.2" data-path="lmer.html"><a href="lmer.html#fitting-a-normal-linear-mixed-model-in-r"><i class="fa fa-check"></i><b>13.2</b> Fitting a normal linear mixed model in R</a></li>
+<li class="chapter" data-level="13.2" data-path="lmer.html"><a href="lmer.html#fitting-a-normal-linear-mixed-model-in-r"><i class="fa fa-check"></i><b>13.2</b> Fitting a normal linear mixed model in R</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="lmer.html"><a href="lmer.html#background-3"><i class="fa fa-check"></i><b>13.2.1</b> Background</a></li>
+<li class="chapter" data-level="13.2.2" data-path="lmer.html"><a href="lmer.html#fitting-a-normal-linear-mixed-model-using-lmer"><i class="fa fa-check"></i><b>13.2.2</b> Fitting a normal linear mixed model using lmer</a></li>
+</ul></li>
 <li class="chapter" data-level="13.3" data-path="lmer.html"><a href="lmer.html#restricted-maximum-likelihood-estimation-reml"><i class="fa fa-check"></i><b>13.3</b> Restricted maximum likelihood estimation (REML)</a></li>
+<li class="chapter" data-level="13.4" data-path="lmer.html"><a href="lmer.html#assessing-model-assumptions"><i class="fa fa-check"></i><b>13.4</b> Assessing model assumptions</a></li>
+<li class="chapter" data-level="13.5" data-path="lmer.html"><a href="lmer.html#presenting-the-results-1"><i class="fa fa-check"></i><b>13.5</b> Presenting the results</a></li>
+<li class="chapter" data-level="13.6" data-path="lmer.html"><a href="lmer.html#random-intercept-and-slope"><i class="fa fa-check"></i><b>13.6</b> Random intercept and slope</a></li>
+<li class="chapter" data-level="13.7" data-path="lmer.html"><a href="lmer.html#nested-and-crossed-random-effects"><i class="fa fa-check"></i><b>13.7</b> Nested and crossed random effects</a></li>
+<li class="chapter" data-level="13.8" data-path="lmer.html"><a href="lmer.html#model-selection-in-mixed-models"><i class="fa fa-check"></i><b>13.8</b> Model selection in mixed models</a></li>
+<li class="chapter" data-level="13.9" data-path="lmer.html"><a href="lmer.html#further-reading-5"><i class="fa fa-check"></i><b>13.9</b> Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>14</b> Generalized linear models</a>
 <ul>
 <li class="chapter" data-level="14.1" data-path="glm.html"><a href="glm.html#introduction-2"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
 <li class="chapter" data-level="14.2" data-path="glm.html"><a href="glm.html#bernoulli-model"><i class="fa fa-check"></i><b>14.2</b> Bernoulli model</a>
 <ul>
-<li class="chapter" data-level="14.2.1" data-path="glm.html"><a href="glm.html#background-2"><i class="fa fa-check"></i><b>14.2.1</b> Background</a></li>
+<li class="chapter" data-level="14.2.1" data-path="glm.html"><a href="glm.html#background-4"><i class="fa fa-check"></i><b>14.2.1</b> Background</a></li>
 <li class="chapter" data-level="14.2.2" data-path="glm.html"><a href="glm.html#fitting-a-bernoulli-model-in-r"><i class="fa fa-check"></i><b>14.2.2</b> Fitting a Bernoulli model in R</a></li>
 <li class="chapter" data-level="14.2.3" data-path="glm.html"><a href="glm.html#assessing-model-assumptions-in-a-bernoulli-model"><i class="fa fa-check"></i><b>14.2.3</b> Assessing model assumptions in a Bernoulli model</a></li>
 <li class="chapter" data-level="14.2.4" data-path="glm.html"><a href="glm.html#visualising-the-results"><i class="fa fa-check"></i><b>14.2.4</b> Visualising the results</a></li>
@@ -328,27 +357,31 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="glm.html"><a href="glm.html#binomial-model"><i class="fa fa-check"></i><b>14.3</b> Binomial model</a>
 <ul>
-<li class="chapter" data-level="14.3.1" data-path="glm.html"><a href="glm.html#background-3"><i class="fa fa-check"></i><b>14.3.1</b> Background</a></li>
+<li class="chapter" data-level="14.3.1" data-path="glm.html"><a href="glm.html#background-5"><i class="fa fa-check"></i><b>14.3.1</b> Background</a></li>
 <li class="chapter" data-level="14.3.2" data-path="glm.html"><a href="glm.html#fitting-a-binomial-model-in-r"><i class="fa fa-check"></i><b>14.3.2</b> Fitting a binomial model in R</a></li>
 <li class="chapter" data-level="14.3.3" data-path="glm.html"><a href="glm.html#assessing-assumptions-in-a-binomial-model"><i class="fa fa-check"></i><b>14.3.3</b> Assessing assumptions in a binomial model</a></li>
 <li class="chapter" data-level="14.3.4" data-path="glm.html"><a href="glm.html#visualising-the-results-1"><i class="fa fa-check"></i><b>14.3.4</b> Visualising the results</a></li>
 </ul></li>
 <li class="chapter" data-level="14.4" data-path="glm.html"><a href="glm.html#poisson-model"><i class="fa fa-check"></i><b>14.4</b> Poisson model</a>
 <ul>
-<li class="chapter" data-level="14.4.1" data-path="glm.html"><a href="glm.html#background-4"><i class="fa fa-check"></i><b>14.4.1</b> Background</a></li>
+<li class="chapter" data-level="14.4.1" data-path="glm.html"><a href="glm.html#background-6"><i class="fa fa-check"></i><b>14.4.1</b> Background</a></li>
 <li class="chapter" data-level="14.4.2" data-path="glm.html"><a href="glm.html#fitting-a-poisson-model-in-r"><i class="fa fa-check"></i><b>14.4.2</b> Fitting a Poisson model in R</a></li>
-<li class="chapter" data-level="14.4.3" data-path="glm.html"><a href="glm.html#assessing-model-assumptions"><i class="fa fa-check"></i><b>14.4.3</b> Assessing model assumptions</a></li>
+<li class="chapter" data-level="14.4.3" data-path="glm.html"><a href="glm.html#assessing-model-assumptions-1"><i class="fa fa-check"></i><b>14.4.3</b> Assessing model assumptions</a></li>
 <li class="chapter" data-level="14.4.4" data-path="glm.html"><a href="glm.html#visualising-results"><i class="fa fa-check"></i><b>14.4.4</b> Visualising results</a></li>
 <li class="chapter" data-level="14.4.5" data-path="glm.html"><a href="glm.html#modeling-rates-and-densities-poisson-model-with-an-offset"><i class="fa fa-check"></i><b>14.4.5</b> Modeling rates and densities: Poisson model with an offset</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="glmm.html"><a href="glmm.html"><i class="fa fa-check"></i><b>15</b> Generalized linear mixed models</a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="glmm.html"><a href="glmm.html#introduction-3"><i class="fa fa-check"></i><b>15.1</b> Introduction</a>
+<li class="chapter" data-level="15.1" data-path="glmm.html"><a href="glmm.html#background-7"><i class="fa fa-check"></i><b>15.1</b> Background</a></li>
+<li class="chapter" data-level="15.2" data-path="glmm.html"><a href="glmm.html#binomial-mixed-model"><i class="fa fa-check"></i><b>15.2</b> Binomial mixed model</a>
 <ul>
-<li class="chapter" data-level="15.1.1" data-path="glmm.html"><a href="glmm.html#binomial-mixed-model"><i class="fa fa-check"></i><b>15.1.1</b> Binomial Mixed Model</a></li>
+<li class="chapter" data-level="15.2.1" data-path="glmm.html"><a href="glmm.html#background-8"><i class="fa fa-check"></i><b>15.2.1</b> Background</a></li>
+<li class="chapter" data-level="15.2.2" data-path="glmm.html"><a href="glmm.html#fitting-a-binomial-mixed-model-in-r"><i class="fa fa-check"></i><b>15.2.2</b> Fitting a binomial mixed model in R</a></li>
+<li class="chapter" data-level="15.2.3" data-path="glmm.html"><a href="glmm.html#presenting-the-results-2"><i class="fa fa-check"></i><b>15.2.3</b> Presenting the results</a></li>
 </ul></li>
-<li class="chapter" data-level="15.2" data-path="glmm.html"><a href="glmm.html#summary-2"><i class="fa fa-check"></i><b>15.2</b> Summary</a></li>
+<li class="chapter" data-level="15.3" data-path="glmm.html"><a href="glmm.html#poisson-mixed-model"><i class="fa fa-check"></i><b>15.3</b> Poisson mixed model</a></li>
+<li class="chapter" data-level="15.4" data-path="glmm.html"><a href="glmm.html#summary-2"><i class="fa fa-check"></i><b>15.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="modelchecking.html"><a href="modelchecking.html"><i class="fa fa-check"></i><b>16</b> Posterior predictive model checking</a></li>
 <li class="chapter" data-level="17" data-path="model_comparison.html"><a href="model_comparison.html"><i class="fa fa-check"></i><b>17</b> Model comparison and multimodel inference</a>
@@ -357,7 +390,7 @@ div.csl-indent {
 <li class="chapter" data-level="17.2" data-path="model_comparison.html"><a href="model_comparison.html#methods-for-model-commparison"><i class="fa fa-check"></i><b>17.2</b> Methods for model commparison</a>
 <ul>
 <li class="chapter" data-level="17.2.1" data-path="model_comparison.html"><a href="model_comparison.html#cross-validation"><i class="fa fa-check"></i><b>17.2.1</b> Cross-validation</a></li>
-<li class="chapter" data-level="17.2.2" data-path="model_comparison.html"><a href="model_comparison.html#information-criteria-akaike-information-citerion-and-widely-applicable-information-criterion"><i class="fa fa-check"></i><b>17.2.2</b> Information Criteria: Akaike information citerion and widely applicable information criterion</a></li>
+<li class="chapter" data-level="17.2.2" data-path="model_comparison.html"><a href="model_comparison.html#information-criteria-akaike-information-criterion-and-widely-applicable-information-criterion"><i class="fa fa-check"></i><b>17.2.2</b> Information criteria: Akaike information criterion and widely applicable information criterion</a></li>
 <li class="chapter" data-level="17.2.3" data-path="model_comparison.html"><a href="model_comparison.html#other-information-criteria"><i class="fa fa-check"></i><b>17.2.3</b> Other information criteria</a></li>
 <li class="chapter" data-level="17.2.4" data-path="model_comparison.html"><a href="model_comparison.html#bayes-factors-and-posterior-model-probabilities"><i class="fa fa-check"></i><b>17.2.4</b> Bayes factors and posterior model probabilities</a></li>
 <li class="chapter" data-level="17.2.5" data-path="model_comparison.html"><a href="model_comparison.html#model-based-methods-to-obtain-posterior-model-probabilities-and-inclusion-probabilities"><i class="fa fa-check"></i><b>17.2.5</b> Model-based methods to obtain posterior model probabilities and inclusion probabilities</a></li>
@@ -365,27 +398,30 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="17.3" data-path="model_comparison.html"><a href="model_comparison.html#multimodel-inference"><i class="fa fa-check"></i><b>17.3</b> Multimodel inference</a></li>
 <li class="chapter" data-level="17.4" data-path="model_comparison.html"><a href="model_comparison.html#which-method-to-choose-and-which-strategy-to-follow"><i class="fa fa-check"></i><b>17.4</b> Which method to choose and which strategy to follow?</a></li>
-<li class="chapter" data-level="17.5" data-path="model_comparison.html"><a href="model_comparison.html#further-reading-5"><i class="fa fa-check"></i><b>17.5</b> Further reading</a></li>
+<li class="chapter" data-level="17.5" data-path="model_comparison.html"><a href="model_comparison.html#further-reading-6"><i class="fa fa-check"></i><b>17.5</b> Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>18</b> MCMC using Stan</a>
+<li class="chapter" data-level="18" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>18</b> MCMC using Stan via rstanarm, brms or rstan</a>
 <ul>
-<li class="chapter" data-level="18.1" data-path="stan.html"><a href="stan.html#background-6"><i class="fa fa-check"></i><b>18.1</b> Background</a></li>
-<li class="chapter" data-level="18.2" data-path="stan.html"><a href="stan.html#install-rstan"><i class="fa fa-check"></i><b>18.2</b> Install <code>rstan</code></a></li>
-<li class="chapter" data-level="18.3" data-path="stan.html"><a href="stan.html#firststanmod"><i class="fa fa-check"></i><b>18.3</b> Writing a Stan model</a></li>
-<li class="chapter" data-level="18.4" data-path="stan.html"><a href="stan.html#run-stan-from-r"><i class="fa fa-check"></i><b>18.4</b> Run Stan from R</a></li>
-<li class="chapter" data-level="" data-path="stan.html"><a href="stan.html#further-reading-6"><i class="fa fa-check"></i>Further reading</a></li>
+<li class="chapter" data-level="18.1" data-path="stan.html"><a href="stan.html#background-9"><i class="fa fa-check"></i><b>18.1</b> Background</a></li>
+<li class="chapter" data-level="18.2" data-path="stan.html"><a href="stan.html#assessing-convergence-of-the-markov-chains-and-trouble-shooting-warnings-of-stan"><i class="fa fa-check"></i><b>18.2</b> Assessing convergence of the Markov chains and trouble shooting warnings of Stan</a></li>
+<li class="chapter" data-level="18.3" data-path="stan.html"><a href="stan.html#using-stan-via-rstan"><i class="fa fa-check"></i><b>18.3</b> Using Stan via rstan</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="stan.html"><a href="stan.html#firststanmod"><i class="fa fa-check"></i><b>18.3.1</b> Writing a Stan model</a></li>
+<li class="chapter" data-level="18.3.2" data-path="stan.html"><a href="stan.html#run-stan-from-r-using-rstan"><i class="fa fa-check"></i><b>18.3.2</b> Run Stan from R using rstan</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="stan.html"><a href="stan.html#further-reading-7"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="19" data-path="ridge_regression.html"><a href="ridge_regression.html"><i class="fa fa-check"></i><b>19</b> Ridge Regression</a>
 <ul>
-<li class="chapter" data-level="19.1" data-path="ridge_regression.html"><a href="ridge_regression.html#introduction-4"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
+<li class="chapter" data-level="19.1" data-path="ridge_regression.html"><a href="ridge_regression.html#introduction-3"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
 </ul></li>
 <li class="chapter" data-level="20" data-path="SEM.html"><a href="SEM.html"><i class="fa fa-check"></i><b>20</b> Structural equation models</a>
 <ul>
-<li class="chapter" data-level="20.1" data-path="SEM.html"><a href="SEM.html#introduction-5"><i class="fa fa-check"></i><b>20.1</b> Introduction</a></li>
+<li class="chapter" data-level="20.1" data-path="SEM.html"><a href="SEM.html#introduction-4"><i class="fa fa-check"></i><b>20.1</b> Introduction</a></li>
 </ul></li>
 <li class="chapter" data-level="21" data-path="spatial_glmm.html"><a href="spatial_glmm.html"><i class="fa fa-check"></i><b>21</b> Modeling spatial data using GLMM</a>
 <ul>
-<li class="chapter" data-level="21.1" data-path="spatial_glmm.html"><a href="spatial_glmm.html#introduction-6"><i class="fa fa-check"></i><b>21.1</b> Introduction</a></li>
+<li class="chapter" data-level="21.1" data-path="spatial_glmm.html"><a href="spatial_glmm.html#introduction-5"><i class="fa fa-check"></i><b>21.1</b> Introduction</a></li>
 <li class="chapter" data-level="21.2" data-path="spatial_glmm.html"><a href="spatial_glmm.html#summary-3"><i class="fa fa-check"></i><b>21.2</b> Summary</a></li>
 </ul></li>
 <li class="part"><span><b>III ECOLOGICAL MODELS</b></span></li>
@@ -393,16 +429,16 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="22.1" data-path="PART-III.html"><a href="PART-III.html#model-notations"><i class="fa fa-check"></i><b>22.1</b> Model notations</a></li>
 </ul></li>
-<li class="chapter" data-level="23" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html"><i class="fa fa-check"></i><b>23</b> Zero-inflated Poisson Mixed Model</a>
+<li class="chapter" data-level="23" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html"><i class="fa fa-check"></i><b>23</b> Zero-inflated Poisson mixed model</a>
 <ul>
-<li class="chapter" data-level="23.1" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#introduction-7"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
+<li class="chapter" data-level="23.1" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#introduction-6"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
 <li class="chapter" data-level="23.2" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#example-data"><i class="fa fa-check"></i><b>23.2</b> Example data</a></li>
 <li class="chapter" data-level="23.3" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#model"><i class="fa fa-check"></i><b>23.3</b> Model</a></li>
-<li class="chapter" data-level="23.4" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#further-packages-and-readings"><i class="fa fa-check"></i><b>23.4</b> Further packages and readings$</a></li>
+<li class="chapter" data-level="23.4" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#further-packages-and-readings"><i class="fa fa-check"></i><b>23.4</b> Further packages and readings</a></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="dailynestsurv.html"><a href="dailynestsurv.html"><i class="fa fa-check"></i><b>24</b> Daily nest survival</a>
 <ul>
-<li class="chapter" data-level="24.1" data-path="dailynestsurv.html"><a href="dailynestsurv.html#background-7"><i class="fa fa-check"></i><b>24.1</b> Background</a></li>
+<li class="chapter" data-level="24.1" data-path="dailynestsurv.html"><a href="dailynestsurv.html#background-10"><i class="fa fa-check"></i><b>24.1</b> Background</a></li>
 <li class="chapter" data-level="24.2" data-path="dailynestsurv.html"><a href="dailynestsurv.html#models-for-estimating-daily-nest-survival"><i class="fa fa-check"></i><b>24.2</b> Models for estimating daily nest survival</a></li>
 <li class="chapter" data-level="24.3" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model"><i class="fa fa-check"></i><b>24.3</b> Known fate model</a></li>
 <li class="chapter" data-level="24.4" data-path="dailynestsurv.html"><a href="dailynestsurv.html#dailynestsurvstan"><i class="fa fa-check"></i><b>24.4</b> The Stan model</a></li>
@@ -410,11 +446,11 @@ div.csl-indent {
 <li class="chapter" data-level="24.6" data-path="dailynestsurv.html"><a href="dailynestsurv.html#check-convergence"><i class="fa fa-check"></i><b>24.6</b> Check convergence</a></li>
 <li class="chapter" data-level="24.7" data-path="dailynestsurv.html"><a href="dailynestsurv.html#look-at-results"><i class="fa fa-check"></i><b>24.7</b> Look at results</a></li>
 <li class="chapter" data-level="24.8" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model-for-irregular-nest-controls"><i class="fa fa-check"></i><b>24.8</b> Known fate model for irregular nest controls</a></li>
-<li class="chapter" data-level="" data-path="dailynestsurv.html"><a href="dailynestsurv.html#further-reading-7"><i class="fa fa-check"></i>Further reading</a></li>
+<li class="chapter" data-level="" data-path="dailynestsurv.html"><a href="dailynestsurv.html#further-reading-8"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html"><i class="fa fa-check"></i><b>25</b> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</a>
 <ul>
-<li class="chapter" data-level="25.1" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#introduction-8"><i class="fa fa-check"></i><b>25.1</b> Introduction</a></li>
+<li class="chapter" data-level="25.1" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#introduction-7"><i class="fa fa-check"></i><b>25.1</b> Introduction</a></li>
 <li class="chapter" data-level="25.2" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#data-description"><i class="fa fa-check"></i><b>25.2</b> Data description</a></li>
 <li class="chapter" data-level="25.3" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#model-description"><i class="fa fa-check"></i><b>25.3</b> Model description</a></li>
 <li class="chapter" data-level="25.4" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#the-stan-code"><i class="fa fa-check"></i><b>25.4</b> The Stan code</a></li>
@@ -422,7 +458,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="26" data-path="samplesize.html"><a href="samplesize.html"><i class="fa fa-check"></i><b>26</b> What sample size?</a>
 <ul>
-<li class="chapter" data-level="26.1" data-path="samplesize.html"><a href="samplesize.html#introduction-9"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
+<li class="chapter" data-level="26.1" data-path="samplesize.html"><a href="samplesize.html#introduction-8"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
 </ul></li>
 <li class="part"><span><b>IV APPENDICES</b></span></li>
 <li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
@@ -447,26 +483,26 @@ div.csl-indent {
 
             <section class="normal" id="section-">
 <div id="lmer" class="section level1 hasAnchor" number="13">
-<h1><span class="header-section-number">13</span> Linear Mixed Effect Models<a href="lmer.html#lmer" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><a href="" target="_blank"><img src="images/himmelsherold.jpg" style="display: block; margin: auto;" /></a></p>
+<h1><span class="header-section-number">13</span> Linear mixed effect models<a href="lmer.html#lmer" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><a href="" target="_blank"><img src="images/himmelsherold.jpg" width="640" style="display: block; margin: auto;" /></a></p>
 <hr />
-<div id="background-1" class="section level2 hasAnchor" number="13.1">
-<h2><span class="header-section-number">13.1</span> Background<a href="lmer.html#background-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="background-2" class="section level2 hasAnchor" number="13.1">
+<h2><span class="header-section-number">13.1</span> Background<a href="lmer.html#background-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="why-mixed-effects-models" class="section level3 hasAnchor" number="13.1.1">
-<h3><span class="header-section-number">13.1.1</span> Why Mixed Effects Models?<a href="lmer.html#why-mixed-effects-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Mixed effects models (or hierarchical models <span class="citation">Andrew Gelman and Hill (<a href="referenzen.html#ref-Gelman.2007">2007</a>)</span> for a discussion on the terminology) are used to analyze nonindependent, grouped, or hierarchical data. For example, when we measure growth rates of nestlings in different nests by taking mass measurements of each nestling several times during the nestling phase, the measurements are grouped within nestlings (because there are repeated measurements of each) and the nestlings are grouped within nests. Measurements from the same individual are likely to be more similar than measurements from different individuals, and individuals from the same nest are likely to be more similar than nestlings from different nests. Measurements of the same group (here, the “groups” are individuals or nests) are not independent. If the grouping structure of the data is ignored in the model, the residuals do not fulfill the independence assumption.</p>
-<p>Further, predictor variables can be measured on different hierarchical levels. For example, in each nest some nestlings were treated with a hormone implant whereas others received a placebo. Thus, the treatment is measured at the level of the individual, while clutch size is measured at the level of the nest. Clutch size was measured only once per nest but entered in the data file more than once (namely for each individual from the same nest). Repeated measure results in pseudoreplication if we do not account for the hierarchical data structure in the model. Mixed models allow modeling of the hierarchical structure of the data and, therefore, account for pseudoreplication.</p>
+<h3><span class="header-section-number">13.1.1</span> Why mixed effects models?<a href="lmer.html#why-mixed-effects-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Mixed effects models (or hierarchical models; see <span class="citation">Andrew Gelman and Hill (<a href="referenzen.html#ref-Gelman.2007">2007</a>)</span> for a discussion on the terminology) are used to analyze nonindependent, grouped, or hierarchical data. For example, when we measure growth rates of nestlings in different nests by taking mass measurements of each nestling several times during the nestling phase, the measurements are grouped within nestlings (because there are repeated measurements of each) and the nestlings are grouped within nests. Measurements from the same individual are likely to be more similar than measurements from different individuals, and individuals from the same nest are likely to be more similar than nestlings from different nests. Measurements of the same group (here, the “groups” are individuals or nests) are not independent. If the grouping structure of the data is ignored in the model, the residuals do not fulfill the independence assumption.</p>
+<p>Further, predictor variables can be measured on different hierarchical levels. For example, in each nest some nestlings were treated with a hormone implant whereas others received a placebo. Thus, the treatment is measured at the level of the individual, while clutch size is measured at the level of the nest. Clutch size was measured only once per nest but entered in the data file more than once (namely for each individual from the same nest). Repeated measures result in pseudoreplication if we do not account for the hierarchical data structure in the model. Mixed models allow modeling of the hierarchical structure of the data and, therefore, account for pseudoreplication.</p>
 <p>Mixed models are further used to analyze variance components. For example, when the nestlings were cross-fostered so that they were not raised by their genetic parents, we would like to estimate the proportions of the variance (in a measurement, e.g., wing length) that can be assigned to genetic versus to environmental differences.</p>
-<p>The three problems, grouped data, repeated measure and interest in variances are solved by adding further variance parameters to the model. As a result, the linear predictor of such models contain parameters that are fixed and parameters that vary among levels of a grouping variable. The latter are called “random effects”. Thus, a mixed model contains fixed and random effects. Often the grouping variable, which is a categorical variable, i.e., a factor, is called the random effect, even though it is not the factor that is random. The levels of the factor are seen as a random sample from a bigger population of levels, and a distribution, usually the normal distribution, is fitted to the level-specific parameter values. Thus, a random effect in a model can be seen as a model (for a parameter) that is nested within the model for the data.</p>
-<p>Predictors that are defined as fixed effects are either numeric or, if they are categorical, they have a finite (“fixed”) number of levels. For example, the factor “treatment” in the Barn owl study below has exactly two levels “placebo” and “corticosterone” and nothing more. In contrast, random effects have a theoretically infinite number of levels of which we have measured a random sample. For example, we have measured 10 nests, but there are many more nests in the world that we have not measured. Normally, fixed effects have a low number of levels whereas random effects have a large number of levels (at least 3!). For fixed effects we are interested in the specific differences between levels (e.g., between males and females), whereas for random effects we are only interested in the between-level (between-group, e.g., between-nest) variance rather than in differences between specific levels (e.g., nest A versus nest B).
-Typical fixed effects are: treatment, sex, age classes, or season. Typical random effects are: nest, individual, field, school, or study plot. It depends sometimes on the aim of the study whether a factor should be treated as fixed or random. When we would like to compare the average size of a corn cob between specific regions, then we include region as a fixed factor. However, when we would like to know how the size of a corn cob is related to the irrigation system and we have several measurements within each of a sample of regions, then we treat region as a random factor.</p>
+<p>The three problems - grouped data, repeated measure and interest in variances - are solved by adding further variance parameters to the model. As a result, the linear predictor of such models contains predictors with fixed parameters and predictors with non-fixed parameters. The former are called “fixed effects”, the latter “random effects”. “Fixed effects” can be a slope (for a continuous predictor), or a defined set of levels for a factor (often called a “fixed factor”). The non-mixed models presented in Chapter <a href="lm.html#lm">11</a> (and later in Chapter <a href="glm.html#glm">14</a>) only have such “fixed effects”. A mixed model, on the other hand, contains fixed and random effects. Typically, a grouping variable as described above is treated as a “random factor”. “Random factor” is a somewhat misleading name as it is not the factor that is random. Rather, the <em>levels</em> of the factor are seen as a random sample from a bigger population of levels (e.g. nests). We assume that the level-specific parameter value (a value for each nest) comes from a normal distribution. Thus, a random effect in a model can be seen as a model (for a parameter) that is nested within the model for the data.</p>
+<p>Predictors that are defined as fixed effects are either numeric or, if they are categorical, they have a finite (“fixed”) number of levels, defined by the research question. For example, the factor “treatment” in the Barn owl study below has exactly two levels: “placebo” and “corticosterone” (a stress hormone), and nothing more. In contrast, random effects have a theoretically infinite number of levels of which we have measured a random sample. For example, we have measured 10 nests, but there are many more nests in the world that we have not measured. Normally, fixed effects have a low number of levels whereas random effects have a large number of levels (at least 3!). For fixed effects, we are interested in the specific differences between levels (e.g., between males and females, placebo and corticosterone, etc), whereas for random effects we are mainly interested in the between-level (between-group, e.g., between-nest) variance rather than in differences between specific levels (e.g., nest A versus nest B).</p>
+<p>Typical fixed effects are: treatment, sex, age classes, or season. Typical random effects are: nest, individual, field, school, or study plot. It depends sometimes on the aim of the study whether a factor should be treated as fixed or random. When we would like to compare the average size of a corn cob between specific regions, then we include region as a fixed factor. However, when we would like to know how the size of a corn cob is related to the irrigation system and we have several measurements within each of a sample of regions, then we treat region as a random factor.</p>
 </div>
 <div id="random-factors-and-partial-pooling" class="section level3 hasAnchor" number="13.1.2">
-<h3><span class="header-section-number">13.1.2</span> Random Factors and Partial Pooling<a href="lmer.html#random-factors-and-partial-pooling" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In a model with fixed factors, the differences of the group means to the mean of the reference group are separately estimated as model parameters. This produces <span class="math inline">\(k-1\)</span> (independent) model parameters, where <span class="math inline">\(k\)</span> is the number of groups (or number of factor levels). In contrast, for a random factor, the between-group variance is estimated and the <span class="math inline">\(k\)</span> group-specific means are assumed to be normally distributed around the population mean. These <span class="math inline">\(k\)</span> means are thus not independent. We usually call the differences between the specific mean of group <span class="math inline">\(g\)</span> and the mean of all groups <span class="math inline">\(b_g\)</span>. They are assumed to be realizations of the same (in most cases normal) distribution with a mean of zero. They are like residuals. The variance of the <span class="math inline">\(b_g\)</span> values is the among-group variance.</p>
-<p>Treating a factor as a random factor is equivalent to partial pooling of the data. There are three different ways to obtain means for grouped data. First, the grouping structure of the data can be ignored. This is called complete pooling (left panel in Figure <a href="lmer.html#fig:pooling">13.1</a>).</p>
-<p>Second, group means may be estimated separately for each group. In this case, the data from all other groups are ignored when estimating a group mean. No pooling occurs in this case (right panel in Figure <a href="lmer.html#fig:pooling">13.1</a>).</p>
-<p>Third, the data of the different groups can be partially pooled (i.e., treated as a random effect). Thereby, the group means are weighted averages of the population mean and the unpooled group means. The weights are proportional to sample size and the inverse of the variance (see <span class="citation">Andrew Gelman and Hill (<a href="referenzen.html#ref-Gelman.2007">2007</a>)</span>, p. 252). Further, the estimated mean of all group equals the mean of the group specific means, thus, every group is weighed similarly for calculating the overall mean. In contrast, in the complete pooling case, the groups get weights proportional to their sample sizes.</p>
+<h3><span class="header-section-number">13.1.2</span> Random factors and partial pooling<a href="lmer.html#random-factors-and-partial-pooling" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In a model with fixed factors, the differences of the group means to the mean of the reference group (the “baseline level”) are estimated as individual model parameters. Hence, we have <span class="math inline">\(k-1\)</span> (independent) model parameters, where <span class="math inline">\(k\)</span> is the number of groups (or number of factor levels). In contrast, for a random factor, the between-group variance is estimated and the <span class="math inline">\(k\)</span> group-specific means are assumed to be normally distributed around the population mean (= overall mean). These <span class="math inline">\(k\)</span> means are thus not independent. We usually call the difference between the specific mean of a group <span class="math inline">\(g\)</span> and the mean across all groups <span class="math inline">\(b_g\)</span> (one value per group). They are assumed to be realizations of the same (in most cases normal) distribution with a mean of zero. They are like residuals. The variance of the <span class="math inline">\(b_g\)</span> values is the among-group variance.</p>
+<p>Treating a factor as a random factor is equivalent to “partial pooling” of the data. There are three different ways to obtain means for grouped data. First, the grouping structure of the data can be ignored - we simply estimate a mean across all data. This is called complete pooling (left panel in Figure <a href="lmer.html#fig:pooling">13.1</a>).</p>
+<p>Second, group means may be estimated separately for each group. In this case, the data from all other groups are ignored when estimating a group mean. No pooling occurs in this case (right panel in Figure <a href="lmer.html#fig:pooling">13.1</a>). A fixed factor returns such means.</p>
+<p>Third, the data of the different groups can be partially pooled (i.e., treated as a random effect). Thereby, the group means are weighted averages of the population mean (complete pooling) and the no-pooling group means. The weights are proportional to sample size and the inverse of the within-group variance (see <span class="citation">Andrew Gelman and Hill (<a href="referenzen.html#ref-Gelman.2007">2007</a>)</span>, p. 252). Further, the overall mean (the “population mean”) is close to the mean of the group-specific means, thus, every group is weighed similarly for calculating this overall mean. In contrast, in the complete pooling case, the groups get weights proportional to their sample sizes, i.e. each observation has the same weight. In the no-pooling case, there is no overall mean.</p>
 <table>
 <colgroup>
 <col width="32%" />
@@ -474,14 +510,14 @@ Typical fixed effects are: treatment, sex, age classes, or season. Typical rando
 <col width="30%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th align="left">Complete pooling</th>
 <th align="left">Partial pooling</th>
 <th align="left">No pooling</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td align="left"><span class="math inline">\(\hat{y_i} = \beta_0\)</span>  <span class="math inline">\(y_i \sim normal(\hat{y_i}, \sigma^2)\)</span></td>
 <td align="left"><span class="math inline">\(\hat{y_i} = \beta_0 + b_{g[i]}\)</span>  <span class="math inline">\(b_g \sim normal(0, \sigma_b^2)\)</span>  <span class="math inline">\(y_i \sim normal(\hat{y_i}, \sigma^2)\)</span></td>
 <td align="left"><span class="math inline">\(\hat{y_i} = \beta_{0[g[i]]}\)</span>  <span class="math inline">\(y_i \sim normal(\hat{y_i}, \sigma_g^2)\)</span></td>
@@ -489,23 +525,25 @@ Typical fixed effects are: treatment, sex, age classes, or season. Typical rando
 </tbody>
 </table>
 <div class="figure"><span style="display:block;" id="fig:pooling"></span>
-<img src="2.05-lmer_files/figure-html/pooling-1.png" alt="Three possibilities to obtain group means for grouped data: complete pooling, partial pooling, and no pooling. Open symbols = data, orange dots with vertical bars = group means with 95% uncertainty intervals, horizontal black line with shaded interval = population mean with 95% uncertainty interval." width="672" />
+<img src="2.05-lmer_files/figure-html/pooling-1.png" alt="Three possibilities to obtain group and/or population means for grouped data: complete pooling, partial pooling, and no pooling. Open symbols = data, orange dots with vertical bars = group means with 95% uncertainty intervals, horizontal black line with shaded interval = population mean with 95% uncertainty interval." width="672" />
 <p class="caption">
-Figure 13.1: Three possibilities to obtain group means for grouped data: complete pooling, partial pooling, and no pooling. Open symbols = data, orange dots with vertical bars = group means with 95% uncertainty intervals, horizontal black line with shaded interval = population mean with 95% uncertainty interval.
+Figure 13.1: Three possibilities to obtain group and/or population means for grouped data: complete pooling, partial pooling, and no pooling. Open symbols = data, orange dots with vertical bars = group means with 95% uncertainty intervals, horizontal black line with shaded interval = population mean with 95% uncertainty interval.
 </p>
 </div>
-<p>What is the advantage of analyses using partial pooling (i.e., mixed, hierarchical, or multilevel modelling) compared to the complete or no pooling analyses? Complete pooling ignores the grouping structure of the data. As a result, the uncertainty interval of the population mean may be too narrow. We are too confident in the result because we assume that all observations are independent when they are not. This is a typical case of pseudoreplication. On the other hand, the no pooling method (which is equivalent to treating the factor as fixed) has the danger of overestimation of the among-group variance because the group means are estimated independently of each other. The danger of overestimating the among-group variance is particularly large when sample sizes per group are low and within-group variance large. In contrast, the partial pooling method assumes that the group means are a random sample from a common distribution. Therefore, information is exchanged between groups. Estimated means for groups with low sample sizes, large variances, and means far away from the population mean are shrunk towards the population mean. Thus, group means that are estimated with a lot of imprecision (because of low sample size and high variance) are shrunk towards the population mean. How strongly they are shrunk depends on the precision of the estimates for the group specific means and the population mean.</p>
-<p>An example will help make this clear. Imagine that we measured 60 nestling birds from 10 nests (6 nestlings per nest) and found that the average nestling mass at day 10 was around 20 g with a among-nest standard deviation of 2 g. Then, we measure only one nestling from one additional nest (from the same population) whose mass was 12 g. What do we know about the average mass of this new nest? The mean of the measurements for this nest is 12 g, but with n = 1 uncertainty is high. Because we know that the average mass of the other nests was 20 g, and because the new nest belonged to the same population, a value higher than 12 g is a better estimate for an average nestling mass of the new nest than the 12 g measurement of one single nestling, which could, by chance, have been an exceptionally light individual. This is the shrinkage that partial pooling allows in a mixed model. Because of this shrinkage, the estimates for group means from a mixed model are sometimes called shrinkage estimators. A consequence of the shrinkage is that the residuals are positively correlated with the fitted values.
-To summarize, mixed models are used to appropriately estimate among-group variance, and to account for non-independency among data points.</p>
+<p>What is the advantage of analyses using partial pooling (i.e., mixed, hierarchical, or multilevel modelling) compared to the complete or no pooling analyses? Complete pooling ignores the grouping structure of the data. As a result, the uncertainty interval of the population mean may be too narrow. We are too confident of the result because we assume that all observations are independent when they are not. This is a typical case of pseudoreplication. On the other hand, the no pooling method (which is equivalent to treating the factor as fixed) has the danger of overestimation of the among-group variance because the group means are estimated independently of each other. The danger of overestimating the among-group variance is particularly large when sample sizes per group are low and within-group variance large. In contrast, the partial pooling method assumes that the group means are a random sample from a common distribution. Therefore, information is exchanged between groups. Estimated means for groups with low sample sizes, large variances, and means far away from the population mean are shrunk towards the population mean. Thus, group means that are estimated with a lot of imprecision (because of low sample size and high variance) are shrunk towards the population mean. How strongly they are shrunk depends on the precision of the estimates for the group specific means and the population mean.</p>
+<p>An example will help make this clear. Imagine that we measured 60 nestling birds from 10 nests (6 nestlings per nest) and found that the average nestling mass at day 10 was around 20 g with an among-nest standard deviation of 2 g. Then, we measure only one nestling from one additional nest (from the same population) whose mass was 12 g. What do we know about the average mass of this new nest? The mean of the measurements for this nest is 12 g, but with n = 1 uncertainty is high. Because we know that the average mass of the other nests was 20 g, and because the new nest belonged to the same population, a value higher than 12 g is a better estimate for an average nestling mass of the new nest than the 12 g measurement of one single nestling, which could, by chance, have been an exceptionally light individual. This is the shrinkage that partial pooling allows in a mixed model. Because of this shrinkage, the estimates for group means from a mixed model are sometimes called shrinkage estimators. A consequence of the shrinkage is that the residuals are positively correlated with the fitted values.</p>
+<p>To summarize, mixed models are used to appropriately estimate among-group variance, and to account for non-independency among data points.</p>
 </div>
 </div>
 <div id="fitting-a-normal-linear-mixed-model-in-r" class="section level2 hasAnchor" number="13.2">
 <h2><span class="header-section-number">13.2</span> Fitting a normal linear mixed model in R<a href="lmer.html#fitting-a-normal-linear-mixed-model-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>To introduce the linear mixed model, we use repeated hormone measures at nestling Barn Owls <em>Tyto alba</em>. The cortbowl data set contains stress hormone data (corticosterone, variable ‘totCort’) of nestling Barn owls which were either treated with a corticosterone-implant, or with a placebo-implant as the control group. The aim of the study was to quantify the corticosterone increase due to the corticosterone implants <span class="citation">(<a href="referenzen.html#ref-Almasi.2009">Almasi et al. 2009</a>)</span>. In each brood, one or two nestlings were implanted with a corticosterone-implant and one or two nestlings with a placebo-implant (variable ‘Implant’). Blood samples were taken just before implantation, and at days 2 and 20 after implantation.</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="lmer.html#cb142-1" tabindex="-1"></a><span class="fu">data</span>(cortbowl)</span>
-<span id="cb142-2"><a href="lmer.html#cb142-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> cortbowl</span>
-<span id="cb142-3"><a href="lmer.html#cb142-3" tabindex="-1"></a>dat<span class="sc">$</span>days <span class="ot">&lt;-</span> <span class="fu">factor</span>(dat<span class="sc">$</span>days, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;before&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;20&quot;</span>)) </span>
-<span id="cb142-4"><a href="lmer.html#cb142-4" tabindex="-1"></a><span class="fu">str</span>(dat)  <span class="co"># the data was sampled in 2004,2005, and 2005 by the Swiss Ornithologicla Institute</span></span></code></pre></div>
+<div id="background-3" class="section level3 hasAnchor" number="13.2.1">
+<h3><span class="header-section-number">13.2.1</span> Background<a href="lmer.html#background-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To introduce the linear mixed model, we use repeated hormone measures at nestling barn owls <em>Tyto alba</em>. The cortbowl data set contains stress hormone data (corticosterone, variable “totCort”) of nestling barn owls which were either treated with a corticosterone implant, or with a placebo-implant as the control group. The aim of the study was to quantify the corticosterone increase due to the corticosterone implant <span class="citation">(<a href="referenzen.html#ref-Almasi.2009">Almasi et al. 2009</a>)</span>. In each brood, one or two nestlings were implanted with a corticosterone implant and one or two nestlings with a placebo implant (variable ‘Implant’). Blood samples were taken just before implantation, and at days 2 and 20 after implantation.</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="lmer.html#cb188-1" tabindex="-1"></a><span class="fu">data</span>(cortbowl)</span>
+<span id="cb188-2"><a href="lmer.html#cb188-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> cortbowl</span>
+<span id="cb188-3"><a href="lmer.html#cb188-3" tabindex="-1"></a>dat<span class="sc">$</span>days <span class="ot">&lt;-</span> <span class="fu">factor</span>(dat<span class="sc">$</span>days, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;before&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;20&quot;</span>)) </span>
+<span id="cb188-4"><a href="lmer.html#cb188-4" tabindex="-1"></a><span class="fu">str</span>(dat)  <span class="co"># the data was sampled in 2004,2005, and 2005 by the Swiss Ornithologicla Institute</span></span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    287 obs. of  6 variables:
 ##  $ Brood  : Factor w/ 54 levels &quot;231&quot;,&quot;232&quot;,&quot;233&quot;,..: 7 7 7 7 8 8 9 9 10 10 ...
 ##  $ Ring   : Factor w/ 151 levels &quot;898054&quot;,&quot;898055&quot;,..: 44 45 45 46 31 32 9 9 18 19 ...
@@ -513,24 +551,33 @@ To summarize, mixed models are used to appropriately estimate among-group varian
 ##  $ Age    : int  49 29 47 25 57 28 35 53 35 31 ...
 ##  $ days   : Factor w/ 3 levels &quot;before&quot;,&quot;2&quot;,&quot;20&quot;: 3 2 3 2 3 1 2 3 2 2 ...
 ##  $ totCort: num  5.76 8.42 8.05 25.74 8.04 ...</code></pre>
-<p>In total, there are 287 measurements of 151 individuals (variable ‘Ring’) of 54 broods. Because the measurements from the same individual are non-independent, we use a mixed model to analyze these data: Two additional arguments for a mixed model are: a) the mixed model allows prediction of corticosterone levels for an ‘average’ individual, whereas the fixed effect model allows prediction of corticosterone levels only for the 151 individuals that were sampled; and b) fewer parameters are needed. If we include individual as a fixed factor, we would use 150 parameters, while the random factor needs a much lower number of parameters.
-We first create a graphic to show the development for each individual, separately for owls receiving corticosterone versus owls receiving a placebo (Figure <a href="lmer.html#fig:corttest">13.2</a>).</p>
+<p>In total, there are 287 measurements of 151 individuals (variable ‘Ring’) of 54 broods. Because the measurements from the same individual are non-independent, we use a mixed model to analyze these data. Two additional arguments for a mixed model are: a) The mixed model allows prediction of corticosterone levels for an ‘average’ individual, whereas the fixed effect model allows prediction of corticosterone levels only for each of the 151 individuals that were sampled. And b) fewer parameters are needed. If we include individual as a fixed factor, we would use 150 parameters, while the random factor needs a much lower number of parameters: we have one classical parameter, the among-individual variance; overall, the random factor increases model complexity by more than 1 parameter - by how many depends on the data, but it is usually much less than what is needed for a fixed factor with the same number of levels.</p>
+<p>We first create a raw-data plot to show the development for each individual, separately for owls receiving corticosterone versus owls receiving a placebo (Figure <a href="lmer.html#fig:corttest">13.2</a>).</p>
 <div class="figure"><span style="display:block;" id="fig:corttest"></span>
 <img src="2.05-lmer_files/figure-html/corttest-1.png" alt="Total corticosterone before and at day 2 and 20 after implantation of a corticosterone or a placebo implant. Lines connect measurements of the same individual." width="672" />
 <p class="caption">
 Figure 13.2: Total corticosterone before and at day 2 and 20 after implantation of a corticosterone or a placebo implant. Lines connect measurements of the same individual.
 </p>
 </div>
-<p>We fit a normal linear model with ‘Ring’ as a random factor, and ‘Implant’, ‘days’ and the interaction of ‘Implant’ <span class="math inline">\(\times\)</span> ‘days’ as fixed effects. Note that both ‘Implant’ and ‘days’ are defined as factors, thus R creates indicator variables for all levels except the reference level. Later, we will also include ‘Brood’ as a grouping level; for now, we ignore this level and start with a simpler (less perfect) model for illustrative purposes.</p>
-<p><span class="math inline">\(\hat{y_i} = \beta_0 + b_{Ring[i]} + \beta_1I(days=2) + \beta_2I(days=20) + \beta_3I(Implant=P) + \beta_4I(days=2)I(Implant=P) + \beta_5I(days=20)I(Implant=P)\)</span><br />
-<span class="math inline">\(b_{Ring} \sim normal(0, \sigma_b)\)</span><br />
-<span class="math inline">\(y_i \sim normal(\hat{y_i}, \sigma)\)</span></p>
-<p>Several different functions to fit a mixed model have been written in R: <code>lme</code>, <code>gls</code>, <code>gee</code> have been the first ones. Then <code>lmer</code> followed, and now, <code>stan_lmer</code> and <code>brm</code> allow to fit a large variety of hierarchical models. We here start w <code>ith using lmer</code> from the package lme4 (which is automatically loaded to the R-console when loading arm), because it is a kind of basis function also for <code>stan_lmer</code>and <code>brm</code>. Further, <code>sim</code> can treat lmer-objects but none of the earlier ones.</p>
-<p>The function <code>lmer</code> is used similarly to the function <code>lm</code>. The only difference is that the random factors are added in the model formula within parentheses. The ’1’ stands for the intercept and the ‘|’ means ‘grouped by’. ‘(1|Ring)’, therefore, adds the random deviations for each individual to the average intercept. These deviations are the b_{Ring} in the model formula above. Corticosterone data are log transformed to achieve normally distributed residuals.</p>
-<p>After having fitted the model, in real life, we always first inspect the residuals, before we look at the model output. However, that is a dilemma for this text book. Here, we would like to explain how the model is constructed just after having shown the model code. Therefore, we do the residual analyses later, but in real life, we would do it now.</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="lmer.html#cb144-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(<span class="fu">log</span>(totCort) <span class="sc">~</span> Implant <span class="sc">+</span> days <span class="sc">+</span> Implant<span class="sc">:</span>days <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Ring), </span>
-<span id="cb144-2"><a href="lmer.html#cb144-2" tabindex="-1"></a>            <span class="at">data=</span>dat, <span class="at">REML=</span><span class="cn">TRUE</span>)</span>
-<span id="cb144-3"><a href="lmer.html#cb144-3" tabindex="-1"></a>mod</span></code></pre></div>
+<p>We fit a normal linear model with “Ring” (the individual) as a random factor, and “Implant” and “days”, including their interaction, as fixed effects. Note that both “Implant” and “days” are defined as factors, thus R creates indicator variables for all levels except the reference level. Later, we will also include “Brood” as a grouping level (i.e. random factor); for now, we ignore this level and start with a simpler (less perfect) model for illustrative purposes. The model can be written as follows:</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\hat{y_i} = \beta_0 + b_{Ring_i} + \beta_1 I(days=2) + \beta_2 I(days=20) + \beta_3 I(Implant=P) \\
+&amp;\quad + \beta_4 I(days=2) I(Implant=P) + \beta_5 I(days=20) I(Implant=P) \\
+&amp;b_{Ring} \sim normal(0, \sigma_b) \\
+&amp;y_i \sim normal(\hat{y_i}, \sigma)
+\end{aligned}
+\]</span></p>
+<p>The first part relates the fitted value of an observation (<span class="math inline">\(\hat{y_i}\)</span>, i.e. the expected value of the outcome variable) to the linear predictor. This linear predictor consists of the intercept <span class="math inline">\(\beta_0\)</span> and five dummy variables for the factor levels (including the interaction) with their <span class="math inline">\(\beta\)</span>-parameters (<span class="math inline">\(\beta_1\)</span> to <span class="math inline">\(\beta_5\)</span>), as we have seen it already for the simple linear model in Chapter <a href="lm.html#twowayanova">11.3.1</a>. The new component of the linear predictor is the <span class="math inline">\(b_{Ring_i}\)</span>, which is an estimate per group: the deviation of each group from the overall mean. Adding these deviations to the intercept yields the group mean (assuming the baseline level for each factor, but using another level would just shift all the means by the same amount), using partial pooling as described above (= shrinkage estimator).</p>
+<p>Several different functions to fit a mixed model have been written in R: <code>lme</code>, <code>gls</code>, <code>gee</code> have been the first ones. Then, <code>lmer</code> followed, and now, <code>stan_lmer</code> and <code>brm</code> allow to fit a large variety of hierarchical models (see also <a href="lm.html#brm">11.1.2.4</a>). We here start with using <code>lmer</code> from the package lme4, because it is kind of a basic function also for <code>stan_lmer</code> and <code>brm</code>. Further, <code>sim</code> can only work with lmer-objects but not the others. To work with <code>lmer</code>, we usually load the package arm which contains the function <code>sim</code> and also automatically loads the package lme4.</p>
+</div>
+<div id="fitting-a-normal-linear-mixed-model-using-lmer" class="section level3 hasAnchor" number="13.2.2">
+<h3><span class="header-section-number">13.2.2</span> Fitting a normal linear mixed model using lmer<a href="lmer.html#fitting-a-normal-linear-mixed-model-using-lmer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The function <code>lmer</code> is used similarly to the function <code>lm</code>. The only difference is that the random factors are added to the model formula within parentheses, e.g. <code>+ (1|Ring)</code>. The “1” stands for the intercept and the “|” means “grouped by”. <code>+ (1|Ring)</code>, therefore, adds the random deviations for each individual (the <span class="math inline">\(b_{Ring_i}\)</span> in the model formula above) from the overall mean.</p>
+<p>To fit the model to our example data, we log-transformed the corticosterone values (i.e. the outcome variable) to achieve normally distributed residuals. After having fitted the model, in real life, we always first inspect the residuals before we look at the model output. Here, we skip this point to explain how the model is constructed right after having shown the model code. But we will come back to the residual analyses.</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="lmer.html#cb190-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(<span class="fu">log</span>(totCort) <span class="sc">~</span> Implant <span class="sc">+</span> days <span class="sc">+</span> Implant<span class="sc">:</span>days <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Ring), </span>
+<span id="cb190-2"><a href="lmer.html#cb190-2" tabindex="-1"></a>            <span class="at">data=</span>dat, <span class="at">REML=</span><span class="cn">TRUE</span>)</span>
+<span id="cb190-3"><a href="lmer.html#cb190-3" tabindex="-1"></a>mod</span></code></pre></div>
 <pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
 ## Formula: log(totCort) ~ Implant + days + Implant:days + (1 | Ring)
 ##    Data: dat
@@ -545,15 +592,15 @@ Figure 13.2: Total corticosterone before and at day 2 and 20 after implantation 
 ##         1.91446         -0.08523          1.65307          0.26278  
 ##  ImplantP:days2  ImplantP:days20  
 ##        -1.71999         -0.09514</code></pre>
-<p>The output of the lmer-object tells us that the model was fitted using the REML-method, which is the restricted maximum likelihood method. The ‘REML criterion’ is the statistic describing the model fit for a model fitted by REML. The model output further contains the parameter estimates. These are grouped into a random effects and fixed effects section. The random effects section gives the estimates for the among-individual standard deviation of the intercept (<span class="math inline">\(\sigma_{Ring} =\)</span> 0.34) and the residual standard deviation (<span class="math inline">\(\sigma =\)</span> 0.61). The fixed effects section gives the estimates for the intercept (<span class="math inline">\(\beta_0 =\)</span> 1.91), which is the mean logarithm of corticosterone for an ‘average’ individual that received a corticosterone implant at the day of implantation. The other model coefficients are defined as follows: the difference in the logarithm of corticosterone between placebo- and corticosterone-treated individuals before implantation (<span class="math inline">\(\beta_1 =\)</span> -0.09), the difference between day 2 and before implantation for the corticosterone-treated individuals (<span class="math inline">\(\beta_2 =\)</span> 1.65), the difference between day 20 and before implantation for the corticosterone-treated individuals (<span class="math inline">\(\beta_3 =\)</span> 0.26), and the interaction parameters which tell us how the differences between day 2 and before implantation (<span class="math inline">\(\beta_4 =\)</span> -1.72), and day 20 and before implantation (<span class="math inline">\(\beta_5 =\)</span> -0.1), differ for the placebo-treated individuals compared to the corticosterone treated individuals.</p>
-<p>Neither the model output shown above nor the summary function (not shown) give any information about the proportion of variance explained by the model such as an <span class="math inline">\(R^2\)</span>. The reason is that it is not straightforward to obtain a measure of model fit in a mixed model, and different definitions of <span class="math inline">\(R^2\)</span> exist <span class="citation">(<a href="referenzen.html#ref-Nakagawa.2013">Nakagawa and Schielzeth 2013</a>)</span>.</p>
+<p>The output of the lmer-object tells us that the model was fitted using the REML-method, which is the restricted maximum likelihood method. The “REML criterion” is the statistic describing the model fit for a model fitted by REML. Then follows the more interesting part: the parameter estimates. These are grouped into a random effects and fixed effects section. The random effects section gives the estimates for the among-individual standard deviation of the intercept <nobr>(<span class="math inline">\(\sigma_{Ring} =\)</span> 0.34)</nobr> and the residual standard deviation <nobr>(<span class="math inline">\(\sigma =\)</span> 0.61)</nobr>. The fixed effects section gives the estimates for the intercept <nobr>(<span class="math inline">\(\beta_0 =\)</span> 1.91)</nobr>, which is the mean logarithm of corticosterone for an “average” individual that received a corticosterone implant at the day of implantation. The other model coefficients are defined as follows: The difference in the logarithm of corticosterone between placebo- and corticosterone-treated individuals before implantation <nobr>(<span class="math inline">\(\beta_1 =\)</span> -0.09)</nobr>, the difference between day 2 and before implantation for the corticosterone-treated individuals <nobr>(<span class="math inline">\(\beta_2 =\)</span> 1.65)</nobr>, the difference between day 20 and before implantation for the corticosterone-treated individuals <nobr>(<span class="math inline">\(\beta_3 =\)</span> 0.26)</nobr>, and the interaction parameters which tell us how the differences between day 2 and before implantation <nobr>(<span class="math inline">\(\beta_4 =\)</span> -1.72)</nobr>, and day 20 and before implantation <nobr>(<span class="math inline">\(\beta_5 =\)</span> -0.1)</nobr>, differ for the placebo-treated individuals compared to the corticosterone treated individuals. Of course, these interpretations of the fixed effects are the same as in non-mixed models.</p>
+<p>Neither the model output shown above nor the summary function (not shown) give any information about the proportion of variance explained by the model such as an <span class="math inline">\(R^2\)</span>. The reason is that it is not straightforward to obtain a measure of model fit in a mixed model, and different definitions of <span class="math inline">\(R^2\)</span> exist <span class="citation">(<a href="referenzen.html#ref-Nakagawa.2013">Nakagawa and Schielzeth 2013</a>)</span>. Check out the function <code>r.squaredGLMM</code> from package MuMIn to get pseudo-<span class="math inline">\(R^2\)</span> for mixed models.</p>
 <p>The function <code>fixef</code> extracts the estimates for the fixed effects, the function <code>ranef</code> extracts the estimates for the random deviations from the population intercept for each individual. The <code>ranef</code>-object is a list with one element for each random factor in the model. We can extract the random effects for each ring using the <code>$Ring</code> notation.</p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="lmer.html#cb146-1" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">fixef</span>(mod), <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="lmer.html#cb192-1" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">fixef</span>(mod), <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##     (Intercept)        ImplantP           days2          days20  ImplantP:days2 
 ##           1.914          -0.085           1.653           0.263          -1.720 
 ## ImplantP:days20 
 ##          -0.095</code></pre>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="lmer.html#cb148-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">ranef</span>(mod)<span class="sc">$</span>Ring) <span class="co"># print the first 6 Ring effects</span></span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="lmer.html#cb194-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">ranef</span>(mod)<span class="sc">$</span>Ring) <span class="co"># print the first 6 Ring effects</span></span></code></pre></div>
 <pre><code>##        (Intercept)
 ## 898054  0.24884979
 ## 898055  0.11845863
@@ -562,13 +609,268 @@ Figure 13.2: Total corticosterone before and at day 2 and 20 after implantation 
 ## 898059 -0.08086498
 ## 898061 -0.08396839</code></pre>
 </div>
+</div>
 <div id="restricted-maximum-likelihood-estimation-reml" class="section level2 hasAnchor" number="13.3">
 <h2><span class="header-section-number">13.3</span> Restricted maximum likelihood estimation (REML)<a href="lmer.html#restricted-maximum-likelihood-estimation-reml" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<!-- we have not yet explained the ML-method. in the old book, chapter 5. we need to find a place for ML-method-->
-<p>For a mixed model the restricted maximum likelihood method is used by default instead of the maximum likelihood (ML) method. The reason is that the ML-method underestimates the variance parameters because this method assumes that the fixed parameters are known without uncertainty when estimating the variance parameters. However, the estimates of the fixed effects have uncertainty. The REML method uses a mathematical trick to make the estimates for the variance parameters independent of the estimates for the fixed effects. We recommend reading the very understandable description of the REML method in <span class="citation">Zuur et al. (<a href="referenzen.html#ref-Zuur.2009">2009</a>)</span>. For our purposes, the relevant difference between the two methods is that the ML-estimates are unbiased for the fixed effects but biased for the random effects, whereas the REML-estimates are biased for the fixed effects and unbiased for the random effects. However, when sample size is large compared to the number of model parameters, the differences between the ML- and REML-estimates become negligible. As a guideline, use REML if the interest is in the random effects (variance parameters), and ML if the interest is in the fixed effects. The estimation method can be chosen by setting the argument ‘REML’ to ‘FALSE’ (default is ‘TRUE’).</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="lmer.html#cb150-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(<span class="fu">log</span>(totCort) <span class="sc">~</span> Implant <span class="sc">+</span> days <span class="sc">+</span> Implant<span class="sc">:</span>days <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Ring), </span>
-<span id="cb150-2"><a href="lmer.html#cb150-2" tabindex="-1"></a>            <span class="at">data=</span>dat, <span class="at">REML=</span><span class="cn">FALSE</span>)  <span class="co"># using ML</span></span></code></pre></div>
+<!-- we have not yet explained the ML-method. in the old book, Chapter 5. we need to find a place for ML-method ___ pko15.8.25: inserted link to 9.3-->
+<p>For a mixed model the restricted maximum likelihood method is used by default instead of the maximum likelihood (ML) method (see Chapter <a href="bayesian_paradigm.html#likelihood">9.3</a>). The reason is that the ML-method underestimates the variance parameters because this method assumes that the fixed parameters are known without uncertainty when estimating the variance parameters. However, the estimates of the fixed effects have uncertainty. The REML method uses a mathematical trick to make the estimates for the variance parameters independent of the estimates for the fixed effects. We recommend reading the very understandable description of the REML method in <span class="citation">Zuur et al. (<a href="referenzen.html#ref-Zuur.2009">2009</a>)</span>. For our purposes, the relevant difference between the two methods is that the ML-estimates are unbiased for the fixed effects but biased for the random effects, whereas the REML-estimates are biased for the fixed effects and unbiased for the random effects. However, when sample size is large compared to the number of model parameters, the differences between the ML- and REML-estimates become negligible. As a guideline, use REML if the interest is in the random effects (variance parameters), and ML if the interest is in the fixed effects. The estimation method can be chosen by setting the argument ‘REML’ to ‘FALSE’ (default is ‘TRUE’).</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="lmer.html#cb196-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(<span class="fu">log</span>(totCort) <span class="sc">~</span> Implant <span class="sc">+</span> days <span class="sc">+</span> Implant<span class="sc">:</span>days <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Ring), </span>
+<span id="cb196-2"><a href="lmer.html#cb196-2" tabindex="-1"></a>            <span class="at">data=</span>dat, <span class="at">REML=</span><span class="cn">FALSE</span>)  <span class="co"># using ML</span></span></code></pre></div>
 <p>When we fit the model by <code>stan_lmer</code> from the rstanarm-package or <code>brm</code> from the brms-package, i.e., using the Bayes theorem instead of ML or REML, we do not have to care about this choice (of course!). The result from a Bayesian analyses is unbiased for all parameters (at least from a mathematical point of view - also parameters from a Bayesian model can be biased if the model violates assumptions or is confounded).</p>
+</div>
+<div id="assessing-model-assumptions" class="section level2 hasAnchor" number="13.4">
+<h2><span class="header-section-number">13.4</span> Assessing model assumptions<a href="lmer.html#assessing-model-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As with a simple linear model, the assumptions are carefully checked before inference is drawn from a mixed model. The assumptions are, as explained in Chapter <a href="residualanalysis.html#residualanalysis">12</a>, that the residuals are independent and identically distributed (iid). In principle, the same methods described in Chapter <a href="residualanalysis.html#residualanalysis">12</a> are used to assess violation of model assumptions in mixed models. However, the function <code>plot</code> does not produce the standard diagnostic residual plots from an <code>lmer</code> object. Therefore, these plots have to be coded by hand.</p>
+<p>In the first plot of Figure <a href="lmer.html#fig:mermodplot">13.3</a> we see that the residuals scatter around zero with a few exceptions in the lower left part of the panel. A positive correlation between the residuals and the fitted values (not present in the example data) would not bother us statistically in the case of a mixed model, but it indicates strong shrinkage and may have biological meaning.</p>
+<p>The few small measurements that do not fit well to the model are also recognizable in the QQ plot of the residuals (a banana-like deviation from the straight line at the left edge of the data) and when plotting the square root of the absolute values of the residuals against the fitted values (second and third plots in Figure <a href="lmer.html#fig:mermodplot">13.3</a>). Because the number of such cases is low and all other observations seem to fulfill the model assumptions well, we accept the slight lack of fit. But we are aware of the fact that model predictions for small corticosterone levels are unreliable.</p>
+<p>In addition to the checks presented in Chapter <a href="residualanalysis.html#residualanalysis">12</a>, the assumption that the random effects, that is the values of <span class="math inline">\(b_{Ring}\)</span>, are normally distributed, needs to be checked. We do this using a QQ plot (fourth plot in Figure <a href="lmer.html#fig:mermodplot">13.3</a>). Note that we need to extract the <span class="math inline">\(b_{Ring}\)</span> using “[,1]” because the ranef object is two-dimensional.</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="lmer.html#cb197-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb197-2"><a href="lmer.html#cb197-2" tabindex="-1"></a><span class="fu">scatter.smooth</span>(<span class="fu">fitted</span>(mod),<span class="fu">resid</span>(mod)); <span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb197-3"><a href="lmer.html#cb197-3" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Tukey-Anscombe Plot&quot;</span>) <span class="co"># residuals vs. fitted</span></span>
+<span id="cb197-4"><a href="lmer.html#cb197-4" tabindex="-1"></a></span>
+<span id="cb197-5"><a href="lmer.html#cb197-5" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">resid</span>(mod), <span class="at">main=</span><span class="st">&quot;normal QQ-plot, residuals&quot;</span>) <span class="co"># qq of residuals</span></span>
+<span id="cb197-6"><a href="lmer.html#cb197-6" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">resid</span>(mod))</span>
+<span id="cb197-7"><a href="lmer.html#cb197-7" tabindex="-1"></a><span class="fu">scatter.smooth</span>(<span class="fu">fitted</span>(mod), <span class="fu">sqrt</span>(<span class="fu">abs</span>(<span class="fu">resid</span>(mod)))) <span class="co"># res. var vs. fitted</span></span>
+<span id="cb197-8"><a href="lmer.html#cb197-8" tabindex="-1"></a></span>
+<span id="cb197-9"><a href="lmer.html#cb197-9" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">ranef</span>(mod)<span class="sc">$</span>Ring[,<span class="dv">1</span>], <span class="at">main=</span><span class="st">&quot;normal QQ-plot, random effects&quot;</span>)</span>
+<span id="cb197-10"><a href="lmer.html#cb197-10" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">ranef</span>(mod)<span class="sc">$</span>Ring[,<span class="dv">1</span>]) <span class="co"># qq of random effects</span></span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:mermodplot"></span>
+<img src="2.05-lmer_files/figure-html/mermodplot-1.png" alt="Diagnostic residual and random effect plots to assess model assumptions of the corticosterone model. Upper left: residuals versus fitted values. Upper right: Normal QQ plot of the residuals. Lower left: square-root of the absolute values of the residuals versus fitted values. Lower right: Normal QQ plot of the random effects." width="672" />
+<p class="caption">
+Figure 13.3: Diagnostic residual and random effect plots to assess model assumptions of the corticosterone model. Upper left: residuals versus fitted values. Upper right: Normal QQ plot of the residuals. Lower left: square-root of the absolute values of the residuals versus fitted values. Lower right: Normal QQ plot of the random effects.
+</p>
+</div>
+<p>We do not see a serious deviation in the distribution of the random effects from the normal distribution.</p>
+</div>
+<div id="presenting-the-results-1" class="section level2 hasAnchor" number="13.5">
+<h2><span class="header-section-number">13.5</span> Presenting the results<a href="lmer.html#presenting-the-results-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We use the function <code>sim</code> to draw 2000 random values from the joint posterior distribution of the model parameters; that is, we draw 2000 values for each parameter while taking the correlation between the parameters into account.</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="lmer.html#cb198-1" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb198-2"><a href="lmer.html#cb198-2" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim)</span>
+<span id="cb198-3"><a href="lmer.html#cb198-3" tabindex="-1"></a><span class="fu">str</span>(bsim)</span></code></pre></div>
+<pre><code>## Formal class &#39;sim.merMod&#39; [package &quot;arm&quot;] with 3 slots
+##   ..@ fixef: num [1:2000, 1:6] 2.03 1.87 1.96 2.07 1.86 ...
+##   .. ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. .. ..$ : NULL
+##   .. .. ..$ : chr [1:6] &quot;(Intercept)&quot; &quot;ImplantP&quot; &quot;days2&quot; &quot;days20&quot; ...
+##   ..@ ranef:List of 1
+##   .. ..$ Ring: num [1:2000, 1:151, 1] 0.7929 -0.075 0.1721 -0.0153 0.0783 ...
+##   .. .. ..- attr(*, &quot;dimnames&quot;)=List of 3
+##   .. .. .. ..$ : NULL
+##   .. .. .. ..$ : chr [1:151] &quot;898054&quot; &quot;898055&quot; &quot;898057&quot; &quot;898058&quot; ...
+##   .. .. .. ..$ : chr &quot;(Intercept)&quot;
+##   ..@ sigma: num [1:2000] 0.646 0.601 0.584 0.626 0.61 ...</code></pre>
+<p>The object produced by the <code>sim</code> function when applied to a mer object (= object produced by the functions <code>lmer</code> or <code>glmer</code>) contains three slots (remember that slots are addressed using the <code>@</code> sign in R). The slot “fixef” is a matrix with as many columns as there are parameters in the fixed part of the model. The number of rows corresponds to the number of simulations (we have saved this number in the object “nsim”). The slot “ranef” is a list that contains one element for each random factor. In the previous example, there is only one random factor (“Ring”). Therefore, the list contains only one element.
+Each element of the ranef slot is a three-dimensional array where the first dimension represents the number of simulations (2000 in our case), the second dimension is the number of groups (factor levels; here this is the number of individuals), and the third dimension corresponds to the number of parameters that are grouped by the specific factor. In the previous example, we have included only a random intercept in the model. Therefore, this dimension has a length of one. In the following we will fit models with more parameters per random effect.
+From the simulated values (i.e. draws from the joint posterior distribution), the 2.5% and 97.5% quantiles can be used for the 95% credible interval:</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="lmer.html#cb200-1" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">apply</span>(bsim<span class="sc">@</span>fixef, <span class="dv">2</span>,quantile, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.5</span>,<span class="fl">0.975</span>)),<span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##       (Intercept) ImplantP days2 days20 ImplantP:days2 ImplantP:days20
+## 2.5%        1.741   -0.346 1.410  0.007         -2.072          -0.448
+## 50%         1.913   -0.090 1.658  0.263         -1.713          -0.090
+## 97.5%       2.082    0.175 1.894  0.498         -1.363           0.269</code></pre>
+<p>Some effort is needed to interpret models with interactions (independent of whether it is a mixed model or not). We see that in the corticosterone-treated nestlings, the logarithm of the corticosterone measure increases from before implantation to day 2 by 1.7 (95% compatiblity interval CI: 1.4-1.9), which is quite substantial. To get this increase for the placebo-treated individuals, we have to add the interaction parameter, thus the increase in placebo nestlings is 1.7-1.7 = 0. The interaction parameter, -1.7 (95% CI: -2.1 to -1.4), measures the difference between placebo and corticosterone nestlings in their response to the treatment; it is, therefore, an important result.
+To better see what really happens, we often plot the fitted values with its CI and the observations in one plot. To this end, we first prepare a new data frame that contains a row for each factor level (“Implant” and “days”). Then, the fitted value for each of the factor-level combinations is calculated 2000 times (once for each set of model parameters from the simulated posterior distribution) to obtain 2000 simulated values from the posterior distribution of the fitted values. The 2.5% and 97.5% quantiles of these fitted values are used as lower and upper bounds of the 95% compatibility interval.</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="lmer.html#cb202-1" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">Implant=</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;C&quot;</span>,<span class="st">&quot;P&quot;</span>),<span class="at">levels=</span><span class="fu">levels</span>(dat<span class="sc">$</span>Implant)),</span>
+<span id="cb202-2"><a href="lmer.html#cb202-2" tabindex="-1"></a>                      <span class="at">days=</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;before&quot;</span>,<span class="dv">2</span>,<span class="dv">20</span>),<span class="at">levels=</span><span class="fu">levels</span>(dat<span class="sc">$</span>days)))</span>
+<span id="cb202-3"><a href="lmer.html#cb202-3" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> Implant <span class="sc">+</span> days <span class="sc">+</span> Implant<span class="sc">:</span>days, <span class="at">data=</span>newdat)</span>
+<span id="cb202-4"><a href="lmer.html#cb202-4" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nsim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
+<span id="cb202-5"><a href="lmer.html#cb202-5" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) fitmat[,i] <span class="ot">&lt;-</span> Xmat <span class="sc">%*%</span> bsim<span class="sc">@</span>fixef[i,] <span class="co"># fitted values</span></span>
+<span id="cb202-6"><a href="lmer.html#cb202-6" tabindex="-1"></a>newdat<span class="sc">$</span>lower <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.025</span>)</span>
+<span id="cb202-7"><a href="lmer.html#cb202-7" tabindex="-1"></a>newdat<span class="sc">$</span>upper <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.975</span>)</span>
+<span id="cb202-8"><a href="lmer.html#cb202-8" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> Xmat <span class="sc">%*%</span> <span class="fu">fixef</span>(mod)</span></code></pre></div>
+<p>The fitted values given in Figure <a href="lmer.html#fig:cortdaysplot">13.4</a>, together with their uncertainty measures (compatibility intervals), take into account that we had repeated measures for each individual.</p>
+<div class="figure"><span style="display:block;" id="fig:cortdaysplot"></span>
+<img src="2.05-lmer_files/figure-html/cortdaysplot-1.png" alt="Predicted total corticosterone values with 95% CI of placebo-implanted nestlings (closed symbol) and corticosterone-implanted nestlings (open symbol) in relation to days after implantation. Blue dots are raw data of placebo-implanted nestlings, and orange dots are raw data of corticosterone-implanted nestlings." width="672" />
+<p class="caption">
+Figure 13.4: Predicted total corticosterone values with 95% CI of placebo-implanted nestlings (closed symbol) and corticosterone-implanted nestlings (open symbol) in relation to days after implantation. Blue dots are raw data of placebo-implanted nestlings, and orange dots are raw data of corticosterone-implanted nestlings.
+</p>
+</div>
+</div>
+<div id="random-intercept-and-slope" class="section level2 hasAnchor" number="13.6">
+<h2><span class="header-section-number">13.6</span> Random intercept and slope<a href="lmer.html#random-intercept-and-slope" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In the preceding model, only the intercept <span class="math inline">\(\beta_0\)</span> was modeled per individual (the model allowed for between-individual variance in <span class="math inline">\(\beta_0\)</span>). But a random effect does not need to be restricted to the intercept. Any parameter can be modeled, if the data allow. For example, in the previous model we cannot include an individual-specific difference between corticosterone and placebo treatment because each individual obtained only one treatment. Therefore, the data do not contain information about between-individual differences in the treatment effect, and it does not make sense to include such a structure in the model.
+In another study on barn owls, we were interested in the effect of corticosterone on growth rate. Here, we measured wing length (as a proxy for size) at different ages of individuals that had been treated either with corticosterone or with a placebo implant. We used the slope of the regression line for wing length on age as a growth rate measure, and we were interested in the difference in this slope between corticosterone- and placebo-implanted individuals.
+We expected that growth rate differed between individuals due to between-individual differences in body condition and also because the age at which the implant was implanted differed between the individuals because barn owl nestlings hatch asynchronously (the implantation was done on the same day for all the nestlings in a nest). Therefore, we modeled the slope of the regression line for each individual. Otherwise, our confidence in the (population) slope parameter would be too high (the compatibility intervals would be too narrow). This is because individual-specific slopes in the data produce a kind of pseudoreplication when equal slopes between individuals are assumed in the model (<span class="citation">Schielzeth and Forstmeier (<a href="referenzen.html#ref-Schielzeth.2009">2009</a>)</span>).
+The data for the growth rate study are in the wingbowl data set. In total, we have 209 measurements of 86 individuals (variable “Ring”) from 24 broods.
+In the model, we include “age” (as a continuous covariate), “implant” (as a fixed effect), and their interaction in the fixed part; and “ring” (= id of individual) is included as a random effect. We model both the intercept and the slope for the covariate “age” dependent on “ring.” We use this notation with <span class="math inline">\(b_{Ring}\)</span> being an individual-specific deviation from the population mean parameter value, but we add a second numerical subscript, <span class="math inline">\(b_{1,Ring}\)</span>, to indicate the random intercept and <span class="math inline">\(b_{2,Ring}\)</span> for the random slope. The two random parameters are assumed to follow a multivariate normal distribution (MVNorm); that is, they are both normally distributed and are assumed to be correlated and this correlation is estimated. Hence, the formula for the random intercept and random slope model is:</p>
+<p><span class="math display">\[
+\begin{aligned}
+  &amp;\hat{y_i} =\beta_0 + b_{1,Ring_i} + (\beta_1 + b_{2,Ring_i}) age_i + \beta_2 I(Implant=P)+\beta_3 age_i I(Implant=P) \\
+  &amp;y_i \sim normal(\hat{y_i}, \sigma^2) \\
+  &amp;\boldsymbol{b}_{1:2,Ring} \sim MVnormal(\boldsymbol{0,\Sigma})
+\end{aligned}
+\]</span></p>
+<p>The vector <span class="math inline">\(\boldsymbol{b}_{1:2,Ring}\)</span> contains the two parameters <span class="math inline">\(b_{1,Ring}\)</span> and <span class="math inline">\(b_{2,Ring}\)</span>. The matrix <span class="math inline">\(\boldsymbol{\Sigma}\)</span> contains the variances of and the covariances between the intercept and the slope. The notation <code>(Age|Ring)</code> means that both the intercept and the Age-effect are grouped by Ring. We find it advisable to center and scale covariates, especially for mixed models with some complexity because non-centered covariates lead to a stronger correlation between the estimated parameters, which may cause nonconvergence of the fitting algorithm. Hence, we center and scale the variable “Age”:</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="lmer.html#cb203-1" tabindex="-1"></a><span class="fu">data</span>(wingbowl)</span>
+<span id="cb203-2"><a href="lmer.html#cb203-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> wingbowl</span>
+<span id="cb203-3"><a href="lmer.html#cb203-3" tabindex="-1"></a>dat<span class="sc">$</span>Age.z <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat<span class="sc">$</span>Age)</span>
+<span id="cb203-4"><a href="lmer.html#cb203-4" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Wing <span class="sc">~</span> Age.z <span class="sc">+</span> Implant <span class="sc">+</span> Age.z<span class="sc">:</span>Implant <span class="sc">+</span> (Age.z<span class="sc">|</span>Ring),</span>
+<span id="cb203-5"><a href="lmer.html#cb203-5" tabindex="-1"></a>            <span class="at">data=</span>dat, <span class="at">REML=</span><span class="cn">FALSE</span>)</span>
+<span id="cb203-6"><a href="lmer.html#cb203-6" tabindex="-1"></a>mod</span></code></pre></div>
+<pre><code>## Linear mixed model fit by maximum likelihood  [&#39;lmerMod&#39;]
+## Formula: Wing ~ Age.z + Implant + Age.z:Implant + (Age.z | Ring)
+##    Data: dat
+##       AIC       BIC    logLik  deviance  df.resid 
+## 1280.4391 1307.1778 -632.2195 1264.4391       201 
+## Random effects:
+##  Groups   Name        Std.Dev. Corr 
+##  Ring     (Intercept) 6.394         
+##           Age.z       1.898    -0.12
+##  Residual             2.542         
+## Number of obs: 209, groups:  Ring, 86
+## Fixed Effects:
+##    (Intercept)           Age.z        ImplantP  Age.z:ImplantP  
+##        155.442          24.954           4.554           2.185</code></pre>
+<p>The estimate of the between-nestling standard deviation for the intercept is 6.4 and for the age-effect (slope), this value is 1.9. We see that there is a negative correlation between the intercept and the slope (-0.12). This is not unusual, and it would be even stronger with noncentered predictors: this means we can find different regression lines that fit the data similarly well when we increase the intercept and simultaneously decrease the slope.
+We can use the diagnostic residual plots as described in Chapter <a href="residualanalysis.html#residualanalysis">12</a>, and the R code of the previous section, to produce a QQ plot of the random effects. Because two parameters were modeled per individual, we have to produce two different QQ plots to assess whether the random effects are normally distributed. The different parameters for each random effect are extracted from the <code>ranef</code> object using the squared brackets because the random effects are given as a matrix containing one row per individual and one column per parameter (here: intercept and age-effect).</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="lmer.html#cb205-1" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">ranef</span>(mod)<span class="sc">$</span>Ring[,<span class="dv">1</span>]) <span class="co"># intercept</span></span>
+<span id="cb205-2"><a href="lmer.html#cb205-2" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">ranef</span>(mod)<span class="sc">$</span>Ring[,<span class="dv">1</span>])</span></code></pre></div>
+<p><img src="2.05-lmer_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="lmer.html#cb206-1" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">ranef</span>(mod)<span class="sc">$</span>Ring[,<span class="dv">2</span>]) <span class="co"># slope</span></span>
+<span id="cb206-2"><a href="lmer.html#cb206-2" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">ranef</span>(mod)<span class="sc">$</span>Ring[,<span class="dv">2</span>]) <span class="co"># plots not shown</span></span></code></pre></div>
+<p><img src="2.05-lmer_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
+<p>The diagnostic residual plots did not indicate strong violation of the model assumptions; therefore, we can start drawing inferences from the model. Our question was how strongly does corticosterone affect growth rate? From the model output we see that individuals with a placebo implant grow 2.2 mm more per standard deviation of age, that is, <code>2.2/sd(dat$Age)</code> = 0.4 mm per day compared to the individuals with a corticosterone implant. We can get the 95% CI of the parameter estimates using <code>sim</code>.</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="lmer.html#cb207-1" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb207-2"><a href="lmer.html#cb207-2" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim)</span>
+<span id="cb207-3"><a href="lmer.html#cb207-3" tabindex="-1"></a><span class="fu">apply</span>(bsim<span class="sc">@</span>fixef, <span class="dv">2</span>, quantile, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<pre><code>##       (Intercept)    Age.z ImplantP Age.z:ImplantP
+## 2.5%     153.4216 24.01919 1.667113      0.8272214
+## 97.5%    157.3967 25.92689 7.437416      3.4891947</code></pre>
+<p>The CI for the interaction effect of 0.4 mm, on the original Age-scale, is:</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="lmer.html#cb209-1" tabindex="-1"></a><span class="fu">quantile</span>(bsim<span class="sc">@</span>fixef[,<span class="st">&quot;Age.z:ImplantP&quot;</span>]<span class="sc">/</span><span class="fu">sd</span>(dat<span class="sc">$</span>Age), <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>))</span></code></pre></div>
+<pre><code>##      2.5%     97.5% 
+## 0.1557376 0.6568965</code></pre>
+<p>Thus, given the data and the model, we are 95% sure that the wings of placebo nestlings grow between 0.16 mm and 0.66 mm faster per day than the wings of corticosterone nestlings. To be better able to assess the biological relevance of this effect, we may want to plot the two regression lines (averaged over the individuals) as well as the individual-specific regression lines (<a href="lmer.html#fig:wingagecourtplot">13.5</a>). To do so, we calculate the fitted values for each age and implant combination 2000 times, each with a different set of model parameters from their posterior distribution.</p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="lmer.html#cb211-1" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">Age=</span><span class="fu">seq</span>(<span class="dv">23</span>, <span class="dv">45</span>, <span class="at">length=</span><span class="dv">100</span>),</span>
+<span id="cb211-2"><a href="lmer.html#cb211-2" tabindex="-1"></a>                      <span class="at">Implant=</span><span class="fu">levels</span>(dat<span class="sc">$</span>Implant))</span>
+<span id="cb211-3"><a href="lmer.html#cb211-3" tabindex="-1"></a>newdat<span class="sc">$</span>Age.z <span class="ot">&lt;-</span> (newdat<span class="sc">$</span>Age <span class="sc">-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>Age))<span class="sc">/</span><span class="fu">sd</span>(dat<span class="sc">$</span>Age)</span>
+<span id="cb211-4"><a href="lmer.html#cb211-4" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>Age.z <span class="sc">+</span> Implant <span class="sc">+</span> Age.z<span class="sc">:</span>Implant, <span class="at">data=</span>newdat)</span>
+<span id="cb211-5"><a href="lmer.html#cb211-5" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nsim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
+<span id="cb211-6"><a href="lmer.html#cb211-6" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) fitmat[,i] <span class="ot">&lt;-</span> Xmat <span class="sc">%*%</span> bsim<span class="sc">@</span>fixef[i,]</span>
+<span id="cb211-7"><a href="lmer.html#cb211-7" tabindex="-1"></a>newdat<span class="sc">$</span>lower <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.025</span>)</span>
+<span id="cb211-8"><a href="lmer.html#cb211-8" tabindex="-1"></a>newdat<span class="sc">$</span>upper <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.975</span>)</span></code></pre></div>
+<p>We do not extract the mean of the posterior distribution of the fitted values because we use the ML estimates for drawing the mean regression lines. These estimates are not subject to simulation error. Note that we use Age.z on the x-axis, but we label the x-axis with back-transformed values so that we are able to use the <code>abline</code> function to draw the regression lines directly from the model parameters.</p>
+<p>To draw the individual-specific regression lines, we add the individual-specific deviations from the intercept and the slope, respectively, to the population intercept and slope.We do this in a separate plot so as not to overload the figure.</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="lmer.html#cb212-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="fl">0.1</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb212-2"><a href="lmer.html#cb212-2" tabindex="-1"></a><span class="fu">plot</span>(dat<span class="sc">$</span>Age.z, dat<span class="sc">$</span>Wing, <span class="at">pch=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">0.8</span>, <span class="at">las=</span><span class="dv">1</span>,<span class="at">xlab=</span><span class="st">&quot;Age (days)&quot;</span>,</span>
+<span id="cb212-3"><a href="lmer.html#cb212-3" tabindex="-1"></a>     <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;orange&quot;</span>, <span class="st">&quot;blue&quot;</span>)[<span class="fu">as.numeric</span>(dat<span class="sc">$</span>Implant)],<span class="at">ylab=</span><span class="cn">NA</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb212-4"><a href="lmer.html#cb212-4" tabindex="-1"></a>at.x_orig <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">25</span>,<span class="dv">45</span>,<span class="at">by=</span><span class="dv">5</span>) <span class="co"># values on the x-axis, original scale</span></span>
+<span id="cb212-5"><a href="lmer.html#cb212-5" tabindex="-1"></a>at.x <span class="ot">&lt;-</span> (at.x_orig<span class="sc">-</span><span class="fu">mean</span>(dat<span class="sc">$</span>Age))<span class="sc">/</span><span class="fu">sd</span>(dat<span class="sc">$</span>Age) <span class="co"># transformed scale</span></span>
+<span id="cb212-6"><a href="lmer.html#cb212-6" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at=</span>at.x, <span class="at">labels=</span>at.x_orig) <span class="co"># original values at transformed</span></span>
+<span id="cb212-7"><a href="lmer.html#cb212-7" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Wing length (mm)&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">outer=</span><span class="cn">TRUE</span>, <span class="at">line=</span><span class="dv">2</span>, <span class="at">cex=</span><span class="fl">1.2</span>, <span class="at">adj=</span><span class="fl">0.6</span>)</span>
+<span id="cb212-8"><a href="lmer.html#cb212-8" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">fixef</span>(mod)[<span class="dv">1</span>], <span class="fu">fixef</span>(mod)[<span class="dv">2</span>], <span class="at">col=</span><span class="st">&quot;orange&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>) <span class="co"># for C</span></span>
+<span id="cb212-9"><a href="lmer.html#cb212-9" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">fixef</span>(mod)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">fixef</span>(mod)[<span class="dv">3</span>], <span class="fu">fixef</span>(mod)[<span class="dv">2</span>]<span class="sc">+</span><span class="fu">fixef</span>(mod)[<span class="dv">4</span>], <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>) <span class="co"># for P</span></span>
+<span id="cb212-10"><a href="lmer.html#cb212-10" tabindex="-1"></a><span class="co"># add transparent polygons to visualize the 95% CI</span></span>
+<span id="cb212-11"><a href="lmer.html#cb212-11" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>){</span>
+<span id="cb212-12"><a href="lmer.html#cb212-12" tabindex="-1"></a>  index <span class="ot">&lt;-</span> newdat<span class="sc">$</span>Implant<span class="sc">==</span><span class="fu">levels</span>(newdat<span class="sc">$</span>Implant)[i]</span>
+<span id="cb212-13"><a href="lmer.html#cb212-13" tabindex="-1"></a>  <span class="fu">polygon</span>(<span class="fu">c</span>(newdat<span class="sc">$</span>Age.z[index], <span class="fu">rev</span>(newdat<span class="sc">$</span>Age.z[index])),</span>
+<span id="cb212-14"><a href="lmer.html#cb212-14" tabindex="-1"></a>          <span class="fu">c</span>(newdat<span class="sc">$</span>lower[index], <span class="fu">rev</span>(newdat<span class="sc">$</span>upper[index])),</span>
+<span id="cb212-15"><a href="lmer.html#cb212-15" tabindex="-1"></a>          <span class="at">border=</span><span class="cn">NA</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">1</span>,<span class="fl">0.65</span>,<span class="dv">0</span>,<span class="fl">0.5</span>), <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.5</span>))[i])</span>
+<span id="cb212-16"><a href="lmer.html#cb212-16" tabindex="-1"></a>}</span>
+<span id="cb212-17"><a href="lmer.html#cb212-17" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x=</span><span class="sc">-</span><span class="fl">1.5</span>,<span class="at">y=</span><span class="dv">100</span>, <span class="fu">c</span>(<span class="st">&quot;corticosterone&quot;</span>, <span class="st">&quot;placebo&quot;</span>),<span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>),<span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;orange&quot;</span>,<span class="st">&quot;blue&quot;</span>),</span>
+<span id="cb212-18"><a href="lmer.html#cb212-18" tabindex="-1"></a>       <span class="at">bty=</span><span class="st">&quot;n&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">cex=</span><span class="dv">1</span>, <span class="at">pt.cex=</span><span class="fl">1.2</span>)</span>
+<span id="cb212-19"><a href="lmer.html#cb212-19" tabindex="-1"></a></span>
+<span id="cb212-20"><a href="lmer.html#cb212-20" tabindex="-1"></a><span class="co"># individual-specific regression lines in a separate plot:</span></span>
+<span id="cb212-21"><a href="lmer.html#cb212-21" tabindex="-1"></a><span class="fu">plot</span>(dat<span class="sc">$</span>Age.z, dat<span class="sc">$</span>Wing, <span class="at">pch=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">0.8</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;orange&quot;</span>, <span class="st">&quot;blue&quot;</span>)[<span class="fu">as.numeric</span>(dat<span class="sc">$</span>Implant)],</span>
+<span id="cb212-22"><a href="lmer.html#cb212-22" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Age (days)&quot;</span>, <span class="at">ylab=</span><span class="cn">NA</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb212-23"><a href="lmer.html#cb212-23" tabindex="-1"></a>at.x_orig <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">25</span>,<span class="dv">45</span>,<span class="at">by=</span><span class="dv">5</span>)</span>
+<span id="cb212-24"><a href="lmer.html#cb212-24" tabindex="-1"></a>at.x <span class="ot">&lt;-</span> (at.x_orig <span class="sc">-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>Age))<span class="sc">/</span><span class="fu">sd</span>(dat<span class="sc">$</span>Age)</span>
+<span id="cb212-25"><a href="lmer.html#cb212-25" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at=</span>at.x, <span class="at">labels=</span>at.x_orig)</span>
+<span id="cb212-26"><a href="lmer.html#cb212-26" tabindex="-1"></a>indtreat <span class="ot">&lt;-</span> <span class="fu">tapply</span>(dat<span class="sc">$</span>Implant, dat<span class="sc">$</span>Ring, <span class="cf">function</span>(x) <span class="fu">as.character</span>(x[<span class="dv">1</span>]))</span>
+<span id="cb212-27"><a href="lmer.html#cb212-27" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">86</span>){</span>
+<span id="cb212-28"><a href="lmer.html#cb212-28" tabindex="-1"></a>  <span class="cf">if</span>(indtreat[i]<span class="sc">==</span><span class="st">&quot;C&quot;</span>) </span>
+<span id="cb212-29"><a href="lmer.html#cb212-29" tabindex="-1"></a>    <span class="fu">abline</span>(<span class="fu">fixef</span>(mod)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">ranef</span>(mod)<span class="sc">$</span>Ring[i,<span class="dv">1</span>],</span>
+<span id="cb212-30"><a href="lmer.html#cb212-30" tabindex="-1"></a>           <span class="fu">fixef</span>(mod)[<span class="dv">2</span>]<span class="sc">+</span><span class="fu">ranef</span>(mod)<span class="sc">$</span>Ring[i,<span class="dv">2</span>],<span class="at">col=</span><span class="st">&quot;orange&quot;</span>) </span>
+<span id="cb212-31"><a href="lmer.html#cb212-31" tabindex="-1"></a>  <span class="cf">else</span></span>
+<span id="cb212-32"><a href="lmer.html#cb212-32" tabindex="-1"></a>    <span class="fu">abline</span>(<span class="fu">fixef</span>(mod)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">fixef</span>(mod)[<span class="dv">3</span>]<span class="sc">+</span><span class="fu">ranef</span>(mod)<span class="sc">$</span>Ring[i,<span class="dv">1</span>],</span>
+<span id="cb212-33"><a href="lmer.html#cb212-33" tabindex="-1"></a>           <span class="fu">fixef</span>(mod)[<span class="dv">2</span>]<span class="sc">+</span><span class="fu">fixef</span>(mod)[<span class="dv">4</span>]<span class="sc">+</span><span class="fu">ranef</span>(mod)<span class="sc">$</span>Ring[i,<span class="dv">2</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb212-34"><a href="lmer.html#cb212-34" tabindex="-1"></a>}</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:wingagecourtplot"></span>
+<img src="2.05-lmer_files/figure-html/wingagecourtplot-1.png" alt="*Left*: Population regression lines (bold lines) with 95% compatibility intervals (semitransparent color) for the corticosterone (orange) and placebo (blue) treated barn owl nestlings. *Right*: Individual-specific regression lines. Circles are the raw data." width="672" />
+<p class="caption">
+Figure 13.5: <em>Left</em>: Population regression lines (bold lines) with 95% compatibility intervals (semitransparent color) for the corticosterone (orange) and placebo (blue) treated barn owl nestlings. <em>Right</em>: Individual-specific regression lines. Circles are the raw data.
+</p>
+</div>
+<p>We see a discernible effect of corticosterone on growth rate such that the wing length of corticosterone-treated nestlings is, on average, around 1 cm smaller than in placebo-treated individuals at the end of the nestling phase.</p>
+</div>
+<div id="nested-and-crossed-random-effects" class="section level2 hasAnchor" number="13.7">
+<h2><span class="header-section-number">13.7</span> Nested and crossed random effects<a href="lmer.html#nested-and-crossed-random-effects" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Random factors can be nested or crossed. Each level of a factor that is nested within another factor occurs only in one level of the other factor (Figure <a href="lmer.html#fig:nestedrandomplot">13.6</a>, left). For example, the factor “nestling” is nested in the factor “nest” because the same nestling cannot be in two nests. In contrast, when two factors are crossed, all possible combinations of the factor levels occur in the data set (Figure <a href="lmer.html#fig:nestedrandomplot">13.6</a>, right). For example, the factors “month” and “year” are crossed, because all months occur in every year.
+<br></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:nestedrandomplot"></span>
+<img src="images/nested_crossed.jpg" alt="Nested and crossed structures of two factors. In the left panel, each level of the factor &amp;quot;individual&amp;quot; only occurs in one level of the factor &amp;quot;nest&amp;quot;. These are called nested effects. In the right panel, each level of the factor &amp;quot;species&amp;quot; occurs in all levels of the factor &amp;quot;field&amp;quot;. Therefore, these factors are called crossed." width="4832" />
+<p class="caption">
+Figure 13.6: Nested and crossed structures of two factors. In the left panel, each level of the factor "individual" only occurs in one level of the factor "nest". These are called nested effects. In the right panel, each level of the factor "species" occurs in all levels of the factor "field". Therefore, these factors are called crossed.
+</p>
+</div>
+<p>It is important to specify factors as nested and crossed random factors, because a falsely specified structure leads to indecipherable results. If unique level names are used (in contrast to starting with the number 1 in each group), the nested structure is defined in the data and there is no need to explicitly specify the nested design in the <code>lmer</code> (or <code>glmer</code>, see Chapter <a href="glmm.html#glmm">15</a>) function; if nestlings (or other levels nested in another factor) are not labeled uniquely (i.e., different nestlings from different nests have the same name), the nesting structure has to be specified in the model formula. The following is an example of a nested random effect and one of a crossed random effect.</p>
+<p>In the two barn owl example data sets described earlier, the individuals were actually not independent because they were grouped in nests. Thus, we should have included nest as another random factor in the two models. Because each individual only appears in one nest, these two random factors are nested. There are two possible ways to specify nested random effects in the function <code>lmer</code>. The first is to add the factor nest (“Brood”) as a second random effect in the model formula. This only fits nested random effects if the nested structure is clear from the names of the factor levels, because the nested structure is not explicitly defined in the model formula; all nestlings must have a unique name, thereby, it becomes clear that each nestling belongs to only one nest (is nested within nest).</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="lmer.html#cb213-1" tabindex="-1"></a><span class="fu">data</span>(cortbowl)</span>
+<span id="cb213-2"><a href="lmer.html#cb213-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> cortbowl</span>
+<span id="cb213-3"><a href="lmer.html#cb213-3" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(<span class="fu">log</span>(totCort) <span class="sc">~</span> Implant <span class="sc">+</span> days <span class="sc">+</span> Implant<span class="sc">:</span>days</span>
+<span id="cb213-4"><a href="lmer.html#cb213-4" tabindex="-1"></a>            <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Brood) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Ring), <span class="at">data=</span>dat, <span class="at">REML=</span><span class="cn">FALSE</span>)</span>
+<span id="cb213-5"><a href="lmer.html#cb213-5" tabindex="-1"></a>mod</span></code></pre></div>
+<pre><code>## Linear mixed model fit by maximum likelihood  [&#39;lmerMod&#39;]
+## Formula: log(totCort) ~ Implant + days + Implant:days + (1 | Brood) +  
+##     (1 | Ring)
+##    Data: dat
+##       AIC       BIC    logLik  deviance  df.resid 
+##  604.2934  637.2287 -293.1467  586.2934       278 
+## Random effects:
+##  Groups   Name        Std.Dev.
+##  Ring     (Intercept) 0.1917  
+##  Brood    (Intercept) 0.2486  
+##  Residual             0.6117  
+## Number of obs: 287, groups:  Ring, 151; Brood, 54
+## Fixed Effects:
+##         (Intercept)             ImplantP               days20  
+##               3.592               -1.796               -1.383  
+##          daysbefore      ImplantP:days20  ImplantP:daysbefore  
+##              -1.639                1.617                1.693</code></pre>
+<p>The second possibility is to define explicitly the nested structure in the model formula using the “F1/F2” notation (“F2 is nested in F1”).</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="lmer.html#cb215-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(<span class="fu">log</span>(totCort) <span class="sc">~</span> Implant <span class="sc">+</span> days <span class="sc">+</span> Implant<span class="sc">:</span>days</span>
+<span id="cb215-2"><a href="lmer.html#cb215-2" tabindex="-1"></a>            <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Brood<span class="sc">/</span>Ring), <span class="at">data=</span>dat, <span class="at">REML=</span><span class="cn">FALSE</span>)</span>
+<span id="cb215-3"><a href="lmer.html#cb215-3" tabindex="-1"></a><span class="fu">summary</span>(mod)<span class="sc">$</span>varcor</span></code></pre></div>
+<pre><code>##  Groups     Name        Std.Dev.
+##  Ring:Brood (Intercept) 0.19168 
+##  Brood      (Intercept) 0.24863 
+##  Residual               0.61170</code></pre>
+<p>These two models are the same, hence not all model output is repeated. The only difference is in the name of the individual random factor: it is called “Ring” in the first version, whereas in the second version it is called “Ring:Brood”, meaning “Ring nested in Brood”.</p>
+<p>To specify crossed random effects, we can only use the first specification in the previous example. For example, in Ellenberg’s data (Chapter <a href="lm.html#lm">11</a>), six different grass species were grown in four different situations: two tanks in each of two years, and the two tanks contained different soil. This four-level factor has been called “gradient” by <span class="citation">Hector et al. (<a href="referenzen.html#ref-Hector.2012">2012</a>)</span>. Four species were grown in all four gradients and two species were grown in only two of the gradients. Above-ground biomass was measured for 11 different water conditions within each species-gradient combination.</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="lmer.html#cb217-1" tabindex="-1"></a><span class="fu">data</span>(ellenberg)</span>
+<span id="cb217-2"><a href="lmer.html#cb217-2" tabindex="-1"></a>ellenberg<span class="sc">$</span>gradient <span class="ot">&lt;-</span> <span class="fu">paste</span>(ellenberg<span class="sc">$</span>Year, ellenberg<span class="sc">$</span>Soil)</span>
+<span id="cb217-3"><a href="lmer.html#cb217-3" tabindex="-1"></a><span class="fu">table</span>(ellenberg<span class="sc">$</span>Species, ellenberg<span class="sc">$</span>gradient)</span></code></pre></div>
+<pre><code>##     
+##      1952 Loam 1952 Sand 1953 Loam 1953 Sand
+##   Ae        11        11        11        11
+##   Ap        11        11        11        11
+##   Be        11        11        11        11
+##   Dg        11        11        11        11
+##   Fp        11        11         0         0
+##   Pp        11        11         0         0</code></pre>
+<p>We assume that the six grass species are a random sample from the family Poaceae (true grasses) and we may be interested in the general relationship between water condition (distance to ground water; using a linear and a quadratic term) and Poaceae biomass, as well as in species-specific reactions to water conditions. Therefore, we treat species as a random factor. We also include gradient as a random factor to correct for any between-gradient variance.</p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="lmer.html#cb219-1" tabindex="-1"></a>ellenberg<span class="sc">$</span>water.z <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">scale</span>(ellenberg<span class="sc">$</span>Water))</span>
+<span id="cb219-2"><a href="lmer.html#cb219-2" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(<span class="fu">log</span>(Yi.g) <span class="sc">~</span> water.z <span class="sc">+</span> <span class="fu">I</span>(water.z<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb219-3"><a href="lmer.html#cb219-3" tabindex="-1"></a>            <span class="sc">+</span> (water.z <span class="sc">+</span> <span class="fu">I</span>(water.z<span class="sc">^</span><span class="dv">2</span>)<span class="sc">|</span>Species) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>gradient), <span class="at">data=</span>ellenberg)</span></code></pre></div>
+<p>We did not find any suspicious pattern in the residuals and, therefore, plot the species-specific and the overall (for all Poaceae) relationship between water gradient and biomass in a figure. We see that the average biomass of Poaceae does not change with distance to ground water, but the different species react quite differently to the water condition (<a href="lmer.html#fig:biomasswaterplot">13.7</a>).</p>
+<div class="figure"><span style="display:block;" id="fig:biomasswaterplot"></span>
+<img src="2.05-lmer_files/figure-html/biomasswaterplot-1.png" alt="Average biomass of Poaceae plants (black line with 95% compatibility interval in gray), and the species-specific biomasses (colored lines), in relation to water condition. Dot are the raw data, each color is a different species." width="480" />
+<p class="caption">
+Figure 13.7: Average biomass of Poaceae plants (black line with 95% compatibility interval in gray), and the species-specific biomasses (colored lines), in relation to water condition. Dot are the raw data, each color is a different species.
+</p>
+</div>
+</div>
+<div id="model-selection-in-mixed-models" class="section level2 hasAnchor" number="13.8">
+<h2><span class="header-section-number">13.8</span> Model selection in mixed models<a href="lmer.html#model-selection-in-mixed-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Random effects are inexpensive in terms of degrees of freedom, because only one parameter per random effect is used. Further, natural processes vary on many different levels and, therefore, including random effects in a model leads to more realistic models in most cases. However, sometimes the model-fitting algorithms do not converge when the model is overloaded with random structures. Therefore, before adding a random effect to a model, be sure that the data contain some information about the specific variance parameter.</p>
+<p>Sometimes, we would like to decide based on the data whether a random effect should be included in the model or not. This is model selection, and it is discussed in more detail in Chapter @ref(model_comparison). However, when analyzing random factors, the following recommendations may be kept in mind: (1) As the random effects are estimated conditional on the fixed effects, model selection in the random part of the model should be done using a realistic fixed part of the model. This should include all possible predictors. (2) Random factors that are included because of the study design (e.g., subject of repeated measures, blocks) should, whenever possible, remain in the model. And (3) to get unbiased estimates for variance parameters (i.e., for the random effects) use REML.</p>
+</div>
+<div id="further-reading-5" class="section level2 hasAnchor" number="13.9">
+<h2><span class="header-section-number">13.9</span> Further reading<a href="lmer.html#further-reading-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The book by <span class="citation">Andrew Gelman and Hill (<a href="referenzen.html#ref-Gelman.2007">2007</a>)</span> is all about hierarchical models. <span class="citation">Pinheiro and Bates (<a href="referenzen.html#ref-Pinheiro.2000">2000</a>)</span> is the reference for fitting mixed models in R (and S). General guidelines to build a mixed model are given in <span class="citation">Verbeke and Molenberghs (<a href="referenzen.html#ref-Verbeke.2000">2000</a>)</span>. <span class="citation">Zuur et al. (<a href="referenzen.html#ref-Zuur.2009">2009</a>)</span> give a detailed example on model selection in mixed models.</p>
+<p>Sometimes, covariates have different effects within and between groups of measurements. <span class="citation">van de Pol and Wright (<a href="referenzen.html#ref-vandePol.2009">2009</a>)</span> present a simple method to distinguish such different effects using mixed models.</p>
+<p><span class="citation">MCCulloch and Neuhaus (<a href="referenzen.html#ref-McCulloch.2011">2011</a>)</span> studied the effect of not normally distributed random effects in linear models and found that model predictions seem to be quite robust against the violation of the normal distribution assumption of random effects.</p>
+<p>The wingbowl data set has been analyzed in detail in <span class="citation">Almasi et al. (<a href="referenzen.html#ref-Almasi.2012">2012</a>)</span> taking into account that the corticosterone implant affects blood corticosterone concentration for only three days. The Ellenberg data set has been analyzed in detail, including also the effects of soil type and year, in <span class="citation">Hector et al. (<a href="referenzen.html#ref-Hector.2012">2012</a>)</span>.</p>
 
 </div>
 </div>

@@ -5,25 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>20 Structural equation models | Bayesian Data Analysis in Ecology with R and Stan</title>
-  <meta name="description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="description" content="This GitHub-book is a collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="20 Structural equation models | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/images/cover.jpg" />
-  <meta property="og:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
+  <meta property="og:description" content="This GitHub-book is a collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="github-repo" content="TobiasRoth/BDAEcology" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="20 Structural equation models | Bayesian Data Analysis in Ecology with R and Stan" />
   
-  <meta name="twitter:description" content="This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
+  <meta name="twitter:description" content="This GitHub-book is a collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
   <meta name="twitter:image" content="/images/cover.jpg" />
 
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2024-12-13" />
+<meta name="date" content="2025-10-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -55,8 +55,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -66,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -200,20 +201,21 @@ div.csl-indent {
 <li class="chapter" data-level="2.5.2" data-path="basics.html"><a href="basics.html#comparison-of-a-sample-with-a-fixed-value-one-sample-t-test"><i class="fa fa-check"></i><b>2.5.2</b> Comparison of a sample with a fixed value (one-sample t-test)</a></li>
 <li class="chapter" data-level="2.5.3" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups-two-sample-t-test"><i class="fa fa-check"></i><b>2.5.3</b> Comparison of the locations between two groups (two-sample t-test)</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.6</b> Summary</a></li>
+<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#whyBayes"><i class="fa fa-check"></i><b>2.6</b> Comparing frequentist and Bayesian approach - an why we use Bayes</a></li>
+<li class="chapter" data-level="2.7" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.7</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="analyses_steps.html"><a href="analyses_steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="analyses_steps.html"><a href="analyses_steps.html#step1"><i class="fa fa-check"></i><b>3.1</b> Plausibility of Data</a></li>
+<li class="chapter" data-level="3.1" data-path="analyses_steps.html"><a href="analyses_steps.html#step1"><i class="fa fa-check"></i><b>3.1</b> Plausibility of data</a></li>
 <li class="chapter" data-level="3.2" data-path="analyses_steps.html"><a href="analyses_steps.html#step2"><i class="fa fa-check"></i><b>3.2</b> Relationships</a></li>
-<li class="chapter" data-level="3.3" data-path="analyses_steps.html"><a href="analyses_steps.html#step3"><i class="fa fa-check"></i><b>3.3</b> Data Distribution</a></li>
-<li class="chapter" data-level="3.4" data-path="analyses_steps.html"><a href="analyses_steps.html#step4"><i class="fa fa-check"></i><b>3.4</b> Preparation of Explanatory Variables</a></li>
-<li class="chapter" data-level="3.5" data-path="analyses_steps.html"><a href="analyses_steps.html#step5"><i class="fa fa-check"></i><b>3.5</b> Data Structure</a></li>
-<li class="chapter" data-level="3.6" data-path="analyses_steps.html"><a href="analyses_steps.html#step6"><i class="fa fa-check"></i><b>3.6</b> Define Prior Distributions</a></li>
-<li class="chapter" data-level="3.7" data-path="analyses_steps.html"><a href="analyses_steps.html#step7"><i class="fa fa-check"></i><b>3.7</b> Fit the Model</a></li>
-<li class="chapter" data-level="3.8" data-path="analyses_steps.html"><a href="analyses_steps.html#step8"><i class="fa fa-check"></i><b>3.8</b> Check Model</a></li>
-<li class="chapter" data-level="3.9" data-path="analyses_steps.html"><a href="analyses_steps.html#step9"><i class="fa fa-check"></i><b>3.9</b> Model Uncertainty</a></li>
-<li class="chapter" data-level="3.10" data-path="analyses_steps.html"><a href="analyses_steps.html#step10"><i class="fa fa-check"></i><b>3.10</b> Draw Conclusions</a></li>
+<li class="chapter" data-level="3.3" data-path="analyses_steps.html"><a href="analyses_steps.html#step3"><i class="fa fa-check"></i><b>3.3</b> Data distribution</a></li>
+<li class="chapter" data-level="3.4" data-path="analyses_steps.html"><a href="analyses_steps.html#step4"><i class="fa fa-check"></i><b>3.4</b> Preparation of explanatory variables</a></li>
+<li class="chapter" data-level="3.5" data-path="analyses_steps.html"><a href="analyses_steps.html#step5"><i class="fa fa-check"></i><b>3.5</b> Data structure</a></li>
+<li class="chapter" data-level="3.6" data-path="analyses_steps.html"><a href="analyses_steps.html#step6"><i class="fa fa-check"></i><b>3.6</b> Define prior distributions</a></li>
+<li class="chapter" data-level="3.7" data-path="analyses_steps.html"><a href="analyses_steps.html#step7"><i class="fa fa-check"></i><b>3.7</b> Fit the model</a></li>
+<li class="chapter" data-level="3.8" data-path="analyses_steps.html"><a href="analyses_steps.html#step8"><i class="fa fa-check"></i><b>3.8</b> Check model</a></li>
+<li class="chapter" data-level="3.9" data-path="analyses_steps.html"><a href="analyses_steps.html#step9"><i class="fa fa-check"></i><b>3.9</b> Model uncertainty</a></li>
+<li class="chapter" data-level="3.10" data-path="analyses_steps.html"><a href="analyses_steps.html#step10"><i class="fa fa-check"></i><b>3.10</b> Present model results</a></li>
 <li class="chapter" data-level="" data-path="analyses_steps.html"><a href="analyses_steps.html#further-reading-1"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>4</b> Probability distributions</a>
@@ -236,10 +238,23 @@ div.csl-indent {
 <li class="chapter" data-level="4.3.6" data-path="distributions.html"><a href="distributions.html#f-distribution"><i class="fa fa-check"></i><b>4.3.6</b> F-distribution</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="rfunctions.html"><a href="rfunctions.html"><i class="fa fa-check"></i><b>5</b> Important R-functions</a>
+<li class="chapter" data-level="5" data-path="transformations.html"><a href="transformations.html"><i class="fa fa-check"></i><b>5</b> Transformations</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="rfunctions.html"><a href="rfunctions.html#data-preparation"><i class="fa fa-check"></i><b>5.1</b> Data preparation</a></li>
-<li class="chapter" data-level="5.2" data-path="rfunctions.html"><a href="rfunctions.html#figures"><i class="fa fa-check"></i><b>5.2</b> Figures</a></li>
+<li class="chapter" data-level="5.1" data-path="transformations.html"><a href="transformations.html#some-r-specific-aspects"><i class="fa fa-check"></i><b>5.1</b> Some R-specific aspects</a></li>
+<li class="chapter" data-level="5.2" data-path="transformations.html"><a href="transformations.html#first-aid-transformations"><i class="fa fa-check"></i><b>5.2</b> First-aid transformations</a></li>
+<li class="chapter" data-level="5.3" data-path="transformations.html"><a href="transformations.html#logtransformation"><i class="fa fa-check"></i><b>5.3</b> Log-transformation with Stahel</a></li>
+<li class="chapter" data-level="5.4" data-path="transformations.html"><a href="transformations.html#ztransformation"><i class="fa fa-check"></i><b>5.4</b> Centering and scaling (z-transformation)</a></li>
+<li class="chapter" data-level="5.5" data-path="transformations.html"><a href="transformations.html#transformationspolynomials"><i class="fa fa-check"></i><b>5.5</b> Raw and orthogonal polynomials</a></li>
+<li class="chapter" data-level="5.6" data-path="transformations.html"><a href="transformations.html#square-root-transformation"><i class="fa fa-check"></i><b>5.6</b> Square-root transformation</a></li>
+<li class="chapter" data-level="5.7" data-path="transformations.html"><a href="transformations.html#arcsinus-square-root-transformation"><i class="fa fa-check"></i><b>5.7</b> Arcsinus-square-root transformation</a></li>
+<li class="chapter" data-level="5.8" data-path="transformations.html"><a href="transformations.html#logit-transformation"><i class="fa fa-check"></i><b>5.8</b> Logit transformation</a></li>
+<li class="chapter" data-level="5.9" data-path="transformations.html"><a href="transformations.html#categorizing-and-decategorizing"><i class="fa fa-check"></i><b>5.9</b> Categorizing and decategorizing</a></li>
+<li class="chapter" data-level="5.10" data-path="transformations.html"><a href="transformations.html#transformationscircular"><i class="fa fa-check"></i><b>5.10</b> Sinus and cosinus transformation for circular variables</a></li>
+<li class="chapter" data-level="5.11" data-path="transformations.html"><a href="transformations.html#cloglog-probit-inverse-transformation"><i class="fa fa-check"></i><b>5.11</b> Cloglog, probit, inverse transformation</a></li>
+<li class="chapter" data-level="5.12" data-path="transformations.html"><a href="transformations.html#identity-transformation"><i class="fa fa-check"></i><b>5.12</b> Identity transformation</a></li>
+<li class="chapter" data-level="5.13" data-path="transformations.html"><a href="transformations.html#transformations-on-the-outcome-variable"><i class="fa fa-check"></i><b>5.13</b> Transformations on the outcome variable</a></li>
+<li class="chapter" data-level="5.14" data-path="transformations.html"><a href="transformations.html#back-transformation"><i class="fa fa-check"></i><b>5.14</b> Back-transformation</a></li>
+<li class="chapter" data-level="5.15" data-path="transformations.html"><a href="transformations.html#applythesametransformation"><i class="fa fa-check"></i><b>5.15</b> Applying the transformations to new data</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="reproducibleresearch.html"><a href="reproducibleresearch.html"><i class="fa fa-check"></i><b>6</b> Reproducible research</a>
 <ul>
@@ -250,6 +265,10 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="7.1" data-path="furthertopics.html"><a href="furthertopics.html#bioacoustic-analyse"><i class="fa fa-check"></i><b>7.1</b> Bioacoustic analyse</a></li>
 <li class="chapter" data-level="7.2" data-path="furthertopics.html"><a href="furthertopics.html#python"><i class="fa fa-check"></i><b>7.2</b> Python</a></li>
+<li class="chapter" data-level="7.3" data-path="furthertopics.html"><a href="furthertopics.html#some-r"><i class="fa fa-check"></i><b>7.3</b> Some R</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="furthertopics.html"><a href="furthertopics.html#date-on-x-axis"><i class="fa fa-check"></i><b>7.3.1</b> Date on x-axis</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>II BAYESIAN DATA ANALYSIS</b></span></li>
 <li class="chapter" data-level="8" data-path="PART-II.html"><a href="PART-II.html"><i class="fa fa-check"></i><b>8</b> Introduction to PART II</a>
@@ -282,45 +301,55 @@ div.csl-indent {
 <li class="chapter" data-level="11.1" data-path="lm.html"><a href="lm.html#linear-regression"><i class="fa fa-check"></i><b>11.1</b> Linear regression</a>
 <ul>
 <li class="chapter" data-level="11.1.1" data-path="lm.html"><a href="lm.html#background"><i class="fa fa-check"></i><b>11.1.1</b> Background</a></li>
-<li class="chapter" data-level="11.1.2" data-path="lm.html"><a href="lm.html#fitting-a-linear-regression-in-r"><i class="fa fa-check"></i><b>11.1.2</b> Fitting a Linear Regression in R</a></li>
-<li class="chapter" data-level="11.1.3" data-path="lm.html"><a href="lm.html#drawing-conclusions"><i class="fa fa-check"></i><b>11.1.3</b> Drawing Conclusions</a></li>
+<li class="chapter" data-level="11.1.2" data-path="lm.html"><a href="lm.html#fitting-a-linear-regression-in-r"><i class="fa fa-check"></i><b>11.1.2</b> Fitting a linear regression in R</a></li>
+<li class="chapter" data-level="11.1.3" data-path="lm.html"><a href="lm.html#presenting-the-results"><i class="fa fa-check"></i><b>11.1.3</b> Presenting the results</a></li>
 <li class="chapter" data-level="11.1.4" data-path="lm.html"><a href="lm.html#interpretation-of-the-r-summary-output"><i class="fa fa-check"></i><b>11.1.4</b> Interpretation of the R summary output</a></li>
 </ul></li>
 <li class="chapter" data-level="11.2" data-path="lm.html"><a href="lm.html#linear-model-with-one-categorical-predictor-one-way-anova"><i class="fa fa-check"></i><b>11.2</b> Linear model with one categorical predictor (one-way ANOVA)</a></li>
-<li class="chapter" data-level="11.3" data-path="lm.html"><a href="lm.html#other-variants-of-normal-linear-models-two-way-anova-analysis-of-covariance-and-multiple-regression"><i class="fa fa-check"></i><b>11.3</b> Other variants of normal linear models: Two-way anova, analysis of covariance and multiple regression</a>
+<li class="chapter" data-level="11.3" data-path="lm.html"><a href="lm.html#other-variants-of-normal-linear-models"><i class="fa fa-check"></i><b>11.3</b> Other variants of normal linear models</a>
 <ul>
-<li class="chapter" data-level="11.3.1" data-path="lm.html"><a href="lm.html#linear-model-with-two-categorical-predictors-two-way-anova"><i class="fa fa-check"></i><b>11.3.1</b> Linear model with two categorical predictors (two-way ANOVA)</a></li>
+<li class="chapter" data-level="11.3.1" data-path="lm.html"><a href="lm.html#twowayanova"><i class="fa fa-check"></i><b>11.3.1</b> Linear model with two categorical predictors (two-way ANOVA)</a></li>
 <li class="chapter" data-level="11.3.2" data-path="lm.html"><a href="lm.html#a-linear-model-with-a-categorical-and-a-numeric-predictor-ancova"><i class="fa fa-check"></i><b>11.3.2</b> A linear model with a categorical and a numeric predictor (ANCOVA)</a></li>
 </ul></li>
 <li class="chapter" data-level="11.4" data-path="lm.html"><a href="lm.html#collinearity"><i class="fa fa-check"></i><b>11.4</b> Partial coefficients and some comments on collinearity</a></li>
-<li class="chapter" data-level="11.5" data-path="lm.html"><a href="lm.html#orderedfactors"><i class="fa fa-check"></i><b>11.5</b> Ordered Factors and Contrasts</a></li>
-<li class="chapter" data-level="11.6" data-path="lm.html"><a href="lm.html#polynomials"><i class="fa fa-check"></i><b>11.6</b> Quadratic and Higher Polynomial Terms</a></li>
+<li class="chapter" data-level="11.5" data-path="lm.html"><a href="lm.html#orderedfactors"><i class="fa fa-check"></i><b>11.5</b> Ordered factors and contrasts</a></li>
+<li class="chapter" data-level="11.6" data-path="lm.html"><a href="lm.html#lmpolynomials"><i class="fa fa-check"></i><b>11.6</b> Quadratic and higher polynomial terms</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="residualanalysis.html"><a href="residualanalysis.html"><i class="fa fa-check"></i><b>12</b> Assessing Model Assumptions</a>
+<li class="chapter" data-level="12" data-path="residualanalysis.html"><a href="residualanalysis.html"><i class="fa fa-check"></i><b>12</b> Assessing model assumptions</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="residualanalysis.html"><a href="residualanalysis.html#model-assumptions"><i class="fa fa-check"></i><b>12.1</b> Model Assumptions</a></li>
-<li class="chapter" data-level="12.2" data-path="residualanalysis.html"><a href="residualanalysis.html#independent-and-identically-distributed"><i class="fa fa-check"></i><b>12.2</b> Independent and Identically Distributed</a></li>
-<li class="chapter" data-level="12.3" data-path="residualanalysis.html"><a href="residualanalysis.html#qqplot"><i class="fa fa-check"></i><b>12.3</b> The QQ-Plot</a></li>
-<li class="chapter" data-level="12.4" data-path="residualanalysis.html"><a href="residualanalysis.html#tempautocorrelation"><i class="fa fa-check"></i><b>12.4</b> Temporal Autocorrelation</a></li>
-<li class="chapter" data-level="12.5" data-path="residualanalysis.html"><a href="residualanalysis.html#spatialautocorrelation"><i class="fa fa-check"></i><b>12.5</b> Spatial Autocorrelation</a></li>
+<li class="chapter" data-level="12.1" data-path="residualanalysis.html"><a href="residualanalysis.html#model-assumptions"><i class="fa fa-check"></i><b>12.1</b> Model assumptions</a></li>
+<li class="chapter" data-level="12.2" data-path="residualanalysis.html"><a href="residualanalysis.html#independent-and-identically-distributed"><i class="fa fa-check"></i><b>12.2</b> Independent and identically distributed</a></li>
+<li class="chapter" data-level="12.3" data-path="residualanalysis.html"><a href="residualanalysis.html#qqplot"><i class="fa fa-check"></i><b>12.3</b> The QQ-plot</a></li>
+<li class="chapter" data-level="12.4" data-path="residualanalysis.html"><a href="residualanalysis.html#tempautocorrelation"><i class="fa fa-check"></i><b>12.4</b> Temporal autocorrelation</a></li>
+<li class="chapter" data-level="12.5" data-path="residualanalysis.html"><a href="residualanalysis.html#spatialautocorrelation"><i class="fa fa-check"></i><b>12.5</b> Spatial autocorrelation</a></li>
 <li class="chapter" data-level="12.6" data-path="residualanalysis.html"><a href="residualanalysis.html#Heteroscedasticity"><i class="fa fa-check"></i><b>12.6</b> Heteroscedasticity</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="lmer.html"><a href="lmer.html"><i class="fa fa-check"></i><b>13</b> Linear Mixed Effect Models</a>
+<li class="chapter" data-level="13" data-path="lmer.html"><a href="lmer.html"><i class="fa fa-check"></i><b>13</b> Linear mixed effect models</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="lmer.html"><a href="lmer.html#background-1"><i class="fa fa-check"></i><b>13.1</b> Background</a>
+<li class="chapter" data-level="13.1" data-path="lmer.html"><a href="lmer.html#background-2"><i class="fa fa-check"></i><b>13.1</b> Background</a>
 <ul>
-<li class="chapter" data-level="13.1.1" data-path="lmer.html"><a href="lmer.html#why-mixed-effects-models"><i class="fa fa-check"></i><b>13.1.1</b> Why Mixed Effects Models?</a></li>
-<li class="chapter" data-level="13.1.2" data-path="lmer.html"><a href="lmer.html#random-factors-and-partial-pooling"><i class="fa fa-check"></i><b>13.1.2</b> Random Factors and Partial Pooling</a></li>
+<li class="chapter" data-level="13.1.1" data-path="lmer.html"><a href="lmer.html#why-mixed-effects-models"><i class="fa fa-check"></i><b>13.1.1</b> Why mixed effects models?</a></li>
+<li class="chapter" data-level="13.1.2" data-path="lmer.html"><a href="lmer.html#random-factors-and-partial-pooling"><i class="fa fa-check"></i><b>13.1.2</b> Random factors and partial pooling</a></li>
 </ul></li>
-<li class="chapter" data-level="13.2" data-path="lmer.html"><a href="lmer.html#fitting-a-normal-linear-mixed-model-in-r"><i class="fa fa-check"></i><b>13.2</b> Fitting a normal linear mixed model in R</a></li>
+<li class="chapter" data-level="13.2" data-path="lmer.html"><a href="lmer.html#fitting-a-normal-linear-mixed-model-in-r"><i class="fa fa-check"></i><b>13.2</b> Fitting a normal linear mixed model in R</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="lmer.html"><a href="lmer.html#background-3"><i class="fa fa-check"></i><b>13.2.1</b> Background</a></li>
+<li class="chapter" data-level="13.2.2" data-path="lmer.html"><a href="lmer.html#fitting-a-normal-linear-mixed-model-using-lmer"><i class="fa fa-check"></i><b>13.2.2</b> Fitting a normal linear mixed model using lmer</a></li>
+</ul></li>
 <li class="chapter" data-level="13.3" data-path="lmer.html"><a href="lmer.html#restricted-maximum-likelihood-estimation-reml"><i class="fa fa-check"></i><b>13.3</b> Restricted maximum likelihood estimation (REML)</a></li>
+<li class="chapter" data-level="13.4" data-path="lmer.html"><a href="lmer.html#assessing-model-assumptions"><i class="fa fa-check"></i><b>13.4</b> Assessing model assumptions</a></li>
+<li class="chapter" data-level="13.5" data-path="lmer.html"><a href="lmer.html#presenting-the-results-1"><i class="fa fa-check"></i><b>13.5</b> Presenting the results</a></li>
+<li class="chapter" data-level="13.6" data-path="lmer.html"><a href="lmer.html#random-intercept-and-slope"><i class="fa fa-check"></i><b>13.6</b> Random intercept and slope</a></li>
+<li class="chapter" data-level="13.7" data-path="lmer.html"><a href="lmer.html#nested-and-crossed-random-effects"><i class="fa fa-check"></i><b>13.7</b> Nested and crossed random effects</a></li>
+<li class="chapter" data-level="13.8" data-path="lmer.html"><a href="lmer.html#model-selection-in-mixed-models"><i class="fa fa-check"></i><b>13.8</b> Model selection in mixed models</a></li>
+<li class="chapter" data-level="13.9" data-path="lmer.html"><a href="lmer.html#further-reading-5"><i class="fa fa-check"></i><b>13.9</b> Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>14</b> Generalized linear models</a>
 <ul>
 <li class="chapter" data-level="14.1" data-path="glm.html"><a href="glm.html#introduction-2"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
 <li class="chapter" data-level="14.2" data-path="glm.html"><a href="glm.html#bernoulli-model"><i class="fa fa-check"></i><b>14.2</b> Bernoulli model</a>
 <ul>
-<li class="chapter" data-level="14.2.1" data-path="glm.html"><a href="glm.html#background-2"><i class="fa fa-check"></i><b>14.2.1</b> Background</a></li>
+<li class="chapter" data-level="14.2.1" data-path="glm.html"><a href="glm.html#background-4"><i class="fa fa-check"></i><b>14.2.1</b> Background</a></li>
 <li class="chapter" data-level="14.2.2" data-path="glm.html"><a href="glm.html#fitting-a-bernoulli-model-in-r"><i class="fa fa-check"></i><b>14.2.2</b> Fitting a Bernoulli model in R</a></li>
 <li class="chapter" data-level="14.2.3" data-path="glm.html"><a href="glm.html#assessing-model-assumptions-in-a-bernoulli-model"><i class="fa fa-check"></i><b>14.2.3</b> Assessing model assumptions in a Bernoulli model</a></li>
 <li class="chapter" data-level="14.2.4" data-path="glm.html"><a href="glm.html#visualising-the-results"><i class="fa fa-check"></i><b>14.2.4</b> Visualising the results</a></li>
@@ -328,27 +357,31 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="glm.html"><a href="glm.html#binomial-model"><i class="fa fa-check"></i><b>14.3</b> Binomial model</a>
 <ul>
-<li class="chapter" data-level="14.3.1" data-path="glm.html"><a href="glm.html#background-3"><i class="fa fa-check"></i><b>14.3.1</b> Background</a></li>
+<li class="chapter" data-level="14.3.1" data-path="glm.html"><a href="glm.html#background-5"><i class="fa fa-check"></i><b>14.3.1</b> Background</a></li>
 <li class="chapter" data-level="14.3.2" data-path="glm.html"><a href="glm.html#fitting-a-binomial-model-in-r"><i class="fa fa-check"></i><b>14.3.2</b> Fitting a binomial model in R</a></li>
 <li class="chapter" data-level="14.3.3" data-path="glm.html"><a href="glm.html#assessing-assumptions-in-a-binomial-model"><i class="fa fa-check"></i><b>14.3.3</b> Assessing assumptions in a binomial model</a></li>
 <li class="chapter" data-level="14.3.4" data-path="glm.html"><a href="glm.html#visualising-the-results-1"><i class="fa fa-check"></i><b>14.3.4</b> Visualising the results</a></li>
 </ul></li>
 <li class="chapter" data-level="14.4" data-path="glm.html"><a href="glm.html#poisson-model"><i class="fa fa-check"></i><b>14.4</b> Poisson model</a>
 <ul>
-<li class="chapter" data-level="14.4.1" data-path="glm.html"><a href="glm.html#background-4"><i class="fa fa-check"></i><b>14.4.1</b> Background</a></li>
+<li class="chapter" data-level="14.4.1" data-path="glm.html"><a href="glm.html#background-6"><i class="fa fa-check"></i><b>14.4.1</b> Background</a></li>
 <li class="chapter" data-level="14.4.2" data-path="glm.html"><a href="glm.html#fitting-a-poisson-model-in-r"><i class="fa fa-check"></i><b>14.4.2</b> Fitting a Poisson model in R</a></li>
-<li class="chapter" data-level="14.4.3" data-path="glm.html"><a href="glm.html#assessing-model-assumptions"><i class="fa fa-check"></i><b>14.4.3</b> Assessing model assumptions</a></li>
+<li class="chapter" data-level="14.4.3" data-path="glm.html"><a href="glm.html#assessing-model-assumptions-1"><i class="fa fa-check"></i><b>14.4.3</b> Assessing model assumptions</a></li>
 <li class="chapter" data-level="14.4.4" data-path="glm.html"><a href="glm.html#visualising-results"><i class="fa fa-check"></i><b>14.4.4</b> Visualising results</a></li>
 <li class="chapter" data-level="14.4.5" data-path="glm.html"><a href="glm.html#modeling-rates-and-densities-poisson-model-with-an-offset"><i class="fa fa-check"></i><b>14.4.5</b> Modeling rates and densities: Poisson model with an offset</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="glmm.html"><a href="glmm.html"><i class="fa fa-check"></i><b>15</b> Generalized linear mixed models</a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="glmm.html"><a href="glmm.html#introduction-3"><i class="fa fa-check"></i><b>15.1</b> Introduction</a>
+<li class="chapter" data-level="15.1" data-path="glmm.html"><a href="glmm.html#background-7"><i class="fa fa-check"></i><b>15.1</b> Background</a></li>
+<li class="chapter" data-level="15.2" data-path="glmm.html"><a href="glmm.html#binomial-mixed-model"><i class="fa fa-check"></i><b>15.2</b> Binomial mixed model</a>
 <ul>
-<li class="chapter" data-level="15.1.1" data-path="glmm.html"><a href="glmm.html#binomial-mixed-model"><i class="fa fa-check"></i><b>15.1.1</b> Binomial Mixed Model</a></li>
+<li class="chapter" data-level="15.2.1" data-path="glmm.html"><a href="glmm.html#background-8"><i class="fa fa-check"></i><b>15.2.1</b> Background</a></li>
+<li class="chapter" data-level="15.2.2" data-path="glmm.html"><a href="glmm.html#fitting-a-binomial-mixed-model-in-r"><i class="fa fa-check"></i><b>15.2.2</b> Fitting a binomial mixed model in R</a></li>
+<li class="chapter" data-level="15.2.3" data-path="glmm.html"><a href="glmm.html#presenting-the-results-2"><i class="fa fa-check"></i><b>15.2.3</b> Presenting the results</a></li>
 </ul></li>
-<li class="chapter" data-level="15.2" data-path="glmm.html"><a href="glmm.html#summary-2"><i class="fa fa-check"></i><b>15.2</b> Summary</a></li>
+<li class="chapter" data-level="15.3" data-path="glmm.html"><a href="glmm.html#poisson-mixed-model"><i class="fa fa-check"></i><b>15.3</b> Poisson mixed model</a></li>
+<li class="chapter" data-level="15.4" data-path="glmm.html"><a href="glmm.html#summary-2"><i class="fa fa-check"></i><b>15.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="modelchecking.html"><a href="modelchecking.html"><i class="fa fa-check"></i><b>16</b> Posterior predictive model checking</a></li>
 <li class="chapter" data-level="17" data-path="model_comparison.html"><a href="model_comparison.html"><i class="fa fa-check"></i><b>17</b> Model comparison and multimodel inference</a>
@@ -357,7 +390,7 @@ div.csl-indent {
 <li class="chapter" data-level="17.2" data-path="model_comparison.html"><a href="model_comparison.html#methods-for-model-commparison"><i class="fa fa-check"></i><b>17.2</b> Methods for model commparison</a>
 <ul>
 <li class="chapter" data-level="17.2.1" data-path="model_comparison.html"><a href="model_comparison.html#cross-validation"><i class="fa fa-check"></i><b>17.2.1</b> Cross-validation</a></li>
-<li class="chapter" data-level="17.2.2" data-path="model_comparison.html"><a href="model_comparison.html#information-criteria-akaike-information-citerion-and-widely-applicable-information-criterion"><i class="fa fa-check"></i><b>17.2.2</b> Information Criteria: Akaike information citerion and widely applicable information criterion</a></li>
+<li class="chapter" data-level="17.2.2" data-path="model_comparison.html"><a href="model_comparison.html#information-criteria-akaike-information-criterion-and-widely-applicable-information-criterion"><i class="fa fa-check"></i><b>17.2.2</b> Information criteria: Akaike information criterion and widely applicable information criterion</a></li>
 <li class="chapter" data-level="17.2.3" data-path="model_comparison.html"><a href="model_comparison.html#other-information-criteria"><i class="fa fa-check"></i><b>17.2.3</b> Other information criteria</a></li>
 <li class="chapter" data-level="17.2.4" data-path="model_comparison.html"><a href="model_comparison.html#bayes-factors-and-posterior-model-probabilities"><i class="fa fa-check"></i><b>17.2.4</b> Bayes factors and posterior model probabilities</a></li>
 <li class="chapter" data-level="17.2.5" data-path="model_comparison.html"><a href="model_comparison.html#model-based-methods-to-obtain-posterior-model-probabilities-and-inclusion-probabilities"><i class="fa fa-check"></i><b>17.2.5</b> Model-based methods to obtain posterior model probabilities and inclusion probabilities</a></li>
@@ -365,27 +398,30 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="17.3" data-path="model_comparison.html"><a href="model_comparison.html#multimodel-inference"><i class="fa fa-check"></i><b>17.3</b> Multimodel inference</a></li>
 <li class="chapter" data-level="17.4" data-path="model_comparison.html"><a href="model_comparison.html#which-method-to-choose-and-which-strategy-to-follow"><i class="fa fa-check"></i><b>17.4</b> Which method to choose and which strategy to follow?</a></li>
-<li class="chapter" data-level="17.5" data-path="model_comparison.html"><a href="model_comparison.html#further-reading-5"><i class="fa fa-check"></i><b>17.5</b> Further reading</a></li>
+<li class="chapter" data-level="17.5" data-path="model_comparison.html"><a href="model_comparison.html#further-reading-6"><i class="fa fa-check"></i><b>17.5</b> Further reading</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>18</b> MCMC using Stan</a>
+<li class="chapter" data-level="18" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>18</b> MCMC using Stan via rstanarm, brms or rstan</a>
 <ul>
-<li class="chapter" data-level="18.1" data-path="stan.html"><a href="stan.html#background-6"><i class="fa fa-check"></i><b>18.1</b> Background</a></li>
-<li class="chapter" data-level="18.2" data-path="stan.html"><a href="stan.html#install-rstan"><i class="fa fa-check"></i><b>18.2</b> Install <code>rstan</code></a></li>
-<li class="chapter" data-level="18.3" data-path="stan.html"><a href="stan.html#firststanmod"><i class="fa fa-check"></i><b>18.3</b> Writing a Stan model</a></li>
-<li class="chapter" data-level="18.4" data-path="stan.html"><a href="stan.html#run-stan-from-r"><i class="fa fa-check"></i><b>18.4</b> Run Stan from R</a></li>
-<li class="chapter" data-level="" data-path="stan.html"><a href="stan.html#further-reading-6"><i class="fa fa-check"></i>Further reading</a></li>
+<li class="chapter" data-level="18.1" data-path="stan.html"><a href="stan.html#background-9"><i class="fa fa-check"></i><b>18.1</b> Background</a></li>
+<li class="chapter" data-level="18.2" data-path="stan.html"><a href="stan.html#assessing-convergence-of-the-markov-chains-and-trouble-shooting-warnings-of-stan"><i class="fa fa-check"></i><b>18.2</b> Assessing convergence of the Markov chains and trouble shooting warnings of Stan</a></li>
+<li class="chapter" data-level="18.3" data-path="stan.html"><a href="stan.html#using-stan-via-rstan"><i class="fa fa-check"></i><b>18.3</b> Using Stan via rstan</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="stan.html"><a href="stan.html#firststanmod"><i class="fa fa-check"></i><b>18.3.1</b> Writing a Stan model</a></li>
+<li class="chapter" data-level="18.3.2" data-path="stan.html"><a href="stan.html#run-stan-from-r-using-rstan"><i class="fa fa-check"></i><b>18.3.2</b> Run Stan from R using rstan</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="stan.html"><a href="stan.html#further-reading-7"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="19" data-path="ridge_regression.html"><a href="ridge_regression.html"><i class="fa fa-check"></i><b>19</b> Ridge Regression</a>
 <ul>
-<li class="chapter" data-level="19.1" data-path="ridge_regression.html"><a href="ridge_regression.html#introduction-4"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
+<li class="chapter" data-level="19.1" data-path="ridge_regression.html"><a href="ridge_regression.html#introduction-3"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
 </ul></li>
 <li class="chapter" data-level="20" data-path="SEM.html"><a href="SEM.html"><i class="fa fa-check"></i><b>20</b> Structural equation models</a>
 <ul>
-<li class="chapter" data-level="20.1" data-path="SEM.html"><a href="SEM.html#introduction-5"><i class="fa fa-check"></i><b>20.1</b> Introduction</a></li>
+<li class="chapter" data-level="20.1" data-path="SEM.html"><a href="SEM.html#introduction-4"><i class="fa fa-check"></i><b>20.1</b> Introduction</a></li>
 </ul></li>
 <li class="chapter" data-level="21" data-path="spatial_glmm.html"><a href="spatial_glmm.html"><i class="fa fa-check"></i><b>21</b> Modeling spatial data using GLMM</a>
 <ul>
-<li class="chapter" data-level="21.1" data-path="spatial_glmm.html"><a href="spatial_glmm.html#introduction-6"><i class="fa fa-check"></i><b>21.1</b> Introduction</a></li>
+<li class="chapter" data-level="21.1" data-path="spatial_glmm.html"><a href="spatial_glmm.html#introduction-5"><i class="fa fa-check"></i><b>21.1</b> Introduction</a></li>
 <li class="chapter" data-level="21.2" data-path="spatial_glmm.html"><a href="spatial_glmm.html#summary-3"><i class="fa fa-check"></i><b>21.2</b> Summary</a></li>
 </ul></li>
 <li class="part"><span><b>III ECOLOGICAL MODELS</b></span></li>
@@ -393,16 +429,16 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="22.1" data-path="PART-III.html"><a href="PART-III.html#model-notations"><i class="fa fa-check"></i><b>22.1</b> Model notations</a></li>
 </ul></li>
-<li class="chapter" data-level="23" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html"><i class="fa fa-check"></i><b>23</b> Zero-inflated Poisson Mixed Model</a>
+<li class="chapter" data-level="23" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html"><i class="fa fa-check"></i><b>23</b> Zero-inflated Poisson mixed model</a>
 <ul>
-<li class="chapter" data-level="23.1" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#introduction-7"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
+<li class="chapter" data-level="23.1" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#introduction-6"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
 <li class="chapter" data-level="23.2" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#example-data"><i class="fa fa-check"></i><b>23.2</b> Example data</a></li>
 <li class="chapter" data-level="23.3" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#model"><i class="fa fa-check"></i><b>23.3</b> Model</a></li>
-<li class="chapter" data-level="23.4" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#further-packages-and-readings"><i class="fa fa-check"></i><b>23.4</b> Further packages and readings$</a></li>
+<li class="chapter" data-level="23.4" data-path="zeroinflated-poisson-lmm.html"><a href="zeroinflated-poisson-lmm.html#further-packages-and-readings"><i class="fa fa-check"></i><b>23.4</b> Further packages and readings</a></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="dailynestsurv.html"><a href="dailynestsurv.html"><i class="fa fa-check"></i><b>24</b> Daily nest survival</a>
 <ul>
-<li class="chapter" data-level="24.1" data-path="dailynestsurv.html"><a href="dailynestsurv.html#background-7"><i class="fa fa-check"></i><b>24.1</b> Background</a></li>
+<li class="chapter" data-level="24.1" data-path="dailynestsurv.html"><a href="dailynestsurv.html#background-10"><i class="fa fa-check"></i><b>24.1</b> Background</a></li>
 <li class="chapter" data-level="24.2" data-path="dailynestsurv.html"><a href="dailynestsurv.html#models-for-estimating-daily-nest-survival"><i class="fa fa-check"></i><b>24.2</b> Models for estimating daily nest survival</a></li>
 <li class="chapter" data-level="24.3" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model"><i class="fa fa-check"></i><b>24.3</b> Known fate model</a></li>
 <li class="chapter" data-level="24.4" data-path="dailynestsurv.html"><a href="dailynestsurv.html#dailynestsurvstan"><i class="fa fa-check"></i><b>24.4</b> The Stan model</a></li>
@@ -410,11 +446,11 @@ div.csl-indent {
 <li class="chapter" data-level="24.6" data-path="dailynestsurv.html"><a href="dailynestsurv.html#check-convergence"><i class="fa fa-check"></i><b>24.6</b> Check convergence</a></li>
 <li class="chapter" data-level="24.7" data-path="dailynestsurv.html"><a href="dailynestsurv.html#look-at-results"><i class="fa fa-check"></i><b>24.7</b> Look at results</a></li>
 <li class="chapter" data-level="24.8" data-path="dailynestsurv.html"><a href="dailynestsurv.html#known-fate-model-for-irregular-nest-controls"><i class="fa fa-check"></i><b>24.8</b> Known fate model for irregular nest controls</a></li>
-<li class="chapter" data-level="" data-path="dailynestsurv.html"><a href="dailynestsurv.html#further-reading-7"><i class="fa fa-check"></i>Further reading</a></li>
+<li class="chapter" data-level="" data-path="dailynestsurv.html"><a href="dailynestsurv.html#further-reading-8"><i class="fa fa-check"></i>Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html"><i class="fa fa-check"></i><b>25</b> Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals</a>
 <ul>
-<li class="chapter" data-level="25.1" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#introduction-8"><i class="fa fa-check"></i><b>25.1</b> Introduction</a></li>
+<li class="chapter" data-level="25.1" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#introduction-7"><i class="fa fa-check"></i><b>25.1</b> Introduction</a></li>
 <li class="chapter" data-level="25.2" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#data-description"><i class="fa fa-check"></i><b>25.2</b> Data description</a></li>
 <li class="chapter" data-level="25.3" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#model-description"><i class="fa fa-check"></i><b>25.3</b> Model description</a></li>
 <li class="chapter" data-level="25.4" data-path="cjs_with_mix.html"><a href="cjs_with_mix.html#the-stan-code"><i class="fa fa-check"></i><b>25.4</b> The Stan code</a></li>
@@ -422,7 +458,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="26" data-path="samplesize.html"><a href="samplesize.html"><i class="fa fa-check"></i><b>26</b> What sample size?</a>
 <ul>
-<li class="chapter" data-level="26.1" data-path="samplesize.html"><a href="samplesize.html#introduction-9"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
+<li class="chapter" data-level="26.1" data-path="samplesize.html"><a href="samplesize.html#introduction-8"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
 </ul></li>
 <li class="part"><span><b>IV APPENDICES</b></span></li>
 <li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
@@ -452,90 +488,90 @@ div.csl-indent {
 <blockquote>
 <p>We should provide an example in Stan.</p>
 </blockquote>
-<div id="introduction-5" class="section level2 hasAnchor" number="20.1">
-<h2><span class="header-section-number">20.1</span> Introduction<a href="SEM.html#introduction-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="SEM.html#cb240-1" tabindex="-1"></a><span class="sc">------------------------------------------------------------------------------------------------------</span></span>
-<span id="cb240-2"><a href="SEM.html#cb240-2" tabindex="-1"></a><span class="co"># General settings</span></span>
-<span id="cb240-3"><a href="SEM.html#cb240-3" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------------------------------</span></span>
-<span id="cb240-4"><a href="SEM.html#cb240-4" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb240-5"><a href="SEM.html#cb240-5" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
-<span id="cb240-6"><a href="SEM.html#cb240-6" tabindex="-1"></a><span class="fu">library</span>(MCMCpack)</span>
-<span id="cb240-7"><a href="SEM.html#cb240-7" tabindex="-1"></a></span>
-<span id="cb240-8"><a href="SEM.html#cb240-8" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------------------------------</span></span>
-<span id="cb240-9"><a href="SEM.html#cb240-9" tabindex="-1"></a><span class="co"># Simulation</span></span>
-<span id="cb240-10"><a href="SEM.html#cb240-10" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------------------------------</span></span>
-<span id="cb240-11"><a href="SEM.html#cb240-11" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb240-12"><a href="SEM.html#cb240-12" tabindex="-1"></a>heffM <span class="ot">&lt;-</span> <span class="fl">0.6</span>                                <span class="co"># effect of H on M</span></span>
-<span id="cb240-13"><a href="SEM.html#cb240-13" tabindex="-1"></a>heffCS <span class="ot">&lt;-</span> <span class="fl">0.0</span>                              <span class="co"># effect of H on Clutch size</span></span>
-<span id="cb240-14"><a href="SEM.html#cb240-14" tabindex="-1"></a>meffCS <span class="ot">&lt;-</span> <span class="fl">0.6</span>                               <span class="co"># effect of M on Clutch size</span></span>
-<span id="cb240-15"><a href="SEM.html#cb240-15" tabindex="-1"></a></span>
-<span id="cb240-16"><a href="SEM.html#cb240-16" tabindex="-1"></a>SigmaM <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.04</span>,<span class="fl">0.04</span>,<span class="fl">0.1</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb240-17"><a href="SEM.html#cb240-17" tabindex="-1"></a>meffm1 <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
-<span id="cb240-18"><a href="SEM.html#cb240-18" tabindex="-1"></a>meffm2 <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
-<span id="cb240-19"><a href="SEM.html#cb240-19" tabindex="-1"></a></span>
-<span id="cb240-20"><a href="SEM.html#cb240-20" tabindex="-1"></a>SigmaH <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.04</span>,<span class="fl">0.04</span>,<span class="fl">0.1</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb240-21"><a href="SEM.html#cb240-21" tabindex="-1"></a>meffh1 <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
-<span id="cb240-22"><a href="SEM.html#cb240-22" tabindex="-1"></a>meffh2 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.7</span></span>
-<span id="cb240-23"><a href="SEM.html#cb240-23" tabindex="-1"></a></span>
-<span id="cb240-24"><a href="SEM.html#cb240-24" tabindex="-1"></a><span class="co"># Latente Variablen</span></span>
-<span id="cb240-25"><a href="SEM.html#cb240-25" tabindex="-1"></a>H <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb240-26"><a href="SEM.html#cb240-26" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, heffM <span class="sc">*</span> H, <span class="fl">0.1</span>)</span>
-<span id="cb240-27"><a href="SEM.html#cb240-27" tabindex="-1"></a></span>
-<span id="cb240-28"><a href="SEM.html#cb240-28" tabindex="-1"></a><span class="co"># Clutch size</span></span>
-<span id="cb240-29"><a href="SEM.html#cb240-29" tabindex="-1"></a>CS <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, heffCS <span class="sc">*</span> H <span class="sc">+</span> meffCS <span class="sc">*</span> M, <span class="fl">0.1</span>)</span>
-<span id="cb240-30"><a href="SEM.html#cb240-30" tabindex="-1"></a></span>
-<span id="cb240-31"><a href="SEM.html#cb240-31" tabindex="-1"></a><span class="co"># Indicators</span></span>
-<span id="cb240-32"><a href="SEM.html#cb240-32" tabindex="-1"></a>eM <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meffm1 <span class="sc">*</span> M, meffm2 <span class="sc">*</span> M)</span>
-<span id="cb240-33"><a href="SEM.html#cb240-33" tabindex="-1"></a>datM <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> n)</span>
-<span id="cb240-34"><a href="SEM.html#cb240-34" tabindex="-1"></a>eH <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meffh1 <span class="sc">*</span> H, meffh2 <span class="sc">*</span> H)</span>
-<span id="cb240-35"><a href="SEM.html#cb240-35" tabindex="-1"></a>datH <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> n)</span>
-<span id="cb240-36"><a href="SEM.html#cb240-36" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
-<span id="cb240-37"><a href="SEM.html#cb240-37" tabindex="-1"></a>  datM[i,] <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="dv">1</span>, eM[i,], SigmaM)</span>
-<span id="cb240-38"><a href="SEM.html#cb240-38" tabindex="-1"></a>  datH[i,] <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="dv">1</span>, eH[i,], SigmaH)</span>
-<span id="cb240-39"><a href="SEM.html#cb240-39" tabindex="-1"></a>}</span>
-<span id="cb240-40"><a href="SEM.html#cb240-40" tabindex="-1"></a></span>
-<span id="cb240-41"><a href="SEM.html#cb240-41" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------</span></span>
-<span id="cb240-42"><a href="SEM.html#cb240-42" tabindex="-1"></a><span class="co"># JAGS Model  </span></span>
-<span id="cb240-43"><a href="SEM.html#cb240-43" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------</span></span>
-<span id="cb240-44"><a href="SEM.html#cb240-44" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">datM =</span> datM, <span class="at">datH =</span> datH, <span class="at">n =</span> n, <span class="at">CS =</span> CS, <span class="co">#H = H, M = M,  </span></span>
-<span id="cb240-45"><a href="SEM.html#cb240-45" tabindex="-1"></a>            <span class="at">S3 =</span>  <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">1</span>)</span>
-<span id="cb240-46"><a href="SEM.html#cb240-46" tabindex="-1"></a></span>
-<span id="cb240-47"><a href="SEM.html#cb240-47" tabindex="-1"></a><span class="co"># Function to create initial values</span></span>
-<span id="cb240-48"><a href="SEM.html#cb240-48" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb240-49"><a href="SEM.html#cb240-49" tabindex="-1"></a>  <span class="fu">list</span>(</span>
-<span id="cb240-50"><a href="SEM.html#cb240-50" tabindex="-1"></a>    <span class="at">meffh =</span> <span class="fu">runif</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
-<span id="cb240-51"><a href="SEM.html#cb240-51" tabindex="-1"></a>    <span class="at">meffm =</span> <span class="fu">runif</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
-<span id="cb240-52"><a href="SEM.html#cb240-52" tabindex="-1"></a>    <span class="at">heffM =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
-<span id="cb240-53"><a href="SEM.html#cb240-53" tabindex="-1"></a>    <span class="at">heffCS =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
-<span id="cb240-54"><a href="SEM.html#cb240-54" tabindex="-1"></a>    <span class="at">meffCS =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
-<span id="cb240-55"><a href="SEM.html#cb240-55" tabindex="-1"></a>    <span class="at">tauCS =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
-<span id="cb240-56"><a href="SEM.html#cb240-56" tabindex="-1"></a>    <span class="at">tauMH =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
-<span id="cb240-57"><a href="SEM.html#cb240-57" tabindex="-1"></a>    <span class="at">tauH =</span> <span class="fu">rwish</span>(<span class="dv">3</span>,<span class="fu">matrix</span>(<span class="fu">c</span>(.<span class="dv">02</span>,<span class="dv">0</span>,<span class="dv">0</span>,.<span class="dv">04</span>),<span class="at">nrow=</span><span class="dv">2</span>)),</span>
-<span id="cb240-58"><a href="SEM.html#cb240-58" tabindex="-1"></a>    <span class="at">tauM =</span> <span class="fu">rwish</span>(<span class="dv">3</span>,<span class="fu">matrix</span>(<span class="fu">c</span>(.<span class="dv">02</span>,<span class="dv">0</span>,<span class="dv">0</span>,.<span class="dv">04</span>),<span class="at">nrow=</span><span class="dv">2</span>))</span>
-<span id="cb240-59"><a href="SEM.html#cb240-59" tabindex="-1"></a><span class="co">#    M = as.numeric(rep(0, n))</span></span>
-<span id="cb240-60"><a href="SEM.html#cb240-60" tabindex="-1"></a>  )</span>
-<span id="cb240-61"><a href="SEM.html#cb240-61" tabindex="-1"></a>}</span>
-<span id="cb240-62"><a href="SEM.html#cb240-62" tabindex="-1"></a></span>
-<span id="cb240-63"><a href="SEM.html#cb240-63" tabindex="-1"></a>t.n.thin <span class="ot">&lt;-</span>      <span class="dv">50</span></span>
-<span id="cb240-64"><a href="SEM.html#cb240-64" tabindex="-1"></a>t.n.chains <span class="ot">&lt;-</span>     <span class="dv">2</span></span>
-<span id="cb240-65"><a href="SEM.html#cb240-65" tabindex="-1"></a>t.n.burnin <span class="ot">&lt;-</span> <span class="dv">20000</span></span>
-<span id="cb240-66"><a href="SEM.html#cb240-66" tabindex="-1"></a>t.n.iter <span class="ot">&lt;-</span>   <span class="dv">50000</span></span>
-<span id="cb240-67"><a href="SEM.html#cb240-67" tabindex="-1"></a></span>
-<span id="cb240-68"><a href="SEM.html#cb240-68" tabindex="-1"></a><span class="co"># Run JAGS</span></span>
-<span id="cb240-69"><a href="SEM.html#cb240-69" tabindex="-1"></a>jagres <span class="ot">&lt;-</span> <span class="fu">jags.model</span>(<span class="st">&#39;JAGS/BUGSmod1.R&#39;</span>,<span class="at">data =</span> dat, <span class="at">n.chains =</span> t.n.chains, <span class="at">inits =</span> inits, <span class="at">n.adapt =</span> t.n.burnin)</span>
-<span id="cb240-70"><a href="SEM.html#cb240-70" tabindex="-1"></a></span>
-<span id="cb240-71"><a href="SEM.html#cb240-71" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;meffh&quot;</span>, <span class="st">&quot;meffm&quot;</span>, <span class="st">&quot;heffM&quot;</span>, <span class="st">&quot;heffCS&quot;</span>, <span class="st">&quot;meffCS&quot;</span>)</span>
-<span id="cb240-72"><a href="SEM.html#cb240-72" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">coda.samples</span>(jagres, params, <span class="at">n.iter=</span>t.n.iter, <span class="at">thin=</span>t.n.thin)</span>
-<span id="cb240-73"><a href="SEM.html#cb240-73" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">data.frame</span>(<span class="fu">summary</span>(mod)<span class="sc">$</span>quantiles[, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span>)]), <span class="dv">3</span>)</span>
-<span id="cb240-74"><a href="SEM.html#cb240-74" tabindex="-1"></a>res<span class="sc">$</span>TRUEVALUE <span class="ot">&lt;-</span> <span class="fu">c</span>(heffCS, heffM, meffCS, meffh1, meffh2, meffm1, meffm2)</span>
-<span id="cb240-75"><a href="SEM.html#cb240-75" tabindex="-1"></a>res</span>
-<span id="cb240-76"><a href="SEM.html#cb240-76" tabindex="-1"></a></span>
-<span id="cb240-77"><a href="SEM.html#cb240-77" tabindex="-1"></a><span class="co"># Traceplots</span></span>
-<span id="cb240-78"><a href="SEM.html#cb240-78" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">rbind</span>(mod[[<span class="dv">1</span>]], mod[[<span class="dv">2</span>]]))</span>
-<span id="cb240-79"><a href="SEM.html#cb240-79" tabindex="-1"></a><span class="fu">names</span>(post) <span class="ot">&lt;-</span> <span class="fu">dimnames</span>(mod[[<span class="dv">1</span>]])[[<span class="dv">2</span>]]</span>
-<span id="cb240-80"><a href="SEM.html#cb240-80" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))</span>
-<span id="cb240-81"><a href="SEM.html#cb240-81" tabindex="-1"></a>param <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;meffh[1]&quot;</span>, <span class="st">&quot;meffh[2]&quot;</span>, <span class="st">&quot;meffm[1]&quot;</span>, <span class="st">&quot;meffm[2]&quot;</span>, <span class="st">&quot;heffM&quot;</span>, <span class="st">&quot;heffCS&quot;</span>, <span class="st">&quot;meffCS&quot;</span>)</span>
-<span id="cb240-82"><a href="SEM.html#cb240-82" tabindex="-1"></a><span class="fu">traceplot</span>(mod[, <span class="fu">match</span>(param, <span class="fu">names</span>(post))])</span></code></pre></div>
+<div id="introduction-4" class="section level2 hasAnchor" number="20.1">
+<h2><span class="header-section-number">20.1</span> Introduction<a href="SEM.html#introduction-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="SEM.html#cb322-1" tabindex="-1"></a><span class="sc">------------------------------------------------------------------------------------------------------</span></span>
+<span id="cb322-2"><a href="SEM.html#cb322-2" tabindex="-1"></a><span class="co"># General settings</span></span>
+<span id="cb322-3"><a href="SEM.html#cb322-3" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------------------------------</span></span>
+<span id="cb322-4"><a href="SEM.html#cb322-4" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb322-5"><a href="SEM.html#cb322-5" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb322-6"><a href="SEM.html#cb322-6" tabindex="-1"></a><span class="fu">library</span>(MCMCpack)</span>
+<span id="cb322-7"><a href="SEM.html#cb322-7" tabindex="-1"></a></span>
+<span id="cb322-8"><a href="SEM.html#cb322-8" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------------------------------</span></span>
+<span id="cb322-9"><a href="SEM.html#cb322-9" tabindex="-1"></a><span class="co"># Simulation</span></span>
+<span id="cb322-10"><a href="SEM.html#cb322-10" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------------------------------</span></span>
+<span id="cb322-11"><a href="SEM.html#cb322-11" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb322-12"><a href="SEM.html#cb322-12" tabindex="-1"></a>heffM <span class="ot">&lt;-</span> <span class="fl">0.6</span>                                <span class="co"># effect of H on M</span></span>
+<span id="cb322-13"><a href="SEM.html#cb322-13" tabindex="-1"></a>heffCS <span class="ot">&lt;-</span> <span class="fl">0.0</span>                              <span class="co"># effect of H on Clutch size</span></span>
+<span id="cb322-14"><a href="SEM.html#cb322-14" tabindex="-1"></a>meffCS <span class="ot">&lt;-</span> <span class="fl">0.6</span>                               <span class="co"># effect of M on Clutch size</span></span>
+<span id="cb322-15"><a href="SEM.html#cb322-15" tabindex="-1"></a></span>
+<span id="cb322-16"><a href="SEM.html#cb322-16" tabindex="-1"></a>SigmaM <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.04</span>,<span class="fl">0.04</span>,<span class="fl">0.1</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb322-17"><a href="SEM.html#cb322-17" tabindex="-1"></a>meffm1 <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
+<span id="cb322-18"><a href="SEM.html#cb322-18" tabindex="-1"></a>meffm2 <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
+<span id="cb322-19"><a href="SEM.html#cb322-19" tabindex="-1"></a></span>
+<span id="cb322-20"><a href="SEM.html#cb322-20" tabindex="-1"></a>SigmaH <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.04</span>,<span class="fl">0.04</span>,<span class="fl">0.1</span>),<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb322-21"><a href="SEM.html#cb322-21" tabindex="-1"></a>meffh1 <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
+<span id="cb322-22"><a href="SEM.html#cb322-22" tabindex="-1"></a>meffh2 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.7</span></span>
+<span id="cb322-23"><a href="SEM.html#cb322-23" tabindex="-1"></a></span>
+<span id="cb322-24"><a href="SEM.html#cb322-24" tabindex="-1"></a><span class="co"># Latente Variablen</span></span>
+<span id="cb322-25"><a href="SEM.html#cb322-25" tabindex="-1"></a>H <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb322-26"><a href="SEM.html#cb322-26" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, heffM <span class="sc">*</span> H, <span class="fl">0.1</span>)</span>
+<span id="cb322-27"><a href="SEM.html#cb322-27" tabindex="-1"></a></span>
+<span id="cb322-28"><a href="SEM.html#cb322-28" tabindex="-1"></a><span class="co"># Clutch size</span></span>
+<span id="cb322-29"><a href="SEM.html#cb322-29" tabindex="-1"></a>CS <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, heffCS <span class="sc">*</span> H <span class="sc">+</span> meffCS <span class="sc">*</span> M, <span class="fl">0.1</span>)</span>
+<span id="cb322-30"><a href="SEM.html#cb322-30" tabindex="-1"></a></span>
+<span id="cb322-31"><a href="SEM.html#cb322-31" tabindex="-1"></a><span class="co"># Indicators</span></span>
+<span id="cb322-32"><a href="SEM.html#cb322-32" tabindex="-1"></a>eM <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meffm1 <span class="sc">*</span> M, meffm2 <span class="sc">*</span> M)</span>
+<span id="cb322-33"><a href="SEM.html#cb322-33" tabindex="-1"></a>datM <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> n)</span>
+<span id="cb322-34"><a href="SEM.html#cb322-34" tabindex="-1"></a>eH <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meffh1 <span class="sc">*</span> H, meffh2 <span class="sc">*</span> H)</span>
+<span id="cb322-35"><a href="SEM.html#cb322-35" tabindex="-1"></a>datH <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> n)</span>
+<span id="cb322-36"><a href="SEM.html#cb322-36" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb322-37"><a href="SEM.html#cb322-37" tabindex="-1"></a>  datM[i,] <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="dv">1</span>, eM[i,], SigmaM)</span>
+<span id="cb322-38"><a href="SEM.html#cb322-38" tabindex="-1"></a>  datH[i,] <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="dv">1</span>, eH[i,], SigmaH)</span>
+<span id="cb322-39"><a href="SEM.html#cb322-39" tabindex="-1"></a>}</span>
+<span id="cb322-40"><a href="SEM.html#cb322-40" tabindex="-1"></a></span>
+<span id="cb322-41"><a href="SEM.html#cb322-41" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------</span></span>
+<span id="cb322-42"><a href="SEM.html#cb322-42" tabindex="-1"></a><span class="co"># JAGS Model  </span></span>
+<span id="cb322-43"><a href="SEM.html#cb322-43" tabindex="-1"></a><span class="co">#------------------------------------------------------------------------------</span></span>
+<span id="cb322-44"><a href="SEM.html#cb322-44" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">datM =</span> datM, <span class="at">datH =</span> datH, <span class="at">n =</span> n, <span class="at">CS =</span> CS, <span class="co">#H = H, M = M,  </span></span>
+<span id="cb322-45"><a href="SEM.html#cb322-45" tabindex="-1"></a>            <span class="at">S3 =</span>  <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">1</span>)</span>
+<span id="cb322-46"><a href="SEM.html#cb322-46" tabindex="-1"></a></span>
+<span id="cb322-47"><a href="SEM.html#cb322-47" tabindex="-1"></a><span class="co"># Function to create initial values</span></span>
+<span id="cb322-48"><a href="SEM.html#cb322-48" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb322-49"><a href="SEM.html#cb322-49" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb322-50"><a href="SEM.html#cb322-50" tabindex="-1"></a>    <span class="at">meffh =</span> <span class="fu">runif</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
+<span id="cb322-51"><a href="SEM.html#cb322-51" tabindex="-1"></a>    <span class="at">meffm =</span> <span class="fu">runif</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
+<span id="cb322-52"><a href="SEM.html#cb322-52" tabindex="-1"></a>    <span class="at">heffM =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
+<span id="cb322-53"><a href="SEM.html#cb322-53" tabindex="-1"></a>    <span class="at">heffCS =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
+<span id="cb322-54"><a href="SEM.html#cb322-54" tabindex="-1"></a>    <span class="at">meffCS =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>),</span>
+<span id="cb322-55"><a href="SEM.html#cb322-55" tabindex="-1"></a>    <span class="at">tauCS =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
+<span id="cb322-56"><a href="SEM.html#cb322-56" tabindex="-1"></a>    <span class="at">tauMH =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
+<span id="cb322-57"><a href="SEM.html#cb322-57" tabindex="-1"></a>    <span class="at">tauH =</span> <span class="fu">rwish</span>(<span class="dv">3</span>,<span class="fu">matrix</span>(<span class="fu">c</span>(.<span class="dv">02</span>,<span class="dv">0</span>,<span class="dv">0</span>,.<span class="dv">04</span>),<span class="at">nrow=</span><span class="dv">2</span>)),</span>
+<span id="cb322-58"><a href="SEM.html#cb322-58" tabindex="-1"></a>    <span class="at">tauM =</span> <span class="fu">rwish</span>(<span class="dv">3</span>,<span class="fu">matrix</span>(<span class="fu">c</span>(.<span class="dv">02</span>,<span class="dv">0</span>,<span class="dv">0</span>,.<span class="dv">04</span>),<span class="at">nrow=</span><span class="dv">2</span>))</span>
+<span id="cb322-59"><a href="SEM.html#cb322-59" tabindex="-1"></a><span class="co">#    M = as.numeric(rep(0, n))</span></span>
+<span id="cb322-60"><a href="SEM.html#cb322-60" tabindex="-1"></a>  )</span>
+<span id="cb322-61"><a href="SEM.html#cb322-61" tabindex="-1"></a>}</span>
+<span id="cb322-62"><a href="SEM.html#cb322-62" tabindex="-1"></a></span>
+<span id="cb322-63"><a href="SEM.html#cb322-63" tabindex="-1"></a>t.n.thin <span class="ot">&lt;-</span>      <span class="dv">50</span></span>
+<span id="cb322-64"><a href="SEM.html#cb322-64" tabindex="-1"></a>t.n.chains <span class="ot">&lt;-</span>     <span class="dv">2</span></span>
+<span id="cb322-65"><a href="SEM.html#cb322-65" tabindex="-1"></a>t.n.burnin <span class="ot">&lt;-</span> <span class="dv">20000</span></span>
+<span id="cb322-66"><a href="SEM.html#cb322-66" tabindex="-1"></a>t.n.iter <span class="ot">&lt;-</span>   <span class="dv">50000</span></span>
+<span id="cb322-67"><a href="SEM.html#cb322-67" tabindex="-1"></a></span>
+<span id="cb322-68"><a href="SEM.html#cb322-68" tabindex="-1"></a><span class="co"># Run JAGS</span></span>
+<span id="cb322-69"><a href="SEM.html#cb322-69" tabindex="-1"></a>jagres <span class="ot">&lt;-</span> <span class="fu">jags.model</span>(<span class="st">&#39;JAGS/BUGSmod1.R&#39;</span>,<span class="at">data =</span> dat, <span class="at">n.chains =</span> t.n.chains, <span class="at">inits =</span> inits, <span class="at">n.adapt =</span> t.n.burnin)</span>
+<span id="cb322-70"><a href="SEM.html#cb322-70" tabindex="-1"></a></span>
+<span id="cb322-71"><a href="SEM.html#cb322-71" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;meffh&quot;</span>, <span class="st">&quot;meffm&quot;</span>, <span class="st">&quot;heffM&quot;</span>, <span class="st">&quot;heffCS&quot;</span>, <span class="st">&quot;meffCS&quot;</span>)</span>
+<span id="cb322-72"><a href="SEM.html#cb322-72" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">coda.samples</span>(jagres, params, <span class="at">n.iter=</span>t.n.iter, <span class="at">thin=</span>t.n.thin)</span>
+<span id="cb322-73"><a href="SEM.html#cb322-73" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">data.frame</span>(<span class="fu">summary</span>(mod)<span class="sc">$</span>quantiles[, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span>)]), <span class="dv">3</span>)</span>
+<span id="cb322-74"><a href="SEM.html#cb322-74" tabindex="-1"></a>res<span class="sc">$</span>TRUEVALUE <span class="ot">&lt;-</span> <span class="fu">c</span>(heffCS, heffM, meffCS, meffh1, meffh2, meffm1, meffm2)</span>
+<span id="cb322-75"><a href="SEM.html#cb322-75" tabindex="-1"></a>res</span>
+<span id="cb322-76"><a href="SEM.html#cb322-76" tabindex="-1"></a></span>
+<span id="cb322-77"><a href="SEM.html#cb322-77" tabindex="-1"></a><span class="co"># Traceplots</span></span>
+<span id="cb322-78"><a href="SEM.html#cb322-78" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">rbind</span>(mod[[<span class="dv">1</span>]], mod[[<span class="dv">2</span>]]))</span>
+<span id="cb322-79"><a href="SEM.html#cb322-79" tabindex="-1"></a><span class="fu">names</span>(post) <span class="ot">&lt;-</span> <span class="fu">dimnames</span>(mod[[<span class="dv">1</span>]])[[<span class="dv">2</span>]]</span>
+<span id="cb322-80"><a href="SEM.html#cb322-80" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))</span>
+<span id="cb322-81"><a href="SEM.html#cb322-81" tabindex="-1"></a>param <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;meffh[1]&quot;</span>, <span class="st">&quot;meffh[2]&quot;</span>, <span class="st">&quot;meffm[1]&quot;</span>, <span class="st">&quot;meffm[2]&quot;</span>, <span class="st">&quot;heffM&quot;</span>, <span class="st">&quot;heffCS&quot;</span>, <span class="st">&quot;meffCS&quot;</span>)</span>
+<span id="cb322-82"><a href="SEM.html#cb322-82" tabindex="-1"></a><span class="fu">traceplot</span>(mod[, <span class="fu">match</span>(param, <span class="fu">names</span>(post))])</span></code></pre></div>
 
 </div>
 </div>

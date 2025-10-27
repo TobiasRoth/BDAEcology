@@ -1,19 +1,19 @@
 --- 
 title: "Bayesian Data Analysis in Ecology with R and Stan"
 author: "Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt"
-date: "2024-12-13"
+date: "2025-10-27"
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: [references/References_fk.bib, references/References_new.bib, references/References_svf.bib]
-link-citations: yes
+bibliography: [references/References_new.bib, references/References_fk.bib, references/References_svf.bib]
+link-citations: true
 github-repo: TobiasRoth/BDAEcology
 cover-image: images/cover.jpg
-description: "This GitHub-book is collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN."
+description: "This GitHub-book is a collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN."
 ---
 
 # Preface {-}
 
-<img src="images/cover.jpg" style="display: block; margin: auto;" />
+<img src="images/cover.jpg" width="655" style="display: block; margin: auto;" />
 
 ## Why this book? {-}
 In 2015, we wrote a statistics book on Master/PhD-level Bayesian data analyses in ecology [@KornerNievergelt.2015] based on scripts we used for our statistics courses. You can order it [here](https://www.elsevier.com/books/bayesian-data-analysis-in-ecology-using-linear-models-with-r-bugs-and-stan/korner-nievergelt/978-0-12-801370-0). People seemed to like it [e.g. @Harju.2016]. Since then, two parallel processes happen. First, we learned more and we became more confident in what we do and what we don't do, and why we do what we do. Second, clever people continuously develop software that broaden the spectrum of ecological models that can be applied by ecologists working with R. Therefore, with this e-book, we substantially revised the text of the printed book, and we add new material.
@@ -26,7 +26,7 @@ We understand this e-book as a dynamic project. Based on contributions from read
 While we show the R-code behind most of the analyses, we sometimes choose not to show all the code in the html version of the book, e.g. for illustrations. But you can always consult the [public GitHub repository](https://github.com/TobiasRoth/BDAEcology) with the R Markdown files that were used to generate the book.
 
 ## How to contribute {-}
-This e-book is open, so everybody with a [GitHub](https://github.com) account can make comments and suggestions for improvement. Readers can contribute in two ways. One way is to add an [issue](https://github.com/TobiasRoth/BDAEcology/issues). The second way is to contribute content directly through the edit button at the top of the page (i.e. a symbol showing a pencil in a square). That button is linked to the R Markdown source file of each page. You can correct typos or add new text and then submit a [GitHub pull request](https://help.github.com/articles/about-pull-requests/). We try to respond to you as quickly as possible. We are looking forward to your contribution!
+This e-book is open and free. Also, everybody with a [GitHub](https://github.com) account can make comments and suggestions for improvement. Readers can contribute in two ways. One way is to add an [issue](https://github.com/TobiasRoth/BDAEcology/issues). The second way is to contribute content directly through the edit button at the top of the page (i.e. a symbol showing a pencil in a square). That button is linked to the R Markdown source file of each page. You can correct typos or add new text and then submit a [GitHub pull request](https://help.github.com/articles/about-pull-requests/). We try to respond to you as quickly as possible. We are looking forward to your contribution!
 
 ## Acknowledgments {-}
 We thank the amazing community of people behind the open source [R project](https://cran.r-project.org/). Among the packages we use most are arm [@Gelman.2022], rstanarm [@Goodrich.2023], rstan [mc-stan.org](https://mc-stan.org) and brms [@Burkner.2017]. We used the amazing [bookdown](https://bookdown.org/yihui/bookdown/) to write this book. 
