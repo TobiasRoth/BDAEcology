@@ -5,6 +5,11 @@ THIS CHAPTER IS UNDER CONSTRUCTION!!!
 
 > We should provide an example in Stan.
 
+We, here may just direct readers to the very useful article and R-package:  
+
+https://glmnet.stanford.edu/articles/glmnet.html
+
+
 ## Introduction
 
 
