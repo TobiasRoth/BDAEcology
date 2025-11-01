@@ -292,9 +292,9 @@ Checking model assumptions will be addressed together with the model fitted usin
 As with rstanarm, fitting the linear mixed effects model with `brm` is straightforward. Because compiling the model takes a little time, we here save the compiled model (as we did with the analogous normal linear model), but this is optional.
 
 ```{r}
-# mod.lmm.brm.compiled <- brm(log(totCort) ~ Implant + days + Implant:days + (1|Ring), 
-#                         data=dat, chains=0)
-# save(mod.lmm.brm.compiled,file="RData/mod.lmm.brm.compiled.RData")
+ # mod.lmm.brm.compiled <- brm(log(totCort) ~ Implant + days + Implant:days + (1|Ring), 
+ #                         data=dat, chains=0)
+ # save(mod.lmm.brm.compiled,file="RData/mod.lmm.brm.compiled.RData")
 load("RData/mod.lmm.brm.compiled.RData")
 mod.brm <- update(mod.lmm.brm.compiled, recompile = FALSE, seed=123, refresh=0)
 ```
