@@ -1,10 +1,10 @@
 
 # Basics of statistics {#basics} 
-This chapter introduces some important terms useful for doing data analyses. We introduce the Bayesian approach of data analyses. We also introduce the essentials of the classical frequentist tests (e.g. t-tests), which can be seen as an alternative to the Bayesian approach. Even though we will not use null hypotheses tests later [@Amrhein.2019], we introduce them here because we need to understand the scientific literature. For each classical test treated, we provide a suggestion how to present the statistical results without using null hypothesis tests. We further discuss some differences between the Bayesian and frequentist approach. 
+This chapter introduces some important terms useful for doing data analyses. We introduce the Bayesian approach of data analyses. We also introduce the essentials of the classical frequentist tests (e.g. t-tests), which can be seen as an alternative to the Bayesian approach. Although we will not be using null hypotheses tests in further chapters of this book [@Amrhein.2019], we introduce them here because we need to understand the scientific literature. For each classical test treated, we provide a suggestion on how to present the statistical results without using null hypothesis tests. We further discuss some differences between the Bayesian and frequentist approaches. 
 
 ## Variables and observations  
 
-Empirical research involves data collection. Data are collected by recording measurements of variables for observational units. An observational unit may be, for example, an individual, a plot, a time interval or a combination of those. The collection of all units ideally is a random sample of the entire population of units we are interested in. The measurements (or observations) of the random sample are stored in a data table. A data table is a collection of variables (columns). Data tables normally are handled as objects of class `data.frame` in R. All measurements on a row in a data table belong to the same observational unit. The variables can be of different scales (Table \@ref(tab:scalemeasurement)). 
+Empirical research involves data collection. Data are collected by recording measurements of variables for observational units. An observational unit may be, for example, an individual, a study plot, a time interval or a combination of those. The collection of all units ideally is a random sample of the entire population of units we are interested in. The measurements (or observations) of the random sample are stored in a data table. A data table is a collection of variables (columns). Data tables normally are handled as objects of class `data.frame` in R. All measurements on a row in a data table belong to the same observational unit. The variables can be of different scales (Table \@ref(tab:scalemeasurement)). 
 
 <br>
 
@@ -19,16 +19,16 @@ Numeric | Discrete: counts;  continuous: body weight, wing length | Identity, or
 
 Nominal and ordinal variables may also be called "categorical" variables.
 
-The aim of many studies is to describe how a variable of interest ($y$; e.g. the time to build a nest) is related to one or more predictor variables ($x$; e.g. the sex of the bird, its age class, and the number of individuals in the colony - representing a nominal, ordinal and numeric predictor). Depending on the author, the y-variable is called "outcome variable", "response" or "dependent variable". The x-variables are called "predictors", "explanatory variables" or "independent variables". We avoid the terms "dependent" and "independent" variables because often we do not know whether the variable $y$ is in fact depending on the $x$ variables, and often the x-variables are not independent of each other. In this book, we try to use "outcome" and "predictor" variables because these terms sound most neutral to us in that they refer to how the statistical model is constructed rather than to an assumed real relationship.
+The aim of many studies is to describe how a variable of interest ($y$; e.g., the time to build a nest) is related to one or more predictor variables ($x$; e.g., the sex of the bird, its age class, and the number of individuals in the colony - representing a nominal, ordinal, and numeric predictor). Depending on the author, the y-variable is called "outcome variable", "response", or "dependent variable". The x-variables are called "predictors", "explanatory variables", or "independent variables". We avoid the terms "dependent" and "independent" variables because often we do not know whether the variable $y$ is in fact depending on the $x$ variables, and often the x-variables are not independent of each other. In this book, we try to use "outcome" and "predictor" variables because these terms sound most neutral to us as they refer to how the statistical model is constructed rather than to an assumed real relationship.
 
-"Predictors" are often called a "covariable" if they are numeric (e.g. the colony size), and "factor" if they are nominal or ordinal (e.g. sex and age class). The characteristic of a factor is that it has defined values, called levels (in our example, the factor "sex" has the levels "female" and "male", the factor "age class" has the levels "juvenile", "immature" and "adult").
+"Predictors" are often called a "covariable" if they are numeric (e.g. the colony size), and "factor" if they are nominal or ordinal (e.g. sex and age class). Factors always have defined values, called levels (in our example, the factor "sex" has the levels "female" and "male", and the factor "age class" has the levels "juvenile", "immature" and "adult").
 
 
 ## Displaying and summarizing data
 
 ### Histogram
 
-While nominal and ordinal variables can be summarized by giving the absolute number or the proportion of observations for each level (e.g number of females and number of males), numeric variables normally are summarized by a location and a scatter statistic, such as the mean and the standard deviation, or the median and some quantiles (see below). Hence, the location tells us around what value our observations lay and it is sometimes called the "measure of central tendency". The distribution of a numeric variable is graphically displayed in a histogram (Fig. \@ref(fig:histogram)).
+While nominal and ordinal variables can be summarized by giving the absolute number or the proportion of observations for each level (e.g., number of females and number of males), numeric variables normally are summarized by a location and a scatter statistic, such as the mean and the standard deviation, or the median and some quantiles (see below). Hence, the location tells us around what value our observations lay and it is sometimes called the "measure of central tendency". The distribution of a numeric variable is graphically displayed in a histogram (Fig. \@ref(fig:histogram)).
 
 ```{r histogram, echo=FALSE, fig.width=4, fig.height=3,fig.cap='Histogram of the length of the forearm of statistics course participants.'}
 load("RData/datacourse.RData")
@@ -44,7 +44,7 @@ box()
 <div style="border: 2px solid grey; padding: 10px">
 **Draw a histogram**
 
-To draw a histogram, the variable is displayed on the x-axis and the observed values are assigned to classes. We use the function <span class="codeInBox">hist</span>. Remember to call the helpfile, if you forgot how a function works and what arguments it has; for that, type <span class="codeInBox">?hist</span> in the R console. There, we see that the edges of the classes can be set with the argument <span class="codeInBox">breaks=</span>. The values given in the <span class="codeInBox">breaks=</span> argument must at least span the values of the variable. If the argument <span class="codeInBox">breaks=</span> is not specified, R searches for break-values that make the histogram look smooth. The number of observations falling in each class is given on the y-axis. The y-axis can be re-scaled so that the area of the histogram equals 1 by setting the argument <span class="codeInBox">density=TRUE</span>. In that case, the values on the y-axis correspond to the density values of a probability distribution (Chapter \@ref(distributions)). You can also save the result of the hist-function into an object, e.g. <span class="codeInBox">t.hist <- hist(dat$ell)</span>, possibly with the argument <span class="codeInBox">plot=F (F for FALSE)</span>. Using <span class="codeInBox">t.hist</span>, you may then fully customize your histogram (e.g. overlay two histograms with slightly shifted columns).
+To draw a histogram, the variable is displayed on the x-axis and the observed values are assigned to classes. We use the function <span class="codeInBox">hist</span>. Remember to call the helpfile, if you forget how a function works and which arguments it has; for that, type <span class="codeInBox">?hist</span> in the R console. There, we see that the edges of the classes can be set with the argument <span class="codeInBox">breaks=</span>. The values given in the <span class="codeInBox">breaks=</span> argument must at least span the values of the variable. If the argument <span class="codeInBox">breaks=</span> is not specified, R searches for break-values that make the histogram look smooth. The number of observations in each class is given on the y-axis. The y-axis can be re-scaled so that the area of the histogram equals 1 by setting the argument <span class="codeInBox">density=TRUE</span>. In that case, the values on the y-axis correspond to the density values of a probability distribution (Chapter \@ref(distributions)). You can also save the result of the hist-function into an object, e.g. <span class="codeInBox">t.hist <- hist(dat$ell)</span>, possibly with the argument <span class="codeInBox">plot=F (F for FALSE)</span>. Using <span class="codeInBox">t.hist</span>, you may then fully customize your histogram (e.g., overlay two histograms with slightly shifted columns).
 
 </div>
 </font>
@@ -59,13 +59,13 @@ There are different types of means, e.g.:
 
 - Arithmetic mean: $\hat{\mu} = \bar{x} = \frac{1}{n} \sum_{1}^{n}x_i$
 
-(R function `mean`),  where $n$ is the sample size. The parameter $\mu$ is the (unknown) true mean of the entire population of which the $n$ measurements $x_i$ are a random sample of. $\bar{x}$ is called the sample mean and it is used as an estimate for $\mu$. The $^$ (the "hat") above any parameter indicates that the parameter value is obtained from a sample and, therefore, it may be different from the true value; it is an estimate of the true value.
+(R function `mean`),  where $n$ is the sample size. The parameter $\mu$ is the (unknown) true mean of the entire population of which the $n$ measurements $x_i$ are a random sample of. $\bar{x}$ is called the sample mean and it is used as an estimate for $\mu$. The $\hat{}$ (the "hat") above any parameter indicates that the parameter value is obtained from a sample and, therefore, it may be different from the true value; it is an estimate of the true value.
 
 - Geometric mean: $\hat{\mu}_{geom} = \bar{x}_{geom} = \sqrt{\prod_{1}^{n}x_i}$
 
 (no R function in the base package, but you may use: `exp(mean(log(x)))`)
 
-The median is the 50% quantile: 50% of the measurements are below (and, hence 50% above) the median. If $x_1,..., x_n$ are the ordered measurements of a variable, then the median is:  
+The median is the 50% quantile: 50% of the measurements are below (and, hence, 50% above) the median. If $x_1,..., x_n$ are the ordered measurements of a variable, then the median is:  
 
 - $\begin{aligned}
   & Median = 
@@ -79,7 +79,7 @@ The median is the 50% quantile: 50% of the measurements are below (and, hence 50
 
 The mode is the value that is occurring with highest frequency or that has the highest density.
 
-Scatter is also called spread, scale or variance. It describes how far away from the location parameter single observations can be found, or how the measurements are scattered around their mean. The variance is defined as the average squared difference between the observations and the mean:  
+Scatter is also called spread, scale, or variance. It describes how far away from the location parameter single observations can be found, or how the measurements are scattered around their mean. The variance is defined as the average squared difference between the observations and the mean:  
 
 - Variance $\hat{\sigma^2} = s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2$
 
@@ -97,9 +97,9 @@ Sometimes, the inverse of the variance is used, called precision:
 
 - Precision $\hat{p} = \frac{1}{\sigma^2}$
 
-The variance and standard deviation each describe the scatter with a single value. Thus, we have to assume that the observations are scattered symmetrically around their mean in order to get a picture of the distribution of the measurements. When the measurements are spread asymmetrically (skewed distribution), then it may be more useful to describe the scatter with more than one value. Such statistics can be quantiles from the lower and upper tail of the data. 
+The variance and standard deviation each describe the scatter with a single value. Thus, we have to assume that the observations are scattered symmetrically around their mean in order to get a picture of the distribution of the measurements. When the measurements are spread asymmetrically (skewed distribution), it may be more useful to describe the scatter with more than one value. Such statistics can be quantiles from the lower and upper tail of the data. 
 
-Quantiles inform us about both location and spread of a distribution. The $p$th-quantile is the value with the property that the proportion $p$ of all values are less than or equal to the value of the quantile. The median is the 50% quantile. The 25% quantile and the 75% quantiles are also called the lower and upper quartiles, respectively. The range between the 25% and the 75% quartiles is called the interquartile range. This range includes 50% of the (central part of the) distribution and is also a measure of scatter. The R function `quantile` extracts sample quantiles. The median, the quartiles, and the interquartile range can be graphically displayed using box-and-whisker plots (boxplots in short, R function `boxplot`). The horizontal fat bar is the median (Fig. \@ref(fig:boxplot)). The box marks the interquartile range. The whiskers reach out to the last observation within 1.5 times the interquartile range from the quartile. Circles mark observations beyond the whiskers.
+Quantiles inform us about the location and spread of a distribution. The $p$th-quantile is the value with the property that the proportion $p$ of all values are less than or equal to the value of the quantile. The median is the 50% quantile. The 25% quantile and the 75% quantiles are also called the lower and upper quartiles, respectively (note the difference between "quantiles" and "quartiles"). The range between the 25% and the 75% quartiles is called the interquartile range. This range includes 50% of the (central part of the) distribution and is also a measure of scatter. The R function `quantile` extracts sample quantiles. The median, the quartiles, and the interquartile range can be graphically displayed using box-and-whisker plots (boxplots in short, R function `boxplot`). The horizontal fat bar is the median (Fig. \@ref(fig:boxplot)). The box marks the interquartile range. The whiskers reach out to the last observation within 1.5 times the interquartile range from the quartile. Circles mark observations beyond the whiskers.
 
 ```{r boxplot, echo=F, fig.width=4, fig.height=3,  fig.cap="Boxplot of the length of forearm of statistics course participants who own car or not."}
 par(mar=c(4,4,1,1))
@@ -112,9 +112,9 @@ axis(1, at=c(1,2), labels=paste("n=", n, sep=""), mgp=c(3,2, 0))
 
 The boxplot is an appealing tool for comparing location, variance and distribution of measurements among groups.
 
-A value that is far away from the distribution - such that it seems not to belong to the distribution - is called an outlier. It is not always clear whether an observation at the edge of a distribution should be considered an outlier or not, and how to deal with it. A first step is to check whether it could be due to a data entry error. Then, analyses may be done without and with the outlier(s) to see whether that has an effect on our conclusions. If you omit outliers, you must report and justify this. Note that median and interquartile range are less affected by outliers than mean and standard deviation.
+A value that is far away from the distribution - such that it seems not to belong to the distribution - is called an outlier. It is not always clear whether an observation at the edge of a distribution should be considered an outlier or not, and how to deal with it. The first step is to check whether it could be due to a data entry error. Then, analyses may be done with and without the outlier(s) to see whether they have an effect on our conclusions. If you omit outliers, you must report and justify this. Note that median and interquartile range are less affected by outliers than mean and standard deviation.
 
-To summarize: For symmetric distributions, mean and standard deviation (SD) area meaningful statistics to describe the distribution (Fig. \@ref(fig:locationScatter), left). Mean and median are identical. The more skewed a distribution is, the more different are mean and median. Mean $\pm$1 SD becomes flawed as it suggests symmetry that does not exist, and its end may even go beyond the distribution (e.g. below the minimum in Fig. \@ref(fig:locationScatter), right). For skewed distributions, median and interquartile range are more informative.
+To summarize: For symmetric distributions, the mean and standard deviation (SD) describe the distribution of the dataset well, and the mean and median are identical (Fig. \@ref(fig:locationScatter), left). However, in skewed distributions, the mean and median become increasingly different as skewness increases. In these cases, using the mean $\pm$\hspace{0pt}1 SD to summarize the data can be misleading (since they suggest symmetry) and the lower bound (i.e., mean - SD) can even fall outside the data (i.e., below the minimum in Fig. \@ref(fig:locationScatter), right). For skewed distributions, median and interquartile range are more informative.
 
 ```{r locationScatter, echo=F, fig.width=6, fig.height=3,  fig.cap="A symmetric and a skewed distribution with the corresponding mean (dot, with $\\pm1$ SD) and median (triangle, with interquartile range)."}
 par(mfrow=c(1,2),mar=c(1,1,3,1))
@@ -142,7 +142,7 @@ points(median(d.asym),t.y[2],pch=17,xpd=NA)
 
 A correlation measures the strength with which characteristics of two variables are associated with each other (co-occur). If both variables are numeric, we can visualize the correlation using a scatterplot.
 
-```{r scatterplot, echo=F, fig.width=4, fig.height=3, fig.cap="Scatterplot of the length of forewarm and the comfort temperature of statistics course participants."}  
+```{r scatterplot, echo=F, fig.width=4, fig.height=3, fig.cap="Scatterplot of the length of forearm and the comfort temperature of statistics course participants."}  
 par(mar=c(4,4,1,1))
 plot(temp~ell, data=dat, las=1, xlab="Lenght of forearm [cm]",
 ylab="Comfort temperature [°C]", pch=16)
@@ -158,7 +158,7 @@ The covariance between variable $x$ and $y$ is defined as:
 
 (R function `cor`)
 
-Mean, variance, standard deviation, covariance and correlation are sensitive to outliers. Single observations with extreme values normally have a disproportionately high influence on these statistics. When outliers are present in the data, we may prefer a more robust correlation measure such as the Spearman correlation or Kendall’s tau. Both are based on the ranks of the measurements instead of the measurements themselves. The rank is simply the rank of each observation when these are sorted. The function `rank` ranks values, with different methods to deal with ties (see the helpfile using `?rank`).
+Mean, variance, standard deviation, covariance, and correlation are sensitive to outliers. Single observations with extreme values normally have a disproportionately high influence on these statistics. When outliers are present in the data, we may prefer a more robust correlation measure such as the Spearman correlation or Kendall’s tau. Both are based on the ranks of the measurements instead of the measurements themselves. The rank is simply the rank of each measurement when these are sorted (i.e. the ranks of the measurements 2, 8, 4, 5 are 1, 4, 2, 3). The function `rank` ranks values, with different methods to deal with ties, i.e. when two or more measurements are identical (see the helpfile using `?rank`).
 
 - Spearman correlation coefficient: correlation between rank(x) and rank(y), i.e. $r_s=\frac{\sum_{i=1}^{n}(R_{x_i}-\bar{R_x})(R_{y_i}-\bar{R_y})}{\sqrt{\sum_{i=1}^{n}(R_{x_i}-\bar{R_x})^2\sum_{i=1}^{n}(R_{y_i}-\bar{R_y})^2}}$
 
