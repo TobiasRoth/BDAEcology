@@ -51,7 +51,7 @@ To draw a histogram, the variable is displayed on the x-axis and the observed va
 
 
 
-### Location and scatter
+### Location and scatter {location_and_scatter}
 
 Typical location statistics are mean, median or mode.
 
@@ -158,7 +158,7 @@ The covariance between variable $x$ and $y$ is defined as:
 
 (R function `cor`)
 
-Mean, variance, standard deviation, covariance, and correlation are sensitive to outliers. Single observations with extreme values normally have a disproportionately high influence on these statistics. When outliers are present in the data, we may prefer a more robust correlation measure such as the Spearman correlation or Kendall’s tau. Both are based on the ranks of the measurements instead of the measurements themselves. The rank is simply the rank of each measurement when these are sorted (i.e. the ranks of the measurements 2, 8, 4, 5 are 1, 4, 2, 3). The function `rank` ranks values, with different methods to deal with ties, i.e. when two or more measurements are identical (see the helpfile using `?rank`).
+Mean, variance, standard deviation, covariance, and correlation are sensitive to outliers. Single observations with extreme values normally have a disproportionately high influence on these statistics. When outliers are present in the data, we may prefer a more robust correlation measure such as the Spearman correlation or Kendall’s tau. Both are based on the ranks of the measurements instead of the measurements themselves. The rank is simply the rank of each measurement when these are sorted (i.e. the ranks of the measurements 2, 8, 4, 5 are 1, 4, 2, 3). The function `rank` ranks values, providing different methods to deal with ties, i.e. when two or more measurements are identical (see the helpfile using `?rank`).
 
 - Spearman correlation coefficient: correlation between rank(x) and rank(y), i.e. $r_s=\frac{\sum_{i=1}^{n}(R_{x_i}-\bar{R_x})(R_{y_i}-\bar{R_y})}{\sqrt{\sum_{i=1}^{n}(R_{x_i}-\bar{R_x})^2\sum_{i=1}^{n}(R_{y_i}-\bar{R_y})^2}}$
 
@@ -166,18 +166,18 @@ Mean, variance, standard deviation, covariance, and correlation are sensitive to
 
 - Kendall's tau: $\tau = 1-\frac{4I}{(n(n-1))}$, where $I$ = number of $(i,k)$ for which $(x_i < x_k)$ & $(y_i > y_k)$ or vice versa, and $(i,k)$ has all pairs of observations with $k>i$.
 
-(R function `cor(x,y, method="kendall")`). $I$ counts the number of observation pairs that are "disconcordant", i.e. where the ranking of the measurements of the two data points is not the same for the both variables. The more such discordant pairs, the less the correlation.
+(R function `cor(x,y, method="kendall")`). $I$ counts the number of observation pairs that are "disconcordant", i.e. where the ranking of the measurements of the two data points is not the same for the both variables. The more discordant pairs in the dataset, the less the correlation.
 
-Figure \@ref(fig:correlations) illustrates that the correlation $q$ is larger with more data points (B vs. A) and steeper relationships (C vs. D). Pearson correlation $r$, Spearman correlation $r_s$ and Kendall's $\tau$ are always 1 when dots are in line (A-D), or -1 when the line descends (D), in which case $q$ is negative, too. The outlier in E has a strong effect on $r$, but much less on $r_s$ and $\tau$. F shows a more real world example. $q$ can have any value from $-\infty$ to $\infty$, while $r$, $r_s$ and $\tau$ are bound between -1 and 1. If the dots are completely horizontal (not shown), $q$ is 0 and the other three measures of correlation are $NA$, i.e. not defined.
+Figure \@ref(fig:correlations) illustrates that the covariance $q$ is larger with more data points (B vs. A) and with steeper relationships (A vs. C). Pearson correlation $r$, Spearman correlation $r_s$ and Kendall's $\tau$ are always 1 when dots are in line (A-C), and -1 when the line descends (D), in which case $q$ is negative, too. The outlier in E has a strong effect on $r$, but less of an effect on $r_s$ and $\tau$. F shows a more real-world example. $q$ can have any value from $-\infty$ to $\infty$, while $r$, $r_s$ and $\tau$ are bound between -1 and 1. If the dots lie on a horizontal line (not shown), $q$ is 0 and the other three measures of correlation are $NA$, i.e., not defined.
 
 
-```{r correlations, echo=F, fig.width=7, fig.height=4, fig.cap="Covariance, Pearson correlation, Spearman correlation, and Kendall's tau for different patterns of x-y-data."}  
+```{r correlations, echo=F, fig.width=7, fig.height=4, fig.cap="Covariance (q), Pearson correlation (r), Spearman correlation ($r_s$), and Kendall\'s tau ($\\tau$) for different patterns of x-y-data."}  
 cplot <- function(x,y) {
   plot(t.x, t.y, xlab="", ylab="", xaxt="n", yaxt="n", pch=16, xlim=c(0,10),ylim=c(0,10))
-  legend("topleft", bty="n", legend=c(paste("q =",round(cov(t.x,t.y),3)),
-                                      paste("r =",round(cor(t.x,t.y),3)),
-                                      paste("r_s =",round(cor(t.x,t.y,method="spearman"),3)),
-                                      paste("tau =",round(cor(t.x,t.y,method="kendall"),3))),
+  legend("topleft", bty="n", legend=c(bquote(q == .(round(cov(t.x,t.y),3))),
+                                      bquote(r == .(round(cor(t.x,t.y),3))),
+                                      bquote(r[s] == .(round(cor(t.x,t.y,method="spearman"),3))),
+                                      bquote(tau == .(round(cor(t.x,t.y,method="kendall"),3)))),
          cex=1.2)
 }
 
@@ -200,30 +200,31 @@ cplot(t.x); legend("topright",legend="F",bty="n", text.font=2, cex=1.2)
 ```
 
 
-For nominal variables, covariance and the above presented correlations cannot be calculated and would not be meaningful. But nominal variables may also be correlated or not - generally, we talk of "balanced" data if they are uncorrelated and "unbalanced" data otherwise. Measures of two nominal variables can be aggregated in a crosstabulation, e.g. the number of birds observed per combination of sex (male or female) and age (juvenile, immature or adult). In this table, there are 6 cells, and if there is the same number of males and females for each age class (and, thereby, also the same number per age class for both sexes), the data is balanced, i.e. sex and age are uncorrelated. The more the 6 numbers deviate from this, the more unbalanced the data is regarding sex and age. The $\chi^2$-value is a measure of this balancedness, with a value of 0 for perfect balanced data, and increasingly larger values for less balanced data (also dependent on the size of the crosstabulation).
+For nominal variables, covariance and the above presented correlations cannot be calculated and would not be meaningful. But still, nominal variables may also be correlated - generally, we talk of "balanced" data if they are uncorrelated and otherwise "unbalanced" data. Measures of two nominal variables can be aggregated in a crosstabulation, e.g., the number of birds observed per combination of sex (male or female) and age (juvenile, immature, or adult). In this table, there are six cells, and if there is the same number of males and females for each age class (and, thereby, also the same number per age class for both sexes), the data is balanced, i.e. sex and age are uncorrelated. The more the six numbers deviate from this, the more unbalanced the data will be regarding sex and age. The $\chi^2$-value is a measure of this balancedness, with a value of 0 for perfectly balanced data, and increasingly larger values for less balanced data (also dependent on the size of the crosstabulation).
 
 
 ### Principal components analyses PCA
 
-The principal components analysis (PCA) is a multivariate correlation analysis. A multidimensional data set with $k$ variables can be seen as a cloud of points (observations) in a $k$-dimensional space. Imagine, we could move around in the space and look at the cloud from different locations. From some locations, the data looks highly correlated, whereas from others, we cannot see the correlation. That is what PCA is doing. It is rotating the coordinate system (defined by the original variables) of the data cloud so that the correlations are no longer visible. The axes of the new coordinates system are linear combinations of the original variables. They are called principal components. There are as many principal components as there are original variables, i.e. $k$, $p_1, ..., p_k$. The principal components meet further requirements:
+The principal components analysis (PCA) is a multivariate correlation analysis. A multidimensional data set with $k$ variables (i.e., a multivariate data set) can be seen as a cloud of points (observations) in a $k$-dimensional space. Imagine we could move around in the space and look at the cloud from different locations. From some locations, the data looks highly correlated, whereas from others, we cannot see the correlation. That is what PCA is doing. It is rotating the coordinate system (defined by the original variables) so that the correlations are no longer visible. The axes of the new coordinate system are linear combinations of the original variables. They are called principal components. There are as many principal components as there are original variables, i.e., $k$, $p_1, ..., p_k$. The principal components must meet further requirements:
 
-- the first component explains most variance
+- the first component explains the most variance
 - the second component explains most of the remaining variance and is perpendicular (= uncorrelated) to the first one
-- third component explains most of the remaining variance and is perpendicular to the first two
+- the third component explains most of the remaining variance and is perpendicular to the first two
 - and so on
 
 For example, in a two-dimensional data set $(x_1, x_2)$ the principal components become
 
 $pc_{1i} = b_{11}x_{1i} + b_{12}x_{2i}$  
 $pc_{2i} = b_{21}x_{1i} + b_{22}x_{2i}$  
-with $b_{jk}$ being loadings of original variable $k$ on principal component $j$. Fig. \@ref(fig:principal) shows the two principal components PC1 and PC2 for a two-dimensional data set. They can be calculated using linear algebra: Principal components are eigenvectors of the covariance or correlation matrix. Note how the data spreads maximally along PC1.
+with $b_{jk}$ called the "loading" of the original variable $k$ on the principal component $j$. Fig. \@ref(fig:principal) shows the two principal components PC1 and PC2 for a two-dimensional data set. They can be calculated using linear algebra: Principal components are eigenvectors of the covariance or correlation matrix. Note how the data spreads maximally along PC1.
 
-```{r principal, echo=FALSE, fig.width=4, fig.height=3, fig.cap='Principal components of a two dimensional data set based on the covariance matrix (green) and the correlation matrix (brown).'}
+```{r principal, echo=FALSE, fig.width=4, fig.height=3, fig.cap='Principal components of a two-dimensional data set based on the covariance matrix (green) and the correlation matrix (brown).'}
 set.seed(2353)
 x1 <- rnorm(100, 5, 1)
 x2 <- rnorm(100, 0.8*x1, 1)
 par(mar=c(4,4,0.3,0.3))
-plot(x1-mean(x1),x2-mean(x2), asp=1, pch=16, col="blue", xlab="x_1", ylab="x_2", cex=0.8)
+plot(x1-mean(x1),x2-mean(x2), asp=1, pch=16, col="blue", xlab=expression(x[1]),
+     ylab=expression(x[2]), cex=0.8)
 # PCA based on covariance matrix
 pc1 <- eigen(cov(cbind(x1,x2)))$vectors[,1]
 pc2 <- eigen(cov(cbind(x1,x2)))$vectors[,2]
@@ -242,7 +243,7 @@ text(-2.9,2.2,"PC2")
 
 ```
 
-The choice between correlation or covariance matrix is important. The covariance matrix is an unstandardized correlation matrix and, therefore, the units, e.g. whether centimeters or meters are used, influence the result of the PCA. When the PCA is based on the covariance matrix, the result will change when we change the unit of a variable, e.g. from centimeters to meters. A PCA based on the covariance matrix only makes sense when the variances are comparable among the variables, i.e. when all variables are measured in the same unit, and when we want to weight each variable according to its variance. Usually, this is not the case and, therefore, the PCA must be based on the correlation matrix. Note that this is not the default setting in the most commonly used function `princomp` (use argument `cor=TRUE`) and `prcomp` (use argument `scale.=TRUE`)!
+The choice between correlation or covariance matrix is important. The covariance matrix is an unstandardized correlation matrix and, therefore, the units (e.g., whether centimeters or meters are used) influence the result of the PCA. A PCA based on the covariance matrix only makes sense when the variances are comparable among the variables, i.e., when all variables are measured in the same unit, and when we want to weigh each variable according to its variance (as defined in \@ref(location_and_scatter)). Usually, this is not the case and, therefore, the PCA must be based on the correlation matrix. Note that this is not the default setting in the most commonly used function `princomp` (use argument `cor=TRUE`) and `prcomp` (use argument `scale.=TRUE`)!
 
 ```{r}
 pca <- princomp(cbind(x1,x2)) # PCA based on covariance matrix
@@ -250,20 +251,20 @@ pca <- princomp(cbind(x1,x2), cor=TRUE) # PCA based on correlation matrix
 loadings(pca)
 ```
 
-The loadings measure the correlation of each variable with the principal components. They inform about what aspects of the data each component is measuring. The signs of the loadings are arbitrary, thus we can multiplied them by -1 without changing the PCA. Sometimes this can be handy for describing the meaning of the principal component in a paper. For example, @Zbinden.2018 combined the number of hunting licenses, the duration of the hunting period, and the number of black grouse cocks that were allowed to be hunted per hunter in a principal component in order to measure hunting pressure. All three variables had a negative loading on the first component, so that high values of the component meant low hunting pressure. Before the subsequent analyses, for which a measure of hunting pressure was of interest, the authors changed the signs of the loadings so that the first principal component could be used as a measure of hunting pressure.
+The loadings measure the correlation of each variable with the principal components. They describe which aspects of the data each component is measuring. The signs of the loadings are arbitrary, thus we can multiply them by -1 without changing the PCA. Sometimes, this can be handy for describing the meaning of the principal component in a paper. For example, @Zbinden.2018 combined the number of hunting licenses, the duration of the hunting period, and the number of black grouse cocks that were allowed to be hunted per hunter in a principal component in order to measure hunting pressure. All three variables had a negative loading on the first component, so that high values of the component meant low hunting pressure. Before the subsequent analyses, for which a measure of hunting pressure was of interest, the authors changed the signs of the loadings so that the first principal component could be used as a measure of hunting pressure.
 
-This example also illustrates what PCA is often used for in ecology: You can reduce the number of predictors (for a model) by combining meaningful sets of predictors into fewer PCs. In the example, three predictors were combined into one predictor. This is often useful when you have many predictors, especially when these contain ecologically meaningful sets of predictors (in the example: hunting pressure variables; could also be weather variables, habitat variables etc) and, importantly, when they correlate. If there is not correlation, you don't gain anything by using PCs instead of the original variables. But if they correlate, the first PC (or the first few PCs) can represent a relevant proportion of the total variance.
+This example also illustrates what PCA is often used for in ecology: You can reduce the number of predictors (for a model) by combining meaningful sets of predictors into fewer PCs. In the example, three predictors were combined into one predictor. This is often useful when you have many predictors, especially when these contain ecologically meaningful sets of predictors (in the example: hunting pressure variables; could also be weather variables, habitat variables, etc.) and, importantly, when they correlate. If there is no correlation, there is no reason to use PCs instead of the original variables. But if they correlate, the first PC (or the first few PCs) can represent a relevant proportion of the total variance.
 
-Hence, this proportion of variance explained by each PC is, beside the loadings, an important information. If the first few components explain the main part of the variance, it means that maybe not all $k$ variables are necessary to describe the data, or, in other words, the original $k$ variables contain a lot of redundant information. Then, you can use fewer than $k$ PCs without loosing (much) information.   
+Hence, this proportion of variance explained by each PC is, besides the loadings, important information. If the first few components explain the main part of the variance, it means that maybe not all $k$ variables are necessary to describe the data, or, in other words, the original $k$ variables contain a lot of redundant information. Then, you can use fewer than $k$ PCs without losing (much) information.   
 
 ```{r}
 # extract the variance captured by each component
 summary(pca)
 ```
 
-Ridge regression is similar to doing a PCA within a linear model while components with low variance are shrinked to a higher degree than components with a high variance [may be there will be a chapter on ridge regression some day].
+Ridge regression is similar to doing a PCA within a linear model, with components with low variance shrunk to a larger degree than components with high variance (may be there will be a chapter on ridge regression some day).
 
-As stated, PCA can be used to generate a lower-dimensional representation of multi-dimensional data, aiming to represent as much of the original multi-dimensional variance as possible e.g. in two dimensions (PC1 vs. PC2). There is a number of other techniques, especially from community ecology, with a similar aim, e.g. correspondence analyses (CA), redundancy analyses (RDA), or non-metric multidimensional scaling (NMDS). All these methods, including PCA, are "ordination techniques". PCA simply turns the data cloud around without any distortion (only scaling), thereby showing as much of the euclidean distance as possible in the first PCs. Other techniques use other distance measures than euclidean. There may be additional variables that constrain the ordination (e.g. constrained = canonical CA). The R package vegan provides many of these ordination techniques and tutorials are available online. You may also start with wikipedia, e.g. on [multivariate statistics](https://en.wikipedia.org/wiki/Multivariate_statistics).
+As stated, PCA can be used to generate a lower-dimensional representation of multi-dimensional data, aiming to represent as much of the original multi-dimensional variance as possible in, e.g., two dimensions (PC1 vs. PC2). There are several other techniques, especially from community ecology, with a similar aim, e.g. correspondence analyses (CA), redundancy analyses (RDA), or non-metric multidimensional scaling (NMDS). All these methods, including PCA, belong to the so-called "ordination techniques". PCA simply turns the data cloud around without any distortion (only scaling), thereby showing as much of the euclidean distance as possible in the first PCs. Other techniques use other distance measures than euclidean. There may be additional variables that constrain the ordination (e.g. constrained = canonical CA). The R package vegan provides many of these ordination techniques and tutorials are available online. You may also start with wikipedia, e.g. on [multivariate statistics](https://en.wikipedia.org/wiki/Multivariate_statistics).
 
 
 ## Inferential statistics
@@ -274,9 +275,9 @@ As stated, PCA can be used to generate a lower-dimensional representation of mul
 > there will always be uncertainty  
 [Amrhein (2017)](https://peerj.com/preprints/26857)
 
-The decision whether an effect is important or not cannot be based on data alone. For making a decision, we should, beside the data, carefully consider the consequences of each decision, the aims we would like to achieve, and the risk, i.e. how bad it is to make the wrong decision. Structured decision making or decision analyses provide methods to combine consequences of decisions, objectives of different stakeholders, and risk attitudes of decision makers to make optimal decisions [@Hemming.2022, @Runge.2020]. In most data analyses, particularly in basic research and when working on case studies, we normally do not consider consequences of decisions. However, the results will be more useful when presented in a way that other scientists can use them for a meta-analysis (including structured decision making), or stakeholders and politicians can use them for making better decisions. Results useful for this must include information on the size of a parameter of interest, such as the effect of a drug or an average survival, together with an uncertainty measure.
+The decision whether an effect is important or not cannot be based on data alone. For making a decision, we should, beside the data, carefully consider the consequences of each decision, the aims we would like to achieve, and the risk, i.e., how bad it is to make the wrong decision. Decision analyses, often applied in a formal structured decision making (SDM) process, provide methods to combine consequences of decisions, objectives of different stakeholders, and risk attitudes of decision makers to make optimal decisions [@Hemming.2022; @Runge.2020]. In most data analyses, particularly in basic research and when working on case studies, we normally do not consider consequences of decisions. However, the results will be more useful when presented in a way that allows other scientists to use them for a meta-analysis (e.g., within a structured decision making process), allowing stakeholders and politicians to make better decisions. Results useful for this must include information on the size of a parameter of interest, such as the effect of a drug, or an average survival, together with an uncertainty measure.
 
-Therefore, inferential statistics aims to describe the process that presumably has generated the data, and it quantifies the uncertainty of the described process that is due to the fact that the data is just a random sample from the larger population we would like to know the process of. In other words: Using regression modelling, we find patterns in our data, and if we make good models and careful ecological reasoning, we can make an educated guess about the underlying process.
+Therefore, inferential statistics aims to describe the process that presumably has generated the data. It quantifies the uncertainty of the described process that is due data just being a random sample from the larger population we would like to know the process of. In other words: Using regression modelling, we find patterns in our data, and if we make good models and careful ecological reasoning, we can make an educated guess about the underlying process.
 
 Quantification of uncertainty is only possible if:  
 1. the mechanisms that generated the data are known  
@@ -284,7 +285,7 @@ Quantification of uncertainty is only possible if:
 
 Most studies aim at understanding the mechanisms that generated the data, thus they are generally not known beforehand. To overcome that problem, we construct models, e.g. statistical models, that are (strong) abstractions of the data generating process. And we report the model assumptions. All uncertainty measures are conditional on the model we used to analyze the data, i.e., they are only reliable if the model describes the data generating process realistically. Because statistical models essentially never describe the data generating process perfectly, the true uncertainty almost always is (much) higher than the one we report.  
 
-We can only make inference about the population under study if we have a random sample from this population. In order to obtain a random sample, a good study design is a prerequisite. To illustrate how inference about a big population is drawn from a small sample, we here use simulated data. The advantage of using simulated data is that the mechanism that generated the data is known, and we can play around with a big population.  
+We can only make inference about the population under study if we have a random sample from this population. To obtain a random sample, a good study design is a prerequisite. To illustrate how inference about a big population is drawn from a small sample, we here use simulated data. The advantage of using simulated data is that the mechanism that generated the data is known, and we can play around with a big population.  
 
 Imagine there are 300&nbsp;000 PhD students in the world and we would like to know how many statistics&nbsp;courses they have taken before they started their PhD on average (Fig. \@ref(fig:histtruesample)). We use random number generators (`rpois` and `rgamma`) to simulate a number of courses for each of the 300&nbsp;000 virtual students. We use these 300&nbsp;000 as the big population that in real life we almost never can sample in total. Normally, we only have values for a small sample of students. To simulate that situation we draw 12 numbers at random from the 300&nbsp;000 (R function `sample`). Then, we estimate the average number of pre-PhD courses from the sample of 12 students, and we compare that *sample mean* with the *true mean* of the 300&nbsp;000 students. 
 
