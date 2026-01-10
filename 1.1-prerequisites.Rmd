@@ -138,7 +138,7 @@ points(median(d.asym),t.y[2],pch=17,xpd=NA)
 ```
 
 
-### Correlations
+### Correlations {#correlations}
 
 A correlation measures the strength with which characteristics of two variables are associated with each other (co-occur). If both variables are numeric, we can visualize the correlation using a scatterplot.
 
@@ -642,11 +642,12 @@ quantile(bsim@coef[,1], probs=c(0.005, 0.995))
 
 ### Comparison of the locations between two groups (two-sample t-test)
 
-Many research questions aim at measuring differences between groups. For example, we could be curious to know how different in size car owner are from people not owning a car. 
-A boxplot is a nice possibility to visualize the ell length measurements of two (or more) groups (Fig. \@ref(fig:boxplt)). From the boxplot, we do not see how many observations are in the two samples. We can add that information to the plot. The boxplot visualizes the samples but it does not show what we know about the big (unmeasured) population mean. To show that, we need to add a compatibility interval (or uncertainty interval, credible interval, confidence interval, in brown in Fig. \@ref(fig:boxplt)). 
+Many research questions aim at measuring differences between groups. For example, we could be curious to know how different in size car owners are from people not owning a car. Hence, we measured the ell (distance from the elbow to the fingertips) for peple with and without a car. 
+
+A boxplot is a nice way to visualize ell length measurements of two (or more) groups (Fig. \@ref(fig:boxplt)). From the boxplot, we do not see how many observations are in the two samples, hence we add that information to the plot. The boxplot visualizes the raw data, but it does not show what we know about the mean (per group) in the entire (unmeasured) population - well, we have the median, so we do have some idea about the mean in the entire population (unless the data is very asymmetric), but the box plot does not show the uncertainty of the mean (nor of the median) of the entire population. To show what we know about the mean of the entire population, we calculate, for each group, the mean and its compatibility interval (or uncertainty interval, credible interval, or confidence interval; in brown in Fig. \@ref(fig:boxplt)). 
 
 
-```{r boxplt, fig.cap='Ell length of car owners (Y) and people not owning a car (N). Horizontal bar = median, box = interquartile range, whiskers = extremest observation within 1.5 times the interquartile range from the quartile, circles=observations farther than 1.5 times the interquartile range from the quartile. Filled brown circles = means, vertical brown bars = 95% compatibility interval.',echo=FALSE}
+```{r boxplt, fig.cap='Ell length of car owners (Y) and people not owning a car (N). Horizontal bar = median, box = interquartile range, whiskers = most extreme observation within 1.5 times the interquartile range from the quartile, circles = observations farther than 1.5 times the interquartile range from the quartile. Filled brown circle = mean, vertical brown bar = 95% compatibility interval.',echo=FALSE}
 par(mar=c(4.5,4.5,2,0.2))
 boxplot(ell~car, data=dat, las=1, ylab="Length of ell (cm)", col="grey", boxwex=0.2,
         ylim=c(35, 50))
@@ -655,12 +656,13 @@ means <- tapply(dat$ell, dat$car, mean)
 semeans <- tapply(dat$ell, dat$car, function(x) sd(x)/sqrt(length(x)))
 segments(c(1.2,2.2), means-2*semeans, c(1.2,2.2), means+2*semeans, lwd=2, col="brown")
 points(c(1.2,2.2), means, pch=21, bg="brown")
-text(x=c(1,2), y=c(36, 36), labels=paste("n=", table(dat$car)))
+text(x=c(1,2), y=c(36, 36), labels=paste("n =", table(dat$car)))
 
 ```
 
-When we added the two means with a compatibility interval, we see what we know about the two means, but we do still not see what we know about the difference between the two means. The uncertainties of the means do not show the uncertainty of the difference between the means. To do so, we need to extract the difference between the two means from a model that describes (abstractly) how the data has been generated. Such a model is a linear model that we will introduce in Chapter \@ref(lm). The second parameter measures the differences in the means of the two groups. And from the simulated posterior distribution we can extract a 95% compatibility interval.
-Thus, we can conclude that the average ell length of car owners is with high probability between 0.5 cm smaller and 2.5 cm larger than the averag ell of people not having a car.
+When we added the two means with their compatibility intervals, we see what we know about the two means, but we still do not see what we know about the difference between the two means. The uncertainties of the means do not show the uncertainty of the difference between the means. To do so, we need to extract the difference between the two means from a model that describes (abstractly) how the data has been generated. Such a model is a linear model that we will introduce in Chapter \@ref(lm). In such a model, we have an intercept parameter, which is the estimate of the mean in group one. The second parameter in the model measures the difference in the means of the two groups. From the values drawn from the posterior distribution we can easily extract a 95% compatibility interval for the intercept and for the difference in the group means. 
+
+Thus, from our data, we can conclude that the average ell length of car owners is with high probability between 0.5 cm smaller and 2.5 cm larger than the average ell length of people not having a car.
 
 
 ```{r, echo=TRUE}
@@ -670,50 +672,51 @@ bsim <- sim(mod, n.sim=nsim)
 quantile(bsim@coef[,"carY"], prob=c(0.025, 0.5, 0.975))
 ```
 
-The corresponding two-sample t-test gives a p-value for the null hypothesis: "The difference between the two means equals zero.", a confidence interval for the difference and the two means. While the function `lm`gives the difference Y minus N, the function `t.test`gives the difference N minus Y. Luckily the two means are also given in the output, so we know which group mean is the larger one. 
+The corresponding two-sample t-test gives a p-value for the null hypothesis "The difference between the two means equals zero". The output also includes a confidence interval for the difference, as well as the two means. While the function `lm` gives the difference Y (yes) minus N (no car), the function `t.test` gives the difference N minus Y. Luckily the two means are also given in the output, so we know which group mean is the larger one. 
 
 ```{r, echo=TRUE}
 t.test(ell~car, data=dat, var.equal=TRUE)
 ```
 
-In both possibilities, we used to compare the to means, the Bayesian posterior distribution of the difference and the t-test or the confidence interval of the difference, we used a data model. We thus assumed that the observations are normally distributed. In some cases, such an assumption is not a reasonable assumption. Then the result is not reliable. In such cases, we can either search for a more realistic model or use non-parametric (also called distribution free) methods. Nowadays, we have almost infinite possibilities to construct data models (e.g. generalized linear models and beyond). Therefore, we normally start looking for a model that fits the data better. However, in former days, all these possiblities did not exist (or were not easily available for non-mathematicians). Therefore, we here introduce two of such non-parametric methods, the Wilcoxon-test (or Mann-Whitney-U-test) and the randomisation test. 
+In both approaches we used above to compare the to means - the Bayesian posterior distribution of the difference, and the t-test for the difference - we used a data model. Thereby, we assumed that the ell lengths are normally distributed (within each group in the entire population). Depending on the data, such an assumption may not be valid, and the result will not be reliable. In such cases, we can either search for a more realistic model, or use non-parametric (also called distribution free) methods. Nowadays, we have many options to construct data models (e.g., generalized linear models and beyond). Therefore, we normally look for a model that fits the data sufficiently good. However, in former days, all these possibilities did not exist (or were not easily available for non-mathematicians). Therefore, we here introduce two such non-parametric methods: the Wilcoxon test (or Mann-Whitney U test), and the randomisation test. 
 
-Some of the distribution free statistical methods are based on the rank instead of the value of the observations. The principle of the Wilcoxon-test is to rank the observations and sum the ranks per group. It is not completely true that the non-parametric methods do not have a model. The model of the Wilcoxon-test "knows" how the difference in the sum of the ranks between two groups is distributed given the mean of the two groups do not differ (null hypothesis). Therefore, it is possible to get a p-value, e.g. by the function `wilcox.test`.
+Some of the distribution free statistical methods are based on the rank (explained in Chapter \@ref(correlations)) instead of the value of the observations. The principle of the Wilcoxon test is to rank the observations and sum the ranks per group. Although non-parametric methods are often treated as though they don't have a model, this is not perfectly accurate. The model of the Wilcoxon-test "knows" how the difference in the summed ranks between two groups is distributed given the mean of the two groups do not differ (null hypothesis). Therefore, it is possible to get a p-value, e.g., by using the function `wilcox.test`.
 
 ```{r, echo=TRUE}
-wilcox.test(ell~car, data=dat)
+wilcox.test(ell ~ car, data=dat)
 ```
 
-The note in the output tells us that ranking is ambiguous, when some values are equal. Equal values are called ties when they should be ranked.
+Ranking is ambiguous when equal values, called "ties", are present (in the ell values). Then, the function output contains a note of caution that no exact p-value can be computed. 
 
-The result of the Wilcoxon-test tells us how probable it is to observe the difference in the rank sum between the two sample or a more extreme difference given the means of the two groups are equal. That is at least something.
+The result of the Wilcoxon-test tells us how probable it is to observe the difference in the rank sum between the two samples, or a more extreme difference, given that the means of the two groups are equal. That is at least something.
 
-A similar result is obtained by using a randomisation test. This test is not based on ranks but on the original values. The aim of the randomisation is to simulate a distribution of the difference in the arithmetic mean between the two groups assuming this difference would be zero. To do so, the observed values are randomly distributed among the two groups. Because of the random distribution among the two groups, we expect that, if we repeat that virtual experiment many times, the average difference between the group means would be zero (both virtual samples are drawn from the same big population). 
+A similar result is obtained by using a randomisation test. This test is not based on ranks but on the observed values. The aim of the randomisation is to simulate a distribution of the difference in the mean between the two groups, assuming this difference would be zero. To that end, the observed values are randomly assigned to the two groups. By doing this, we implicitly assume that the average difference between the group means is zero (we assume the randomised samples of both groups are drawn from one and the same population, i.e. a population without a group effect).
 
-We can use a loop in R for repeating the random re-assignement to the two groups and, each time, extracting the difference between the group means. As a result, we have a vector of many (`nsim`) values that all are possible differences between group means given the two samples were drawn from the same population. The proportion of these values that have an equal or larger absolute value give the probability that the observed or a larger difference between the group means is observed given the null hypothesis would be true, thus that is a p-value.
+We can use a loop in R to repeat the random re-assignment to the two groups many times (`nsim`). In each simulation, we extract the difference between the group means. As a result, we get a vector of many (`nsim`) values that all are possible differences between group means, assuming the two samples were drawn from the same population (with no group effect). Then, we compare the observed difference to these simulated values: we calculate the proportion of the absolute simulated values that are equal or more extreme. This answers the question: given the null hypothesis of no group effect, how likely is it to randomly observe a difference as large or larger than the observed difference? This probability is a p-value - the smaller it is, the less likely the null hypothesis is a good hypothesis.
 
 
 ```{r, echo=TRUE}
 diffH0 <- numeric(nsim)
 for(i in 1:nsim){
-  randomcars <- sample(dat$car)
+  randomcars <- sample(dat$car)  # note: we randomly assign the ell values to the two groups by
+       # sample(dat$car), i.e. we permute $car (the group ID)
   rmod <- lm(ell~randomcars, data=dat)
   diffH0[i] <- coef(rmod)["randomcarsY"]
 }
 mean(abs(diffH0)>abs(coef(mod)["carY"])) # p-value
 ```
 
-Visualizing the possible differences between the group means given the null hypothesis was true shows that the observed difference is well within what is expected if the two groups would not differ in their means (Fig. \@ref(fig:ranhist)). 
+Visualising the possible differences between the group means, given the null hypothesis was true, shows that the observed difference is well within what is expected if the two groups would not differ in their means (Fig. \@ref(fig:ranhist)). 
 
 
-```{r ranhist, fig.cap='Histogram if differences between the means of randomly assigned groups (grey) and the difference between the means of the two observed groups (red)', echo=FALSE}
+```{r ranhist, fig.cap='Histogram of differences between the means of random assignement of ell values to groups (grey), and the difference between the means of the two observed groups (red).', echo=FALSE}
 par(mar=c(5.5, 4.5, 0.5, 0), cex=0.8)
 hist(diffH0, main=NA); abline(v=coef(mod)[2], lwd=2, col="red", main=NA)
 ```
 
-The randomization test results in a p-value and, we could also report the observed difference between the group means. However, it does not tell us, what values of the difference all would be compatible with the data. We do not get an uncertainty measurement for the difference. 
+The randomisation test results in a p-value and, we could also report the observed difference between the group means. However, it does not tell us, what values of the difference all would be compatible with the data. We do not get an uncertainty measurement for the difference. 
 
-In order to get a compatibility interval without assuming a distribution for the data (thus non-parametric) we could bootstrap the samples. 
+To get a compatibility interval without assuming a distribution for the data (thus non-parametric) we can bootstrap the samples. 
 
 Bootstrapping is sampling observations from the data with replacement. For example, if we have a sample of 8 observations, we draw 8 times a random observation from the 8 observation. Each time, we assume that all 8 observations are available. Thus a bootstrapped sample could include some observations several times, whereas others are missing. In this way, we simulate the variance in the data that is due to the fact that our data do not contain the whole big population.  
 
@@ -741,7 +744,7 @@ hist(diffboot); abline(v=coef(mod)[2], lwd=2, col="red")
 ```
 
 
-For both methods, randomisation test and bootstrapping, we have to assume that all observations are independent. Randomization and bootstrapping becomes complicated or even unfeasible when data are structured.
+For both methods, randomisation test and bootstrapping, we have to assume that all observations are independent. Randomisation and bootstrapping becomes complicated or even unfeasible when data are structured.
 
 
 ## Comparing frequentist and Bayesian approach - an why we use Bayes{#whyBayes}
