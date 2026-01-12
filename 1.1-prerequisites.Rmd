@@ -711,16 +711,15 @@ Visualising the possible differences between the group means, given the null hyp
 
 ```{r ranhist, fig.cap='Histogram of differences between the means of random assignement of ell values to groups (grey), and the difference between the means of the two observed groups (red).', echo=FALSE}
 par(mar=c(5.5, 4.5, 0.5, 0), cex=0.8)
-hist(diffH0, main=NA); abline(v=coef(mod)[2], lwd=2, col="red", main=NA)
+hist(diffH0, main=NA, xlab="Difference among the two groups"); abline(v=coef(mod)[2], lwd=2, col="red", main=NA)
+legend("topleft",pch=16, col=c("gray","red"),legend=c(expression(according~to~H[0],"in the real data")), bty="n")
 ```
 
-The randomisation test results in a p-value and, we could also report the observed difference between the group means. However, it does not tell us, what values of the difference all would be compatible with the data. We do not get an uncertainty measurement for the difference. 
+The randomisation test results in a p-value, and we could also report the observed difference between the group means. However, it does not tell us what values of the difference all would be compatible with the data. We do not get an uncertainty measurement for the difference. To get a compatibility interval without assuming a distribution for the data (thus non-parametric), we can use a method referred to as bootstrapping the samples. 
 
-To get a compatibility interval without assuming a distribution for the data (thus non-parametric) we can bootstrap the samples. 
+Bootstrapping is sampling observations from the data, with replacements. For example, if we have a sample of 8 observations, we draw one of these observations randomly 8 times. Each time, all 8 observations are available (i.e. sampling with replacement). Thus a bootstrapped sample can include some observations several times, whereas others are missing. In this way, we simulate the variance in the data that comes from our data not including the entire population.  
 
-Bootstrapping is sampling observations from the data with replacement. For example, if we have a sample of 8 observations, we draw 8 times a random observation from the 8 observation. Each time, we assume that all 8 observations are available. Thus a bootstrapped sample could include some observations several times, whereas others are missing. In this way, we simulate the variance in the data that is due to the fact that our data do not contain the whole big population.  
-
-Also bootstrapping can be programmed in R using a loop. 
+Bootstrapping can be programmed in R using a loop. 
 
 ```{r, echo=TRUE}
 diffboot <- numeric(1000)
@@ -740,14 +739,16 @@ The resulting values for the difference between the two group means can be inter
 A 95% interval of the distribution corresponds to a 95% compatibility interval (or confidence interval or uncertainty interval). 
 
 ```{r histboot, fig.cap='Histogram of the boostrapped differences between the group means (grey) and the observed difference.', echo=TRUE}
-hist(diffboot); abline(v=coef(mod)[2], lwd=2, col="red")
+hist(diffboot, main=NA, xlab="Difference among the two groups"); abline(v=coef(mod)[2], lwd=2, col="red")
+legend("topleft",pch=16, col=c("gray","red"),legend=c("from bootstrap samples","in the real data"), bty="n")
+
 ```
 
 
-For both methods, randomisation test and bootstrapping, we have to assume that all observations are independent. Randomisation and bootstrapping becomes complicated or even unfeasible when data are structured.
+For both, randomisation test and bootstrapping, we have to assume that all observations are independent. Randomisation and bootstrapping become complicated or even unfeasible when data are structured, i.e. when you want (or better: need) to consider other groups or important linear predictors.
 
 
-## Comparing frequentist and Bayesian approach - an why we use Bayes{#whyBayes}
+## Comparing frequentist and Bayesian approach - and why we use Bayes{#whyBayes}
 
 An important difference between the Bayesian and frequentist ways of analyzing data is how conclusions are drawn (Table \@ref(tab:TabBayesFreq)). Bayesians are interested in the probability of a (meaningful) hypothesis (e.g., that an effect is larger than a relevant size, say, $H: \theta > e$) given the data, $p(H|y)$, or they describe what we know about a parameter after having looked at the data by the posterior distribution $p(\theta|y)$. Frequentist methods assess the probability of the data given a null hypothesis, $p(y|H_0)$, or they give estimates with a standard error for specific model parameters.
 
@@ -759,16 +760,16 @@ Table: (\#tab:TabBayesFreq) Characteristics of Bayesian and frequentist statisti
 |  | Bayesian statistics | Frequentist statistics |
 | :---- | :------ | :------ |
 | Interpretation of probability | Description of what we know about a parameter | Relative frequency of an event |
-| Information used | Prior distribution $p(\theta)$ and likelihood $p(y|\theta)$, that is, data | Data only |
+| Information used | Prior distribution $p(\theta)$ and likelihood $p(y|\theta)$, i.e., data | Data only |
 | Uncertainty measurement | Compatibility interval (or credible interval) | Confidence interval |
 | Hypotheses | Probability of meaningful hypotheses $p(H|y)$ | Null hypothesis tests $p(y|H_0)$ |
 
 
-Doing science consists of updating prior knowledge with information from experiments or observations to obtain new (posterior) knowledge about a parameter. The Bayesian way of analyzing data formalizes the learning process of science. One of the reasons for the development of frequentist statistics was that it was not feasible to do the simulation part of Bayesian statistics before the computer age (because of the earlier application of frequentist statistical methods, they are sometimes called the “classical” statistical methods, even though the idea of Bayes is older). Nowadays, everybody can use his or her own computer to draw values from posterior distributions very easily.
+Doing science consists of updating prior knowledge with information from experiments or observations to obtain new (posterior) knowledge about a parameter. The Bayesian way of analyzing data formalizes the learning process of science. One of the reasons for the development of frequentist statistics was that it was not feasible to do the simulation part of Bayesian statistics before the computer age (because of the earlier application of frequentist statistical methods, they are sometimes called the “classical” statistical methods, even though the idea of Bayes is older). Nowadays, everybody can use their own computer to draw values from posterior distributions very easily.
 
-Some scientists even reject Bayesian statistics mainly because they argue that using prior information makes a study subjective (see e.g., discussion in the Forum of Ecological Applications, 19, 2009). Frequentist analysis is subjective too! Subjectivity enters at many levels, from deciding what questions to investigate, which data to collect, which results to publish, and so on. Using prior information is not the only subjective step during a data analysis - the key thing is to report what has been done. A famous statistician once asked us whether we had ever laughed out loud at a statistical result because it absolutely did not make any sense? If yes, this is clear evidence that we have prior knowledge; clearly it is reasonable to report this prior knowledge and use it in the analysis.
+Some scientists reject Bayesian statistics mainly because they argue that using prior information makes a study subjective (see, e.g., the discussion in the Forum of Ecological Applications, 19, 2009). However, we argue that frequentist analysis is subjective, too! Subjectivity enters at many levels, from deciding what questions to investigate, which data to collect, which results to publish, and so on. Using prior information is not the only subjective step during a data analysis - the key thing is to report what has been done. A famous statistician once asked us whether we had ever laughed out loud at a statistical result because it absolutely did not make any sense? If yes, this is clear evidence that we have prior knowledge; clearly it is reasonable to report this prior knowledge and use it in the analysis.
 
-In this book, we primarily use Bayesian methods because they allow more meaningful inferences (i.e., probabilities of specific hypotheses, posterior distributions for derived quantities). In fact, in the case of generalized linear mixed models, they are the only exact way to draw inference [@Bolker.2009]. Bayesian methods make the fit of more complex models (such as models that estimate true state together with an observation process) feasible. They make meta-analysis relatively simple. And error propagation to derived parameters (e.g. to create an effect plot) is ridiculously easy: As a result from a Bayesian analyses, we get many, e.g. 4000, draws from the joint posterior distribution, i.e. 4000 set of parameters - whatever derived quantity we are interested in, we simply calculate it using each draw in turn, giving us 4000 values for the derived parameter, which represents the uncertainty of that derived parameter (the 2.5% and 97.5% quantiles of these 4000 values can be used as a 95% compatibility interval).
+In this book, we primarily use Bayesian methods because they allow more meaningful inferences (i.e., probabilities of specific hypotheses, or posterior distributions for derived quantities - we will do that in the book several times). In fact, in the case of generalized linear mixed models (Chapter \@ref(glmm)), they are the only exact way to draw inference [@Bolker.2009]. Bayesian methods make the fit of more complex models (such as models that estimate true state together with an observation process) feasible. They make meta-analysis relatively simple. And error propagation to derived parameters (e.g. to create an effect plot) is ridiculously easy: As a result from a Bayesian analyses, we get many, e.g. 4000, draws from the joint posterior distribution, i.e. 4000 set of parameters - whatever derived quantity we are interested in, we simply calculate it using each draw in turn, giving us 4000 values for the derived parameter, which represents the uncertainty of that derived parameter (the 2.5% and 97.5% quantiles of these 4000 values can be used as a 95% compatibility interval).
 
 While our book clearly focuses on Bayesian analyses, we also briefly introduce the most important classical frequentist tests associated with linear models because they are still widely used, and because almost 100 years of scientific literature has used these techniques that we, as readers, would like to understand.
 
