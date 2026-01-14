@@ -54,12 +54,12 @@ another explanatory variable (interaction)?
 
 
 ## Data structure  {#step5}
-After having considered the (fixed effect) terms from step 4: are the observations independent or grouped/structured? What random factors are needed in the model? Are the data obviously temporally or spatially correlated? Or, are other correlation structures present, such as phylogenetic relationships? 
-Our strategy is to start with a rather simple model that may not account for all correlation structures that in fact are present in the data. We first, only include those that are known to be important a priory. Only when residual analyses reveals important additional correlation structures, we include them in the model.
+After having considered the (fixed effect) terms from step 4: are the observations independent or grouped/structured? What random factors are needed in the model (see Chapter \@ref(lmer))? Are the data obviously temporally or spatially correlated? Or, are other correlation structures present, such as phylogenetic relationships? 
+Our strategy is to start with a rather simple model that may not account for all correlation structures that in fact are present in the data. First, we only include what is known to be important a priori. We only include additional correlation structures in the model once we know that they are needed, e.g., when residual analyses reveal their importance.
 
 
 ## Define prior distributions {#step6}
-Decide whether we would like to use informative prior distributions or whether we would like use priors that only have a negligible effect on the results. When the results are later used for informing authorities or for making a decision (as usual in applied sciences), then we would like to base the results on all information available. Information from the literature is then used to construct informative prior distributions. In contrast to applied sciences, in basic research we often would like to show only the information in the data that should not be influenced by earlier results. Therefore, in basic research we look for priors that do not influence the results. 
+Decide whether we would like to use informative prior distributions or whether we would like use priors that only have a negligible effect on the results. When the results are later used for informing authorities or for decision making (which is common in applied sciences), then we would like to base the results on all information available. Information from the literature is then used to construct informative prior distributions. In contrast to applied sciences, in basic research we often would like to show only the information in the data that should not be influenced by earlier results. Therefore, in basic research we look for priors that do not influence the results. 
 
 
 ## Fit the model  {#step7}
@@ -68,17 +68,17 @@ Fit the model.
 ## Check model {#step8}
 We assess model fit by graphical [analyses of the residuals](#residualanalysis) and by [predictive model checking](#modelchecking). 
 
-For non-Gaussian models it is often easier to assess model fit using [posterior predictive checks](#modelchecking) rather than residual analyses. Posterior predictive checks usually show clearly in which aspect the model failed so we can go back to step 2 of the analysis. Recognizing in what aspect a model does not fit the data based on residual plots improves with experience. Therefore, we list in Chapter 16 of @KornerNievergelt.2015 some patterns that can appear in residual plots together with what these patterns possibly indicate. We also indicate what could be done in the specific cases.
+For non-Gaussian models, it is often easier to assess model fit using [posterior predictive checks](#modelchecking) rather than residual analyses. Posterior predictive checks usually show clearly which aspect of the model failed, so we can go back to step 2 of the analysis. Recognizing what aspect in a model does not fit the data based on residual plots improves with experience. Therefore, in Chapter 16 of @KornerNievergelt.2015 we list some patterns that can appear in residual plots together with what these patterns possibly indicate. We also indicate what could be done in these specific cases.
 
 ## Model uncertainty  {#step9}
-If, while working through steps 1 to 8, possibly repeatedly, we came up with one or more models that fit the data reasonably well, we [model comparison](#model_comparison) is needed or inference may be drawn from more than one model. If we have only one model, we proceed to \@ref(step10).
+If, while working through steps 1 to 8, possibly repeatedly, we came up with one or more models that fit the data reasonably well,  [model comparison](#model_comparison) is needed or inference may be drawn from more than one model. If we have only one model, we proceed to \@ref(step10).
 
 ## Present model results  {#step10}
-Draw values from the joint posterior distribution of the model parameters, usnig `sim` or Stan via rstanarm-package or `brm`. Use these draws to present parameter uncertainty, to obtain posterior distributions for predictions, probabilities of specific hypotheses, and derived quantities, and show effect plots.
+Draw values from the joint posterior distribution of the model parameters, using `sim` or Stan via rstanarm-package or `brm`. Use these draws to present parameter uncertainty, to obtain posterior distributions for predictions, probabilities of specific hypotheses, and derived quantities, and show effect plots.
 
 ## Further reading {-}
 
-- [R for Data Science by Garrett Grolemund and Hadley Wickham](http://r4ds.had.co.nz): Introduces the tidyverse framework. It explains how to get data into R, get it into the most useful structure, transform it, visualise it and model it.  
+- [R for Data Science by Garrett Grolemund and Hadley Wickham](http://r4ds.had.co.nz): Introduces the tidyverse framework. It explains how to get data into R, get it into the most useful structure, transform it, visualise it, and model it.  
 
 
 
