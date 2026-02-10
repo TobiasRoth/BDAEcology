@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>17 Model comparison and multimodel inference | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is a collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="17 Model comparison and multimodel inference | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2025-11-01" />
+<meta name="date" content="2026-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -179,7 +179,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-data"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing data</a>
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="basics.html"><a href="basics.html#histogram"><i class="fa fa-check"></i><b>2.2.1</b> Histogram</a></li>
-<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#location-and-scatter"><i class="fa fa-check"></i><b>2.2.2</b> Location and scatter</a></li>
+<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#location-and-scatter-location_and_scatter"><i class="fa fa-check"></i><b>2.2.2</b> Location and scatter {location_and_scatter}</a></li>
 <li class="chapter" data-level="2.2.3" data-path="basics.html"><a href="basics.html#correlations"><i class="fa fa-check"></i><b>2.2.3</b> Correlations</a></li>
 <li class="chapter" data-level="2.2.4" data-path="basics.html"><a href="basics.html#principal-components-analyses-pca"><i class="fa fa-check"></i><b>2.2.4</b> Principal components analyses PCA</a></li>
 </ul></li>
@@ -193,15 +193,15 @@ div.csl-indent {
 <li class="chapter" data-level="2.4.1" data-path="basics.html"><a href="basics.html#bayes-theorem-for-discrete-events"><i class="fa fa-check"></i><b>2.4.1</b> Bayes theorem for discrete events</a></li>
 <li class="chapter" data-level="2.4.2" data-path="basics.html"><a href="basics.html#bayes-theorem-for-continuous-parameters"><i class="fa fa-check"></i><b>2.4.2</b> Bayes theorem for continuous parameters</a></li>
 <li class="chapter" data-level="2.4.3" data-path="basics.html"><a href="basics.html#estimating-a-mean-assuming-that-the-variance-is-known"><i class="fa fa-check"></i><b>2.4.3</b> Estimating a mean assuming that the variance is known</a></li>
-<li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#estimating-the-mean-and-the-variance"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
+<li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#meanvarSnowfinch"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#classical-frequentist-tests-and-alternatives"><i class="fa fa-check"></i><b>2.5</b> Classical frequentist tests and alternatives</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#nullhypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Nullhypothesis testing</a></li>
+<li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#null-hypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Null hypothesis testing</a></li>
 <li class="chapter" data-level="2.5.2" data-path="basics.html"><a href="basics.html#comparison-of-a-sample-with-a-fixed-value-one-sample-t-test"><i class="fa fa-check"></i><b>2.5.2</b> Comparison of a sample with a fixed value (one-sample t-test)</a></li>
 <li class="chapter" data-level="2.5.3" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups-two-sample-t-test"><i class="fa fa-check"></i><b>2.5.3</b> Comparison of the locations between two groups (two-sample t-test)</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#whyBayes"><i class="fa fa-check"></i><b>2.6</b> Comparing frequentist and Bayesian approach - an why we use Bayes</a></li>
+<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#whyBayes"><i class="fa fa-check"></i><b>2.6</b> Comparing frequentist and Bayesian approach - and why we use Bayes</a></li>
 <li class="chapter" data-level="2.7" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.7</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="analyses_steps.html"><a href="analyses_steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a>
@@ -267,7 +267,8 @@ div.csl-indent {
 <li class="chapter" data-level="7.2" data-path="furthertopics.html"><a href="furthertopics.html#python"><i class="fa fa-check"></i><b>7.2</b> Python</a></li>
 <li class="chapter" data-level="7.3" data-path="furthertopics.html"><a href="furthertopics.html#some-r"><i class="fa fa-check"></i><b>7.3</b> Some R</a>
 <ul>
-<li class="chapter" data-level="7.3.1" data-path="furthertopics.html"><a href="furthertopics.html#date-on-x-axis"><i class="fa fa-check"></i><b>7.3.1</b> Date on x-axis</a></li>
+<li class="chapter" data-level="7.3.1" data-path="furthertopics.html"><a href="furthertopics.html#spatial-data-processing-in-r"><i class="fa fa-check"></i><b>7.3.1</b> Spatial data processing in R</a></li>
+<li class="chapter" data-level="7.3.2" data-path="furthertopics.html"><a href="furthertopics.html#date-on-x-axis"><i class="fa fa-check"></i><b>7.3.2</b> Date on x-axis</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II BAYESIAN DATA ANALYSIS</b></span></li>
@@ -502,41 +503,41 @@ The out-of-data predictive performance of a model is certainly very important in
 <col width="47%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th align="left">Situation</th>
 <th align="left">Useful method</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td align="left">Describe a nonlinear effect using polynomials: How many polynomials should be included?</td>
 <td align="left">WAIC, or cross-validation; consider using a GAM(M) or non-linear model</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Finding an appropriate smoothness in GAM(M)</td>
 <td align="left">cross-validation, WAIC</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Omit interactions from a model for better interpretability</td>
 <td align="left">Decide whether the interaction is biologically relevant, compare effect sizes, or use WAIC, or cross-validation</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Computing problems that may be produced by too many random factors: which random factor should be deleted?</td>
 <td align="left">Assess the importance of the random factors by visualising among-group variance in plots or by fitting the model using Bayesian methods (priors may help fitting the model). Do not delete random factors when there was a good reason to include them. Also, WAIC may be helpful.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">The residuals are spatially correlated and no theory about the shape of the correlation function exists: choose a correlation function (e.g., linear, exponential, spherical)</td>
 <td align="left">WAIC may help, but as it has difficulties in structured models, such as spatial models <span class="citation">(<a href="referenzen.html#ref-Gelman.2014">A. Gelman et al. 2014</a>)</span>, AIC may be a pragmatic alternative. Use predictive model-checking to see which model best captures the data’s spatial distribution.</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Different models represent different biological hypotheses, which mutually exclude each other. It should be measured which one has the highest support given the data</td>
 <td align="left">Bayes factor and posterior model probabilities are nice tools for that. However, results are more easily interpreted if prior information is available. In case of no prior information, WAIC may be a better alternative. If the interest is in derived parameters (e.g., fitted values, predictions, population estimates), model averaging may be considered.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Many explanatory variables and only the important ones should be included to reduce uncertainty</td>
 <td align="left">Do not remove variables of interest (aim of the study) from the model. For nuisance variables, cross-validation, WAIC, LASSO, ridge regression, or inclusion probabilities may be useful. Choose method depending on the purpose of the study.</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">There are more explanatory variables than observations</td>
 <td align="left">LASSO and ridge regression may be helpful.</td>
 </tr>
@@ -555,20 +556,20 @@ Because all <span class="math inline">\(n\)</span> models are based on <span cla
 <p>We illustrate Bayesian leave-one-out cross-validation using the “pondfrog1” data. This data set contains the size of frog populations in different ponds with different characteristics. It includes simulated data. Therefore, the “true” model is known and model comparison using different methods may be illustrative. Let’s say that we need to estimate the total frog population in a large area with around 5000 small ponds. It is not feasible to count the number of frogs in 5000 ponds. Therefore, we would like to predict the number of frogs for the 5000 ponds from a sample of 130 ponds, for which the frog populations have been counted, and pH, water depth, and average temperature have been measured. The aim is to use these variables as predictors for the number of frogs for the remaining 4870 ponds. Measuring water depth, pH, and temperature is expensive. Therefore, we would like to include only those
 predictors that are really necessary.</p>
 <p>For example, say it was well known that waterdepth and temperature are important factors determining how many frogs inhabit a pont. However we are unsure about ph. We need to decide whether we would like to consider ph as a predictor. First, we fit two models, one including ph and one excluding ph as predictor.</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="model_comparison.html#cb304-1" tabindex="-1"></a><span class="fu">data</span>(pondfrog1) <span class="co"># data in the package blmeco</span></span>
-<span id="cb304-2"><a href="model_comparison.html#cb304-2" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(frog <span class="sc">~</span> waterdepth <span class="sc">+</span> temp <span class="sc">+</span> ph, <span class="at">data=</span> pondfrog1,</span>
-<span id="cb304-3"><a href="model_comparison.html#cb304-3" tabindex="-1"></a><span class="at">family=</span>poisson)</span>
-<span id="cb304-4"><a href="model_comparison.html#cb304-4" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(frog <span class="sc">~</span> waterdepth <span class="sc">+</span> temp, <span class="at">data=</span>pondfrog1,</span>
-<span id="cb304-5"><a href="model_comparison.html#cb304-5" tabindex="-1"></a><span class="at">family=</span>poisson)</span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="model_comparison.html#cb303-1" tabindex="-1"></a><span class="fu">data</span>(pondfrog1) <span class="co"># data in the package blmeco</span></span>
+<span id="cb303-2"><a href="model_comparison.html#cb303-2" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(frog <span class="sc">~</span> waterdepth <span class="sc">+</span> temp <span class="sc">+</span> ph, <span class="at">data=</span> pondfrog1,</span>
+<span id="cb303-3"><a href="model_comparison.html#cb303-3" tabindex="-1"></a><span class="at">family=</span>poisson)</span>
+<span id="cb303-4"><a href="model_comparison.html#cb303-4" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(frog <span class="sc">~</span> waterdepth <span class="sc">+</span> temp, <span class="at">data=</span>pondfrog1,</span>
+<span id="cb303-5"><a href="model_comparison.html#cb303-5" tabindex="-1"></a><span class="at">family=</span>poisson)</span></code></pre></div>
 <p>The leave-one-out cross-validation predictive performance of the different models can be compared.</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="model_comparison.html#cb305-1" tabindex="-1"></a>loo1 <span class="ot">&lt;-</span> <span class="fu">loo.cv</span>(mod1, <span class="at">bias.corr=</span><span class="cn">TRUE</span>) <span class="co"># increase nsim for more precise results</span></span>
-<span id="cb305-2"><a href="model_comparison.html#cb305-2" tabindex="-1"></a>loo2 <span class="ot">&lt;-</span> <span class="fu">loo.cv</span>(mod2, <span class="at">bias.corr=</span><span class="cn">TRUE</span>)</span>
-<span id="cb305-3"><a href="model_comparison.html#cb305-3" tabindex="-1"></a>loo1<span class="sc">$</span>bias.corrected.LOO.CV; loo2<span class="sc">$</span>bias.corrected.LOO.CV</span></code></pre></div>
-<pre><code>## [1] -402.7756</code></pre>
-<pre><code>## [1] -404.7133</code></pre>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="model_comparison.html#cb308-1" tabindex="-1"></a>loo1<span class="sc">$</span>est.peff; loo2<span class="sc">$</span>est.peff</span></code></pre></div>
-<pre><code>## [1] 4.643054</code></pre>
-<pre><code>## [1] 3.421694</code></pre>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="model_comparison.html#cb304-1" tabindex="-1"></a>loo1 <span class="ot">&lt;-</span> <span class="fu">loo.cv</span>(mod1, <span class="at">bias.corr=</span><span class="cn">TRUE</span>) <span class="co"># increase nsim for more precise results</span></span>
+<span id="cb304-2"><a href="model_comparison.html#cb304-2" tabindex="-1"></a>loo2 <span class="ot">&lt;-</span> <span class="fu">loo.cv</span>(mod2, <span class="at">bias.corr=</span><span class="cn">TRUE</span>)</span>
+<span id="cb304-3"><a href="model_comparison.html#cb304-3" tabindex="-1"></a>loo1<span class="sc">$</span>bias.corrected.LOO.CV; loo2<span class="sc">$</span>bias.corrected.LOO.CV</span></code></pre></div>
+<pre><code>## [1] -402.6543</code></pre>
+<pre><code>## [1] -404.7237</code></pre>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="model_comparison.html#cb307-1" tabindex="-1"></a>loo1<span class="sc">$</span>est.peff; loo2<span class="sc">$</span>est.peff</span></code></pre></div>
+<pre><code>## [1] 4.630878</code></pre>
+<pre><code>## [1] 3.407952</code></pre>
 <p>The output gives the leave-one-out cross-validation estimate of predictive fit. The bias-corrected leave-one-out cross-validation, which is recommended for small sample sizes. We also get an estimate for the number of effective parameters (est.peff), which is the difference between the non-cross-validated predictive fit and the cross-validated predictive fit (LOO.CV). It measures “overfit”, that is, how much the model fits better to the data used for model fitting compared to new data. The model without ph seems to have
 the higher out-of data predictive fit.</p>
 <p>Cross-validation in a Bayesian framework is extremely computing time intensive, because <span class="math inline">\(n\)</span> models have to be fitted, and for each model the posterior distribution of the parameter estimates needs to be simulated. Frequentist cross-validation requires less computing time, because no posterior distributions have to be simulated. And, for normal linear models, a leave-one-out cross-validation can be computed using matrix algebra without having to refit any model <span class="citation">(e.g., see <a href="referenzen.html#ref-Wood.2017">S. Wood 2017</a>)</span>. This may be a fast alternative.</p>
@@ -587,24 +588,24 @@ As <span class="math inline">\(AIC_c\)</span> approximates <span class="math inl
 <p>The WAIC is a Bayesian version of the AIC. It behaves asymptotically similar to the Bayesian cross-validation <span class="citation">(<a href="referenzen.html#ref-Watanabe.2010">Watanabe 2010</a>)</span>. It also works for hierarchical models and when informative priors are used. Its formula looks similar to the one for the AIC, but instead of the log-likelihood for the ML-point estimates of the model parameters, WAIC uses the logarithm of the pointwise predictive density (the likelihood function averaged over the posterior distribution of the model parameters and its logarithm summed over all observations<!-- fk: füge Referenz zu Likelihood chapter -->). The penalization term for overfit is an estimate of the number of effective parameters.</p>
 <p><span class="math display">\[ WAIC = -2log(p(y|\theta_{post})) + 2p_{WAIC}\]</span>
 where <span class="math inline">\(\theta_{post}\)</span> is the joint posterior distribution of the model parameters and <span class="math inline">\(p_{WAIC}\)</span> an estimate of the number of effective parameters. <span class="math inline">\(p_{WAIC}\)</span> can be calculated in two different ways, therefore, two different <span class="math inline">\(WAIC\)</span> values exist <span class="citation">(<a href="referenzen.html#ref-Gelman.2014">A. Gelman et al. 2014</a>)</span>. Both are implemented in the function <code>WAIC</code> (from the package <code>blmeco</code>) but the WAIC2 more strongly resembles the cross-validation and is, therefore, recommended.</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="model_comparison.html#cb311-1" tabindex="-1"></a><span class="fu">WAIC</span>(mod1, <span class="at">nsim=</span><span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="model_comparison.html#cb310-1" tabindex="-1"></a><span class="fu">WAIC</span>(mod1, <span class="at">nsim=</span><span class="dv">1000</span>)</span></code></pre></div>
 <pre><code>## $lppd
-## [1] -397.9835
+## [1] -398.0018
 ## 
 ## $pwaic1
-## [1] 4.257857
+## [1] 4.11535
 ## 
 ## $pwaic2
-## [1] 4.637073
+## [1] 4.512799
 ## 
 ## $WAIC1
-## [1] 804.4828
+## [1] 804.2343
 ## 
 ## $WAIC2
-## [1] 805.2412</code></pre>
-<p>The <code>lppd</code> is the log pointwise posterior predictive density (a measure of fit; the better the model fits the data the larger it is). <code>pwaic1</code> and <code>pwaic2</code> are the two estimates for the effective number of parameters, a measure for the increase in model fit that is solely due to the number of parameters, and that is used to estimate WAIC1 and WAIC2. The WAIC2 values for the second model in our frog example was 809.4. Thus the conclusion is similar as with the cross-validation.<br />
+## [1] 805.0292</code></pre>
+<p>The <code>lppd</code> is the log pointwise posterior predictive density (a measure of fit; the better the model fits the data the larger it is). <code>pwaic1</code> and <code>pwaic2</code> are the two estimates for the effective number of parameters, a measure for the increase in model fit that is solely due to the number of parameters, and that is used to estimate WAIC1 and WAIC2. The WAIC2 values for the second model in our frog example was 809.7. Thus the conclusion is similar as with the cross-validation.<br />
 A technical warning: To compare models, the models must have been fitted using the same data set. R omits observations with missing values when fitting a linear model! Thus, if a predictor variable contains missing values, R fits the model to data excluding the missing cases. We only see this in a small note in the summary output, which is easily overlooked. When excluding the predictor variable with missing values from the model, R fits the model to a larger data set. As a result, the two models cannot be compared because they have been fitted to different data. Therefore, we have to make sure that all models we compare have been fitted to the same data set. Such a line of code may prevent unjustified comparisons:</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="model_comparison.html#cb313-1" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> dat[<span class="fu">complete.cases</span>(dat),]</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="model_comparison.html#cb312-1" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> dat[<span class="fu">complete.cases</span>(dat),]</span></code></pre></div>
 <p>where “dat” contains the outcome variable and all predictors (but no other variables with NAs, or too many cases might be deleted).<br />
 We are not aware of anyone who has used WAIC weights in a way similar to AIC weights. This may be because WAIC is quite new or because, in a Bayesian framework, posterior model probabilities are available. These probabilities quantify, based on probability theory, the probability that a model is the “true” (or, better, “the most realistic”) model given a set of models, the data, and the prior model probabilities.</p>
 </div>
@@ -650,21 +651,21 @@ LASSO and ridge regression can handle situations with more predictor variables t
 Bayesian multimodel inference provides much flexibility in how to weigh different aspects of the model via the priors. The priors for the model parameters and the model probabilities strongly influence posterior model probabilities often in not so easily understandable ways. For example, when we use flat priors for all parameters, we would expect that larger models would get higher posterior model probabilities. However, this can interfere with the prior for the model probabilities, when we specify these to favor smaller models and vice versa. Here, it is not possible to give a comprehensive overview of all the possible priors and their usage. We only give a simple example to communicate the principles of Bayesian multimodel inference. To start using Bayesian multimodel inference, we recommend <span class="citation">Hoeting et al. (<a href="referenzen.html#ref-Hoeting.1999">1999</a>)</span> as well as the tutorials and the online material for the <code>BMS</code> package <span class="citation">(<a href="referenzen.html#ref-Zeugner.2011">Zeugner 2011</a>)</span>.<br />
 Model averaging yields averaged parameter estimates, but it is also possible to obtain averaged model predictions, or averaged estimates for any other derived parameter, with credible intervals.</p>
 <p>In the following, we show how to obtain averaged model predictions with credible intervals according to the methods described in <span class="citation">Hoeting et al. (<a href="referenzen.html#ref-Hoeting.1999">1999</a>)</span> using the package <code>BMS</code> and the function <code>sim</code>. We again use the pond frog example.</p>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="model_comparison.html#cb314-1" tabindex="-1"></a><span class="fu">library</span>(BMS)</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="model_comparison.html#cb313-1" tabindex="-1"></a><span class="fu">library</span>(BMS)</span></code></pre></div>
 <p>First, create the data matrix with the dependent variable in the first column and all other columns containing numeric values of the predictors; factors, if present, need to be transformed to dummy variables.</p>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="model_comparison.html#cb315-1" tabindex="-1"></a>pondfrog1<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">log</span>(pondfrog1<span class="sc">$</span>frog<span class="sc">+</span><span class="dv">1</span>) <span class="co"># transform for reaching better the normal distribution</span></span>
-<span id="cb315-2"><a href="model_comparison.html#cb315-2" tabindex="-1"></a>X <span class="ot">&lt;-</span> pondfrog1[, <span class="fu">c</span>(<span class="st">&quot;y&quot;</span>, <span class="st">&quot;ph&quot;</span>, <span class="st">&quot;waterdepth&quot;</span>, <span class="st">&quot;temp&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="model_comparison.html#cb314-1" tabindex="-1"></a>pondfrog1<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">log</span>(pondfrog1<span class="sc">$</span>frog<span class="sc">+</span><span class="dv">1</span>) <span class="co"># transform for reaching better the normal distribution</span></span>
+<span id="cb314-2"><a href="model_comparison.html#cb314-2" tabindex="-1"></a>X <span class="ot">&lt;-</span> pondfrog1[, <span class="fu">c</span>(<span class="st">&quot;y&quot;</span>, <span class="st">&quot;ph&quot;</span>, <span class="st">&quot;waterdepth&quot;</span>, <span class="st">&quot;temp&quot;</span>)]</span></code></pre></div>
 <p>Before we start doing multimodel inference using the function <code>bms</code>, we need to specify priors for the model coefficients and for the model probabilities. The priors for the model probabilities are given in the argument mprior. “uniform” means uniform prior probabilities for all models <span class="math inline">\(M_i\)</span>, <span class="math inline">\(p(M_i) \propto 1\)</span> (a horizontal line at 1, which is an improper prior, see <a href="priors.html#priors">Chapter on priors</a>). For the intercept and the residual variance, the function <code>bms</code> also uses improper priors, that is, <span class="math inline">\(\propto 1\)</span> for the intercept and <span class="math inline">\(\proto 1/\sigma\)</span> for the residual standard deviation.
 For the model coefficients, the function <code>bms</code> uses the so-called Zellner’s g prior, which is defined by the parameter <span class="math inline">\(g\)</span>. It describes a multivariate normal distribution for the coefficients, with expected values of zero for all coefficients and a variance-covariance structure defined by the variance in the data and the parameter <span class="math inline">\(g\)</span>. The larger <span class="math inline">\(g\)</span> is, the less certain the researcher is that the coefficients are zero. A Zellner’s g prior results in t-distributions for the posterior distributions for the coefficients with means equal to <span class="math inline">\(g/(1 - g) \hat{\beta^{LS}}\)</span>, where <span class="math inline">\(\hat{\beta^{LS}}\)</span> is the ordinary least-squares estimate that we would obtain using <code>lm</code>. The default “UIP” (unit information prior) sets <span class="math inline">\(g = n\)</span> (sample size). Using <span class="math inline">\(g = n\)</span> and uniform priors for the model probabilities leads to asymptotically equal results as when using <span class="math inline">\(BIC\)</span>.<br />
 The function <code>bms</code> fits all possible models and calculates posterior inclusion probabilities (PIP) of each variable as well as the posterior means and standard deviations of the model-averaged parameters.</p>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="model_comparison.html#cb316-1" tabindex="-1"></a>bmsmod <span class="ot">&lt;-</span> <span class="fu">bms</span>(X, <span class="at">mprior=</span><span class="st">&quot;uniform&quot;</span>, <span class="at">g=</span><span class="st">&quot;UIP&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="model_comparison.html#cb315-1" tabindex="-1"></a>bmsmod <span class="ot">&lt;-</span> <span class="fu">bms</span>(X, <span class="at">mprior=</span><span class="st">&quot;uniform&quot;</span>, <span class="at">g=</span><span class="st">&quot;UIP&quot;</span>)</span></code></pre></div>
 <pre><code>##                  PIP    Post Mean     Post SD Cond.Pos.Sign Idx
 ## waterdepth 1.0000000 -0.302381905 0.010771244             0   2
 ## temp       1.0000000  0.191626285 0.003888324             1   3
 ## ph         0.1290152  0.006211641 0.023388692             1   1
 ## 
 ## Mean no. regressors               Draws             Burnins                Time 
-##            &quot;2.1290&quot;                 &quot;8&quot;                 &quot;0&quot;  &quot;0.005589962 secs&quot; 
+##            &quot;2.1290&quot;                 &quot;8&quot;                 &quot;0&quot;  &quot;0.005874872 secs&quot; 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 &quot;8&quot;                 &quot;8&quot;               &quot;100&quot;               &quot;100&quot; 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -672,12 +673,12 @@ The function <code>bms</code> fits all possible models and calculates posterior 
 ##     Shrinkage-Stats 
 ##         &quot;Av=0.9924&quot; 
 ## 
-## Time difference of 0.005589962 secs</code></pre>
+## Time difference of 0.005874872 secs</code></pre>
 <p><img src="2.09-model_comparison_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>The variables in the output are ordered according to their PIP. The (according to the inclusion probabilities) most important variables come first. The second column gives the posterior means of the parameters averaged over the models. It corresponds to a weighted mean of the estimates from the models with the model probabilities as weights. By default, the posterior mean is calculated over all models using the value 0 for models excluding the variable (unconditional posterior mean).</p>
 <p>By setting the argument <code>condi.coef = TRUE</code>, only the models including a variable are used to calculate the posterior mean. The column Post SD is the posterior standard deviation of the parameter estimates. The next column gives the posterior probability that the parameter value is positive conditional on the inclusion of this parameter. Thus, we can infer from the output that water depth and temperature are important predictors (inclusion probabilities close to 1), and that water depth has a negative and temperature a positive effect on the size of the frog population in a pond.</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="model_comparison.html#cb318-1" tabindex="-1"></a><span class="co">#fk: for some reasons, this does no longer work well</span></span>
-<span id="cb318-2"><a href="model_comparison.html#cb318-2" tabindex="-1"></a><span class="fu">topmodels.bma</span>(bmsmod)[,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="co"># we extract only the 5 &quot;best&quot; models</span></span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="model_comparison.html#cb317-1" tabindex="-1"></a><span class="co">#fk: for some reasons, this does no longer work well</span></span>
+<span id="cb317-2"><a href="model_comparison.html#cb317-2" tabindex="-1"></a><span class="fu">topmodels.bma</span>(bmsmod)[,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="co"># we extract only the 5 &quot;best&quot; models</span></span></code></pre></div>
 <pre><code>##                        3            7            1            5        2
 ## ph          0.000000e+00 1.000000e+00 0.000000e+00 1.000000e+00    0.000
 ## waterdepth  1.000000e+00 1.000000e+00 0.000000e+00 0.000000e+00    1.000
@@ -731,42 +732,42 @@ The function <code>bms</code> fits all possible models and calculates posterior 
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/2.09-model_comparison.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-}
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/TobiasRoth/BDAEcology/edit/master/2.09-model_comparison.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
 });
 });
 </script>

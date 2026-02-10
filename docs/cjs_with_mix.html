@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>25 Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is a collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="25 Capture-mark recapture model with a mixture structure to account for missing sex-variable for parts of the individuals | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2025-11-01" />
+<meta name="date" content="2026-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -179,7 +179,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-data"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing data</a>
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="basics.html"><a href="basics.html#histogram"><i class="fa fa-check"></i><b>2.2.1</b> Histogram</a></li>
-<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#location-and-scatter"><i class="fa fa-check"></i><b>2.2.2</b> Location and scatter</a></li>
+<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#location-and-scatter-location_and_scatter"><i class="fa fa-check"></i><b>2.2.2</b> Location and scatter {location_and_scatter}</a></li>
 <li class="chapter" data-level="2.2.3" data-path="basics.html"><a href="basics.html#correlations"><i class="fa fa-check"></i><b>2.2.3</b> Correlations</a></li>
 <li class="chapter" data-level="2.2.4" data-path="basics.html"><a href="basics.html#principal-components-analyses-pca"><i class="fa fa-check"></i><b>2.2.4</b> Principal components analyses PCA</a></li>
 </ul></li>
@@ -193,15 +193,15 @@ div.csl-indent {
 <li class="chapter" data-level="2.4.1" data-path="basics.html"><a href="basics.html#bayes-theorem-for-discrete-events"><i class="fa fa-check"></i><b>2.4.1</b> Bayes theorem for discrete events</a></li>
 <li class="chapter" data-level="2.4.2" data-path="basics.html"><a href="basics.html#bayes-theorem-for-continuous-parameters"><i class="fa fa-check"></i><b>2.4.2</b> Bayes theorem for continuous parameters</a></li>
 <li class="chapter" data-level="2.4.3" data-path="basics.html"><a href="basics.html#estimating-a-mean-assuming-that-the-variance-is-known"><i class="fa fa-check"></i><b>2.4.3</b> Estimating a mean assuming that the variance is known</a></li>
-<li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#estimating-the-mean-and-the-variance"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
+<li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#meanvarSnowfinch"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#classical-frequentist-tests-and-alternatives"><i class="fa fa-check"></i><b>2.5</b> Classical frequentist tests and alternatives</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#nullhypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Nullhypothesis testing</a></li>
+<li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#null-hypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Null hypothesis testing</a></li>
 <li class="chapter" data-level="2.5.2" data-path="basics.html"><a href="basics.html#comparison-of-a-sample-with-a-fixed-value-one-sample-t-test"><i class="fa fa-check"></i><b>2.5.2</b> Comparison of a sample with a fixed value (one-sample t-test)</a></li>
 <li class="chapter" data-level="2.5.3" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups-two-sample-t-test"><i class="fa fa-check"></i><b>2.5.3</b> Comparison of the locations between two groups (two-sample t-test)</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#whyBayes"><i class="fa fa-check"></i><b>2.6</b> Comparing frequentist and Bayesian approach - an why we use Bayes</a></li>
+<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#whyBayes"><i class="fa fa-check"></i><b>2.6</b> Comparing frequentist and Bayesian approach - and why we use Bayes</a></li>
 <li class="chapter" data-level="2.7" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.7</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="analyses_steps.html"><a href="analyses_steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a>
@@ -267,7 +267,8 @@ div.csl-indent {
 <li class="chapter" data-level="7.2" data-path="furthertopics.html"><a href="furthertopics.html#python"><i class="fa fa-check"></i><b>7.2</b> Python</a></li>
 <li class="chapter" data-level="7.3" data-path="furthertopics.html"><a href="furthertopics.html#some-r"><i class="fa fa-check"></i><b>7.3</b> Some R</a>
 <ul>
-<li class="chapter" data-level="7.3.1" data-path="furthertopics.html"><a href="furthertopics.html#date-on-x-axis"><i class="fa fa-check"></i><b>7.3.1</b> Date on x-axis</a></li>
+<li class="chapter" data-level="7.3.1" data-path="furthertopics.html"><a href="furthertopics.html#spatial-data-processing-in-r"><i class="fa fa-check"></i><b>7.3.1</b> Spatial data processing in R</a></li>
+<li class="chapter" data-level="7.3.2" data-path="furthertopics.html"><a href="furthertopics.html#date-on-x-axis"><i class="fa fa-check"></i><b>7.3.2</b> Date on x-axis</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II BAYESIAN DATA ANALYSIS</b></span></li>
@@ -493,60 +494,60 @@ An introduction to the Cormack-Jolly-Seber model we gave in Chapter 14.5 of the 
 </div>
 <div id="data-description" class="section level2 hasAnchor" number="25.2">
 <h2><span class="header-section-number">25.2</span> Data description<a href="cjs_with_mix.html#data-description" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="cjs_with_mix.html#cb342-1" tabindex="-1"></a><span class="do">## simulate data</span></span>
-<span id="cb342-2"><a href="cjs_with_mix.html#cb342-2" tabindex="-1"></a><span class="co"># true parameter values</span></span>
-<span id="cb342-3"><a href="cjs_with_mix.html#cb342-3" tabindex="-1"></a>theta  <span class="ot">&lt;-</span> <span class="fl">0.6</span> <span class="co"># proportion of males</span></span>
-<span id="cb342-4"><a href="cjs_with_mix.html#cb342-4" tabindex="-1"></a>nocc <span class="ot">&lt;-</span> <span class="dv">15</span>    <span class="co"># number of years in the data set</span></span>
-<span id="cb342-5"><a href="cjs_with_mix.html#cb342-5" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol=</span>nocc<span class="dv">-1</span>, <span class="at">nrow=</span><span class="dv">2</span>)</span>
-<span id="cb342-6"><a href="cjs_with_mix.html#cb342-6" tabindex="-1"></a>b0[<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">rbeta</span>((nocc<span class="dv">-1</span>), <span class="dv">3</span>, <span class="dv">4</span>) <span class="co"># capture probability of males</span></span>
-<span id="cb342-7"><a href="cjs_with_mix.html#cb342-7" tabindex="-1"></a>b0[<span class="dv">2</span>,] <span class="ot">&lt;-</span> <span class="fu">rbeta</span>((nocc<span class="dv">-1</span>), <span class="dv">2</span>, <span class="dv">4</span>) <span class="co"># capture probability of females  </span></span>
-<span id="cb342-8"><a href="cjs_with_mix.html#cb342-8" tabindex="-1"></a>a0 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">nrow=</span><span class="dv">2</span>)</span>
-<span id="cb342-9"><a href="cjs_with_mix.html#cb342-9" tabindex="-1"></a>a1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">nrow=</span><span class="dv">2</span>)</span>
-<span id="cb342-10"><a href="cjs_with_mix.html#cb342-10" tabindex="-1"></a>a0[<span class="dv">1</span>,<span class="dv">1</span>]<span class="ot">&lt;-</span> <span class="fu">qlogis</span>(<span class="fl">0.7</span>) <span class="co"># average annual survival for adult males</span></span>
-<span id="cb342-11"><a href="cjs_with_mix.html#cb342-11" tabindex="-1"></a>a0[<span class="dv">1</span>,<span class="dv">2</span>]<span class="ot">&lt;-</span> <span class="fu">qlogis</span>(<span class="fl">0.3</span>) <span class="co"># average annual survival for juveniles</span></span>
-<span id="cb342-12"><a href="cjs_with_mix.html#cb342-12" tabindex="-1"></a>a0[<span class="dv">2</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">qlogis</span>(<span class="fl">0.55</span>) <span class="co"># average annual survival for adult females</span></span>
-<span id="cb342-13"><a href="cjs_with_mix.html#cb342-13" tabindex="-1"></a>a0[<span class="dv">2</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> a0[<span class="dv">1</span>,<span class="dv">2</span>]</span>
-<span id="cb342-14"><a href="cjs_with_mix.html#cb342-14" tabindex="-1"></a>a1[<span class="dv">1</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb342-15"><a href="cjs_with_mix.html#cb342-15" tabindex="-1"></a>a1[<span class="dv">1</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.5</span></span>
-<span id="cb342-16"><a href="cjs_with_mix.html#cb342-16" tabindex="-1"></a>a1[<span class="dv">2</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.8</span></span>
-<span id="cb342-17"><a href="cjs_with_mix.html#cb342-17" tabindex="-1"></a>a1[<span class="dv">2</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> a1[<span class="dv">1</span>,<span class="dv">2</span>]</span>
-<span id="cb342-18"><a href="cjs_with_mix.html#cb342-18" tabindex="-1"></a></span>
-<span id="cb342-19"><a href="cjs_with_mix.html#cb342-19" tabindex="-1"></a>nindi <span class="ot">&lt;-</span> <span class="dv">1000</span>    <span class="co"># number of individuals with identified sex</span></span>
-<span id="cb342-20"><a href="cjs_with_mix.html#cb342-20" tabindex="-1"></a>nindni <span class="ot">&lt;-</span> <span class="dv">1500</span>   <span class="co"># number of individuals with non-identified sex</span></span>
-<span id="cb342-21"><a href="cjs_with_mix.html#cb342-21" tabindex="-1"></a>nind <span class="ot">&lt;-</span> nindi <span class="sc">+</span> nindni  <span class="co"># total number of individuals</span></span>
-<span id="cb342-22"><a href="cjs_with_mix.html#cb342-22" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nocc, <span class="at">nrow=</span>nind)</span>
-<span id="cb342-23"><a href="cjs_with_mix.html#cb342-23" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nocc, <span class="at">nrow=</span>nind)</span>
-<span id="cb342-24"><a href="cjs_with_mix.html#cb342-24" tabindex="-1"></a>first <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>(nocc<span class="dv">-1</span>), nind, <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
-<span id="cb342-25"><a href="cjs_with_mix.html#cb342-25" tabindex="-1"></a>sex <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), nind, <span class="at">prob=</span><span class="fu">c</span>(theta, <span class="dv">1</span><span class="sc">-</span>theta), <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
-<span id="cb342-26"><a href="cjs_with_mix.html#cb342-26" tabindex="-1"></a>juvfirst <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), nind, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
-<span id="cb342-27"><a href="cjs_with_mix.html#cb342-27" tabindex="-1"></a>juv <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow=</span>nind, <span class="at">ncol=</span>nocc)</span>
-<span id="cb342-28"><a href="cjs_with_mix.html#cb342-28" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nind) juv[i,first[i]] <span class="ot">&lt;-</span> juv[i]</span>
-<span id="cb342-29"><a href="cjs_with_mix.html#cb342-29" tabindex="-1"></a></span>
-<span id="cb342-30"><a href="cjs_with_mix.html#cb342-30" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(nocc<span class="dv">-1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>)                   <span class="co"># a time dependent covariate covariate </span></span>
-<span id="cb342-31"><a href="cjs_with_mix.html#cb342-31" tabindex="-1"></a>p <span class="ot">&lt;-</span> b0                                     <span class="co"># recapture probability</span></span>
-<span id="cb342-32"><a href="cjs_with_mix.html#cb342-32" tabindex="-1"></a>phi <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, nocc<span class="dv">-1</span>))</span>
-<span id="cb342-33"><a href="cjs_with_mix.html#cb342-33" tabindex="-1"></a><span class="co"># for ad males</span></span>
-<span id="cb342-34"><a href="cjs_with_mix.html#cb342-34" tabindex="-1"></a>phi[<span class="dv">1</span>,<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">plogis</span>(a0[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">+</span>a1[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">*</span>x)</span>
-<span id="cb342-35"><a href="cjs_with_mix.html#cb342-35" tabindex="-1"></a><span class="co"># for ad females</span></span>
-<span id="cb342-36"><a href="cjs_with_mix.html#cb342-36" tabindex="-1"></a>phi[<span class="dv">2</span>,<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">plogis</span>(a0[<span class="dv">2</span>,<span class="dv">1</span>]<span class="sc">+</span>a1[<span class="dv">2</span>,<span class="dv">1</span>]<span class="sc">*</span>x)</span>
-<span id="cb342-37"><a href="cjs_with_mix.html#cb342-37" tabindex="-1"></a><span class="co"># for juvs</span></span>
-<span id="cb342-38"><a href="cjs_with_mix.html#cb342-38" tabindex="-1"></a>phi[<span class="dv">1</span>,<span class="dv">2</span>,] <span class="ot">&lt;-</span>  phi[<span class="dv">2</span>,<span class="dv">2</span>,] <span class="ot">&lt;-</span> <span class="fu">plogis</span>(a0[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">+</span>a1[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">*</span>x)</span>
-<span id="cb342-39"><a href="cjs_with_mix.html#cb342-39" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nind){</span>
-<span id="cb342-40"><a href="cjs_with_mix.html#cb342-40" tabindex="-1"></a>  z[i,first[i]] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb342-41"><a href="cjs_with_mix.html#cb342-41" tabindex="-1"></a>  y[i, first[i]] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb342-42"><a href="cjs_with_mix.html#cb342-42" tabindex="-1"></a>  <span class="cf">for</span>(t <span class="cf">in</span> (first[i]<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>nocc){</span>
-<span id="cb342-43"><a href="cjs_with_mix.html#cb342-43" tabindex="-1"></a>    z[i, t] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span>z[i,t<span class="dv">-1</span>]<span class="sc">*</span>phi[sex[i],juv[i,t<span class="dv">-1</span>]<span class="sc">+</span><span class="dv">1</span>, t<span class="dv">-1</span>])</span>
-<span id="cb342-44"><a href="cjs_with_mix.html#cb342-44" tabindex="-1"></a>    y[i, t] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span>z[i,t]<span class="sc">*</span>p[sex[i],t<span class="dv">-1</span>])</span>
-<span id="cb342-45"><a href="cjs_with_mix.html#cb342-45" tabindex="-1"></a>    }</span>
-<span id="cb342-46"><a href="cjs_with_mix.html#cb342-46" tabindex="-1"></a>}</span>
-<span id="cb342-47"><a href="cjs_with_mix.html#cb342-47" tabindex="-1"></a>y[<span class="fu">is.na</span>(y)] <span class="ot">&lt;-</span> <span class="dv">0</span></span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="cjs_with_mix.html#cb341-1" tabindex="-1"></a><span class="do">## simulate data</span></span>
+<span id="cb341-2"><a href="cjs_with_mix.html#cb341-2" tabindex="-1"></a><span class="co"># true parameter values</span></span>
+<span id="cb341-3"><a href="cjs_with_mix.html#cb341-3" tabindex="-1"></a>theta  <span class="ot">&lt;-</span> <span class="fl">0.6</span> <span class="co"># proportion of males</span></span>
+<span id="cb341-4"><a href="cjs_with_mix.html#cb341-4" tabindex="-1"></a>nocc <span class="ot">&lt;-</span> <span class="dv">15</span>    <span class="co"># number of years in the data set</span></span>
+<span id="cb341-5"><a href="cjs_with_mix.html#cb341-5" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol=</span>nocc<span class="dv">-1</span>, <span class="at">nrow=</span><span class="dv">2</span>)</span>
+<span id="cb341-6"><a href="cjs_with_mix.html#cb341-6" tabindex="-1"></a>b0[<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">rbeta</span>((nocc<span class="dv">-1</span>), <span class="dv">3</span>, <span class="dv">4</span>) <span class="co"># capture probability of males</span></span>
+<span id="cb341-7"><a href="cjs_with_mix.html#cb341-7" tabindex="-1"></a>b0[<span class="dv">2</span>,] <span class="ot">&lt;-</span> <span class="fu">rbeta</span>((nocc<span class="dv">-1</span>), <span class="dv">2</span>, <span class="dv">4</span>) <span class="co"># capture probability of females  </span></span>
+<span id="cb341-8"><a href="cjs_with_mix.html#cb341-8" tabindex="-1"></a>a0 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">nrow=</span><span class="dv">2</span>)</span>
+<span id="cb341-9"><a href="cjs_with_mix.html#cb341-9" tabindex="-1"></a>a1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">nrow=</span><span class="dv">2</span>)</span>
+<span id="cb341-10"><a href="cjs_with_mix.html#cb341-10" tabindex="-1"></a>a0[<span class="dv">1</span>,<span class="dv">1</span>]<span class="ot">&lt;-</span> <span class="fu">qlogis</span>(<span class="fl">0.7</span>) <span class="co"># average annual survival for adult males</span></span>
+<span id="cb341-11"><a href="cjs_with_mix.html#cb341-11" tabindex="-1"></a>a0[<span class="dv">1</span>,<span class="dv">2</span>]<span class="ot">&lt;-</span> <span class="fu">qlogis</span>(<span class="fl">0.3</span>) <span class="co"># average annual survival for juveniles</span></span>
+<span id="cb341-12"><a href="cjs_with_mix.html#cb341-12" tabindex="-1"></a>a0[<span class="dv">2</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">qlogis</span>(<span class="fl">0.55</span>) <span class="co"># average annual survival for adult females</span></span>
+<span id="cb341-13"><a href="cjs_with_mix.html#cb341-13" tabindex="-1"></a>a0[<span class="dv">2</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> a0[<span class="dv">1</span>,<span class="dv">2</span>]</span>
+<span id="cb341-14"><a href="cjs_with_mix.html#cb341-14" tabindex="-1"></a>a1[<span class="dv">1</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb341-15"><a href="cjs_with_mix.html#cb341-15" tabindex="-1"></a>a1[<span class="dv">1</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.5</span></span>
+<span id="cb341-16"><a href="cjs_with_mix.html#cb341-16" tabindex="-1"></a>a1[<span class="dv">2</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.8</span></span>
+<span id="cb341-17"><a href="cjs_with_mix.html#cb341-17" tabindex="-1"></a>a1[<span class="dv">2</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> a1[<span class="dv">1</span>,<span class="dv">2</span>]</span>
+<span id="cb341-18"><a href="cjs_with_mix.html#cb341-18" tabindex="-1"></a></span>
+<span id="cb341-19"><a href="cjs_with_mix.html#cb341-19" tabindex="-1"></a>nindi <span class="ot">&lt;-</span> <span class="dv">1000</span>    <span class="co"># number of individuals with identified sex</span></span>
+<span id="cb341-20"><a href="cjs_with_mix.html#cb341-20" tabindex="-1"></a>nindni <span class="ot">&lt;-</span> <span class="dv">1500</span>   <span class="co"># number of individuals with non-identified sex</span></span>
+<span id="cb341-21"><a href="cjs_with_mix.html#cb341-21" tabindex="-1"></a>nind <span class="ot">&lt;-</span> nindi <span class="sc">+</span> nindni  <span class="co"># total number of individuals</span></span>
+<span id="cb341-22"><a href="cjs_with_mix.html#cb341-22" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nocc, <span class="at">nrow=</span>nind)</span>
+<span id="cb341-23"><a href="cjs_with_mix.html#cb341-23" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>nocc, <span class="at">nrow=</span>nind)</span>
+<span id="cb341-24"><a href="cjs_with_mix.html#cb341-24" tabindex="-1"></a>first <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>(nocc<span class="dv">-1</span>), nind, <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb341-25"><a href="cjs_with_mix.html#cb341-25" tabindex="-1"></a>sex <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), nind, <span class="at">prob=</span><span class="fu">c</span>(theta, <span class="dv">1</span><span class="sc">-</span>theta), <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb341-26"><a href="cjs_with_mix.html#cb341-26" tabindex="-1"></a>juvfirst <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), nind, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb341-27"><a href="cjs_with_mix.html#cb341-27" tabindex="-1"></a>juv <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow=</span>nind, <span class="at">ncol=</span>nocc)</span>
+<span id="cb341-28"><a href="cjs_with_mix.html#cb341-28" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nind) juv[i,first[i]] <span class="ot">&lt;-</span> juv[i]</span>
+<span id="cb341-29"><a href="cjs_with_mix.html#cb341-29" tabindex="-1"></a></span>
+<span id="cb341-30"><a href="cjs_with_mix.html#cb341-30" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(nocc<span class="dv">-1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>)                   <span class="co"># a time dependent covariate covariate </span></span>
+<span id="cb341-31"><a href="cjs_with_mix.html#cb341-31" tabindex="-1"></a>p <span class="ot">&lt;-</span> b0                                     <span class="co"># recapture probability</span></span>
+<span id="cb341-32"><a href="cjs_with_mix.html#cb341-32" tabindex="-1"></a>phi <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, nocc<span class="dv">-1</span>))</span>
+<span id="cb341-33"><a href="cjs_with_mix.html#cb341-33" tabindex="-1"></a><span class="co"># for ad males</span></span>
+<span id="cb341-34"><a href="cjs_with_mix.html#cb341-34" tabindex="-1"></a>phi[<span class="dv">1</span>,<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">plogis</span>(a0[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">+</span>a1[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">*</span>x)</span>
+<span id="cb341-35"><a href="cjs_with_mix.html#cb341-35" tabindex="-1"></a><span class="co"># for ad females</span></span>
+<span id="cb341-36"><a href="cjs_with_mix.html#cb341-36" tabindex="-1"></a>phi[<span class="dv">2</span>,<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">plogis</span>(a0[<span class="dv">2</span>,<span class="dv">1</span>]<span class="sc">+</span>a1[<span class="dv">2</span>,<span class="dv">1</span>]<span class="sc">*</span>x)</span>
+<span id="cb341-37"><a href="cjs_with_mix.html#cb341-37" tabindex="-1"></a><span class="co"># for juvs</span></span>
+<span id="cb341-38"><a href="cjs_with_mix.html#cb341-38" tabindex="-1"></a>phi[<span class="dv">1</span>,<span class="dv">2</span>,] <span class="ot">&lt;-</span>  phi[<span class="dv">2</span>,<span class="dv">2</span>,] <span class="ot">&lt;-</span> <span class="fu">plogis</span>(a0[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">+</span>a1[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">*</span>x)</span>
+<span id="cb341-39"><a href="cjs_with_mix.html#cb341-39" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nind){</span>
+<span id="cb341-40"><a href="cjs_with_mix.html#cb341-40" tabindex="-1"></a>  z[i,first[i]] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb341-41"><a href="cjs_with_mix.html#cb341-41" tabindex="-1"></a>  y[i, first[i]] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb341-42"><a href="cjs_with_mix.html#cb341-42" tabindex="-1"></a>  <span class="cf">for</span>(t <span class="cf">in</span> (first[i]<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>nocc){</span>
+<span id="cb341-43"><a href="cjs_with_mix.html#cb341-43" tabindex="-1"></a>    z[i, t] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span>z[i,t<span class="dv">-1</span>]<span class="sc">*</span>phi[sex[i],juv[i,t<span class="dv">-1</span>]<span class="sc">+</span><span class="dv">1</span>, t<span class="dv">-1</span>])</span>
+<span id="cb341-44"><a href="cjs_with_mix.html#cb341-44" tabindex="-1"></a>    y[i, t] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span>z[i,t]<span class="sc">*</span>p[sex[i],t<span class="dv">-1</span>])</span>
+<span id="cb341-45"><a href="cjs_with_mix.html#cb341-45" tabindex="-1"></a>    }</span>
+<span id="cb341-46"><a href="cjs_with_mix.html#cb341-46" tabindex="-1"></a>}</span>
+<span id="cb341-47"><a href="cjs_with_mix.html#cb341-47" tabindex="-1"></a>y[<span class="fu">is.na</span>(y)] <span class="ot">&lt;-</span> <span class="dv">0</span></span></code></pre></div>
 <p>The mark-recapture data set consists of capture histories of 2500 individuals over 15 time periods. For each time period <span class="math inline">\(t\)</span> and individual <span class="math inline">\(i\)</span> the capture history matrix <span class="math inline">\(y\)</span> contains <span class="math inline">\(y_{it}=1\)</span> if the individual <span class="math inline">\(i\)</span> is captured during time period <span class="math inline">\(t\)</span>, or <span class="math inline">\(y_{it}=0\)</span> if the individual <span class="math inline">\(i\)</span> is not captured during time period <span class="math inline">\(t\)</span>. The marking time period varies between individuals from 1 to 14. At the marking time period, the age of the individuals was classified either as juvenile or as adult. Juveniles turn into adults after one time period, thus age is known for all individuals during all time periods after marking. For 1000 individuals of the 2500 individuals, the sex is identified, whereas for 1500 individuals, the sex is unknown. The example data contain one covariate <span class="math inline">\(x\)</span> that takes on one value for each time period.</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="cjs_with_mix.html#cb343-1" tabindex="-1"></a><span class="co"># bundle the data for Stan</span></span>
-<span id="cb343-2"><a href="cjs_with_mix.html#cb343-2" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nindi</span>
-<span id="cb343-3"><a href="cjs_with_mix.html#cb343-3" tabindex="-1"></a>ni <span class="ot">&lt;-</span> (nindi<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>nind</span>
-<span id="cb343-4"><a href="cjs_with_mix.html#cb343-4" tabindex="-1"></a>datax <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">yi=</span>y[i,], <span class="at">nindi=</span>nindi, <span class="at">sex=</span>sex[i], <span class="at">nocc=</span>nocc, </span>
-<span id="cb343-5"><a href="cjs_with_mix.html#cb343-5" tabindex="-1"></a>              <span class="at">yni=</span>y[ni,], <span class="at">nindni=</span>nindni, <span class="at">firsti=</span>first[i], <span class="at">firstni=</span>first[ni],</span>
-<span id="cb343-6"><a href="cjs_with_mix.html#cb343-6" tabindex="-1"></a>              <span class="at">juvi=</span>juv[i,]<span class="sc">+</span><span class="dv">1</span>, <span class="at">juvni=</span>juv[ni,]<span class="sc">+</span><span class="dv">1</span>, <span class="at">year=</span><span class="dv">1</span><span class="sc">:</span>nocc, <span class="at">x=</span>x)</span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="cjs_with_mix.html#cb342-1" tabindex="-1"></a><span class="co"># bundle the data for Stan</span></span>
+<span id="cb342-2"><a href="cjs_with_mix.html#cb342-2" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nindi</span>
+<span id="cb342-3"><a href="cjs_with_mix.html#cb342-3" tabindex="-1"></a>ni <span class="ot">&lt;-</span> (nindi<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>nind</span>
+<span id="cb342-4"><a href="cjs_with_mix.html#cb342-4" tabindex="-1"></a>datax <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">yi=</span>y[i,], <span class="at">nindi=</span>nindi, <span class="at">sex=</span>sex[i], <span class="at">nocc=</span>nocc, </span>
+<span id="cb342-5"><a href="cjs_with_mix.html#cb342-5" tabindex="-1"></a>              <span class="at">yni=</span>y[ni,], <span class="at">nindni=</span>nindni, <span class="at">firsti=</span>first[i], <span class="at">firstni=</span>first[ni],</span>
+<span id="cb342-6"><a href="cjs_with_mix.html#cb342-6" tabindex="-1"></a>              <span class="at">juvi=</span>juv[i,]<span class="sc">+</span><span class="dv">1</span>, <span class="at">juvni=</span>juv[ni,]<span class="sc">+</span><span class="dv">1</span>, <span class="at">year=</span><span class="dv">1</span><span class="sc">:</span>nocc, <span class="at">x=</span>x)</span></code></pre></div>
 </div>
 <div id="model-description" class="section level2 hasAnchor" number="25.3">
 <h2><span class="header-section-number">25.3</span> Model description<a href="cjs_with_mix.html#model-description" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -571,225 +572,225 @@ Uniform prior distributions were used for all parameters with a parameter space 
 2. For the males that were not identified<br />
 3. For the females that were not identified</p>
 <p>Then for the non-identified individuals a mixture model is formulated that assigns a probability of being a female or a male to each individual.</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode stan"><code class="sourceCode stan"><span id="cb344-1"><a href="cjs_with_mix.html#cb344-1" tabindex="-1"></a><span class="kw">data</span> {</span>
-<span id="cb344-2"><a href="cjs_with_mix.html#cb344-2" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">2</span>&gt; nocc;                    <span class="co">// number of capture events</span></span>
-<span id="cb344-3"><a href="cjs_with_mix.html#cb344-3" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; nindi;                   <span class="co">// number of individuals with identified sex</span></span>
-<span id="cb344-4"><a href="cjs_with_mix.html#cb344-4" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; nindni;                  <span class="co">// number of individuals with non-identified sex</span></span>
-<span id="cb344-5"><a href="cjs_with_mix.html#cb344-5" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">2</span>&gt; yi[nindi,nocc];         <span class="co">// CH[i,k]: individual i captured at k</span></span>
-<span id="cb344-6"><a href="cjs_with_mix.html#cb344-6" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=nocc<span class="dv">-1</span>&gt; firsti[nindi];      <span class="co">// year of first capture</span></span>
-<span id="cb344-7"><a href="cjs_with_mix.html#cb344-7" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">2</span>&gt; yni[nindni,nocc];       <span class="co">// CH[i,k]: individual i captured at k</span></span>
-<span id="cb344-8"><a href="cjs_with_mix.html#cb344-8" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=nocc<span class="dv">-1</span>&gt; firstni[nindni];    <span class="co">// year of first capture</span></span>
-<span id="cb344-9"><a href="cjs_with_mix.html#cb344-9" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>, <span class="kw">upper</span>=<span class="dv">2</span>&gt; sex[nindi];</span>
-<span id="cb344-10"><a href="cjs_with_mix.html#cb344-10" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>, <span class="kw">upper</span>=<span class="dv">2</span>&gt; juvi[nindi, nocc];</span>
-<span id="cb344-11"><a href="cjs_with_mix.html#cb344-11" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>, <span class="kw">upper</span>=<span class="dv">2</span>&gt; juvni[nindni, nocc];</span>
-<span id="cb344-12"><a href="cjs_with_mix.html#cb344-12" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>&gt; year[nocc];</span>
-<span id="cb344-13"><a href="cjs_with_mix.html#cb344-13" tabindex="-1"></a>  <span class="dt">real</span> x[nocc<span class="dv">-1</span>];                     <span class="co">// a covariate </span></span>
-<span id="cb344-14"><a href="cjs_with_mix.html#cb344-14" tabindex="-1"></a>}</span>
-<span id="cb344-15"><a href="cjs_with_mix.html#cb344-15" tabindex="-1"></a></span>
-<span id="cb344-16"><a href="cjs_with_mix.html#cb344-16" tabindex="-1"></a><span class="kw">transformed data</span> {</span>
-<span id="cb344-17"><a href="cjs_with_mix.html#cb344-17" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=nocc+<span class="dv">1</span>&gt; lasti[nindi];       <span class="co">// last[i]:  ind i last capture</span></span>
-<span id="cb344-18"><a href="cjs_with_mix.html#cb344-18" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=nocc+<span class="dv">1</span>&gt; lastni[nindni];       <span class="co">// last[i]:  ind i last capture</span></span>
-<span id="cb344-19"><a href="cjs_with_mix.html#cb344-19" tabindex="-1"></a>  lasti = rep_array(<span class="dv">0</span>,nindi); </span>
-<span id="cb344-20"><a href="cjs_with_mix.html#cb344-20" tabindex="-1"></a>  lastni = rep_array(<span class="dv">0</span>,nindni);</span>
-<span id="cb344-21"><a href="cjs_with_mix.html#cb344-21" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:nindi) {</span>
-<span id="cb344-22"><a href="cjs_with_mix.html#cb344-22" tabindex="-1"></a>    <span class="cf">for</span> (k <span class="cf">in</span> firsti[i]:nocc) {</span>
-<span id="cb344-23"><a href="cjs_with_mix.html#cb344-23" tabindex="-1"></a>      <span class="cf">if</span> (yi[i,k] == <span class="dv">1</span>) {</span>
-<span id="cb344-24"><a href="cjs_with_mix.html#cb344-24" tabindex="-1"></a>        <span class="cf">if</span> (k &gt; lasti[i])  lasti[i] = k;</span>
-<span id="cb344-25"><a href="cjs_with_mix.html#cb344-25" tabindex="-1"></a>      }</span>
-<span id="cb344-26"><a href="cjs_with_mix.html#cb344-26" tabindex="-1"></a>    }</span>
-<span id="cb344-27"><a href="cjs_with_mix.html#cb344-27" tabindex="-1"></a>  }</span>
-<span id="cb344-28"><a href="cjs_with_mix.html#cb344-28" tabindex="-1"></a>  <span class="cf">for</span> (ii <span class="cf">in</span> <span class="dv">1</span>:nindni) {</span>
-<span id="cb344-29"><a href="cjs_with_mix.html#cb344-29" tabindex="-1"></a>    <span class="cf">for</span> (kk <span class="cf">in</span> firstni[ii]:nocc) {</span>
-<span id="cb344-30"><a href="cjs_with_mix.html#cb344-30" tabindex="-1"></a>      <span class="cf">if</span> (yni[ii,kk] == <span class="dv">1</span>) {</span>
-<span id="cb344-31"><a href="cjs_with_mix.html#cb344-31" tabindex="-1"></a>        <span class="cf">if</span> (kk &gt; lastni[ii])  lastni[ii] = kk;</span>
-<span id="cb344-32"><a href="cjs_with_mix.html#cb344-32" tabindex="-1"></a>      }</span>
-<span id="cb344-33"><a href="cjs_with_mix.html#cb344-33" tabindex="-1"></a>    }</span>
-<span id="cb344-34"><a href="cjs_with_mix.html#cb344-34" tabindex="-1"></a>  }</span>
-<span id="cb344-35"><a href="cjs_with_mix.html#cb344-35" tabindex="-1"></a></span>
-<span id="cb344-36"><a href="cjs_with_mix.html#cb344-36" tabindex="-1"></a>}</span>
-<span id="cb344-37"><a href="cjs_with_mix.html#cb344-37" tabindex="-1"></a></span>
-<span id="cb344-38"><a href="cjs_with_mix.html#cb344-38" tabindex="-1"></a></span>
-<span id="cb344-39"><a href="cjs_with_mix.html#cb344-39" tabindex="-1"></a><span class="kw">parameters</span> {</span>
-<span id="cb344-40"><a href="cjs_with_mix.html#cb344-40" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>, <span class="kw">upper</span>=<span class="dv">1</span>&gt; theta[nindni];            <span class="co">// probability of being male for non-identified individuals</span></span>
-<span id="cb344-41"><a href="cjs_with_mix.html#cb344-41" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>, <span class="kw">upper</span>=<span class="dv">1</span>&gt; b0[<span class="dv">2</span>,nocc<span class="dv">-1</span>];             <span class="co">// intercept of p</span></span>
-<span id="cb344-42"><a href="cjs_with_mix.html#cb344-42" tabindex="-1"></a>  <span class="dt">real</span> a0[<span class="dv">2</span>,<span class="dv">2</span>];                  <span class="co">// intercept for phi </span></span>
-<span id="cb344-43"><a href="cjs_with_mix.html#cb344-43" tabindex="-1"></a>  <span class="dt">real</span> a1[<span class="dv">2</span>,<span class="dv">2</span>];                  <span class="co">// coefficient for phi   </span></span>
-<span id="cb344-44"><a href="cjs_with_mix.html#cb344-44" tabindex="-1"></a>}</span>
-<span id="cb344-45"><a href="cjs_with_mix.html#cb344-45" tabindex="-1"></a></span>
-<span id="cb344-46"><a href="cjs_with_mix.html#cb344-46" tabindex="-1"></a><span class="kw">transformed parameters</span> {</span>
-<span id="cb344-47"><a href="cjs_with_mix.html#cb344-47" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;p_male[nindni,nocc];         <span class="co">// capture probability</span></span>
-<span id="cb344-48"><a href="cjs_with_mix.html#cb344-48" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;p_female[nindni,nocc];       <span class="co">// capture probability</span></span>
-<span id="cb344-49"><a href="cjs_with_mix.html#cb344-49" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;p[nindi,nocc];               <span class="co">// capture probability</span></span>
-<span id="cb344-50"><a href="cjs_with_mix.html#cb344-50" tabindex="-1"></a></span>
-<span id="cb344-51"><a href="cjs_with_mix.html#cb344-51" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;phi_male[nindni,nocc<span class="dv">-1</span>];   <span class="co">// survival probability</span></span>
-<span id="cb344-52"><a href="cjs_with_mix.html#cb344-52" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;chi_male[nindni,nocc+<span class="dv">1</span>];   <span class="co">// probability that an individual </span></span>
-<span id="cb344-53"><a href="cjs_with_mix.html#cb344-53" tabindex="-1"></a>                                                  <span class="co">// is never recaptured after its</span></span>
-<span id="cb344-54"><a href="cjs_with_mix.html#cb344-54" tabindex="-1"></a>                                                  <span class="co">// last capture</span></span>
-<span id="cb344-55"><a href="cjs_with_mix.html#cb344-55" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;phi_female[nindni,nocc<span class="dv">-1</span>]; <span class="co">// survival probability</span></span>
-<span id="cb344-56"><a href="cjs_with_mix.html#cb344-56" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;chi_female[nindni,nocc+<span class="dv">1</span>]; <span class="co">// probability that an individual </span></span>
-<span id="cb344-57"><a href="cjs_with_mix.html#cb344-57" tabindex="-1"></a>                                                  <span class="co">// is never recaptured after its</span></span>
-<span id="cb344-58"><a href="cjs_with_mix.html#cb344-58" tabindex="-1"></a>                                                   <span class="co">// last capture</span></span>
-<span id="cb344-59"><a href="cjs_with_mix.html#cb344-59" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;phi[nindi,nocc<span class="dv">-1</span>];   <span class="co">// survival probability</span></span>
-<span id="cb344-60"><a href="cjs_with_mix.html#cb344-60" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;chi[nindi,nocc+<span class="dv">1</span>];   <span class="co">// probability that an individual </span></span>
-<span id="cb344-61"><a href="cjs_with_mix.html#cb344-61" tabindex="-1"></a>                                           <span class="co">// is never recaptured after its</span></span>
-<span id="cb344-62"><a href="cjs_with_mix.html#cb344-62" tabindex="-1"></a>                                           <span class="co">// last capture</span></span>
-<span id="cb344-63"><a href="cjs_with_mix.html#cb344-63" tabindex="-1"></a></span>
-<span id="cb344-64"><a href="cjs_with_mix.html#cb344-64" tabindex="-1"></a>  {</span>
-<span id="cb344-65"><a href="cjs_with_mix.html#cb344-65" tabindex="-1"></a>    <span class="dt">int</span> k; </span>
-<span id="cb344-66"><a href="cjs_with_mix.html#cb344-66" tabindex="-1"></a>    <span class="dt">int</span> kk; </span>
-<span id="cb344-67"><a href="cjs_with_mix.html#cb344-67" tabindex="-1"></a>    <span class="cf">for</span>(ii <span class="cf">in</span> <span class="dv">1</span>:nindi){</span>
-<span id="cb344-68"><a href="cjs_with_mix.html#cb344-68" tabindex="-1"></a>      <span class="cf">if</span> (firsti[ii]&gt;<span class="dv">1</span>) {</span>
-<span id="cb344-69"><a href="cjs_with_mix.html#cb344-69" tabindex="-1"></a>        <span class="cf">for</span> (z <span class="cf">in</span> <span class="dv">1</span>:(firsti[ii]-<span class="dv">1</span>)){</span>
-<span id="cb344-70"><a href="cjs_with_mix.html#cb344-70" tabindex="-1"></a>          phi[ii,z] = <span class="dv">1</span>;</span>
-<span id="cb344-71"><a href="cjs_with_mix.html#cb344-71" tabindex="-1"></a>        }</span>
-<span id="cb344-72"><a href="cjs_with_mix.html#cb344-72" tabindex="-1"></a>      }</span>
-<span id="cb344-73"><a href="cjs_with_mix.html#cb344-73" tabindex="-1"></a>      <span class="cf">for</span>(tt <span class="cf">in</span> firsti[ii]:(nocc<span class="dv">-1</span>)) {</span>
-<span id="cb344-74"><a href="cjs_with_mix.html#cb344-74" tabindex="-1"></a>        <span class="co">// linear predictor for phi:</span></span>
-<span id="cb344-75"><a href="cjs_with_mix.html#cb344-75" tabindex="-1"></a>        phi[ii,tt] = inv_logit(a0[sex[ii], juvi[ii,tt]] + a1[sex[ii], juvi[ii,tt]]*x[tt]); </span>
-<span id="cb344-76"><a href="cjs_with_mix.html#cb344-76" tabindex="-1"></a></span>
-<span id="cb344-77"><a href="cjs_with_mix.html#cb344-77" tabindex="-1"></a>      }</span>
-<span id="cb344-78"><a href="cjs_with_mix.html#cb344-78" tabindex="-1"></a>    }</span>
-<span id="cb344-79"><a href="cjs_with_mix.html#cb344-79" tabindex="-1"></a></span>
-<span id="cb344-80"><a href="cjs_with_mix.html#cb344-80" tabindex="-1"></a>    <span class="cf">for</span>(ii <span class="cf">in</span> <span class="dv">1</span>:nindni){</span>
-<span id="cb344-81"><a href="cjs_with_mix.html#cb344-81" tabindex="-1"></a>      <span class="cf">if</span> (firstni[ii]&gt;<span class="dv">1</span>) {</span>
-<span id="cb344-82"><a href="cjs_with_mix.html#cb344-82" tabindex="-1"></a>        <span class="cf">for</span> (z <span class="cf">in</span> <span class="dv">1</span>:(firstni[ii]-<span class="dv">1</span>)){</span>
-<span id="cb344-83"><a href="cjs_with_mix.html#cb344-83" tabindex="-1"></a>          phi_female[ii,z] = <span class="dv">1</span>;</span>
-<span id="cb344-84"><a href="cjs_with_mix.html#cb344-84" tabindex="-1"></a>          phi_male[ii,z] = <span class="dv">1</span>;</span>
-<span id="cb344-85"><a href="cjs_with_mix.html#cb344-85" tabindex="-1"></a>        }</span>
-<span id="cb344-86"><a href="cjs_with_mix.html#cb344-86" tabindex="-1"></a>      }</span>
-<span id="cb344-87"><a href="cjs_with_mix.html#cb344-87" tabindex="-1"></a>      <span class="cf">for</span>(tt <span class="cf">in</span> firstni[ii]:(nocc<span class="dv">-1</span>)) {</span>
-<span id="cb344-88"><a href="cjs_with_mix.html#cb344-88" tabindex="-1"></a>        <span class="co">// linear predictor for phi:</span></span>
-<span id="cb344-89"><a href="cjs_with_mix.html#cb344-89" tabindex="-1"></a>        phi_male[ii,tt] = inv_logit(a0[<span class="dv">1</span>, juvni[ii,tt]] + a1[<span class="dv">1</span>, juvni[ii,tt]]*x[tt]); </span>
-<span id="cb344-90"><a href="cjs_with_mix.html#cb344-90" tabindex="-1"></a>        phi_female[ii,tt] = inv_logit(a0[<span class="dv">2</span>, juvni[ii,tt]]+ a1[<span class="dv">2</span>, juvni[ii,tt]]*x[tt]);</span>
-<span id="cb344-91"><a href="cjs_with_mix.html#cb344-91" tabindex="-1"></a></span>
-<span id="cb344-92"><a href="cjs_with_mix.html#cb344-92" tabindex="-1"></a>      }</span>
-<span id="cb344-93"><a href="cjs_with_mix.html#cb344-93" tabindex="-1"></a>    }</span>
-<span id="cb344-94"><a href="cjs_with_mix.html#cb344-94" tabindex="-1"></a>    </span>
-<span id="cb344-95"><a href="cjs_with_mix.html#cb344-95" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span>:nindi) {</span>
-<span id="cb344-96"><a href="cjs_with_mix.html#cb344-96" tabindex="-1"></a>      <span class="co">// linear predictor for p for identified individuals</span></span>
-<span id="cb344-97"><a href="cjs_with_mix.html#cb344-97" tabindex="-1"></a>      <span class="cf">for</span>(w <span class="cf">in</span> <span class="dv">1</span>:firsti[i]){</span>
-<span id="cb344-98"><a href="cjs_with_mix.html#cb344-98" tabindex="-1"></a>        p[i,w] = <span class="dv">1</span>;</span>
-<span id="cb344-99"><a href="cjs_with_mix.html#cb344-99" tabindex="-1"></a>      }</span>
-<span id="cb344-100"><a href="cjs_with_mix.html#cb344-100" tabindex="-1"></a>      <span class="cf">for</span>(kkk <span class="cf">in</span> (firsti[i]+<span class="dv">1</span>):nocc)</span>
-<span id="cb344-101"><a href="cjs_with_mix.html#cb344-101" tabindex="-1"></a>        p[i,kkk] = b0[sex[i],year[kkk<span class="dv">-1</span>]];  </span>
-<span id="cb344-102"><a href="cjs_with_mix.html#cb344-102" tabindex="-1"></a>      chi[i,nocc+<span class="dv">1</span>] = <span class="fl">1.0</span>;              </span>
-<span id="cb344-103"><a href="cjs_with_mix.html#cb344-103" tabindex="-1"></a>      k = nocc;</span>
-<span id="cb344-104"><a href="cjs_with_mix.html#cb344-104" tabindex="-1"></a>      <span class="cf">while</span> (k &gt; firsti[i]) {</span>
-<span id="cb344-105"><a href="cjs_with_mix.html#cb344-105" tabindex="-1"></a>        chi[i,k] = (<span class="dv">1</span> - phi[i,k<span class="dv">-1</span>]) + phi[i,k<span class="dv">-1</span>] * (<span class="dv">1</span> - p[i,k]) * chi[i,k+<span class="dv">1</span>]; </span>
-<span id="cb344-106"><a href="cjs_with_mix.html#cb344-106" tabindex="-1"></a>        k = k - <span class="dv">1</span>;</span>
-<span id="cb344-107"><a href="cjs_with_mix.html#cb344-107" tabindex="-1"></a>      }</span>
-<span id="cb344-108"><a href="cjs_with_mix.html#cb344-108" tabindex="-1"></a>      <span class="cf">if</span> (firsti[i]&gt;<span class="dv">1</span>) {</span>
-<span id="cb344-109"><a href="cjs_with_mix.html#cb344-109" tabindex="-1"></a>        <span class="cf">for</span> (u <span class="cf">in</span> <span class="dv">1</span>:(firsti[i]-<span class="dv">1</span>)){</span>
-<span id="cb344-110"><a href="cjs_with_mix.html#cb344-110" tabindex="-1"></a>          chi[i,u] = <span class="dv">0</span>;</span>
-<span id="cb344-111"><a href="cjs_with_mix.html#cb344-111" tabindex="-1"></a>        }</span>
-<span id="cb344-112"><a href="cjs_with_mix.html#cb344-112" tabindex="-1"></a>      }</span>
-<span id="cb344-113"><a href="cjs_with_mix.html#cb344-113" tabindex="-1"></a>      chi[i,firsti[i]] = (<span class="dv">1</span> - p[i,firsti[i]]) * chi[i,firsti[i]+<span class="dv">1</span>];</span>
-<span id="cb344-114"><a href="cjs_with_mix.html#cb344-114" tabindex="-1"></a>    }<span class="co">// close definition of transformed parameters for identified individuals</span></span>
-<span id="cb344-115"><a href="cjs_with_mix.html#cb344-115" tabindex="-1"></a></span>
-<span id="cb344-116"><a href="cjs_with_mix.html#cb344-116" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span>:nindni) {</span>
-<span id="cb344-117"><a href="cjs_with_mix.html#cb344-117" tabindex="-1"></a>      <span class="co">// linear predictor for p for non-identified individuals</span></span>
-<span id="cb344-118"><a href="cjs_with_mix.html#cb344-118" tabindex="-1"></a>      <span class="cf">for</span>(w <span class="cf">in</span> <span class="dv">1</span>:firstni[i]){</span>
-<span id="cb344-119"><a href="cjs_with_mix.html#cb344-119" tabindex="-1"></a>        p_male[i,w] = <span class="dv">1</span>;</span>
-<span id="cb344-120"><a href="cjs_with_mix.html#cb344-120" tabindex="-1"></a>        p_female[i,w] = <span class="dv">1</span>;</span>
-<span id="cb344-121"><a href="cjs_with_mix.html#cb344-121" tabindex="-1"></a>      }</span>
-<span id="cb344-122"><a href="cjs_with_mix.html#cb344-122" tabindex="-1"></a>      <span class="cf">for</span>(kkkk <span class="cf">in</span> (firstni[i]+<span class="dv">1</span>):nocc){</span>
-<span id="cb344-123"><a href="cjs_with_mix.html#cb344-123" tabindex="-1"></a>        p_male[i,kkkk] = b0[<span class="dv">1</span>,year[kkkk<span class="dv">-1</span>]];  </span>
-<span id="cb344-124"><a href="cjs_with_mix.html#cb344-124" tabindex="-1"></a>        p_female[i,kkkk] = b0[<span class="dv">2</span>,year[kkkk<span class="dv">-1</span>]];</span>
-<span id="cb344-125"><a href="cjs_with_mix.html#cb344-125" tabindex="-1"></a>      }</span>
-<span id="cb344-126"><a href="cjs_with_mix.html#cb344-126" tabindex="-1"></a>      chi_male[i,nocc+<span class="dv">1</span>] = <span class="fl">1.0</span>; </span>
-<span id="cb344-127"><a href="cjs_with_mix.html#cb344-127" tabindex="-1"></a>      chi_female[i,nocc+<span class="dv">1</span>] = <span class="fl">1.0</span>; </span>
-<span id="cb344-128"><a href="cjs_with_mix.html#cb344-128" tabindex="-1"></a>      k = nocc;</span>
-<span id="cb344-129"><a href="cjs_with_mix.html#cb344-129" tabindex="-1"></a>      <span class="cf">while</span> (k &gt; firstni[i]) {</span>
-<span id="cb344-130"><a href="cjs_with_mix.html#cb344-130" tabindex="-1"></a>        chi_male[i,k] = (<span class="dv">1</span> - phi_male[i,k<span class="dv">-1</span>]) + phi_male[i,k<span class="dv">-1</span>] * (<span class="dv">1</span> - p_male[i,k]) * chi_male[i,k+<span class="dv">1</span>]; </span>
-<span id="cb344-131"><a href="cjs_with_mix.html#cb344-131" tabindex="-1"></a>        chi_female[i,k] = (<span class="dv">1</span> - phi_female[i,k<span class="dv">-1</span>]) + phi_female[i,k<span class="dv">-1</span>] * (<span class="dv">1</span> - p_female[i,k]) * chi_female[i,k+<span class="dv">1</span>]; </span>
-<span id="cb344-132"><a href="cjs_with_mix.html#cb344-132" tabindex="-1"></a>        k = k - <span class="dv">1</span>;</span>
-<span id="cb344-133"><a href="cjs_with_mix.html#cb344-133" tabindex="-1"></a>      }</span>
-<span id="cb344-134"><a href="cjs_with_mix.html#cb344-134" tabindex="-1"></a>      <span class="cf">if</span> (firstni[i]&gt;<span class="dv">1</span>) {</span>
-<span id="cb344-135"><a href="cjs_with_mix.html#cb344-135" tabindex="-1"></a>        <span class="cf">for</span> (u <span class="cf">in</span> <span class="dv">1</span>:(firstni[i]-<span class="dv">1</span>)){</span>
-<span id="cb344-136"><a href="cjs_with_mix.html#cb344-136" tabindex="-1"></a>          chi_male[i,u] = <span class="dv">0</span>;</span>
-<span id="cb344-137"><a href="cjs_with_mix.html#cb344-137" tabindex="-1"></a>          chi_female[i,u] = <span class="dv">0</span>;</span>
-<span id="cb344-138"><a href="cjs_with_mix.html#cb344-138" tabindex="-1"></a>        }</span>
-<span id="cb344-139"><a href="cjs_with_mix.html#cb344-139" tabindex="-1"></a>      }</span>
-<span id="cb344-140"><a href="cjs_with_mix.html#cb344-140" tabindex="-1"></a>      chi_male[i,firstni[i]] = (<span class="dv">1</span> - p_male[i,firstni[i]]) * chi_male[i,firstni[i]+<span class="dv">1</span>];</span>
-<span id="cb344-141"><a href="cjs_with_mix.html#cb344-141" tabindex="-1"></a>      chi_female[i,firstni[i]] = (<span class="dv">1</span> - p_female[i,firstni[i]]) * chi_female[i,firstni[i]+<span class="dv">1</span>];</span>
-<span id="cb344-142"><a href="cjs_with_mix.html#cb344-142" tabindex="-1"></a>    } <span class="co">// close definition of transformed parameters for non-identified individuals</span></span>
-<span id="cb344-143"><a href="cjs_with_mix.html#cb344-143" tabindex="-1"></a></span>
-<span id="cb344-144"><a href="cjs_with_mix.html#cb344-144" tabindex="-1"></a>    </span>
-<span id="cb344-145"><a href="cjs_with_mix.html#cb344-145" tabindex="-1"></a>  }  <span class="co">// close block of transformed parameters exclusive parameter declarations</span></span>
-<span id="cb344-146"><a href="cjs_with_mix.html#cb344-146" tabindex="-1"></a>}    <span class="co">// close transformed parameters</span></span>
-<span id="cb344-147"><a href="cjs_with_mix.html#cb344-147" tabindex="-1"></a></span>
-<span id="cb344-148"><a href="cjs_with_mix.html#cb344-148" tabindex="-1"></a><span class="kw">model</span> {</span>
-<span id="cb344-149"><a href="cjs_with_mix.html#cb344-149" tabindex="-1"></a>  <span class="co">// priors</span></span>
-<span id="cb344-150"><a href="cjs_with_mix.html#cb344-150" tabindex="-1"></a>  theta ~ beta(<span class="dv">1</span>, <span class="dv">1</span>);</span>
-<span id="cb344-151"><a href="cjs_with_mix.html#cb344-151" tabindex="-1"></a>  <span class="cf">for</span> (g <span class="cf">in</span> <span class="dv">1</span>:(nocc<span class="dv">-1</span>)){</span>
-<span id="cb344-152"><a href="cjs_with_mix.html#cb344-152" tabindex="-1"></a>    b0[<span class="dv">1</span>,g]~beta(<span class="dv">1</span>,<span class="dv">1</span>);</span>
-<span id="cb344-153"><a href="cjs_with_mix.html#cb344-153" tabindex="-1"></a>    b0[<span class="dv">2</span>,g]~beta(<span class="dv">1</span>,<span class="dv">1</span>);</span>
-<span id="cb344-154"><a href="cjs_with_mix.html#cb344-154" tabindex="-1"></a>  }</span>
-<span id="cb344-155"><a href="cjs_with_mix.html#cb344-155" tabindex="-1"></a>  a0[<span class="dv">1</span>,<span class="dv">1</span>]~normal(<span class="dv">0</span>,<span class="fl">1.5</span>);</span>
-<span id="cb344-156"><a href="cjs_with_mix.html#cb344-156" tabindex="-1"></a>  a0[<span class="dv">1</span>,<span class="dv">2</span>]~normal(<span class="dv">0</span>,<span class="fl">1.5</span>);</span>
-<span id="cb344-157"><a href="cjs_with_mix.html#cb344-157" tabindex="-1"></a>  a1[<span class="dv">1</span>,<span class="dv">1</span>]~normal(<span class="dv">0</span>,<span class="dv">3</span>);</span>
-<span id="cb344-158"><a href="cjs_with_mix.html#cb344-158" tabindex="-1"></a>  a1[<span class="dv">1</span>,<span class="dv">2</span>]~normal(<span class="dv">0</span>,<span class="dv">3</span>);</span>
-<span id="cb344-159"><a href="cjs_with_mix.html#cb344-159" tabindex="-1"></a></span>
-<span id="cb344-160"><a href="cjs_with_mix.html#cb344-160" tabindex="-1"></a>  a0[<span class="dv">2</span>,<span class="dv">1</span>]~normal(<span class="dv">0</span>,<span class="fl">1.5</span>);</span>
-<span id="cb344-161"><a href="cjs_with_mix.html#cb344-161" tabindex="-1"></a>  a0[<span class="dv">2</span>,<span class="dv">2</span>]~normal(a0[<span class="dv">1</span>,<span class="dv">2</span>],<span class="fl">0.01</span>); <span class="co">// for juveniles, we assume that the effect of the covariate is independet of sex</span></span>
-<span id="cb344-162"><a href="cjs_with_mix.html#cb344-162" tabindex="-1"></a>  a1[<span class="dv">2</span>,<span class="dv">1</span>]~normal(<span class="dv">0</span>,<span class="dv">3</span>);</span>
-<span id="cb344-163"><a href="cjs_with_mix.html#cb344-163" tabindex="-1"></a>  a1[<span class="dv">2</span>,<span class="dv">2</span>]~normal(a1[<span class="dv">1</span>,<span class="dv">2</span>],<span class="fl">0.01</span>);</span>
-<span id="cb344-164"><a href="cjs_with_mix.html#cb344-164" tabindex="-1"></a></span>
-<span id="cb344-165"><a href="cjs_with_mix.html#cb344-165" tabindex="-1"></a>  <span class="co">// likelihood for identified individuals</span></span>
-<span id="cb344-166"><a href="cjs_with_mix.html#cb344-166" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:nindi) {</span>
-<span id="cb344-167"><a href="cjs_with_mix.html#cb344-167" tabindex="-1"></a>    <span class="cf">if</span> (lasti[i]&gt;<span class="dv">0</span>) {</span>
-<span id="cb344-168"><a href="cjs_with_mix.html#cb344-168" tabindex="-1"></a>      <span class="cf">for</span> (k <span class="cf">in</span> firsti[i]:lasti[i]) {</span>
-<span id="cb344-169"><a href="cjs_with_mix.html#cb344-169" tabindex="-1"></a>        <span class="cf">if</span>(k&gt;<span class="dv">1</span>) <span class="kw">target+=</span> (log(phi[i, k<span class="dv">-1</span>])); </span>
-<span id="cb344-170"><a href="cjs_with_mix.html#cb344-170" tabindex="-1"></a>        <span class="cf">if</span> (yi[i,k] == <span class="dv">1</span>) <span class="kw">target+=</span>(log(p[i,k]));   </span>
-<span id="cb344-171"><a href="cjs_with_mix.html#cb344-171" tabindex="-1"></a>        <span class="cf">else</span> <span class="kw">target+=</span>(log1m(p[i,k]));  </span>
-<span id="cb344-172"><a href="cjs_with_mix.html#cb344-172" tabindex="-1"></a>      }</span>
-<span id="cb344-173"><a href="cjs_with_mix.html#cb344-173" tabindex="-1"></a>    }  </span>
-<span id="cb344-174"><a href="cjs_with_mix.html#cb344-174" tabindex="-1"></a>    <span class="kw">target+=</span>(log(chi[i,lasti[i]+<span class="dv">1</span>]));</span>
-<span id="cb344-175"><a href="cjs_with_mix.html#cb344-175" tabindex="-1"></a>  }</span>
-<span id="cb344-176"><a href="cjs_with_mix.html#cb344-176" tabindex="-1"></a>  </span>
-<span id="cb344-177"><a href="cjs_with_mix.html#cb344-177" tabindex="-1"></a>  <span class="co">// likelihood for non-identified individuals</span></span>
-<span id="cb344-178"><a href="cjs_with_mix.html#cb344-178" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:nindni) {</span>
-<span id="cb344-179"><a href="cjs_with_mix.html#cb344-179" tabindex="-1"></a>    <span class="dt">real</span> log_like_male = <span class="dv">0</span>;</span>
-<span id="cb344-180"><a href="cjs_with_mix.html#cb344-180" tabindex="-1"></a>    <span class="dt">real</span> log_like_female = <span class="dv">0</span>;</span>
-<span id="cb344-181"><a href="cjs_with_mix.html#cb344-181" tabindex="-1"></a></span>
-<span id="cb344-182"><a href="cjs_with_mix.html#cb344-182" tabindex="-1"></a>    <span class="cf">if</span> (lastni[i]&gt;<span class="dv">0</span>) {</span>
-<span id="cb344-183"><a href="cjs_with_mix.html#cb344-183" tabindex="-1"></a>      <span class="cf">for</span> (k <span class="cf">in</span> firstni[i]:lastni[i]) {</span>
-<span id="cb344-184"><a href="cjs_with_mix.html#cb344-184" tabindex="-1"></a>        <span class="cf">if</span>(k&gt;<span class="dv">1</span>){</span>
-<span id="cb344-185"><a href="cjs_with_mix.html#cb344-185" tabindex="-1"></a>          log_like_male += (log(phi_male[i, k<span class="dv">-1</span>]));</span>
-<span id="cb344-186"><a href="cjs_with_mix.html#cb344-186" tabindex="-1"></a>          log_like_female += (log(phi_female[i, k<span class="dv">-1</span>]));</span>
-<span id="cb344-187"><a href="cjs_with_mix.html#cb344-187" tabindex="-1"></a>        }</span>
-<span id="cb344-188"><a href="cjs_with_mix.html#cb344-188" tabindex="-1"></a>        <span class="cf">if</span> (yni[i,k] == <span class="dv">1</span>){ </span>
-<span id="cb344-189"><a href="cjs_with_mix.html#cb344-189" tabindex="-1"></a>          log_like_male+=(log(p_male[i,k]));</span>
-<span id="cb344-190"><a href="cjs_with_mix.html#cb344-190" tabindex="-1"></a>          log_like_female+=(log(p_female[i,k]));</span>
-<span id="cb344-191"><a href="cjs_with_mix.html#cb344-191" tabindex="-1"></a>        }</span>
-<span id="cb344-192"><a href="cjs_with_mix.html#cb344-192" tabindex="-1"></a>        <span class="cf">else</span>{</span>
-<span id="cb344-193"><a href="cjs_with_mix.html#cb344-193" tabindex="-1"></a>          log_like_male+=(log1m(p_male[i,k])); </span>
-<span id="cb344-194"><a href="cjs_with_mix.html#cb344-194" tabindex="-1"></a>          log_like_female+=(log1m(p_female[i,k])); </span>
-<span id="cb344-195"><a href="cjs_with_mix.html#cb344-195" tabindex="-1"></a>        }</span>
-<span id="cb344-196"><a href="cjs_with_mix.html#cb344-196" tabindex="-1"></a></span>
-<span id="cb344-197"><a href="cjs_with_mix.html#cb344-197" tabindex="-1"></a>      }</span>
-<span id="cb344-198"><a href="cjs_with_mix.html#cb344-198" tabindex="-1"></a>    }  </span>
-<span id="cb344-199"><a href="cjs_with_mix.html#cb344-199" tabindex="-1"></a>    log_like_male += (log(chi_male[i,lastni[i]+<span class="dv">1</span>]));</span>
-<span id="cb344-200"><a href="cjs_with_mix.html#cb344-200" tabindex="-1"></a>    log_like_female += (log(chi_female[i,lastni[i]+<span class="dv">1</span>]));</span>
-<span id="cb344-201"><a href="cjs_with_mix.html#cb344-201" tabindex="-1"></a>    </span>
-<span id="cb344-202"><a href="cjs_with_mix.html#cb344-202" tabindex="-1"></a>    <span class="kw">target +=</span> log_mix(theta[i], log_like_male, log_like_female);</span>
-<span id="cb344-203"><a href="cjs_with_mix.html#cb344-203" tabindex="-1"></a>  }</span>
-<span id="cb344-204"><a href="cjs_with_mix.html#cb344-204" tabindex="-1"></a></span>
-<span id="cb344-205"><a href="cjs_with_mix.html#cb344-205" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode stan"><code class="sourceCode stan"><span id="cb343-1"><a href="cjs_with_mix.html#cb343-1" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb343-2"><a href="cjs_with_mix.html#cb343-2" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">2</span>&gt; nocc;                    <span class="co">// number of capture events</span></span>
+<span id="cb343-3"><a href="cjs_with_mix.html#cb343-3" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; nindi;                   <span class="co">// number of individuals with identified sex</span></span>
+<span id="cb343-4"><a href="cjs_with_mix.html#cb343-4" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; nindni;                  <span class="co">// number of individuals with non-identified sex</span></span>
+<span id="cb343-5"><a href="cjs_with_mix.html#cb343-5" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">2</span>&gt; yi[nindi,nocc];         <span class="co">// CH[i,k]: individual i captured at k</span></span>
+<span id="cb343-6"><a href="cjs_with_mix.html#cb343-6" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=nocc<span class="dv">-1</span>&gt; firsti[nindi];      <span class="co">// year of first capture</span></span>
+<span id="cb343-7"><a href="cjs_with_mix.html#cb343-7" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">2</span>&gt; yni[nindni,nocc];       <span class="co">// CH[i,k]: individual i captured at k</span></span>
+<span id="cb343-8"><a href="cjs_with_mix.html#cb343-8" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=nocc<span class="dv">-1</span>&gt; firstni[nindni];    <span class="co">// year of first capture</span></span>
+<span id="cb343-9"><a href="cjs_with_mix.html#cb343-9" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>, <span class="kw">upper</span>=<span class="dv">2</span>&gt; sex[nindi];</span>
+<span id="cb343-10"><a href="cjs_with_mix.html#cb343-10" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>, <span class="kw">upper</span>=<span class="dv">2</span>&gt; juvi[nindi, nocc];</span>
+<span id="cb343-11"><a href="cjs_with_mix.html#cb343-11" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>, <span class="kw">upper</span>=<span class="dv">2</span>&gt; juvni[nindni, nocc];</span>
+<span id="cb343-12"><a href="cjs_with_mix.html#cb343-12" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>&gt; year[nocc];</span>
+<span id="cb343-13"><a href="cjs_with_mix.html#cb343-13" tabindex="-1"></a>  <span class="dt">real</span> x[nocc<span class="dv">-1</span>];                     <span class="co">// a covariate </span></span>
+<span id="cb343-14"><a href="cjs_with_mix.html#cb343-14" tabindex="-1"></a>}</span>
+<span id="cb343-15"><a href="cjs_with_mix.html#cb343-15" tabindex="-1"></a></span>
+<span id="cb343-16"><a href="cjs_with_mix.html#cb343-16" tabindex="-1"></a><span class="kw">transformed data</span> {</span>
+<span id="cb343-17"><a href="cjs_with_mix.html#cb343-17" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=nocc+<span class="dv">1</span>&gt; lasti[nindi];       <span class="co">// last[i]:  ind i last capture</span></span>
+<span id="cb343-18"><a href="cjs_with_mix.html#cb343-18" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=nocc+<span class="dv">1</span>&gt; lastni[nindni];       <span class="co">// last[i]:  ind i last capture</span></span>
+<span id="cb343-19"><a href="cjs_with_mix.html#cb343-19" tabindex="-1"></a>  lasti = rep_array(<span class="dv">0</span>,nindi); </span>
+<span id="cb343-20"><a href="cjs_with_mix.html#cb343-20" tabindex="-1"></a>  lastni = rep_array(<span class="dv">0</span>,nindni);</span>
+<span id="cb343-21"><a href="cjs_with_mix.html#cb343-21" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:nindi) {</span>
+<span id="cb343-22"><a href="cjs_with_mix.html#cb343-22" tabindex="-1"></a>    <span class="cf">for</span> (k <span class="cf">in</span> firsti[i]:nocc) {</span>
+<span id="cb343-23"><a href="cjs_with_mix.html#cb343-23" tabindex="-1"></a>      <span class="cf">if</span> (yi[i,k] == <span class="dv">1</span>) {</span>
+<span id="cb343-24"><a href="cjs_with_mix.html#cb343-24" tabindex="-1"></a>        <span class="cf">if</span> (k &gt; lasti[i])  lasti[i] = k;</span>
+<span id="cb343-25"><a href="cjs_with_mix.html#cb343-25" tabindex="-1"></a>      }</span>
+<span id="cb343-26"><a href="cjs_with_mix.html#cb343-26" tabindex="-1"></a>    }</span>
+<span id="cb343-27"><a href="cjs_with_mix.html#cb343-27" tabindex="-1"></a>  }</span>
+<span id="cb343-28"><a href="cjs_with_mix.html#cb343-28" tabindex="-1"></a>  <span class="cf">for</span> (ii <span class="cf">in</span> <span class="dv">1</span>:nindni) {</span>
+<span id="cb343-29"><a href="cjs_with_mix.html#cb343-29" tabindex="-1"></a>    <span class="cf">for</span> (kk <span class="cf">in</span> firstni[ii]:nocc) {</span>
+<span id="cb343-30"><a href="cjs_with_mix.html#cb343-30" tabindex="-1"></a>      <span class="cf">if</span> (yni[ii,kk] == <span class="dv">1</span>) {</span>
+<span id="cb343-31"><a href="cjs_with_mix.html#cb343-31" tabindex="-1"></a>        <span class="cf">if</span> (kk &gt; lastni[ii])  lastni[ii] = kk;</span>
+<span id="cb343-32"><a href="cjs_with_mix.html#cb343-32" tabindex="-1"></a>      }</span>
+<span id="cb343-33"><a href="cjs_with_mix.html#cb343-33" tabindex="-1"></a>    }</span>
+<span id="cb343-34"><a href="cjs_with_mix.html#cb343-34" tabindex="-1"></a>  }</span>
+<span id="cb343-35"><a href="cjs_with_mix.html#cb343-35" tabindex="-1"></a></span>
+<span id="cb343-36"><a href="cjs_with_mix.html#cb343-36" tabindex="-1"></a>}</span>
+<span id="cb343-37"><a href="cjs_with_mix.html#cb343-37" tabindex="-1"></a></span>
+<span id="cb343-38"><a href="cjs_with_mix.html#cb343-38" tabindex="-1"></a></span>
+<span id="cb343-39"><a href="cjs_with_mix.html#cb343-39" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb343-40"><a href="cjs_with_mix.html#cb343-40" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>, <span class="kw">upper</span>=<span class="dv">1</span>&gt; theta[nindni];            <span class="co">// probability of being male for non-identified individuals</span></span>
+<span id="cb343-41"><a href="cjs_with_mix.html#cb343-41" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>, <span class="kw">upper</span>=<span class="dv">1</span>&gt; b0[<span class="dv">2</span>,nocc<span class="dv">-1</span>];             <span class="co">// intercept of p</span></span>
+<span id="cb343-42"><a href="cjs_with_mix.html#cb343-42" tabindex="-1"></a>  <span class="dt">real</span> a0[<span class="dv">2</span>,<span class="dv">2</span>];                  <span class="co">// intercept for phi </span></span>
+<span id="cb343-43"><a href="cjs_with_mix.html#cb343-43" tabindex="-1"></a>  <span class="dt">real</span> a1[<span class="dv">2</span>,<span class="dv">2</span>];                  <span class="co">// coefficient for phi   </span></span>
+<span id="cb343-44"><a href="cjs_with_mix.html#cb343-44" tabindex="-1"></a>}</span>
+<span id="cb343-45"><a href="cjs_with_mix.html#cb343-45" tabindex="-1"></a></span>
+<span id="cb343-46"><a href="cjs_with_mix.html#cb343-46" tabindex="-1"></a><span class="kw">transformed parameters</span> {</span>
+<span id="cb343-47"><a href="cjs_with_mix.html#cb343-47" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;p_male[nindni,nocc];         <span class="co">// capture probability</span></span>
+<span id="cb343-48"><a href="cjs_with_mix.html#cb343-48" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;p_female[nindni,nocc];       <span class="co">// capture probability</span></span>
+<span id="cb343-49"><a href="cjs_with_mix.html#cb343-49" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;p[nindi,nocc];               <span class="co">// capture probability</span></span>
+<span id="cb343-50"><a href="cjs_with_mix.html#cb343-50" tabindex="-1"></a></span>
+<span id="cb343-51"><a href="cjs_with_mix.html#cb343-51" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;phi_male[nindni,nocc<span class="dv">-1</span>];   <span class="co">// survival probability</span></span>
+<span id="cb343-52"><a href="cjs_with_mix.html#cb343-52" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;chi_male[nindni,nocc+<span class="dv">1</span>];   <span class="co">// probability that an individual </span></span>
+<span id="cb343-53"><a href="cjs_with_mix.html#cb343-53" tabindex="-1"></a>                                                  <span class="co">// is never recaptured after its</span></span>
+<span id="cb343-54"><a href="cjs_with_mix.html#cb343-54" tabindex="-1"></a>                                                  <span class="co">// last capture</span></span>
+<span id="cb343-55"><a href="cjs_with_mix.html#cb343-55" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;phi_female[nindni,nocc<span class="dv">-1</span>]; <span class="co">// survival probability</span></span>
+<span id="cb343-56"><a href="cjs_with_mix.html#cb343-56" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;chi_female[nindni,nocc+<span class="dv">1</span>]; <span class="co">// probability that an individual </span></span>
+<span id="cb343-57"><a href="cjs_with_mix.html#cb343-57" tabindex="-1"></a>                                                  <span class="co">// is never recaptured after its</span></span>
+<span id="cb343-58"><a href="cjs_with_mix.html#cb343-58" tabindex="-1"></a>                                                   <span class="co">// last capture</span></span>
+<span id="cb343-59"><a href="cjs_with_mix.html#cb343-59" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;phi[nindi,nocc<span class="dv">-1</span>];   <span class="co">// survival probability</span></span>
+<span id="cb343-60"><a href="cjs_with_mix.html#cb343-60" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>,<span class="kw">upper</span>=<span class="dv">1</span>&gt;chi[nindi,nocc+<span class="dv">1</span>];   <span class="co">// probability that an individual </span></span>
+<span id="cb343-61"><a href="cjs_with_mix.html#cb343-61" tabindex="-1"></a>                                           <span class="co">// is never recaptured after its</span></span>
+<span id="cb343-62"><a href="cjs_with_mix.html#cb343-62" tabindex="-1"></a>                                           <span class="co">// last capture</span></span>
+<span id="cb343-63"><a href="cjs_with_mix.html#cb343-63" tabindex="-1"></a></span>
+<span id="cb343-64"><a href="cjs_with_mix.html#cb343-64" tabindex="-1"></a>  {</span>
+<span id="cb343-65"><a href="cjs_with_mix.html#cb343-65" tabindex="-1"></a>    <span class="dt">int</span> k; </span>
+<span id="cb343-66"><a href="cjs_with_mix.html#cb343-66" tabindex="-1"></a>    <span class="dt">int</span> kk; </span>
+<span id="cb343-67"><a href="cjs_with_mix.html#cb343-67" tabindex="-1"></a>    <span class="cf">for</span>(ii <span class="cf">in</span> <span class="dv">1</span>:nindi){</span>
+<span id="cb343-68"><a href="cjs_with_mix.html#cb343-68" tabindex="-1"></a>      <span class="cf">if</span> (firsti[ii]&gt;<span class="dv">1</span>) {</span>
+<span id="cb343-69"><a href="cjs_with_mix.html#cb343-69" tabindex="-1"></a>        <span class="cf">for</span> (z <span class="cf">in</span> <span class="dv">1</span>:(firsti[ii]-<span class="dv">1</span>)){</span>
+<span id="cb343-70"><a href="cjs_with_mix.html#cb343-70" tabindex="-1"></a>          phi[ii,z] = <span class="dv">1</span>;</span>
+<span id="cb343-71"><a href="cjs_with_mix.html#cb343-71" tabindex="-1"></a>        }</span>
+<span id="cb343-72"><a href="cjs_with_mix.html#cb343-72" tabindex="-1"></a>      }</span>
+<span id="cb343-73"><a href="cjs_with_mix.html#cb343-73" tabindex="-1"></a>      <span class="cf">for</span>(tt <span class="cf">in</span> firsti[ii]:(nocc<span class="dv">-1</span>)) {</span>
+<span id="cb343-74"><a href="cjs_with_mix.html#cb343-74" tabindex="-1"></a>        <span class="co">// linear predictor for phi:</span></span>
+<span id="cb343-75"><a href="cjs_with_mix.html#cb343-75" tabindex="-1"></a>        phi[ii,tt] = inv_logit(a0[sex[ii], juvi[ii,tt]] + a1[sex[ii], juvi[ii,tt]]*x[tt]); </span>
+<span id="cb343-76"><a href="cjs_with_mix.html#cb343-76" tabindex="-1"></a></span>
+<span id="cb343-77"><a href="cjs_with_mix.html#cb343-77" tabindex="-1"></a>      }</span>
+<span id="cb343-78"><a href="cjs_with_mix.html#cb343-78" tabindex="-1"></a>    }</span>
+<span id="cb343-79"><a href="cjs_with_mix.html#cb343-79" tabindex="-1"></a></span>
+<span id="cb343-80"><a href="cjs_with_mix.html#cb343-80" tabindex="-1"></a>    <span class="cf">for</span>(ii <span class="cf">in</span> <span class="dv">1</span>:nindni){</span>
+<span id="cb343-81"><a href="cjs_with_mix.html#cb343-81" tabindex="-1"></a>      <span class="cf">if</span> (firstni[ii]&gt;<span class="dv">1</span>) {</span>
+<span id="cb343-82"><a href="cjs_with_mix.html#cb343-82" tabindex="-1"></a>        <span class="cf">for</span> (z <span class="cf">in</span> <span class="dv">1</span>:(firstni[ii]-<span class="dv">1</span>)){</span>
+<span id="cb343-83"><a href="cjs_with_mix.html#cb343-83" tabindex="-1"></a>          phi_female[ii,z] = <span class="dv">1</span>;</span>
+<span id="cb343-84"><a href="cjs_with_mix.html#cb343-84" tabindex="-1"></a>          phi_male[ii,z] = <span class="dv">1</span>;</span>
+<span id="cb343-85"><a href="cjs_with_mix.html#cb343-85" tabindex="-1"></a>        }</span>
+<span id="cb343-86"><a href="cjs_with_mix.html#cb343-86" tabindex="-1"></a>      }</span>
+<span id="cb343-87"><a href="cjs_with_mix.html#cb343-87" tabindex="-1"></a>      <span class="cf">for</span>(tt <span class="cf">in</span> firstni[ii]:(nocc<span class="dv">-1</span>)) {</span>
+<span id="cb343-88"><a href="cjs_with_mix.html#cb343-88" tabindex="-1"></a>        <span class="co">// linear predictor for phi:</span></span>
+<span id="cb343-89"><a href="cjs_with_mix.html#cb343-89" tabindex="-1"></a>        phi_male[ii,tt] = inv_logit(a0[<span class="dv">1</span>, juvni[ii,tt]] + a1[<span class="dv">1</span>, juvni[ii,tt]]*x[tt]); </span>
+<span id="cb343-90"><a href="cjs_with_mix.html#cb343-90" tabindex="-1"></a>        phi_female[ii,tt] = inv_logit(a0[<span class="dv">2</span>, juvni[ii,tt]]+ a1[<span class="dv">2</span>, juvni[ii,tt]]*x[tt]);</span>
+<span id="cb343-91"><a href="cjs_with_mix.html#cb343-91" tabindex="-1"></a></span>
+<span id="cb343-92"><a href="cjs_with_mix.html#cb343-92" tabindex="-1"></a>      }</span>
+<span id="cb343-93"><a href="cjs_with_mix.html#cb343-93" tabindex="-1"></a>    }</span>
+<span id="cb343-94"><a href="cjs_with_mix.html#cb343-94" tabindex="-1"></a>    </span>
+<span id="cb343-95"><a href="cjs_with_mix.html#cb343-95" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span>:nindi) {</span>
+<span id="cb343-96"><a href="cjs_with_mix.html#cb343-96" tabindex="-1"></a>      <span class="co">// linear predictor for p for identified individuals</span></span>
+<span id="cb343-97"><a href="cjs_with_mix.html#cb343-97" tabindex="-1"></a>      <span class="cf">for</span>(w <span class="cf">in</span> <span class="dv">1</span>:firsti[i]){</span>
+<span id="cb343-98"><a href="cjs_with_mix.html#cb343-98" tabindex="-1"></a>        p[i,w] = <span class="dv">1</span>;</span>
+<span id="cb343-99"><a href="cjs_with_mix.html#cb343-99" tabindex="-1"></a>      }</span>
+<span id="cb343-100"><a href="cjs_with_mix.html#cb343-100" tabindex="-1"></a>      <span class="cf">for</span>(kkk <span class="cf">in</span> (firsti[i]+<span class="dv">1</span>):nocc)</span>
+<span id="cb343-101"><a href="cjs_with_mix.html#cb343-101" tabindex="-1"></a>        p[i,kkk] = b0[sex[i],year[kkk<span class="dv">-1</span>]];  </span>
+<span id="cb343-102"><a href="cjs_with_mix.html#cb343-102" tabindex="-1"></a>      chi[i,nocc+<span class="dv">1</span>] = <span class="fl">1.0</span>;              </span>
+<span id="cb343-103"><a href="cjs_with_mix.html#cb343-103" tabindex="-1"></a>      k = nocc;</span>
+<span id="cb343-104"><a href="cjs_with_mix.html#cb343-104" tabindex="-1"></a>      <span class="cf">while</span> (k &gt; firsti[i]) {</span>
+<span id="cb343-105"><a href="cjs_with_mix.html#cb343-105" tabindex="-1"></a>        chi[i,k] = (<span class="dv">1</span> - phi[i,k<span class="dv">-1</span>]) + phi[i,k<span class="dv">-1</span>] * (<span class="dv">1</span> - p[i,k]) * chi[i,k+<span class="dv">1</span>]; </span>
+<span id="cb343-106"><a href="cjs_with_mix.html#cb343-106" tabindex="-1"></a>        k = k - <span class="dv">1</span>;</span>
+<span id="cb343-107"><a href="cjs_with_mix.html#cb343-107" tabindex="-1"></a>      }</span>
+<span id="cb343-108"><a href="cjs_with_mix.html#cb343-108" tabindex="-1"></a>      <span class="cf">if</span> (firsti[i]&gt;<span class="dv">1</span>) {</span>
+<span id="cb343-109"><a href="cjs_with_mix.html#cb343-109" tabindex="-1"></a>        <span class="cf">for</span> (u <span class="cf">in</span> <span class="dv">1</span>:(firsti[i]-<span class="dv">1</span>)){</span>
+<span id="cb343-110"><a href="cjs_with_mix.html#cb343-110" tabindex="-1"></a>          chi[i,u] = <span class="dv">0</span>;</span>
+<span id="cb343-111"><a href="cjs_with_mix.html#cb343-111" tabindex="-1"></a>        }</span>
+<span id="cb343-112"><a href="cjs_with_mix.html#cb343-112" tabindex="-1"></a>      }</span>
+<span id="cb343-113"><a href="cjs_with_mix.html#cb343-113" tabindex="-1"></a>      chi[i,firsti[i]] = (<span class="dv">1</span> - p[i,firsti[i]]) * chi[i,firsti[i]+<span class="dv">1</span>];</span>
+<span id="cb343-114"><a href="cjs_with_mix.html#cb343-114" tabindex="-1"></a>    }<span class="co">// close definition of transformed parameters for identified individuals</span></span>
+<span id="cb343-115"><a href="cjs_with_mix.html#cb343-115" tabindex="-1"></a></span>
+<span id="cb343-116"><a href="cjs_with_mix.html#cb343-116" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span>:nindni) {</span>
+<span id="cb343-117"><a href="cjs_with_mix.html#cb343-117" tabindex="-1"></a>      <span class="co">// linear predictor for p for non-identified individuals</span></span>
+<span id="cb343-118"><a href="cjs_with_mix.html#cb343-118" tabindex="-1"></a>      <span class="cf">for</span>(w <span class="cf">in</span> <span class="dv">1</span>:firstni[i]){</span>
+<span id="cb343-119"><a href="cjs_with_mix.html#cb343-119" tabindex="-1"></a>        p_male[i,w] = <span class="dv">1</span>;</span>
+<span id="cb343-120"><a href="cjs_with_mix.html#cb343-120" tabindex="-1"></a>        p_female[i,w] = <span class="dv">1</span>;</span>
+<span id="cb343-121"><a href="cjs_with_mix.html#cb343-121" tabindex="-1"></a>      }</span>
+<span id="cb343-122"><a href="cjs_with_mix.html#cb343-122" tabindex="-1"></a>      <span class="cf">for</span>(kkkk <span class="cf">in</span> (firstni[i]+<span class="dv">1</span>):nocc){</span>
+<span id="cb343-123"><a href="cjs_with_mix.html#cb343-123" tabindex="-1"></a>        p_male[i,kkkk] = b0[<span class="dv">1</span>,year[kkkk<span class="dv">-1</span>]];  </span>
+<span id="cb343-124"><a href="cjs_with_mix.html#cb343-124" tabindex="-1"></a>        p_female[i,kkkk] = b0[<span class="dv">2</span>,year[kkkk<span class="dv">-1</span>]];</span>
+<span id="cb343-125"><a href="cjs_with_mix.html#cb343-125" tabindex="-1"></a>      }</span>
+<span id="cb343-126"><a href="cjs_with_mix.html#cb343-126" tabindex="-1"></a>      chi_male[i,nocc+<span class="dv">1</span>] = <span class="fl">1.0</span>; </span>
+<span id="cb343-127"><a href="cjs_with_mix.html#cb343-127" tabindex="-1"></a>      chi_female[i,nocc+<span class="dv">1</span>] = <span class="fl">1.0</span>; </span>
+<span id="cb343-128"><a href="cjs_with_mix.html#cb343-128" tabindex="-1"></a>      k = nocc;</span>
+<span id="cb343-129"><a href="cjs_with_mix.html#cb343-129" tabindex="-1"></a>      <span class="cf">while</span> (k &gt; firstni[i]) {</span>
+<span id="cb343-130"><a href="cjs_with_mix.html#cb343-130" tabindex="-1"></a>        chi_male[i,k] = (<span class="dv">1</span> - phi_male[i,k<span class="dv">-1</span>]) + phi_male[i,k<span class="dv">-1</span>] * (<span class="dv">1</span> - p_male[i,k]) * chi_male[i,k+<span class="dv">1</span>]; </span>
+<span id="cb343-131"><a href="cjs_with_mix.html#cb343-131" tabindex="-1"></a>        chi_female[i,k] = (<span class="dv">1</span> - phi_female[i,k<span class="dv">-1</span>]) + phi_female[i,k<span class="dv">-1</span>] * (<span class="dv">1</span> - p_female[i,k]) * chi_female[i,k+<span class="dv">1</span>]; </span>
+<span id="cb343-132"><a href="cjs_with_mix.html#cb343-132" tabindex="-1"></a>        k = k - <span class="dv">1</span>;</span>
+<span id="cb343-133"><a href="cjs_with_mix.html#cb343-133" tabindex="-1"></a>      }</span>
+<span id="cb343-134"><a href="cjs_with_mix.html#cb343-134" tabindex="-1"></a>      <span class="cf">if</span> (firstni[i]&gt;<span class="dv">1</span>) {</span>
+<span id="cb343-135"><a href="cjs_with_mix.html#cb343-135" tabindex="-1"></a>        <span class="cf">for</span> (u <span class="cf">in</span> <span class="dv">1</span>:(firstni[i]-<span class="dv">1</span>)){</span>
+<span id="cb343-136"><a href="cjs_with_mix.html#cb343-136" tabindex="-1"></a>          chi_male[i,u] = <span class="dv">0</span>;</span>
+<span id="cb343-137"><a href="cjs_with_mix.html#cb343-137" tabindex="-1"></a>          chi_female[i,u] = <span class="dv">0</span>;</span>
+<span id="cb343-138"><a href="cjs_with_mix.html#cb343-138" tabindex="-1"></a>        }</span>
+<span id="cb343-139"><a href="cjs_with_mix.html#cb343-139" tabindex="-1"></a>      }</span>
+<span id="cb343-140"><a href="cjs_with_mix.html#cb343-140" tabindex="-1"></a>      chi_male[i,firstni[i]] = (<span class="dv">1</span> - p_male[i,firstni[i]]) * chi_male[i,firstni[i]+<span class="dv">1</span>];</span>
+<span id="cb343-141"><a href="cjs_with_mix.html#cb343-141" tabindex="-1"></a>      chi_female[i,firstni[i]] = (<span class="dv">1</span> - p_female[i,firstni[i]]) * chi_female[i,firstni[i]+<span class="dv">1</span>];</span>
+<span id="cb343-142"><a href="cjs_with_mix.html#cb343-142" tabindex="-1"></a>    } <span class="co">// close definition of transformed parameters for non-identified individuals</span></span>
+<span id="cb343-143"><a href="cjs_with_mix.html#cb343-143" tabindex="-1"></a></span>
+<span id="cb343-144"><a href="cjs_with_mix.html#cb343-144" tabindex="-1"></a>    </span>
+<span id="cb343-145"><a href="cjs_with_mix.html#cb343-145" tabindex="-1"></a>  }  <span class="co">// close block of transformed parameters exclusive parameter declarations</span></span>
+<span id="cb343-146"><a href="cjs_with_mix.html#cb343-146" tabindex="-1"></a>}    <span class="co">// close transformed parameters</span></span>
+<span id="cb343-147"><a href="cjs_with_mix.html#cb343-147" tabindex="-1"></a></span>
+<span id="cb343-148"><a href="cjs_with_mix.html#cb343-148" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb343-149"><a href="cjs_with_mix.html#cb343-149" tabindex="-1"></a>  <span class="co">// priors</span></span>
+<span id="cb343-150"><a href="cjs_with_mix.html#cb343-150" tabindex="-1"></a>  theta ~ beta(<span class="dv">1</span>, <span class="dv">1</span>);</span>
+<span id="cb343-151"><a href="cjs_with_mix.html#cb343-151" tabindex="-1"></a>  <span class="cf">for</span> (g <span class="cf">in</span> <span class="dv">1</span>:(nocc<span class="dv">-1</span>)){</span>
+<span id="cb343-152"><a href="cjs_with_mix.html#cb343-152" tabindex="-1"></a>    b0[<span class="dv">1</span>,g]~beta(<span class="dv">1</span>,<span class="dv">1</span>);</span>
+<span id="cb343-153"><a href="cjs_with_mix.html#cb343-153" tabindex="-1"></a>    b0[<span class="dv">2</span>,g]~beta(<span class="dv">1</span>,<span class="dv">1</span>);</span>
+<span id="cb343-154"><a href="cjs_with_mix.html#cb343-154" tabindex="-1"></a>  }</span>
+<span id="cb343-155"><a href="cjs_with_mix.html#cb343-155" tabindex="-1"></a>  a0[<span class="dv">1</span>,<span class="dv">1</span>]~normal(<span class="dv">0</span>,<span class="fl">1.5</span>);</span>
+<span id="cb343-156"><a href="cjs_with_mix.html#cb343-156" tabindex="-1"></a>  a0[<span class="dv">1</span>,<span class="dv">2</span>]~normal(<span class="dv">0</span>,<span class="fl">1.5</span>);</span>
+<span id="cb343-157"><a href="cjs_with_mix.html#cb343-157" tabindex="-1"></a>  a1[<span class="dv">1</span>,<span class="dv">1</span>]~normal(<span class="dv">0</span>,<span class="dv">3</span>);</span>
+<span id="cb343-158"><a href="cjs_with_mix.html#cb343-158" tabindex="-1"></a>  a1[<span class="dv">1</span>,<span class="dv">2</span>]~normal(<span class="dv">0</span>,<span class="dv">3</span>);</span>
+<span id="cb343-159"><a href="cjs_with_mix.html#cb343-159" tabindex="-1"></a></span>
+<span id="cb343-160"><a href="cjs_with_mix.html#cb343-160" tabindex="-1"></a>  a0[<span class="dv">2</span>,<span class="dv">1</span>]~normal(<span class="dv">0</span>,<span class="fl">1.5</span>);</span>
+<span id="cb343-161"><a href="cjs_with_mix.html#cb343-161" tabindex="-1"></a>  a0[<span class="dv">2</span>,<span class="dv">2</span>]~normal(a0[<span class="dv">1</span>,<span class="dv">2</span>],<span class="fl">0.01</span>); <span class="co">// for juveniles, we assume that the effect of the covariate is independet of sex</span></span>
+<span id="cb343-162"><a href="cjs_with_mix.html#cb343-162" tabindex="-1"></a>  a1[<span class="dv">2</span>,<span class="dv">1</span>]~normal(<span class="dv">0</span>,<span class="dv">3</span>);</span>
+<span id="cb343-163"><a href="cjs_with_mix.html#cb343-163" tabindex="-1"></a>  a1[<span class="dv">2</span>,<span class="dv">2</span>]~normal(a1[<span class="dv">1</span>,<span class="dv">2</span>],<span class="fl">0.01</span>);</span>
+<span id="cb343-164"><a href="cjs_with_mix.html#cb343-164" tabindex="-1"></a></span>
+<span id="cb343-165"><a href="cjs_with_mix.html#cb343-165" tabindex="-1"></a>  <span class="co">// likelihood for identified individuals</span></span>
+<span id="cb343-166"><a href="cjs_with_mix.html#cb343-166" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:nindi) {</span>
+<span id="cb343-167"><a href="cjs_with_mix.html#cb343-167" tabindex="-1"></a>    <span class="cf">if</span> (lasti[i]&gt;<span class="dv">0</span>) {</span>
+<span id="cb343-168"><a href="cjs_with_mix.html#cb343-168" tabindex="-1"></a>      <span class="cf">for</span> (k <span class="cf">in</span> firsti[i]:lasti[i]) {</span>
+<span id="cb343-169"><a href="cjs_with_mix.html#cb343-169" tabindex="-1"></a>        <span class="cf">if</span>(k&gt;<span class="dv">1</span>) <span class="kw">target+=</span> (log(phi[i, k<span class="dv">-1</span>])); </span>
+<span id="cb343-170"><a href="cjs_with_mix.html#cb343-170" tabindex="-1"></a>        <span class="cf">if</span> (yi[i,k] == <span class="dv">1</span>) <span class="kw">target+=</span>(log(p[i,k]));   </span>
+<span id="cb343-171"><a href="cjs_with_mix.html#cb343-171" tabindex="-1"></a>        <span class="cf">else</span> <span class="kw">target+=</span>(log1m(p[i,k]));  </span>
+<span id="cb343-172"><a href="cjs_with_mix.html#cb343-172" tabindex="-1"></a>      }</span>
+<span id="cb343-173"><a href="cjs_with_mix.html#cb343-173" tabindex="-1"></a>    }  </span>
+<span id="cb343-174"><a href="cjs_with_mix.html#cb343-174" tabindex="-1"></a>    <span class="kw">target+=</span>(log(chi[i,lasti[i]+<span class="dv">1</span>]));</span>
+<span id="cb343-175"><a href="cjs_with_mix.html#cb343-175" tabindex="-1"></a>  }</span>
+<span id="cb343-176"><a href="cjs_with_mix.html#cb343-176" tabindex="-1"></a>  </span>
+<span id="cb343-177"><a href="cjs_with_mix.html#cb343-177" tabindex="-1"></a>  <span class="co">// likelihood for non-identified individuals</span></span>
+<span id="cb343-178"><a href="cjs_with_mix.html#cb343-178" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:nindni) {</span>
+<span id="cb343-179"><a href="cjs_with_mix.html#cb343-179" tabindex="-1"></a>    <span class="dt">real</span> log_like_male = <span class="dv">0</span>;</span>
+<span id="cb343-180"><a href="cjs_with_mix.html#cb343-180" tabindex="-1"></a>    <span class="dt">real</span> log_like_female = <span class="dv">0</span>;</span>
+<span id="cb343-181"><a href="cjs_with_mix.html#cb343-181" tabindex="-1"></a></span>
+<span id="cb343-182"><a href="cjs_with_mix.html#cb343-182" tabindex="-1"></a>    <span class="cf">if</span> (lastni[i]&gt;<span class="dv">0</span>) {</span>
+<span id="cb343-183"><a href="cjs_with_mix.html#cb343-183" tabindex="-1"></a>      <span class="cf">for</span> (k <span class="cf">in</span> firstni[i]:lastni[i]) {</span>
+<span id="cb343-184"><a href="cjs_with_mix.html#cb343-184" tabindex="-1"></a>        <span class="cf">if</span>(k&gt;<span class="dv">1</span>){</span>
+<span id="cb343-185"><a href="cjs_with_mix.html#cb343-185" tabindex="-1"></a>          log_like_male += (log(phi_male[i, k<span class="dv">-1</span>]));</span>
+<span id="cb343-186"><a href="cjs_with_mix.html#cb343-186" tabindex="-1"></a>          log_like_female += (log(phi_female[i, k<span class="dv">-1</span>]));</span>
+<span id="cb343-187"><a href="cjs_with_mix.html#cb343-187" tabindex="-1"></a>        }</span>
+<span id="cb343-188"><a href="cjs_with_mix.html#cb343-188" tabindex="-1"></a>        <span class="cf">if</span> (yni[i,k] == <span class="dv">1</span>){ </span>
+<span id="cb343-189"><a href="cjs_with_mix.html#cb343-189" tabindex="-1"></a>          log_like_male+=(log(p_male[i,k]));</span>
+<span id="cb343-190"><a href="cjs_with_mix.html#cb343-190" tabindex="-1"></a>          log_like_female+=(log(p_female[i,k]));</span>
+<span id="cb343-191"><a href="cjs_with_mix.html#cb343-191" tabindex="-1"></a>        }</span>
+<span id="cb343-192"><a href="cjs_with_mix.html#cb343-192" tabindex="-1"></a>        <span class="cf">else</span>{</span>
+<span id="cb343-193"><a href="cjs_with_mix.html#cb343-193" tabindex="-1"></a>          log_like_male+=(log1m(p_male[i,k])); </span>
+<span id="cb343-194"><a href="cjs_with_mix.html#cb343-194" tabindex="-1"></a>          log_like_female+=(log1m(p_female[i,k])); </span>
+<span id="cb343-195"><a href="cjs_with_mix.html#cb343-195" tabindex="-1"></a>        }</span>
+<span id="cb343-196"><a href="cjs_with_mix.html#cb343-196" tabindex="-1"></a></span>
+<span id="cb343-197"><a href="cjs_with_mix.html#cb343-197" tabindex="-1"></a>      }</span>
+<span id="cb343-198"><a href="cjs_with_mix.html#cb343-198" tabindex="-1"></a>    }  </span>
+<span id="cb343-199"><a href="cjs_with_mix.html#cb343-199" tabindex="-1"></a>    log_like_male += (log(chi_male[i,lastni[i]+<span class="dv">1</span>]));</span>
+<span id="cb343-200"><a href="cjs_with_mix.html#cb343-200" tabindex="-1"></a>    log_like_female += (log(chi_female[i,lastni[i]+<span class="dv">1</span>]));</span>
+<span id="cb343-201"><a href="cjs_with_mix.html#cb343-201" tabindex="-1"></a>    </span>
+<span id="cb343-202"><a href="cjs_with_mix.html#cb343-202" tabindex="-1"></a>    <span class="kw">target +=</span> log_mix(theta[i], log_like_male, log_like_female);</span>
+<span id="cb343-203"><a href="cjs_with_mix.html#cb343-203" tabindex="-1"></a>  }</span>
+<span id="cb343-204"><a href="cjs_with_mix.html#cb343-204" tabindex="-1"></a></span>
+<span id="cb343-205"><a href="cjs_with_mix.html#cb343-205" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="call-stan-from-r-check-convergence-and-look-at-results" class="section level2 hasAnchor" number="25.5">
 <h2><span class="header-section-number">25.5</span> Call Stan from R, check convergence and look at results<a href="cjs_with_mix.html#call-stan-from-r-check-convergence-and-look-at-results" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="cjs_with_mix.html#cb345-1" tabindex="-1"></a><span class="co"># Run STAN</span></span>
-<span id="cb345-2"><a href="cjs_with_mix.html#cb345-2" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
-<span id="cb345-3"><a href="cjs_with_mix.html#cb345-3" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">stan</span>(<span class="at">file =</span> <span class="st">&quot;stanmodels/cmr_mixture_model.stan&quot;</span>, <span class="at">data=</span>datax, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb345-4"><a href="cjs_with_mix.html#cb345-4" tabindex="-1"></a><span class="co"># for above simulated data (25000 individuals x 15 time periods) </span></span>
-<span id="cb345-5"><a href="cjs_with_mix.html#cb345-5" tabindex="-1"></a><span class="co"># computing time is around 48 hours on an intel corei7 laptop</span></span>
-<span id="cb345-6"><a href="cjs_with_mix.html#cb345-6" tabindex="-1"></a><span class="co"># for larger data sets, we recommed moving the transformed parameters block </span></span>
-<span id="cb345-7"><a href="cjs_with_mix.html#cb345-7" tabindex="-1"></a><span class="co"># to the model block in order to avoid monitoring of p_male, p_female, </span></span>
-<span id="cb345-8"><a href="cjs_with_mix.html#cb345-8" tabindex="-1"></a><span class="co"># phi_male and phi_female producing memory problems</span></span>
-<span id="cb345-9"><a href="cjs_with_mix.html#cb345-9" tabindex="-1"></a></span>
-<span id="cb345-10"><a href="cjs_with_mix.html#cb345-10" tabindex="-1"></a><span class="co"># launch_shinystan(fit) # diagnostic plots</span></span>
-<span id="cb345-11"><a href="cjs_with_mix.html#cb345-11" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="cjs_with_mix.html#cb344-1" tabindex="-1"></a><span class="co"># Run STAN</span></span>
+<span id="cb344-2"><a href="cjs_with_mix.html#cb344-2" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
+<span id="cb344-3"><a href="cjs_with_mix.html#cb344-3" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">stan</span>(<span class="at">file =</span> <span class="st">&quot;stanmodels/cmr_mixture_model.stan&quot;</span>, <span class="at">data=</span>datax, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb344-4"><a href="cjs_with_mix.html#cb344-4" tabindex="-1"></a><span class="co"># for above simulated data (25000 individuals x 15 time periods) </span></span>
+<span id="cb344-5"><a href="cjs_with_mix.html#cb344-5" tabindex="-1"></a><span class="co"># computing time is around 48 hours on an intel corei7 laptop</span></span>
+<span id="cb344-6"><a href="cjs_with_mix.html#cb344-6" tabindex="-1"></a><span class="co"># for larger data sets, we recommed moving the transformed parameters block </span></span>
+<span id="cb344-7"><a href="cjs_with_mix.html#cb344-7" tabindex="-1"></a><span class="co"># to the model block in order to avoid monitoring of p_male, p_female, </span></span>
+<span id="cb344-8"><a href="cjs_with_mix.html#cb344-8" tabindex="-1"></a><span class="co"># phi_male and phi_female producing memory problems</span></span>
+<span id="cb344-9"><a href="cjs_with_mix.html#cb344-9" tabindex="-1"></a></span>
+<span id="cb344-10"><a href="cjs_with_mix.html#cb344-10" tabindex="-1"></a><span class="co"># launch_shinystan(fit) # diagnostic plots</span></span>
+<span id="cb344-11"><a href="cjs_with_mix.html#cb344-11" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
 <pre><code>##                 mean      se_mean         sd        2.5%         25%
 ## b0[1,1]   0.60132367 0.0015709423 0.06173884  0.48042366  0.55922253
 ## b0[1,2]   0.70098709 0.0012519948 0.04969428  0.60382019  0.66806698
@@ -887,42 +888,42 @@ Uniform prior distributions were used for all parameters with a parameter space 
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/3.3-cjs_with_mix.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-}
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/TobiasRoth/BDAEcology/edit/master/3.3-cjs_with_mix.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
 });
 });
 </script>

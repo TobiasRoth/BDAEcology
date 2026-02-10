@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 Transformations | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is a collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 Transformations | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2025-11-01" />
+<meta name="date" content="2026-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -179,7 +179,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-data"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing data</a>
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="basics.html"><a href="basics.html#histogram"><i class="fa fa-check"></i><b>2.2.1</b> Histogram</a></li>
-<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#location-and-scatter"><i class="fa fa-check"></i><b>2.2.2</b> Location and scatter</a></li>
+<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#location-and-scatter-location_and_scatter"><i class="fa fa-check"></i><b>2.2.2</b> Location and scatter {location_and_scatter}</a></li>
 <li class="chapter" data-level="2.2.3" data-path="basics.html"><a href="basics.html#correlations"><i class="fa fa-check"></i><b>2.2.3</b> Correlations</a></li>
 <li class="chapter" data-level="2.2.4" data-path="basics.html"><a href="basics.html#principal-components-analyses-pca"><i class="fa fa-check"></i><b>2.2.4</b> Principal components analyses PCA</a></li>
 </ul></li>
@@ -193,15 +193,15 @@ div.csl-indent {
 <li class="chapter" data-level="2.4.1" data-path="basics.html"><a href="basics.html#bayes-theorem-for-discrete-events"><i class="fa fa-check"></i><b>2.4.1</b> Bayes theorem for discrete events</a></li>
 <li class="chapter" data-level="2.4.2" data-path="basics.html"><a href="basics.html#bayes-theorem-for-continuous-parameters"><i class="fa fa-check"></i><b>2.4.2</b> Bayes theorem for continuous parameters</a></li>
 <li class="chapter" data-level="2.4.3" data-path="basics.html"><a href="basics.html#estimating-a-mean-assuming-that-the-variance-is-known"><i class="fa fa-check"></i><b>2.4.3</b> Estimating a mean assuming that the variance is known</a></li>
-<li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#estimating-the-mean-and-the-variance"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
+<li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#meanvarSnowfinch"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#classical-frequentist-tests-and-alternatives"><i class="fa fa-check"></i><b>2.5</b> Classical frequentist tests and alternatives</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#nullhypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Nullhypothesis testing</a></li>
+<li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#null-hypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Null hypothesis testing</a></li>
 <li class="chapter" data-level="2.5.2" data-path="basics.html"><a href="basics.html#comparison-of-a-sample-with-a-fixed-value-one-sample-t-test"><i class="fa fa-check"></i><b>2.5.2</b> Comparison of a sample with a fixed value (one-sample t-test)</a></li>
 <li class="chapter" data-level="2.5.3" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups-two-sample-t-test"><i class="fa fa-check"></i><b>2.5.3</b> Comparison of the locations between two groups (two-sample t-test)</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#whyBayes"><i class="fa fa-check"></i><b>2.6</b> Comparing frequentist and Bayesian approach - an why we use Bayes</a></li>
+<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#whyBayes"><i class="fa fa-check"></i><b>2.6</b> Comparing frequentist and Bayesian approach - and why we use Bayes</a></li>
 <li class="chapter" data-level="2.7" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.7</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="analyses_steps.html"><a href="analyses_steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a>
@@ -267,7 +267,8 @@ div.csl-indent {
 <li class="chapter" data-level="7.2" data-path="furthertopics.html"><a href="furthertopics.html#python"><i class="fa fa-check"></i><b>7.2</b> Python</a></li>
 <li class="chapter" data-level="7.3" data-path="furthertopics.html"><a href="furthertopics.html#some-r"><i class="fa fa-check"></i><b>7.3</b> Some R</a>
 <ul>
-<li class="chapter" data-level="7.3.1" data-path="furthertopics.html"><a href="furthertopics.html#date-on-x-axis"><i class="fa fa-check"></i><b>7.3.1</b> Date on x-axis</a></li>
+<li class="chapter" data-level="7.3.1" data-path="furthertopics.html"><a href="furthertopics.html#spatial-data-processing-in-r"><i class="fa fa-check"></i><b>7.3.1</b> Spatial data processing in R</a></li>
+<li class="chapter" data-level="7.3.2" data-path="furthertopics.html"><a href="furthertopics.html#date-on-x-axis"><i class="fa fa-check"></i><b>7.3.2</b> Date on x-axis</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II BAYESIAN DATA ANALYSIS</b></span></li>
@@ -498,22 +499,22 @@ div.csl-indent {
 <div id="some-r-specific-aspects" class="section level2 hasAnchor" number="5.1">
 <h2><span class="header-section-number">5.1</span> Some R-specific aspects<a href="transformations.html#some-r-specific-aspects" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A transformation on a predictor can be calculated and stored as a new variable in the data object:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="transformations.html#cb40-1" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">runif</span>(<span class="dv">20</span>,<span class="dv">2</span>,<span class="dv">6</span>),</span>
-<span id="cb40-2"><a href="transformations.html#cb40-2" tabindex="-1"></a>                  <span class="at">b =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">2</span>,<span class="dv">100</span>))                           <span class="co"># some simulated data</span></span>
-<span id="cb40-3"><a href="transformations.html#cb40-3" tabindex="-1"></a>dat<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">2</span><span class="fl">-0.6</span><span class="sc">*</span><span class="fu">log</span>(dat<span class="sc">$</span>a)<span class="sc">-</span><span class="fl">0.12</span><span class="sc">*</span>dat<span class="sc">$</span>b<span class="fl">+0.003</span><span class="sc">*</span>dat<span class="sc">$</span>b<span class="sc">^</span><span class="dv">2</span>,<span class="dv">11</span>)  <span class="co"># simulated outcome variable</span></span>
-<span id="cb40-4"><a href="transformations.html#cb40-4" tabindex="-1"></a>dat<span class="sc">$</span>a.l <span class="ot">&lt;-</span> <span class="fu">log</span>(dat<span class="sc">$</span>a)    <span class="co"># the log of x is stored in the new variable $x.l</span></span>
-<span id="cb40-5"><a href="transformations.html#cb40-5" tabindex="-1"></a>dat<span class="sc">$</span>b.z <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat<span class="sc">$</span>b)  <span class="co"># the variable b is centerd and scaled to 1 SD by the function scale, and stored in $b.z</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="transformations.html#cb39-1" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">runif</span>(<span class="dv">20</span>,<span class="dv">2</span>,<span class="dv">6</span>),</span>
+<span id="cb39-2"><a href="transformations.html#cb39-2" tabindex="-1"></a>                  <span class="at">b =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">2</span>,<span class="dv">100</span>))                           <span class="co"># some simulated data</span></span>
+<span id="cb39-3"><a href="transformations.html#cb39-3" tabindex="-1"></a>dat<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">2</span><span class="fl">-0.6</span><span class="sc">*</span><span class="fu">log</span>(dat<span class="sc">$</span>a)<span class="sc">-</span><span class="fl">0.12</span><span class="sc">*</span>dat<span class="sc">$</span>b<span class="fl">+0.003</span><span class="sc">*</span>dat<span class="sc">$</span>b<span class="sc">^</span><span class="dv">2</span>,<span class="dv">11</span>)  <span class="co"># simulated outcome variable</span></span>
+<span id="cb39-4"><a href="transformations.html#cb39-4" tabindex="-1"></a>dat<span class="sc">$</span>a.l <span class="ot">&lt;-</span> <span class="fu">log</span>(dat<span class="sc">$</span>a)    <span class="co"># the log of x is stored in the new variable $x.l</span></span>
+<span id="cb39-5"><a href="transformations.html#cb39-5" tabindex="-1"></a>dat<span class="sc">$</span>b.z <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat<span class="sc">$</span>b)  <span class="co"># the variable b is centerd and scaled to 1 SD by the function scale, and stored in $b.z</span></span></code></pre></div>
 <p>Then, the variable (“a.l”, “b.z”) can be used in the model just like any variable.</p>
 <p>Alternatively, transformations can be done directly in the model formula:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="transformations.html#cb41-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">log</span>(a), <span class="at">data=</span>dat)     <span class="co"># the effect of the log of a on b is estimated</span></span>
-<span id="cb41-2"><a href="transformations.html#cb41-2" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> b <span class="sc">+</span> <span class="fu">I</span>(b<span class="sc">^</span><span class="dv">2</span>), <span class="at">data=</span>dat) <span class="co"># using a linear and quadratic effect</span></span>
-<span id="cb41-3"><a href="transformations.html#cb41-3" tabindex="-1"></a>  <span class="co"># as dat$b has large values, better use scaled dat$b, i.e. dat$b.z:</span></span>
-<span id="cb41-4"><a href="transformations.html#cb41-4" tabindex="-1"></a>mod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> b.z <span class="sc">+</span> <span class="fu">I</span>(b.z<span class="sc">^</span><span class="dv">2</span>), <span class="at">data=</span>dat)  <span class="co"># the I() makes that first the square is calculated, then these values are used</span></span>
-<span id="cb41-5"><a href="transformations.html#cb41-5" tabindex="-1"></a>  <span class="co"># or, even better, especially for complex models, use orthogonal polynomials by applying the function poly</span></span>
-<span id="cb41-6"><a href="transformations.html#cb41-6" tabindex="-1"></a>mod4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">poly</span>(b,<span class="dv">2</span>), <span class="at">data=</span>dat)   <span class="co"># the &quot;2&quot; asks for 2 polynomials, i.e. linear and quadratic</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="transformations.html#cb40-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">log</span>(a), <span class="at">data=</span>dat)     <span class="co"># the effect of the log of a on b is estimated</span></span>
+<span id="cb40-2"><a href="transformations.html#cb40-2" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> b <span class="sc">+</span> <span class="fu">I</span>(b<span class="sc">^</span><span class="dv">2</span>), <span class="at">data=</span>dat) <span class="co"># using a linear and quadratic effect</span></span>
+<span id="cb40-3"><a href="transformations.html#cb40-3" tabindex="-1"></a>  <span class="co"># as dat$b has large values, better use scaled dat$b, i.e. dat$b.z:</span></span>
+<span id="cb40-4"><a href="transformations.html#cb40-4" tabindex="-1"></a>mod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> b.z <span class="sc">+</span> <span class="fu">I</span>(b.z<span class="sc">^</span><span class="dv">2</span>), <span class="at">data=</span>dat)  <span class="co"># the I() makes that first the square is calculated, then these values are used</span></span>
+<span id="cb40-5"><a href="transformations.html#cb40-5" tabindex="-1"></a>  <span class="co"># or, even better, especially for complex models, use orthogonal polynomials by applying the function poly</span></span>
+<span id="cb40-6"><a href="transformations.html#cb40-6" tabindex="-1"></a>mod4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">poly</span>(b,<span class="dv">2</span>), <span class="at">data=</span>dat)   <span class="co"># the &quot;2&quot; asks for 2 polynomials, i.e. linear and quadratic</span></span></code></pre></div>
 <p>Models 2 to 4 are all the same model in the sense that they create the same effectplot.</p>
 <p>Beware: It is often nice to z-transform the orthogonal polynomials. For that, we cannot use a double-function in the formula notation, rather the polynomials have to be created before the modeling, stored as a new variable, and only the z-transformation can be done in the formula (or outside, too, if you prefer). We get back to this in the polynomial chapter below.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="transformations.html#cb42-1" tabindex="-1"></a>mod5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">scale</span>(<span class="fu">poly</span>(b,<span class="dv">2</span>)), <span class="at">data=</span>dat)  <span class="co"># produces a wrong model!</span></span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="transformations.html#cb41-1" tabindex="-1"></a>mod5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">scale</span>(<span class="fu">poly</span>(b,<span class="dv">2</span>)), <span class="at">data=</span>dat)  <span class="co"># produces a wrong model!</span></span></code></pre></div>
 </div>
 <div id="first-aid-transformations" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> First-aid transformations<a href="transformations.html#first-aid-transformations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -530,43 +531,44 @@ div.csl-indent {
 <p>Log-transformations are often used and often very helpful, especially, as stated above, for strongly right skewed positive variables. Without the transformation, the large values, far away from the bulk of data, may have an unduely strong effect on the regression line (leading to a large “Cook’s distance”, see <a href="residualanalysis.html#residualanalysis">12</a>).</p>
 <p>When log-transforming a predictor, we model its multiplicative effect on the outcome variable, while without transformation, it is the additive effect. This means: The model assumes that multiplying x by a factor F increases y by amount G (rather than increasing x by amount F increases y by amount G for the additive case). It seems that right skewed variables often relate in a multiplicative way to the outcome variable (for reasons that may lie in the heart of how mathematics works in our universe - we don’t know). But it is a good that down-scaling large values and changing to a multiplicative effect often both increase the model fit, else the log-transformation would not be that useful.</p>
 <p>The log-transformation is great, as long as there are no zeros (and, of course, it does not work with negative values at all), as the log of 0 is minus infinity. But in real life, we often have zeros, and then, many people just add 1 to the values before log-transformation. This can be ok, but it is not optimal when the (non-zero) values are small. For that reason, some suggest to add 0.5 times the smallest non-zero value. Rob J Hyndman also presents the Box-Cox transformation in a <a href="https://robjhyndman.com/hyndsight/transformations/">blog</a>, which apparently can be done using the R function <code>log1p</code>.</p>
-<p>We made good experience with a transformation suggested by our above mentioned stats teacher Werner Stahel in his book (<span class="citation">Stahel (<a href="referenzen.html#ref-Stahel.2000">2000</a>)</span>, on p. 30): <span class="math inline">\(log(x + c)\)</span>, and c is the squared 25% quantile of the non-zero values divided by the 75% quantile of the non-zero values. This performs well with zeros, but is overall much better than adding 1 in many cases (and probably never worse).</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="transformations.html#cb43-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3</span>)</span>
-<span id="cb43-2"><a href="transformations.html#cb43-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">runif</span>(<span class="dv">200</span>,<span class="sc">-</span><span class="dv">3</span>,<span class="dv">5</span>))  <span class="co"># a strongly skewed variable</span></span>
-<span id="cb43-3"><a href="transformations.html#cb43-3" tabindex="-1"></a>x[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x),<span class="dv">7</span>)] <span class="ot">&lt;-</span> <span class="dv">0</span>   <span class="co"># put some values to exactly 0</span></span>
-<span id="cb43-4"><a href="transformations.html#cb43-4" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> x<span class="sc">/</span><span class="dv">1000</span>   <span class="co"># small values</span></span>
-<span id="cb43-5"><a href="transformations.html#cb43-5" tabindex="-1"></a></span>
-<span id="cb43-6"><a href="transformations.html#cb43-6" tabindex="-1"></a><span class="co"># our custom function to calculate the Stahel-constant:</span></span>
-<span id="cb43-7"><a href="transformations.html#cb43-7" tabindex="-1"></a>stahelc <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb43-8"><a href="transformations.html#cb43-8" tabindex="-1"></a>  ix <span class="ot">&lt;-</span> x<span class="sc">&gt;</span><span class="dv">0</span></span>
-<span id="cb43-9"><a href="transformations.html#cb43-9" tabindex="-1"></a>  <span class="fu">return</span>((<span class="fu">quantile</span>(x[ix],<span class="fl">0.25</span>,<span class="at">na.rm=</span>T))<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">quantile</span>(x[ix],<span class="fl">0.75</span>,<span class="at">na.rm=</span>T))</span>
-<span id="cb43-10"><a href="transformations.html#cb43-10" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="transformations.html#cb44-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span>
-<span id="cb44-2"><a href="transformations.html#cb44-2" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;raw values&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
-<span id="cb44-3"><a href="transformations.html#cb44-3" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;larger values&quot;</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="at">xpd=</span><span class="cn">NA</span>)</span>
-<span id="cb44-4"><a href="transformations.html#cb44-4" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(x<span class="sc">+</span><span class="dv">1</span>), <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;+1&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
-<span id="cb44-5"><a href="transformations.html#cb44-5" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(x<span class="sc">+</span><span class="fu">stahelc</span>(x)), <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;Stahel&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
-<span id="cb44-6"><a href="transformations.html#cb44-6" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log1p</span>(x), <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;Box-Cox&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
-<span id="cb44-7"><a href="transformations.html#cb44-7" tabindex="-1"></a><span class="fu">hist</span>(x2, <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;raw values&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
-<span id="cb44-8"><a href="transformations.html#cb44-8" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;small values&quot;</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="at">xpd=</span><span class="cn">NA</span>)</span>
-<span id="cb44-9"><a href="transformations.html#cb44-9" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(x2<span class="sc">+</span><span class="dv">1</span>), <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;+1&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
-<span id="cb44-10"><a href="transformations.html#cb44-10" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(x2<span class="sc">+</span><span class="fu">stahelc</span>(x2)), <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;Stahel&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
-<span id="cb44-11"><a href="transformations.html#cb44-11" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log1p</span>(x2), <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;Box-Cox&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+<p>We made good experience with a transformation suggested by our above mentioned stats teacher Werner Stahel in his book (<span class="citation">Stahel (<a href="referenzen.html#ref-Stahel.2000">2000</a>)</span>, on p. 30): <span class="math inline">\(log(x + c)\)</span>, and c is the squared 25% quantile of the non-zero values divided by the 75% quantile of the non-zero values. This performs well with zeros and is overall much better than adding 1 in many cases (and probably never worse).</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="transformations.html#cb42-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3</span>)</span>
+<span id="cb42-2"><a href="transformations.html#cb42-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">runif</span>(<span class="dv">200</span>,<span class="sc">-</span><span class="dv">3</span>,<span class="dv">5</span>))  <span class="co"># a strongly skewed variable</span></span>
+<span id="cb42-3"><a href="transformations.html#cb42-3" tabindex="-1"></a>x[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x),<span class="dv">7</span>)] <span class="ot">&lt;-</span> <span class="dv">0</span>   <span class="co"># put some values to exactly 0</span></span>
+<span id="cb42-4"><a href="transformations.html#cb42-4" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> x<span class="sc">/</span><span class="dv">1000</span>   <span class="co"># small values</span></span>
+<span id="cb42-5"><a href="transformations.html#cb42-5" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="transformations.html#cb42-6" tabindex="-1"></a><span class="co"># our custom function to calculate the Stahel-constant:</span></span>
+<span id="cb42-7"><a href="transformations.html#cb42-7" tabindex="-1"></a>stahelc <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb42-8"><a href="transformations.html#cb42-8" tabindex="-1"></a>  ix <span class="ot">&lt;-</span> x<span class="sc">&gt;</span><span class="dv">0</span></span>
+<span id="cb42-9"><a href="transformations.html#cb42-9" tabindex="-1"></a>  <span class="fu">return</span>((<span class="fu">quantile</span>(x[ix],<span class="fl">0.25</span>,<span class="at">na.rm=</span>T))<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">quantile</span>(x[ix],<span class="fl">0.75</span>,<span class="at">na.rm=</span>T))</span>
+<span id="cb42-10"><a href="transformations.html#cb42-10" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="transformations.html#cb43-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span>
+<span id="cb43-2"><a href="transformations.html#cb43-2" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;raw values&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb43-3"><a href="transformations.html#cb43-3" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;larger values&quot;</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="at">xpd=</span><span class="cn">NA</span>)</span>
+<span id="cb43-4"><a href="transformations.html#cb43-4" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(x<span class="sc">+</span><span class="dv">1</span>), <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;+1&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb43-5"><a href="transformations.html#cb43-5" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(x<span class="sc">+</span><span class="fu">stahelc</span>(x)), <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;Stahel&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb43-6"><a href="transformations.html#cb43-6" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log1p</span>(x), <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;Box-Cox&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb43-7"><a href="transformations.html#cb43-7" tabindex="-1"></a><span class="fu">hist</span>(x2, <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;raw values&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb43-8"><a href="transformations.html#cb43-8" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;small values&quot;</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="at">xpd=</span><span class="cn">NA</span>)</span>
+<span id="cb43-9"><a href="transformations.html#cb43-9" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(x2<span class="sc">+</span><span class="dv">1</span>), <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;+1&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb43-10"><a href="transformations.html#cb43-10" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(x2<span class="sc">+</span><span class="fu">stahelc</span>(x2)), <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;Stahel&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb43-11"><a href="transformations.html#cb43-11" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log1p</span>(x2), <span class="at">nclass=</span><span class="dv">30</span>, <span class="at">main=</span><span class="st">&quot;Box-Cox&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-5"></span>
 <img src="1.4-transformations_files/figure-html/unnamed-chunk-5-1.png" alt="log-transformation of an original variable (leftmost two panels), for a variable with larger values (above row of panels) and one with smaller values (lower row). Adding 1 or the Box-Cox transformation don't seem to help much, adding a constant according to Stahel performs best in these cases." width="672" />
 <p class="caption">
 Figure 5.1: log-transformation of an original variable (leftmost two panels), for a variable with larger values (above row of panels) and one with smaller values (lower row). Adding 1 or the Box-Cox transformation don’t seem to help much, adding a constant according to Stahel performs best in these cases.
 </p>
 </div>
+<p>Recently, the function ‘logst’ from Werner Stahel has become available in the package plgraphics, with the <a href="https://r-forge.r-universe.dev/plgraphics/doc/logst.pdf">vignette</a> explaining the rationale. This function also uses a constant calculated from the quantiles as described above, but applies the transformation only to small values (smaller than the constant). This seems to be a great option, too.</p>
 </div>
 <div id="ztransformation" class="section level2 hasAnchor" number="5.4">
 <h2><span class="header-section-number">5.4</span> Centering and scaling (z-transformation)<a href="transformations.html#ztransformation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Centering (<span class="math inline">\(x.c = x-mean(x)\)</span>) is a transformation that produces a variable with a mean of 0. Centering is optional, but we have two good reasons reasons to center a predictor variable. First, it helps the model fitting algorithm to better converge because it reduces correlations among model parameters. Second, with centered predictors, the intercept and main effects in the linear model are better interpretable (they are measured at the center of the data instead of at the covariate value of 0 which may be far off).</p>
 <p>Scaling: Scaling (<span class="math inline">\(x.s = x/c\)</span>, where <span class="math inline">\(c\)</span> is a constant) is a transformation that changes the unit of the variable. Scaling is optional, too, but we have three good reasons to scale a covariable. First, to make the effect sizes better understandable. For example, a population change from one year to the next may be very small and hard to interpret. When we give the change for a 10-year period, its ecological meaning is better understandable. Second, to make the estimate of the effect sizes comparable between variables, we may use <span class="math inline">\(x.s = x/sd(x)\)</span>. The resulting variable has a unit of one standard deviation. A standard deviation may be comparable between variables that originally are measured in different units (meters, seconds etc). <span class="citation">Andrew Gelman and Hill (<a href="referenzen.html#ref-Gelman.2007">2007</a>)</span> (p. 55 f) propose to scale the variables by two times the standard deviation (<span class="math inline">\(x.s = x/(2*sd(x))\)</span>) to make effect sizes comparable between numeric and binary variables. Third, scaling can be important for model convergence, especially when polynomials are included. Also, consider the use of orthogonal polynomials, see below.</p>
 <p>Centering and scaling to one standard deviation is usually done by the function <code>scale</code>:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="transformations.html#cb45-1" tabindex="-1"></a>dat<span class="sc">$</span>a.z <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat<span class="sc">$</span>a)  <span class="co"># using the arguments center and scale you can also only center or only scale</span></span>
-<span id="cb45-2"><a href="transformations.html#cb45-2" tabindex="-1"></a><span class="co"># this is the same as:</span></span>
-<span id="cb45-3"><a href="transformations.html#cb45-3" tabindex="-1"></a>dat<span class="sc">$</span>a.z <span class="ot">&lt;-</span> (dat<span class="sc">$</span>a <span class="sc">-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>a)) <span class="sc">/</span> <span class="fu">sd</span>(dat<span class="sc">$</span>a)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="transformations.html#cb44-1" tabindex="-1"></a>dat<span class="sc">$</span>a.z <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat<span class="sc">$</span>a)  <span class="co"># using the arguments center and scale you can also only center or only scale</span></span>
+<span id="cb44-2"><a href="transformations.html#cb44-2" tabindex="-1"></a><span class="co"># this is the same as:</span></span>
+<span id="cb44-3"><a href="transformations.html#cb44-3" tabindex="-1"></a>dat<span class="sc">$</span>a.z <span class="ot">&lt;-</span> (dat<span class="sc">$</span>a <span class="sc">-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>a)) <span class="sc">/</span> <span class="fu">sd</span>(dat<span class="sc">$</span>a)</span></code></pre></div>
 </div>
 <div id="transformationspolynomials" class="section level2 hasAnchor" number="5.5">
 <h2><span class="header-section-number">5.5</span> Raw and orthogonal polynomials<a href="transformations.html#transformationspolynomials" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -581,16 +583,16 @@ Figure 5.1: log-transformation of an original variable (leftmost two panels), fo
 <li>Orthogonal polynomials created with <code>poly</code> have small values, hence z-transforming them, too, can be advisable to make coefficient estimated comparable with other covariates</li>
 </ul>
 <p>Quadratic polynomials are common in ecology because often, a relationship is not simply linear but has an optimum, e.g. of rainfall on growth - too little and too much rain are both not ideal for most plants. In such a case, the quadratic effect typically will be negative, because this means that the curve (= the regression line) has an optimum; a positive quadratic effect produces a curve that has a minimum. Of course, across the range of the predictor, we may only cover a part of the curve, hence a negative quadratic effect can also be a curve that increases and gradually levels off. This is typically seen for a species-area curve: as the size of a study plot increases, more species are found, but fewer and fewer new species can be added the more species are already in the pool of observed species. If we extrapolyte such a regression line beyond the maximal size of our study plots, the curve would start to decline, which is biological nonsense (in most cases!). Extrapolations of regression lines beyond the observed data are always delicate, but especially when polynomials are included.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="transformations.html#cb46-1" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">area =</span> <span class="fu">c</span>(<span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="fl">2.3</span>,<span class="dv">3</span>,<span class="fl">3.3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="fl">5.5</span>),</span>
-<span id="cb46-2"><a href="transformations.html#cb46-2" tabindex="-1"></a>                  <span class="at">species =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>))</span>
-<span id="cb46-3"><a href="transformations.html#cb46-3" tabindex="-1"></a><span class="fu">plot</span>(dat<span class="sc">$</span>area, dat<span class="sc">$</span>species, <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab=</span><span class="st">&quot;Size of study area&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Nr of species found&quot;</span>,</span>
-<span id="cb46-4"><a href="transformations.html#cb46-4" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>),<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>))</span>
-<span id="cb46-5"><a href="transformations.html#cb46-5" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(species <span class="sc">~</span> <span class="fu">poly</span>(area,<span class="dv">2</span>), <span class="at">data=</span>dat)   <span class="co"># for species, a Poisson model would be a natural approach, but Gauss also works in our case</span></span>
-<span id="cb46-6"><a href="transformations.html#cb46-6" tabindex="-1"></a>t.area <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(dat<span class="sc">$</span>area),<span class="fu">max</span>(dat<span class="sc">$</span>area),<span class="at">l=</span><span class="dv">100</span>)  <span class="co"># span 100 values across which to draw the regression line</span></span>
-<span id="cb46-7"><a href="transformations.html#cb46-7" tabindex="-1"></a><span class="fu">lines</span>(t.area, <span class="fu">predict</span>(mod, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">area=</span>t.area)), <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
-<span id="cb46-8"><a href="transformations.html#cb46-8" tabindex="-1"></a><span class="co"># further extrapolytion would not make biologically sense here:</span></span>
-<span id="cb46-9"><a href="transformations.html#cb46-9" tabindex="-1"></a>t.area <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">max</span>(dat<span class="sc">$</span>area)<span class="sc">+</span><span class="fl">0.2</span>,<span class="dv">10</span>,<span class="at">l=</span><span class="dv">100</span>)  <span class="co"># span 100 values across which to draw the regression line</span></span>
-<span id="cb46-10"><a href="transformations.html#cb46-10" tabindex="-1"></a><span class="fu">lines</span>(t.area, <span class="fu">predict</span>(mod, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">area=</span>t.area)), <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="transformations.html#cb45-1" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">area =</span> <span class="fu">c</span>(<span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="fl">2.3</span>,<span class="dv">3</span>,<span class="fl">3.3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="fl">5.5</span>),</span>
+<span id="cb45-2"><a href="transformations.html#cb45-2" tabindex="-1"></a>                  <span class="at">species =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>))</span>
+<span id="cb45-3"><a href="transformations.html#cb45-3" tabindex="-1"></a><span class="fu">plot</span>(dat<span class="sc">$</span>area, dat<span class="sc">$</span>species, <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab=</span><span class="st">&quot;Size of study area&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Nr of species found&quot;</span>,</span>
+<span id="cb45-4"><a href="transformations.html#cb45-4" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>),<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>))</span>
+<span id="cb45-5"><a href="transformations.html#cb45-5" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(species <span class="sc">~</span> <span class="fu">poly</span>(area,<span class="dv">2</span>), <span class="at">data=</span>dat)   <span class="co"># for species, a Poisson model would be a natural approach, but Gauss also works in our case</span></span>
+<span id="cb45-6"><a href="transformations.html#cb45-6" tabindex="-1"></a>t.area <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(dat<span class="sc">$</span>area),<span class="fu">max</span>(dat<span class="sc">$</span>area),<span class="at">l=</span><span class="dv">100</span>)  <span class="co"># span 100 values across which to draw the regression line</span></span>
+<span id="cb45-7"><a href="transformations.html#cb45-7" tabindex="-1"></a><span class="fu">lines</span>(t.area, <span class="fu">predict</span>(mod, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">area=</span>t.area)), <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb45-8"><a href="transformations.html#cb45-8" tabindex="-1"></a><span class="co"># further extrapolytion would not make biologically sense here:</span></span>
+<span id="cb45-9"><a href="transformations.html#cb45-9" tabindex="-1"></a>t.area <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">max</span>(dat<span class="sc">$</span>area)<span class="sc">+</span><span class="fl">0.2</span>,<span class="dv">10</span>,<span class="at">l=</span><span class="dv">100</span>)  <span class="co"># span 100 values across which to draw the regression line</span></span>
+<span id="cb45-10"><a href="transformations.html#cb45-10" tabindex="-1"></a><span class="fu">lines</span>(t.area, <span class="fu">predict</span>(mod, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">area=</span>t.area)), <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-7"></span>
 <img src="1.4-transformations_files/figure-html/unnamed-chunk-7-1.png" alt="Observed relationship between the size of the study area and the number of species found there (circles) with a linear-quadratic regression line (red) to describe this relationship. While this line is a reasonable model for the data at hand, it is nonsense to extrapolate the line beyond the available data (blue line)." width="336" />
 <p class="caption">
@@ -606,7 +608,7 @@ Figure 5.2: Observed relationship between the size of the study area and the num
 <h2><span class="header-section-number">5.7</span> Arcsinus-square-root transformation<a href="transformations.html#arcsinus-square-root-transformation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The arccin-square-root transformation has been suggested for proportions. If you have the number of germinated seeds among a total number of seeds in the pot, you would use a binomial model (Chapter @glm and @glmm). But sometimes, you may only have the proportion that germinated, not the number and not the total, and, therefore, a binomial model is not possible. Then, the arcsin-square-root transformation can be a good choice. It stretches the effect at the ends, such that a change from 1% to 2% corresponds to a larger change than a change from 50% to 51%, which makes sense biologically in many or most cases (the first is a doubling, the second only a minor change).</p>
 <p>The logit-transformation (see next chapter) has an analogous effect, but it cannot be applied to values of exactly 0 or 1, while arcsin-square-root does. The coefficient of a logit-transformed proportion has an interpretable meaning (albeit not a very easy one: see the discussion on odds ratios in Chapter <a href="glm.html#glm">14</a>), the coefficient of a arcsin-square-root transformation does not (except for the sign). But interpreting results works better looking at effectplots than coefficients anyways. So if you have 0s or 1s in the data, the arcsin-square-root is the better option than the logit; this is also true if you have values extremely close to 0 or 1, because the logit has a stronger effect on such values (as it goes towards minus/plus infinity at the extremes), potentially making these observations unduely influential; the arcsin-square-root transformation, on the other hand, does not go beyond 0 and (the meaningless valu of) 1.57:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="transformations.html#cb47-1" tabindex="-1"></a><span class="fu">asin</span>(<span class="fu">sqrt</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="transformations.html#cb46-1" tabindex="-1"></a><span class="fu">asin</span>(<span class="fu">sqrt</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)))</span></code></pre></div>
 <pre><code>## [1] 0.000000 1.570796</code></pre>
 <p>For values not at the extremes, arcsin-square-root and logit produce similar transformations.</p>
 </div>
@@ -626,28 +628,28 @@ Figure 5.2: Observed relationship between the size of the study area and the num
 <div id="transformationscircular" class="section level2 hasAnchor" number="5.10">
 <h2><span class="header-section-number">5.10</span> Sinus and cosinus transformation for circular variables<a href="transformations.html#transformationscircular" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Variables like date (when spanning an entire year) or direction (in the sense of 0 to 360°, such as wind direction) are circular: the two ends (1 January and 31 December, 0° and 359°) are actually right next to each other. When you fit a simple linear regression to such data, e.g. the effect of wind direction on the number of migrants passing a study site, the two ends will not match (unless the line is horizontal), which makes no sense biologically. We can apply a sinus and cosinus transformation to match the two ends. The transformation has to be made on the radians, i.e. values from <span class="math inline">\(0\)</span> to <span class="math inline">\(2\pi\)</span>, hence convert a julian day to <span class="math inline">\(day/365*2*\pi\)</span>, direction to <span class="math inline">\(direction/360*2*\pi\)</span>, etc.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="transformations.html#cb49-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">8</span>)</span>
-<span id="cb49-2"><a href="transformations.html#cb49-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">wind =</span> <span class="fu">sort</span>(<span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">359</span>,<span class="dv">120</span>, <span class="at">replace =</span> T)),</span>
-<span id="cb49-3"><a href="transformations.html#cb49-3" tabindex="-1"></a>                  <span class="at">migration =</span> <span class="fu">as.numeric</span>(<span class="fu">mapply</span>(<span class="cf">function</span>(x) <span class="fu">rpois</span>(<span class="dv">10</span>,x), <span class="at">x=</span><span class="fu">c</span>(<span class="dv">15</span>,<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">15</span>,<span class="dv">20</span>,<span class="dv">32</span>,<span class="dv">25</span>,<span class="dv">20</span>))))</span>
-<span id="cb49-4"><a href="transformations.html#cb49-4" tabindex="-1"></a>dat<span class="sc">$</span>wind.n <span class="ot">&lt;-</span> <span class="fu">cos</span>(dat<span class="sc">$</span>wind<span class="sc">/</span><span class="dv">360</span><span class="sc">*</span><span class="dv">2</span><span class="sc">*</span>pi)   <span class="co"># northwind component: 1 for perfect north, -1 for perfect south wind</span></span>
-<span id="cb49-5"><a href="transformations.html#cb49-5" tabindex="-1"></a>dat<span class="sc">$</span>wind.e <span class="ot">&lt;-</span> <span class="fu">sin</span>(dat<span class="sc">$</span>wind<span class="sc">/</span><span class="dv">360</span><span class="sc">*</span><span class="dv">2</span><span class="sc">*</span>pi)   <span class="co"># eastwind component: 1 for perfect east, -1 for perfect west wind</span></span>
-<span id="cb49-6"><a href="transformations.html#cb49-6" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(migration <span class="sc">~</span> wind.n <span class="sc">+</span> wind.e, <span class="at">data=</span>dat)</span>
-<span id="cb49-7"><a href="transformations.html#cb49-7" tabindex="-1"></a><span class="fu">summary</span>(mod)<span class="sc">$</span>coefficients[,<span class="fu">c</span>(<span class="st">&quot;Estimate&quot;</span>,<span class="st">&quot;Std. Error&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="transformations.html#cb48-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">8</span>)</span>
+<span id="cb48-2"><a href="transformations.html#cb48-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">wind =</span> <span class="fu">sort</span>(<span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">359</span>,<span class="dv">120</span>, <span class="at">replace =</span> T)),</span>
+<span id="cb48-3"><a href="transformations.html#cb48-3" tabindex="-1"></a>                  <span class="at">migration =</span> <span class="fu">as.numeric</span>(<span class="fu">mapply</span>(<span class="cf">function</span>(x) <span class="fu">rpois</span>(<span class="dv">10</span>,x), <span class="at">x=</span><span class="fu">c</span>(<span class="dv">15</span>,<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">15</span>,<span class="dv">20</span>,<span class="dv">32</span>,<span class="dv">25</span>,<span class="dv">20</span>))))</span>
+<span id="cb48-4"><a href="transformations.html#cb48-4" tabindex="-1"></a>dat<span class="sc">$</span>wind.n <span class="ot">&lt;-</span> <span class="fu">cos</span>(dat<span class="sc">$</span>wind<span class="sc">/</span><span class="dv">360</span><span class="sc">*</span><span class="dv">2</span><span class="sc">*</span>pi)   <span class="co"># northwind component: 1 for perfect north, -1 for perfect south wind</span></span>
+<span id="cb48-5"><a href="transformations.html#cb48-5" tabindex="-1"></a>dat<span class="sc">$</span>wind.e <span class="ot">&lt;-</span> <span class="fu">sin</span>(dat<span class="sc">$</span>wind<span class="sc">/</span><span class="dv">360</span><span class="sc">*</span><span class="dv">2</span><span class="sc">*</span>pi)   <span class="co"># eastwind component: 1 for perfect east, -1 for perfect west wind</span></span>
+<span id="cb48-6"><a href="transformations.html#cb48-6" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(migration <span class="sc">~</span> wind.n <span class="sc">+</span> wind.e, <span class="at">data=</span>dat)</span>
+<span id="cb48-7"><a href="transformations.html#cb48-7" tabindex="-1"></a><span class="fu">summary</span>(mod)<span class="sc">$</span>coefficients[,<span class="fu">c</span>(<span class="st">&quot;Estimate&quot;</span>,<span class="st">&quot;Std. Error&quot;</span>)]</span></code></pre></div>
 <pre><code>##              Estimate Std. Error
 ## (Intercept) 12.020347  0.4399101
 ## wind.n       7.943276  0.6712879
 ## wind.e      -8.967165  0.5775515</code></pre>
 <p>A positive effect of wind.n means that there is more migration the larger the northern component of the wind, a negative effect of wind.e means that there is less migration the larger the eastern component of the wind (and hence, more migration with more westerly winds).</p>
 <p>Result interpretation is easier from an effectplot:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="transformations.html#cb51-1" tabindex="-1"></a>t.wind <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">365</span>,<span class="at">l=</span><span class="dv">100</span>)   <span class="co"># prepare a sequence of wind-values for which to draw the regression line</span></span>
-<span id="cb51-2"><a href="transformations.html#cb51-2" tabindex="-1"></a>t.wind.n <span class="ot">&lt;-</span> <span class="fu">cos</span>(t.wind<span class="sc">/</span><span class="dv">365</span><span class="sc">*</span><span class="dv">2</span><span class="sc">*</span>pi)  <span class="co"># same transformation as before</span></span>
-<span id="cb51-3"><a href="transformations.html#cb51-3" tabindex="-1"></a>t.wind.e <span class="ot">&lt;-</span> <span class="fu">sin</span>(t.wind<span class="sc">/</span><span class="dv">365</span><span class="sc">*</span><span class="dv">2</span><span class="sc">*</span>pi)</span>
-<span id="cb51-4"><a href="transformations.html#cb51-4" tabindex="-1"></a></span>
-<span id="cb51-5"><a href="transformations.html#cb51-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb51-6"><a href="transformations.html#cb51-6" tabindex="-1"></a><span class="fu">plot</span>(dat<span class="sc">$</span>wind, dat<span class="sc">$</span>migration, <span class="at">xlab=</span><span class="st">&quot;Winddirection</span><span class="sc">\n</span><span class="st">(where wind comes from)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Migration activity&quot;</span>,<span class="at">las=</span><span class="dv">1</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>)</span>
-<span id="cb51-7"><a href="transformations.html#cb51-7" tabindex="-1"></a>  <span class="co"># make a meaningful x-axis:</span></span>
-<span id="cb51-8"><a href="transformations.html#cb51-8" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>,<span class="at">at=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">365</span>,<span class="at">by=</span><span class="dv">45</span>),<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>,<span class="st">&quot;NE&quot;</span>,<span class="st">&quot;E&quot;</span>,<span class="st">&quot;SE&quot;</span>,<span class="st">&quot;S&quot;</span>,<span class="st">&quot;SW&quot;</span>,<span class="st">&quot;W&quot;</span>,<span class="st">&quot;NW&quot;</span>,<span class="st">&quot;N&quot;</span>))</span>
-<span id="cb51-9"><a href="transformations.html#cb51-9" tabindex="-1"></a><span class="fu">lines</span>(t.wind, <span class="fu">predict</span>(mod, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">wind.n=</span>t.wind.n, <span class="at">wind.e=</span>t.wind.e)), <span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="transformations.html#cb50-1" tabindex="-1"></a>t.wind <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">365</span>,<span class="at">l=</span><span class="dv">100</span>)   <span class="co"># prepare a sequence of wind-values for which to draw the regression line</span></span>
+<span id="cb50-2"><a href="transformations.html#cb50-2" tabindex="-1"></a>t.wind.n <span class="ot">&lt;-</span> <span class="fu">cos</span>(t.wind<span class="sc">/</span><span class="dv">365</span><span class="sc">*</span><span class="dv">2</span><span class="sc">*</span>pi)  <span class="co"># same transformation as before</span></span>
+<span id="cb50-3"><a href="transformations.html#cb50-3" tabindex="-1"></a>t.wind.e <span class="ot">&lt;-</span> <span class="fu">sin</span>(t.wind<span class="sc">/</span><span class="dv">365</span><span class="sc">*</span><span class="dv">2</span><span class="sc">*</span>pi)</span>
+<span id="cb50-4"><a href="transformations.html#cb50-4" tabindex="-1"></a></span>
+<span id="cb50-5"><a href="transformations.html#cb50-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb50-6"><a href="transformations.html#cb50-6" tabindex="-1"></a><span class="fu">plot</span>(dat<span class="sc">$</span>wind, dat<span class="sc">$</span>migration, <span class="at">xlab=</span><span class="st">&quot;Winddirection</span><span class="sc">\n</span><span class="st">(where wind comes from)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Migration activity&quot;</span>,<span class="at">las=</span><span class="dv">1</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb50-7"><a href="transformations.html#cb50-7" tabindex="-1"></a>  <span class="co"># make a meaningful x-axis:</span></span>
+<span id="cb50-8"><a href="transformations.html#cb50-8" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>,<span class="at">at=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">365</span>,<span class="at">by=</span><span class="dv">45</span>),<span class="fu">c</span>(<span class="st">&quot;N&quot;</span>,<span class="st">&quot;NE&quot;</span>,<span class="st">&quot;E&quot;</span>,<span class="st">&quot;SE&quot;</span>,<span class="st">&quot;S&quot;</span>,<span class="st">&quot;SW&quot;</span>,<span class="st">&quot;W&quot;</span>,<span class="st">&quot;NW&quot;</span>,<span class="st">&quot;N&quot;</span>))</span>
+<span id="cb50-9"><a href="transformations.html#cb50-9" tabindex="-1"></a><span class="fu">lines</span>(t.wind, <span class="fu">predict</span>(mod, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">wind.n=</span>t.wind.n, <span class="at">wind.e=</span>t.wind.e)), <span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-10"></span>
 <img src="1.4-transformations_files/figure-html/unnamed-chunk-10-1.png" alt="Relationship between wind direction and migration activity (circles; virtual data). We fit a linear regression through the data using two circular wind variables (north and east components)." width="384" />
 <p class="caption">
@@ -674,13 +676,13 @@ Figure 5.3: Relationship between wind direction and migration activity (circles;
 <h2><span class="header-section-number">5.14</span> Back-transformation<a href="transformations.html#back-transformation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In many contexts we want to back-transform a transformed value to its original value. This is especially common in generalized linear (mixed) models, where the prediction from the linear predictor is on the link scale (log for Poisson and negative-binomial models, logit for binomial models; see Chapter <a href="glm.html#glm">14</a>). In suche cases, we apply the “inverse link function” (i.e. doing the back-transformation) to get the values on the original scale. Hence, predictions from a Poisson model are exp-transformed to get the estimates (or predicted value) of the outcome variable on its original scale (e.g. number of individuals); predictions from a binomial model are inverse-logit-transformed (function <code>plogis</code>) to get the estimate ot he original scale (i.e. a probability in the case of a binomial model). Note that depending on the R function you use, this back-transformation is done automatically, e.g. when using <code>predict</code> with argument <code>tpye=response</code>, or when using <code>posterior_epred</code> (applied to a model fitted with rstanarm or brms, Chapter <a href="lm.html#brm">11.1.2.4</a>).</p>
 <p>A technical note: you can get the inverse link-function to a model you fitted using the function <code>family</code>; it works with models fitted with <code>glm</code>, but may be others, too, depending on whether the package authors have implemented this. You apply the function <code>family</code> to the fitted model and extract the <code>$lininv</code> from that, which is the inverse link function:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="transformations.html#cb52-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)<span class="sc">~</span><span class="fu">runif</span>(<span class="dv">10</span>,<span class="dv">3</span>,<span class="dv">7</span>), <span class="at">family=</span>binomial)  <span class="co"># default link function is logit</span></span>
-<span id="cb52-2"><a href="transformations.html#cb52-2" tabindex="-1"></a><span class="fu">family</span>(m)<span class="sc">$</span><span class="fu">linkinv</span>(<span class="dv">3</span>)   <span class="co"># inverse link of logit; is the same as plogis:</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="transformations.html#cb51-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)<span class="sc">~</span><span class="fu">runif</span>(<span class="dv">10</span>,<span class="dv">3</span>,<span class="dv">7</span>), <span class="at">family=</span>binomial)  <span class="co"># default link function is logit</span></span>
+<span id="cb51-2"><a href="transformations.html#cb51-2" tabindex="-1"></a><span class="fu">family</span>(m)<span class="sc">$</span><span class="fu">linkinv</span>(<span class="dv">3</span>)   <span class="co"># inverse link of logit; is the same as plogis:</span></span></code></pre></div>
 <pre><code>## [1] 0.9525741</code></pre>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="transformations.html#cb54-1" tabindex="-1"></a><span class="fu">plogis</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="transformations.html#cb53-1" tabindex="-1"></a><span class="fu">plogis</span>(<span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## [1] 0.9525741</code></pre>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="transformations.html#cb56-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)<span class="sc">~</span><span class="fu">runif</span>(<span class="dv">10</span>,<span class="dv">3</span>,<span class="dv">7</span>), <span class="at">family=</span><span class="fu">binomial</span>(probit))  <span class="co"># alternative link function: probit</span></span>
-<span id="cb56-2"><a href="transformations.html#cb56-2" tabindex="-1"></a><span class="fu">family</span>(m)<span class="sc">$</span><span class="fu">linkinv</span>(<span class="dv">3</span>)   <span class="co"># inverse probit function</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="transformations.html#cb55-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)<span class="sc">~</span><span class="fu">runif</span>(<span class="dv">10</span>,<span class="dv">3</span>,<span class="dv">7</span>), <span class="at">family=</span><span class="fu">binomial</span>(probit))  <span class="co"># alternative link function: probit</span></span>
+<span id="cb55-2"><a href="transformations.html#cb55-2" tabindex="-1"></a><span class="fu">family</span>(m)<span class="sc">$</span><span class="fu">linkinv</span>(<span class="dv">3</span>)   <span class="co"># inverse probit function</span></span></code></pre></div>
 <pre><code>## [1] 0.9986501</code></pre>
 </div>
 <div id="applythesametransformation" class="section level2 hasAnchor" number="5.15">
@@ -698,74 +700,74 @@ Figure 5.3: Relationship between wind direction and migration activity (circles;
 <col width="38%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th align="left">transformation</th>
 <th align="left">transformation done on dat$x</th>
 <th align="left">transformation done on newdat$x</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td align="left">log</td>
 <td align="left">log(dat$x)</td>
 <td align="left">log(newdat$x)</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">log + 1</td>
 <td align="left">log(dat$x+1)</td>
 <td align="left">log(newdat$x+1)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">log with Stahel</td>
 <td align="left">log(dat$x+stahelc(dat$x))</td>
 <td align="left">log(newdat$x+stahelc(dat$x))</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">center</td>
 <td align="left">dat$x - mean(dat$x)</td>
 <td align="left">newdat$x - mean(dat$x)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">scale to 1 SD</td>
 <td align="left">dat$x / sd(dat$x)</td>
 <td align="left">newdat$x / sd(dat$x)</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">z</td>
 <td align="left">scale(dat$x)</td>
 <td align="left">(newdat$x - mean(dat$x)) / sd(dat$x)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">raw poly</td>
 <td align="left">dat$x^2, dat$x^3, etc</td>
 <td align="left">newdat$x^2, newdat$x^3, etc</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">orthogonal poly (e.g. 2)</td>
 <td align="left">poly(dat$x,2)</td>
 <td align="left">predict(poly(dat$x,2), newdata=newdat$x)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">square-root</td>
 <td align="left">sqrt(dat$x)</td>
 <td align="left">sqrt(newdat$x)</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">asin-square-root</td>
 <td align="left">asin(sqrt(dat$x))</td>
 <td align="left">asin(sqrt(newdat$x))</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">logit</td>
 <td align="left">log(dat$p / (1-dat$p))</td>
 <td align="left">log(newdat$p / (1-newdat$p))</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">sin</td>
 <td align="left">sin(dat$r)</td>
 <td align="left">sin(newdat$r)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">cosin</td>
 <td align="left">cos(dat$r)</td>
 <td align="left">cos(newdat$r)</td>
@@ -795,42 +797,42 @@ Figure 5.3: Relationship between wind direction and migration activity (circles;
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/1.4-transformations.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-}
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/TobiasRoth/BDAEcology/edit/master/1.4-transformations.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
 });
 });
 </script>

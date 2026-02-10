@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9 The Bayesian paradigm and likelihood in a frequentist and Bayesian framework | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is a collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9 The Bayesian paradigm and likelihood in a frequentist and Bayesian framework | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2025-11-01" />
+<meta name="date" content="2026-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -179,7 +179,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-data"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing data</a>
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="basics.html"><a href="basics.html#histogram"><i class="fa fa-check"></i><b>2.2.1</b> Histogram</a></li>
-<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#location-and-scatter"><i class="fa fa-check"></i><b>2.2.2</b> Location and scatter</a></li>
+<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#location-and-scatter-location_and_scatter"><i class="fa fa-check"></i><b>2.2.2</b> Location and scatter {location_and_scatter}</a></li>
 <li class="chapter" data-level="2.2.3" data-path="basics.html"><a href="basics.html#correlations"><i class="fa fa-check"></i><b>2.2.3</b> Correlations</a></li>
 <li class="chapter" data-level="2.2.4" data-path="basics.html"><a href="basics.html#principal-components-analyses-pca"><i class="fa fa-check"></i><b>2.2.4</b> Principal components analyses PCA</a></li>
 </ul></li>
@@ -193,15 +193,15 @@ div.csl-indent {
 <li class="chapter" data-level="2.4.1" data-path="basics.html"><a href="basics.html#bayes-theorem-for-discrete-events"><i class="fa fa-check"></i><b>2.4.1</b> Bayes theorem for discrete events</a></li>
 <li class="chapter" data-level="2.4.2" data-path="basics.html"><a href="basics.html#bayes-theorem-for-continuous-parameters"><i class="fa fa-check"></i><b>2.4.2</b> Bayes theorem for continuous parameters</a></li>
 <li class="chapter" data-level="2.4.3" data-path="basics.html"><a href="basics.html#estimating-a-mean-assuming-that-the-variance-is-known"><i class="fa fa-check"></i><b>2.4.3</b> Estimating a mean assuming that the variance is known</a></li>
-<li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#estimating-the-mean-and-the-variance"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
+<li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#meanvarSnowfinch"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#classical-frequentist-tests-and-alternatives"><i class="fa fa-check"></i><b>2.5</b> Classical frequentist tests and alternatives</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#nullhypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Nullhypothesis testing</a></li>
+<li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#null-hypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Null hypothesis testing</a></li>
 <li class="chapter" data-level="2.5.2" data-path="basics.html"><a href="basics.html#comparison-of-a-sample-with-a-fixed-value-one-sample-t-test"><i class="fa fa-check"></i><b>2.5.2</b> Comparison of a sample with a fixed value (one-sample t-test)</a></li>
 <li class="chapter" data-level="2.5.3" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups-two-sample-t-test"><i class="fa fa-check"></i><b>2.5.3</b> Comparison of the locations between two groups (two-sample t-test)</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#whyBayes"><i class="fa fa-check"></i><b>2.6</b> Comparing frequentist and Bayesian approach - an why we use Bayes</a></li>
+<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#whyBayes"><i class="fa fa-check"></i><b>2.6</b> Comparing frequentist and Bayesian approach - and why we use Bayes</a></li>
 <li class="chapter" data-level="2.7" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.7</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="analyses_steps.html"><a href="analyses_steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a>
@@ -267,7 +267,8 @@ div.csl-indent {
 <li class="chapter" data-level="7.2" data-path="furthertopics.html"><a href="furthertopics.html#python"><i class="fa fa-check"></i><b>7.2</b> Python</a></li>
 <li class="chapter" data-level="7.3" data-path="furthertopics.html"><a href="furthertopics.html#some-r"><i class="fa fa-check"></i><b>7.3</b> Some R</a>
 <ul>
-<li class="chapter" data-level="7.3.1" data-path="furthertopics.html"><a href="furthertopics.html#date-on-x-axis"><i class="fa fa-check"></i><b>7.3.1</b> Date on x-axis</a></li>
+<li class="chapter" data-level="7.3.1" data-path="furthertopics.html"><a href="furthertopics.html#spatial-data-processing-in-r"><i class="fa fa-check"></i><b>7.3.1</b> Spatial data processing in R</a></li>
+<li class="chapter" data-level="7.3.2" data-path="furthertopics.html"><a href="furthertopics.html#date-on-x-axis"><i class="fa fa-check"></i><b>7.3.2</b> Date on x-axis</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II BAYESIAN DATA ANALYSIS</b></span></li>
@@ -514,15 +515,15 @@ very little but it can include information from earlier studies. The probability
 <h3><span class="header-section-number">9.3.1</span> Theory<a href="bayesian_paradigm.html#theory" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In Bayesian statistics the likelihood is the probability distribution of the data given the model <span class="math inline">\(p(y|\theta)\)</span>, also called the predictive density. In contrast, frequentists use the likelihood as a relative measure of the probability of the data given a specific model (i.e., a model with specified parameter values). Often, we see the notation <span class="math inline">\(L(\theta|y) = p(y|\theta)\)</span> for thelikelihood of a model. Let’s look at an example. According to values that we found on the internet, black-tailed prairie dogs <em>Cynomys ludovicianus</em> weigh on average 1 kg with a standard deviation of 0.2 kg.</p>
 <p>Using these values, we construct a model for the weight of prairie dogs <span class="math inline">\(y_i \sim normal(\mu, \sigma)\)</span> with <span class="math inline">\(\mu\)</span> = 1 kg and <span class="math inline">\(\sigma\)</span> = 0.2 kg. We then go to the prairie and catch three prairie dogs. Their weights are 0.8, 1.2, and 1.1 kg. What is the likelihood of our model given this data? The likelihood is the product of the density function (the <a href="distributions.html#normdist">Gaussian function</a> with <span class="math inline">\(\mu\)</span> = 1 and <span class="math inline">\(\sigma\)</span> = 0.2) defined by the model and evaluated for each data point (Figure <a href="bayesian_paradigm.html#fig:gaussdistpd">9.1</a>).</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="bayesian_paradigm.html#cb61-1" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">0.8</span>, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>)<span class="sc">*</span><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">1.2</span>, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>)<span class="sc">*</span></span>
-<span id="cb61-2"><a href="bayesian_paradigm.html#cb61-2" tabindex="-1"></a><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">1.1</span>, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>)</span>
-<span id="cb61-3"><a href="bayesian_paradigm.html#cb61-3" tabindex="-1"></a>l</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="bayesian_paradigm.html#cb60-1" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">0.8</span>, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>)<span class="sc">*</span><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">1.2</span>, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>)<span class="sc">*</span></span>
+<span id="cb60-2"><a href="bayesian_paradigm.html#cb60-2" tabindex="-1"></a><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">1.1</span>, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>)</span>
+<span id="cb60-3"><a href="bayesian_paradigm.html#cb60-3" tabindex="-1"></a>l</span></code></pre></div>
 <pre><code>## [1] 2.576671</code></pre>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="bayesian_paradigm.html#cb63-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">2</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
-<span id="cb63-2"><a href="bayesian_paradigm.html#cb63-2" tabindex="-1"></a>dx <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>)</span>
-<span id="cb63-3"><a href="bayesian_paradigm.html#cb63-3" tabindex="-1"></a><span class="fu">plot</span>(x, dx, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab=</span><span class="st">&quot;Weight [kg]&quot;</span>)</span>
-<span id="cb63-4"><a href="bayesian_paradigm.html#cb63-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">1.1</span>, <span class="fl">1.2</span>)</span>
-<span id="cb63-5"><a href="bayesian_paradigm.html#cb63-5" tabindex="-1"></a><span class="fu">segments</span>(y, <span class="fu">dnorm</span>(y, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>), y, <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(y)))</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="bayesian_paradigm.html#cb62-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">2</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
+<span id="cb62-2"><a href="bayesian_paradigm.html#cb62-2" tabindex="-1"></a>dx <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>)</span>
+<span id="cb62-3"><a href="bayesian_paradigm.html#cb62-3" tabindex="-1"></a><span class="fu">plot</span>(x, dx, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab=</span><span class="st">&quot;Weight [kg]&quot;</span>)</span>
+<span id="cb62-4"><a href="bayesian_paradigm.html#cb62-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">1.1</span>, <span class="fl">1.2</span>)</span>
+<span id="cb62-5"><a href="bayesian_paradigm.html#cb62-5" tabindex="-1"></a><span class="fu">segments</span>(y, <span class="fu">dnorm</span>(y, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="fl">0.2</span>), y, <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(y)))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:gaussdistpd"></span>
 <img src="2.01-bayesian_paradigm_files/figure-html/gaussdistpd-1.png" alt="Density function of a Gaussian (=normal) distribution with mean 1 kg and standard deviation 0.2 kg. The vertical lines indicate the three observations in the data. The curve has been produced using the function dnorm." width="672" />
 <p class="caption">
@@ -530,48 +531,48 @@ Figure 9.1: Density function of a Gaussian (=normal) distribution with mean 1 kg
 </p>
 </div>
 <p>The likelihood (2.6) does not tell us much. But, another web page says that prairie dogs weigh on average 1.2 kg with a standard deviation of 0.4 kg. The likelihood for this alternative model is:</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="bayesian_paradigm.html#cb64-1" tabindex="-1"></a>l2 <span class="ot">&lt;-</span><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">0.8</span>, <span class="at">mean=</span><span class="fl">1.2</span>, <span class="at">sd=</span><span class="fl">0.4</span>)<span class="sc">*</span><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">1.2</span>, <span class="at">mean=</span><span class="fl">1.2</span>, <span class="at">sd=</span><span class="fl">0.4</span>)<span class="sc">*</span></span>
-<span id="cb64-2"><a href="bayesian_paradigm.html#cb64-2" tabindex="-1"></a><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">1.1</span>, <span class="at">mean=</span><span class="fl">1.2</span>, <span class="at">sd=</span><span class="fl">0.4</span>)</span>
-<span id="cb64-3"><a href="bayesian_paradigm.html#cb64-3" tabindex="-1"></a>l2</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="bayesian_paradigm.html#cb63-1" tabindex="-1"></a>l2 <span class="ot">&lt;-</span><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">0.8</span>, <span class="at">mean=</span><span class="fl">1.2</span>, <span class="at">sd=</span><span class="fl">0.4</span>)<span class="sc">*</span><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">1.2</span>, <span class="at">mean=</span><span class="fl">1.2</span>, <span class="at">sd=</span><span class="fl">0.4</span>)<span class="sc">*</span></span>
+<span id="cb63-2"><a href="bayesian_paradigm.html#cb63-2" tabindex="-1"></a><span class="fu">dnorm</span>(<span class="at">x=</span><span class="fl">1.1</span>, <span class="at">mean=</span><span class="fl">1.2</span>, <span class="at">sd=</span><span class="fl">0.4</span>)</span>
+<span id="cb63-3"><a href="bayesian_paradigm.html#cb63-3" tabindex="-1"></a>l2</span></code></pre></div>
 <pre><code>## [1] 0.5832185</code></pre>
 <p>Thus, the probability of observing the three weights (0.8, 1.2, and 1.1 kg) is four times larger given the first model than given the second model.<br />
 The normal density function is a function of <span class="math inline">\(y\)</span> with fixed parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span>. When we fix the data to value <span class="math inline">\(y\)</span> (i.e., we have a data file with <span class="math inline">\(n = 1\)</span>) and vary the parameter, we get the likelihood function given the data and we assume the normal distribution as our data model. When the data contain more than one observation, the likelihood function becomes a product of the normal density function for each observation.
 <span class="math display">\[ L(\mu, \sigma|y) = \prod_{i=1}^n p(y_i|\mu,\sigma) \]</span>
 We can insert the three observations into this function.</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="bayesian_paradigm.html#cb66-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">1.2</span>, <span class="fl">1.1</span>)</span>
-<span id="cb66-2"><a href="bayesian_paradigm.html#cb66-2" tabindex="-1"></a>lf <span class="ot">&lt;-</span> <span class="cf">function</span>(mu, sigma) <span class="fu">prod</span>(<span class="fu">dnorm</span>(y, <span class="at">mean=</span>mu, <span class="at">sd=</span>sigma))</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="bayesian_paradigm.html#cb65-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">1.2</span>, <span class="fl">1.1</span>)</span>
+<span id="cb65-2"><a href="bayesian_paradigm.html#cb65-2" tabindex="-1"></a>lf <span class="ot">&lt;-</span> <span class="cf">function</span>(mu, sigma) <span class="fu">prod</span>(<span class="fu">dnorm</span>(y, <span class="at">mean=</span>mu, <span class="at">sd=</span>sigma))</span></code></pre></div>
 <p>Applying the likelihood function to the model from the first web page, we get the following likelihood.</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="bayesian_paradigm.html#cb67-1" tabindex="-1"></a><span class="fu">lf</span>(<span class="dv">1</span>, <span class="fl">0.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="bayesian_paradigm.html#cb66-1" tabindex="-1"></a><span class="fu">lf</span>(<span class="dv">1</span>, <span class="fl">0.2</span>)</span></code></pre></div>
 <pre><code>## [1] 2.576671</code></pre>
 </div>
 <div id="the-maximum-likelihood-method" class="section level3 hasAnchor" number="9.3.2">
 <h3><span class="header-section-number">9.3.2</span> The maximum likelihood method<a href="bayesian_paradigm.html#the-maximum-likelihood-method" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A common method of obtaining parameter estimates is the maximum likelihood method (ML). Specifically, we search for the parameter combination from the likelihood function for which the likelihood is maximized. Also in Bayesian statistics, ML is used to optimize algorithms that produce posterior distributions (e.g., in the function <code>sim</code>).</p>
 <p>To obtain ML estimates for the mean and standard deviation of the prairie dog weights, we calculate the likelihood function for many possible combinations of means and standard deviations and look for the pair of parameter values that is associated with the largest likelihood value.</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="bayesian_paradigm.html#cb69-1" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.6</span>, <span class="fl">1.4</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
-<span id="cb69-2"><a href="bayesian_paradigm.html#cb69-2" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.6</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
-<span id="cb69-3"><a href="bayesian_paradigm.html#cb69-3" tabindex="-1"></a>lik <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">length</span>(mu), <span class="at">ncol=</span><span class="fu">length</span>(sigma))</span>
-<span id="cb69-4"><a href="bayesian_paradigm.html#cb69-4" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(mu)){</span>
-<span id="cb69-5"><a href="bayesian_paradigm.html#cb69-5" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sigma)){</span>
-<span id="cb69-6"><a href="bayesian_paradigm.html#cb69-6" tabindex="-1"></a>    lik[i,j] <span class="ot">&lt;-</span> <span class="fu">lf</span>(mu[i], sigma[j])</span>
-<span id="cb69-7"><a href="bayesian_paradigm.html#cb69-7" tabindex="-1"></a>  }</span>
-<span id="cb69-8"><a href="bayesian_paradigm.html#cb69-8" tabindex="-1"></a>}</span>
-<span id="cb69-9"><a href="bayesian_paradigm.html#cb69-9" tabindex="-1"></a><span class="fu">contour</span>(mu, sigma, lik, <span class="at">nlevels=</span><span class="dv">20</span>, <span class="at">xlab=</span><span class="fu">expression</span>(mu),</span>
-<span id="cb69-10"><a href="bayesian_paradigm.html#cb69-10" tabindex="-1"></a><span class="at">ylab=</span><span class="fu">expression</span>(sigma), <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.4</span>) </span>
-<span id="cb69-11"><a href="bayesian_paradigm.html#cb69-11" tabindex="-1"></a></span>
-<span id="cb69-12"><a href="bayesian_paradigm.html#cb69-12" tabindex="-1"></a><span class="co"># find the ML estimates</span></span>
-<span id="cb69-13"><a href="bayesian_paradigm.html#cb69-13" tabindex="-1"></a>neglf <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="sc">-</span><span class="fu">prod</span>(<span class="fu">dnorm</span>(y, x[<span class="dv">1</span>], x[<span class="dv">2</span>]))</span>
-<span id="cb69-14"><a href="bayesian_paradigm.html#cb69-14" tabindex="-1"></a>MLest <span class="ot">&lt;-</span> <span class="fu">optim</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>), neglf) <span class="co"># the vector with numbers are the initial values</span></span>
-<span id="cb69-15"><a href="bayesian_paradigm.html#cb69-15" tabindex="-1"></a></span>
-<span id="cb69-16"><a href="bayesian_paradigm.html#cb69-16" tabindex="-1"></a></span>
-<span id="cb69-17"><a href="bayesian_paradigm.html#cb69-17" tabindex="-1"></a><span class="fu">points</span>(MLest<span class="sc">$</span>par[<span class="dv">1</span>],MLest<span class="sc">$</span>par[<span class="dv">2</span>], <span class="at">pch=</span><span class="dv">13</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="bayesian_paradigm.html#cb68-1" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.6</span>, <span class="fl">1.4</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
+<span id="cb68-2"><a href="bayesian_paradigm.html#cb68-2" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.6</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
+<span id="cb68-3"><a href="bayesian_paradigm.html#cb68-3" tabindex="-1"></a>lik <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">length</span>(mu), <span class="at">ncol=</span><span class="fu">length</span>(sigma))</span>
+<span id="cb68-4"><a href="bayesian_paradigm.html#cb68-4" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(mu)){</span>
+<span id="cb68-5"><a href="bayesian_paradigm.html#cb68-5" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sigma)){</span>
+<span id="cb68-6"><a href="bayesian_paradigm.html#cb68-6" tabindex="-1"></a>    lik[i,j] <span class="ot">&lt;-</span> <span class="fu">lf</span>(mu[i], sigma[j])</span>
+<span id="cb68-7"><a href="bayesian_paradigm.html#cb68-7" tabindex="-1"></a>  }</span>
+<span id="cb68-8"><a href="bayesian_paradigm.html#cb68-8" tabindex="-1"></a>}</span>
+<span id="cb68-9"><a href="bayesian_paradigm.html#cb68-9" tabindex="-1"></a><span class="fu">contour</span>(mu, sigma, lik, <span class="at">nlevels=</span><span class="dv">20</span>, <span class="at">xlab=</span><span class="fu">expression</span>(mu),</span>
+<span id="cb68-10"><a href="bayesian_paradigm.html#cb68-10" tabindex="-1"></a><span class="at">ylab=</span><span class="fu">expression</span>(sigma), <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.4</span>) </span>
+<span id="cb68-11"><a href="bayesian_paradigm.html#cb68-11" tabindex="-1"></a></span>
+<span id="cb68-12"><a href="bayesian_paradigm.html#cb68-12" tabindex="-1"></a><span class="co"># find the ML estimates</span></span>
+<span id="cb68-13"><a href="bayesian_paradigm.html#cb68-13" tabindex="-1"></a>neglf <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="sc">-</span><span class="fu">prod</span>(<span class="fu">dnorm</span>(y, x[<span class="dv">1</span>], x[<span class="dv">2</span>]))</span>
+<span id="cb68-14"><a href="bayesian_paradigm.html#cb68-14" tabindex="-1"></a>MLest <span class="ot">&lt;-</span> <span class="fu">optim</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>), neglf) <span class="co"># the vector with numbers are the initial values</span></span>
+<span id="cb68-15"><a href="bayesian_paradigm.html#cb68-15" tabindex="-1"></a></span>
+<span id="cb68-16"><a href="bayesian_paradigm.html#cb68-16" tabindex="-1"></a></span>
+<span id="cb68-17"><a href="bayesian_paradigm.html#cb68-17" tabindex="-1"></a><span class="fu">points</span>(MLest<span class="sc">$</span>par[<span class="dv">1</span>],MLest<span class="sc">$</span>par[<span class="dv">2</span>], <span class="at">pch=</span><span class="dv">13</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:ml"></span>
 <img src="2.01-bayesian_paradigm_files/figure-html/ml-1.png" alt="Likelihood function for y=0.8, 1.2, 1.1 and the data model y~normal(mu, sigma). The cross indicates the highest likelihood value." width="672" />
 <p class="caption">
 Figure 9.2: Likelihood function for y=0.8, 1.2, 1.1 and the data model y~normal(mu, sigma). The cross indicates the highest likelihood value.
 </p>
 </div>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="bayesian_paradigm.html#cb70-1" tabindex="-1"></a>MLest<span class="sc">$</span>par</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="bayesian_paradigm.html#cb69-1" tabindex="-1"></a>MLest<span class="sc">$</span>par</span></code></pre></div>
 <pre><code>## [1] 1.0333330 0.1699668</code></pre>
 <p>We can get the <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> values that produce the largest likelihood by the function <code>optim</code>. This function finds the parameter values associated with the lowest value of a user defined function. Therefore, we define a function that calculates the negative likelihood.</p>
 <p>The combination of mean = 1.03 and standard deviation = 0.17 is associated with the highest likelihood value (the “mountain top” in Figure <a href="bayesian_paradigm.html#fig:ml">9.2</a>). In
@@ -587,17 +588,17 @@ likelihood ratio, and the difference in the logarithm of the likelihoods is call
 <p>Up to now, we have discussed likelihood in a frequentist framework because it is so important in statistics. Let’s now turn to the Bayesian framework. When Bayesians use the word likelihood, they mean the probability distribution of the data given the model, <span class="math inline">\(p(y|\theta)\)</span>. However, the log pointwise predictive density (lppd) could be seen as a Bayesian analog to the “frequentist” log-likelihood. The lppd is the log of the posterior density integrated over the posterior distribution of the model parameters and summed over all observations in the data:</p>
 <p><span class="math display">\[ lppd = \sum_{i=1}^{n}log\int p(y_i|\theta)p(\theta|y)d\theta \]</span>
 Based on simulated values from the joint posterior distribution of the model parameters, the log pointwise predictive density can be calculated in R as follows.</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="bayesian_paradigm.html#cb72-1" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
-<span id="cb72-2"><a href="bayesian_paradigm.html#cb72-2" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span><span class="dv">1</span>) <span class="co"># fit model by LS method</span></span>
-<span id="cb72-3"><a href="bayesian_paradigm.html#cb72-3" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
-<span id="cb72-4"><a href="bayesian_paradigm.html#cb72-4" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim) <span class="co"># simulate from posterior dist. of parameters</span></span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="bayesian_paradigm.html#cb71-1" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
+<span id="cb71-2"><a href="bayesian_paradigm.html#cb71-2" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span><span class="dv">1</span>) <span class="co"># fit model by LS method</span></span>
+<span id="cb71-3"><a href="bayesian_paradigm.html#cb71-3" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb71-4"><a href="bayesian_paradigm.html#cb71-4" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim) <span class="co"># simulate from posterior dist. of parameters</span></span></code></pre></div>
 <p>We prepare a matrix “pyi” to be filled up with the posterior densities for every observation <span class="math inline">\(y_i\)</span> and for each of the simulated sets of model parameters.</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="bayesian_paradigm.html#cb73-1" tabindex="-1"></a>pyi <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">length</span>(y), <span class="at">ncol=</span>nsim)</span>
-<span id="cb73-2"><a href="bayesian_paradigm.html#cb73-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) pyi[,i] <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(y, <span class="at">mean=</span>bsim<span class="sc">@</span>coef[i,<span class="dv">1</span>], <span class="at">sd=</span>bsim<span class="sc">@</span>sigma[i])</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="bayesian_paradigm.html#cb72-1" tabindex="-1"></a>pyi <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">length</span>(y), <span class="at">ncol=</span>nsim)</span>
+<span id="cb72-2"><a href="bayesian_paradigm.html#cb72-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) pyi[,i] <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(y, <span class="at">mean=</span>bsim<span class="sc">@</span>coef[i,<span class="dv">1</span>], <span class="at">sd=</span>bsim<span class="sc">@</span>sigma[i])</span></code></pre></div>
 <p>Then, we average the posterior density values over all simulations (this corresponds to the integral in the previous formula). Finally, we calculate the sum of the logarithm of the averaged density values.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="bayesian_paradigm.html#cb74-1" tabindex="-1"></a>mpyi <span class="ot">&lt;-</span> <span class="fu">apply</span>(pyi, <span class="dv">1</span>, mean)</span>
-<span id="cb74-2"><a href="bayesian_paradigm.html#cb74-2" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">log</span>(mpyi))</span></code></pre></div>
-<pre><code>## [1] 0.2086227</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="bayesian_paradigm.html#cb73-1" tabindex="-1"></a>mpyi <span class="ot">&lt;-</span> <span class="fu">apply</span>(pyi, <span class="dv">1</span>, mean)</span>
+<span id="cb73-2"><a href="bayesian_paradigm.html#cb73-2" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">log</span>(mpyi))</span></code></pre></div>
+<pre><code>## [1] 0.2171268</code></pre>
 <p>The log posterior density can be used as a measure of model fit. We will come back to this measurement when we discuss cross-validation as a method for <a href="model_comparison.html#model_comparison">model comparison</a>.</p>
 </div>
 <div id="further-reading-4" class="section level2 hasAnchor" number="9.5">
@@ -630,42 +631,42 @@ Based on simulated values from the joint posterior distribution of the model par
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/2.01-bayesian_paradigm.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-}
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/TobiasRoth/BDAEcology/edit/master/2.01-bayesian_paradigm.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
 });
 });
 </script>

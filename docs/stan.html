@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>18 MCMC using Stan via rstanarm, brms or rstan | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is a collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="18 MCMC using Stan via rstanarm, brms or rstan | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2025-11-01" />
+<meta name="date" content="2026-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -179,7 +179,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-data"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing data</a>
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="basics.html"><a href="basics.html#histogram"><i class="fa fa-check"></i><b>2.2.1</b> Histogram</a></li>
-<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#location-and-scatter"><i class="fa fa-check"></i><b>2.2.2</b> Location and scatter</a></li>
+<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#location-and-scatter-location_and_scatter"><i class="fa fa-check"></i><b>2.2.2</b> Location and scatter {location_and_scatter}</a></li>
 <li class="chapter" data-level="2.2.3" data-path="basics.html"><a href="basics.html#correlations"><i class="fa fa-check"></i><b>2.2.3</b> Correlations</a></li>
 <li class="chapter" data-level="2.2.4" data-path="basics.html"><a href="basics.html#principal-components-analyses-pca"><i class="fa fa-check"></i><b>2.2.4</b> Principal components analyses PCA</a></li>
 </ul></li>
@@ -193,15 +193,15 @@ div.csl-indent {
 <li class="chapter" data-level="2.4.1" data-path="basics.html"><a href="basics.html#bayes-theorem-for-discrete-events"><i class="fa fa-check"></i><b>2.4.1</b> Bayes theorem for discrete events</a></li>
 <li class="chapter" data-level="2.4.2" data-path="basics.html"><a href="basics.html#bayes-theorem-for-continuous-parameters"><i class="fa fa-check"></i><b>2.4.2</b> Bayes theorem for continuous parameters</a></li>
 <li class="chapter" data-level="2.4.3" data-path="basics.html"><a href="basics.html#estimating-a-mean-assuming-that-the-variance-is-known"><i class="fa fa-check"></i><b>2.4.3</b> Estimating a mean assuming that the variance is known</a></li>
-<li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#estimating-the-mean-and-the-variance"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
+<li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#meanvarSnowfinch"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#classical-frequentist-tests-and-alternatives"><i class="fa fa-check"></i><b>2.5</b> Classical frequentist tests and alternatives</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#nullhypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Nullhypothesis testing</a></li>
+<li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#null-hypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Null hypothesis testing</a></li>
 <li class="chapter" data-level="2.5.2" data-path="basics.html"><a href="basics.html#comparison-of-a-sample-with-a-fixed-value-one-sample-t-test"><i class="fa fa-check"></i><b>2.5.2</b> Comparison of a sample with a fixed value (one-sample t-test)</a></li>
 <li class="chapter" data-level="2.5.3" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups-two-sample-t-test"><i class="fa fa-check"></i><b>2.5.3</b> Comparison of the locations between two groups (two-sample t-test)</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#whyBayes"><i class="fa fa-check"></i><b>2.6</b> Comparing frequentist and Bayesian approach - an why we use Bayes</a></li>
+<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#whyBayes"><i class="fa fa-check"></i><b>2.6</b> Comparing frequentist and Bayesian approach - and why we use Bayes</a></li>
 <li class="chapter" data-level="2.7" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.7</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="analyses_steps.html"><a href="analyses_steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a>
@@ -267,7 +267,8 @@ div.csl-indent {
 <li class="chapter" data-level="7.2" data-path="furthertopics.html"><a href="furthertopics.html#python"><i class="fa fa-check"></i><b>7.2</b> Python</a></li>
 <li class="chapter" data-level="7.3" data-path="furthertopics.html"><a href="furthertopics.html#some-r"><i class="fa fa-check"></i><b>7.3</b> Some R</a>
 <ul>
-<li class="chapter" data-level="7.3.1" data-path="furthertopics.html"><a href="furthertopics.html#date-on-x-axis"><i class="fa fa-check"></i><b>7.3.1</b> Date on x-axis</a></li>
+<li class="chapter" data-level="7.3.1" data-path="furthertopics.html"><a href="furthertopics.html#spatial-data-processing-in-r"><i class="fa fa-check"></i><b>7.3.1</b> Spatial data processing in R</a></li>
+<li class="chapter" data-level="7.3.2" data-path="furthertopics.html"><a href="furthertopics.html#date-on-x-axis"><i class="fa fa-check"></i><b>7.3.2</b> Date on x-axis</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II BAYESIAN DATA ANALYSIS</b></span></li>
@@ -492,15 +493,15 @@ div.csl-indent {
 <p>In this book we use the program <a href="http://mc-stan.org">Stan</a> to draw random samples from the joint posterior distribution of the model parameters given a model, the data, prior distributions, and initial values. To do so, it uses the “no-U-turn sampler,” which is a type of Hamiltonian Monte Carlo simulation <span class="citation">(<a href="referenzen.html#ref-Hoffman.2014">Hoffman and Gelman 2014</a>; <a href="referenzen.html#ref-Betancourt.2013b">M~J Betancourt 2013</a>)</span>, and optimization-based point estimation. These algorithms are more efficient than the ones implemented in BUGS programs and they can handle larger data sets. Stan works particularly well for hierarchical models <span class="citation">(<a href="referenzen.html#ref-Betancourt.2013">Michael Betancourt 2013</a>)</span>. Stan runs on Windows, Mac, and Linux and can be used via the R interfaces (package) rstanarm, brms or rstan. Stan is automatically installed when one of these R-packages is installed.</p>
 <p>According to our experience, rstanarm can be installed from CRAN as any R-package without problems. With brm, sometimes, it has been a bit more difficult. You should use a recent version of R and RStudio (if you use that). It seems advisable to first install Rtools (for Windows) or Xcode (for Mac). Search the web for instructions to do that (RTools is a program, not an R package; it is installed directly on C:, by default). Then, brms can be installed in the normal way within R using <code>install.packages</code>. rstan should be installed automatically, else install it following online instructions <a href="https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started">here</a>.</p>
 <p>A trick that helped more than once when we had problems to run <code>brm</code> was:</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="stan.html#cb320-1" tabindex="-1"></a><span class="co"># after installing or updating brms, the got warnings regarding &quot;make not found&quot; and MCMC</span></span>
-<span id="cb320-2"><a href="stan.html#cb320-2" tabindex="-1"></a><span class="co"># sampling did not start. The following may help (solution found here:</span></span>
-<span id="cb320-3"><a href="stan.html#cb320-3" tabindex="-1"></a><span class="co"># https://discourse.mc-stan.org/t/error-when-running-brm-model/27951) </span></span>
-<span id="cb320-4"><a href="stan.html#cb320-4" tabindex="-1"></a></span>
-<span id="cb320-5"><a href="stan.html#cb320-5" tabindex="-1"></a><span class="co"># after installing rtools, rstan and brms, run this in the console:</span></span>
-<span id="cb320-6"><a href="stan.html#cb320-6" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="fu">c</span>(<span class="st">&quot;StanHeaders&quot;</span>, <span class="st">&quot;rstan&quot;</span>))</span>
-<span id="cb320-7"><a href="stan.html#cb320-7" tabindex="-1"></a> <span class="co"># may give a warning if you don’t have StanHeaders, but that’s ok</span></span>
-<span id="cb320-8"><a href="stan.html#cb320-8" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;StanHeaders&quot;</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">&quot;https://mc-stan.org/r-packages/&quot;</span>, <span class="fu">getOption</span>(<span class="st">&quot;repos&quot;</span>)))</span>
-<span id="cb320-9"><a href="stan.html#cb320-9" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rstan&quot;</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">&quot;https://mc-stan.org/r-packages/&quot;</span>, <span class="fu">getOption</span>(<span class="st">&quot;repos&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="stan.html#cb319-1" tabindex="-1"></a><span class="co"># after installing or updating brms, the got warnings regarding &quot;make not found&quot; and MCMC</span></span>
+<span id="cb319-2"><a href="stan.html#cb319-2" tabindex="-1"></a><span class="co"># sampling did not start. The following may help (solution found here:</span></span>
+<span id="cb319-3"><a href="stan.html#cb319-3" tabindex="-1"></a><span class="co"># https://discourse.mc-stan.org/t/error-when-running-brm-model/27951) </span></span>
+<span id="cb319-4"><a href="stan.html#cb319-4" tabindex="-1"></a></span>
+<span id="cb319-5"><a href="stan.html#cb319-5" tabindex="-1"></a><span class="co"># after installing rtools, rstan and brms, run this in the console:</span></span>
+<span id="cb319-6"><a href="stan.html#cb319-6" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="fu">c</span>(<span class="st">&quot;StanHeaders&quot;</span>, <span class="st">&quot;rstan&quot;</span>))</span>
+<span id="cb319-7"><a href="stan.html#cb319-7" tabindex="-1"></a> <span class="co"># may give a warning if you don’t have StanHeaders, but that’s ok</span></span>
+<span id="cb319-8"><a href="stan.html#cb319-8" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;StanHeaders&quot;</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">&quot;https://mc-stan.org/r-packages/&quot;</span>, <span class="fu">getOption</span>(<span class="st">&quot;repos&quot;</span>)))</span>
+<span id="cb319-9"><a href="stan.html#cb319-9" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rstan&quot;</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">&quot;https://mc-stan.org/r-packages/&quot;</span>, <span class="fu">getOption</span>(<span class="st">&quot;repos&quot;</span>)))</span></code></pre></div>
 <p>An alternative to rtools may be to use <code>brm</code> together with the package <a href="https://mc-stan.org/cmdstanr/articles/cmdstanr.html#comparison-with-rstan">cmdstanr</a>, but we have only limited experience so far.</p>
 </div>
 <div id="assessing-convergence-of-the-markov-chains-and-trouble-shooting-warnings-of-stan" class="section level2 hasAnchor" number="18.2">
@@ -521,25 +522,25 @@ div.csl-indent {
 <li><p>Warnings about too high R-hat and/or too low ESS must be addressed in all cases. These warnings tell us that the model or parts of it have not converged and anything concluded from these draws may be complete nonsense. Often, the problem can be resolved by increasing the number of iterations, e.g. <code>iter=20000</code>. ESS warnings indicate that your MCMC draws are autocorrelated (thereby reducing the effective sample size ESS of your number of draws). Hence, in addition to increasing the number draws, you may want to thin the chains to prevent generating a lot of redundant numbers, e.g. <code>thin=5</code>. R-hat is a measure of convergence of chains; a R-hat of 1 means perfect mixing of chains and, hence, convergence, larger values indicate non-convergence (it’s good to have all R-hat &lt;1.1, but larger values are accepted depending on the aim of the model). Generally, we get one R-hat value and two ESS values per estimated parameter.The two ESS values are “bulk ESS” and “tail ESS”. The first tells us about how many effectively independent draws we have in the middle of the marginal posterior distribution of the parameter. This should be &gt;200 or better &gt;2000. The tail ESS is about the effective number of draws in the two tails of the posterior, which is relevant for the quality of the compatibility interval estimate because this is defined as the 2.5% to 97.5% quantile of the posterior (which obviously are in the tails of the posterior). Again, it should probably be &gt;200 or better &gt;2000. Note that, as said, R-hat and ESS are given per parameter. If all values are fine but one or few parameters of little interest (e.g. a random effect level you are not much interested in) show R-hat of &gt;1.1 and rather small ESS, and increasing the iterations does not help, you may still be content with the model, but you would not make great conclusions from the random effect levels that converged poorly.</p></li>
 </ul>
 <p>R-hat and ESS are returned when you type the model object, or request the summary of it (see below), but for random levels, they may not all appear. You can get all values using this code:</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="stan.html#cb321-1" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
-<span id="cb321-2"><a href="stan.html#cb321-2" tabindex="-1"></a><span class="fu">library</span>(posterior)</span>
-<span id="cb321-3"><a href="stan.html#cb321-3" tabindex="-1"></a></span>
-<span id="cb321-4"><a href="stan.html#cb321-4" tabindex="-1"></a><span class="co"># load a model that has been fitted using brm</span></span>
-<span id="cb321-5"><a href="stan.html#cb321-5" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;RData/mod.brm.compiled.RData&quot;</span>)</span>
-<span id="cb321-6"><a href="stan.html#cb321-6" tabindex="-1"></a>mod.brm <span class="ot">&lt;-</span> <span class="fu">update</span>(mod.brm.compiled, <span class="at">recompile =</span> <span class="cn">FALSE</span>, <span class="at">seed=</span><span class="dv">123</span>, <span class="at">refresh=</span><span class="dv">0</span>)</span>
-<span id="cb321-7"><a href="stan.html#cb321-7" tabindex="-1"></a></span>
-<span id="cb321-8"><a href="stan.html#cb321-8" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">as.matrix</span>(mod.brm), <span class="dv">2</span>, rhat)</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="stan.html#cb320-1" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb320-2"><a href="stan.html#cb320-2" tabindex="-1"></a><span class="fu">library</span>(posterior)</span>
+<span id="cb320-3"><a href="stan.html#cb320-3" tabindex="-1"></a></span>
+<span id="cb320-4"><a href="stan.html#cb320-4" tabindex="-1"></a><span class="co"># load a model that has been fitted using brm</span></span>
+<span id="cb320-5"><a href="stan.html#cb320-5" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;RData/mod.brm.compiled.RData&quot;</span>)</span>
+<span id="cb320-6"><a href="stan.html#cb320-6" tabindex="-1"></a>mod.brm <span class="ot">&lt;-</span> <span class="fu">update</span>(mod.brm.compiled, <span class="at">recompile =</span> <span class="cn">FALSE</span>, <span class="at">seed=</span><span class="dv">123</span>, <span class="at">refresh=</span><span class="dv">0</span>)</span>
+<span id="cb320-7"><a href="stan.html#cb320-7" tabindex="-1"></a></span>
+<span id="cb320-8"><a href="stan.html#cb320-8" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">as.matrix</span>(mod.brm), <span class="dv">2</span>, rhat)</span></code></pre></div>
 <pre><code>## b_Intercept         b_x       sigma   Intercept      lprior        lp__ 
 ##   1.0003384   1.0011481   1.0007055   0.9998799   1.0001323   1.0007838</code></pre>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="stan.html#cb323-1" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">as.matrix</span>(mod.brm), <span class="dv">2</span>, ess_bulk)</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="stan.html#cb322-1" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">as.matrix</span>(mod.brm), <span class="dv">2</span>, ess_bulk)</span></code></pre></div>
 <pre><code>## b_Intercept         b_x       sigma   Intercept      lprior        lp__ 
 ##    3810.513    3902.531    4183.216    4292.089    3780.433    1965.951</code></pre>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="stan.html#cb325-1" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">as.matrix</span>(mod.brm), <span class="dv">2</span>, ess_tail)</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="stan.html#cb324-1" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">as.matrix</span>(mod.brm), <span class="dv">2</span>, ess_tail)</span></code></pre></div>
 <pre><code>## b_Intercept         b_x       sigma   Intercept      lprior        lp__ 
 ##    2575.402    2664.881    3097.737    3117.777    2721.946    2305.481</code></pre>
 <p>When we have no warnings, Markov chains likely have mixed well. Still, we should, at least for more complex models, check the mixing. We can either do that by scanning through the many diagnostic plots given by <code>launch_shinystan(mod.brm)</code>, or create the most important plots ourselves such as the traceplot (Figure <a href="stan.html#fig:checkconvergencemodelbrm">18.1</a>).</p>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="stan.html#cb327-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb327-2"><a href="stan.html#cb327-2" tabindex="-1"></a><span class="fu">mcmc_plot</span>(mod.brm, <span class="at">type =</span> <span class="st">&quot;trace&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="stan.html#cb326-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb326-2"><a href="stan.html#cb326-2" tabindex="-1"></a><span class="fu">mcmc_plot</span>(mod.brm, <span class="at">type =</span> <span class="st">&quot;trace&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:checkconvergencemodelbrm"></span>
 <img src="2.10-stan_files/figure-html/checkconvergencemodelbrm-1.png" alt="Traceplot of the Markov chains. After convergence, the Markov chains should sample from the same stationary distribution. Indications of non-convergence would be if the chains diverge or vary around different means." width="672" />
 <p class="caption">
@@ -553,24 +554,24 @@ Figure 18.1: Traceplot of the Markov chains. After convergence, the Markov chain
 <h3><span class="header-section-number">18.3.1</span> Writing a Stan model<a href="stan.html#firststanmod" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The statistical model is written in the Stan language and saved in a text file. The Stan language is rather strict, forcing the user to write unambiguous models. Stan is very well documented and the <a href="http://mc-stan.org/users/documentation/index.html">Stan Documentation</a> contains a comprehensive Language Manual, a Wiki documentation and various tutorials.</p>
 <p>We here provide a normal regression with one predictor variable as a worked example. The entire Stan model is as following (saved as <code>linreg.stan</code>)</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode stan"><code class="sourceCode stan"><span id="cb328-1"><a href="stan.html#cb328-1" tabindex="-1"></a><span class="kw">data</span> {</span>
-<span id="cb328-2"><a href="stan.html#cb328-2" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; n;</span>
-<span id="cb328-3"><a href="stan.html#cb328-3" tabindex="-1"></a>  <span class="dt">vector</span>[n] y;</span>
-<span id="cb328-4"><a href="stan.html#cb328-4" tabindex="-1"></a>  <span class="dt">vector</span>[n] x;</span>
-<span id="cb328-5"><a href="stan.html#cb328-5" tabindex="-1"></a>}</span>
-<span id="cb328-6"><a href="stan.html#cb328-6" tabindex="-1"></a></span>
-<span id="cb328-7"><a href="stan.html#cb328-7" tabindex="-1"></a><span class="kw">parameters</span> {</span>
-<span id="cb328-8"><a href="stan.html#cb328-8" tabindex="-1"></a>  <span class="dt">vector</span>[<span class="dv">2</span>] beta;</span>
-<span id="cb328-9"><a href="stan.html#cb328-9" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; sigma;</span>
-<span id="cb328-10"><a href="stan.html#cb328-10" tabindex="-1"></a>}</span>
-<span id="cb328-11"><a href="stan.html#cb328-11" tabindex="-1"></a></span>
-<span id="cb328-12"><a href="stan.html#cb328-12" tabindex="-1"></a><span class="kw">model</span> {</span>
-<span id="cb328-13"><a href="stan.html#cb328-13" tabindex="-1"></a>  <span class="co">//priors</span></span>
-<span id="cb328-14"><a href="stan.html#cb328-14" tabindex="-1"></a>  beta ~ normal(<span class="dv">0</span>,<span class="dv">5</span>);</span>
-<span id="cb328-15"><a href="stan.html#cb328-15" tabindex="-1"></a>  sigma ~ cauchy(<span class="dv">0</span>,<span class="dv">5</span>);</span>
-<span id="cb328-16"><a href="stan.html#cb328-16" tabindex="-1"></a>  <span class="co">// likelihood</span></span>
-<span id="cb328-17"><a href="stan.html#cb328-17" tabindex="-1"></a>  y ~ normal(beta[<span class="dv">1</span>] + beta[<span class="dv">2</span>] * x, sigma);</span>
-<span id="cb328-18"><a href="stan.html#cb328-18" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode stan"><code class="sourceCode stan"><span id="cb327-1"><a href="stan.html#cb327-1" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb327-2"><a href="stan.html#cb327-2" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; n;</span>
+<span id="cb327-3"><a href="stan.html#cb327-3" tabindex="-1"></a>  <span class="dt">vector</span>[n] y;</span>
+<span id="cb327-4"><a href="stan.html#cb327-4" tabindex="-1"></a>  <span class="dt">vector</span>[n] x;</span>
+<span id="cb327-5"><a href="stan.html#cb327-5" tabindex="-1"></a>}</span>
+<span id="cb327-6"><a href="stan.html#cb327-6" tabindex="-1"></a></span>
+<span id="cb327-7"><a href="stan.html#cb327-7" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb327-8"><a href="stan.html#cb327-8" tabindex="-1"></a>  <span class="dt">vector</span>[<span class="dv">2</span>] beta;</span>
+<span id="cb327-9"><a href="stan.html#cb327-9" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; sigma;</span>
+<span id="cb327-10"><a href="stan.html#cb327-10" tabindex="-1"></a>}</span>
+<span id="cb327-11"><a href="stan.html#cb327-11" tabindex="-1"></a></span>
+<span id="cb327-12"><a href="stan.html#cb327-12" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb327-13"><a href="stan.html#cb327-13" tabindex="-1"></a>  <span class="co">//priors</span></span>
+<span id="cb327-14"><a href="stan.html#cb327-14" tabindex="-1"></a>  beta ~ normal(<span class="dv">0</span>,<span class="dv">5</span>);</span>
+<span id="cb327-15"><a href="stan.html#cb327-15" tabindex="-1"></a>  sigma ~ cauchy(<span class="dv">0</span>,<span class="dv">5</span>);</span>
+<span id="cb327-16"><a href="stan.html#cb327-16" tabindex="-1"></a>  <span class="co">// likelihood</span></span>
+<span id="cb327-17"><a href="stan.html#cb327-17" tabindex="-1"></a>  y ~ normal(beta[<span class="dv">1</span>] + beta[<span class="dv">2</span>] * x, sigma);</span>
+<span id="cb327-18"><a href="stan.html#cb327-18" tabindex="-1"></a>}</span></code></pre></div>
 <p>A Stan model consists of different named blocks. These blocks are (from first to last): data, transformed data, parameters, trans- formed parameters, model, and generated quantities. The blocks must appear in this order. The model block is mandatory; all other blocks are optional.</p>
 <p>In the <em>data</em> block, the type, dimension, and name of every variable has to be declared. Optionally, the range of possible values can be specified. For example, <code>vector[N] y;</code> means that y is a vector (type real) of length N, and <code>int&lt;lower=0&gt; N;</code> means that N is an integer with nonnegative values (the bounds, here 0, are included). Note that the restriction to a possible range of values is not strictly necessary but this will help specifying the correct model and it will improve speed. We also see that each line needs to be closed by a column sign. In the parameters block, all model parameters have to be defined. The coefficients of the linear predictor constitute a vector of length 2, <code>vector[2] beta;</code>. Alternatively, <code>real beta[2];</code> could be used. The sigma parameter is a one-number parameter that has to be positive, therefore <code>real&lt;lower=0&gt; sigma;</code>.</p>
 <p>The <em>model</em> block contains the model specification. Stan functions can handle vectors and we do not have to loop over all observations as typical for BUGS . Here, we use a <a href="distributions.html#cauchydistri">Cauchy distribution</a> as a prior distribution for sigma. This distribution can have negative values, but because we defined the lower limit of sigma to be 0 in the parameters block, the prior distribution actually used in the model is a truncated Cauchy distribution (truncated at zero). In Chapter <a href="priors.html#choosepriors">10.2</a> we explain how to choose prior distributions.</p>
@@ -581,24 +582,24 @@ Figure 18.1: Traceplot of the Markov chains. After convergence, the Markov chain
 <h3><span class="header-section-number">18.3.2</span> Run Stan from R using rstan<a href="stan.html#run-stan-from-r-using-rstan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We fit the model to simulated data. Stan needs a vector containing the names of the data objects. In our case, <code>x</code>, <code>y,</code> and <code>N</code> are objects that exist in the R console.</p>
 <p>The function <code>stan()</code> starts Stan and returns an object containing MCMCs for every model parameter. We have to specify the name of the file that contains the model specification, the data, the number of chains, and the number of iterations per chain we would like to have. The first half of the iterations of each chain is declared as the warm-up. During the warm-up, Stan is not simulating a Markov chain, because in every step the algorithm is adapted. After the warm-up the algorithm is fixed and Stan simulates Markov chains.</p>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="stan.html#cb329-1" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
-<span id="cb329-2"><a href="stan.html#cb329-2" tabindex="-1"></a></span>
-<span id="cb329-3"><a href="stan.html#cb329-3" tabindex="-1"></a><span class="co"># Simulate fake data </span></span>
-<span id="cb329-4"><a href="stan.html#cb329-4" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span>                                      <span class="co"># sample size</span></span>
-<span id="cb329-5"><a href="stan.html#cb329-5" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">5</span>                                   <span class="co"># standard deviation of the residuals</span></span>
-<span id="cb329-6"><a href="stan.html#cb329-6" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">2</span>                                      <span class="co"># intercept</span></span>
-<span id="cb329-7"><a href="stan.html#cb329-7" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fl">0.7</span>                                    <span class="co"># slope</span></span>
-<span id="cb329-8"><a href="stan.html#cb329-8" tabindex="-1"></a></span>
-<span id="cb329-9"><a href="stan.html#cb329-9" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">10</span>, <span class="dv">30</span>)                        <span class="co"># random numbers of the covariate</span></span>
-<span id="cb329-10"><a href="stan.html#cb329-10" tabindex="-1"></a>simresid <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="at">sd=</span>sigma)            <span class="co"># residuals</span></span>
-<span id="cb329-11"><a href="stan.html#cb329-11" tabindex="-1"></a></span>
-<span id="cb329-12"><a href="stan.html#cb329-12" tabindex="-1"></a>y <span class="ot">&lt;-</span> b0 <span class="sc">+</span> b1<span class="sc">*</span>x <span class="sc">+</span> simresid                    <span class="co"># calculate y, i.e. the data</span></span>
-<span id="cb329-13"><a href="stan.html#cb329-13" tabindex="-1"></a></span>
-<span id="cb329-14"><a href="stan.html#cb329-14" tabindex="-1"></a><span class="co"># Bundle data into a list </span></span>
-<span id="cb329-15"><a href="stan.html#cb329-15" tabindex="-1"></a>datax <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">n=</span><span class="fu">length</span>(y), <span class="at">y=</span>y, <span class="at">x=</span>x)</span>
-<span id="cb329-16"><a href="stan.html#cb329-16" tabindex="-1"></a></span>
-<span id="cb329-17"><a href="stan.html#cb329-17" tabindex="-1"></a><span class="co"># Run STAN</span></span>
-<span id="cb329-18"><a href="stan.html#cb329-18" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">stan</span>(<span class="at">file =</span> <span class="st">&quot;stanmodels/linreg.stan&quot;</span>, <span class="at">data=</span>datax, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">refresh=</span><span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="stan.html#cb328-1" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
+<span id="cb328-2"><a href="stan.html#cb328-2" tabindex="-1"></a></span>
+<span id="cb328-3"><a href="stan.html#cb328-3" tabindex="-1"></a><span class="co"># Simulate fake data </span></span>
+<span id="cb328-4"><a href="stan.html#cb328-4" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span>                                      <span class="co"># sample size</span></span>
+<span id="cb328-5"><a href="stan.html#cb328-5" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">5</span>                                   <span class="co"># standard deviation of the residuals</span></span>
+<span id="cb328-6"><a href="stan.html#cb328-6" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">2</span>                                      <span class="co"># intercept</span></span>
+<span id="cb328-7"><a href="stan.html#cb328-7" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fl">0.7</span>                                    <span class="co"># slope</span></span>
+<span id="cb328-8"><a href="stan.html#cb328-8" tabindex="-1"></a></span>
+<span id="cb328-9"><a href="stan.html#cb328-9" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">10</span>, <span class="dv">30</span>)                        <span class="co"># random numbers of the covariate</span></span>
+<span id="cb328-10"><a href="stan.html#cb328-10" tabindex="-1"></a>simresid <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="at">sd=</span>sigma)            <span class="co"># residuals</span></span>
+<span id="cb328-11"><a href="stan.html#cb328-11" tabindex="-1"></a></span>
+<span id="cb328-12"><a href="stan.html#cb328-12" tabindex="-1"></a>y <span class="ot">&lt;-</span> b0 <span class="sc">+</span> b1<span class="sc">*</span>x <span class="sc">+</span> simresid                    <span class="co"># calculate y, i.e. the data</span></span>
+<span id="cb328-13"><a href="stan.html#cb328-13" tabindex="-1"></a></span>
+<span id="cb328-14"><a href="stan.html#cb328-14" tabindex="-1"></a><span class="co"># Bundle data into a list </span></span>
+<span id="cb328-15"><a href="stan.html#cb328-15" tabindex="-1"></a>datax <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">n=</span><span class="fu">length</span>(y), <span class="at">y=</span>y, <span class="at">x=</span>x)</span>
+<span id="cb328-16"><a href="stan.html#cb328-16" tabindex="-1"></a></span>
+<span id="cb328-17"><a href="stan.html#cb328-17" tabindex="-1"></a><span class="co"># Run STAN</span></span>
+<span id="cb328-18"><a href="stan.html#cb328-18" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">stan</span>(<span class="at">file =</span> <span class="st">&quot;stanmodels/linreg.stan&quot;</span>, <span class="at">data=</span>datax, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">refresh=</span><span class="dv">0</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="further-reading-7" class="section level2 unnumbered hasAnchor">
@@ -629,42 +630,42 @@ Figure 18.1: Traceplot of the Markov chains. After convergence, the Markov chain
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/2.10-stan.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-}
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/TobiasRoth/BDAEcology/edit/master/2.10-stan.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
 });
 });
 </script>

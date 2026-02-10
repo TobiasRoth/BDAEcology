@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>14 Generalized linear models | Bayesian Data Analysis in Ecology with R and Stan</title>
   <meta name="description" content="This GitHub-book is a collection of updates and additional material to the book Bayesian Data Analysis in Ecology Using Linear Models with R, BUGS, and STAN." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="14 Generalized linear models | Bayesian Data Analysis in Ecology with R and Stan" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Fränzi Korner-Nievergelt, Tobias Roth, Stefanie von Felten, Jerôme Guélat, Bettina Almasi, Louis Hunninck, Pius Korner-Nievergelt" />
 
 
-<meta name="date" content="2025-11-01" />
+<meta name="date" content="2026-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -179,7 +179,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#displaying-and-summarizing-data"><i class="fa fa-check"></i><b>2.2</b> Displaying and summarizing data</a>
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="basics.html"><a href="basics.html#histogram"><i class="fa fa-check"></i><b>2.2.1</b> Histogram</a></li>
-<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#location-and-scatter"><i class="fa fa-check"></i><b>2.2.2</b> Location and scatter</a></li>
+<li class="chapter" data-level="2.2.2" data-path="basics.html"><a href="basics.html#location-and-scatter-location_and_scatter"><i class="fa fa-check"></i><b>2.2.2</b> Location and scatter {location_and_scatter}</a></li>
 <li class="chapter" data-level="2.2.3" data-path="basics.html"><a href="basics.html#correlations"><i class="fa fa-check"></i><b>2.2.3</b> Correlations</a></li>
 <li class="chapter" data-level="2.2.4" data-path="basics.html"><a href="basics.html#principal-components-analyses-pca"><i class="fa fa-check"></i><b>2.2.4</b> Principal components analyses PCA</a></li>
 </ul></li>
@@ -193,15 +193,15 @@ div.csl-indent {
 <li class="chapter" data-level="2.4.1" data-path="basics.html"><a href="basics.html#bayes-theorem-for-discrete-events"><i class="fa fa-check"></i><b>2.4.1</b> Bayes theorem for discrete events</a></li>
 <li class="chapter" data-level="2.4.2" data-path="basics.html"><a href="basics.html#bayes-theorem-for-continuous-parameters"><i class="fa fa-check"></i><b>2.4.2</b> Bayes theorem for continuous parameters</a></li>
 <li class="chapter" data-level="2.4.3" data-path="basics.html"><a href="basics.html#estimating-a-mean-assuming-that-the-variance-is-known"><i class="fa fa-check"></i><b>2.4.3</b> Estimating a mean assuming that the variance is known</a></li>
-<li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#estimating-the-mean-and-the-variance"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
+<li class="chapter" data-level="2.4.4" data-path="basics.html"><a href="basics.html#meanvarSnowfinch"><i class="fa fa-check"></i><b>2.4.4</b> Estimating the mean and the variance</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#classical-frequentist-tests-and-alternatives"><i class="fa fa-check"></i><b>2.5</b> Classical frequentist tests and alternatives</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#nullhypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Nullhypothesis testing</a></li>
+<li class="chapter" data-level="2.5.1" data-path="basics.html"><a href="basics.html#null-hypothesis-testing"><i class="fa fa-check"></i><b>2.5.1</b> Null hypothesis testing</a></li>
 <li class="chapter" data-level="2.5.2" data-path="basics.html"><a href="basics.html#comparison-of-a-sample-with-a-fixed-value-one-sample-t-test"><i class="fa fa-check"></i><b>2.5.2</b> Comparison of a sample with a fixed value (one-sample t-test)</a></li>
 <li class="chapter" data-level="2.5.3" data-path="basics.html"><a href="basics.html#comparison-of-the-locations-between-two-groups-two-sample-t-test"><i class="fa fa-check"></i><b>2.5.3</b> Comparison of the locations between two groups (two-sample t-test)</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#whyBayes"><i class="fa fa-check"></i><b>2.6</b> Comparing frequentist and Bayesian approach - an why we use Bayes</a></li>
+<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#whyBayes"><i class="fa fa-check"></i><b>2.6</b> Comparing frequentist and Bayesian approach - and why we use Bayes</a></li>
 <li class="chapter" data-level="2.7" data-path="basics.html"><a href="basics.html#summary"><i class="fa fa-check"></i><b>2.7</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="analyses_steps.html"><a href="analyses_steps.html"><i class="fa fa-check"></i><b>3</b> Data analysis step by step</a>
@@ -267,7 +267,8 @@ div.csl-indent {
 <li class="chapter" data-level="7.2" data-path="furthertopics.html"><a href="furthertopics.html#python"><i class="fa fa-check"></i><b>7.2</b> Python</a></li>
 <li class="chapter" data-level="7.3" data-path="furthertopics.html"><a href="furthertopics.html#some-r"><i class="fa fa-check"></i><b>7.3</b> Some R</a>
 <ul>
-<li class="chapter" data-level="7.3.1" data-path="furthertopics.html"><a href="furthertopics.html#date-on-x-axis"><i class="fa fa-check"></i><b>7.3.1</b> Date on x-axis</a></li>
+<li class="chapter" data-level="7.3.1" data-path="furthertopics.html"><a href="furthertopics.html#spatial-data-processing-in-r"><i class="fa fa-check"></i><b>7.3.1</b> Spatial data processing in R</a></li>
+<li class="chapter" data-level="7.3.2" data-path="furthertopics.html"><a href="furthertopics.html#date-on-x-axis"><i class="fa fa-check"></i><b>7.3.2</b> Date on x-axis</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II BAYESIAN DATA ANALYSIS</b></span></li>
@@ -516,7 +517,7 @@ The normal linear model is a specific case of a generalized linear model, namely
 <col width="23%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th align="left">link</th>
 <th align="left">Gaussian</th>
 <th align="left">Binomial</th>
@@ -527,7 +528,7 @@ The normal linear model is a specific case of a generalized linear model, namely
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td align="left">logit</td>
 <td align="left"></td>
 <td align="left">D</td>
@@ -536,7 +537,7 @@ The normal linear model is a specific case of a generalized linear model, namely
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">probit</td>
 <td align="left"></td>
 <td align="left">x</td>
@@ -545,7 +546,7 @@ The normal linear model is a specific case of a generalized linear model, namely
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">cloglog</td>
 <td align="left"></td>
 <td align="left">x</td>
@@ -554,7 +555,7 @@ The normal linear model is a specific case of a generalized linear model, namely
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">identity</td>
 <td align="left">D</td>
 <td align="left"></td>
@@ -563,7 +564,7 @@ The normal linear model is a specific case of a generalized linear model, namely
 <td align="left">x</td>
 <td align="left">x</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">inverse</td>
 <td align="left"></td>
 <td align="left"></td>
@@ -572,7 +573,7 @@ The normal linear model is a specific case of a generalized linear model, namely
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">log</td>
 <td align="left"></td>
 <td align="left"></td>
@@ -581,7 +582,7 @@ The normal linear model is a specific case of a generalized linear model, namely
 <td align="left">D</td>
 <td align="left">D</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">1/mu^2</td>
 <td align="left"></td>
 <td align="left"></td>
@@ -590,7 +591,7 @@ The normal linear model is a specific case of a generalized linear model, namely
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">sqrt</td>
 <td align="left"></td>
 <td align="left"></td>
@@ -599,7 +600,7 @@ The normal linear model is a specific case of a generalized linear model, namely
 <td align="left"></td>
 <td align="left">x</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">cauchit</td>
 <td align="left"></td>
 <td align="left">x</td>
@@ -608,7 +609,7 @@ The normal linear model is a specific case of a generalized linear model, namely
 <td align="left">x</td>
 <td align="left"></td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">exponent (mu^a)</td>
 <td align="left">x</td>
 <td align="left"></td>
@@ -648,9 +649,9 @@ Figure 14.1: Left panel: Shape of different link functions commonly used for mod
 <p><span class="math display">\[ y_i \sim Bernoulli(p_i) \]</span>
 <span class="math display">\[ logit(p_i) = \beta_0 + \beta_1 elevation\]</span>
 where <span class="math inline">\(logit(p_i) = log(p_i/(1-p_i))\)</span>.</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="glm.html#cb228-1" tabindex="-1"></a><span class="fu">data</span>(anoctua) <span class="co"># Athene noctua data in the blmeco package</span></span>
-<span id="cb228-2"><a href="glm.html#cb228-2" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(PA<span class="sc">~</span>elevation, <span class="at">data=</span>anoctua, <span class="at">family=</span>binomial)</span>
-<span id="cb228-3"><a href="glm.html#cb228-3" tabindex="-1"></a>mod</span></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="glm.html#cb227-1" tabindex="-1"></a><span class="fu">data</span>(anoctua) <span class="co"># Athene noctua data in the blmeco package</span></span>
+<span id="cb227-2"><a href="glm.html#cb227-2" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(PA<span class="sc">~</span>elevation, <span class="at">data=</span>anoctua, <span class="at">family=</span>binomial)</span>
+<span id="cb227-3"><a href="glm.html#cb227-3" tabindex="-1"></a>mod</span></code></pre></div>
 <pre><code>## 
 ## Call:  glm(formula = PA ~ elevation, family = binomial, data = anoctua)
 ## 
@@ -672,28 +673,28 @@ three plots (residuals versus fitted values, QQ plot, and residual variance vers
 An often more informative plot to judge model fit for a binary logistic regression is to compare the fitted values with the data. To better see the observations, we slightly jitter them in the vertical direction.
 If the model would fit the data well, the data would be, on average, equal to the fitted values. Thus, we add the <span class="math inline">\(y = x\)</span>-line to the plot using the <code>abline</code> function with intercept 0 and slope 1.
 Of course, binary data cannot lie on this line because they can only take on the two discrete values 0 or 1. However, the mean of the 0 and 1 values should lie on the line if the model fits well. Therefore, we calculate the mean for suitably selected classes of fitted values. In our example, we choose a class width of 0.1. Then, we calculate means per class and add these to the plot, together with a classical standard error that tells us how reliable the means are. This can be an indication whether our arbitrarily chosen class width is reasonable.</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="glm.html#cb230-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(mod), <span class="fu">jitter</span>(anoctua<span class="sc">$</span>PA, <span class="at">amount=</span><span class="fl">0.05</span>), </span>
-<span id="cb230-2"><a href="glm.html#cb230-2" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Fitted values&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Probability of presence&quot;</span>, </span>
-<span id="cb230-3"><a href="glm.html#cb230-3" tabindex="-1"></a>     <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.2</span>, <span class="at">cex=</span><span class="fl">0.8</span>)</span>
-<span id="cb230-4"><a href="glm.html#cb230-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="at">lty=</span><span class="dv">3</span>)</span>
-<span id="cb230-5"><a href="glm.html#cb230-5" tabindex="-1"></a></span>
-<span id="cb230-6"><a href="glm.html#cb230-6" tabindex="-1"></a>t.breaks <span class="ot">&lt;-</span> <span class="fu">cut</span>(<span class="fu">fitted</span>(mod), <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="at">by=</span><span class="fl">0.1</span>))</span>
-<span id="cb230-7"><a href="glm.html#cb230-7" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">tapply</span>(anoctua<span class="sc">$</span>PA, t.breaks, mean)</span>
-<span id="cb230-8"><a href="glm.html#cb230-8" tabindex="-1"></a>semean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x))</span>
-<span id="cb230-9"><a href="glm.html#cb230-9" tabindex="-1"></a>means.se <span class="ot">&lt;-</span> <span class="fu">tapply</span>(anoctua<span class="sc">$</span>PA, t.breaks, semean)</span>
-<span id="cb230-10"><a href="glm.html#cb230-10" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="at">by=</span><span class="fl">0.1</span>), means, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">col=</span><span class="st">&quot;orange&quot;</span>)</span>
-<span id="cb230-11"><a href="glm.html#cb230-11" tabindex="-1"></a><span class="fu">segments</span>(<span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="at">by=</span><span class="fl">0.1</span>), means<span class="dv">-2</span><span class="sc">*</span>means.se,</span>
-<span id="cb230-12"><a href="glm.html#cb230-12" tabindex="-1"></a><span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>,<span class="at">by=</span><span class="fl">0.1</span>), means<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>means.se,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;orange&quot;</span>)</span>
-<span id="cb230-13"><a href="glm.html#cb230-13" tabindex="-1"></a></span>
-<span id="cb230-14"><a href="glm.html#cb230-14" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(PA <span class="sc">~</span> elevation <span class="sc">+</span> <span class="fu">I</span>(elevation<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(elevation<span class="sc">^</span><span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb230-15"><a href="glm.html#cb230-15" tabindex="-1"></a>             <span class="fu">I</span>(elevation<span class="sc">^</span><span class="dv">4</span>), <span class="at">data=</span>anoctua, <span class="at">family=</span>binomial)</span>
-<span id="cb230-16"><a href="glm.html#cb230-16" tabindex="-1"></a>t.breaks <span class="ot">&lt;-</span> <span class="fu">cut</span>(<span class="fu">fitted</span>(mod), <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="at">by=</span><span class="fl">0.1</span>))</span>
-<span id="cb230-17"><a href="glm.html#cb230-17" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">tapply</span>(anoctua<span class="sc">$</span>PA, t.breaks, mean)</span>
-<span id="cb230-18"><a href="glm.html#cb230-18" tabindex="-1"></a>semean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x))</span>
-<span id="cb230-19"><a href="glm.html#cb230-19" tabindex="-1"></a>means.se <span class="ot">&lt;-</span> <span class="fu">tapply</span>(anoctua<span class="sc">$</span>PA, t.breaks, semean)</span>
-<span id="cb230-20"><a href="glm.html#cb230-20" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="at">by=</span><span class="fl">0.1</span>)<span class="sc">+</span><span class="fl">0.01</span>, means, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">col=</span><span class="st">&quot;lightblue&quot;</span>, <span class="at">cex=</span><span class="fl">0.7</span>)</span>
-<span id="cb230-21"><a href="glm.html#cb230-21" tabindex="-1"></a><span class="fu">segments</span>(<span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="at">by=</span><span class="fl">0.1</span>)<span class="sc">+</span><span class="fl">0.01</span>, means<span class="dv">-2</span><span class="sc">*</span>means.se,</span>
-<span id="cb230-22"><a href="glm.html#cb230-22" tabindex="-1"></a><span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>,<span class="at">by=</span><span class="fl">0.1</span>)<span class="sc">+</span><span class="fl">0.01</span>, means<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>means.se,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="glm.html#cb229-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(mod), <span class="fu">jitter</span>(anoctua<span class="sc">$</span>PA, <span class="at">amount=</span><span class="fl">0.05</span>), </span>
+<span id="cb229-2"><a href="glm.html#cb229-2" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Fitted values&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Probability of presence&quot;</span>, </span>
+<span id="cb229-3"><a href="glm.html#cb229-3" tabindex="-1"></a>     <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.2</span>, <span class="at">cex=</span><span class="fl">0.8</span>)</span>
+<span id="cb229-4"><a href="glm.html#cb229-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb229-5"><a href="glm.html#cb229-5" tabindex="-1"></a></span>
+<span id="cb229-6"><a href="glm.html#cb229-6" tabindex="-1"></a>t.breaks <span class="ot">&lt;-</span> <span class="fu">cut</span>(<span class="fu">fitted</span>(mod), <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="at">by=</span><span class="fl">0.1</span>))</span>
+<span id="cb229-7"><a href="glm.html#cb229-7" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">tapply</span>(anoctua<span class="sc">$</span>PA, t.breaks, mean)</span>
+<span id="cb229-8"><a href="glm.html#cb229-8" tabindex="-1"></a>semean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x))</span>
+<span id="cb229-9"><a href="glm.html#cb229-9" tabindex="-1"></a>means.se <span class="ot">&lt;-</span> <span class="fu">tapply</span>(anoctua<span class="sc">$</span>PA, t.breaks, semean)</span>
+<span id="cb229-10"><a href="glm.html#cb229-10" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="at">by=</span><span class="fl">0.1</span>), means, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">col=</span><span class="st">&quot;orange&quot;</span>)</span>
+<span id="cb229-11"><a href="glm.html#cb229-11" tabindex="-1"></a><span class="fu">segments</span>(<span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="at">by=</span><span class="fl">0.1</span>), means<span class="dv">-2</span><span class="sc">*</span>means.se,</span>
+<span id="cb229-12"><a href="glm.html#cb229-12" tabindex="-1"></a><span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>,<span class="at">by=</span><span class="fl">0.1</span>), means<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>means.se,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;orange&quot;</span>)</span>
+<span id="cb229-13"><a href="glm.html#cb229-13" tabindex="-1"></a></span>
+<span id="cb229-14"><a href="glm.html#cb229-14" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(PA <span class="sc">~</span> elevation <span class="sc">+</span> <span class="fu">I</span>(elevation<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(elevation<span class="sc">^</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb229-15"><a href="glm.html#cb229-15" tabindex="-1"></a>             <span class="fu">I</span>(elevation<span class="sc">^</span><span class="dv">4</span>), <span class="at">data=</span>anoctua, <span class="at">family=</span>binomial)</span>
+<span id="cb229-16"><a href="glm.html#cb229-16" tabindex="-1"></a>t.breaks <span class="ot">&lt;-</span> <span class="fu">cut</span>(<span class="fu">fitted</span>(mod), <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="at">by=</span><span class="fl">0.1</span>))</span>
+<span id="cb229-17"><a href="glm.html#cb229-17" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">tapply</span>(anoctua<span class="sc">$</span>PA, t.breaks, mean)</span>
+<span id="cb229-18"><a href="glm.html#cb229-18" tabindex="-1"></a>semean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x))</span>
+<span id="cb229-19"><a href="glm.html#cb229-19" tabindex="-1"></a>means.se <span class="ot">&lt;-</span> <span class="fu">tapply</span>(anoctua<span class="sc">$</span>PA, t.breaks, semean)</span>
+<span id="cb229-20"><a href="glm.html#cb229-20" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="at">by=</span><span class="fl">0.1</span>)<span class="sc">+</span><span class="fl">0.01</span>, means, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">col=</span><span class="st">&quot;lightblue&quot;</span>, <span class="at">cex=</span><span class="fl">0.7</span>)</span>
+<span id="cb229-21"><a href="glm.html#cb229-21" tabindex="-1"></a><span class="fu">segments</span>(<span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="at">by=</span><span class="fl">0.1</span>)<span class="sc">+</span><span class="fl">0.01</span>, means<span class="dv">-2</span><span class="sc">*</span>means.se,</span>
+<span id="cb229-22"><a href="glm.html#cb229-22" tabindex="-1"></a><span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>,<span class="at">by=</span><span class="fl">0.1</span>)<span class="sc">+</span><span class="fl">0.01</span>, means<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>means.se,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:lrgof"></span>
 <img src="2.06-glm_files/figure-html/lrgof-1.png" alt="Goodness of fit plot for the Bernoulli model fitted to little owl presence-absence data. Open circles = observed presence (1) or absence (0) jittered in the vertical direction; orange dots = mean (and 95% compatibility intervals given as vertical bards) of the observations within classes of width 0.1 along the x-axis. The dotted line indicates perfect coincidence between observation and fitted values. Orange larger points are from the model assuming a linear effect of elevation, wheras the smaller light blue points are from a model assuming a non-linear effect." width="672" />
 <p class="caption">
@@ -710,30 +711,30 @@ Are all parameters well informed by the data? Some parameters may not be identif
 <div id="visualising-the-results" class="section level3 hasAnchor" number="14.2.4">
 <h3><span class="header-section-number">14.2.4</span> Visualising the results<a href="glm.html#visualising-the-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When we are ready to report and visualise the results (i.e. after assessing the model fit, when we think the model reasonably well describes the data generating process). We can simulate the posterior distribution of <span class="math inline">\(\beta_1\)</span> and obtain the 95% compatibility interval.</p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="glm.html#cb231-1" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
-<span id="cb231-2"><a href="glm.html#cb231-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
-<span id="cb231-3"><a href="glm.html#cb231-3" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim) <span class="co"># sim from package arm</span></span>
-<span id="cb231-4"><a href="glm.html#cb231-4" tabindex="-1"></a><span class="fu">apply</span>(bsim<span class="sc">@</span>coef, <span class="dv">2</span>, quantile, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="glm.html#cb230-1" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
+<span id="cb230-2"><a href="glm.html#cb230-2" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb230-3"><a href="glm.html#cb230-3" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim) <span class="co"># sim from package arm</span></span>
+<span id="cb230-4"><a href="glm.html#cb230-4" tabindex="-1"></a><span class="fu">apply</span>(bsim<span class="sc">@</span>coef, <span class="dv">2</span>, quantile, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <pre><code>##       (Intercept) elevation I(elevation^2) I(elevation^3)      I(elevation^4)
-## 50%     -24.29795 0.3969243   -0.002186237 0.000004819823 -0.0000000037551571
-## 2.5%    -35.04641 0.1892489   -0.003492464 0.000001193223 -0.0000000071580098
-## 97.5%   -13.17001 0.5943964   -0.000840353 0.000008361637 -0.0000000002608181</code></pre>
+## 50%     -24.25342 0.3955025  -0.0021794718 0.000004820656 -0.0000000037607916
+## 2.5%    -35.45788 0.1937418  -0.0035119330 0.000001322617 -0.0000000071657464
+## 97.5%   -13.46754 0.6025964  -0.0008981447 0.000008442307 -0.0000000004292545</code></pre>
 <p>To interpret this polynomial function, an effect plot is helpful. To that end, and as we have done before, we calculate fitted values over the range of the covariate, together with compatibility intervals.</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="glm.html#cb233-1" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">elevation =</span> <span class="fu">seq</span>(<span class="dv">80</span>,<span class="dv">600</span>,<span class="at">by=</span><span class="dv">1</span>))</span>
-<span id="cb233-2"><a href="glm.html#cb233-2" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>elevation<span class="sc">+</span><span class="fu">I</span>(elevation<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">I</span>(elevation<span class="sc">^</span><span class="dv">3</span>)<span class="sc">+</span></span>
-<span id="cb233-3"><a href="glm.html#cb233-3" tabindex="-1"></a>                       <span class="fu">I</span>(elevation<span class="sc">^</span><span class="dv">4</span>), <span class="at">data=</span>newdat) <span class="co"># the model matrix</span></span>
-<span id="cb233-4"><a href="glm.html#cb233-4" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">nrow</span>(newdat), <span class="at">ncol=</span>nsim)</span>
-<span id="cb233-5"><a href="glm.html#cb233-5" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) fitmat[,i] <span class="ot">&lt;-</span> <span class="fu">plogis</span>(Xmat <span class="sc">%*%</span> bsim<span class="sc">@</span>coef[i,])</span>
-<span id="cb233-6"><a href="glm.html#cb233-6" tabindex="-1"></a>newdat<span class="sc">$</span>lwr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat,<span class="dv">1</span>,quantile,<span class="at">probs=</span><span class="fl">0.025</span>)</span>
-<span id="cb233-7"><a href="glm.html#cb233-7" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">plogis</span>(Xmat <span class="sc">%*%</span> <span class="fu">coef</span>(mod))</span>
-<span id="cb233-8"><a href="glm.html#cb233-8" tabindex="-1"></a>newdat<span class="sc">$</span>upr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat,<span class="dv">1</span>,quantile,<span class="at">probs=</span><span class="fl">0.975</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="glm.html#cb232-1" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">elevation =</span> <span class="fu">seq</span>(<span class="dv">80</span>,<span class="dv">600</span>,<span class="at">by=</span><span class="dv">1</span>))</span>
+<span id="cb232-2"><a href="glm.html#cb232-2" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>elevation<span class="sc">+</span><span class="fu">I</span>(elevation<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">I</span>(elevation<span class="sc">^</span><span class="dv">3</span>)<span class="sc">+</span></span>
+<span id="cb232-3"><a href="glm.html#cb232-3" tabindex="-1"></a>                       <span class="fu">I</span>(elevation<span class="sc">^</span><span class="dv">4</span>), <span class="at">data=</span>newdat) <span class="co"># the model matrix</span></span>
+<span id="cb232-4"><a href="glm.html#cb232-4" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">nrow</span>(newdat), <span class="at">ncol=</span>nsim)</span>
+<span id="cb232-5"><a href="glm.html#cb232-5" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) fitmat[,i] <span class="ot">&lt;-</span> <span class="fu">plogis</span>(Xmat <span class="sc">%*%</span> bsim<span class="sc">@</span>coef[i,])</span>
+<span id="cb232-6"><a href="glm.html#cb232-6" tabindex="-1"></a>newdat<span class="sc">$</span>lwr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat,<span class="dv">1</span>,quantile,<span class="at">probs=</span><span class="fl">0.025</span>)</span>
+<span id="cb232-7"><a href="glm.html#cb232-7" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">plogis</span>(Xmat <span class="sc">%*%</span> <span class="fu">coef</span>(mod))</span>
+<span id="cb232-8"><a href="glm.html#cb232-8" tabindex="-1"></a>newdat<span class="sc">$</span>upr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat,<span class="dv">1</span>,quantile,<span class="at">probs=</span><span class="fl">0.975</span>)</span></code></pre></div>
 <p>We now can plot the data together with the estimate and its compatibility interval. We, again, use the function <code>jitter</code> to slightly scatter the points along the y-axis to make overlaying points visible.</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="glm.html#cb234-1" tabindex="-1"></a><span class="fu">plot</span>(anoctua<span class="sc">$</span>elevation, <span class="fu">jitter</span>(anoctua<span class="sc">$</span>PA, <span class="at">amount=</span><span class="fl">0.05</span>), </span>
-<span id="cb234-2"><a href="glm.html#cb234-2" tabindex="-1"></a>     <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.4</span>, <span class="at">cex.axis=</span><span class="fl">1.2</span>, <span class="at">xlab=</span><span class="st">&quot;Elevation&quot;</span>,</span>
-<span id="cb234-3"><a href="glm.html#cb234-3" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Probability of presence&quot;</span>)</span>
-<span id="cb234-4"><a href="glm.html#cb234-4" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>elevation, newdat<span class="sc">$</span>fit, <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb234-5"><a href="glm.html#cb234-5" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>elevation, newdat<span class="sc">$</span>lwr, <span class="at">lty=</span><span class="dv">3</span>)</span>
-<span id="cb234-6"><a href="glm.html#cb234-6" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>elevation, newdat<span class="sc">$</span>upr, <span class="at">lty=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="glm.html#cb233-1" tabindex="-1"></a><span class="fu">plot</span>(anoctua<span class="sc">$</span>elevation, <span class="fu">jitter</span>(anoctua<span class="sc">$</span>PA, <span class="at">amount=</span><span class="fl">0.05</span>), </span>
+<span id="cb233-2"><a href="glm.html#cb233-2" tabindex="-1"></a>     <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.4</span>, <span class="at">cex.axis=</span><span class="fl">1.2</span>, <span class="at">xlab=</span><span class="st">&quot;Elevation&quot;</span>,</span>
+<span id="cb233-3"><a href="glm.html#cb233-3" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Probability of presence&quot;</span>)</span>
+<span id="cb233-4"><a href="glm.html#cb233-4" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>elevation, newdat<span class="sc">$</span>fit, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb233-5"><a href="glm.html#cb233-5" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>elevation, newdat<span class="sc">$</span>lwr, <span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb233-6"><a href="glm.html#cb233-6" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>elevation, newdat<span class="sc">$</span>upr, <span class="at">lty=</span><span class="dv">3</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-4"></span>
 <img src="2.06-glm_files/figure-html/unnamed-chunk-4-1.png" alt="Little owl presence data versus elevation with regression line and 95% compatibility interval (dotted lines). Open circles = observed presence (1) or abesnce (0) jittered in the vertical direction." width="672" />
 <p class="caption">
@@ -766,13 +767,13 @@ where <span class="math inline">\(p_i\)</span> being the survival probability an
 <p>We here, again, start with using the <code>glm</code> function.</p>
 <p>A peculiarity with binomial models is that the outcome is not just one number, it is the number of trees still live <span class="math inline">\(y_i\)</span> out of <span class="math inline">\(n_i\)</span> trees that were alive before the experimental fire. Therefore, the outcome variable has to be given as a matrix with two columns.
 The first column contains the number of successes (number of survivors <span class="math inline">\(y_i\)</span>) and the second column contains the number of failures (number of trees killed by the fire, <span class="math inline">\(n_i - y_i\)</span>). We build this matrix using <code>cbind</code> (“column bind”).</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="glm.html#cb235-1" tabindex="-1"></a><span class="fu">data</span>(resprouts) <span class="co"># example data from package blmeco</span></span>
-<span id="cb235-2"><a href="glm.html#cb235-2" tabindex="-1"></a>resprouts<span class="sc">$</span>succ <span class="ot">&lt;-</span> resprouts<span class="sc">$</span>post</span>
-<span id="cb235-3"><a href="glm.html#cb235-3" tabindex="-1"></a>resprouts<span class="sc">$</span>fail <span class="ot">&lt;-</span> resprouts<span class="sc">$</span>pre <span class="sc">-</span> resprouts<span class="sc">$</span>post</span>
-<span id="cb235-4"><a href="glm.html#cb235-4" tabindex="-1"></a></span>
-<span id="cb235-5"><a href="glm.html#cb235-5" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">cbind</span>(succ, fail) <span class="sc">~</span> treatment, <span class="at">data=</span>resprouts,</span>
-<span id="cb235-6"><a href="glm.html#cb235-6" tabindex="-1"></a><span class="at">family=</span>binomial)</span>
-<span id="cb235-7"><a href="glm.html#cb235-7" tabindex="-1"></a>mod</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="glm.html#cb234-1" tabindex="-1"></a><span class="fu">data</span>(resprouts) <span class="co"># example data from package blmeco</span></span>
+<span id="cb234-2"><a href="glm.html#cb234-2" tabindex="-1"></a>resprouts<span class="sc">$</span>succ <span class="ot">&lt;-</span> resprouts<span class="sc">$</span>post</span>
+<span id="cb234-3"><a href="glm.html#cb234-3" tabindex="-1"></a>resprouts<span class="sc">$</span>fail <span class="ot">&lt;-</span> resprouts<span class="sc">$</span>pre <span class="sc">-</span> resprouts<span class="sc">$</span>post</span>
+<span id="cb234-4"><a href="glm.html#cb234-4" tabindex="-1"></a></span>
+<span id="cb234-5"><a href="glm.html#cb234-5" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">cbind</span>(succ, fail) <span class="sc">~</span> treatment, <span class="at">data=</span>resprouts,</span>
+<span id="cb234-6"><a href="glm.html#cb234-6" tabindex="-1"></a><span class="at">family=</span>binomial)</span>
+<span id="cb234-7"><a href="glm.html#cb234-7" tabindex="-1"></a>mod</span></code></pre></div>
 <pre><code>## 
 ## Call:  glm(formula = cbind(succ, fail) ~ treatment, family = binomial, 
 ##     data = resprouts)
@@ -786,7 +787,7 @@ The first column contains the number of successes (number of survivors <span cla
 ## Residual Deviance: 395   AIC: 514.4</code></pre>
 <p>Experienced readers will be alarmed because the residual deviance is much larger than the residual degrees of freedom, which indicates overdispersion. We will soon discuss overdispersion, but, for now, we continue with the analysis for the sake of illustration.</p>
 <p>The estimated model parameters are <span class="math inline">\(\hat{b_0} =\)</span> -1.24, <span class="math inline">\(\hat{b_1} =\)</span> 1.16, and <span class="math inline">\(\hat{b_2} =\)</span> -2.3. These estimates tell us that tree survival was higher for the 9-month fire lag treatment compared to the 4-month treatment (which is the reference level), but lowest in the 12-month treatment. To obtain the mean survival probabilities per treatment, some math is needed because we have to back-transform the linear predictor to the scale of the outcome variable. The mean survival probability for the 4-month treatment is <span class="math inline">\(logit^{-1}(\)</span>-1.24$) = =$0.22, for the 9-month treatment it is <span class="math inline">\(logit^{-1}(\)</span>-1.24$ +$ 1.16<span class="math inline">\() =\)</span> 0.48, and for the 12-month treatment it is <span class="math inline">\(logit^{-1}(\)</span>-1.24$ +$ -2.3<span class="math inline">\() =\)</span> 0.03. The function <code>plogis</code> gives the inverse of the logit function and can be used to estimate the survival probabilities, for example:</p>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="glm.html#cb237-1" tabindex="-1"></a><span class="fu">plogis</span>(<span class="fu">coef</span>(mod)[<span class="dv">1</span>]<span class="sc">+</span> <span class="fu">coef</span>(mod)[<span class="dv">2</span>]) <span class="co"># for the 9month treatment</span></span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="glm.html#cb236-1" tabindex="-1"></a><span class="fu">plogis</span>(<span class="fu">coef</span>(mod)[<span class="dv">1</span>]<span class="sc">+</span> <span class="fu">coef</span>(mod)[<span class="dv">2</span>]) <span class="co"># for the 9month treatment</span></span></code></pre></div>
 <pre><code>## (Intercept) 
 ##   0.4795799</code></pre>
 <p>The direct interpretation of the model coefficients <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_2\)</span> is that they are the log of the ratio of the odds of two treatment levels (i.e., the log odds ratio). The odds for treatment “4 months” are 0.22/(1-0.22)=0.29 (calculated using non rounded values), which is the estimated ratio of survived to killed trees in this treatment. For treatment “9 months,” the odds are 0.48/(1-0.48) = 0.92, and the log odds ratio is log(0.92/0.29) = 1.16 = <span class="math inline">\(beta_1\)</span>.</p>
@@ -797,8 +798,8 @@ The residual deviance is defined as minus two times the difference of the log-li
 <div id="assessing-assumptions-in-a-binomial-model" class="section level3 hasAnchor" number="14.3.3">
 <h3><span class="header-section-number">14.3.3</span> Assessing assumptions in a binomial model<a href="glm.html#assessing-assumptions-in-a-binomial-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In the standard residual plots, we see that in our example data there are obviously a number of influential points (especially the data points with row numbers 7, 20, and 26; Figure <a href="glm.html#fig:diagplotsprout">14.4</a>). The corresponding data points may be inspected for errors, or additional predictors may be identified that help to explain why these points are extreme (Are they close/far from the village? Were they grazed? etc.).</p>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="glm.html#cb239-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb239-2"><a href="glm.html#cb239-2" tabindex="-1"></a><span class="fu">plot</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="glm.html#cb238-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb238-2"><a href="glm.html#cb238-2" tabindex="-1"></a><span class="fu">plot</span>(mod)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:diagplotsprout"></span>
 <img src="2.06-glm_files/figure-html/diagplotsprout-1.png" alt="The four standard residual plots obtained by using the plot-function." width="672" />
 <p class="caption">
@@ -825,8 +826,8 @@ Figure 14.5: Histogram of a binomial distribution without overdispersion (orange
 </ul>
 <p>Fit a quasibinomial or quasi-Poisson model by specifying “quasibinomial” or
 “quasipoisson” in the family-argument.</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="glm.html#cb240-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">cbind</span>(succ,fail) <span class="sc">~</span>  treatment, <span class="at">data=</span>resprouts,</span>
-<span id="cb240-2"><a href="glm.html#cb240-2" tabindex="-1"></a><span class="at">family=</span>quasibinomial)</span></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="glm.html#cb239-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">cbind</span>(succ,fail) <span class="sc">~</span>  treatment, <span class="at">data=</span>resprouts,</span>
+<span id="cb239-2"><a href="glm.html#cb239-2" tabindex="-1"></a><span class="at">family=</span>quasibinomial)</span></code></pre></div>
 <p>This will fit a binomial model that estimates, in addition to the other model
 parameters, a dispersion parameter, <span class="math inline">\(u\)</span>, that is multiplied by the binomial or Poisson variance to obtain the residual variance: <span class="math inline">\(var(y_i) = u n_i p_i(1 - p_i)\)</span>, or <span class="math inline">\(var(y_i)= u\lambda_i\)</span>, respectively.
 This inflated variance is then used to obtain the standard errors of the
@@ -844,29 +845,29 @@ The process that determines whether a nest survives differs from the process tha
 <h3><span class="header-section-number">14.3.4</span> Visualising the results<a href="glm.html#visualising-the-results-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For the moment, we use the quasibinomial GLM to analyze the tree sprout data.<br />
 We simulate 2000 values from the joint posterior distribution of the model parameters.</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="glm.html#cb241-1" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
-<span id="cb241-2"><a href="glm.html#cb241-2" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim) <span class="co"># simulate from the posterior distr.</span></span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="glm.html#cb240-1" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb240-2"><a href="glm.html#cb240-2" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>nsim) <span class="co"># simulate from the posterior distr.</span></span></code></pre></div>
 <p>For each set of simulated model parameters, we derive the linear predictor by multiplying the model matrix with the corresponding set of model parameters.
 Then, the inverse logit function (<span class="math inline">\(logit^{-1}(x) = \frac{e^x}{(1+ e^x)}\)</span>; R function <code>plogis</code>) is used to obtain the fitted value for each fire lag treatment. Lastly, we extract, for each treatment level, the 2.5% and 97.5% quantile of the posterior distribution of the fitted values and plot it together with the estimates (the fitted values) per treatment and the raw data.</p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="glm.html#cb242-1" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">treatment=</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;4m&quot;</span>,<span class="st">&quot;9m&quot;</span>,<span class="st">&quot;12m&quot;</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;4m&quot;</span>,<span class="st">&quot;9m&quot;</span>,<span class="st">&quot;12m&quot;</span>)))</span>
-<span id="cb242-2"><a href="glm.html#cb242-2" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>treatment, newdat)</span>
-<span id="cb242-3"><a href="glm.html#cb242-3" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">nrow</span>(newdat), <span class="at">ncol=</span>nsim)</span>
-<span id="cb242-4"><a href="glm.html#cb242-4" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) fitmat[,i] <span class="ot">&lt;-</span> <span class="fu">plogis</span>(Xmat <span class="sc">%*%</span> bsim<span class="sc">@</span>coef[i,])</span>
-<span id="cb242-5"><a href="glm.html#cb242-5" tabindex="-1"></a>newdat<span class="sc">$</span>lwr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.025</span>)</span>
-<span id="cb242-6"><a href="glm.html#cb242-6" tabindex="-1"></a>newdat<span class="sc">$</span>upr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.975</span>)</span>
-<span id="cb242-7"><a href="glm.html#cb242-7" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">plogis</span>(Xmat<span class="sc">%*%</span><span class="fu">coef</span>(mod))</span>
-<span id="cb242-8"><a href="glm.html#cb242-8" tabindex="-1"></a></span>
-<span id="cb242-9"><a href="glm.html#cb242-9" tabindex="-1"></a></span>
-<span id="cb242-10"><a href="glm.html#cb242-10" tabindex="-1"></a>newdat<span class="sc">$</span>lag <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">9</span>,<span class="dv">12</span>)  <span class="co"># used for plotting</span></span>
-<span id="cb242-11"><a href="glm.html#cb242-11" tabindex="-1"></a>resprouts<span class="sc">$</span>lag <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">9</span>,<span class="dv">12</span>)[<span class="fu">match</span>(resprouts<span class="sc">$</span>treatment,<span class="fu">c</span>(<span class="st">&quot;4m&quot;</span>,<span class="st">&quot;9m&quot;</span>,<span class="st">&quot;12m&quot;</span>))]  <span class="co"># used for plotting</span></span>
-<span id="cb242-12"><a href="glm.html#cb242-12" tabindex="-1"></a></span>
-<span id="cb242-13"><a href="glm.html#cb242-13" tabindex="-1"></a><span class="fu">plot</span>(newdat<span class="sc">$</span>lag, newdat<span class="sc">$</span>fit, <span class="at">type=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Fire lag [months]&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Tree survival&quot;</span>,</span>
-<span id="cb242-14"><a href="glm.html#cb242-14" tabindex="-1"></a>     <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.4</span>, <span class="at">cex.axis=</span><span class="dv">1</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">13</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.6</span>))</span>
-<span id="cb242-15"><a href="glm.html#cb242-15" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">9</span>,<span class="dv">12</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;0&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;9&quot;</span>,<span class="st">&quot;12&quot;</span>))</span>
-<span id="cb242-16"><a href="glm.html#cb242-16" tabindex="-1"></a><span class="fu">segments</span>(newdat<span class="sc">$</span>lag, newdat<span class="sc">$</span>lwr, newdat<span class="sc">$</span>lag, newdat<span class="sc">$</span>upr, <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb242-17"><a href="glm.html#cb242-17" tabindex="-1"></a><span class="fu">points</span>(newdat<span class="sc">$</span>lag, newdat<span class="sc">$</span>fit, <span class="at">pch=</span><span class="dv">21</span>, <span class="at">bg=</span><span class="st">&quot;gray&quot;</span>)</span>
-<span id="cb242-18"><a href="glm.html#cb242-18" tabindex="-1"></a></span>
-<span id="cb242-19"><a href="glm.html#cb242-19" tabindex="-1"></a><span class="fu">points</span>(resprouts<span class="sc">$</span>lag<span class="fl">+0.3</span>,resprouts<span class="sc">$</span>succ<span class="sc">/</span>resprouts<span class="sc">$</span>pre, <span class="at">cex=</span><span class="fl">0.7</span>)  <span class="co"># adds the raw data to the plot</span></span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="glm.html#cb241-1" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">treatment=</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;4m&quot;</span>,<span class="st">&quot;9m&quot;</span>,<span class="st">&quot;12m&quot;</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;4m&quot;</span>,<span class="st">&quot;9m&quot;</span>,<span class="st">&quot;12m&quot;</span>)))</span>
+<span id="cb241-2"><a href="glm.html#cb241-2" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>treatment, newdat)</span>
+<span id="cb241-3"><a href="glm.html#cb241-3" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">nrow</span>(newdat), <span class="at">ncol=</span>nsim)</span>
+<span id="cb241-4"><a href="glm.html#cb241-4" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) fitmat[,i] <span class="ot">&lt;-</span> <span class="fu">plogis</span>(Xmat <span class="sc">%*%</span> bsim<span class="sc">@</span>coef[i,])</span>
+<span id="cb241-5"><a href="glm.html#cb241-5" tabindex="-1"></a>newdat<span class="sc">$</span>lwr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.025</span>)</span>
+<span id="cb241-6"><a href="glm.html#cb241-6" tabindex="-1"></a>newdat<span class="sc">$</span>upr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.975</span>)</span>
+<span id="cb241-7"><a href="glm.html#cb241-7" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">plogis</span>(Xmat<span class="sc">%*%</span><span class="fu">coef</span>(mod))</span>
+<span id="cb241-8"><a href="glm.html#cb241-8" tabindex="-1"></a></span>
+<span id="cb241-9"><a href="glm.html#cb241-9" tabindex="-1"></a></span>
+<span id="cb241-10"><a href="glm.html#cb241-10" tabindex="-1"></a>newdat<span class="sc">$</span>lag <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">9</span>,<span class="dv">12</span>)  <span class="co"># used for plotting</span></span>
+<span id="cb241-11"><a href="glm.html#cb241-11" tabindex="-1"></a>resprouts<span class="sc">$</span>lag <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">9</span>,<span class="dv">12</span>)[<span class="fu">match</span>(resprouts<span class="sc">$</span>treatment,<span class="fu">c</span>(<span class="st">&quot;4m&quot;</span>,<span class="st">&quot;9m&quot;</span>,<span class="st">&quot;12m&quot;</span>))]  <span class="co"># used for plotting</span></span>
+<span id="cb241-12"><a href="glm.html#cb241-12" tabindex="-1"></a></span>
+<span id="cb241-13"><a href="glm.html#cb241-13" tabindex="-1"></a><span class="fu">plot</span>(newdat<span class="sc">$</span>lag, newdat<span class="sc">$</span>fit, <span class="at">type=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Fire lag [months]&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Tree survival&quot;</span>,</span>
+<span id="cb241-14"><a href="glm.html#cb241-14" tabindex="-1"></a>     <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.4</span>, <span class="at">cex.axis=</span><span class="dv">1</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">13</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.6</span>))</span>
+<span id="cb241-15"><a href="glm.html#cb241-15" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">9</span>,<span class="dv">12</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;0&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;9&quot;</span>,<span class="st">&quot;12&quot;</span>))</span>
+<span id="cb241-16"><a href="glm.html#cb241-16" tabindex="-1"></a><span class="fu">segments</span>(newdat<span class="sc">$</span>lag, newdat<span class="sc">$</span>lwr, newdat<span class="sc">$</span>lag, newdat<span class="sc">$</span>upr, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb241-17"><a href="glm.html#cb241-17" tabindex="-1"></a><span class="fu">points</span>(newdat<span class="sc">$</span>lag, newdat<span class="sc">$</span>fit, <span class="at">pch=</span><span class="dv">21</span>, <span class="at">bg=</span><span class="st">&quot;gray&quot;</span>)</span>
+<span id="cb241-18"><a href="glm.html#cb241-18" tabindex="-1"></a></span>
+<span id="cb241-19"><a href="glm.html#cb241-19" tabindex="-1"></a><span class="fu">points</span>(resprouts<span class="sc">$</span>lag<span class="fl">+0.3</span>,resprouts<span class="sc">$</span>succ<span class="sc">/</span>resprouts<span class="sc">$</span>pre, <span class="at">cex=</span><span class="fl">0.7</span>)  <span class="co"># adds the raw data to the plot</span></span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:fittree1"></span>
 <img src="2.06-glm_files/figure-html/fittree1-1.png" alt="Proportion of surviving trees (circles) for three fire lag treatments with estimated mean proportion of survivors using a quasi-binomial model. Gray dots = fitted values. Vertical bars = 95% compatibility intervals. " width="672" />
 <p class="caption">
@@ -892,33 +893,33 @@ As an example, we fit a Poisson model with log-link function to a simulated data
 <p><span class="math display">\[log(\lambda_i = \bf X_i \boldsymbol \beta)\]</span></p>
 <p>We use, similar to the R function <code>log</code>, the notation <span class="math inline">\(log\)</span> for the natural logarithm. We fit the model in R using the function <code>glm</code> and use the argument “family” to specify that we assume a Poisson distribution as the error distribution.
 The log-link is used as the default link function. Then we add the regression line to the plot using the function <code>curve</code>. Further add the compatibility interval to the plot (of course only after having checked the model assumptions).</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="glm.html#cb243-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">196855</span>)</span>
-<span id="cb243-2"><a href="glm.html#cb243-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span>         <span class="co"># simulate 50 sampling sites, where we count aphids</span></span>
-<span id="cb243-3"><a href="glm.html#cb243-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)   <span class="co"># the number of aphids depends, among others, on the aridity index x</span></span>
-<span id="cb243-4"><a href="glm.html#cb243-4" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co"># intercept and</span></span>
-<span id="cb243-5"><a href="glm.html#cb243-5" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fl">0.5</span>       <span class="co"># slope of the linear predictor</span></span>
-<span id="cb243-6"><a href="glm.html#cb243-6" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rpois</span>(n, <span class="at">lambda=</span><span class="fu">exp</span>(b0<span class="sc">+</span>b1<span class="sc">*</span>x))</span>
-<span id="cb243-7"><a href="glm.html#cb243-7" tabindex="-1"></a></span>
-<span id="cb243-8"><a href="glm.html#cb243-8" tabindex="-1"></a></span>
-<span id="cb243-9"><a href="glm.html#cb243-9" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(y<span class="sc">~</span>x, <span class="at">family=</span><span class="st">&quot;poisson&quot;</span>)</span>
-<span id="cb243-10"><a href="glm.html#cb243-10" tabindex="-1"></a></span>
-<span id="cb243-11"><a href="glm.html#cb243-11" tabindex="-1"></a>n.sim <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
-<span id="cb243-12"><a href="glm.html#cb243-12" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>n.sim)</span>
-<span id="cb243-13"><a href="glm.html#cb243-13" tabindex="-1"></a></span>
-<span id="cb243-14"><a href="glm.html#cb243-14" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb243-15"><a href="glm.html#cb243-15" tabindex="-1"></a><span class="fu">plot</span>(x,y, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.4</span>, <span class="at">cex.axis=</span><span class="fl">1.2</span>)</span>
-<span id="cb243-16"><a href="glm.html#cb243-16" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">exp</span>(<span class="fu">coef</span>(mod)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(mod)[<span class="dv">2</span>]<span class="sc">*</span>x), <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb243-17"><a href="glm.html#cb243-17" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="fl">2.5</span>, <span class="at">length=</span><span class="dv">100</span>))</span>
-<span id="cb243-18"><a href="glm.html#cb243-18" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>x, <span class="at">data=</span>newdat)</span>
-<span id="cb243-19"><a href="glm.html#cb243-19" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">coef</span>(mod)</span>
-<span id="cb243-20"><a href="glm.html#cb243-20" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">exp</span>(Xmat<span class="sc">%*%</span>b)</span>
-<span id="cb243-21"><a href="glm.html#cb243-21" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>n.sim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
-<span id="cb243-22"><a href="glm.html#cb243-22" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n.sim) fitmat[,i] <span class="ot">&lt;-</span> <span class="fu">exp</span>(Xmat<span class="sc">%*%</span>bsim<span class="sc">@</span>coef[i,])</span>
-<span id="cb243-23"><a href="glm.html#cb243-23" tabindex="-1"></a>newdat<span class="sc">$</span>lwr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.025</span>)</span>
-<span id="cb243-24"><a href="glm.html#cb243-24" tabindex="-1"></a>newdat<span class="sc">$</span>upr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.975</span>)</span>
-<span id="cb243-25"><a href="glm.html#cb243-25" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>x, newdat<span class="sc">$</span>fit, <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb243-26"><a href="glm.html#cb243-26" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>x, newdat<span class="sc">$</span>lwr, <span class="at">lty=</span><span class="dv">3</span>)</span>
-<span id="cb243-27"><a href="glm.html#cb243-27" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>x, newdat<span class="sc">$</span>upr, <span class="at">lty=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="glm.html#cb242-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">196855</span>)</span>
+<span id="cb242-2"><a href="glm.html#cb242-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span>         <span class="co"># simulate 50 sampling sites, where we count aphids</span></span>
+<span id="cb242-3"><a href="glm.html#cb242-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)   <span class="co"># the number of aphids depends, among others, on the aridity index x</span></span>
+<span id="cb242-4"><a href="glm.html#cb242-4" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">1</span>         <span class="co"># intercept and</span></span>
+<span id="cb242-5"><a href="glm.html#cb242-5" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fl">0.5</span>       <span class="co"># slope of the linear predictor</span></span>
+<span id="cb242-6"><a href="glm.html#cb242-6" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rpois</span>(n, <span class="at">lambda=</span><span class="fu">exp</span>(b0<span class="sc">+</span>b1<span class="sc">*</span>x))</span>
+<span id="cb242-7"><a href="glm.html#cb242-7" tabindex="-1"></a></span>
+<span id="cb242-8"><a href="glm.html#cb242-8" tabindex="-1"></a></span>
+<span id="cb242-9"><a href="glm.html#cb242-9" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(y<span class="sc">~</span>x, <span class="at">family=</span><span class="st">&quot;poisson&quot;</span>)</span>
+<span id="cb242-10"><a href="glm.html#cb242-10" tabindex="-1"></a></span>
+<span id="cb242-11"><a href="glm.html#cb242-11" tabindex="-1"></a>n.sim <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb242-12"><a href="glm.html#cb242-12" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>n.sim)</span>
+<span id="cb242-13"><a href="glm.html#cb242-13" tabindex="-1"></a></span>
+<span id="cb242-14"><a href="glm.html#cb242-14" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb242-15"><a href="glm.html#cb242-15" tabindex="-1"></a><span class="fu">plot</span>(x,y, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.4</span>, <span class="at">cex.axis=</span><span class="fl">1.2</span>)</span>
+<span id="cb242-16"><a href="glm.html#cb242-16" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">exp</span>(<span class="fu">coef</span>(mod)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(mod)[<span class="dv">2</span>]<span class="sc">*</span>x), <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb242-17"><a href="glm.html#cb242-17" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="fl">2.5</span>, <span class="at">length=</span><span class="dv">100</span>))</span>
+<span id="cb242-18"><a href="glm.html#cb242-18" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>x, <span class="at">data=</span>newdat)</span>
+<span id="cb242-19"><a href="glm.html#cb242-19" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">coef</span>(mod)</span>
+<span id="cb242-20"><a href="glm.html#cb242-20" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">exp</span>(Xmat<span class="sc">%*%</span>b)</span>
+<span id="cb242-21"><a href="glm.html#cb242-21" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>n.sim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
+<span id="cb242-22"><a href="glm.html#cb242-22" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n.sim) fitmat[,i] <span class="ot">&lt;-</span> <span class="fu">exp</span>(Xmat<span class="sc">%*%</span>bsim<span class="sc">@</span>coef[i,])</span>
+<span id="cb242-23"><a href="glm.html#cb242-23" tabindex="-1"></a>newdat<span class="sc">$</span>lwr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.025</span>)</span>
+<span id="cb242-24"><a href="glm.html#cb242-24" tabindex="-1"></a>newdat<span class="sc">$</span>upr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.975</span>)</span>
+<span id="cb242-25"><a href="glm.html#cb242-25" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>x, newdat<span class="sc">$</span>fit, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb242-26"><a href="glm.html#cb242-26" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>x, newdat<span class="sc">$</span>lwr, <span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb242-27"><a href="glm.html#cb242-27" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>x, newdat<span class="sc">$</span>upr, <span class="at">lty=</span><span class="dv">3</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:simpois"></span>
 <img src="2.06-glm_files/figure-html/simpois-1.png" alt="Simulated data (dots) with a Poisson regression line (solid) and the lower and upper bound of the 95% compatibility interval." width="672" />
 <p class="caption">
@@ -930,7 +931,7 @@ Figure 14.7: Simulated data (dots) with a Poisson regression line (solid) and th
 <h3><span class="header-section-number">14.4.3</span> Assessing model assumptions<a href="glm.html#assessing-model-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Because the residual variance in the Poisson model is defined by <span class="math inline">\(\lambda\)</span> (the fitted value), it is not estimated as a separate parameter from the data. Therefore, we always have to check whether overdispersion is present. Ecological data are often overdispersed because not all influencing factors can be measured and included in the model. As with the binomial model, in a Poisson model overdispersion is present when the residual deviance is larger than the residual degrees of freedom. This is because if we add one independent observation to the data, the deviance increases, on average, by one if the variance equals <span class="math inline">\(\lambda\)</span>. If the variance is larger, the contribution of each observation to the deviance is, on average, larger than one.
 We can check this in the model output:</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="glm.html#cb244-1" tabindex="-1"></a>mod</span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="glm.html#cb243-1" tabindex="-1"></a>mod</span></code></pre></div>
 <pre><code>## 
 ## Call:  glm(formula = y ~ x, family = &quot;poisson&quot;)
 ## 
@@ -943,8 +944,8 @@ We can check this in the model output:</p>
 ## Residual Deviance: 52.12     AIC: 198.9</code></pre>
 <p>The residual deviance is 52 compared to 48 degrees of freedom. This is perfect (of course, because the model is fit to simulated data). If we are not sure, we could do a <a href="modelchecking.html#modelchecking">posterior predictive model checking</a> and compare the variance in the data with the variance in data that were simulated from the model. If there is substantial overdispersion, we could fit a quasi-Poisson model that includes a dispersion parameter. However, as explained previously, we prefer to explicitly model the variance. A good alternative for overdispersed count data that we now like very much (in contrast to what we wrote in the first printed edition of this book) is the negative binomial model.</p>
 <p>The standard residual plots (Figure <a href="glm.html#fig:diagpois">14.8</a>) are obtained in the usual way.</p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="glm.html#cb246-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb246-2"><a href="glm.html#cb246-2" tabindex="-1"></a><span class="fu">plot</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="glm.html#cb245-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb245-2"><a href="glm.html#cb245-2" tabindex="-1"></a><span class="fu">plot</span>(mod)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:diagpois"></span>
 <img src="2.06-glm_files/figure-html/diagpois-1.png" alt="Standard residual plots for the Poisson model fitted to simulated data, thus they fit perfectly." width="672" />
 <p class="caption">
@@ -956,7 +957,7 @@ Figure 14.8: Standard residual plots for the Poisson model fitted to simulated d
 <div id="visualising-results" class="section level3 hasAnchor" number="14.4.4">
 <h3><span class="header-section-number">14.4.4</span> Visualising results<a href="glm.html#visualising-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We can look at the posterior distributions of the model parameters.</p>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="glm.html#cb247-1" tabindex="-1"></a><span class="fu">apply</span>(bsim<span class="sc">@</span>coef, <span class="dv">2</span>, quantile, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="glm.html#cb246-1" tabindex="-1"></a><span class="fu">apply</span>(bsim<span class="sc">@</span>coef, <span class="dv">2</span>, quantile, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
 <pre><code>##       (Intercept)         x
 ## 50%     1.1370430 0.4569485
 ## 2.5%    0.9692098 0.2974446
@@ -972,13 +973,13 @@ says that we add a predictor but do not estimate its effect because it is fixed 
 <span class="math display">\[ log(\boldsymbol \lambda \boldsymbol T) = log(\boldsymbol  \lambda) + log(\boldsymbol T) = \boldsymbol X \boldsymbol \beta + log(\boldsymbol T)\]</span></p>
 <p>In R, we can use the argument “offset” within the function <code>glm</code> to specify an offset. We illustrate this using a breeding bird census on wildflower fields in Switzerland in 2007 conducted by <span class="citation">Zollinger et al. (<a href="referenzen.html#ref-Zollinger.2013">2013</a>)</span>. We focus on the common whitethroat <em>Silvia communis</em>, a bird of field margins and fallow lands that has become rare in the intensively used agricultural landscape. Wildflower fields are an ecological compensation measure to provide food and nesting grounds for species such as the common whitethroat. Such fields are sown and then left unmanaged for several years except for the control of potentially problematic species (e.g., some thistle species, <em>Carduus spp.</em>). The plant composition and the vegetation structure in the field gradually changes over the years, hence the interest in this study was to determine the optimal age of a wildflower field for use by the common whitethroat.</p>
 <p>We use the number of breeding pairs (bp) as the outcome variable and field size as an offset, which means that we model breeding pair density. We include the age of the field (age) as a linear and quadratic term because we expect there to be an optimal age of the field (i.e., a curvilinear relationship between the breeding pair density and age). We also include field size as a covariate (in addition to using it as the offset) because the size of the field may have an effect on the density; for example, small fields may have a higher density if the whitethroat can also use surrounding areas but uses the field to breed. Size (in hectares) was z-transformed before the model fit.</p>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="glm.html#cb249-1" tabindex="-1"></a><span class="fu">data</span>(wildflowerfields) <span class="co"># in the package blmeco</span></span>
-<span id="cb249-2"><a href="glm.html#cb249-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> wildflowerfields[wildflowerfields<span class="sc">$</span>year<span class="sc">==</span><span class="dv">2007</span>,] <span class="co"># select data</span></span>
-<span id="cb249-3"><a href="glm.html#cb249-3" tabindex="-1"></a>dat<span class="sc">$</span>size.ha <span class="ot">&lt;-</span> dat<span class="sc">$</span>size<span class="sc">/</span><span class="dv">100</span> <span class="co"># change unit to ha</span></span>
-<span id="cb249-4"><a href="glm.html#cb249-4" tabindex="-1"></a>dat<span class="sc">$</span>size.ha.z <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat<span class="sc">$</span>size.ha)</span>
-<span id="cb249-5"><a href="glm.html#cb249-5" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(bp <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> size.ha.z, <span class="at">offset=</span><span class="fu">log</span>(size.ha),</span>
-<span id="cb249-6"><a href="glm.html#cb249-6" tabindex="-1"></a><span class="at">data=</span>dat, <span class="at">family=</span>poisson)</span>
-<span id="cb249-7"><a href="glm.html#cb249-7" tabindex="-1"></a>mod</span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="glm.html#cb248-1" tabindex="-1"></a><span class="fu">data</span>(wildflowerfields) <span class="co"># in the package blmeco</span></span>
+<span id="cb248-2"><a href="glm.html#cb248-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> wildflowerfields[wildflowerfields<span class="sc">$</span>year<span class="sc">==</span><span class="dv">2007</span>,] <span class="co"># select data</span></span>
+<span id="cb248-3"><a href="glm.html#cb248-3" tabindex="-1"></a>dat<span class="sc">$</span>size.ha <span class="ot">&lt;-</span> dat<span class="sc">$</span>size<span class="sc">/</span><span class="dv">100</span> <span class="co"># change unit to ha</span></span>
+<span id="cb248-4"><a href="glm.html#cb248-4" tabindex="-1"></a>dat<span class="sc">$</span>size.ha.z <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat<span class="sc">$</span>size.ha)</span>
+<span id="cb248-5"><a href="glm.html#cb248-5" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(bp <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> size.ha.z, <span class="at">offset=</span><span class="fu">log</span>(size.ha),</span>
+<span id="cb248-6"><a href="glm.html#cb248-6" tabindex="-1"></a><span class="at">data=</span>dat, <span class="at">family=</span>poisson)</span>
+<span id="cb248-7"><a href="glm.html#cb248-7" tabindex="-1"></a>mod</span></code></pre></div>
 <pre><code>## 
 ## Call:  glm(formula = bp ~ age + I(age^2) + size.ha.z, family = poisson, 
 ##     data = dat, offset = log(size.ha))
@@ -992,29 +993,29 @@ says that we add a predictor but do not estimate its effect because it is fixed 
 ## Residual Deviance: 27.75     AIC: 70.2</code></pre>
 <p>For the residual analysis and for drawing conclusions, we can proceed in the same way we did in the Poisson model. From the model output we see that the residual deviance is smaller than the corresponding degrees of freedom, thus we have some degree of underdispersion. But the degree of underdispersion is not very extreme so we accept that the compatibility intervals will be a bit larger than “necessary” and proceed in this case.
 After residual analyses, we can produce an effect plot of the estimated whitethroat density against the age of the wildflower field (Figure <a href="glm.html#fig:wildfl">14.9</a>). And we see that the expected whitethroat density is largest on wildflower fields of age 4 to 7 years.</p>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="glm.html#cb251-1" tabindex="-1"></a>n.sim <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
-<span id="cb251-2"><a href="glm.html#cb251-2" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>n.sim)</span>
-<span id="cb251-3"><a href="glm.html#cb251-3" tabindex="-1"></a><span class="fu">apply</span>(bsim<span class="sc">@</span>coef, <span class="dv">2</span>, quantile, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.5</span>,<span class="fl">0.975</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="glm.html#cb250-1" tabindex="-1"></a>n.sim <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb250-2"><a href="glm.html#cb250-2" tabindex="-1"></a>bsim <span class="ot">&lt;-</span> <span class="fu">sim</span>(mod, <span class="at">n.sim=</span>n.sim)</span>
+<span id="cb250-3"><a href="glm.html#cb250-3" tabindex="-1"></a><span class="fu">apply</span>(bsim<span class="sc">@</span>coef, <span class="dv">2</span>, quantile, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.5</span>,<span class="fl">0.975</span>))</span></code></pre></div>
 <pre><code>##       (Intercept)       age    I(age^2)   size.ha.z
 ## 2.5%    -7.006715 0.3158791 -0.26708865 -1.14757192
 ## 50%     -4.196504 1.5118620 -0.14034083 -0.54749587
 ## 97.5%   -1.445242 2.7196036 -0.01837473  0.02976658</code></pre>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="glm.html#cb253-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb253-2"><a href="glm.html#cb253-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">jitter</span>(dat<span class="sc">$</span>age,<span class="at">amount=</span><span class="fl">0.1</span>),<span class="fu">jitter</span>(dat<span class="sc">$</span>bp<span class="sc">/</span>dat<span class="sc">$</span>size.ha,<span class="at">amount=</span><span class="fl">0.1</span>), <span class="at">pch=</span><span class="dv">16</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.2</span>, <span class="at">cex.axis=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">0.7</span>,</span>
-<span id="cb253-3"><a href="glm.html#cb253-3" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Age of wildflower field [yrs]&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Density of Whitethroat [bp/ha]&quot;</span>)</span>
-<span id="cb253-4"><a href="glm.html#cb253-4" tabindex="-1"></a></span>
-<span id="cb253-5"><a href="glm.html#cb253-5" tabindex="-1"></a><span class="co"># add credible/compatibility interval</span></span>
-<span id="cb253-6"><a href="glm.html#cb253-6" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">age=</span><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">9</span>, <span class="at">length=</span><span class="dv">100</span>), <span class="at">size.ha.z=</span><span class="dv">0</span>)</span>
-<span id="cb253-7"><a href="glm.html#cb253-7" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> size.ha.z, <span class="at">data=</span>newdat)</span>
-<span id="cb253-8"><a href="glm.html#cb253-8" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">coef</span>(mod)</span>
-<span id="cb253-9"><a href="glm.html#cb253-9" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">exp</span>(Xmat<span class="sc">%*%</span>b)</span>
-<span id="cb253-10"><a href="glm.html#cb253-10" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>n.sim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
-<span id="cb253-11"><a href="glm.html#cb253-11" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n.sim) fitmat[,i] <span class="ot">&lt;-</span> <span class="fu">exp</span>(Xmat<span class="sc">%*%</span>bsim<span class="sc">@</span>coef[i,])</span>
-<span id="cb253-12"><a href="glm.html#cb253-12" tabindex="-1"></a>newdat<span class="sc">$</span>lwr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.025</span>)</span>
-<span id="cb253-13"><a href="glm.html#cb253-13" tabindex="-1"></a>newdat<span class="sc">$</span>upr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.975</span>)</span>
-<span id="cb253-14"><a href="glm.html#cb253-14" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>age, newdat<span class="sc">$</span>fit, <span class="at">lwd=</span><span class="dv">2</span>)  </span>
-<span id="cb253-15"><a href="glm.html#cb253-15" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>age, newdat<span class="sc">$</span>lwr, <span class="at">lty=</span><span class="dv">3</span>)</span>
-<span id="cb253-16"><a href="glm.html#cb253-16" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>age, newdat<span class="sc">$</span>upr, <span class="at">lty=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="glm.html#cb252-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb252-2"><a href="glm.html#cb252-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">jitter</span>(dat<span class="sc">$</span>age,<span class="at">amount=</span><span class="fl">0.1</span>),<span class="fu">jitter</span>(dat<span class="sc">$</span>bp<span class="sc">/</span>dat<span class="sc">$</span>size.ha,<span class="at">amount=</span><span class="fl">0.1</span>), <span class="at">pch=</span><span class="dv">16</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.2</span>, <span class="at">cex.axis=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">0.7</span>,</span>
+<span id="cb252-3"><a href="glm.html#cb252-3" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Age of wildflower field [yrs]&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Density of Whitethroat [bp/ha]&quot;</span>)</span>
+<span id="cb252-4"><a href="glm.html#cb252-4" tabindex="-1"></a></span>
+<span id="cb252-5"><a href="glm.html#cb252-5" tabindex="-1"></a><span class="co"># add credible/compatibility interval</span></span>
+<span id="cb252-6"><a href="glm.html#cb252-6" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">age=</span><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">9</span>, <span class="at">length=</span><span class="dv">100</span>), <span class="at">size.ha.z=</span><span class="dv">0</span>)</span>
+<span id="cb252-7"><a href="glm.html#cb252-7" tabindex="-1"></a>Xmat <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> size.ha.z, <span class="at">data=</span>newdat)</span>
+<span id="cb252-8"><a href="glm.html#cb252-8" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">coef</span>(mod)</span>
+<span id="cb252-9"><a href="glm.html#cb252-9" tabindex="-1"></a>newdat<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">exp</span>(Xmat<span class="sc">%*%</span>b)</span>
+<span id="cb252-10"><a href="glm.html#cb252-10" tabindex="-1"></a>fitmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol=</span>n.sim, <span class="at">nrow=</span><span class="fu">nrow</span>(newdat))</span>
+<span id="cb252-11"><a href="glm.html#cb252-11" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n.sim) fitmat[,i] <span class="ot">&lt;-</span> <span class="fu">exp</span>(Xmat<span class="sc">%*%</span>bsim<span class="sc">@</span>coef[i,])</span>
+<span id="cb252-12"><a href="glm.html#cb252-12" tabindex="-1"></a>newdat<span class="sc">$</span>lwr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.025</span>)</span>
+<span id="cb252-13"><a href="glm.html#cb252-13" tabindex="-1"></a>newdat<span class="sc">$</span>upr <span class="ot">&lt;-</span> <span class="fu">apply</span>(fitmat, <span class="dv">1</span>, quantile, <span class="at">prob=</span><span class="fl">0.975</span>)</span>
+<span id="cb252-14"><a href="glm.html#cb252-14" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>age, newdat<span class="sc">$</span>fit, <span class="at">lwd=</span><span class="dv">2</span>)  </span>
+<span id="cb252-15"><a href="glm.html#cb252-15" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>age, newdat<span class="sc">$</span>lwr, <span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb252-16"><a href="glm.html#cb252-16" tabindex="-1"></a><span class="fu">lines</span>(newdat<span class="sc">$</span>age, newdat<span class="sc">$</span>upr, <span class="at">lty=</span><span class="dv">3</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:wildfl"></span>
 <img src="2.06-glm_files/figure-html/wildfl-1.png" alt="Whitethroat densities are highest in wildflower fields that are around 4 to 6 years old. Dots are the raw data, the bold line give the fitted values (with the 95% compatibility interval given with dotted lines) for wildflower fields of different ages (years). The fitted values are given for average field sizes of 1.4 ha." width="672" />
 <p class="caption">
@@ -1045,42 +1046,42 @@ Figure 14.9: Whitethroat densities are highest in wildflower fields that are aro
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/TobiasRoth/BDAEcology/edit/master/2.06-glm.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-}
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/TobiasRoth/BDAEcology/edit/master/2.06-glm.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
 });
 });
 </script>

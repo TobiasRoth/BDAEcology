@@ -88,7 +88,7 @@ basics
 variables-and-observations
 displaying-and-summarizing-data
 histogram
-location-and-scatter
+location-and-scatter-location_and_scatter
 correlations
 principal-components-analyses-pca
 inferential-statistics
@@ -98,9 +98,9 @@ bayes-theorem-and-the-common-aim-of-frequentist-and-bayesian-methods
 bayes-theorem-for-discrete-events
 bayes-theorem-for-continuous-parameters
 estimating-a-mean-assuming-that-the-variance-is-known
-estimating-the-mean-and-the-variance
+meanvarSnowfinch
 classical-frequentist-tests-and-alternatives
-nullhypothesis-testing
+null-hypothesis-testing
 comparison-of-a-sample-with-a-fixed-value-one-sample-t-test
 comparison-of-the-locations-between-two-groups-two-sample-t-test
 whyBayes
@@ -153,6 +153,7 @@ furthertopics
 bioacoustic-analyse
 python
 some-r
+spatial-data-processing-in-r
 date-on-x-axis
 PART-II
 bayesian_paradigm
