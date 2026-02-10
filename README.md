@@ -15,25 +15,21 @@ This repository mainly contains the files to produce the online book  "Data Anal
 
    This folder contains all the files that are used to produced the page that ist published under https://tobiasroth.github.io/BDAEcology.  Note that if the book is locally built using  [bookdown](https://bookdown.org/yihui/bookdown/) the resulting files for the html version are saved in the folder `docs_local` .  Whenever we added new content that we are happy with, we manually copy the content of `docs_local` to `docs` and thus publish the new content. As a consequence,  https://tobiasroth.github.io/BDAEcology may correspond alder versions of the `.Rmd` files at the top level of the repository.
 
-4. **future_chapters-Folder**
-
-   This folder contains the `.Rmd` files for chapters that we may eventually include into the book. Currently, these chapters are mostly under construction. 
-
-5. **images**
+4. **images**
 
    Contains pictures that are used in the book. Note that this folder does not include the figures produced by the `.Rmd` files.
 
-6. **RData-Folder**
+5. **RData-Folder**
 
    This folder contains some of the data that we use in the book. The data files are storred as `.RData` files that can be directly loaded into R using the funtion `load()`. By convention the name of the file is also the name of the R-object that will be loaded. E.g. using `load("RData/elevation.RData")` will load a tibble named elevation. Note, that most of the data-files that we use in the book are instead available from the R-package [`blmeco`](https://github.com/fraenzi/blmeco). 
 
-7. **references-Folder**
+6. **references-Folder**
 
    Contains the `.bib` files that contain the data-base of references that we partly used in the book. The file `References_fk.bib` is the export of the data-base maintained by Fränzi. This file should not be changed.  Additional references or references that you like to improve you should add to `References_new.bib`.
 
-8. **settings-Folder**
+7. **settings-Folder**
 
-9. **stanmodels-Folder**
+8. **stanmodels-Folder**
 
    Contains the stan model description for all the models used in the book.
 
