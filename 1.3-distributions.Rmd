@@ -2,11 +2,11 @@
 
 ## Introduction
 
-In Bayesian statistics, probability distributions are used for two fundamentally different purposes. First, they are used to describe distributions of data. These distributions are also called data distributions. Second, probability distributions are used to express information or knowledge about parameters. Such distributions are called prior or posterior distributions. The data distributions are part of descriptive statistics, whereas prior and posterior distributions are part of inferential statistics. The usage of probability distributions for describing data does not differ between frequentist and Bayesian statistics. For both, the data distribution used is a central model assumption. Specific to Bayesian statistics is the formal expression of statistical uncertainty (or "information" or "knowledge") by prior and posterior distributions. 
+In Bayesian statistics, probability distributions are used for two fundamentally different purposes. First, they are used to describe distributions of data. These distributions are also called data distributions. Second, probability distributions are used to express information or knowledge about parameters. Such distributions are called prior or posterior distributions. The data distributions are part of descriptive statistics, whereas prior and posterior distributions are part of inferential statistics. The role of the probability distribution to describe data is the same for frequentist and Bayesian statistics. For both, we have to choose a suitable data distribution for the problem at hand, and this choice is a key model assumption. Specific to Bayesian statistics is the formal expression of statistical uncertainty (or "information" or "knowledge") by prior and posterior distributions. 
 
-In the following, we introduce some of the most often used probability distributions and present how they are used in statistics. 
+In the following, we introduce some of the probability distributions that are most often used in statistics. 
 
-Probability distributions are grouped into discrete and continuous distributions. Discrete distributions define for any discrete value the probability that exactly this value occurs. They are usually used as data distributions for discrete data such as counts. The function that describes a discrete distribution is called a probability function (their values are probabilities, i.e. a number between 0 and 1). Continuous distributions describe how continuous values are distributed. They are used as data distributions for continuous measurements such as body size, and also as prior or posterior distributions for parameters such as the mean body size. Most parameters are measured on a continuous scale. The function that describes a continuous distribution is called a probability density function (or just density function). The area under the density function corresponds to probabilities, its total, hence, equals one. For example, the area under the density function above the value 2 corresponds to the proportion of data with values above 2 if the density function describes data, or it corresponds to the probability that the parameter takes on a value bigger than 2 if the density function is a posterior distribution.  
+Probability distributions are grouped into discrete and continuous distributions. Discrete distributions define for any discrete value the probability that exactly this value occurs. They are usually used as data distributions for discrete data such as counts. The function that describes a discrete distribution is called a probability function (their values are probabilities, i.e. a number between 0 and 1). Continuous distributions describe how continuous values are distributed. They are used as data distributions for continuous measurements such as body size, and also as prior or posterior distributions for parameters such as the mean body size. Most parameters are measured on a continuous scale. The function that describes a continuous distribution is called a probability density function (or just density function). The area under the density function corresponds to probabilities, hence, its total equals one. For example, the area under the density function above the value 2 corresponds to the proportion of data with values above 2 if the density function describes data, or it corresponds to the probability that the parameter takes on a value bigger than 2 if the density function is a posterior distribution.  
 
 
 ## Discrete distributions
@@ -20,11 +20,11 @@ $x \sim Bernoulli(p)$
 The probability function is $p(x) = p^x(1-p)^{1-x}$. 
 The expected value is $E(x) = p$ and the variance is $Var(x) = p(1-p)$.
 
-The flipping experiment of a fair coin produces Bernoulli distributed data with $p=0.5$ if head is taken as one and tail is taken as zero. The Bernoulli distribution is usually used as a data model for binary data such as whether a nest box is used or not, whether a seed germinated or not, whether a species occurs or not in a plot etc. 
+The coin flipping experiment produces Bernoulli distributed data with $p=0.5$ if head is taken as one and tail is taken as zero (or vice versa). The Bernoulli distribution is usually used as a data model for binary data such as whether or not a nest box is used, whether a seed germinated, whether a species occurs in a plot, etc. 
 
 ### Binomial distribution {#binomial-dist}
 
-The binomial distribution describes the number of ones among a predefined number of Bernoulli trials. For example, the number of heads among 20 coin flips, the number of used nest boxes among the 50 nest boxes of the study area, or the number of seed that germinated among the 10 seeds in the pot. Binomially distributed data are counts with an upper limit ($n$).
+The binomial distribution describes the number of ones among a predefined number of Bernoulli trials. For example, the number of heads among 20 coin flips, the number of used nest boxes among the 50 nest boxes in the study area, or the number of seed that germinated among the 10 seeds in the pot. Binomially distributed data are counts with an upper limit ($n$).
 
 $x \sim binomial(p,n)$ 
 
@@ -32,7 +32,7 @@ The probability function is $p(x) = {n\choose x} p^x(1-p)^{(n-x)}$.
 The expected value is $E(x) = np$ and the variance is $Var(x) = np(1-p)$.
 
 
-```{r, echo=FALSE, fig.cap="Two examples of a binomial distribution. size: number of trials (the argument in the corresponding R function, for example in rbinom, is called size). p: success probability."}
+```{r, echo=FALSE, fig.cap="Two examples of a binomial distribution. size: number of trials (the argument in the corresponding R function, for example in `rbinom`, is called size). p: success probability."}
 randombinom <- rbinom(100000, size=10, prob=0.3)
 histrandombin <- hist(randombinom, breaks=seq(-0.5, 10.5, by=1), plot=FALSE)
 par(mfrow=c(1,2), oma=c(0, 2, 0,0))
@@ -55,7 +55,7 @@ The Poisson distribution describes the distribution of counts without upper boun
 $x \sim Poisson(\lambda)$  
 
 The probability function is $p(x) = \frac{1}{x!}\lambda^xexp(-\lambda)$. It is implemented in the R-function `dpois`.
-The expected values is $E(x) = \lambda$ and the variance is $Var(x) = \lambda$.
+The expected value is $E(x) = \lambda$ and the variance is $Var(x) = \lambda$.
 
 ```{r pois, fig.cap="A natural process that produces Poisson distributed data is the number of raindrops falling (at random) into equally sized cells of a grid. Left: spatial distribution of raindrops, right: corresponding distribution of the number of raindrops per cell."}
 set.seed(1338)
@@ -82,7 +82,9 @@ par(mar=c(4,4,1,1))
 hist(counts, col="blue", cex.lab=1.4, las=1, cex.axis=1.2, main="")
 ```
 
-An important property of the Poisson distribution is that it has only one parameter $\lambda$. As a consequence, it does not allow for any combination of means and variances. In fact, they are assumed to be the same. In the real world, most count data do not behave like rain drops, that means variances of count data are in most real world examples not equal to the mean as assumed by the Poisson distribution. Therefore, when using the Poisson distribution as a data model, it is important to check for overdispersion.
+An important property of the Poisson distribution is that it has only one parameter $\lambda$ (which is also true for the Bernoulli and Binomial distributions, with their only parameter $p$; the $n$ in the Binomial distribution is not a parameter, rather, it is given by the data). As a consequence, the Poisson distribution does not allow for any arbitrary combination of mean and variance. For example, in Figure \@ref(fig:pois) (right), the mean is around five; a Poisson distribution with mean five could not have a variance of, e.g., 100, i.e. spreading substantially farther than what is seen in this Figure. In fact, mean and variance are assumed to be equal.
+
+In the real world, most count data do not behave like rain drops. Rather, the variance of count data is usually found to be larger than the mean. If, nevertheless, we use a Poisson data distribution in our model, we are violating a key model assumption, i.e., the equality of mean and variance in the data distribution. This state is called "overdispersion": The real data spreads more than the Poisson distribution assumes. Therefore, when using the Poisson distribution as a data model, it is important to check for overdispersion. We show in Chapter \@ref(glm) how to do that, and that switching to a negative-binomial data distribution is one option to deal with it. In this chapter, we also address the issue of overdispersion in the Bernoulli (where it is actually not an issue) and the Binomial (where it is an issue) distributions.
 
 The property that in a Poisson distribution the mean equals the variance can be used to quickly assess whether the spatial distribution of observations, for example, nest locations, is clustered, random, or equally spaced. Animal locations could be clustered due to coloniality, social, or other attraction. More equally spaced location may be due to territoriality. 
 Let $x$ be the number of observations per grid cell; if $var(x)/mean(x)>>1$ the observations are clustered, whereas if $var(x)/mean(x)<<1$, the observations are more equally spaced than expected by chance. Clustering will lead to overdispersion in the counts whereas more equally spaced locations will lead
