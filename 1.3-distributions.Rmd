@@ -32,7 +32,7 @@ The probability function is $p(x) = {n\choose x} p^x(1-p)^{(n-x)}$.
 The expected value is $E(x) = np$ and the variance is $Var(x) = np(1-p)$.
 
 
-```{r, echo=FALSE, fig.cap="Two examples of a binomial distribution. size: number of trials (the argument in the corresponding R function, for example in `rbinom`, is called size). p: success probability."}
+```{r, echo=FALSE, fig.cap="Two examples of a binomial distribution. size: number of trials (the argument in the corresponding R function, for example in `rbinom`, is called size). p: success probability.", fig.height=4, fig.width=7}
 randombinom <- rbinom(100000, size=10, prob=0.3)
 histrandombin <- hist(randombinom, breaks=seq(-0.5, 10.5, by=1), plot=FALSE)
 par(mfrow=c(1,2), oma=c(0, 2, 0,0))
@@ -57,7 +57,7 @@ $x \sim Poisson(\lambda)$
 The probability function is $p(x) = \frac{1}{x!}\lambda^xexp(-\lambda)$. It is implemented in the R-function `dpois`.
 The expected value is $E(x) = \lambda$ and the variance is $Var(x) = \lambda$.
 
-```{r pois, fig.cap="A natural process that produces Poisson distributed data is the number of raindrops falling (at random) into equally sized cells of a grid. Left: spatial distribution of raindrops, right: corresponding distribution of the number of raindrops per cell."}
+```{r pois, fig.cap="A natural process that produces Poisson distributed data is the number of raindrops falling (at random) into equally sized cells of a grid. Left: spatial distribution of raindrops, right: corresponding distribution of the number of raindrops per cell.", fig.height=4, fig.width=7}
 set.seed(1338)
 n <- 500         # simulate 500 raindrops
 x <- runif(n)    # they fall at some random point (x,y) in space
@@ -122,7 +122,7 @@ x <- seq(0,1, length=100)
 y1 <- dbeta(x, 2,2)
 y2 <- dbeta(x, 10,7)
 y3 <- dbeta(x, 10, 30)
-par(mar=c(5,4,0.5,0.5))
+par(mar=c(4,4,0.5,0.5))
 plot(x, y1, ylim=c(0, 5.9), xlab="x", ylab="Density", las=1, lwd=2, col="blue",
      type="l")
 lines(x,y2, lwd=2, col="brown")
@@ -153,6 +153,7 @@ The standard normal distribution is a normal distribution with a mean of zero an
 x <- seq(-3, 3, length=100)
 y <- dnorm(x) # density function of a standard normal distribution
 dat <- tibble(x=x,y=y)
+par(mar=c(4,4,0.5,0.5))
 plot(x,y, type="l", lwd=2, col="#d95f0e", las=1, ylab="normal density of x")
 segments(0, dnorm(1), 1, dnorm(1), lwd=2)
 segments(0, dnorm(0), 0, 0)
@@ -189,7 +190,7 @@ The part of the Cauchy distribution for positive values, i.e.,  half of the Cauc
 
 ### t-distribution
 
-The t-distribution is the marginal posterior distribution of a the mean of a sample with unknown variance when conjugate prior distributions are used to obtain the posterior distribution. The t-distribution has three parameters, the degrees of freedom $v$, the location $\mu$ and the scale $\sigma$.
+The t-distribution is the marginal posterior distribution of the mean of a sample with unknown variance when conjugate prior distributions are used to obtain the posterior distribution. The t-distribution has three parameters, the degrees of freedom $v$, the location $\mu$ and the scale $\sigma$.
 
 $x \sim t(v, \mu, \sigma)$
 
@@ -197,22 +198,22 @@ Its density function is $p(x) = \frac{\Gamma((v+1)/2)}{\Gamma(v/2)\sqrt{v\pi}\si
 
 The t-distribution is sometimes used as data model. Because of its heavier tails compared to the normal model, the model parameters are less influenced by measurement errors when a t-distribution is used instead of a normal distribution. This is called "robust statistics". 
 
-Similar to the Cauchy distribution, the folded t-distribution, i.e., the positive part of the t-distribution, can serve as a prior distribution for variance parameters.
+Similar to the Cauchy distribution, the folded t-distribution, i.e., the positive part of the t-distribution(scaled to integrate to one), can serve as a prior distribution for variance parameters.
 
 
 ### F-distribution
 
 The F-distribution is not important in Bayesian statistics. 
-Ratios of sample variances drawn from populations with equal variances follow an F-distribution. The density function of the F-distribution is even more complicated than the one of the t-distribution! We do not copy it here. Further, we have not yet met any Bayesian example where the F-distribution is used (that does not mean that there is no). It is used in frequentist analyses in order to compare variances, e.g. within ANOVAs. If two variances only differ because of natural variance in the data (nullhypothesis) then $\frac{Var(X_1)}{Var(X_2)}\sim F_{df_1,df_2}$.
+Ratios of sample variances drawn from populations with equal variances follow an F-distribution. The density function of the F-distribution is even more complicated than the one of the t-distribution! We will not share it here. Furthermore, we have not yet encountered any Bayesian example where the F-distribution is used. It is used in frequentist analyses in order to compare variances, e.g., within ANOVAs. If two variances only differ because of natural variance in the data (null hypothesis), then $\frac{Var(X_1)}{Var(X_2)}\sim F_{df_1,df_2}$.
 
-```{r, echo=FALSE, fig.cap="Different density functions of the F statistics", fig.asp=0.45}
+```{r, echo=FALSE, fig.cap="Different density functions of the F statistics.", fig.width=4, fig.height=3.5}
 par(mar=c(4.5,4.5,1,1))
 x <- seq(0, 5, length=100)
 y <- df(x, 5,5)
 plot(x, y, type="l", lwd=2, las=1, xlab="F-value", ylab="Density", main="", ylim=c(0,1))
-text(3, 0.3, "df1=5, df2=5", adj=c(0,0))
-text(3, 0.2, "df1=2, df2=10", adj=c(0,0), col="blue")
-text(3, 0.1, "df1=20, df2=20", adj=c(0,0), col="orange")
+text(3, 0.4, "df1=5, df2=5", adj=c(0,0))
+text(3, 0.3, "df1=2, df2=10", adj=c(0,0), col="blue")
+text(3, 0.2, "df1=20, df2=20", adj=c(0,0), col="orange")
 
 y <- df(x, 2,10)
 lines(x,y, lwd=2, col="blue")
