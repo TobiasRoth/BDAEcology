@@ -16,6 +16,7 @@ The Stan development team gives a profound and up-to-date [prior choice recommen
 
 
 <!-- Tabelle von Fränzi (CourseIII_glm_glmmm/course2018/presentations_handouts/presentations) -->
+<!-- Referenz von 4.3.3 Gamma distrb hierher, wenn hier conjugate priors erklärt sind -->
 
 Further references: 
 @Lemoine.2019  

@@ -86,38 +86,38 @@ An important property of the Poisson distribution is that it has only one parame
 
 In the real world, most count data do not behave like rain drops. Rather, the variance of count data is usually found to be larger than the mean. If, nevertheless, we use a Poisson data distribution in our model, we are violating a key model assumption, i.e., the equality of mean and variance in the data distribution. This state is called "overdispersion": The real data spreads more than the Poisson distribution assumes. Therefore, when using the Poisson distribution as a data model, it is important to check for overdispersion. We show in Chapter \@ref(glm) how to do that, and that switching to a negative-binomial data distribution is one option to deal with it. In this chapter, we also address the issue of overdispersion in the Bernoulli (where it is actually not an issue) and the Binomial (where it is an issue) distributions.
 
-The property that in a Poisson distribution the mean equals the variance can be used to quickly assess whether the spatial distribution of observations, for example, nest locations, is clustered, random, or equally spaced. Animal locations could be clustered due to coloniality, social, or other attraction. More equally spaced location may be due to territoriality. 
-Let $x$ be the number of observations per grid cell; if $var(x)/mean(x)>>1$ the observations are clustered, whereas if $var(x)/mean(x)<<1$, the observations are more equally spaced than expected by chance. Clustering will lead to overdispersion in the counts whereas more equally spaced locations will lead
-to underdispersion.
+Because the mean equals the variance in a Poisson distribution, this property can be used to quickly assess whether a spatial pattern, such as nest locations, is clustered, random, or evenly spaced. Animal locations could be clustered due to coloniality, social, or other attraction. More evenly spaced locations may be due to territoriality. 
+Let $x$ be the number of observations per grid cell; if $var(x)/mean(x)>>1$, the observations are clustered, whereas if $var(x)/mean(x)<<1$, the observations are more evenly spaced than expected by chance. Clustering will lead to overdispersion in the counts, whereas more evenly spaced locations will lead to underdispersion (data spreading less than expected by the Poisson distribution, e.g., only between around 4 and 5.5 in Figure \@ref(fig:pois), right).
 
-Further, note that not all variables measured as an integer number are count data! For example, the number of days an animal spends in a specific area before moving away looks like a count. However, it is a continuous measurement. The duration an animal spends in a specific areas could also be measured in hours or minutes. The Poisson model assumes that the counts are all events that happened. However, an emigration of an animal is just one event, independent of how long it stayed.  
+Furthermore, note that not all variables measured as an integer number are count data! For example, the number of days an animal spends in a specific area before moving away looks like a count. However, it is a continuous measurement. The duration an animal spends in a specific area could also be measured in hours or minutes. The Poisson model assumes that the count is the number of independent events that happened. This is not the case when you have the number of hours before something happens. If your value changes with the scale (hour, minute, or meter, centimeter, etc.), it is not a Poisson count.   
 
 
 ### Negative-binomial distribution
 
-The negative-binomial distribution represents the number of zeros which occur in a sequence of Bernoulli trials before a target number of ones is reached. It is hard to see this situation in, e.g., the number of individuals counted on plots. Therefore, we were reluctant to introduce this distribution in our old book [@KornerNievergelt.2015]. However, the negative-binomial distribution often fits much better to count data than the Poisson model because it has two parameters and therefore allows for fitting both the mean and the variance to the data. Therefore, we started using the negative-binomial distribution as a data model more often. 
+The negative-binomial distribution, technically, represents the number of zeros which occur in a sequence of Bernoulli trials before a target number of ones is reached. It is hard to see this situation in, e.g., the number of individuals counted on plots. Therefore, we were reluctant to introduce this distribution in our old book [@KornerNievergelt.2015]. However, it turns out that the negative-binomial distribution often fits much better to count data than the Poisson distribution. This is because the negative-binomial distribution has two parameters and, therefore, allows for fitting both the mean and the variance to the data. For this reason, the negative-binomial model has become popular in ecology, especially since functions to fit it have become readily available. 
+
 $x \sim negative-binomial(p,n)$ 
 
 Its probability function is rather complex:  
 
-$p(x) = \frac{\Gamma(x+n)}{\Gamma(n) x!} p^n (1-p)^x$  with $\Gamma$ being the Gamma-function. Luckily, the negative-binomial probability function is implemented in the R-function `dnegbin`.   
+$p(x) = \frac{\Gamma(x+n)}{\Gamma(n) x!} p^n (1-p)^x$  with $\Gamma$ being the Gamma-function, $p$ the probability for a one, and $n$ the target number of ones needed. Luckily, the negative-binomial probability function is implemented in the R-function `dnegbin`.   
 The expected value of the negative-binomial distribution is $E(x) = n\frac{(1-p)}{p}$ and the variance is $Var(x) = n\frac{(1-p)}{p^2}$.
-We like to specify the distribution using the mean and the scale parameter $x \sim negativ-binomial(\mu,\theta)$, because in practice we often specify a linear predictor for the logarithm of the mean $\mu$. 
+However, there is an alternative specification of the negative-binomial distribution using the mean and the scale parameter $x \sim negativ-binomial(\mu,\theta)$. In ecology, this is much more useful, because we often want to specify a linear predictor for the logarithm of the mean $\mu$ (the logarithm is the “link-function” typically used for a negative-binomial model; see Chapter \@ref(glm) for details on using a link-function). 
 
 
 ## Continuous distributions
 
 ### Beta distribution
 
-The beta distribution is restricted to the range [0,1]. It describes the knowledge about a probability parameter. Therefore, it is usually used as a prior or posterior distribution for probabilities. The beta distribution sometimes is used as a data model for continuous probabilities, However, it is difficult to get a good fit of such models, because measured proportions often take on values of zero and ones which is not allowed in most (but not all) beta distributions, thus this distribution does not describe the variance of measured proportions correctly. However, for describing knowledge of a proportion parameter, it is a very convenient distribution with two parameters. 
+The beta distribution is restricted to the range [0,1]. It describes the knowledge about a probability parameter. Therefore, it is usually used as a prior or posterior distribution for probabilities. The beta distribution sometimes is used as a data model for continuous probabilities. However, it is difficult to get a good fit of such models, because measured proportions often take on values of zero and ones which is not allowed in most (but not all) beta distributions, thus this distribution does not describe the variance of measured proportions correctly. However, for describing knowledge of a proportion parameter, it is a very convenient distribution with two parameters. 
 
 $x \sim beta(a,b)$
 
-Its density function is $p(x) = \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}x^{a-1}(1-x)^{b-1}$. The R-function `dbeta`does the rather complicated calculations for us.
+Its density function is $p(x) = \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}x^{a-1}(1-x)^{b-1}$. The R-function `dbeta` does the rather complicated calculations for us.
 
-The expected value of a beta distribution is $E(x) = \frac{a}{(a+b)}$ and the variance is $Var(x) = \frac{ab}{(a+b)^2(a+b+1)}$. The $beta(1,1)$ distribution is equal to the $uniform(0,1)$ distribution. The higher the sum of $a$ and $b$, the more narrow is the distribution (Figure \@ref(fig:betadist)).
+The expected value of a beta distribution is $E(x) = \frac{a}{(a+b)}$ and the variance is $Var(x) = \frac{ab}{(a+b)^2(a+b+1)}$. The $beta(1,1)$ distribution is equal to the $uniform(0,1)$ distribution. The higher the sum of $a$ and $b$, the more narrow the distribution (Figure \@ref(fig:betadist)).
 
-```{r betadist, fig.cap="Beta distributions with different parameter values.", fig.asp=0.45, echo=FALSE}
+```{r betadist, fig.cap="Beta distributions with different parameter values.", fig.width=4, fig.height=3.5, echo=FALSE}
 x <- seq(0,1, length=100)
 y1 <- dbeta(x, 2,2)
 y2 <- dbeta(x, 10,7)
@@ -135,7 +135,7 @@ legend(0.5, 6, lwd=2, col=c("orange", "brown", "blue"),
 
 ### Normal distribution {#normdist}
 
-The normal, or Gaussian distribution is widely used since a long time in statistics. It describes the distribution of measurements that vary because of a sum of random errors. Based on the central limit theorem, sample averages are approximately normally distributed (\@ref(basics)).    
+The normal, or Gaussian, distribution has been widely used for a long time in statistics. It describes the distribution of measurements that vary because of a sum of random errors. Based on the central limit theorem, sample averages are approximately normally distributed.    
  
 $x \sim normal(\mu, \sigma^2)$  
  
@@ -143,24 +143,23 @@ The density function is $p(x) = \frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{1}{2\sigma
      
 The expected value is $E(x) = \mu$ and the variance is $Var(x) = \sigma^2$.
 
-The variance parameter can be specified to be a variance, a standard deviation or a precision. Different software (or authors) have different habits, e.g., R and Stan use the standard deviation sigma $\sigma$, whereas BUGS (WinBugs, OpenBUGS or jags) use the precision, which is the inverse of the variance $\tau= \frac{1}{\sigma^2} $.
+The variance parameter can be specified to be a variance, a standard deviation, or a precision. Different software (or authors) have different habits, e.g., R and Stan use the standard deviation $\sigma$ (sigma), whereas BUGS (WinBugs, OpenBUGS or jags) use the precision, which is the inverse of the variance $\tau= \frac{1}{\sigma^2}$.
 
-The normal distribution is used as a data model for measurements that scatter symmetrically around a mean, such as body size (in m), food consumption (in g), or body temperature (°C). 
-The normal distribution also serves as prior distribution for parameters that can take on negative or positive values. The larger the variance, the flatter (less informative) is the distribution.
+The normal distribution is used as a data model for measurements that scatter symmetrically around a mean, such as body size (e.g., in m), food consumption (e.g., in g), or body temperature (e.g., in °C). The normal distribution also serves as prior distribution for parameters that can take on negative or positive values. The larger the variance, the flatter (less informative) the distribution.
 
-The standard normal distribution is a normal distribution with a mean of zero and a variance of one, $z \sim normal(0, 1)$. The standard normal distribution is also called the z-distribution. Or, a z-variable is a variable with a mean of zero and a standard deviation of one.
+The standard normal distribution is a normal distribution with a mean of zero and a variance of one, $z \sim normal(0, 1)$. The standard normal distribution is also called the z-distribution. Likewise, a z-transformation transforms a variable to a variable with a mean of zero and a standard deviation of one.
 
-```{r normdistplot, fig.cap="Standard normal distribution", fig.asp=0.45, echo=TRUE}
+```{r normdistplot, fig.cap="Standard normal distribution.", fig.width=4, fig.height=3.5, echo=TRUE}
 x <- seq(-3, 3, length=100)
 y <- dnorm(x) # density function of a standard normal distribution
 dat <- tibble(x=x,y=y)
 plot(x,y, type="l", lwd=2, col="#d95f0e", las=1, ylab="normal density of x")
 segments(0, dnorm(1), 1, dnorm(1), lwd=2)
 segments(0, dnorm(0), 0, 0)
-text(0.5, 0.23, expression(sigma))
+text(0.5, 0.2, expression(sigma))
 ```
 
-Plus minus one times the standard deviation ($\sigma$) from the mean includes around 68% of the area under the curve (corresponding to around 68% of the data points in case the normal distribution is used as a data model, or 68% of the prior or posterior mass if the normal distribution is used to describe the knowledge about a parameter). Plus minus two times the standard deviation includes around 95% of the area under the curve. 
+Plus or minus one times the standard deviation ($\sigma$) from the mean includes around 68% of the area under the curve (corresponding to around 68% of the data points in case the normal distribution is used as a data model, or 68% of the prior or posterior mass if the normal distribution is used to describe the knowledge about a parameter). Plus or minus two times the standard deviation includes around 95% of the area under the curve. 
 
 
 
@@ -181,7 +180,7 @@ The gamma distribution is a conjugate prior distribution for the mean of a Poiss
 
 The Cauchy distribution is a symmetric distribution with much heavier tails compared to the normal distribution. 
 
-$ x \sim Cauchy(a,b)$
+$x \sim Cauchy(a,b)$
 
 Its probability density function is $p(x) = \frac{1}{\pi b[1+(\frac{x-a}{b})^2]}$. The mean and the variance of the Cauchy distribution are not defined. The median is $a$. 
 The part of the Cauchy distribution for positive values, i.e.,  half of the Cauchy distribution, is often used as a prior distribution for variance parameters. 
