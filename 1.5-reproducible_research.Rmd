@@ -1,8 +1,8 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
+#---
+#output:
+#  pdf_document: default
+#  html_document: default
+#---
 
 # Reproducible research {#reproducibleresearch}
 
