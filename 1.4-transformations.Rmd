@@ -12,11 +12,11 @@ Linear transformations have no effect on the model performance itself; the varia
 
 <u>*Non-linear transformations*</u>
 
-The most commonly used non-linear transformations include the logarithm (usually just called log-transformation), polynomials (of degree 2 and more), the square-root, the arcussinus-squre-root (arcsin-square-root) and the logit. They have an effect on the model fit and will change the effectplot compared to using the untransformed predictor. E.g., when fitting a normal linear regression, the regression line will not be straight any more. The aim of these transformations is to improve model fit, i.e. to better capture the relationships that are in the data.
+The most commonly used non-linear transformations include the logarithm (usually just called the log transformation), polynomials (of 2nd degree or higher), the square root, the arcussinus-squre root (arcsin-square root) and the logit. They affect the model fit and will change the effect plot compared to using the untransformed predictor. E.g., when fitting a normal linear regression, the regression line will not be straight any more. The aim of these transformations is to improve the model fit, i.e. to better capture the relationships that are in the data.
 
-Non-linear transformations allow the use of the linear modeling framework even if the true nature of a relationship is not linear - to the degree that it can be represented by one of the available transformations. If the relationship is "very non-linear", such as a complex phenology (activity of an organism over the year, with date as predictor), the effect of the predictor can be estimated using a smoother. In that case, we talk of a generalized additive model (GAM; actually, even GAM are linear models in their mathematical structure).
+Non-linear transformations allow the use of the linear modeling framework even if the true nature of a relationship is not linear - to the degree that it can be represented by one of the available transformations. If the relationship is very non-linear, such as a complex phenology (activity of an organism over the year, with date as predictor), the effect of the predictor can be estimated using a smoother. In that case, we talk of a generalized additive model (GAM; actually, even GAM are linear models in their mathematical structure).
 
-Note that transformations generally are only done for continuous predictors (= a covariable). However, sometimes, we may convert a (ordered) factor to a covariable, which can be seen as a type of transformation. This is discussed in a following chapter, together with the inverse: categorizing a covariable.
+Note that transformations generally are only done for continuous predictors (= a covariable). However, sometimes, we may convert a (ordered) factor to a covariable, which can be seen as a type of transformation. This is discussed further down, together with the inverse: categorizing a covariable.
 
 
 ## Some R-specific aspects
@@ -25,10 +25,12 @@ A transformation on a predictor can be calculated and stored as a new variable i
 
 ```{r}
 dat <- data.frame(a = runif(20,2,6),
-                  b = rnorm(20,2,100))                           # some simulated data
-dat$y <- rnorm(20,2-0.6*log(dat$a)-0.12*dat$b+0.003*dat$b^2,11)  # simulated outcome variable
+                  b = rnorm(20,2,100))    # some simulated data
+dat$y <- rnorm(20,2-0.6*log(dat$a)-0.12*dat$b+0.003*dat$b^2,11)  
+  # simulated outcome variable
 dat$a.l <- log(dat$a)    # the log of x is stored in the new variable $x.l
-dat$b.z <- scale(dat$b)  # the variable b is centerd and scaled to 1 SD by the function scale, and stored in $b.z
+dat$b.z <- scale(dat$b)  # the variable b is centered and scaled to 1 SD 
+  # by the function scale(), and stored in $b.z
 ```
 
 Then, the variable ("a.l", "b.z") can be used in the model just like any variable.
@@ -36,41 +38,46 @@ Then, the variable ("a.l", "b.z") can be used in the model just like any variabl
 Alternatively, transformations can be done directly in the model formula:
 
 ```{r}
-mod1 <- lm(y ~ log(a), data=dat)     # the effect of the log of a on b is estimated
+mod1 <- lm(y ~ log(a), data=dat)
+  # the effect of the log of a on b is estimated
 mod2 <- lm(y ~ b + I(b^2), data=dat) # using a linear and quadratic effect
   # as dat$b has large values, better use scaled dat$b, i.e. dat$b.z:
-mod3 <- lm(y ~ b.z + I(b.z^2), data=dat)  # the I() makes that first the square is calculated, then these values are used
-  # or, even better, especially for complex models, use orthogonal polynomials by applying the function poly
-mod4 <- lm(y ~ poly(b,2), data=dat)   # the "2" asks for 2 polynomials, i.e. linear and quadratic
+mod3 <- lm(y ~ b.z + I(b.z^2), data=dat)  
+  # the I() makes that first the square is calculated, then these values
+  # are used
+  # or, even better, especially for complex models, use orthogonal 
+  # polynomials by applying the function poly:
+mod4 <- lm(y ~ poly(b,2), data=dat)
+  # the "2" asks for 2 polynomials, i.e. linear and quadratic
 ```
 
-Models 2 to 4 are all the same model in the sense that they create the same effectplot.
+Models 2 to 4 are all the same model in the sense that they create the same effect plot.
 
-Beware: It is often nice to z-transform the orthogonal polynomials. For that, we cannot use a double-function in the formula notation, rather the polynomials have to be created before the modeling, stored as a new variable, and only the z-transformation can be done in the formula (or outside, too, if you prefer). We get back to this in the polynomial chapter below.
+Beware: It is often nice to z-transform the orthogonal polynomials. For that, we cannot use a double-function in the formula notation. Instead, the polynomials have to be created before the modeling, stored as a new variable, and only the z-transformation can be done in the formula (or outside, too, if you prefer). We will get back to this in the polynomial chapter below.
 
 ```{r}
 mod5 <- lm(y ~ scale(poly(b,2)), data=dat)  # produces a wrong model!
 ```
 
-## First-aid transformations
+## First aid transformations
 
-J. W. Tukey termed the following three transformations the "first aid transformations":
+J. W. Tukey termed the following three transformations the "first aid transformations" [@Stahel.2000\, in German]:
 
-- log-transformation for concentrations and amounts
-- square-root transformation for count data
-- arcsin-square-root transformation for proportions (`asin(sqrt(dat$x))`)
+- log transformation for concentrations and amounts
+- square root transformation for count data
+- arcsin-square root transformation for proportions (`asin(sqrt(dat$x))`)
 
-Werner Stahel, a pivotal stats teacher for several of us, provides this information in his (german) book @Stahel.2000. In our experience, the log-transformation can often be helpful, especially for strongly right skewed positive variables. We don't often use the square-root transformation, but every now and then the arcsin-square-root transformation.
+In our experience, the log transformation can often be helpful, especially for strongly right skewed positive variables. We don't often use the square root transformation, but every now and then the arcsin-square root transformation (see below).
 
-## Log-transformation with Stahel{#logtransformation}
+## Log transformation with Stahel{#logtransformation}
 
-Log-transformations are often used and often very helpful, especially, as stated above, for strongly right skewed positive variables. Without the transformation, the large values, far away from the bulk of data, may have an unduely strong effect on the regression line (leading to a large "Cook's distance", see \@ref(residualanalysis)).
+Log transformations are often used and often very helpful, especially for strongly right skewed positive variables. Without the transformation, large values far from the bulk of the data may have an unduly strong effect on the regression line (leading to a large "Cook's distance", see Chapter \@ref(residualanalysis)).
 
-When log-transforming a predictor, we model its multiplicative effect on the outcome variable, while without transformation, it is the additive effect. This means: The model assumes that multiplying x by a factor F increases y by amount G (rather than increasing x by amount F increases y by amount G for the additive case). It seems that right skewed variables often relate in a multiplicative way to the outcome variable (for reasons that may lie in the heart of how mathematics works in our universe - we don't know). But it is a good that down-scaling large values and changing to a multiplicative effect often both increase the model fit, else the log-transformation would not be that useful.
+When log transforming a predictor, we model its multiplicative effect on the outcome variable (without a transformation, we model its additive effect). I.e., the model assumes that increasing (the original, not log transformed) predictor x by one unit increases the outcome y by a specific factor (in contrast to the additive case, where increasing x by one unit increases y by a specific amount). It seems that right skewed variables often relate in a multiplicative way to the outcome variable (for reasons that may lie in the heart of how mathematics works in our universe - we don't know). But it is good that down-scaling large values and changing to a multiplicative effect often both improve the model fit, otherwise the log-transformation would not be that useful.
 
-The log-transformation is great, as long as there are no zeros (and, of course, it does not work with negative values at all), as the log of 0 is minus infinity. But in real life, we often have zeros, and then, many people just add 1 to the values before log-transformation. This can be ok, but it is not optimal when the (non-zero) values are small. For that reason, some suggest to add 0.5 times the smallest non-zero value. Rob J Hyndman also presents the Box-Cox transformation in a [blog](https://robjhyndman.com/hyndsight/transformations/), which apparently can be done using the R function `log1p`.
+The log transformation is great, as long as there are no zeros (and, of course, it does not work with negative values at all), as the log of 0 is minus infinity. However, datasets often have zeros, and then it is common to add 1 to the values before the log transformation. This can be ok, but it is not optimal when the (non-zero) values are small. For that reason, some suggest to add 0.5 times the smallest non-zero value. Rob J Hyndman also presents the Box-Cox transformation in a [blog](https://robjhyndman.com/hyndsight/transformations/), which apparently can be done using the R function `log1p`.
 
-We made good experience with a transformation suggested by our above mentioned stats teacher Werner Stahel in his book (@Stahel.2000, on p. 30): $log(x + c)$, and c is the squared 25% quantile of the non-zero values divided by the 75% quantile of the non-zero values.  This performs well with zeros and is overall much better than adding 1 in many cases (and probably never worse).
+We have good experiences with a transformation suggested by Werner Stahel [@Stahel.2000\, on p. 30]: $log(x + c)$, where c is the squared 25% quantile of the non-zero values divided by the 75% quantile of the non-zero values.  This performs well with zeros and is overall much better than adding 1 in many cases (and probably never worse).
 
 ```{r}
 set.seed(3)
@@ -85,7 +92,7 @@ stahelc <- function(x) {
 }
 ```
 
-```{r fig.cap="log-transformation of an original variable (leftmost two panels), for a variable with larger values (above row of panels) and one with smaller values (lower row). Adding 1 or the Box-Cox transformation don't seem to help much, adding a constant according to Stahel performs best in these cases."}
+```{r fig.cap="The log transformation of an original variable (the two leftmost panels), for a variable with larger values (top row of panels) and one with smaller values (bottom row). Adding 1 or the Box-Cox transformation don't seem to help much, adding a constant according to Stahel performs best in these cases.", fig.width=6, fig.height=4}
 par(mfrow=c(2,4), mar=c(2,1,1,1), oma=c(0,2,1,0))
 hist(x, nclass=30, main="raw values", xlab="", ylab="", yaxt="n")
 mtext("larger values",2,1,xpd=NA)
@@ -103,9 +110,9 @@ Recently, the function 'logst' from Werner Stahel has become available in the pa
 
 ## Centering and scaling (z-transformation){#ztransformation}
 
-Centering ($x.c = x-mean(x)$) is a transformation that produces a variable with a mean of 0. Centering is optional, but we have two good reasons reasons to center a predictor variable. First, it helps the model fitting algorithm to better converge because it reduces correlations among model parameters. Second, with centered predictors, the intercept and main effects in the linear model are better interpretable (they are measured at the center of the data instead of at the covariate value of 0 which may be far off).
+Centering ($x.c = x-mean(x)$) is a transformation that produces a variable with a mean of 0. Centering has no effect on the model fit, but there are two good reasons reasons to center a predictor variable. First, it helps the model fitting algorithm to better converge because it reduces correlations among model parameters. Second, with centered predictors, the intercept and main effects in the linear model are better interpretable; they are now measured at the center of the data instead of at the covariate value of 0 which may be far off.
 
-Scaling: Scaling ($x.s = x/c$, where $c$ is a constant) is a transformation that changes the unit of the variable. Scaling is optional, too, but we have three good reasons to scale a covariable. First, to make the effect sizes better understandable. For example, a population change from one year to the next may be very small and hard to interpret. When we give the change for a 10-year period, its ecological meaning is better understandable. Second, to make the estimate of the effect sizes comparable between variables, we may use $x.s = x/sd(x)$. The resulting variable has a unit of one standard deviation. A standard deviation may be comparable between variables that originally are measured in different units (meters, seconds etc). @Gelman.2007 (p. 55 f) propose to scale the variables by two times the standard deviation ($x.s = x/(2*sd(x))$) to make effect sizes comparable between numeric and binary variables. Third, scaling can be important for model convergence, especially when polynomials are included. Also, consider the use of orthogonal polynomials, see below.
+Scaling ($x.s = x/c$, where $c$ is a constant) is a transformation that changes the unit of the variable. Scaling also has no effect on the model fit, but we have three good reasons to scale a covariable. First, to make the effect sizes better understandable. For example, a population change from one year to the next may be very small and hard to interpret. When we give the change for a 10-year period, its ecological meaning is better understandable. Second, to make the estimate of the effect sizes comparable between variables, we may use $x.s = x/sd(x)$. The resulting variable has a unit of one standard deviation. A standard deviation may be comparable between variables that originally are measured in different units (meters, seconds etc). @Gelman.2007 (p. 55 f) propose to scale the variables by two times the standard deviation ($x.s = x/(2*sd(x))$) to make effect sizes comparable between numeric and binary variables. Third, scaling can be important for model convergence, especially when polynomials are included. Also, consider the use of orthogonal polynomials, see below.
 
 Centering and scaling to one standard deviation is usually done by the function `scale`:
 ```{r}
