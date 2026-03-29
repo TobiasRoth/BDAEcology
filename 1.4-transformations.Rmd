@@ -12,7 +12,7 @@ Linear transformations have no effect on the model performance itself; the varia
 
 <u>*Non-linear transformations*</u>
 
-The most commonly used non-linear transformations include the logarithm (usually just called the log transformation), polynomials (of 2nd degree or higher), the square root, the arcussinus-squre root (arcsin-square root) and the logit. They affect the model fit and will change the effect plot compared to using the untransformed predictor. E.g., when fitting a normal linear regression, the regression line will not be straight any more. The aim of these transformations is to improve the model fit, i.e. to better capture the relationships that are in the data.
+The most commonly used non-linear transformations include the logarithm (usually just called the log transformation), polynomials (of 2nd degree or higher), the square root, the arcsine squre root and the logit. They affect the model fit and will change the effect plot compared to using the untransformed predictor. E.g., when fitting a normal linear regression, the regression line will not be straight any more. The aim of these transformations is to improve the model fit, i.e. to better capture the relationships that are in the data.
 
 Non-linear transformations allow the use of the linear modeling framework even if the true nature of a relationship is not linear - to the degree that it can be represented by one of the available transformations. If the relationship is very non-linear, such as a complex phenology (activity of an organism over the year, with date as predictor), the effect of the predictor can be estimated using a smoother. In that case, we talk of a generalized additive model (GAM; actually, even GAM are linear models in their mathematical structure).
 
@@ -65,9 +65,9 @@ J. W. Tukey termed the following three transformations the "first aid transforma
 
 - log transformation for concentrations and amounts
 - square root transformation for count data
-- arcsin-square root transformation for proportions (`asin(sqrt(dat$x))`)
+- arcsine square root transformation for proportions (`asin(sqrt(dat$x))`)
 
-In our experience, the log transformation can often be helpful, especially for strongly right skewed positive variables. We don't often use the square root transformation, but every now and then the arcsin-square root transformation (see below).
+In our experience, the log transformation can often be helpful, especially for strongly right skewed positive variables. We don't often use the square root transformation, but every now and then the arcsine square root transformation (see below).
 
 ## Log transformation with Stahel{#logtransformation}
 
@@ -123,21 +123,22 @@ dat$a.z <- (dat$a - mean(dat$a)) / sd(dat$a)
 
 ## Raw and orthogonal polynomials{#transformationspolynomials}
 
-Using polynomials allows to model some degree of non-linearity. The more polynomials are added, the more flexible becomes the curve to track data that has a non-linear relationship. However, in many cases we only add one polynomial - the quadratic effect - to the linear effect, sometimes also the cubic effect (i.e. the linear term is the first polynomial, the quadratic term the second and the cubic term the third polynomial). If you need more polynomials, a generalized additive model may be your better choice (though not always).
+Using polynomials allows us to model some degree of non-linearity. The more polynomials are added, the more flexible the curve becomes to track data that has a non-linear relationship. However, in many cases we only add one polynomial - the quadratic effect - to the linear effect, sometimes also the cubic effect (i.e., the linear term is the first polynomial, the quadratic term the second, and the cubic term the third polynomial). If you need more polynomials, a generalized additive model may be your better choice (though not always).
 
-Raw polynomials are simply the original value squared, or raised to a higher power. It is very advisable in most cases to do that only on z-transformed values, as polynomials are quickly very large numbers, causing convergence problems. Also, polynomials are generally correlated, often strongly. This correlation is reduced if you use z-transformed values (at least for the correlation between linear and quadratic values), but there is (mostly) still a correlation there that may cause convergence problems in complex models. For this reason, we advise to use orthogonal polynomials using the function `poly`. Such polynomials are uncorrelated. Note: whether you use raw or orthogonal polynomials, the model performance is the same (the effecplot will look identical). But convergence is better with orthogonal polynomials, and also the interpretation of the coefficients: e.g. with two polynomials, the first coefficient captures the linear part of the relationship, the second the quadratic part.
+Raw polynomials are simply the original value squared, or raised to a higher power. It is very advisable in most cases to only do that on z-transformed values, as polynomials quickly become very large numbers, causing convergence problems. Also, polynomials are generally correlated, often strongly. This correlation is reduced if you use z-transformed values (at least for the correlation between linear and quadratic values), but there is (mostly) still a correlation there that may cause convergence problems in complex models. For this reason, we advise using orthogonal polynomials with the function `poly`. Such polynomials are uncorrelated. Note: whether you use raw or orthogonal polynomials, the model performance is the same (the effect plot will look identical). But convergence is better with orthogonal polynomials, and so is the interpretation of the coefficients: e.g., with two polynomials, the first coefficient captures the linear part of the relationship, the second the quadratic part.
 
 We illustrate the use of polynomials in an example in Chapter \@ref(lmpolynomials). To summarize the points elaborated there:
 
 - Adding polynomials adds flexibility to the model
 - Quite often, we add the quadratic polynomial, sometimes the cubic, rarely higher-order polynomials
+- We (almost) always keep all lower polynomials, i.e., linear when we add the quadratic polynomial, the linear and quadratic when we add the cubic polynomial, etc.
 - Raw polynomials should generally be done on z-transformed values
 - Orthogonal polynomials are uncorrelated and should be used in more complex models
-- Orthogonal polynomials created with `poly` have small values, hence z-transforming them, too, can be advisable to make coefficient estimated comparable with other covariates
+- Orthogonal polynomials created with `poly` have small values, hence z-transforming them, too, can be advisable to make coefficient estimates comparable with other covariates
 
-Quadratic polynomials are common in ecology because often, a relationship is not simply linear but has an optimum, e.g. of rainfall on growth - too little and too much rain are both not ideal for most plants. In such a case, the quadratic effect typically will be negative, because this means that the curve (= the regression line) has an optimum; a positive quadratic effect produces a curve that has a minimum. Of course, across the range of the predictor, we may only cover a part of the curve, hence a negative quadratic effect can also be a curve that increases and gradually levels off. This is typically seen for a species-area curve: as the size of a study plot increases, more species are found, but fewer and fewer new species can be added the more species are already in the pool of observed species. If we extrapolyte such a regression line beyond the maximal size of our study plots, the curve would start to decline, which is biological nonsense (in most cases!). Extrapolations of regression lines beyond the observed data are always delicate, but especially when polynomials are included.
+Quadratic polynomials are common in ecology, because often a relationship is not simply linear but has an optimum, e.g., of rainfall on growth - too little and too much rain are both not ideal for most plants. In such a case, the quadratic effect typically will be negative, because this means that the curve (= the regression line) has an optimum. A positive quadratic effect produces a curve that has a minimum. Of course, across the range of the predictor, we may only cover a part of the curve, hence a negative quadratic effect can also be a curve that increases and gradually levels off. This is typically seen for a species-area curve: as the size of a study plot increases, more species are found, but fewer and fewer new species can be added as most species are already in the pool of observed species. If we extrapolate such a regression line beyond the maximal size of our study plots, the curve would start to decline (\@ref(fig:specareacurve)), which is biological nonsense (in most cases!). Extrapolations of regression lines beyond the observed data are always delicate, but especially when polynomials are included.
 
-```{r fig.cap="Observed relationship between the size of the study area and the number of species found there (circles) with a linear-quadratic regression line (red) to describe this relationship. While this line is a reasonable model for the data at hand, it is nonsense to extrapolate the line beyond the available data (blue line).", fig.width=3.5, fig.height=3.5}
+```{r specareacurve, fig.cap="Observed relationship between the size of the study area and the number of species found there (circles) with a linear-quadratic regression line (red) to describe this relationship. While this line is a reasonable model for the data at hand, it is nonsense to extrapolate the line beyond the available data (blue line).", fig.width=3.5, fig.height=3.5}
 dat <- data.frame(area = c(0.5,0.5,1,1,2,2.3,3,3.3,4,5,5.5),
                   species = c(2,3,4,5,6,6,7,8,7,8,9))
 plot(dat$area, dat$species, las=1, xlab="Size of study area", ylab="Nr of species found",
@@ -152,62 +153,65 @@ lines(t.area, predict(mod, newdata = data.frame(area=t.area)), col="blue")
 ```
 
 
-## Square-root transformation
+## Square root transformation
 
-The square-root transformation is like a "mild" log-transformation and it has the advantage that zeros are not a problem. However, we rather rarely use it - it seems it often does not improve model fit much (or we don't try often enough). Anyways, keep it in our toolbox!
+The square root transformation is like a "mild" log transformation and it has the advantage that zeros are not a problem. However, we rarely use it as it does not seem to improve model fit much (or we don't try often enough). Anyways, it can be nice to keep it in our toolbox!
 
-## Arcsinus-square-root transformation
+## Arcsine square root transformation
 
-The arccin-square-root transformation has been suggested for proportions. If you have the number of germinated seeds among a total number of seeds in the pot, you would use a binomial model (Chapter \@glm and \@glmm). But sometimes, you may only have the proportion that germinated, not the number and not the total, and, therefore, a binomial model is not possible. Then, the arcsin-square-root transformation can be a good choice. It stretches the effect at the ends, such that a change from 1% to 2% corresponds to a larger change than a change from 50% to 51%, which makes sense biologically in many or most cases (the first is a doubling, the second only a minor change).
+The arcsine square root transformation has been suggested for proportions. If you measure the number of germinated seeds among a total number of seeds in the pot, you would use a binomial model (Chapter \@ref(glm) and \@ref(glmm)). But sometimes the data at hand only has the proportion that germinated, not the number of seeds that germinated nor the total number of seeds in the pot. In such a case, a binomial model is not possible. Then, the arcsine square root transformation can be a good choice. It stretches the effect at the ends, such that a change from 1% to 2% corresponds to a larger change than a change from 50% to 51%, which makes sense biologically in many or most cases (the first is a doubling, the second only a minor change).
 
-The logit-transformation (see next chapter) has an analogous effect, but it cannot be applied to values of exactly 0 or 1, while arcsin-square-root does. The coefficient of a logit-transformed proportion has an interpretable meaning (albeit not a very easy one: see the discussion on odds ratios in Chapter \@ref(glm)), the coefficient of a arcsin-square-root transformation does not (except for the sign). But interpreting results works better looking at effectplots than coefficients anyways. So if you have 0s or 1s in the data, the arcsin-square-root is the better option than the logit; this is also true if you have values extremely close to 0 or 1, because the logit has a stronger effect on such values (as it goes towards minus/plus infinity at the extremes), potentially making these observations unduely influential; the arcsin-square-root transformation, on the other hand, does not go beyond 0 and (the meaningless valu of) 1.57:
+The logit transformation (see next chapter) has an analogous effect, but it cannot be applied to values of exactly 0 or 1, arcsine square root transformation can. The coefficient of a logit transformed proportion has an interpretable meaning (albeit not a very easy one: see the discussion on odds ratios in Chapter \@ref(glm)), the coefficient of an arcsine square root transformation does not (except for the sign). However, it is mostly better to interpret results by looking at effect plots than at coefficients anyways. So if you have 0s or 1s in the data, the arcsine square root is the better option compared to the logit. This is also true if you have values extremely close to 0 or 1, because the logit has a stronger effect on such values (as it goes towards minus/plus infinity at the extremes), potentially making these observations unduly influential. The arcsine square root transformation, on the other hand, does not go beyond 0 and (the meaningless value of) 1.57:
 
 ```{r}
 asin(sqrt(c(0,1)))
 ```
 
-For values not at the extremes, arcsin-square-root and logit produce similar transformations.
+For values not at the extremes, arcsine square root and logit produce similar transformations.
 
 
 ## Logit transformation
 
-Above, we have already discussed the use of the logit-transformation for proportions, with the disadvantage that it does not work for the limit values of 0 and 1. Hence, it is actually not often used to transform predictors. However, it is used in (almost) all binomial models (to which Bernoulli models = logistic regressions belong, too) as the link function (see Chapter \@ref(glm)). For that reason, we here provide the formula: it is the log of the probability divided by one minus the probability:
+Above, we have already discussed the use of the logit transformation for proportions, with the disadvantage that it does not work for the limit values of 0 and 1. Hence, it is not often used to transform predictors. However, it is used in (almost) all binomial models (also including Bernoulli models = logistic regressions) as the link function (see Chapter \@ref(glm)). For that reason, we here provide the formula. It is the log of the probability divided by one minus the probability:
 
 $$ logit(p) = log(\frac{p}{1-p}) $$
 
-The term inside the log is called the odds, hence the logit-transformation could also be called the log-odds-transformation.
+The term inside the log is called the odds, hence the logit transformation could also be called the log odds transformation.
 
-In the packages loaded by R by default, there is no `logit` function. Surely, there are packages that do it, but it is not often needed. The inverse function of logit, however, is needed regularly: When you predict using the linear predictor of a binomial model, you get the estimated value on the logit-scale; you can then apply the inverse logit function `plogis` to get the estimate on the familiar probability scale.
+In the packages loaded by R by default, there is no `logit` function. There are packages that do it, but it is not often needed. The inverse function of logit, however, is needed regularly. When you use the linear predictor of a binomial model to predict values for the outcome variable, these values will be on the logit-scale. You can then apply the inverse logit function `plogis` to change them to the familiar probability scale.
 
 ## Categorizing and decategorizing
 
-Sometimes, none of the above transformations help to achieve a reasonably linear relationship between a covariate and the outcome variable. Then, a sensible solution can be to categorize the covariate and use it in the model as a factor. This can be a good choice e.g. when the covariable has many zeros, some small values and few large values: this could be categorized as "0", ">0 to 1" and ">1". How many levels you can make depends on the amount of data you have (more data allows for more levels) and the aim the model (are you mostly interested in zero vs non-zero, or also in finer classes?). Note that with each additional level, the model needs one more parameter (or more, if the predictor is also in interaction with other predictors).
+Sometimes, none of the above transformations help to achieve a reasonably linear relationship between a covariate and the outcome variable. Then, a sensible solution can be to categorize the covariate and use it in the model as a factor. This can be a good choice for example when the covariable has many zeros, some small values, and few large values. This could be categorized as "0", ">0 to 1" and ">1". How many levels you can make depends on the amount of data you have (more data allows for more levels) and the aim of the model (are you mostly interested in zero vs non-zero, or also in finer classes?). Note that with each additional level, the model needs one more parameter (or more, if the predictor is also in interaction with other predictors).
 
-In rather rare cases, it may also be reasonable to "decategorize" a factor, i.e. to use the factor levels as a covariate. This, of course, can only make sense for an ordered factor (i.e. the levels have a natural order). Also, going from one level to the next should have roughly the same effect on the outcome variable for all levels (if that is not the case, you would notice it in the residual analyses).
+In rather rare cases, it may also be reasonable to "decategorize" a factor, i.e., to use the factor levels as a covariate. This, of course, can only make sense for an ordered factor (i.e., the levels have a natural order). Also, going from one level to the next should have roughly the same effect on the outcome variable for all levels (if that is not the case, you would notice it in the residual analyses).
 
 In R, you can use the function `cut` to categorize a covariate. Applying `as.numeric` to a factor will return the ranks of the factor levels, hence that can be used to turn an (ordered) factor into a covariate.
 
-## Sinus and cosinus transformation for circular variables{#transformationscircular}
+## Sine and cosine transformation for circular variables{#transformationscircular}
 
-Variables like date (when spanning an entire year) or direction (in the sense of 0 to 360°, such as wind direction) are circular: the two ends (1 January and 31 December, 0° and 359°) are actually right next to each other. When you fit a simple linear regression to such data, e.g. the effect of wind direction on the number of migrants passing a study site, the two ends will not match (unless the line is horizontal), which makes no sense biologically. We can apply a sinus and cosinus transformation to match the two ends. The transformation has to be made on the radians, i.e. values from $0$ to $2\pi$, hence convert a julian day to $day/365*2*\pi$, direction to $direction/360*2*\pi$, etc.
+Variables like date (when spanning an entire year) or direction (in the sense of 0 to 360°, such as wind direction) are circular. The two ends (1 January and 31 December, 0° and 359°) are right next to each other. When you fit a simple linear regression to such data, e.g., the effect of wind direction on the number of migrants passing a study site, the two ends will not match (unless the line is horizontal). This makes no sense biologically. We can apply a sine and cosine transformation to match the two ends. The transformation must be made on the radians, i.e., values from $0$ to $2\pi$, hence convert a julian day (day of the year, 1 to 365) to $day/365*2*\pi$, a direction to $direction/360*2*\pi$, etc.
 
 ```{r}
 set.seed(8)
 dat <- data.frame(wind = sort(sample(0:359,120, replace = T)),
                   migration = as.numeric(mapply(function(x) rpois(10,x), x=c(15,10,5,2,2,6,9,15,20,32,25,20))))
-dat$wind.n <- cos(dat$wind/360*2*pi)   # northwind component: 1 for perfect north, -1 for perfect south wind
-dat$wind.e <- sin(dat$wind/360*2*pi)   # eastwind component: 1 for perfect east, -1 for perfect west wind
+dat$wind.n <- cos(dat$wind/360*2*pi)   
+  # north wind component: 1 for perfect north, -1 for perfect south wind
+dat$wind.e <- sin(dat$wind/360*2*pi)   
+  # east wind component: 1 for perfect east, -1 for perfect west wind
 mod <- lm(migration ~ wind.n + wind.e, data=dat)
 summary(mod)$coefficients[,c("Estimate","Std. Error")]
 ```
 
-A positive effect of wind.n means that there is more migration the larger the northern component of the wind, a negative effect of wind.e means that there is less migration the larger the eastern component of the wind (and hence, more migration with more westerly winds).
+A positive effect of wind.n means that there is more migration with a larger north wind component, and a negative effect of wind.e means that there is less migration with a larger east wind component (and hence, more migration with more westerly winds).
 
-Result interpretation is easier from an effectplot:
+It is easier to interpret the result from an effect plot:
 
-```{r fig.cap="Relationship between wind direction and migration activity (circles; virtual data). We fit a linear regression through the data using two circular wind variables (north and east components).", fig.width=4, fig.height=3}
+```{r fig.cap="Relationship between wind direction and migration activity (circles; virtual data). We fit a linear regression through the data using two circular wind variables (north and east components). Notice that the two ends of the line match.", fig.width=4, fig.height=3}
 
-t.wind <- seq(0,365,l=100)   # prepare a sequence of wind-values for which to draw the regression line
+t.wind <- seq(0,365,l=100)
+  # prepare a sequence of wind values for which to draw the regression line
 t.wind.n <- cos(t.wind/365*2*pi)  # same transformation as before
 t.wind.e <- sin(t.wind/365*2*pi)
 
@@ -219,57 +223,59 @@ lines(t.wind, predict(mod, newdata=data.frame(wind.n=t.wind.n, wind.e=t.wind.e))
 
 ```
 
-Note: the two ends of the line match.
+## Cloglog, probit, and inverse transformations
 
-## Cloglog, probit, inverse transformation
+These transformations are not used often in ecology. They can for example be used as link functions in a binomial model, but usually, the logit link function is used.
 
-These transformations are not used often in ecology. They can e.g. be used as link functions in a binomial model, but usually, the logit-link function is used.
-
-Note the risk for confusion of the term "inverse transformation": here, it means $f(x) = 1/x$, while in other contexts, it can mean "applying the inverse transformation of the transformation that had been done", e.g. using $exp()$ on a outcome variable that was log-transformed; if you use "back-transformation" in this context, there is no risk of confusion (but "apply the inverse link function" is often used in the context of binomial models, Chapter \@ref(glm)).
+Note the risk of confusion with the term "inverse transformation": here, it means $f(x) = 1/x$, while in other contexts, it can mean "applying the inverse transformation of the transformation that had been done". This could for example be using `exp` on a outcome variable that was log transformed; if you use "back-transformation" in this context, there is no risk of confusion (but "apply the inverse link function" is often used in the context of binomial models, Chapter \@ref(glm)).
 
 ## Identity transformation
 
-This simply means the transformation to itself, i.e. no transformation. We only list this here because, sometimes, we read about the "identity link" in the context of generalize linear models (Chapter \@ref(glm)), where a link function is used (e.g. log-link function for Poisson models). Normal linear models (\@ref(lm)) are a special case of generalize linear models, namely a Gauss (or "normal") model with an identity-link function.
+This simply means the transformation to itself, i.e., no transformation. We only list this here because we sometimes read about the "identity link" in the context of generalized linear models (Chapter \@ref(glm)), where a link function is used (e.g., log link function for Poisson models). Normal linear models (Chapter \@ref(lm)) are a special case of generalized linear models, namely a Gauss (or "normal") model with an identity link function.
 
 
 ## Transformations on the outcome variable
 
-Transformations can also be made on the outcome variable. A very skewed outcome variable may be log-transformed. If the outcome variable is a proportion (e.g. the proportion of survivors from a nest, and we don't have the actual number of survivors and non-survivors - if we have these numbers, we would fit a binomial model \@ref(glm)), the arcsin-square-root transformation can be meaningful.
+Transformations can also be made on the outcome variable. A very skewed outcome variable may be log transformed. If the outcome variable is a proportion (e.g., the proportion of survivors from a nest, and we don't have the actual number of survivors and non-survivors - if we do have these numbers, we would fit a binomial model, see Chapter \@ref(glm)), the arcsine square root transformation can be meaningful.
 
-But remember to back-transform predictions, if you want to give them on the original scale!
+However, remember to always back-transform predictions if you want to give them on the original scale!
 
 
 ## Back-transformation
 
-In many contexts we want to back-transform a transformed value to its original value. This is especially common in generalized linear (mixed) models, where the prediction from the linear predictor is on the link scale (log for Poisson and negative-binomial models, logit for binomial models; see Chapter \@ref(glm)). In suche cases, we apply the "inverse link function" (i.e. doing the back-transformation) to get the values on the original scale. Hence, predictions from a Poisson model are exp-transformed to get the estimates (or predicted value) of the outcome variable on its original scale (e.g. number of individuals); predictions from a binomial model are inverse-logit-transformed (function `plogis`) to get the estimate ot he original scale (i.e. a probability in the case of a binomial model). Note that depending on the R function you use, this back-transformation is done automatically, e.g. when using `predict` with argument `tpye=response`, or when using `posterior_epred` (applied to a model fitted with rstanarm or brms, Chapter \@ref(brm)).
+In many contexts we want to back-transform a transformed value to its original value. This is especially common in generalized linear (mixed) models, where the prediction from the linear predictor is on the link scale (log for Poisson and negative binomial models, logit for binomial models; see Chapter \@ref(glm)). In such cases, we apply the "inverse link function" (i.e. doing the back-transformation) to get the values on the original scale. So, predictions from a Poisson model must be exponential transformed (function `exp`) to get the estimates (or predicted values) of the outcome variable on its original scale (e.g., number of individuals), and predictions from a binomial model are inverse logit transformed (function `plogis`) to get the estimate on the original scale (i.e., a probability). Note that depending on the R function you use, this back-transformation is done automatically, for example, when using `predict` with argument `tpye=response`, or when using `posterior_epred` (applied to a model fitted with rstanarm or brms, Chapter \@ref(brm)).
 
-A technical note: you can get the inverse link-function to a model you fitted using the function `family`; it works with models fitted with `glm`, but may be others, too, depending on whether the package authors have implemented this. You apply the function `family` to the fitted model and extract the `$lininv` from that, which is the inverse link function:
+A technical note: you can get the inverse link-function to a model you fitted using the function `family`; it works with models fitted with `glm`, but maybe others, too, depending on whether the package authors have implemented this. You apply the function `family` to the fitted model and extract the `$lininv` from that, which is the inverse link function:
 
 ```{r}
-m <- glm(c(1,1,1,0,0,0,1,1,1,0)~runif(10,3,7), family=binomial)  # default link function is logit
-family(m)$linkinv(3)   # inverse link of logit; is the same as plogis:
+m <- glm(c(1,1,1,0,0,0,1,1,1,0)~runif(10,3,7), family=binomial)
+  # default link function is logit
+family(m)$linkinv(3)
+  # inverse link of logit; is the same as plogis:
 plogis(3)
 
-m <- glm(c(1,1,1,0,0,0,1,1,1,0)~runif(10,3,7), family=binomial(probit))  # alternative link function: probit
-family(m)$linkinv(3)   # inverse probit function
+m <- glm(c(1,1,1,0,0,0,1,1,1,0)~runif(10,3,7), family=binomial(probit))
+  # alternative link function: probit
+family(m)$linkinv(3)
+  # inverse probit function
 
 ```
 
 ## Applying the transformations to new data{#applythesametransformation}
 
-Often, we want to predict from a model. This means: we define values for all predictors in the model and the predict the outcome value for these predictor values. This is done when we are interested in a specific scenario of predictor values, and we do it extensively when creating effectplots that depict the relationship between the outcome variable and a predictor.
+Often, we want to predict from a model. This means that we define values for all predictors in the model and then predict the outcome value for these predictor values. This is done when we are interested in a specific scenario of predictor values, and when we create effect plots that depict the relationship between the outcome variable and a predictor.
 
-When we want to predict for specific values of the predictors, we usually store these values in an object called "newdat", because the values are like new data (for which we want to estimate the value of the outcome variable). We can then use "newdat" to make the effectplot. Hence, in newdat, we need the predictor values on their original scale (so that the effectplot is easy to interpret). But we also need the predictors on the scale used in the model - for making the prediction. Our approach is to create the "newdat" using values on the original scale.
+When we want to predict for specific values of the predictors, we usually store these values in an object called "newdat", because the values are like new data (for which we want to estimate the value of the outcome variable). We can then use "newdat" to make the effect plot. So, in "newdat", we need the predictor values on their original scale (so that the effect plot is easy to interpret). But we also need the predictors on the scale used in the model - for making the prediction. Our approach is to create the "newdat" using values on the original scale (for plotting) and apply the same transformations that were applied to the predictors in the original dataframe (for predicting; of course, only needed if transformations were used for the model).
 
-For example, in the circual variables chapter above, we created 100 values from the minimum to the maximum of the observed wind values. We then predicted for each of these to be able to draw the effectplot. But to be able to predict, we also needed the new (100) wind values *on the scale used in the model*, i.e. the cosinus- and sinus-transformed values.
+For example, in the circular variables chapter above (Chapter \@ref(transformationscircular)), we created 100 values from the minimum to the maximum of the observed wind values. For each of these, we wanted to predict the outcome values so that we could draw the effect plot. But to be able to predict from the model, we also needed the new (100) wind values *on the scale used in the model*, i.e., the cosine- and sine-transformed values. Hence, we transformed the values in "newdat" *in the same way* we had transformed the original values for using them in the model.
 
-Care has to be taken when applying the same transformation that was used on the original variable (e.g. called dat\$x) again on the variable in a new dataframe, e.g. on newdat\$x: When the transformation depends on a statistic of the original dat\$x, e.g. on $mean(dat\$x)$, we also have to use $mean(dat\$x)$ and not $mean(newdat\$x)$ for the transformation done on newdat\$x. Table \@ref(tab:transformationsR) shows which transformation to use on newdat\$x for a given transformation used on the original variable. Note the use of dat\$x (rather than newdat\$x) in the newdat-transformations for log with Stahel, center, scale, z, and orthogonal poly.
+Be careful when you transform a variable from the new dataframe "newdat" *in the same way* that the original variable was transformed! If the transformation depends on a statistic of the original data, e.g., the mean, it must be calculated from the *original* dataframe, not the new dataframe "newdat". Here is an example: Imagine our original variable is called "dat\$x", and our new variable is "newdat\$x". If we need the mean to transform the new variable, we must use `mean(dat$x)` to calculate it, *not* `mean(newdat$x)`. Table \@ref(tab:transformationsR) shows which transformation to use on "newdat\$x" for a given transformation used on the original variable. Note the use of "dat\$x" (rather than "newdat\$x") when transforming the newdat variable using log with Stahel, center, scale, z, and orthogonal polynomials.
 
 <br>
 
-Table: (\#tab:transformationsR) Transformations more or less regularly used on covariates (sometimes also on the outcome variable), here, as an example, on dat\$x, and how the transformation must be done when creating a "newdat" with newdat\$x to then be used to predict from the model. "Stahel" stands for the constant proposed by W. Stahel (see chapter on log above). For the logit-transformation, only probabilities are possible (hence the dat\$p), for sinus and cosinus only radians (hence the dat\$r).
+Table: (\#tab:transformationsR) Transformations used on covariates of dat\$x (sometimes also on the outcome variable), and how the transformation must be done when creating a "newdat", where newdat\$x may be used to predict from the model. "Stahel" stands for the constant proposed by W. Stahel (see chapter on log transformation above), poly for polynomials. For the logit transformation, only probabilities are possible (hence the dat\$p), for sine and cosine, only radians are possible (hence the dat\$r).
 
-transformation | transformation done on dat\$x | transformation done on newdat\$x |
+Transformation | Transformation done on dat\$x | Transformation done on newdat\$x |
 :---- | :------- | :------- |
 log | log(dat\$x) | log(newdat\$x) |
 log + 1 | log(dat\$x+1) | log(newdat\$x+1) |
@@ -278,11 +284,11 @@ center | dat\$x - mean(dat\$x) | newdat\$x - mean(dat\$x) |
 scale to 1 SD | dat\$x / sd(dat\$x) | newdat\$x / sd(dat\$x) |
 z | scale(dat\$x) |  (newdat\$x - mean(dat\$x)) / sd(dat\$x) |
 raw poly | dat\$x^2, dat\$x^3, etc | newdat\$x^2, newdat\$x^3, etc | 
-orthogonal poly (e.g. 2) | poly(dat\$x,2) | predict(poly(dat\$x,2), newdata=newdat\$x)
-square-root | sqrt(dat\$x) | sqrt(newdat\$x) |
-asin-square-root | asin(sqrt(dat\$x)) | asin(sqrt(newdat\$x)) |
+orthogonal poly (e.g., 2) | poly(dat\$x,2) | predict(poly(dat\$x,2), newdata=newdat\$x)
+square root | sqrt(dat\$x) | sqrt(newdat\$x) |
+asine square root | asin(sqrt(dat\$x)) | asin(sqrt(newdat\$x)) |
 logit | log(dat\$p / (1-dat\$p)) | log(newdat\$p / (1-newdat\$p))
-sin | sin(dat\$r) | sin(newdat\$r) |
-cosin | cos(dat\$r) | cos(newdat\$r) |
+sine | sin(dat\$r) | sin(newdat\$r) |
+cosine | cos(dat\$r) | cos(newdat\$r) |
 
 
