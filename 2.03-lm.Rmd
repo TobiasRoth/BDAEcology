@@ -25,7 +25,7 @@ library(knitr)
 
 ### Background
 
-Linear regression is the basis of a large part of applied statistical analysis. Analysis of variance (ANOVA) and analysis of covariance (ANCOVA) can be formulated as special cases of linear regression and are collectively named general linear models. Generalized linear models (Chapter \@ref(glm)) and mixed models (Chapters \@ref(lmer), \@ref(glmm)) (and many other models) are extensions of linear regression. 
+Linear regression is the basis of a large part of applied statistical analysis. Analysis of variance (ANOVA) and analysis of covariance (ANCOVA) can be formulated as special cases of linear regression and are collectively named general linear models. Generalized linear models (Chapter \@ref(glm)), mixed models (Chapters \@ref(lmer), \@ref(glmm)), and many other models are extensions of linear regression. 
 
 Typical questions that can be answered using linear regression are: How does $y$ change with changes in $x$? How is y predicted from $x$? An ordinary linear regression (i.e., one numeric  $x$  and a numeric $y$  variable) can be represented by a scatterplot of $y$ against $x$. We search for the line that fits best through the points, and we can describe how the observations scatter around this regression line (Fig. \@ref(fig:illlm)). The model formula of a simple linear regression with one continuous predictor variable $x_i$ (the subscript $i$ denotes the $i=1,\dots,n$ data points) is:
 
@@ -35,11 +35,11 @@ Typical questions that can be answered using linear regression are: How does $y$
   (\#eq:lm)
 \end{align}
 
-The first part of Equation \@ref(eq:lm) describes the regression line; it is called the linear predictor (it is always simply a linear combination - that's why all these models are called *linear models*). The second part describes how the data points, i.e. the observations, are distributed around the regression line (illustrated by normal distributions at two chosen x-values in Figure \@ref(fig:illlm)). In other words: with our model, we assume that the observation $y_i$ stems from a normal distribution with mean $\mu_i$ and variance $\sigma^2$. The mean of the normal distribution, $\mu_i$ , equals the sum of the intercept ($b_0$ ) and the product of the slope ($b_1$) and the continuous predictor value, $x_i$. $y_i$ is also often called the fitted value, the estimated value or simply the estimate.
+The first part of Equation \@ref(eq:lm) describes the regression line; it is called the linear predictor (it is always simply a linear combination - that's why all these models are called *linear models*). The second part describes how the data points, i.e., the observations, are distributed around the regression line (illustrated by normal distributions at two chosen x-values in Figure \@ref(fig:illlm)). In other words: with our model, we assume that the observation $y_i$ stems from a normal distribution with mean $\mu_i$ and variance $\sigma^2$. The mean of the normal distribution, $\mu_i$ , equals the sum of the intercept, $b_0$, and the product of the slope, $b_1$, and the continuous predictor value, $x_i$. $y_i$ is also often called the fitted value, the estimated value, or simply the estimate.
 
 Equation \@ref(eq:lm) is called the data model, because it describes mathematically the process that has (or, better, that we think has) produced the data. This nomenclature also helps to distinguish data models from models for parameters such as prior or posterior distributions.
 
-The differences between the observed y-values $y_i$ and the predicted values $\mu_i$ are the residuals (i.e., $\epsilon_i=y_i-\mu_i$). Equivalently to Equation \@ref(eq:lm), the regression could thus be written as:
+The differences between the observed y-values, $y_i$, and the predicted values, $\mu_i$, are the residuals (i.e., $\epsilon_i=y_i-\mu_i$). Equivalently to Equation \@ref(eq:lm), the regression could thus be written as:
 
 \begin{align} 
   y_i &= \beta_0 + \beta_1 x_i + \epsilon_i\\
@@ -47,7 +47,7 @@ The differences between the observed y-values $y_i$ and the predicted values $\m
   (\#eq:lmalternativ)
 \end{align} 
 
-We prefer the notation in Equation \@ref(eq:lm) because, in this formula, the deterministic part (first row) is nicely separated from the stochastic part (second row) of the model, whereas, in the second notation \@ref(eq:lmalternativ) the first row contains both stochastic and deterministic parts. Also, for a generalized linear model (Chapters \@ref(glm), \@ref(glmm)), only Equation \@ref(eq:lm) can be formulated.
+We prefer the notation in Equation \@ref(eq:lm) because the deterministic part (first row) is nicely separated from the stochastic part (second row) of the model, whereas, in the second notation \@ref(eq:lmalternativ), the first row contains both stochastic and deterministic parts. Also, for a generalized linear model (Chapters \@ref(glm), \@ref(glmm)), only Equation \@ref(eq:lm) can be formulated.
 
 For illustration, we simulate data and then fit a linear regression to them. The advantage of simulating data is that the subsequent analyses can be reproduced without having to read data into R. Further, for simulating data, we need to translate the algebraic model formula into R language which helps us understand the model structure.
 
@@ -71,7 +71,7 @@ dat <- tibble(x = x, y = y)
 ```
 
 
-```{r illlm, fig.asp=0.45, fig.cap="Illustration of a linear regression. The blue line represents the deterministic part of the model, i.e. the regression line (= the fitted value). The stochastic part is represented by a probability distribution, here the normal distribution (orange). The normal distribution changes its mean but not the variance along the x-axis, and it describes how the data are distributed around the fitted value. The blue line and the orange distribution together are a statistical model, i.e., an abstract representation of the data which is given in black.", echo=FALSE}
+```{r illlm, fig.asp=0.45, fig.cap="Illustration of a linear regression. The blue line represents the deterministic part of the model, i.e., the regression line (= the fitted value). The stochastic part is represented by a probability distribution, here, the normal distribution (orange). The normal distribution changes its mean but not the variance along the x-axis, and it describes how the data are distributed around the fitted value. The blue line and the orange distribution together are a statistical model, i.e., an abstract representation of the data which is given in black.", echo=FALSE}
 mod <- lm(y~x, data=dat)
 
 par(mar=c(3,4,0.5,0.5))
