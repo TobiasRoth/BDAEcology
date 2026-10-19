@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 
 # Normal Linear Models{#lm}
 
@@ -597,8 +602,42 @@ The summary output first gives a rough summary of the residual distribution. How
 
 We think the name "residual standard error" for "sigma" is confusing, because $\sigma$ is not a measurement of uncertainty of a parameter estimate like the standard errors of the model coefficients are. $\sigma$ is a model parameter that describes how the observations scatter around the fitted values, that is, it is a standard deviation. It is independent of sample size, whereas the standard errors of the estimates for the model parameters will decrease with increasing sample size. Such a standard error of the estimate of $\sigma$, however, is not given in the summary output. Note that, by using Bayesian methods, we could easily obtain the standard error of the estimated $\sigma$ by calculating the standard deviation of the posterior distribution of $\sigma$. 
 
-The $R^2$ and the adjusted $R^2$ measure the proportion of variance in the outcome variable $y$ that is explained by the predictors in the model. $R^2$ is calculated from the sum of squared residuals, $SSR = \sum_{i=1}^{n}(y_i - \hat{y})$, and the "total sum of squares", $SST = \sum_{i=1}^{n}(y_i - \bar{y})$, where $\bar{y})$ is the mean of $y$. $SST$ is a measure of total variance in $y$ and $SSR$
- is a measure of variance that cannot be explained by the model, thus $R^2 = 1- \frac{SSR}{SST}$ is a measure of variance that can be explained by the model. If $SSR$ is close to $SST$, $R^2$ is close to zero and the model cannot explain a lot of variance. The smaller $SSR$, the closer $R^2$ is to 1. This version of $R2$ approximates 1 if the number of model parameters approximates sample size even if none of the predictor variables correlates with the outcome. It is exactly 1 when the number of model parameters equals sample size, because $n$ measurements can be exactly described by $n$ parameters. The adjusted $R^2$, $R^2 = \frac{var(y)-\hat\sigma^2}{var(y)}$ takes sample size $n$ and the number of model parameters $k$ into account (see explanation to variance in Chapter \@ref(basics)). Therefore, the adjusted $R^2$ is recommended as a measurement of the proportion of explained variance.
+### Sum of squares
+
+The $R^2$ and the adjusted $R^2$ measure the proportion of variance in the outcome variable $y$ that is explained by the predictors in the model. $R^2$ is calculated from the sum of squared residuals, or residual sum of squares, $RSS = \sum_{i=1}^{n}(y_i - \hat{y})$, and the "total sum of squares", $TSS = \sum_{i=1}^{n}(y_i - \bar{y})$, where $\bar{y}$ is the mean of $y$. $TSS$ is a measure of total variance in $y$ and $RSS$ is a measure of variance that cannot be explained by the model, thus $R^2 = 1- \frac{RSS}{TSS}$ is a measure of variance that can be explained by the model. If $RSS$ is close to $TSS$, $R^2$ is close to zero and the model cannot explain a lot of variance. The smaller $RSS$, the closer $R^2$ is to 1. This version of $R^2$ approximates 1 if the number of model parameters approximates sample size, even if none of the predictor variables correlates with the outcome. It is exactly 1 when the number of model parameters equals the sample size, because $n$ measurements can be exactly described by $n$ parameters. The adjusted $R^2$, $R^2 = \frac{var(y)-\hat\sigma^2}{var(y)}$ takes sample size $n$ and the number of model parameters $k$ into account (see explanation to variance in Chapter \@ref(basics)). Therefore, the adjusted $R^2$ is recommended as a measurement of the proportion of explained variance.
+
+```{r}
+par(mar=c(4,4,1,1), fg="black")
+dat <- data.frame(x=c(1,6,8,12),
+                  y=c(2.8,4.2,10.6,10.2))
+plot(dat$x, dat$y, xlab="x", ylab="y", las=1, xlim=c(0,15), ylim=c(-5,20), pch=16)
+
+## aspect ratio on paper needed to get squares independent of plot ratio
+usr <- par("usr"); pin <- par("pin")
+xscale <- pin[1] / (usr[2] - usr[1])  # inches per x-unit
+yscale <- pin[2] / (usr[4] - usr[3])  # inches per y-unit
+t.as <- yscale / xscale
+
+t.m <- lm(y~x, data=dat)
+abline(t.m, col="orange", lwd=1)
+t.m0 <- lm(y~1, data=dat)  # null model = overall mean of outcome variable
+abline(t.m0, col="blue", lwd=1)
+
+# total sum of squares:
+par(fg="blue")
+rect(dat$x-abs(resid(t.m0))*t.as,dat$y,dat$x,mean(dat$y), xpd=NA, border="blue",density=20)
+# residual sum of squares:
+par(fg="orange")
+rect(dat$x,dat$y,dat$x+abs(resid(t.m))*t.as,fitted(t.m), xpd=NA, border="orange",density=40, angle=-45)
+# explained sum of squares:
+par(fg="forestgreen")
+rect(dat$x,fitted(t.m),dat$x+abs(fitted(t.m)-fitted(t.m0))*t.as,fitted(t.m0), xpd=NA, density=20, angle=-45)
+
+par(fg="black")
+
+```
+
+
 
 ## Linear model with one categorical predictor (one-way ANOVA)
 
