@@ -55,7 +55,8 @@ another explanatory variable (interaction)?
 
 ## Data structure  {#step5}
 After having considered the (fixed effect) terms from step 4: are the observations independent or grouped/structured? What random factors are needed in the model (see Chapter \@ref(lmer))? Are the data obviously temporally or spatially correlated? Or, are other correlation structures present, such as phylogenetic relationships? 
-Our strategy is to start with a rather simple model that may not account for all correlation structures that in fact are present in the data. First, we only include what is known to be important a priori. We only include additional correlation structures in the model once we know that they are needed, e.g., when residual analyses reveal their importance.
+
+Our strategy is to start with a rather simple model. This model accounts for correlation structures known to be important a priori, but may not account for all structures that in fact are present in the data. We only include additional correlation structures in the model once we know that they are needed, e.g., when residual analyses reveal their importance. Random slopes (see Chapter \@ref(lmer)) may be added based on biological interest.
 
 
 ## Define prior distributions {#step6}

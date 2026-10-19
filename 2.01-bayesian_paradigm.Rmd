@@ -147,7 +147,7 @@ The log posterior density can be used as a measure of model fit. We will come ba
 
 ## Further reading
 
-@Link.2010 provide a very understandable chapter on likelihood.
+@Link.2010 provide a very understandable chapter on likelihood in the Bayesian framework.
 
 Also, @Burnham.2002 give a thorough introduction to likelihood and how it is used in the multimodel inference framework. An introduction to likelihood for mathematicians, but also quite helpful for biologists, is given by @Dekking.2005.
 

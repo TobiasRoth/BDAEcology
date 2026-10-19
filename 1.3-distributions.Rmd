@@ -196,7 +196,7 @@ $x \sim t(v, \mu, \sigma)$
 
 Its density function is $p(x) = \frac{\Gamma((v+1)/2)}{\Gamma(v/2)\sqrt{v\pi}\sigma}(1+\frac{1}{v}(\frac{x-\mu}{\sigma})^2)^{-(v+1)/2}$. Its expected value is $E(x) = \mu$ for $v>1$ and the variance is $Var(x) = \frac{v}{v-2}\sigma ^2$ for $v>2$.
 
-The t-distribution is sometimes used as data model. Because of its heavier tails compared to the normal model, the model parameters are less influenced by measurement errors when a t-distribution is used instead of a normal distribution. This is called "robust statistics". 
+The t-distribution is sometimes used as data model. Because of its heavier tails compared to the normal model, the model parameters are less influenced by measurement errors when a t-distribution is used instead of a normal distribution. This is a type of "robust statistics". 
 
 Similar to the Cauchy distribution, the folded t-distribution, i.e., the positive part of the t-distribution(scaled to integrate to one), can serve as a prior distribution for variance parameters.
 
