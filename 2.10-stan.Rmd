@@ -22,7 +22,7 @@ install.packages("StanHeaders", repos = c("https://mc-stan.org/r-packages/", get
 install.packages("rstan", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
 ```
 
-An alternative to rtools may be to use `brm` together with the package [cmdstanr](https://mc-stan.org/cmdstanr/articles/cmdstanr.html#comparison-with-rstan), but we have only limited experience so far.
+An alternative to rstan may be to use `brm` together with the package [cmdstanr](https://mc-stan.org/cmdstanr/articles/cmdstanr.html#comparison-with-rstan), but we have only limited experience so far.
 
 ## Assessing convergence of the Markov chains and trouble shooting warnings of Stan
 
